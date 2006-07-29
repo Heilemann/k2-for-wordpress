@@ -21,37 +21,34 @@
 
 function AjaxComment(form) {
 var url = '<?php bloginfo("template_url"); ?>/comments-ajax.php';
-	new Ajax.Updater(
-		{ success: 'commentlist', failure: 'error' }, url,
-			{
-        			asynchronous: true,
-				evalScripts: true,
-				insertion: Insertion.Bottom,
-				onComplete: function(request) { 
-	  					if (request.status == 200) {
-	    						if ($('leavecomment')) { $('leavecomment').remove(); }
-	    						new Effect.Appear($('commentlist').lastChild);
-	    						$('comments').innerHTML = parseInt($('comments').innerHTML) + 1;
-	    						Field.clear('comment');
-	    						Form.disable('commentform');
-	    						setTimeout('Form.enable("commentform")',15000);
-						}
-		  				Element.hide('commentload');
-				},
-				onFailure: function() { 
-						$('error').setStyle( { visibility: 'visible', width: '100%', textAlign: 'center', padding: '1px 0', margin: '5px 0', background: '#ffff99' } );
-						Form.enable('commentform');
-				},
-				onLoading: function() { 
-						$('commentload').show();
-						$('error').update('');
-						$('error').setStyle( { visibility: 'hidden' } );
-						Form.disable('commentform');
-		},
-				parameters: Form.serialize(form) 
-		}
-	);
-}
+	new Ajax.Updater( {
+		success: 'commentlist', failure: 'error' }, url, {
+       		asynchronous: true,
+			evalScripts: true,
+			insertion: Insertion.Bottom,
+			onComplete: function(request) {
+  				if (request.status == 200) {
+    				if ($('leavecomment')) { $('leavecomment').remove(); }
+    				new Effect.Appear($('commentlist').lastChild);
+    				$('comments').innerHTML = parseInt($('comments').innerHTML) + 1;
+    				Field.clear('comment');
+    				Form.disable('commentform');
+    				setTimeout('Form.enable("commentform")',15000);
+				}
+	  			Element.hide('commentload');
+			},
+			onFailure: function() { 
+				$('error').setStyle( { visibility: 'visible', width: '100%', textAlign: 'center', padding: '1px 0', margin: '5px 0', background: '#ffff99' } );
+				Form.enable('commentform');
+			},
+			onLoading: function() { 
+				$('commentload').show();
+				$('error').update('');
+				$('error').setStyle( { visibility: 'hidden' } );
+				Form.disable('commentform');
+	},
+		parameters: Form.serialize(form) 
+} ); }
 
 function initComment() {
 	$('commentform').onsubmit = function() { AjaxComment(this); return false; };

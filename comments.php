@@ -2,16 +2,18 @@
 	if ('comments.php' == basename($_SERVER['SCRIPT_FILENAME']))
 		die (__('Please do not load this page directly. Thanks!','k2_domain'));
 
-        if (!empty($post->post_password)) { // if there's a password
-            if ($_COOKIE['wp-postpass_' . COOKIEHASH] != $post->post_password) {  // and it doesn't match the cookie
-	?>
+	if (!empty($post->post_password)) { // if there's a password
+		if ($_COOKIE['wp-postpass_' . COOKIEHASH] != $post->post_password) {  // and it doesn't match the cookie
+?>
 
-		<p class="center"><?php _e('This post is password protected. Enter the password to view comments.','k2_domain'); ?></p>
-				
-<?php	return; } }
+			<p class="center"><?php _e('This post is password protected. Enter the password to view comments.','k2_domain'); ?></p>
 
+<?php
+			return;
+		}
+	}
+	
 	$templatedir = get_bloginfo('template_directory');
-
 ?>
 
 <!-- You can start editing here. -->
@@ -41,14 +43,12 @@
 					<a href="#comment-<?php comment_ID() ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $count_pings; $count_pings++; ?></a>
 					<span class="commentauthor"><?php comment_author_link() ?></span>
 					<small class="commentmetadata">			
-					<?php
-					printf(('<a href="#comment-%1$s" title="%2$s">%3$s</a>'), 
+					<?php printf(('<a href="#comment-%1$s" title="%2$s">%3$s</a>'), 
 						get_comment_ID(),
 						function_exists('time_since') ?	sprintf(__('%s ago.','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")))) : sprintf(__('Permanent Link to this Comment','k2_domain')),
 						sprintf(__('%1$s at %2$s','k2_domain'),	get_comment_date(__('M jS, Y','k2_domain')), get_comment_time())            
-          				);
-					?>
-					<?php if ( $user_ID ) { edit_comment_link(__('Edit','k2_domain'),'<span class="commentseditlink">','</span>'); } ?>
+          			); ?>
+					<?php if (function_exists('jal_edit_comment_link')) { jal_edit_comment_link("edit", "", "", "<em>(editing)</em>"); } else { edit_comment_link(__('Edit','k2_domain'),'<span class="commentseditlink">','</span>'); } ?>
 					</small>
 					
 					<div class="itemtext">
@@ -88,7 +88,7 @@
 						)
 					);
 					?>				
-					<?php if ( $user_ID ) { edit_comment_link(__('Edit','k2_domain'),'<span class="commentseditlink">','</span>'); } ?>
+					<?php if ($user_ID) { edit_comment_link(__('Edit','k2_domain'),'<span class="commentseditlink">','</span>'); } ?>
 					</small>
 				</li>
 		
@@ -118,21 +118,24 @@
 	<?php } ?>
 
 	<!-- Reply Form -->
-	<?php if ('open' == $post-> comment_status) : ?>
-		<h4><?php _e('Leave a Reply','k2_domain'); ?></h4>
+	<?php if ('open' == $post-> comment_status) { ?>
+		<h4><?php if (isset($_GET['jal_edit_comments'])) { _e('Edit Your Comment','k2_domain'); } else { _e('Leave a Reply','k2_domain'); } ?></h4>
 		
-		<?php if ( get_option('comment_registration') && !$user_ID ) : ?>
+		<?php if ( get_option('comment_registration') && !$user_ID ) { ?>
 		
 			<p><?php printf(__('You must <a href="%s">login</a> to post a comment.','k2_domain'), get_option('siteurl') . '/wp-login.php?redirect_to=' . get_permalink()) ?></p>
 		
-		<?php else : ?>
-		
+		<?php } else { ?>
 
 		<form action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" method="post" id="commentform">
 
-		<?php if ( $user_ID ) { ?>
-
-		<div class="metalinks"><?php printf(__('Logged in as %s.','k2_domain'), '<a href="' . get_option('siteurl') . '/wp-admin/profile.php">' . $user_identity . '</a>') ?> <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="<?php _e('Log out of this account','k2_domain'); ?>"><?php _e('Logout','k2_domain'); ?> &raquo;</a></div>
+		<?php
+			if (isset($_GET['jal_edit_comments']) ) {
+				$jal_comment = jal_edit_comment_init();
+				if (!$jal_comment) { return; }
+			} elseif ($user_ID) { ?>
+		
+		<div class="metalinks"><?php printf(__('Logged in as %s.','k2_domain'), '<a href="'.get_option('siteurl').'/wp-admin/profile.php">'.$user_identity.'</a>') ?> <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="<?php _e('Log out of this account','k2_domain'); ?>"><?php _e('Logout','k2_domain'); ?> &raquo;</a></div>
 	
 		<?php } elseif ($comment_author != "") { ?>
 
@@ -155,7 +158,7 @@
 		<?php } ?>
 			<!--<p><small><?php printf(__('<strong>XHTML:</strong> You can use these tags %s:','k2_domain'), allowed_tags()) ?></small></p>-->
 		
-			<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea></p>
+			<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"><?php if (function_exists('jal_edit_comment_link')) { jal_comment_content($jal_comment); } ?></textarea></p>
 		
 			<?php if (function_exists('show_subscription_checkbox')) { show_subscription_checkbox(); } ?>
 		
@@ -169,12 +172,10 @@
 
 			</form>
 
-	<?php if ($shownavigation) { ?>
-		<?php include (TEMPLATEPATH . '/navigation.php'); ?>
-	<?php } ?>
+	<?php if ($shownavigation) { include (TEMPLATEPATH . '/navigation.php'); } ?>
 
-<?php endif; // If registration required and not logged in ?>
+<?php } // If registration required and not logged in ?>
 
-<?php endif; // if you delete this the sky will fall on your head ?>
-</div> <!-- Close .comments container -->
+<?php } // if you delete this the sky will fall on your head ?>
+</div> <!-- Close .comments -->
 <?php } ?>
