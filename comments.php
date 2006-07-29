@@ -38,7 +38,7 @@
 					sprintf(__('%1$s at %2$s','k2_domain'),	get_comment_date(__('M jS, Y','k2_domain')), get_comment_time())            
 	        			); ?>
 				<?php if (function_exists('quoter_comment')) { quoter_comment(); } ?>
-				<?php if (function_exists('jal_edit_comment_link')) { jal_edit_comment_link("edit", "", "", "<em>(editing)</em>"); } else { edit_comment_link(__('Edit','k2_domain'),'<span class="commentseditlink">','</span>'); } ?>
+				<?php if (function_exists('jal_edit_comment_link')) { jal_edit_comment_link(__('Edit','k2_domain'), '<span class="commentseditlink">','</span>', '<em>(Editing)</em>'); } else { edit_comment_link(__('Edit','k2_domain'), '<span class="commentseditlink">', '</span>'); } ?>
 				</small>
 			
 				<div class="itemtext">
@@ -92,10 +92,8 @@
 			<div><?php _e('Comments are currently closed.','k2_domain'); ?></div>
 		<?php } } ?>
 
-		<?php // Reply Form ?>
-
-	<?php if ('open' == $post-> comment_status) { ?>
-		<h4><?php if (isset($_GET['jal_edit_comments'])) { _e('Edit Your Comment','k2_domain'); } else { _e('Leave a Reply','k2_domain'); } ?></h4>
+	<?php /* Reply Form */ if ('open' == $post-> comment_status) { ?>
+		<h4 class="reply"><?php if (isset($_GET['jal_edit_comments'])) { _e('Edit Your Comment','k2_domain'); } else { _e('Leave a Reply','k2_domain'); } ?></h4>
 		
 		<?php if ( get_option('comment_registration') && !$user_ID ) { ?>
 		
