@@ -12,7 +12,7 @@
 	Author Site	: 	http://binarybonsai.com
 	Style Name	: 	Vader2
 	Style URI	:	http://getk2.com
-	Version		: 	0.5
+	Version		: 	1.0
 	Comments	: 	I made Vader as a tribute to Star Wars for use on my own blog.
 				  	The header image was painted by my friend Rasmus (http://no-go-dk)
 					License: http://creativecommons.org/licenses/by-nc-sa/2.5/
@@ -32,22 +32,24 @@ body {
 	}
 
 h1 {
-	padding: 0 0 0 40px;
 	position: absolute;
-	top: 15px;
-	left: 0;
+	top: 25px;
+	left: 50px;
+	padding: 0;
 	}
 
 .description {
 	position: absolute;
-	top: 50px;
-	left: 0;
+	top: 55px;
+	left: 50px;
+	margin: 0 !important;
 	}
 
 #page {
 	padding: 0;
 	width: 796px;
 	_width: 756px;
+	border: none;
 	}
 
 .primary {
@@ -67,7 +69,7 @@ ul.menu li a:hover {
 	background: #111;
 	}
 	
-h2, h2 a, h2 a:hover, h2 a:visited, h3, h3 a, h3 a:hover, h3 a:visited {
+h2, h2 a, h2 a:hover, h2 a:visited, h3, h3 a, h3 a:hover, h3 a:visited, h4, h4 a, h4 a:hover, h4 a:visited {
 	color: #AC0E0F !important;
 	}
 
@@ -162,3 +164,23 @@ a, a:visited, .sidebar a:visited {
 	border-left: 1px solid #333;
 	border-right: none;
 	}
+
+/* Rolling Archives Slider */
+#pagetrack {
+	margin: 0 auto;
+	width: 218px;
+	height: 18px;
+	background: url('sliderbgleft.png') no-repeat center left;
+}
+
+#pagetrackend {
+	height: 18px;
+	background: url('sliderbgright.png') no-repeat center right;
+	}
+
+#pagehandle {
+	width: 18px;
+	height: 18px;
+	background: url('sliderhandle.png') no-repeat center center;
+	cursor: e-resize;
+}

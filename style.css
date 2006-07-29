@@ -851,7 +851,7 @@ input[type=text], textarea {
 	top: 3px;
 	height: 13px;
 	width: 13px;
-	background: url('images/reset-fff.gif') center center no-repeat;
+	background: url('images/reset-fff.png') center center no-repeat;
 	}
 
 .livesearchform input[type=submit] {
@@ -985,7 +985,6 @@ input[type=text], textarea {
 	height: 13px;
 	width: 13px;
 	margin-right: 5px;
-	/*background: url('images/reset-fff.gif') center center no-repeat;*/
 	background: url('images/reset-fff.gif') no-repeat center center;
 	}
 
@@ -993,29 +992,18 @@ input[type=text], textarea {
 	margin: 0 auto;
 	width: 218px;
 	height: 18px;
-	/*background: url('images/sliderbgleft.png') left 5px no-repeat;*/
 	background: url('images/sliderbgleft.png') no-repeat center left;
 }
 
 #pagetrackend {
 	height: 18px;
-	/*background: url('images/sliderbgright.png') right 5px no-repeat;*/
 	background: url('images/sliderbgright.png') no-repeat center right;
 	}
 
 #pagehandle {
 	width: 18px;
 	height: 18px;
-	/*background: url('images/sliderhandle.png') center center no-repeat;*/
 	background: url('images/sliderhandle.png') no-repeat center center;
-	cursor: e-resize;
-}
-
-#pagehandledisabled {
-	width: 18px;
-	height: 18px;
-	/*background: url('images/sliderhandle.png') center center no-repeat;*/
-	background: red url('images/sliderhandle.png') no-repeat center center;
 	cursor: e-resize;
 }
 
