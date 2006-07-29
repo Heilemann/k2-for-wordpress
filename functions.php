@@ -22,9 +22,6 @@ elseif (get_option('k2installed') < $current) {
 //add_option('k2upgrade-test', 'this is the text', 'Just testing', $autoload);
 }
 
-// Let's add some support for WordPress Widgets
-if (function_exists('register_sidebar')) register_sidebar(array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>'));
-
 // Let's add the options page.
 add_action ('admin_menu', 'k2menu');
 
@@ -43,5 +40,17 @@ function menu() {
 
 // include Hasse R. Hansen's K2 header plugin - http://www.ramlev.dk
 require(TEMPLATEPATH . '/options/display/headers.php');
+
+// Sidebar Modules for K2
+// Only bootstrap if not activating a plugin & no other plugin is installed for handling sidebars
+if(!function_exists('register_sidebar') && ($_GET['action'] != 'activate' || basename($_SERVER['SCRIPT_FILENAME']) != 'plugins.php')) {
+	require(TEMPLATEPATH . '/options/app/sbm.php');
+	k2sbm::wp_bootstrap();
+}
+
+// Sidebar modules / WP Widgets init
+if(function_exists('register_sidebar')) {
+	register_sidebar(array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>'));
+}
 
 // this ends the admin page ?>

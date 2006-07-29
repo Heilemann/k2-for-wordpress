@@ -16,6 +16,11 @@ class installk2 {
 			add_option('k2styleinfo', '', 'Formatted string for style info display.', $autoload);
 			add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on", $autoload);
 			add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.', $autoload);
+
+			// SBM options
+			add_option('k2sbm_modules_active', array());
+			add_option('k2sbm_modules_disabled', array());
+			add_option('k2sbm_modules_next_id', 1);
 	}
 }
 ?>

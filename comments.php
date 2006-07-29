@@ -38,7 +38,7 @@
 					sprintf(__('%1$s at %2$s','k2_domain'),	get_comment_date(__('M jS, Y','k2_domain')), get_comment_time())            
 	        			); ?>
 				<?php if (function_exists('quoter_comment')) { quoter_comment(); } ?>
-				<?php if (function_exists('jal_edit_comment_link')) { jal_edit_comment_link(__('Edit','k2_domain'), '<span class="commentseditlink">','</span>', '<em>(Editing)</em>'); } else { edit_comment_link(__('Edit','k2_domain'), '<span class="commentseditlink">', '</span>'); } ?>
+				<?php if (function_exists('jal_edit_comment_link')) { jal_edit_comment_link(__('Edit','k2_domain'), '<span class="editlink">','</span>', '<em>(Editing)</em>'); } else { edit_comment_link(__('Edit','k2_domain'), '<span class="editlink">', '</span>'); } ?>
 				</small>
 			
 				<div class="itemtext">
@@ -76,7 +76,7 @@
 					)
 				);
 				?>				
-				<?php if ($user_ID) { edit_comment_link(__('Edit','k2_domain'),'<span class="commentseditlink">','</span>'); } ?>
+				<?php if ($user_ID) { edit_comment_link(__('Edit','k2_domain'),'<span class="editlink">','</span>'); } ?>
 				</small>
 			</li>
 			<?php } /* end for each comment */ ?>
