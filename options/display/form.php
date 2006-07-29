@@ -68,7 +68,7 @@
 			</select>
 			
 			<p><small><?php _e('Choose the Custom Style you would like to use on this site.','k2_domain'); ?></small></p>
-			<p><?php printf(__('Formatting to be used for displaying the style info. Use: <strong>style</strong> for style name, <strong>stylelink</strong> for the style\'s homepage, <strong>author</strong> for author, <strong>site</strong> for author\'s site, <strong>version</strong> for version and <strong>comments</strong> for style comments. (code by: %s)','k2_domain'), '<a href="http://stevelam.org/2006/03/k2-style-info/">Steve Lam</a>') ?></p>
+			<p><?php printf(__('Formatting to be used for displaying the style info. Use: <strong>style</strong> for style name, <strong>stylelink</strong> for the style\'s homepage, <strong>author</strong> for author, <strong>site</strong> for author\'s site, <strong>version</strong> for version and <strong>comments</strong> for style comments.','k2_domain')) ?></p>
 			<p><textarea name="format" id="format" rows="3" cols="80"><?php echo stripslashes(get_option('k2styleinfo_format')); ?></textarea></p>
 			<p><strong><?php _e('Outputs:','k2_domain'); ?></strong> <?php k2styleinfo_demo(); ?></p>
 		</td>
