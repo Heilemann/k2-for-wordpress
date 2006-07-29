@@ -93,6 +93,7 @@
 		<?php } } ?>
 
 		<?php // Reply Form ?>
+
 	<?php if ('open' == $post-> comment_status) { ?>
 		<h4><?php if (isset($_GET['jal_edit_comments'])) { _e('Edit Your Comment','k2_domain'); } else { _e('Leave a Reply','k2_domain'); } ?></h4>
 		
@@ -152,8 +153,7 @@
 
 		<?php if ($shownavigation) { include (TEMPLATEPATH . '/navigation.php'); } ?>
 
+		</div><?php // Close .comments ?>
+
 	<?php } // comment_status ?>
 	
-	</div><?php // Close .comments ?>
-
-<?php } ?>
