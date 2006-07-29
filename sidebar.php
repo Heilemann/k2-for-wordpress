@@ -153,18 +153,6 @@
 	<?php } */ ?>
 
 
-	<?php /* Delicious Plugin */ if ((function_exists('delicious')) && is_home() && !(is_paged()) ) { $k2deliciousname = get_option('k2deliciousname'); ?> 
-	<div class="sb-delicious">
-		<h2><a href="http://del.icio.us/<?php echo $k2deliciousname; ?>" title="<?php _e('My del.icio.us links library','k2_domain'); ?>">Del.icio.us</a></h2>
-		<span class="metalink"><a href="http://del.icio.us/rss/<?php echo $k2deliciousname; ?>" title="<?php _e('RSS Feed for del.icio.us links','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
-
-		<div>
-			<?php delicious($k2deliciousname); ?>
-		</div>
-	</div>
-	<?php } ?>
-
-
 	<?php /* Links */ if ( (is_home()) && !(is_page()) && !(is_single()) && !(is_search()) && !(is_archive()) && !(is_author()) && !(is_category()) && !(is_paged()) ) { $links_list_exist = @$wpdb->get_var("SELECT link_id FROM $wpdb->links LIMIT 1"); if($links_list_exist) { ?>
 	<div class="sb-links">
 		<ul>

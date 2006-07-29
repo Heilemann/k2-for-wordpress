@@ -42,12 +42,13 @@
 					<?php if (function_exists('gravatar')) { ?><a href="http://www.gravatar.com/" title="<?php _e('What is this?','k2_domain'); ?>"><img src="<?php gravatar("X", 32,  get_bloginfo('template_url')."/images/defaultgravatar.jpg"); ?>" class="gravatar" alt="<?php _e('Gravatar Icon','k2_domain'); ?>" /></a><?php } ?>
 					<a href="#comment-<?php comment_ID() ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $count_pings; $count_pings++; ?></a>
 					<span class="commentauthor"><?php comment_author_link() ?></span>
-					<small class="commentmetadata">			
+					<small class="commentmetadata">
 					<?php printf(('<a href="#comment-%1$s" title="%2$s">%3$s</a>'), 
 						get_comment_ID(),
 						function_exists('time_since') ?	sprintf(__('%s ago.','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")))) : sprintf(__('Permanent Link to this Comment','k2_domain')),
 						sprintf(__('%1$s at %2$s','k2_domain'),	get_comment_date(__('M jS, Y','k2_domain')), get_comment_time())            
           			); ?>
+					<?php if (function_exists('quoter_comment')) { quoter_comment(); } ?>
 					<?php if (function_exists('jal_edit_comment_link')) { jal_edit_comment_link("edit", "", "", "<em>(editing)</em>"); } else { edit_comment_link(__('Edit','k2_domain'),'<span class="commentseditlink">','</span>'); } ?>
 					</small>
 					
@@ -158,16 +159,17 @@
 		<?php } ?>
 			<!--<p><small><?php printf(__('<strong>XHTML:</strong> You can use these tags %s:','k2_domain'), allowed_tags()) ?></small></p>-->
 		
-			<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"><?php if (function_exists('jal_edit_comment_link')) { jal_comment_content($jal_comment); } ?></textarea></p>
+			<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"><?php if (function_exists('jal_edit_comment_link')) { jal_comment_content($jal_comment); }; if (function_exists('quoter_comment_server')) { quoter_comment_server(); } ?></textarea></p>
 		
 			<?php if (function_exists('show_subscription_checkbox')) { show_subscription_checkbox(); } ?>
-		
+			<?php if (function_exists('quoter_page')) { quoter_page(); } ?>
+
 			<p>
 				<input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit','k2_domain'); ?>" />
 				<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
 				<br class="clear" />
 			</p>
-	
+
 			<?php do_action('comment_form', $post->ID); ?>
 
 			</form>
