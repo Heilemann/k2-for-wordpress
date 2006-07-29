@@ -206,7 +206,7 @@ function change_hpicture() {
 			$pic = 'background: url('.get_bloginfo('template_url').'/images/headers/'.$picture.') no-repeat center center;';
 		}
 	echo '
-		<style>
+		<style type="text/css">
 			#header {
 				'.$pic.'
 				background-color: '.get_option(k2headerbackgroundcolor).';
