@@ -4,16 +4,14 @@
 	
 	<div id="primary">
 
-	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+	<?php if (have_posts()) { while (have_posts()) { the_post(); ?>
 
 	<?php 
-	// This also populates the iconsize for the next line
-	$attachment_link = get_the_attachment_link($post->ID, true, array(450, 800)); 
-	?>
+		// This also populates the iconsize for the next line
+		$attachment_link = get_the_attachment_link($post->ID, true, array(450, 800)); 
 
-	<?php 
-	// This lets us style narrow icons specially
-	$_post = &get_post($post->ID); $classname = ($_post->iconsize[0] <= 128 ? 'small' : '') . 'attachment'; 
+		// This lets us style narrow icons specially
+		$_post = &get_post($post->ID); $classname = ($_post->iconsize[0] <= 128 ? 'small' : '') . 'attachment'; 
 	?>	
 
 		<div id="post-<?php the_ID(); ?>" class="item entry">
@@ -35,13 +33,13 @@
 			</div>
 		</div>
 
-		<?php //comments_template(); ?>	
+		<?php comments_template(); ?>	
 
-		<?php endwhile; else: ?>
+	<?php } } else { ?>
 
 		<h2><?php _e('Sorry, no attachments matched your criteria.','k2_domain'); ?></h2>
 
-	<?php endif; ?>	
+	<?php } ?>
 
 	</div>
 
