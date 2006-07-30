@@ -121,7 +121,7 @@
 			</div>
 
 			<div class="itemtext">
-				<?php if ( is_archive() or is_search() or (function_exists('is_tag') and is_tag()) ) {
+				<?php if (is_archive() or is_search() or (function_exists('is_tag') and is_tag())) {
 					the_excerpt();
 				} else {
 					the_content(__('Continue reading','k2_domain') . " '" . the_title('', '', false) . "'");

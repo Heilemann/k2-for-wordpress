@@ -85,7 +85,11 @@
 		<?php } ?>
 		
 		<?php /* Comments open, but empty */ if (!isset($count_pings) and 'open' == $post-> comment_status) { ?> 
-			<div id="leavecomment"><?php _e('No Comments','k2_domain'); ?></div>
+			<ol id="commentlist">
+				<li id="leavecomment">
+					<?php _e('No Comments','k2_domain'); ?>
+				</li>
+			</ol>
 		<?php } ?>
 		
 		<?php /* Comments closed */ if ('open' != $post-> comment_status and is_single) { ?>
