@@ -340,12 +340,21 @@ body.staticpage .editlink {
 	float: right;
 	}
 
-.editlink a, .comments .editlink a {
+.editlink a {
 	border: none;
 	padding: 2px;
 	padding-left: 23px;
 	margin-left: 10px;
 	background: url('images/pencil.png') left center no-repeat;
+	height: 16px;
+	}
+
+.comments .editlink a {
+	border: none;
+	padding: 2px;
+	padding-left: 23px;
+	margin-left: 10px;
+	background: url('images/comment_edit.png') left center no-repeat;
 	height: 16px;
 	}
 
@@ -389,6 +398,12 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	padding: 2px 0 2px 20px;
 	background: url('images/comment.png') left center no-repeat;
 	margin-left: 10px;
+	}
+
+.quoter_comment {
+	padding: 2px 0 2px 20px;
+	background: url('images/comment.png') left center no-repeat;
+	margin-left: 5px;
 	}
 
 .tagdata {
