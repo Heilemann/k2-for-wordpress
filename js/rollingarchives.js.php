@@ -19,109 +19,130 @@
 	header('Content-Type: text/javascript; charset: UTF-8');
 ?>
 
-function rollArchive(direction, parms) {
-	if (direction == 1 || direction == -1) {
-		pagenumber += direction;
-		new Effect.Appear('rollload', {duration: .1});
-	} else if (direction == 'home') {
-		pagenumber = 1;
-	}
+RollingArchives = Class.create();
 
-	checkRollingElements();
-	new Ajax.Updater({success: 'content'}, '<?php bloginfo('template_url'); ?>/theloop.php', {method: 'get', parameters: '&s='+parms+'&paged='+pagenumber, onSuccess: rollSuccess, onFailure: rollError});
-}
+RollingArchives.prototype = {
+	initialize: function(targetitem, url, query, pagecount) {
+		var rolling = this;
 
+		this.targetitem = targetitem;
+		this.url = url;
+		this.query = query;
+		this.pagecount = pagecount;
+		this.pagenumber = 1;
 
-function rollGotoPage(gotopage, parms) {
-	pagenumber = (gotopage - 1);
-	rollArchive(1, parms);
-}
+		this.rollnext = $('rollnext');
+		this.rollprev = $('rollprevious');
 
+		var sliderValues = new Array(this.pagecount);
+		for (var i = 0; i < this.pagecount; i++) {
+			sliderValues[i] = i + 1;
+		}
+		this.PageSlider = new Control.Slider('pagehandle','pagetrack', {
+			range: $R(rolling.pagecount, 1),
+			values: sliderValues,
+			sliderValue: 1,
+			onSlide: function(v) { $('rollpages').innerHTML = 'Page '+v+' of '+rolling.pagecount; },
+			onChange: function(v) { rolling.gotoPage(v); },
+			handleImage: 'pagehandle'
+		});
 
-function rollSuccess() {
-	rollRemoveLoad();
-	/*if (pagenumber > 1) {								// If we've moved into the archives, 
-		setCookie('rollpage', pagenumber);				// set a cookie so we can return to that page.
-	} else if (pagenumber = 1) {
-		deleteCookie('rollpage');
-	}*/
-}
+		Event.observe('rollprevious', 'click', function(){ rolling.rollPrevPage(); });
+		Event.observe('rollnext', 'click', function(){ rolling.rollNextPage(); });
 
+		this.checkRollingElements();
+		this.rollRemoveLoad();
 
-function rollError() {
-	$('rollnotices').innerHTML = 'Error! <a href="javascript:initRollingArchives()">Reboot</a>';
-}
+		this.initialized = true;
+	},
 
+	rollNextPage: function() {
+		this.PageSlider.setValueBy(-1);
+	},
 
-function rollRemoveLoad() {
-	new Effect.Fade('rollload', {duration: .1});
-}
+	rollPrevPage: function() {
+		this.PageSlider.setValueBy(1);
+	},
 
+	checkRollingElements: function() {
+		if (this.pagenumber == 1) {
+			$('rollprevious').className = null;
+			$('rollnext').className = 'inactive';
+			$('rollhome').className = 'inactive';
+		} else if (this.pagenumber > 1) {
+			$('rollnext').className = null;
+			$('rollhome').className = null;
+		}
 
-// Needs to be run when a direction is picked, but not when you click the link the notice provides. FIX IT
-function rollRemoveNotices() { 
-	new Effect.Fade($('rollnotices'));
-	$('rollnotices').innerHTML = null;
-}
+		if (this.pagenumber >= this.pagecount) {
+			$('rollprevious').className = 'inactive';
+		} else {
+			$('rollprevious').className = null;
+		}
 
-
-function checkRollingElements() {
-	if (pagenumber == 1) {
-		$('rollprevious').className = null;
-		$('rollprevious').onclick = function() { PageSlider.setValueBy(1); return false; };
-		$('rollnext').className = 'inactive';
-		$('rollnext').onclick = null;
-		$('rollhome').className = 'inactive';
-		$('rollhome').onclick = null;
-	} else if (pagenumber > 1) {
-		$('rollnext').className = null;
-		$('rollnext').onclick = function() { PageSlider.setValueBy(-1); return false; };
-		$('rollhome').className = null;
-		$('rollhome').onclick = function() { rollArchive('home'); };
-	}
+		$('rollpages').innerHTML = 'Page '+this.pagenumber+' of '+this.pagecount;
+	},
 	
-	if (pagenumber >= pagecount) {
-		$('rollprevious').className = 'inactive';
-		$('rollprevious').onclick = null;
-	} else {
-		$('rollprevious').className = null;
-		$('rollprevious').onclick = function() { PageSlider.setValueBy(1); return false; };
+	gotoPage: function(newpage) {
+		var direction = 0;
+
+		if (newpage != this.pagenumber) {
+			if (newpage > this.pagecount) {
+				direction = 'end';
+			} else if (newpage < 1) {
+				direction = 'home';
+			} else {
+				direction = 1;
+			}
+			this.pagenumber = (newpage - 1);
+			this.rollArchive(direction);
+		}
+	},
+
+	rollRemoveLoad: function() {
+		new Effect.Fade('rollload', {duration: .1});
+	},
+
+	rollSuccess: function() {
+		this.rollRemoveLoad();
+	},
+
+	rollError: function() {
+		$('rollnotices').innerHTML = 'Error!';
+	},
+
+	processQuery: function() {
+		if (this.query.indexOf('&paged=') != -1) {
+			this.query = this.query.replace(/&paged=\d+/,'&paged='+this.pagenumber);
+		} else {
+			this.query += "&paged=" + this.pagenumber;
+		}
+
+		if (this.query.indexOf('&rolling=') == -1) {
+			this.query += '&rolling=1';
+		}
+	},
+
+	rollArchive: function(direction) {
+		if (direction == 1 || direction == -1) {
+			this.pagenumber += direction;
+			new Effect.Appear('rollload', {duration: .1});
+		} else if (direction == 'home') {
+			this.pagenumber = 1;
+		}
+
+		this.checkRollingElements();
+		this.processQuery();
+
+		new Ajax.Updater(
+			this.targetitem,
+			this.url,
+			{
+				method: 'get',
+				parameters: this.query,
+				onSuccess: this.rollSuccess.bind(this),
+				onFailure: this.rollError.bind(this)
+			}
+		);
 	}
-
-	//alert('Pagecount: '+pagecount);
-	if (pagecount != 0) {
-		$('rollpages').innerHTML = 'Page '+pagenumber+' of '+pagecount;  // Insert page count
-	} else {
-		$('rollpages').innerHTML = 'No Pages';  // Insert page count
-	}
-}
-
-function disableRollingArchives() {
-	$('rollprevious').className = 'inactive';
-	$('rollnext').className = 'inactive';
-	PageSlider.setDisabled();
-	Effect.Fade('pagetrack', { duration: .1, from: 1.0, to: 0.3 });
-}
-
-function initRollingArchives(currentpage, pages) {
-	pagenumber = currentpage;
-	pagecount = pages;
-
- 	checkRollingElements(pagenumber);
-
-	rollRemoveLoad();
-
-	$('rollnotices').style.display = 'none';
-
-	/*if (getCookie('rollpage') != null) {
-		$('rollnotices').innerHTML = 'This session you were last seen on <a href="javascript:rollGotoPage('+getCookie('rollpage')+');">page '+getCookie('rollpage')+'</a>. <img src="<?php bloginfo('template_url'); ?>/images/transparent.gif" alt="Reset" onclick="Effect.Fade($(\'rollnotices\')); deleteCookie(\'rollpage\');" />';
-		new Effect.Highlight('rollnotices');
-	} else {
-		$('rollnotices').style.display = 'none';
-	}*/
-
-}
-
-
-// Initialize the Rolling Archives
-//Event.observe(window, 'load', initRollingArchives, false);
+};

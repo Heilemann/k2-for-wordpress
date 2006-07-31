@@ -98,50 +98,21 @@ function get_k2_ping_type($trackbacktxt = 'Trackback', $pingbacktxt = 'Pingback'
 	return false;
 }
 
-function k2countposts() {
-	global $wpdb;
-
-	$k2asidescategory = get_option('k2asidescategory');
-	$k2asidesposition = get_option('k2asidesposition');
-
-	$join = '';
-	$where = "1=1 AND post_status = 'publish'";
-
-	if (($k2asidescategory != '0') and ($k2asidesposition == '1') and ($_GET["dynamic"] != '1')) {
-		$join = " LEFT JOIN $wpdb->post2cat ON ($wpdb->posts.ID = $wpdb->post2cat.post_id) ";
-		$where .= " AND (category_id != $k2asidescategory)";
+function k2countpages($query_string) {
+	if (!preg_match("/posts_per_page=/", $query_string)) {
+		$posts_per_page = get_settings('posts_per_page');
 	}
 
-	$query = "SELECT DISTINCT $wpdb->posts.ID FROM $wpdb->posts $join WHERE $where GROUP BY $wpdb->posts.ID";
+	$new_query = new WP_Query();
+	$new_query->parse_query($query_string);
+	$new_query->set('posts_per_page', '-1');
+	$new_query->get_posts();
+	$post_count = $new_query->post_count;
+	
+	unset($new_query);
 
-	return (int) count($wpdb->get_col($query));
+	return ceil($post_count / $posts_per_page );
 }
-
-
-function k2countpages() {
-	return (int) ceil(k2countposts() / get_settings('posts_per_page'));
-}
-
-
-function k2countsearchposts($uriquery = '') {
-	$search_count = 0;
-
-	$search = new WP_Query($uriquery.'&showposts=-1');
-	if ($search->have_posts()) {
-		while($search->have_posts()) {
-			$search->the_post();
-			$search_count++;
-		}
-	}
-
-	return (int) $search_count;
-}
-
-
-function k2countsearchpages($uriquery) {
-	return (int) ceil(k2countsearchposts($uriquery) / get_settings('posts_per_page'));
-}
-
 
 /* By Mark Jaquith, http://txfx.net */
 function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' and ') { 
@@ -164,4 +135,18 @@ function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' a
         } 
     return apply_filters('the_category', $thelist, $normal_separator); 
 }
+
+
+function k2asides_filter($query) {
+	$k2asidescategory = get_option('k2asidescategory');
+	$k2asidesposition = get_option('k2asidesposition');
+
+	if ( ($k2asidescategory != 0) && ($k2asidesposition == 1) && ($query->is_home) ) {
+		$query->set('cat', '-'.$k2asidescategory);
+	}
+
+	return $query;
+}
+
+add_filter('pre_get_posts', 'k2asides_filter');
 ?>

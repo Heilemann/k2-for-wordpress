@@ -34,9 +34,14 @@
 
 	<?php /* LiveSearch */ if (get_option('k2livesearch') == 1) { ?>
 	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/livesearch.js.php"></script>
+	<script type="text/javascript">
+	// <![CDATA[
+		var currentquery = '<?php echo $wp_query->query; ?>';
+	// ]]>
+	</script>
 	<?php } ?>
 
-	<?php /* Rolling Archives */ if ((is_home() or is_paged()) and (get_option('k2rollingarchives')) == 1) { ?>
+	<?php /* Rolling Archives */ if (get_option('k2rollingarchives') == 1) { ?>
 	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/rollingarchives.js.php"></script>
 	<?php } ?>
 

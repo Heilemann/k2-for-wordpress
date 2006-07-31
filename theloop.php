@@ -3,16 +3,11 @@
 	// It is a delicate piece of machinery. Be gentle!
 
 	// Get Core WP Functions If Needed
-        if (($_GET["s"] != '') or (($_GET["paged"] != ''))) { require (dirname(__FILE__)."/../../../wp-blog-header.php"); }
-
-	// Asides Segregation
-	if ( (get_option('k2asidescategory') != '0') and (get_option('k2asidesposition') == '1') and (is_home()) ) {
-		if (is_paged()) {
-			query_posts('cat=-'.get_option('k2asidescategory').'&paged='.$paged);
-		} else {
-			query_posts('cat=-'.get_option('k2asidescategory'));
-		}
+	if (isset($_GET['rolling'])) {
+		require (dirname(__FILE__).'/../../../wp-blog-header.php');
 	}
+
+	//print_r($wp_query->query);
 ?>
 
 <div id="primarycontent">

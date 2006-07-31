@@ -72,7 +72,7 @@ Livesearch.prototype = {
 			{
 				method: 'get',
 				evalScripts: true,
-				parameters: this.pars + $F(this.attachitem)
+				parameters: this.pars + $F(this.attachitem) + '&rolling=1'
 				//onLoading: Effect.Appear(this.loaditem, {duration: .2})
 		});
 		Event.observe(this.resetbutton, 'click', this.resetLivesearch.bindAsEventListener(this));
@@ -93,7 +93,7 @@ Livesearch.prototype = {
 			{
 				method: 'get',
 				evalScripts: true,
-				parameters: this.pars + $F(this.attachitem)
+				parameters: currentquery + '&rolling=1'
 		});
 		Event.stop(this.resetbutton);
 		$(this.resetbutton).style.cursor = 'default';
