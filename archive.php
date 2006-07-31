@@ -3,9 +3,7 @@
 <div class="content">
 	
 	<div id="primary">
-
-		<?php include (TEMPLATEPATH . '/theloop.php'); ?>
-
+		<?php include (TEMPLATEPATH . '/rollingarchive.php'); ?>
 	</div>
 
 	<?php get_sidebar(); ?>
