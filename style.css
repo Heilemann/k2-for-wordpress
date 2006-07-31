@@ -858,15 +858,6 @@ input[type=text], textarea {
 	margin: 0;
 	}
 
-#LSResult {
-	margin: 0;
-	width: 100.1%;
-	z-index: 100;
-	position: absolute;
-	background: #eee url('images/livesearchbg.jpg') center repeat-y;
-	border-bottom: 1px solid #eee; 
-	}
-
 #searchcontrols {
 	text-align: center;
 	padding: 1px;
@@ -878,30 +869,6 @@ input[type=text], textarea {
 	padding: 0;
 	}
 
-.LSRow:hover, #LSHighlight, #LSHighlight:hover {
-	background: #ffffcc url('images/livesearchbghilight.jpg') center repeat-y;	}
-
-#LSResult:hover #LSHighlight {
-	background: none;
-	border: none;
-	padding: 5px 2px;
-	}
-
-#LSHighlight small, #LSHighlight small span a {
-	color: #999;
-	}
-
-.LSRow {
-	padding: 5px 10px;
-	}
-
-.LSRow span a, .LSRow span a:visited {
-	word-spacing: -1px;
-	line-height: 1.3em;
-	font-weight: normal;
-	color: #bbb;
-	}
-
 
 /*- Rolling Archives */
 
@@ -909,7 +876,6 @@ input[type=text], textarea {
 	position: relative;
 	padding: 5px 0 0;
 	margin: 0 0 10px;
-	/*text-align: center;*/
 	}
 
 #rollingarchives a {
@@ -940,7 +906,6 @@ input[type=text], textarea {
 #rollload {
 	right: 40px;
 	padding-left: 24px;
-	/*background: url('images/spinner.gif') left center no-repeat;*/
 	background: url('images/spinner.gif') no-repeat left center;
 	width: 50px;
 	text-align: left;
@@ -973,6 +938,7 @@ input[type=text], textarea {
 	padding: 7px;
 	text-align: center;
 	border-top: 1px solid #f3f3f3;
+	display: none;
 	}
 
 #rollnotices a {
