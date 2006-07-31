@@ -17,7 +17,7 @@
   <input type="hidden" name="page_options" value="'dofollow_timeout'" />
   <table width="700px" cellspacing="2" cellpadding="5" class="editform">
   <tr valign="top">
-		<th scope="row"><?php echo __('K2 Scheme','k2_domain'); ?></th>
+		<th scope="row"><?php _e('K2 Scheme','k2_domain'); ?></th>
 		<td>
 			<label for="k2scheme_file">
 
@@ -68,13 +68,13 @@
 			</select>
 			
 			<p><small><?php _e('Choose the Custom Style you would like to use on this site.','k2_domain'); ?></small></p>
-			<p><?php printf(__('Formatting to be used for displaying the style info. Use: <strong>style</strong> for style name, <strong>stylelink</strong> for the style\'s homepage, <strong>author</strong> for author, <strong>site</strong> for author\'s site, <strong>version</strong> for version and <strong>comments</strong> for style comments.','k2_domain')) ?></p>
+			<p><?php _e('Formatting to be used for displaying the style info. Use: <strong>style</strong> for style name, <strong>stylelink</strong> for the style\'s homepage, <strong>author</strong> for author, <strong>site</strong> for author\'s site, <strong>version</strong> for version and <strong>comments</strong> for style comments.','k2_domain'); ?></p>
 			<p><textarea name="format" id="format" rows="3" cols="80"><?php echo stripslashes(get_option('k2styleinfo_format')); ?></textarea></p>
 			<p><strong><?php _e('Outputs:','k2_domain'); ?></strong> <?php k2styleinfo_demo(); ?></p>
 		</td>
 		</tr>
  		<tr valign="top">
-		<th scope="row" width="20%"><?php echo __('Live Search','k2_domain'); ?></th>
+		<th scope="row" width="20%"><?php _e('Live Search','k2_domain'); ?></th>
 		<td>
 			<input name="livesearch" id="live-search" type="radio" value="1" <?php checked('1', get_option('k2livesearch')); ?> /> 
 			<label for="live-search"><?php _e('Enable Livesearch (default)','k2_domain'); ?></label><br />
@@ -85,7 +85,7 @@
 		</tr>
 
  		<tr valign="top">
-		<th scope="row" width="20%"><?php echo __('Rolling Archives','k2_domain'); ?></th>
+		<th scope="row" width="20%"><?php _e('Rolling Archives','k2_domain'); ?></th>
 		<td>
 			<input name="rollingarchives" id="rollingarchives-on" type="radio" value="1" <?php checked('1', get_option('k2rollingarchives')); ?> /> 
 			<label for="rollingarchives-on"><?php _e('Enable Rolling Archives (default)','k2_domain'); ?></label><br />
@@ -96,7 +96,7 @@
 		</tr>
 
 		<tr valign="top">
-		<th scope="row" width="20%"><?php echo __('AJAX Commenting','k2_domain'); ?></th>
+		<th scope="row" width="20%"><?php _e('AJAX Commenting','k2_domain'); ?></th>
 		<td>
 			<input name="livecommenting" id="live-commenting" type="radio" value="1" <?php checked('1', get_option('k2livecommenting')); ?> /> 
 			<label for="live-commenting"><?php _e('Enable AJAX Commenting (default)','k2_domain'); ?></label><br />
@@ -105,7 +105,7 @@
 		</td>
 		</tr>
 		<tr valign="top">
-		<th scope="row"><?php echo __('Width Type','k2_domain'); ?></th>
+		<th scope="row"><?php _e('Width Type','k2_domain'); ?></th>
 		<td>
 			<input name="widthtype" id="fixed" type="radio" value="1" <?php checked('1', get_option('k2widthtype')); ?> /> 
 			<label for="fixed"><?php _e('Fixed Width (default)','k2_domain'); ?></label><br />
@@ -117,7 +117,7 @@
 		</td>
 		</tr>
 		<tr valign="top">
-		<th scope="row"><?php echo __('Asides','k2_domain'); ?></th>
+		<th scope="row"><?php _e('Asides','k2_domain'); ?></th>
 		<td>
 			<input name="asidesposition" id="primary-asides" type="radio" value="0" <?php checked('0', get_option('k2asidesposition')); ?> /> 
 			<label for="primary-asides"><?php _e('Inline Asides','k2_domain'); ?></label><br />
@@ -127,7 +127,7 @@
 		</td>
 		</tr>
 		<tr valign="top">
-		<th scope="row"><?php echo __('Asides Category','k2_domain'); ?></th>
+		<th scope="row"><?php _e('Asides Category','k2_domain'); ?></th>
 		<td>
 			<label for="asides_text">
 			<?php
@@ -150,18 +150,18 @@
             }
             ?>
 			</select>
-			<p><small><?php printf(__('Just select a category and it will be displayed using %s.','k2_domain'), '<a href="http://photomatt.net/2004/05/19/asides/">' .__('Matt\'s Asides Technique','k2_domain') .'</a>' ) ?></small></p>
+			<p><small><?php printf(__('Just select a category and it will be displayed using %s.','k2_domain'), '<a href="http://photomatt.net/2004/05/19/asides/">' .__('Matt\'s Asides Technique','k2_domain') .'</a>' ); ?></small></p>
 		</td>
 		</tr>
 		<tr valign="top">
-		<th scope="row"><?php echo __('Asides Number','k2_domain'); ?></th>
+		<th scope="row"><?php _e('Asides Number','k2_domain'); ?></th>
 		<td>
 			<input name="asidesnumber" id="asidesnumber" type="text" value="<?php echo get_option('k2asidesnumber'); ?>" size="2" /> 
 			<p><small><?php _e('Set the number of Asides to show in the Sidebar. Defaults to 3.','k2_domain'); ?></small></p>
 		</td>
 		</tr>
 		<tr valign="top">
-		<th scope="row"><?php echo __('About Text','k2_domain'); ?></th>
+		<th scope="row"><?php _e('About Text','k2_domain'); ?></th>
 		<td>
 			<label for="about_text">
 			<textarea name="about_text" style="width: 98%;" rows="5" id="about_text"><?php echo stripslashes(get_option('k2aboutblurp')); ?></textarea>
@@ -169,7 +169,7 @@
 		</td>
 		</tr>
 		<tr valign="top">
-		<th scope="row"><?php echo __('Blog?','k2_domain'); ?></th>
+		<th scope="row"><?php _e('Blog?','k2_domain'); ?></th>
 		<td>
 			<label for="blog_text">
 			<input name="blog_text" style="width: 98%;" id="blog_text" value="<?php echo stripslashes(get_option('k2blogornoblog')); ?>">
@@ -178,16 +178,16 @@
 		</tr>
 		<?php if (function_exists('delicious')) { ?> 
 		<tr valign="top">
-		<th scope="row"><?php echo __('Delicious Bookmarks','k2_domain'); ?></th>
+		<th scope="row"><?php _e('Delicious Bookmarks','k2_domain'); ?></th>
 		<td>
-			<label for="deliciousname"><?php echo __('Delicious User Name','k2_domain'); ?></label>
+			<label for="deliciousname"><?php _e('Delicious User Name','k2_domain'); ?></label>
 			<input name="deliciousname" style="width: 300px;" id="deliciousname" value="<?php echo get_option('k2deliciousname'); ?>">
-			<p><small><?php printf(__('Enter your delicious username here, to make use of %s.','k2_domain'), '<a href="http://www.w-a-s-a-b-i.com/archives/2004/10/15/delisious-cached/">Alexander Malov\'s del.icio.us plugin</a>' ) ?></small></p>
+			<p><small><?php printf(__('Enter your delicious username here, to make use of %s.','k2_domain'), '<a href="http://www.w-a-s-a-b-i.com/archives/2004/10/15/delisious-cached/">Alexander Malov\'s del.icio.us plugin</a>' ); ?></small></p>
 		</td>
 		</tr>
 		<?php } ?>
 		<tr valign="top">
-		<th scope="row"><?php echo __('Archives Page','k2_domain'); ?></th>
+		<th scope="row"><?php _e('Archives Page','k2_domain'); ?></th>
 		<td>
 			<input name="archives" id="add-archive" type="checkbox" value="add_archive" <?php checked('add_archive', get_option('k2archives')); ?> />
 			<label for="add-archives"><?php _e('Enable the K2 Archives page','k2_domain'); ?></label>
@@ -197,7 +197,7 @@
 
 		<?php if (function_exists('af_ela_set_config')) { ?>
 		<tr valign="top">
-			<th scope="row"><?php echo __('Set Extended Live Archive','k2_domain'); ?></th>
+			<th scope="row"><?php _e('Set Extended Live Archive','k2_domain'); ?></th>
 			
 			<td>
 				<input name="configela" id="configela" type="submit" value="<?php _e('Setup ELA for K2 Archives page','k2_domain') ?>" />
@@ -206,10 +206,10 @@
 		</tr>	
 		<?php } ?>
 		<tr valign="top">
-			<th scope="row"><?php echo __('Uninstall K2','k2_domain'); ?></th>
+			<th scope="row"><?php _e('Uninstall K2','k2_domain'); ?></th>
 			<td>
-				<input name="uninstall" id="uninstall" type="submit" value="<?php _e('Uninstall K2') ?>" />
-				<p><small><?php printf( __('Having trouble with K2, or you have decided to "go another direction" with your site style?  Fine, we don\'t care... be that way. I promised myself I wouldn\'t cry...','k2_domain') ) ?></small></p>
+				<input name="uninstall" id="uninstall" type="submit" value="<?php _e('Uninstall K2','k2_domain'); ?>" />
+				<p><small><?php _e('Having trouble with K2, or you have decided to "go another direction" with your site style? Fine, we don\'t care... be that way. I promised myself I wouldn\'t cry...','k2_domain'); ?></small></p>
 			</td>
 		</tr>
 		</table>
@@ -220,5 +220,5 @@
 </div>
 
 <div class="wrap">
- 	<p style="text-align: center;"><?php printf(__('Help to be had at the %1$s or in the %2$s.','k2_domain'), '<a href="http://getk2.com/forum/" title="' .__('K2 Support Forums','k2_domain') . '">' .__('K2 Support Forums','k2_domain') . '</a>', '<a href="http://binarybonsai.com/wordpress/k2/features-and-plugins/" title="' .__('K2 Documentation','k2_domain') . '">' .__('K2 Documentation','k2_domain') . '</a>' ) ?></p>
+ 	<p style="text-align: center;"><?php printf(__('Help to be had at the %1$s or in the %2$s.','k2_domain'), '<a href="http://getk2.com/forum/" title="' .__('K2 Support Forums','k2_domain') . '">' .__('K2 Support Forums','k2_domain') . '</a>', '<a href="http://k2.stikipad.com/" title="' .__('K2 Documentation','k2_domain') . '">' .__('K2 Documentation','k2_domain') . '</a>' ); ?></p>
 </div>
