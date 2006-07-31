@@ -7,9 +7,11 @@ function latest_posts_sidebar_module($args) {
 
 	echo($before_module . $before_title . $title . $after_title);
 	?>
-	<ul>
-		<?php wp_get_archives('type=postbypost&limit=' . $num_posts); ?>
-	</ul>
+	<span class="metalink"><a href="<?php bloginfo('rss2_url'); ?>" title="<?php _e('RSS Feed for Blog Entries','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
+
+		<ul>
+			<?php wp_get_archives('type=postbypost&limit=' . sbm_get_option('num_posts')); ?>
+		</ul>
 	<?php
 	echo($after_module);
 }
