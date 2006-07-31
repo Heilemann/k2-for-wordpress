@@ -74,7 +74,7 @@
 		<?php } elseif (function_exists('is_tag') and is_tag()) { ?>
 		<p><?php printf(__('You are currently browsing the %1$s weblog archives for \'%2$s\' tag.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>', get_query_var('tag') ) ?></p>
 		
-		<?php /* Paged Archive */ } elseif (is_paged) { ?>
+		<?php /* Paged Archive */ } elseif (is_paged()) { ?>
 		<p><?php printf(__('You are currently browsing the %s weblog archives.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>') ?></p>
 
 		<?php /* Permalink */ } elseif (is_single()) { ?>
