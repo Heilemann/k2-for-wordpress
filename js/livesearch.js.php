@@ -20,15 +20,14 @@
 
 ?>
 
-var resetisset = '';
-
 Livesearch = Class.create();
 
 Livesearch.prototype = {
-	initialize: function(father, attachitem, target, url, pars, searchform, loaditem, searchtext, resetbutton) {
+	initialize: function(father, attachitem, target, hideitem, url, pars, searchform, loaditem, searchtext, resetbutton) {
 		this.father = father;
 		this.attachitem = attachitem;
 		this.target = target;
+		this.hideitem = hideitem;
 		this.url = url;
 		this.pars = pars;
 		this.searchform = searchform;
@@ -38,7 +37,7 @@ Livesearch.prototype = {
 		this.t = null;  // Init timeout variable
 
 		var buttonvalue = '<?php _e('go','k2_domain'); ?>';
-		$(father).innerHTML = '<input type="text" id="s" name="s" class="livesearch" autocomplete="off" value="'+searchtext+'" /><span id="reset"></span><input type="submit" id="searchsubmit" value="'+buttonvalue+'" />';
+		$(father).innerHTML = '<input type="text" id="s" name="s" class="livesearch" autocomplete="off" value="'+searchtext+'" /><span id="searchreset"></span><span id="searchload"></span><input type="submit" id="searchsubmit" value="'+buttonvalue+'" />';
 
 		// Style the searchform for livesearch
 		var inputs = $(searchform).getElementsByTagName('input');
@@ -47,7 +46,10 @@ Livesearch.prototype = {
 			if (input.type == 'submit')
 				input.style.display = "none";
 		}
-		Effect.Fade(resetbutton, { duration: .1, from: 1.0, to: 0.3 })
+
+		Effect.Fade(this.resetbutton, { duration: .1 });
+		$(this.loaditem).style.display = 'none';
+
 		Event.observe(attachitem, 'focus', function() { if ($(attachitem).value == searchtext) $(attachitem).setAttribute('value', '') });
 		Event.observe(attachitem, 'blur', function() { if ($(attachitem).value == '') $(attachitem).setAttribute('value', searchtext) });
 
@@ -58,7 +60,7 @@ Livesearch.prototype = {
 	readyLivesearch: function(event) {
 		var code = event.keyCode;
 		if (code == Event.KEY_ESC || ((code == Event.KEY_DELETE || code == Event.KEY_BACKSPACE) && $F(this.attachitem) == '')) {
-			this.resetLivesearch();
+			this.resetLivesearch.bind(this);
 		} else if (code != Event.KEY_LEFT && code != Event.KEY_RIGHT && code != Event.KEY_DOWN && code != Event.KEY_UP && code != Event.KEY_RETURN) {
 			if (this.t) { clearTimeout(this.t) };
 	        this.t = setTimeout(this.doLivesearch.bind(this), 400);
@@ -66,42 +68,36 @@ Livesearch.prototype = {
 	},
 
     doLivesearch: function() {
+		Effect.Appear(this.loaditem, {duration: .1});
+
 		new Ajax.Updater(
 			this.target,
 			this.url,
 			{
 				method: 'get',
 				evalScripts: true,
-				parameters: this.pars + $F(this.attachitem) + '&rolling=1'
-				//onLoading: Effect.Appear(this.loaditem, {duration: .2})
+				parameters: this.pars + $F(this.attachitem) + '&rolling=1',
+				onSuccess: this.searchComplete.bind(this)
 		});
+	},
+	
+	searchComplete: function() {
+		$(this.hideitem).style.display = 'none';
+		Effect.Fade(this.loaditem, {duration: .1});
+		Effect.Appear(this.resetbutton, { duration: .1 });
+
 		Event.observe(this.resetbutton, 'click', this.resetLivesearch.bindAsEventListener(this));
 		$(this.resetbutton).style.cursor = 'pointer';
-
-		if (resetisset != '1') {
-			Effect.Appear(this.resetbutton, { duration: .1, from: 0.3, to: 1.0 });
-		}
-		resetisset = '1';
 	},
 
 	resetLivesearch: function() {
+		$(this.hideitem).style.display = 'block';
+		Effect.Fade(this.resetbutton, { duration: .1 });
+
 		$(this.attachitem).value = '';
-		//$(this.target).innerHTML = null;
-		new Ajax.Updater(
-			this.target,
-			this.url,
-			{
-				method: 'get',
-				evalScripts: true,
-				parameters: currentquery + '&rolling=1'
-		});
-		Event.stop(this.resetbutton);
+		$(this.target).innerHTML = '';
 		$(this.resetbutton).style.cursor = 'default';
-		if (resetisset != '0') {
-			Effect.Fade(this.resetbutton, { duration: .1, from: 1.0, to: 0.3 });
-		}
-		resetisset = '0';
 	}
 }
 
-Event.observe(window, "load", function() { new Livesearch('searchform', 's', 'primary', '<?php bloginfo('template_url'); ?>/rollingarchive.php', '&s=', 'searchform', 'rollload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'reset'); } , false);
+Event.observe(window, "load", function() { new Livesearch('searchform', 's', 'dynamic_content', 'current_content', '<?php bloginfo('template_url'); ?>/rollingarchive.php', '&s=', 'searchform', 'searchload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'searchreset'); } , false);

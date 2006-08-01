@@ -7,6 +7,8 @@
 <div class="content">
 	
 	<div id="primary">
+		<div id="current_content">
+			<div>
 
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	
@@ -28,7 +30,10 @@
 		<?php endwhile; endif; ?>
 
 		<?php comments_template(); ?>
+			</div>
+		</div>
 
+		<div id="dynamic_content"></div>
 	</div>
 
 	<?php get_sidebar(); ?>

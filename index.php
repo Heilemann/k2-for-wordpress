@@ -3,7 +3,13 @@
 <div class="content">
 	
 	<div id="primary">
-		<?php include (TEMPLATEPATH . '/rollingarchive.php'); ?>
+		<div id="current_content">
+			<div>
+			<?php include (TEMPLATEPATH . '/rollingarchive.php'); ?>
+			</div>
+		</div>
+
+		<div id="dynamic_content"></div>
 	</div>
 
 	<?php get_sidebar(); ?>

@@ -22,7 +22,7 @@
 RollingArchives = Class.create();
 
 RollingArchives.prototype = {
-	initialize: function(targetitem, url, query, pagecount) {
+	initialize: function(targetitem, url, query, pagecount, prefix) {
 		var rolling = this;
 
 		this.targetitem = targetitem;
@@ -31,76 +31,97 @@ RollingArchives.prototype = {
 		this.pagecount = pagecount;
 		this.pagenumber = 1;
 
-		this.rollnext = $('rollnext');
-		this.rollprev = $('rollprevious');
+		this.rollnext = prefix+'rollnext';
+		this.rollprev = prefix+'rollprevious';
+		this.rollpages = prefix+'rollpages';
+		this.rollload = prefix+'rollload';
+		this.rollhome = prefix+'rollhome';
+		this.rollnotices = prefix+'rollnotices';
+
+		this.pagehandle = prefix+'pagehandle';
+		this.pagetrack = prefix+'pagetrack';
+		this.pagetrackend = prefix+'pagetrackend';
+
+		this.rollRemoveLoad();
 
 		var sliderValues = new Array(this.pagecount);
 		for (var i = 0; i < this.pagecount; i++) {
 			sliderValues[i] = i + 1;
 		}
-		this.PageSlider = new Control.Slider('pagehandle','pagetrack', {
+		this.PageSlider = new Control.Slider(rolling.pagehandle,rolling.pagetrack, {
 			range: $R(rolling.pagecount, 1),
 			values: sliderValues,
 			sliderValue: 1,
-			onSlide: function(v) { $('rollpages').innerHTML = 'Page '+v+' of '+rolling.pagecount; },
+			onSlide: function(v) { rolling.updatePageText(v); },
 			onChange: function(v) { rolling.gotoPage(v); },
-			handleImage: 'pagehandle'
+			handleImage: rolling.pagehandle
 		});
 
-		Event.observe('rollprevious', 'click', function(){ rolling.rollPrevPage(); });
-		Event.observe('rollnext', 'click', function(){ rolling.rollNextPage(); });
+		Event.observe(this.rollprev, 'click', function(){ rolling.gotoPrevPage(); });
+		Event.observe(this.rollnext, 'click', function(){ rolling.gotoNextPage(); });
 
-		this.checkRollingElements();
-		this.rollRemoveLoad();
+		$(this.rollnext).className = 'inactive';
+		$(this.rollhome).className = 'inactive';
+		$(this.rollnotices).style.display = 'none';
+		this.updatePageText(this.pagenumber);
 
 		this.initialized = true;
 	},
 
-	rollNextPage: function() {
+	updatePageText: function(v) {
+		$(this.rollpages).innerHTML = 'Page '+v+' of '+this.pagecount;
+	},
+
+	gotoNextPage: function() {
 		this.PageSlider.setValueBy(-1);
 	},
 
-	rollPrevPage: function() {
+	gotoPrevPage: function() {
 		this.PageSlider.setValueBy(1);
 	},
 
-	checkRollingElements: function() {
-		if (this.pagenumber == 1) {
-			$('rollprevious').className = null;
-			$('rollnext').className = 'inactive';
-			$('rollhome').className = 'inactive';
-		} else if (this.pagenumber > 1) {
-			$('rollnext').className = null;
-			$('rollhome').className = null;
-		}
-
-		if (this.pagenumber >= this.pagecount) {
-			$('rollprevious').className = 'inactive';
-		} else {
-			$('rollprevious').className = null;
-		}
-
-		$('rollpages').innerHTML = 'Page '+this.pagenumber+' of '+this.pagecount;
-	},
-	
 	gotoPage: function(newpage) {
-		var direction = 0;
-
 		if (newpage != this.pagenumber) {
-			if (newpage > this.pagecount) {
-				direction = 'end';
-			} else if (newpage < 1) {
-				direction = 'home';
+			new Effect.Appear(this.rollload, {duration: .1});
+
+			if (newpage >= this.pagecount) {
+				$(this.rollprev).className = 'inactive';
+				$(this.rollnext).className = null;
+				$(this.rollhome).className = null;
+
+				this.pagenumber = this.pagecount;
+			} else if (newpage <= 1) {
+				$(this.rollprev).className = null;
+				$(this.rollnext).className = 'inactive';
+				$(this.rollhome).className = 'inactive';
+
+				this.pagenumber = 1;
 			} else {
-				direction = 1;
+				$(this.rollprev).className = null;
+				$(this.rollnext).className = null;
+				$(this.rollhome).className = null;
+
+				this.pagenumber = newpage;
 			}
-			this.pagenumber = (newpage - 1);
-			this.rollArchive(direction);
+
+			this.updatePageText(this.pagenumber);
+			this.processQuery();
+
+			new Ajax.Updater(
+				this.targetitem,
+				this.url,
+				{
+					method: 'get',
+					parameters: this.query,
+					onSuccess: this.rollSuccess.bind(this),
+					onFailure: this.rollError.bind(this)
+				}
+			);
 		}
 	},
 
 	rollRemoveLoad: function() {
-		new Effect.Fade('rollload', {duration: .1});
+		new Effect.Fade(this.rollload, {duration: .1});
 	},
 
 	rollSuccess: function() {
@@ -108,7 +129,8 @@ RollingArchives.prototype = {
 	},
 
 	rollError: function() {
-		$('rollnotices').innerHTML = 'Error!';
+		$(this.rollnotices).style.display = 'block';
+		$(this.rollnotices).innerHTML = 'An error has occurred. Danger, Will Robinson! Danger!';
 	},
 
 	processQuery: function() {
@@ -121,28 +143,5 @@ RollingArchives.prototype = {
 		if (this.query.indexOf('&rolling=') == -1) {
 			this.query += '&rolling=1';
 		}
-	},
-
-	rollArchive: function(direction) {
-		if (direction == 1 || direction == -1) {
-			this.pagenumber += direction;
-			new Effect.Appear('rollload', {duration: .1});
-		} else if (direction == 'home') {
-			this.pagenumber = 1;
-		}
-
-		this.checkRollingElements();
-		this.processQuery();
-
-		new Ajax.Updater(
-			this.targetitem,
-			this.url,
-			{
-				method: 'get',
-				parameters: this.query,
-				onSuccess: this.rollSuccess.bind(this),
-				onFailure: this.rollError.bind(this)
-			}
-		);
 	}
 };

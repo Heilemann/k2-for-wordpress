@@ -857,16 +857,25 @@ input[type=text], textarea {
 	}
 
 #s.livesearch {
-	width: 88%;
+	margin-right: 45px;
 	}
 
-#reset {
+#searchreset {
 	position: absolute;
-	right: 0;
+	right: 24px;
 	top: 3px;
 	height: 13px;
 	width: 13px;
 	background: url('images/reset-fff.png') center center no-repeat;
+	}
+
+#searchload {
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 18px;
+	width: 18px;
+	background: url('images/spinner.gif') center center no-repeat;
 	}
 
 .livesearchform input[type=submit] {
@@ -887,25 +896,30 @@ input[type=text], textarea {
 
 /*- Rolling Archives */
 
-#rollingarchives {
+#rollingarchives,
+#nested_rollingarchives {
 	position: relative;
 	padding: 5px 0 0;
 	margin: 0 0 10px;
 	}
 
-#rollingarchives a {
+#rollingarchives a,
+#nested_rollingarchives a {
 	color: #888;
 	}
 
-#rollingarchives a:hover {
+#rollingarchives a:hover,
+#nested_rollingarchives a:hover {
 	text-decoration: underline;
 	}
 
-#rollnavigation {
+#rollnavigation,
+#nested_rollnavigation {
 	padding: 4px;
 	}
 
-#rollprevious, #rollnext, #rollpages, #rollload {
+#rollprevious, #rollnext, #rollpages, #rollload,
+#nested_rollprevious, #nested_rollnext, #nested_rollpages, #nested_rollload {
 	position: absolute;
 	width: 90px;
 	padding: 7px 5px;
@@ -913,12 +927,14 @@ input[type=text], textarea {
 	text-align: center;
 	}
 
-#rollhome {
+#rollhome,
+#nested_rollhome {
 	display: none;
 	margin-bottom: 5px;
 	}
 
-#rollload {
+#rollload,
+#nested_rollload {
 	right: 40px;
 	padding-left: 24px;
 	background: url('images/spinner.gif') no-repeat left center;
@@ -926,22 +942,26 @@ input[type=text], textarea {
 	text-align: left;
 	}
 
-#rollpages {
+#rollpages,
+#nested_rollpages {
 	left: 50px;
 	color: #777;
 	}
 
-#rollprevious {
+#rollprevious,
+#nested_rollprevious {
 	left: 0;
 	text-align: left;
 	}
 
-#rollnext {
+#rollnext,
+#nested_rollnext {
 	right: 0;
 	text-align: right;
 	}
 
-#rollingarchives a.inactive, #rollingarchives a.inactive:hover {
+#rollingarchives a.inactive, #rollingarchives a.inactive:hover,
+#nested_rollingarchives a.inactive, #nested_rollingarchives a.inactive:hover {
 	visibility: hidden;
 	text-decoration: none !important;
 	background-color: transparent !important;
@@ -949,18 +969,21 @@ input[type=text], textarea {
 	cursor: default;
 	}
 
-#rollnotices {
+#rollnotices,
+#nested_rollnotices {
 	padding: 7px;
 	text-align: center;
 	border-top: 1px solid #f3f3f3;
 	display: none;
 	}
 
-#rollnotices a {
+#rollnotices a,
+#nested_rollnotices a {
 	color: #227EE9;
 }
 
-#rollnotices img {
+#rollnotices img,
+#nested_rollnotices img {
 	float: right;
 	cursor: pointer;
 	height: 13px;
@@ -969,19 +992,22 @@ input[type=text], textarea {
 	background: url('images/reset-fff.gif') no-repeat center center;
 	}
 
-#pagetrack {
+#pagetrack,
+#nested_pagetrack {
 	margin: 0 auto;
 	width: 218px;
 	height: 18px;
 	background: url('images/sliderbgleft.png') no-repeat center left;
 }
 
-#pagetrackend {
+#pagetrackend,
+#nested_pagetrackend {
 	height: 18px;
 	background: url('images/sliderbgright.png') no-repeat center right;
 	}
 
-#pagehandle {
+#pagehandle,
+#nested_pagehandle {
 	width: 18px;
 	height: 18px;
 	background: url('images/sliderhandle.png') no-repeat center center;

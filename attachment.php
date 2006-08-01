@@ -3,6 +3,8 @@
 <div class="content">
 	
 	<div id="primary">
+		<div id="current_content">
+			<div>
 
 	<?php if (have_posts()) { while (have_posts()) { the_post(); ?>
 
@@ -40,6 +42,10 @@
 		<h2><?php _e('Sorry, no attachments matched your criteria.','k2_domain'); ?></h2>
 
 	<?php } ?>
+			</div>
+		</div>
+
+		<div id="dynamic_content"></div>
 
 	</div>
 
