@@ -6,13 +6,13 @@
 	<title><?php wp_title(''); if (function_exists('is_tag') and is_tag()) { ?>Tag Archive for <?php echo $tag; } if (is_archive()) { ?> archive<?php } elseif (is_search()) { ?> Search for <?php echo $s; } if ( !(is_404()) && (is_search()) or (is_single()) or (is_page()) or (function_exists('is_tag') and is_tag()) or (is_archive()) ) { ?> at <?php } ?> <?php bloginfo('name'); ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php bloginfo('charset'); ?>" />
 	<meta name="generator" content="WordPress <?php bloginfo('version'); ?>" />
-	<meta name="template" content="K2 <?php if (function_exists('k2info')) { k2info('version'); } ?>" />
+	<meta name="template" content="K2 <?php if (function_exists('k2info')) { info::k2info('version'); } ?>" />
  	<meta name="description" content="<?php bloginfo('description'); ?>" />
   
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
 	<link rel="stylesheet" type="text/css" media="print" href="<?php bloginfo('template_url'); ?>/print.css" />
 	<?php /* Custom Style */ if (get_option('k2scheme') != '') { ?>
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php k2info('scheme'); ?>" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php info::k2info('scheme'); ?>" />
 	<?php } ?>
 
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="<?php bloginfo('rss2_url'); ?>" />

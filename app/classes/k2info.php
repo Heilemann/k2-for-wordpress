@@ -1,5 +1,5 @@
 <?php
-
+class info {
 function k2info($show='') {
         $info = get_k2info($show);
         echo $info;
@@ -135,7 +135,7 @@ function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' a
         } 
     return apply_filters('the_category', $thelist, $normal_separator); 
 }
-
+}
 
 function k2asides_filter($query) {
 	$k2asidescategory = get_option('k2asidescategory');
