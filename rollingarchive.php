@@ -10,7 +10,7 @@
 <?php
 	// Load Rolling Archives?
 	if ( (get_option('k2rollingarchives') == 1) ) { 
-		$k2pagecount = k2countpages($wp_query->query);
+		$k2pagecount = k2countpages($wp_query->request);
 
 		if ($k2pagecount > 1) {
 ?>

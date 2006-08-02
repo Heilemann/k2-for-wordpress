@@ -98,20 +98,25 @@ function get_k2_ping_type($trackbacktxt = 'Trackback', $pingbacktxt = 'Pingback'
 	return false;
 }
 
-function k2countpages($query_string) {
-	if (!preg_match("/posts_per_page=/", $query_string)) {
-		$posts_per_page = get_settings('posts_per_page');
+function k2countpages($request) {
+	global $wpdb;
+	
+	// get number of posts per page
+	if (preg_match('/LIMIT \d+, (\d+)/', $request, $matches)) {
+		$posts_per_page = $matches[1];
+	} else {
+		$posts_per_page = get_option('posts_per_page');
 	}
 
-	$new_query = new WP_Query();
-	$new_query->parse_query($query_string);
-	$new_query->set('posts_per_page', '-1');
-	$new_query->get_posts();
-	$post_count = $new_query->post_count;
-	
-	unset($new_query);
+	// modify the sql query
+	$search = array('/\* FROM/', '/LIMIT \d+, \d+/');
+	$replace = array('ID FROM', '');
+	$request = preg_replace($search, $replace, $request);
 
-	return ceil($post_count / $posts_per_page );
+	// get post count
+	$post_count = count($wpdb->get_results($request));
+	
+	return ceil($post_count / $posts_per_page);
 }
 
 /* By Mark Jaquith, http://txfx.net */
