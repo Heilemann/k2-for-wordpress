@@ -59,6 +59,8 @@ RollingArchives.prototype = {
 
 		Event.observe(this.rollprev, 'click', function(){ rolling.gotoPrevPage(); });
 		Event.observe(this.rollnext, 'click', function(){ rolling.gotoNextPage(); });
+		$(this.rollprev).onclick = function() { return false; };
+		$(this.rollnext).onclick = function() { return false; };
 
 		$(this.rollnext).className = 'inactive';
 		$(this.rollhome).className = 'inactive';
