@@ -1,7 +1,7 @@
 <?php
 class info {
 function k2info($show='') {
-        $info = $this->get_k2info($show);
+        $info = info::get_k2info($show);
         echo $info;
 }
 
