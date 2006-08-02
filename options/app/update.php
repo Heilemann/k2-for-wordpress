@@ -39,10 +39,6 @@ class updater {
 			$blogtext = $_POST['blog_text'];
 			update_option('k2blogornoblog', $blogtext, '','');
 		}
-		if ( isset($_POST['deliciousname']) ) {
-			$name = $_POST['deliciousname'];
-			update_option('k2deliciousname', $name, '','');
-		}
 		if ( isset($_POST['archives']) ) {
 			$add = $_POST['archives'];
 			update_option('k2archives', $add, '','');

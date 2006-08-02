@@ -10,6 +10,7 @@ require(TEMPLATEPATH . '/options/app/archive.php');
 require(TEMPLATEPATH . '/options/app/options.php');
 require(TEMPLATEPATH . '/options/app/update.php');
 require(TEMPLATEPATH . '/options/app/info.php');
+require(TEMPLATEPATH . '/options/app/tools.php');
 
 // If K2 isn't installed, install it. This should run only one more time for all our existing users, then they will just be getting the upgrade function if it exists.
 if (!get_option('k2installed')) {

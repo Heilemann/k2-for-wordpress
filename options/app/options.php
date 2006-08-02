@@ -8,7 +8,6 @@ class installk2 {
 			add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on", $autoload); // (live & classic)
 			add_option('k2asidesnumber', '3', 'The number of Asides to show in the Sidebar. Default is 3.', $autoload);
 			add_option('k2widthtype', '1', "Determines whether to use flexible or fixed width. Default is fixed.", $autoload); // (flexible & fixed)
-			add_option('k2deliciousname', '', 'Makes use of Alexander Malovs Delicious plugin to show the delicious links on the sidebar.', $autoload);
 			add_option('k2archives', '', 'Set whether K2 has a Live Archive page', $autoload);
 			add_option('k2scheme', '', 'Choose the Scheme you want K2 to use', $autoload);
 			add_option('k2livecommenting', '1', "If you don't trust JavaScript, you can turn off Live Commenting. Otherwise it is suggested you leave it on", $autoload);
