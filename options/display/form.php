@@ -176,16 +176,6 @@
 			<p><small><?php _e('The text on the first tab in the header navigation.','k2_domain'); ?></small></p>
 		</td>
 		</tr>
-		<?php if (function_exists('delicious')) { ?> 
-		<tr valign="top">
-		<th scope="row"><?php _e('Delicious Bookmarks','k2_domain'); ?></th>
-		<td>
-			<label for="deliciousname"><?php _e('Delicious User Name','k2_domain'); ?></label>
-			<input name="deliciousname" style="width: 300px;" id="deliciousname" value="<?php echo get_option('k2deliciousname'); ?>">
-			<p><small><?php printf(__('Enter your delicious username here, to make use of %s.','k2_domain'), '<a href="http://www.w-a-s-a-b-i.com/archives/2004/10/15/delisious-cached/">Alexander Malov\'s del.icio.us plugin</a>' ); ?></small></p>
-		</td>
-		</tr>
-		<?php } ?>
 		<tr valign="top">
 		<th scope="row"><?php _e('Archives Page','k2_domain'); ?></th>
 		<td>
