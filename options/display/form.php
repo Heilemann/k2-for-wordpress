@@ -15,6 +15,7 @@
 <form name="dofollow" action="" method="post">
   <input type="hidden" name="action" value="<?php updater::k2update(); ?>" />
   <input type="hidden" name="page_options" value="'dofollow_timeout'" />
+  <p class="submit"><input type="submit" name="Submit" value="<?php _e('Update Options','k2_domain'); ?> &raquo;" /></p>
   <table width="700px" cellspacing="2" cellpadding="5" class="editform">
   <tr valign="top">
 		<th scope="row"><?php _e('K2 Scheme','k2_domain'); ?></th>
