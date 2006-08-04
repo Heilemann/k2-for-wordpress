@@ -50,25 +50,53 @@
 	<?php } ?>
 
 	<?php if (get_option('k2rollingarchives') == 0 and !is_single() and !is_home() and is_paged()) include (TEMPLATEPATH . '/navigation.php'); ?> 
-	
-	<?php /* Start the loop */ if (have_posts()) { while (have_posts()) { the_post(); ?>
+
+	<?php /* Check if there are posts */
+		if(have_posts()) {
+			/* It saves time to only perform the following if there are posts to show */
+
+			// Get the 'Noteworthy' category, if it exists
+			$noteworthy_cat = $wpdb->get_var("SELECT cat_ID FROM $wpdb->categories WHERE cat_name = 'Noteworthy' LIMIT 1");
+
+			// Count if there are 2+ users
+			$count_users = $wpdb->get_var("SELECT COUNT(1) FROM $wpdb->usermeta WHERE meta_key = '" . $table_prefix . "user_level' AND meta_value > 1 LIMIT 2");
+
+			// If there are 2+ users, this is a multiple-user blog
+			$multiple_users = ($count_users > 1);
+
+			// Check if to display asides inline or not
+			if(is_archive() or is_search() or is_single() or (function_exists('is_tag') and is_tag())) {
+				$k2asidescheck = '0';
+			} else {
+				$k2asidescheck = get_option('k2asidesposition');
+			}
+
+			// Get the asides category
+			$k2asidescategory = get_option('k2asidescategory');
+
+			// Get the user information
+			get_currentuserinfo();
+			global $user_level;
+	?>
+
+	<?php /* Start the loop */ while (have_posts()) { the_post(); ?>
 
 	<?php /* Permalink nav has to be inside loop */ if (is_single()) include (TEMPLATEPATH . '/navigation.php'); ?>
 
-	<?php /* Asides (shown inline on all archive pages) */ if ( is_archive() or is_search() or is_single() or (function_exists('is_tag') and is_tag()) ) { $k2asidescheck = '0'; } else { $k2asidescheck = get_option('k2asidesposition'); } 
-		if ( (get_option('k2asidescategory') != '0') and (in_category(get_option('k2asidescategory'))) ) { 
+	<?php /* Asides (shown inline on all archive pages) */
+		if ($k2asidescategory and $k2asidescheck == '0' and (in_category($k2asidescategory))) { 
 	    ?> 
 
 		<div id="post-<?php the_ID(); ?>" class="item aside">
 			<div class="itemhead">
-				<h3 <?php /* Support for noteworthy plugin */ foreach((get_the_category()) as $cat) { if ($cat->cat_name == 'Noteworthy') { ?> class="noteworthy"<?php } } ?>><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), strip_tags(get_the_title())) ?>'><?php the_title(); ?></a></h3>
-				<?php /* Support for noteworthy plugin */ get_currentuserinfo(); global $user_level; if (function_exists(nw_noteworthyLink) and ($user_level == 10) ) { ?><?php nw_noteworthyLink($post->ID); ?><?php } ?>
+				<h3 <?php /* Support for noteworthy plugin */ if($noteworthy_cat and in_category($noteworthy_cat)) { ?> class="noteworthy"<?php } ?>><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), strip_tags(get_the_title())) ?>'><?php the_title(); ?></a></h3>
+				<?php /* Support for noteworthy plugin */ if ($user_level == 10 and function_exists('nw_noteworthyLink')) nw_noteworthyLink($post->ID); ?>
 				
 				<small class="metadata">
 					<span class="chronodata">
-						<?php /* Date & Author */ $count_users = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->usermeta WHERE `meta_key` = '" . $table_prefix . "user_level' AND `meta_value` > 1");
+						<?php /* Date & Author */
 						printf(__('Published %1$s %2$s','k2_domain'),
-						(($count_users > 1) ? sprintf(__('by %s','k2_domain'), '<a href="' . get_author_link(0, $authordata->ID, $authordata->user_nicename) .'">' . get_the_author() . '</a>') : ('')),
+						($multiple_users ? sprintf(__('by %s','k2_domain'), '<a href="' . get_author_link(0, $authordata->ID, $authordata->user_nicename) .'">' . get_the_author() . '</a>') : ('')),
 						(function_exists('time_since') ? sprintf(__('%s ago','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")), time())) : get_the_time(__('F jS, Y','k2_domain')))); ?>
 					</span>
 
@@ -76,7 +104,7 @@
 
 					<?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="editlink">','</span>'); ?>
 
-					<?php /* Tags */ if (is_single() and function_exists(UTW_ShowTagsForCurrentPost)) { ?>
+					<?php /* Tags */ if (is_single() and function_exists('UTW_ShowTagsForCurrentPost')) { ?>
 						<span class="tagdata"><?php _e('Tags:','k2_domain'); ?> <?php UTW_ShowTagsForCurrentPost("commalist") ?>.</span>
 					<?php } ?>
 				</small>
@@ -92,14 +120,14 @@
 
 		<div id="post-<?php the_ID(); ?>" class="item entry">
 			<div class="itemhead">
-				<h3 <?php /* Support for noteworthy plugin */ foreach((get_the_category()) as $cat) {  if ($cat->cat_name == 'Noteworthy') { ?> class="noteworthy"<?php } } ?>><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), strip_tags(get_the_title())) ?>'><?php the_title(); ?></a></h3>
-				<?php /* Support for noteworthy plugin */ get_currentuserinfo(); global $user_level; if (function_exists(nw_noteworthyLink) and ($user_level == 10) ) { ?><?php nw_noteworthyLink($post->ID); ?><?php } ?>
+				<h3 <?php /* Support for noteworthy plugin */ if ($noteworthy_cat and in_category($noteworthy_cat)) { ?> class="noteworthy"<?php } ?>><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), strip_tags(get_the_title())) ?>'><?php the_title(); ?></a></h3>
+				<?php /* Support for noteworthy plugin */ if ($user_level == 10 and function_exists('nw_noteworthyLink')) nw_noteworthyLink($post->ID); ?>
 
 				<small class="metadata">
 					<span class="chronodata">
-						<?php /* Date & Author */ $count_users = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->usermeta WHERE `meta_key` = '" . $table_prefix . "user_level' AND `meta_value` > 1");
+						<?php /* Date & Author */
 						printf(__('Published %1$s %2$s','k2_domain'),
-						(($count_users > 1) ? sprintf(__('by %s','k2_domain'), '<a href="' . get_author_link(0, $authordata->ID, $authordata->user_nicename) .'">' . get_the_author() . '</a>') : ('')),
+						($multiple_users ? sprintf(__('by %s','k2_domain'), '<a href="' . get_author_link(0, $authordata->ID, $authordata->user_nicename) .'">' . get_the_author() . '</a>') : ('')),
  							(function_exists('time_since') ? sprintf(__('%s ago','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")), time())) : get_the_time(__('F jS, Y','k2_domain')))); ?>
 					</span>
 
@@ -109,7 +137,7 @@
 				
 					<?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="editlink">','</span>'); ?>
 				
-					<?php /* Tags */ if (is_single() and function_exists(UTW_ShowTagsForCurrentPost)) { ?>
+					<?php /* Tags */ if (is_single() and function_exists('UTW_ShowTagsForCurrentPost')) { ?>
 						<span class="tagdata"><?php _e('Tags:','k2_domain'); ?> <?php UTW_ShowTagsForCurrentPost("commalist") ?>.</span>
 					<?php } ?>
 				</small>

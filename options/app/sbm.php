@@ -58,6 +58,8 @@ class k2sbm {
 	 * The function to bootstrap for the WP interface
 	 **/
 	function wp_bootstrap() {
+		global $k2sbm_active_modules;
+
 		k2sbm::pre_bootstrap();
 
 		// Add menus
@@ -71,8 +73,10 @@ class k2sbm {
 		// Post-bootstrap when everything is loaded
 		add_action('init', array('k2sbm', 'post_bootstrap'));
 
-		// Output the CSS files
-		add_action('wp_head', array('k2sbm', 'output_module_css_files'));
+		// Output the CSS files, if there are modules
+		if($k2sbm_active_modules) {
+			add_action('wp_head', array('k2sbm', 'output_module_css_files'));
+		}
 	}
 
 	/**
@@ -739,8 +743,6 @@ class k2sbm {
 	 * Function to output the CSS files of the modules to the header of the site
 	 **/
 	function output_module_css_files() {
-		global $k2sbm_active_modules;
-
 		$css_files = array();
 
 		foreach($k2sbm_active_modules as $modules) {
