@@ -1,9 +1,6 @@
 <?php 
-// SVN Revision keyword. SVN will auto-populate this with current revision text
-$svn_revision_txt = '$Revision$';
-
-/* Current revision of K2 */
-$current = intval(substr($svn_revision_txt, 11, -2));
+/* Current version of K2 */
+$current = 'svn';
 
 load_theme_textdomain('k2_domain');
 
@@ -16,7 +13,8 @@ require(TEMPLATEPATH . '/options/app/info.php');
 require(TEMPLATEPATH . '/options/app/tools.php');
 
 // Install and update K2 if necessary
-if (!get_option('k2installed') || get_option('k2installed') < $current) {
+global $options_revision;
+if (!get_option('k2installed') || get_option('k2installed') < $options_revision) {
 	installk2::installer();
 }
 

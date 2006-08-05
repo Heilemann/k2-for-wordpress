@@ -1,13 +1,16 @@
 <?php
+// Revision number of the options file. Updated by SVN whenever this file is changed.
+$options_revision = intval(substr('$Revision$', 11, -2));
+
 class installk2 {
 	function installer() {
-		global $current;
+		global $options_revision;
 
 		// Add / update the version number
 		if(!get_option('k2installed')) {
-			add_option('k2installed', $current, 'This options simply tells me if K2 has been installed before', $autoload);
+			add_option('k2installed', $options_revision, 'This options simply tells me if K2 has been installed before', $autoload);
 		} else {
-			update_option('k2installed', $current);
+			update_option('k2installed', $options_revision);
 		}
 
 		add_option('k2aboutblurp', '', 'Allows you to write a small blurp about you and your blog, which will be put on the frontpage', $autoload);
