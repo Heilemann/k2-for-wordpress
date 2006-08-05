@@ -2,22 +2,6 @@
 
 /**
  * Sidebar modules for K2
- * Copyright (c) 2006 Ben Sherratt
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
- * and associated documentation files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial
- * portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
- * LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
- * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  **/
 
 /* Constants **************************************************************************************/
@@ -231,21 +215,6 @@ class k2sbm {
 	}
 
 	/**
-	 * The activation function
-	 **/
-	function activate() {
-		// Install
-		k2sbm::install();
-	}
-
-	/**
-	 * The deactivation function
-	 **/
-	function deactivate() {
-		k2sbm::uninstall();
-	}
-
-	/**
 	 * The function to add menus
 	 **/
 	function add_menus() {
@@ -261,7 +230,7 @@ class k2sbm {
 
 		if(count($k2sbm_registered_sidebars) == 0) {
 		?>
-			<div class="wrap">Your current theme is incompatable with sidebar modules.</div>
+			<div class="wrap">You have no registered sidebars.</div>
 		<?php
 		} elseif(count($k2sbm_registered_modules) == 0) {
 		?>
@@ -277,7 +246,7 @@ class k2sbm {
 	 **/
 	function module_admin_head() {
 	?>
-		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/sbm.css" />
+		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/sbm.css" />
 
 		<script type="text/javascript">
 			//<![CDATA[

@@ -214,7 +214,7 @@ sbmToggleLink.prototype = {
 	initialize: function(id, attachId) {
 		this.toggleLink = $(id);
 		this.attachElement = $(attachId);
-		this.toggleText = this.toggleLink.firstChild.textContent;
+		this.toggleText = this.toggleLink.firstChild.textContent || this.toggleLink.innerText;
 
 		this.toggleLink.innerHTML = this.toggleText + " &rarr;";
 		this.toggleLink.onclick = this.onToggleClick.bindAsEventListener(this);
