@@ -712,6 +712,8 @@ class k2sbm {
 	 * Function to output the CSS files of the modules to the header of the site
 	 **/
 	function output_module_css_files() {
+		global $k2sbm_active_modules;
+
 		$css_files = array();
 
 		foreach($k2sbm_active_modules as $modules) {
