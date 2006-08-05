@@ -15,15 +15,10 @@ require(TEMPLATEPATH . '/options/app/update.php');
 require(TEMPLATEPATH . '/options/app/info.php');
 require(TEMPLATEPATH . '/options/app/tools.php');
 
-// If K2 isn't installed, install it. This should run only one more time for all our existing users, then they will just be getting the upgrade function if it exists.
-if (!get_option('k2installed')) {
+// If K2 isn't installed, install it.
+// If it is installed but it is an older version, run the install event in case of new options
+if (!get_option('k2installed') || get_option('k2installed') < $current) {
 	installk2::installer();
-}
-
-// Here we handle upgrading our users with new options and such. If k2installed is in the DB but the version they are running is lower than our current version, trigger this event.
-elseif (get_option('k2installed') < $current) {
-/* Do something! */
-//add_option('k2upgrade-test', 'this is the text', 'Just testing', $autoload);
 }
 
 // Let's add the options page.
@@ -47,7 +42,7 @@ require(TEMPLATEPATH . '/options/display/headers.php');
 
 // Sidebar Modules for K2
 // Only bootstrap if not activating a plugin & no other plugin is installed for handling sidebars
-if(!function_exists('register_sidebar') && ($_GET['action'] != 'activate' || basename($_SERVER['SCRIPT_FILENAME']) != 'plugins.php')) {
+if(!function_exists('register_sidebar')	&& !(basename($_SERVER['SCRIPT_FILENAME']) == 'plugins.php' && $_GET['action'] == 'activate')) {
 	require(TEMPLATEPATH . '/options/app/sbm.php');
 	k2sbm::wp_bootstrap();
 }
