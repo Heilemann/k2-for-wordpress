@@ -71,7 +71,11 @@ RollingArchives.prototype = {
 	},
 
 	updatePageText: function(v) {
-		$(this.rollpages).innerHTML = 'Page '+v+' of '+this.pagecount;
+		var pagetext = '<?php _e('Page %1$d of %2$d',k2domain); ?>';
+		pagetext = pagetext.replace('%1$d', v);
+		pagetext = pagetext.replace('%2$d', this.pagecount);
+		
+		$(this.rollpages).innerHTML = pagetext;
 	},
 
 	gotoNextPage: function() {
