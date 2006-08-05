@@ -1,18 +1,14 @@
 /*
 Theme Name: K2
 Theme URI: http://getk2.com
-Description: Configure from the <a href="themes.php?page=functions.php">K2 Options Panel</a>. Visit the <a href="http://getk2.com/forum">support forums</a>, <a href="http://k2.stikipad.com/docs/show/">the wiki</a> or <a href="http://code.google.com/p/kaytwo/issues/list">the bug tracker</a>.</p><p>Developed by <a href="http://binarybonsai.com">Michael Heilemann</a>, <a href="http://chrisjdavis.org">Chris J. Davis</a>, <a href="http://zeo.unic.net.my">Zeo</a> and <a href="http://stevelam.org">Steve Lam</a>.
+Description: Configure from the <a href="themes.php?page=functions.php">K2 Options Panel</a>. Visit the <a href="http://getk2.com/forum">support forums</a>, <a href="http://k2.stikipad.com/docs/show/">the wiki</a> or <a href="http://code.google.com/p/kaytwo/issues/list">the bug tracker</a>.</p><p>Developed by <a href="http://binarybonsai.com">Michael Heilemann</a>, <a href="http://chrisjdavis.org">Chris J. Davis</a>, <a href="http://zeo.unic.net.my">Zeo</a> and <a href="http://stevelam.org">Steve Lam</a>.</p><p>Protected by <a href="http://www.opensource.org/licenses/gpl-license.php">GPL</a>.
 Version: Beta Two
 Author: Various Artists
 Author URI: http://binarybonsai.com
 
-	Documentation: http://k2.stikipad.com/docs/show/CSS+Overview
-	K2 uses Fam Fam Fam Silk Icons: http://www.famfamfam.com/lab/icons/silk/
-
-	All elements of this theme are protected by the GPL:
-	http://www.opensource.org/licenses/gpl-license.php
+CSS Documentation: http://k2.stikipad.com/docs/show/CSS+Overview
+K2 uses Fam Fam Fam Silk Icons: http://www.famfamfam.com/lab/icons/silk/
 */
-
 
 
 
@@ -892,127 +888,6 @@ input[type=text], textarea {
 	margin: 0;
 	padding: 0;
 	}
-
-
-/*- Rolling Archives */
-
-#rollingarchives,
-#nested_rollingarchives {
-	position: relative;
-	padding: 5px 0 0;
-	margin: 0 0 10px;
-	}
-
-#rollingarchives a,
-#nested_rollingarchives a {
-	color: #888;
-	}
-
-#rollingarchives a:hover,
-#nested_rollingarchives a:hover {
-	text-decoration: underline;
-	}
-
-#rollnavigation,
-#nested_rollnavigation {
-	padding: 4px;
-	}
-
-#rollprevious, #rollnext, #rollpages, #rollload,
-#nested_rollprevious, #nested_rollnext, #nested_rollpages, #nested_rollload {
-	position: absolute;
-	width: 90px;
-	padding: 7px 5px;
-	top: 3px;
-	text-align: center;
-	}
-
-#rollhome,
-#nested_rollhome {
-	display: none;
-	margin-bottom: 5px;
-	}
-
-#rollload,
-#nested_rollload {
-	right: 40px;
-	padding-left: 24px;
-	background: url('images/spinner.gif') no-repeat left center;
-	width: 50px;
-	text-align: left;
-	}
-
-#rollpages,
-#nested_rollpages {
-	left: 50px;
-	color: #777;
-	}
-
-#rollprevious,
-#nested_rollprevious {
-	left: 0;
-	text-align: left;
-	}
-
-#rollnext,
-#nested_rollnext {
-	right: 0;
-	text-align: right;
-	}
-
-#rollingarchives a.inactive, #rollingarchives a.inactive:hover,
-#nested_rollingarchives a.inactive, #nested_rollingarchives a.inactive:hover {
-	visibility: hidden;
-	text-decoration: none !important;
-	background-color: transparent !important;
-	color: #bbb;
-	cursor: default;
-	}
-
-#rollnotices,
-#nested_rollnotices {
-	padding: 7px;
-	text-align: center;
-	border-top: 1px solid #f3f3f3;
-	display: none;
-	}
-
-#rollnotices a,
-#nested_rollnotices a {
-	color: #227EE9;
-}
-
-#rollnotices img,
-#nested_rollnotices img {
-	float: right;
-	cursor: pointer;
-	height: 13px;
-	width: 13px;
-	margin-right: 5px;
-	background: url('images/reset-fff.gif') no-repeat center center;
-	}
-
-#pagetrack,
-#nested_pagetrack {
-	margin: 0 auto;
-	width: 218px;
-	height: 18px;
-	background: url('images/sliderbgleft.png') no-repeat center left;
-}
-
-#pagetrackend,
-#nested_pagetrackend {
-	height: 18px;
-	background: url('images/sliderbgright.png') no-repeat center right;
-	}
-
-#pagehandle,
-#nested_pagehandle {
-	width: 18px;
-	height: 18px;
-	background: url('images/sliderhandle.png') no-repeat center center;
-	cursor: e-resize;
-}
 
 /*- Attachment */
 

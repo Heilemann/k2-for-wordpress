@@ -15,8 +15,7 @@ require(TEMPLATEPATH . '/options/app/update.php');
 require(TEMPLATEPATH . '/options/app/info.php');
 require(TEMPLATEPATH . '/options/app/tools.php');
 
-// If K2 isn't installed, install it.
-// If it is installed but it is an older version, run the install event in case of new options
+// Install and update K2 if necessary
 if (!get_option('k2installed') || get_option('k2installed') < $current) {
 	installk2::installer();
 }
