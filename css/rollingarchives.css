@@ -39,7 +39,7 @@
 #nested_rollload {
 	right: 40px;
 	padding-left: 24px;
-	background: url('images/spinner.gif') no-repeat left center;
+	background: url('../images/spinner.gif') no-repeat left center;
 	width: 50px;
 	text-align: left;
 	}
@@ -91,7 +91,7 @@
 	height: 13px;
 	width: 13px;
 	margin-right: 5px;
-	background: url('images/reset-fff.gif') no-repeat center center;
+	background: url('../images/reset-fff.gif') no-repeat center center;
 	}
 
 #pagetrack,
@@ -99,19 +99,19 @@
 	margin: 0 auto;
 	width: 218px;
 	height: 18px;
-	background: url('images/sliderbgleft.png') no-repeat center left;
+	background: url('../images/sliderbgleft.png') no-repeat center left;
 }
 
 #pagetrackend,
 #nested_pagetrackend {
 	height: 18px;
-	background: url('images/sliderbgright.png') no-repeat center right;
+	background: url('../images/sliderbgright.png') no-repeat center right;
 	}
 
 #pagehandle,
 #nested_pagehandle {
 	width: 18px;
 	height: 18px;
-	background: url('images/sliderhandle.png') no-repeat center center;
+	background: url('../images/sliderhandle.png') no-repeat center center;
 	cursor: e-resize;
 }
