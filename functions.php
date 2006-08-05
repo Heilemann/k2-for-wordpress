@@ -1,6 +1,6 @@
 <?php 
 /* Current revision of K2 */
-$current = 'svn';
+$current = intval("$Revision$".substring(11, -1));
 
 load_theme_textdomain('k2_domain');
 
