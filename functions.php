@@ -14,7 +14,7 @@ require(TEMPLATEPATH . '/options/app/tools.php');
 
 // Install and update K2 if necessary
 global $options_revision;
-if (!get_option('k2installed') || get_option('k2installed') < $options_revision) {
+if (!get_option('k2optionsrevision') || get_option('k2optionsrevision') < $options_revision) {
 	installk2::installer();
 }
 

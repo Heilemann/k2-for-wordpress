@@ -4,13 +4,20 @@ $options_revision = intval(substr('$Revision$', 11, -2));
 
 class installk2 {
 	function installer() {
-		global $options_revision;
+		global $options_revision, $current;
 
 		// Add / update the version number
 		if(!get_option('k2installed')) {
-			add_option('k2installed', $options_revision, 'This options simply tells me if K2 has been installed before', $autoload);
+			add_option('k2installed', $curent, 'This options simply tells me if K2 has been installed before', $autoload);
 		} else {
-			update_option('k2installed', $options_revision);
+			update_option('k2installed', $current);
+		}
+
+		// Add / update the options revision number
+		if (!get_option('k2optionsrevision')) {
+			add_option('k2optionsrevision', $options_revision, 'Revision number of K2 options', $autoload);
+		} else {
+			update_option('k2optionsrevision', $options_revision);
 		}
 
 		add_option('k2aboutblurp', '', 'Allows you to write a small blurp about you and your blog, which will be put on the frontpage', $autoload);
