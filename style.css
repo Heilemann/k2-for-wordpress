@@ -47,7 +47,6 @@ body {
 	position: relative;
 	/* The entire template's width is set in this class. */
 	width: 780px;
-	/*_width: 740px;*/ /* IE hack */
 	border: 1px solid #ddd;
 	border-top: none;
 	}
@@ -56,9 +55,6 @@ body {
 
 body.flex #page { /* For the flexible-width setting. */
 	width: 98%;
-	/*width: 80%;
-	min-width: 780px;
-	max-width: 1000px; */
 	}
 
 #header {
@@ -71,11 +67,9 @@ body.flex #page { /* For the flexible-width setting. */
 
 #primary {
 	width: 500px;
-	/*_width: 500px;*/ /* IE Hack */
 	float: left;
 	padding: 20px 0 10px;
 	margin: 0 10px 0 30px;
-	/*_margin: 0 20px 0 15px;*/ /* IE Hack */
 	display: inline;
 	}
 
@@ -86,11 +80,6 @@ body.flex #page { /* For the flexible-width setting. */
 	width: 26%;
 	color: #666;
 	position: relative;
-	/* The following are IE Fixes */
-	/*_padding: 30px 0 10px;
-	_margin-left: 0%;
-	_margin-right: -4%;
-	_width: 26.5%;*/ /* IE hack */
 	}
 
 /* For the flexible-width setting. */
@@ -146,7 +135,6 @@ ul.menu li.current_page_item a:hover {
 .admintab {
 	position: absolute;
 	right: 0px;
-	/*_padding: 5px 15px 6px;*/ /* IE hack */
 	}
 
 * html .admintab { padding: 5px 15px 6px }	/* IE hack */
@@ -602,7 +590,6 @@ input[type=text]:focus, textarea:focus {
 	padding: 2px;
 	width: 100%;
 	margin: 10px 0;
-	/*_width: 98.5%;*/ /* IE hack */
 	}
 
 .comments form #submit {
@@ -695,11 +682,6 @@ img.alignleft, img[align="left"] {
 img.noborder {
 	border: none !important;
 	}
-
-/*.favorite img {
-	padding: 0;
-	border: none;
-	}*/
 
 small {
 	font-size: .9em;
@@ -794,18 +776,9 @@ img.wp-smiley {
 	margin-top: 0.5em;
 	}
 
-/*.secondary ul, .secondary ol {
-	margin: 5px 0 0;
-	padding-left: 0;
-	}*/
-
 .secondary ul, .secondary ol, .secondary div div {
 	margin: 5px 0 0;
 	padding-left: 0;
-	}
-
-.secondary ul {
-	/*_margin-left: 0px;*/ /* IE Hack */
 	}
 
 .secondary ol {
