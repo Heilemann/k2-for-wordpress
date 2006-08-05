@@ -1,6 +1,9 @@
 <?php 
+// SVN Revision keyword. SVN will auto-populate this with current revision text
+$svn_revision_txt = '$Revision$';
+
 /* Current revision of K2 */
-$current = intval("$Revision$".substring(11, -1));
+$current = intval(substr($svn_revision_txt, 11, -2));
 
 load_theme_textdomain('k2_domain');
 
