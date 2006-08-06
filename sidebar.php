@@ -3,7 +3,7 @@
 
 <div class="secondary<?php /* Flexible Width? */ if (get_option('k2widthtype') == 0) echo ' flex'; ?> ">
 
-<?php /* WordPress Widget Support */ if (function_exists('dynamic_sidebar') and dynamic_sidebar()) { } else { ?>
+<?php /* WordPress Widget Support */ if (function_exists('dynamic_sidebar') && dynamic_sidebar()) { } else { ?>
 
 	<div id="search"><h2><?php _e('Search','k2_domain'); ?></h2>
 		<?php include (TEMPLATEPATH . '/searchform.php'); ?>
@@ -12,7 +12,7 @@
 
 	<?php /* Menu for subpages of current page */
 		global $notfound;
-		if (is_page() and ($notfound != '1')) {
+		if (is_page() && ($notfound != '1')) {
 			$current_page = $post->ID;
 			while($current_page) {
 				$page_query = $wpdb->get_row("SELECT ID, post_title, post_status, post_parent FROM $wpdb->posts WHERE ID = '$current_page'");
@@ -44,12 +44,12 @@
 		</div>
 	<?php } ?>
 
-	<?php /* If there is a custom about message, use it on the frontpage. */ $k2about = get_option('k2aboutblurp'); if ((is_home() and $k2about != '') or !is_home() and !is_page() and !is_single() or is_paged()) { ?>
+	<?php /* If there is a custom about message, use it on the frontpage. */ $k2about = get_option('k2aboutblurp'); if ((is_home() && $k2about != '') || !is_home() && !is_page() && !is_single() || is_paged()) { ?>
 		
 	<div class="sb-about">
 		<h2><?php _e('About','k2_domain'); ?></h2>
 		
-		<?php /* Frontpage */ if (is_home() and !is_paged()) { ?>
+		<?php /* Frontpage */ if (is_home() && !is_paged()) { ?>
 		<p><?php echo stripslashes($k2about); ?></p>
 		
 		<?php /* Category Archive */ } elseif (is_category()) { ?>
@@ -71,7 +71,7 @@
 		<p><?php printf(__('Archive for <strong>%s</strong>.','k2_domain'), get_the_author()) ?></p>
 		<p><?php the_author_description(); ?></p>
 
-		<?php } elseif (function_exists('is_tag') and is_tag()) { ?>
+		<?php } elseif (function_exists('is_tag') && is_tag()) { ?>
 		<p><?php printf(__('You are currently browsing the %1$s weblog archives for \'%2$s\' tag.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>', get_query_var('tag') ) ?></p>
 		
 		<?php /* Paged Archive */ } elseif (is_paged()) { ?>
@@ -83,7 +83,7 @@
 
 		<?php } ?>
 
-		<?php $k2asidescategory = get_option('k2asidescategory'); if (!is_home() and !is_paged() and !in_category($k2asidescategory) or is_day() or is_month() or is_year() or is_author() or is_search() or (function_exists('is_tag') and is_tag())) { ?>
+		<?php $k2asidescategory = get_option('k2asidescategory'); if (!is_home() && !is_paged() && !in_category($k2asidescategory) || is_day() || is_month() || is_year() || is_author() || is_search() || (function_exists('is_tag') && is_tag())) { ?>
 			<p><?php _e('Longer entries are truncated. Click the headline of an entry to read it in its entirety.','k2_domain'); ?></p>
 		<?php } ?>
 	</div>
@@ -91,7 +91,7 @@
 	<?php } ?>
 
 
-	<?php /* Brian's Latest Comments */ if ((function_exists('blc_latest_comments')) and is_home()) { ?> 
+	<?php /* Brian's Latest Comments */ if ((function_exists('blc_latest_comments')) && is_home()) { ?> 
 	<div class="sb-comments" id="brians-latest-comments">
 		<h2><?php _e('Comments','k2_domain'); ?></h2>
 		
@@ -102,7 +102,7 @@
 	</div>
 	<?php } ?>
 
-	<?php /* Show Asides only on the frontpage */ if (!is_paged() && is_home()) { if (get_option('k2asidesposition') != '0' and get_option('k2asidescategory') != '0') { ?>
+	<?php /* Show Asides only on the frontpage */ if (!is_paged() && is_home()) { if (get_option('k2asidesposition') != '0' && get_option('k2asidescategory') != '0') { ?>
 	<div class="sb-asides">
 		<h2><?php echo get_the_category_by_ID(get_option('k2asidescategory')); ?></h2>
 		<span class="metalink"><a href="<?php bloginfo('url'); ?>/?feed=rss&amp;cat=<?php echo $k2asidescategory; ?>" title="<?php _e('RSS Feed for Asides','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
@@ -115,7 +115,7 @@
 	<?php } } ?>
 
 
-	<?php /* Latest Entries */ if ( (is_home()) or (is_search() or (is_404()) or ($notfound == '1')) or (function_exists('is_tag') and is_tag()) or ( (is_archive()) and (!is_author()) ) ) { ?>
+	<?php /* Latest Entries */ if ( (is_home()) || (is_search() || (is_404()) || ($notfound == '1')) || (function_exists('is_tag') && is_tag()) || ( (is_archive()) && (!is_author()) ) ) { ?>
 	<div class="sb-latest">
 		<h2><?php _e('Latest','k2_domain'); ?></h2>
 		<span class="metalink"><a href="<?php bloginfo('rss2_url'); ?>" title="<?php _e('RSS Feed for Blog Entries','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
@@ -127,7 +127,7 @@
 	<?php } ?>
 
 
-	<?php /* FlickrRSS Plugin */ if ((function_exists('get_flickrRSS')) and is_home() and !(is_paged())) { ?> 
+	<?php /* FlickrRSS Plugin */ if ((function_exists('get_flickrRSS')) && is_home() && !(is_paged())) { ?> 
 	<div class="sb-flickr">
 		<h2>Flickr</h2>
 		<span class="metalink"><a href="http://flickr.com/services/feeds/photos_public.gne?id=<?php echo get_option('flickrRSS_flickrid'); ?>&amp;format=rss_200" title="<?php _e('RSS Feed for flickr','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
@@ -162,7 +162,7 @@
 	<?php } } ?>
 
 
-	<?php /* Archives */ if ( (is_archive()) or (is_search()) or (is_paged()) or ($notfound == '1') or (function_exists('is_tag') and is_tag()) ) { ?>
+	<?php /* Archives */ if ( (is_archive()) || (is_search()) || (is_paged()) || ($notfound == '1') || (function_exists('is_tag') && is_tag()) ) { ?>
 	<div class="sb-months">
 		<h2><?php _e('Archives','k2_domain'); ?></h2>
 		
@@ -181,7 +181,7 @@
 	<?php } ?>
 
 
-	<?php /* Related Posts Plugin */ if ((function_exists('related_posts')) and is_single() and ($notfound != '1')) { ?> 
+	<?php /* Related Posts Plugin */ if ((function_exists('related_posts')) && is_single() && ($notfound != '1')) { ?> 
 	<div class="sb-related">
 		<h2><?php _e('Related Entries','k2_domain'); ?></h2>
 		

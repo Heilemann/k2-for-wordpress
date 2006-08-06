@@ -2,7 +2,7 @@
 	require("../../../../wp-blog-header.php");
 
 	// check to see if the user has enabled gzip compression in the WordPress admin panel
-	if ( !get_settings('gzipcompression') and !ini_get('zlib.output_compression') and ini_get('output_handler') != 'ob_gzhandler' and ini_get('output_handler') != 'mb_output_handler' ) {
+	if ( !get_settings('gzipcompression') && !ini_get('zlib.output_compression') && ini_get('output_handler') != 'ob_gzhandler' && ini_get('output_handler') != 'mb_output_handler' ) {
 		ob_start('ob_gzhandler');
 	}
 

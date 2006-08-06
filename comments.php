@@ -10,7 +10,7 @@
 
 <?php return; } } ?>
 
-<?php if (($comments) or ('open' == $post-> comment_status)) { $shownavigation = 'yes'; ?>
+<?php if (($comments) || ('open' == $post-> comment_status)) { $shownavigation = 'yes'; ?>
 
 	<hr />
 
@@ -84,7 +84,7 @@
 		</ol>
 		<?php } ?>
 		
-		<?php /* Comments open, but empty */ if (!isset($count_pings) and 'open' == $post-> comment_status) { ?> 
+		<?php /* Comments open, but empty */ if (!isset($count_pings) && 'open' == $post-> comment_status) { ?> 
 			<ol id="commentlist">
 				<li id="leavecomment">
 					<?php _e('No Comments','k2_domain'); ?>
@@ -92,7 +92,7 @@
 			</ol>
 		<?php } ?>
 		
-		<?php /* Comments closed */ if ('open' != $post-> comment_status and is_single) { ?>
+		<?php /* Comments closed */ if ('open' != $post-> comment_status && is_single) { ?>
 			<div><?php _e('Comments are currently closed.','k2_domain'); ?></div>
 		<?php } } ?>
 
@@ -158,4 +158,3 @@
 		</div><?php // Close .comments ?>
 
 	<?php } // comment_status ?>
-	
