@@ -20,7 +20,7 @@
 ?>
 
 function AjaxComment(form) {
-var url = '<?php bloginfo("template_url"); ?>/comments-ajax.php';
+	var url = '<?php bloginfo("template_url"); ?>/comments-ajax.php';
 	new Ajax.Updater( {
 		success: 'commentlist',
 		failure: 'error'
@@ -35,18 +35,19 @@ var url = '<?php bloginfo("template_url"); ?>/comments-ajax.php';
 			Form.disable('commentform');
 		},
 		onComplete: function(request) {
- 				if (request.status == 200) {
-					if ($('leavecomment')) { $('leavecomment').remove(); }
-					new Effect.Appear($('commentlist').lastChild);
-					$('comments').innerHTML = parseInt($('comments').innerHTML) + 1;
-					Field.clear('comment');
-					Form.disable('commentform');
-					setTimeout('Form.enable("commentform")',15000);
-				}
+ 			if (request.status == 200) {				
+				if ($('leavecomment')) { $('leavecomment').remove(); }
+				new Effect.Appear($('commentlist').lastChild);
+				$('comments').innerHTML = parseInt($('comments').innerHTML) + 1;
+				Field.clear('comment');
+				Form.disable('commentform');
+				setTimeout('Form.enable("commentform")',15000);
+			}
   			Element.hide('commentload');
 		},
-		onFailure: function() { 
-			$('error').setStyle( { visibility: 'visible', width: '100%', textAlign: 'center', padding: '1px 0', margin: '5px 0', background: '#ffff99' } );
+		onFailure: function() {
+			$('error').show();
+			$('error').setStyle( { visibility: 'visible' } );
 			Form.enable('commentform');
 		},
 		parameters: Form.serialize(form) 
@@ -59,8 +60,8 @@ function initComment() {
 	$('commentform').onsubmit = function() { AjaxComment(this); return false; };
 	new Insertion.Before('submit', '<p id="error"></p>');
 	new Insertion.After('submit','<img src="<?php bloginfo("template_url"); ?>/images/spinner.gif" id="commentload" />');
-	$('commentload').setStyle( { paddingTop: '3px', cssFloat: 'right' } );
 	$('commentload').hide();
+	$('error').hide();
 }
 
 Event.observe(window, 'load', initComment, false);
