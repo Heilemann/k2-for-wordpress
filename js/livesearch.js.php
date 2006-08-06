@@ -76,7 +76,7 @@ Livesearch.prototype = {
 			{
 				method: 'get',
 				evalScripts: true,
-				parameters: this.pars + $F(this.attachitem) + '&rolling=1',
+				parameters: this.pars + encodeURIComponent($F(this.attachitem)) + '&rolling=1',
 				onSuccess: this.searchComplete.bind(this)
 		});
 	},
