@@ -99,7 +99,7 @@
 		</ol> <!-- END #pinglist -->
 		<?php } ?>
 		
-		<?php /* Comments open, but empty */ if (!isset($count_pings) && 'open' == $post-> comment_status) { ?> 
+		<?php /* Comments open, but empty */ if (!isset($counter) && 'open' == $post-> comment_status) { ?> 
 			<ol id="commentlist">
 				<li id="leavecomment">
 					<?php _e('No Comments','k2_domain'); ?>
