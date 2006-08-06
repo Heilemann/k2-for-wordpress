@@ -5,16 +5,17 @@ $options_revision = intval(substr('$Revision$', 11, -2));
 class installk2 {
 	function installer() {
 		global $options_revision, $current;
+		$autoload = 'yes';
 
 		// Add / update the version number
-		if(!get_option('k2installed')) {
+		if ( !get_option('k2installed') ) {
 			add_option('k2installed', $curent, 'This options simply tells me if K2 has been installed before', $autoload);
 		} else {
 			update_option('k2installed', $current);
 		}
 
 		// Add / update the options revision number
-		if (!get_option('k2optionsrevision')) {
+		if ( !get_option('k2optionsrevision') ) {
 			add_option('k2optionsrevision', $options_revision, 'Revision number of K2 options', $autoload);
 		} else {
 			update_option('k2optionsrevision', $options_revision);
