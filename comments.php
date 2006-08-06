@@ -10,7 +10,7 @@
 
 <?php return; } } ?>
 
-<?php if ( ($comments) || ('open' == $post-> comment_status) ) : $shownavigation = 'yes'; ?>
+	<?php if ( ($comments) || ('open' == $post-> comment_status) ) : $shownavigation = 'yes'; ?>
 
 	<div class="comments">
 
@@ -21,19 +21,7 @@
 			<?php if ('open' == $post-> ping_status) { ?><span class="trackbacklink"><a href="<?php trackback_url() ?>" title="<?php _e('Copy this URI to trackback this entry.','k2_domain'); ?>"><?php _e('Trackback Address','k2_domain'); ?></a></span><?php } ?>
 		</div>
 
-		<?php /* Count comments and pings */
-			if ($comments) {
-				$countComments  = 0;
-				$countPingBacks = 0;
-				foreach ($comments as $comment) {
-					if (get_comment_type() != "comment") {
-						$countPingBacks++;
-					} else {
-						$countComments++;
-					}
-				}
-			}
-		?>
+		<?php /* Count comments and pings */ if ($comments) : $countComments  = 0; $countPingBacks = 0; foreach ($comments as $comment) { if (get_comment_type() != "comment") { $countPingBacks++; } else { $countComments++; } } endif; ?>
 
 	<hr />
 
@@ -62,16 +50,13 @@
 				<?php if ($comment->comment_approved == '0') : ?>
 				<p class="alert"><strong><?php _e('Your comment is awaiting moderation.','k2_domain'); ?></strong></p>
 				<?php endif; ?>
-
 			</li>
 			<?php } } /* end for each comment */ ?>
-
 		</ol> <!-- END #commentlist -->
 		<?php } ?>
 		
 		<?php /* Fetch Pings Only*/ if ($countPingBacks != 0) { $counter = 1; ?>
 		<ol id="pinglist">
-
 			<?php foreach ($comments as $comment) { ?>
 			<?php if (get_comment_type() != "comment") { ?>
 			<li class="item" id="comment-<?php comment_ID() ?>">
@@ -93,9 +78,7 @@
 				<?php if ($user_ID) { edit_comment_link(__('Edit','k2_domain'),'<span class="editlink">','</span>'); } ?>
 				</small>
 			</li>
-			<?php } ?>
-			<?php } /* end for each comment */ ?>
-
+			<?php } } /* end for each comment */ ?>
 		</ol> <!-- END #pinglist -->
 		<?php } ?>
 		
