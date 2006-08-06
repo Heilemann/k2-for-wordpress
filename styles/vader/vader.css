@@ -166,19 +166,22 @@ a, a:visited, .sidebar a:visited {
 	}
 
 /* Rolling Archives Slider */
-#pagetrack {
+#current_content #pagetrack,
+#dynamic_content #nested_pagetrack {
 	margin: 0 auto;
 	width: 218px;
 	height: 18px;
 	background: url('sliderbgleft.png') no-repeat center left;
 }
 
-#pagetrackend {
+#current_content #pagetrackend,
+#dynamic_content #nested_pagetrackend {
 	height: 18px;
 	background: url('sliderbgright.png') no-repeat center right;
 	}
 
-#pagehandle {
+#current_content #pagehandle,
+#dynamic_content #nested_pagehandle {
 	width: 18px;
 	height: 18px;
 	background: url('sliderhandle.png') no-repeat center center;
