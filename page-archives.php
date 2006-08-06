@@ -42,7 +42,7 @@
 	
 					<div id="livearchives">
 						<?php af_ela_super_archive('num_posts_by_cat=50&truncate_title_length=40&hide_pingbacks_and_trackbacks=1&num_entries=1&num_comments=1&number_text=<span>%</span>&comment_text=<span>%</span>&selected_text='.urlencode('')); ?>
-						<div style="clear: both;"></div>
+						<div class="clear"></div>
 					</div>
 	
 					<?php } ?>

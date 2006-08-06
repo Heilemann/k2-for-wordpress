@@ -144,8 +144,9 @@
 				<p>
 					<input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit','k2_domain'); ?>" />
 					<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
-					<br class="clear" />
 				</p>
+				
+				<div class="clear"></div>
 
 				<?php do_action('comment_form', $post->ID); ?>
 

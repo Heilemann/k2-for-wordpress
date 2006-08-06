@@ -1,4 +1,4 @@
-	<br class="clear" />
+	<div class="clear"></div>
 
 </div> <!-- Close Page -->
 

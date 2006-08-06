@@ -10,7 +10,7 @@
 	<div class="navigation">
 		<?php previous_post('<div class="left"><span>&laquo;</span> %</div>','','yes') ?>
 		<?php next_post('<div class="right">% <span>&raquo;</span></div>','','yes') ?>
-		<br class="clear" />
+		<div class="clear"></div>
 	</div>
 
 	<?php } else { ?>
@@ -23,7 +23,7 @@
 		'<div class="right">'.__('Next Entries','k2_domain').' <span>&raquo;</span></div>',
 		'<div class="left"><span>&laquo;</span> '.__('Previous Entries','k2_domain').'</div>'
 	); ?>
-		<br class="clear" />
+		<div class="clear"></div>
 	</div>
 
 	<?php } ?>
