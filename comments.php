@@ -10,26 +10,40 @@
 
 <?php return; } } ?>
 
-<?php if (($comments) || ('open' == $post-> comment_status)) { $shownavigation = 'yes'; ?>
-
-	<hr />
+<?php if ( ($comments) || ('open' == $post-> comment_status) ) : $shownavigation = 'yes'; ?>
 
 	<div class="comments">
 
 		<h4><?php printf(__('%1$s %2$s to &#8220;%3$s&#8221;','k2_domain'), '<span id="comments">' . get_comments_number() . '</span>', ($post->comment_count == 1) ? __('Response','k2_domain'): __('Responses','k2_domain'), get_the_title() ) ?></h4>
 
-		<div class="metalinks">
+		<div class="metalinks" id="metalinks">
 			<span class="commentsrsslink"><?php comments_rss_link(__('Feed for this Entry','k2_domain')); ?></span>
 			<?php if ('open' == $post-> ping_status) { ?><span class="trackbacklink"><a href="<?php trackback_url() ?>" title="<?php _e('Copy this URI to trackback this entry.','k2_domain'); ?>"><?php _e('Trackback Address','k2_domain'); ?></a></span><?php } ?>
 		</div>
-	
-		<?php /* Fetch Comments Only*/ $comments = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_post_ID = '$post->ID' AND comment_approved = '1' AND comment_type = '' ORDER BY comment_date"); if ($comments) { $count_pings = 1; ?>
-		<ol id="commentlist">
 
+		<?php /* Count comments and pings */
+			if ($comments) {
+				$countComments  = 0;
+				$countPingBacks = 0;
+				foreach ($comments as $comment) {
+					if (get_comment_type() != "comment") {
+						$countPingBacks++;
+					} else {
+						$countComments++;
+					}
+				}
+			}
+		?>
+
+	<hr />
+
+		<?php /* Fetch Comments Only*/ if ($countComments != 0) { $counter = 1; ?>
+		<ol id="commentlist">
 			<?php foreach ($comments as $comment) { ?>
+			<?php if (get_comment_type() == "comment") { ?>
 			<li class="<?php /* Style differently if comment author is blog author */ if ($comment->comment_author_email == get_the_author_email()) { echo 'authorcomment'; } ?> item" id="comment-<?php comment_ID() ?>">
 				<?php if (function_exists('gravatar')) { ?><a href="http://www.gravatar.com/" title="<?php _e('What is this?','k2_domain'); ?>"><img src="<?php gravatar("X", 32,  get_bloginfo('template_url')."/images/defaultgravatar.jpg"); ?>" class="gravatar" alt="<?php _e('Gravatar Icon','k2_domain'); ?>" /></a><?php } ?>
-				<a href="#comment-<?php comment_ID() ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $count_pings; $count_pings++; ?></a>
+				<a href="#comment-<?php comment_ID() ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $counter; $counter++; ?></a>
 				<span class="commentauthor"><?php comment_author_link() ?></span>
 				<small class="commentmetadata">
 				<?php printf(('<a href="#comment-%1$s" title="%2$s">%3$s</a>'), 
@@ -50,19 +64,19 @@
 				<?php endif; ?>
 
 			</li>
-			<?php } /* end for each comment */ ?>
+			<?php } } /* end for each comment */ ?>
 
-		</ol>
+		</ol> <!-- END #commentlist -->
 		<?php } ?>
 		
-		
-		<?php /* Fetch Pings Only*/ $comments = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_post_ID = '$post->ID' AND comment_approved = '1' AND comment_type!= '' ORDER BY comment_date"); if ($comments) { $count_pings = 1; ?>
+		<?php /* Fetch Pings Only*/ if ($countPingBacks != 0) { $counter = 1; ?>
 		<ol id="pinglist">
 
-			<?php foreach ($comments as $comment) { ?>	
+			<?php foreach ($comments as $comment) { ?>
+			<?php if (get_comment_type() != "comment") { ?>
 			<li class="item" id="comment-<?php comment_ID() ?>">
 				<?php if (function_exists('comment_favicon')) { ?><span class="favatar"><?php comment_favicon(); ?></span><?php } ?>
-				<a href="#comment-<?php comment_ID() ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>" class="counter"><?php echo $count_pings; $count_pings++; ?></a>
+				<a href="#comment-<?php comment_ID() ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>" class="counter"><?php echo $counter; $counter++; ?></a>
 				<span class="commentauthor"><?php comment_author_link() ?></span>
 				<small class="commentmetadata">				
 				<?php
@@ -79,9 +93,10 @@
 				<?php if ($user_ID) { edit_comment_link(__('Edit','k2_domain'),'<span class="editlink">','</span>'); } ?>
 				</small>
 			</li>
+			<?php } ?>
 			<?php } /* end for each comment */ ?>
 
-		</ol>
+		</ol> <!-- END #pinglist -->
 		<?php } ?>
 		
 		<?php /* Comments open, but empty */ if (!isset($count_pings) && 'open' == $post-> comment_status) { ?> 
@@ -94,10 +109,15 @@
 		
 		<?php /* Comments closed */ if ('open' != $post-> comment_status && is_single) { ?>
 			<div><?php _e('Comments are currently closed.','k2_domain'); ?></div>
-		<?php } } ?>
+		<?php } ?>
 
+	</div> <!-- END .comments #1 -->
+		
+	<?php endif; ?>
+	
 	<?php /* Reply Form */ if ('open' == $post-> comment_status) { ?>
-		<h4 class="reply"><?php if (isset($_GET['jal_edit_comments'])) { _e('Edit Your Comment','k2_domain'); } else { _e('Leave a Reply','k2_domain'); } ?></h4>
+	<div class="comments">
+		<h4 id="respond" class="reply"><?php if (isset($_GET['jal_edit_comments'])) { _e('Edit Your Comment','k2_domain'); } else { _e('Leave a Reply','k2_domain'); } ?></h4>
 		
 		<?php if ( get_option('comment_registration') && !$user_ID ) { ?>
 		
@@ -153,9 +173,8 @@
 			</form>
 
 		<?php } // If registration required and not logged in ?>
-
+		
 		<?php if ($shownavigation) { include (TEMPLATEPATH . '/navigation.php'); } ?>
-
-		</div><?php // Close .comments ?>
-
+	
+	</div> <!-- END .comments #2 -->
 	<?php } // comment_status ?>

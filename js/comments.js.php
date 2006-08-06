@@ -55,6 +55,7 @@ var url = '<?php bloginfo("template_url"); ?>/comments-ajax.php';
 }
 
 function initComment() {
+	if (!$('commentlist')) { new Insertion.After('metalinks', '<ol id="commentlist"></ol>'); };
 	$('commentform').onsubmit = function() { AjaxComment(this); return false; };
 	new Insertion.Before('submit', '<p id="error"></p>');
 	new Insertion.After('submit','<img src="<?php bloginfo("template_url"); ?>/images/spinner.gif" id="commentload" />');
