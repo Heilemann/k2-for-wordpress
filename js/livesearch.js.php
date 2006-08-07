@@ -2,7 +2,7 @@
 	require("../../../../wp-blog-header.php");
 
 	// check to see if the user has enabled gzip compression in the WordPress admin panel
-	if ( !get_settings('gzipcompression') && !ini_get('zlib.output_compression') && ini_get('output_handler') != 'ob_gzhandler' && ini_get('output_handler') != 'mb_output_handler' ) {
+	if ( !get_settings('gzipcompression') and !ini_get('zlib.output_compression') and ini_get('output_handler') != 'ob_gzhandler' and ini_get('output_handler') != 'mb_output_handler' ) {
 		ob_start('ob_gzhandler');
 	}
 
@@ -59,9 +59,9 @@ Livesearch.prototype = {
 
 	readyLivesearch: function(event) {
 		var code = event.keyCode;
-		if (code == Event.KEY_ESC || ((code == Event.KEY_DELETE || code == Event.KEY_BACKSPACE) && $F(this.attachitem) == '')) {
+		if (code == Event.KEY_ESC or ((code == Event.KEY_DELETE or code == Event.KEY_BACKSPACE) and $F(this.attachitem) == '')) {
 			this.resetLivesearch.bind(this);
-		} else if (code != Event.KEY_LEFT && code != Event.KEY_RIGHT && code != Event.KEY_DOWN && code != Event.KEY_UP && code != Event.KEY_RETURN) {
+		} else if (code != Event.KEY_LEFT and code != Event.KEY_RIGHT and code != Event.KEY_DOWN and code != Event.KEY_UP and code != Event.KEY_RETURN) {
 			if (this.t) { clearTimeout(this.t) };
 	        this.t = setTimeout(this.doLivesearch.bind(this), 400);
 		}

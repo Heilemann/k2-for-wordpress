@@ -12,7 +12,7 @@
 
 <div id="primarycontent">
 
-	<?php /* Headlines for archives */ if ((!is_single() && !is_home()) || is_paged()) { ?>
+	<?php /* Headlines for archives */ if ((!is_single() and !is_home()) or is_paged()) { ?>
 	<div class="pagetitle">
 		<h2>
 		<?php // Figure out what kind of page is being shown
@@ -35,21 +35,21 @@
 			} elseif (is_search()) {
 				printf(__('Search Results for \'%s\'','k2_domain'), $s);
 
-			} elseif (function_exists('is_tag') && is_tag()) {
+			} elseif (function_exists('is_tag') and is_tag()) {
 				printf(__('Tag Archive for \'%s\'','k2_domain'), get_query_var('tag') );
 
 			} elseif (is_author()) {
 		   		$post = $wp_query->post; $the_author = $wpdb->get_var("SELECT meta_value FROM $wpdb->usermeta WHERE user_id = '$post->post_author' AND meta_key = 'nickname'");
 				printf(__('Author Archive for %s','k2_domain'), $the_author );
 
-			} elseif (is_paged() && ($paged > 1)) { 
+			} elseif (is_paged() and ($paged > 1)) { 
 				 printf(__('Archive Page %s','k2_domain'), $paged );
 			} ?>
 		</h2>
 	</div>
 	<?php } ?>
 
-	<?php if ((get_option('k2rollingarchives') == 0) && !is_single() && !is_home() && is_paged()) include (TEMPLATEPATH . '/navigation.php'); ?> 
+	<?php if ((get_option('k2rollingarchives') == 0) and !is_single() and !is_home() and is_paged()) include (TEMPLATEPATH . '/navigation.php'); ?> 
 
 	<?php /* Check if there are posts */
 		if(have_posts()) {
@@ -65,7 +65,7 @@
 			$multiple_users = ($count_users > 1);
 
 			// Check if to display asides inline or not
-			if(is_archive() || is_search() || is_single() || (function_exists('is_tag') && is_tag())) {
+			if(is_archive() or is_search() or is_single() or (function_exists('is_tag') and is_tag())) {
 				$k2asidescheck = '0';
 			} else {
 				$k2asidescheck = get_option('k2asidesposition');
@@ -84,13 +84,13 @@
 	<?php /* Permalink nav has to be inside loop */ if (is_single()) include (TEMPLATEPATH . '/navigation.php'); ?>
 
 	<?php /* Asides (shown inline on all archive pages) */
-		if ($k2asidescategory && ($k2asidescheck == '0') && (in_category($k2asidescategory))) { 
+		if ($k2asidescategory and ($k2asidescheck == '0') and (in_category($k2asidescategory))) { 
 	    ?> 
 
 		<div id="post-<?php the_ID(); ?>" class="item aside">
 			<div class="itemhead">
-				<h3 <?php /* Support for noteworthy plugin */ if($noteworthy_cat && in_category($noteworthy_cat)) { ?> class="noteworthy"<?php } ?>><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), strip_tags(get_the_title())) ?>'><?php the_title(); ?></a></h3>
-				<?php /* Support for noteworthy plugin */ if (($user_level == 10) && function_exists('nw_noteworthyLink')) nw_noteworthyLink($post->ID); ?>
+				<h3 <?php /* Support for noteworthy plugin */ if($noteworthy_cat and in_category($noteworthy_cat)) { ?> class="noteworthy"<?php } ?>><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), strip_tags(get_the_title())) ?>'><?php the_title(); ?></a></h3>
+				<?php /* Support for noteworthy plugin */ if (($user_level == 10) and function_exists('nw_noteworthyLink')) nw_noteworthyLink($post->ID); ?>
 				
 				<small class="metadata">
 					<span class="chronodata">
@@ -104,7 +104,7 @@
 
 					<?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="editlink">','</span>'); ?>
 
-					<?php /* Tags */ if (is_single() && function_exists('UTW_ShowTagsForCurrentPost')) { ?>
+					<?php /* Tags */ if (is_single() and function_exists('UTW_ShowTagsForCurrentPost')) { ?>
 						<span class="tagdata"><?php _e('Tags:','k2_domain'); ?> <?php UTW_ShowTagsForCurrentPost("commalist") ?>.</span>
 					<?php } ?>
 				</small>
@@ -120,8 +120,8 @@
 
 		<div id="post-<?php the_ID(); ?>" class="item entry">
 			<div class="itemhead">
-				<h3 <?php /* Support for noteworthy plugin */ if ($noteworthy_cat && in_category($noteworthy_cat)) { ?> class="noteworthy"<?php } ?>><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), strip_tags(get_the_title())) ?>'><?php the_title(); ?></a></h3>
-				<?php /* Support for noteworthy plugin */ if (($user_level == 10) && function_exists('nw_noteworthyLink')) nw_noteworthyLink($post->ID); ?>
+				<h3 <?php /* Support for noteworthy plugin */ if ($noteworthy_cat and in_category($noteworthy_cat)) { ?> class="noteworthy"<?php } ?>><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), strip_tags(get_the_title())) ?>'><?php the_title(); ?></a></h3>
+				<?php /* Support for noteworthy plugin */ if (($user_level == 10) and function_exists('nw_noteworthyLink')) nw_noteworthyLink($post->ID); ?>
 
 				<small class="metadata">
 					<span class="chronodata">
@@ -137,14 +137,14 @@
 				
 					<?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="editlink">','</span>'); ?>
 				
-					<?php /* Tags */ if (is_single() && function_exists('UTW_ShowTagsForCurrentPost')) { ?>
+					<?php /* Tags */ if (is_single() and function_exists('UTW_ShowTagsForCurrentPost')) { ?>
 						<span class="tagdata"><?php _e('Tags:','k2_domain'); ?> <?php UTW_ShowTagsForCurrentPost("commalist") ?>.</span>
 					<?php } ?>
 				</small>
 			</div>
 
 			<div class="itemtext">
-				<?php if (is_archive() || is_search() || (function_exists('is_tag') && is_tag())) {
+				<?php if (is_archive() or is_search() or (function_exists('is_tag') and is_tag())) {
 					the_excerpt();
 				} else {
 					the_content(__('Continue reading','k2_domain') . " '" . the_title('', '', false) . "'");
@@ -162,7 +162,7 @@
 
 	} /* End The Loop */ ?>
 	
-	<?php /* Insert Paged Navigation */ if (!is_single() && get_option('k2rollingarchives') != 1) { include (TEMPLATEPATH.'/navigation.php'); } ?>
+	<?php /* Insert Paged Navigation */ if (!is_single() and get_option('k2rollingarchives') != 1) { include (TEMPLATEPATH.'/navigation.php'); } ?>
 
 <?php /* If there is nothing to loop */  } else { $notfound = '1'; ?>
 

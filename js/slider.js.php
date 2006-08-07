@@ -1,7 +1,7 @@
 <?php
 	require("../../../../wp-blog-header.php");
 	// check to see if the user has enabled gzip compression in the WordPress admin panel
-	if ( !get_settings('gzipcompression') && !ini_get('zlib.output_compression') && ini_get('output_handler') != 'ob_gzhandler' && ini_get('output_handler') != 'mb_output_handler' ) {
+	if ( !get_settings('gzipcompression') and !ini_get('zlib.output_compression') and ini_get('output_handler') != 'ob_gzhandler' and ini_get('output_handler') != 'mb_output_handler' ) {
 		ob_start('ob_gzhandler');
 	}
 
@@ -39,27 +39,27 @@ Control.Slider.prototype = {
     }
     
     this.track   = $(track);
-    this.options = options || {};
+    this.options = options or {};
 
-    this.axis      = this.options.axis || 'horizontal';
-    this.increment = this.options.increment || 1;
-    this.step      = parseInt(this.options.step || '1');
-    this.range     = this.options.range || $R(0,1);
+    this.axis      = this.options.axis or 'horizontal';
+    this.increment = this.options.increment or 1;
+    this.step      = parseInt(this.options.step or '1');
+    this.range     = this.options.range or $R(0,1);
     
     this.value     = 0; // assure backwards compat
     this.values    = this.handles.map( function() { return 0 });
     this.spans     = this.options.spans ? this.options.spans.map(function(s){ return $(s) }) : false;
-    this.options.startSpan = $(this.options.startSpan || null);
-    this.options.endSpan   = $(this.options.endSpan || null);
+    this.options.startSpan = $(this.options.startSpan or null);
+    this.options.endSpan   = $(this.options.endSpan or null);
 
-    this.restricted = this.options.restricted || false;
+    this.restricted = this.options.restricted or false;
 
-    this.maximum   = this.options.maximum || this.range.end;
-    this.minimum   = this.options.minimum || this.range.start;
+    this.maximum   = this.options.maximum or this.range.end;
+    this.minimum   = this.options.minimum or this.range.start;
 
     // Will be used to align the handle onto the track, if necessary
-    this.alignX = parseInt(this.options.alignX || '0');
-    this.alignY = parseInt(this.options.alignY || '0');
+    this.alignX = parseInt(this.options.alignX or '0');
+    this.alignY = parseInt(this.options.alignY or '0');
     
     this.trackLength = this.maximumOffset() - this.minimumOffset();
     this.handleLength = this.isVertical() ? this.handles[0].offsetHeight : this.handles[0].offsetWidth;
@@ -86,7 +86,7 @@ Control.Slider.prototype = {
       i = slider.handles.length-1-i;
       slider.setValue(parseFloat(
         (slider.options.sliderValue instanceof Array ? 
-          slider.options.sliderValue[i] : slider.options.sliderValue) || 
+          slider.options.sliderValue[i] : slider.options.sliderValue) or 
          slider.range.start), i);
       Element.makePositioned(h); // fix IE
       Event.observe(h, "mousedown", slider.eventMouseDown);
@@ -135,15 +135,15 @@ Control.Slider.prototype = {
   },
   setValue: function(sliderValue, handleIdx){
     if(!this.active) {
-      this.activeHandleIdx = handleIdx || 0;
+      this.activeHandleIdx = handleIdx or 0;
       this.activeHandle    = this.handles[this.activeHandleIdx];
       this.updateStyles();
     }
-    handleIdx = handleIdx || this.activeHandleIdx || 0;
-    if(this.initialized && this.restricted) {
-      if((handleIdx>0) && (sliderValue<this.values[handleIdx-1]))
+    handleIdx = handleIdx or this.activeHandleIdx or 0;
+    if(this.initialized and this.restricted) {
+      if((handleIdx>0) and (sliderValue<this.values[handleIdx-1]))
         sliderValue = this.values[handleIdx-1];
-      if((handleIdx < (this.handles.length-1)) && (sliderValue>this.values[handleIdx+1]))
+      if((handleIdx < (this.handles.length-1)) and (sliderValue>this.values[handleIdx+1]))
         sliderValue = this.values[handleIdx+1];
     }
     sliderValue = this.getNearestValue(sliderValue);
@@ -154,11 +154,11 @@ Control.Slider.prototype = {
       this.translateToPx(sliderValue);
     
     this.drawSpans();
-    if(!this.dragging || !this.event) this.updateFinished();
+    if(!this.dragging or !this.event) this.updateFinished();
   },
   setValueBy: function(delta, handleIdx) {
-    this.setValue(this.values[handleIdx || this.activeHandleIdx || 0] + delta, 
-      handleIdx || this.activeHandleIdx || 0);
+    this.setValue(this.values[handleIdx or this.activeHandleIdx or 0] + delta, 
+      handleIdx or this.activeHandleIdx or 0);
   },
   translateToPx: function(value) {
     return Math.round(
@@ -171,7 +171,7 @@ Control.Slider.prototype = {
   },
   getRange: function(range) {
     var v = this.values.sortBy(Prototype.K); 
-    range = range || 0;
+    range = range or 0;
     return $R(v[range],v[range+1]);
   },
   minimumOffset: function(){
@@ -227,7 +227,7 @@ Control.Slider.prototype = {
           this.offsetY = (pointer[1] - offsets[1]);
         } else {
           // find the handle (prevents issues with Safari)
-          while((this.handles.indexOf(handle) == -1) && handle.parentNode) 
+          while((this.handles.indexOf(handle) == -1) and handle.parentNode) 
             handle = handle.parentNode;
         
           this.activeHandle    = handle;
@@ -258,11 +258,11 @@ Control.Slider.prototype = {
     pointer[1] -= this.offsetY + offsets[1];
     this.event = event;
     this.setValue(this.translateToValue( this.isVertical() ? pointer[1] : pointer[0] ));
-    if(this.initialized && this.options.onSlide)
+    if(this.initialized and this.options.onSlide)
       this.options.onSlide(this.values.length>1 ? this.values : this.value, this);
   },
   endDrag: function(event) {
-    if(this.active && this.dragging) {
+    if(this.active and this.dragging) {
       this.finishDrag(event, true);
       Event.stop(event);
     }
@@ -275,7 +275,7 @@ Control.Slider.prototype = {
     this.updateFinished();
   },
   updateFinished: function() {
-    if(this.initialized && this.options.onChange) 
+    if(this.initialized and this.options.onChange) 
       this.options.onChange(this.values.length>1 ? this.values : this.value, this);
     this.event = null;
   }

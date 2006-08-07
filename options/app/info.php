@@ -133,8 +133,8 @@ function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' a
         $n = count($categories); 
         foreach ($categories as $category) { 
             $category->cat_name = $category->cat_name; 
-                if (1 < $i && $i != $n) $thelist .= $normal_separator; 
-                if (1 < $i && $i == $n) $thelist .= $penultimate_separator; 
+                if (1 < $i and $i != $n) $thelist .= $normal_separator; 
+                if (1 < $i and $i == $n) $thelist .= $penultimate_separator; 
             $thelist .= '<a href="' . get_category_link($category->cat_ID) . '" title="' . sprintf(__("View all posts in %s"), $category->cat_name) . '">'.$category->cat_name.'</a>'; 
                      ++$i; 
         } 
@@ -146,7 +146,7 @@ function k2asides_filter($query) {
 	$k2asidescategory = get_option('k2asidescategory');
 	$k2asidesposition = get_option('k2asidesposition');
 
-	if ( ($k2asidescategory != 0) && ($k2asidesposition == 1) && ($query->is_home) ) {
+	if ( ($k2asidescategory != 0) and ($k2asidesposition == 1) and ($query->is_home) ) {
 		$query->set('cat', '-'.$k2asidescategory);
 	}
 

@@ -43,8 +43,8 @@ endif;
 
 $comment_type = '';
 
-if ( get_settings('require_name_email') && !$user_ID ) {
-	if ( 6 > strlen($comment_author_email) || '' == $comment_author )
+if ( get_settings('require_name_email') and !$user_ID ) {
+	if ( 6 > strlen($comment_author_email) or '' == $comment_author )
 		fail(__('Error: please fill the required fields (name, email).','k2_domain'));
 	elseif ( !is_email($comment_author_email))
 		fail(__('Error: please enter a valid email address.','k2_domain'));

@@ -46,7 +46,7 @@ global $wpdb;
 function setup_archive() {
 	global $wpdb;
 
-	if (file_exists(ABSPATH . 'wp-content/plugins/UltimateTagWarrior/ultimate-tag-warrior-core.php') && in_array('UltimateTagWarrior/ultimate-tag-warrior.php', get_option('active_plugins'))) {
+	if (file_exists(ABSPATH . 'wp-content/plugins/UltimateTagWarrior/ultimate-tag-warrior-core.php') and in_array('UltimateTagWarrior/ultimate-tag-warrior.php', get_option('active_plugins'))) {
 		$menu_order="chrono,tags,cats";
 	} else {
 		$menu_order="chrono,cats";

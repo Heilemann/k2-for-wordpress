@@ -134,7 +134,7 @@ class k2sbm {
 				// Add a module to the sidebar
 				case 'add':
 					// Check the title was correct
-					if(isset($_POST['add_name']) && trim((string)($_POST['add_name'])) != '') {
+					if(isset($_POST['add_name']) and trim((string)($_POST['add_name'])) != '') {
 						k2sbm::add_module($_POST['add_name'], $_POST['add_type'], $_POST['add_sidebar']);
 					} else {
 						k2sbm::set_error_text('You must specify a valid module name');
@@ -144,7 +144,7 @@ class k2sbm {
 
 				// Update a module
 				case 'update':
-					if(isset($_POST['sidebar_id']) && isset($_POST['module_id'])) {
+					if(isset($_POST['sidebar_id']) and isset($_POST['module_id'])) {
 						k2sbm::update_module($_POST['sidebar_id'], $_POST['module_id']);
 					} else {
 						k2sbm::set_error_text('Missing sidebar and module ids');
@@ -154,7 +154,7 @@ class k2sbm {
 
 				// Remove a module from the sidebar
 				case 'remove':
-					if(isset($_POST['sidebar_id']) && isset($_POST['module_id'])) {
+					if(isset($_POST['sidebar_id']) and isset($_POST['module_id'])) {
 						k2sbm::remove_module($_POST['sidebar_id'], $_POST['module_id']);
 					} else {
 						k2sbm::set_error_text('Missing sidebar and module ids');
@@ -389,7 +389,7 @@ class k2sbm {
 	function load_modules() {
 		global $k2sbm_active_modules, $k2sbm_disabled_modules;
 
-		if(empty($k2sbm_active_modules) && empty($k2sbm_disabled_modules)) {
+		if(empty($k2sbm_active_modules) and empty($k2sbm_disabled_modules)) {
 			$k2sbm_active_modules = get_option('k2sbm_modules_active');
 			$k2sbm_disabled_modules = get_option('k2sbm_modules_disabled');
 		}
@@ -465,14 +465,14 @@ class k2sbm {
 		$tmp_modules = array_values($k2sbm_active_modules);
 
 		// Check if a module with this callback is active
-		for($i = 0; $i < count($tmp_modules) && !$active; $i++) {
-			for($j = 0; $j < count($tmp_modules[$i]) && !$active; $j++) {
+		for($i = 0; $i < count($tmp_modules) and !$active; $i++) {
+			for($j = 0; $j < count($tmp_modules[$i]) and !$active; $j++) {
 				$current_module = $tmp_modules[$i][$j];
 
 				// We can only check if the module can be displayed if $wp_query is set
 				// Otherwise, just assume it can. Ugly, but true.
 				if($k2sbm_registered_modules[$current_module->type]['callback'] == $callback
-					&& (!$wp_query || $current_module->canDisplay())
+					and (!$wp_query or $current_module->canDisplay())
 				) {
 					$active = true;
 				}
@@ -550,7 +550,7 @@ class k2sbm {
 		// Get all the files from the directory
 		while(($file = $dir->read()) !== false) {
 			// Check the file is a module file
-			if(is_file($directory_path . $file) && preg_match('/^(.+)\.php$/i', $file)) {
+			if(is_file($directory_path . $file) and preg_match('/^(.+)\.php$/i', $file)) {
 				// Include the file
 				require_once($directory_path . $file);
 			}
@@ -720,7 +720,7 @@ class k2sbm {
 			foreach($modules as $module) {
 				// If this module has a CSS file to show, and will be shown on this page
 				// then get the file
-				if($module->output['css_file'] && $module->canDisplay()) {
+				if($module->output['css_file'] and $module->canDisplay()) {
 					$css_files[] = $module->output['css_file'];
 				}
 			}
@@ -925,7 +925,7 @@ class k2sbmModule {
 		// Handle default control stuff
 
 		// Handle the module name form
-		if(isset($_POST['module_name']) && trim((string)$_POST['module_name']) != '') {
+		if(isset($_POST['module_name']) and trim((string)$_POST['module_name']) != '') {
 			$this->name = stripslashes((string)$_POST['module_name']);
 		} else {
 			k2sbm::set_error_text('You must specify a valid module name');
@@ -1025,20 +1025,20 @@ class k2sbmModule {
 	function canDisplay() {
 		global $post;
 
-		return ($this->display['home'] && is_home())
-			|| ($this->display['archives'] && is_archive())
-			|| ($this->display['post'] && is_single() && (
+		return ($this->display['home'] and is_home())
+			or ($this->display['archives'] and is_archive())
+			or ($this->display['post'] and is_single() and (
 				   !$this->display['post_id']['ids']
-				|| ($this->display['post_id']['show'] == 'show' && $this->display['post_id']['ids'][$post->ID])
-				|| ($this->display['post_id']['show'] == 'hide' && !$this->display['post_id']['ids'][$post->ID]))
+				or ($this->display['post_id']['show'] == 'show' and $this->display['post_id']['ids'][$post->ID])
+				or ($this->display['post_id']['show'] == 'hide' and !$this->display['post_id']['ids'][$post->ID]))
 			)
-			|| ($this->display['search'] && is_search())
-			|| ($this->display['pages'] && is_page() && (
+			or ($this->display['search'] and is_search())
+			or ($this->display['pages'] and is_page() and (
 				   !$this->display['page_id']['ids']
-				|| ($this->display['page_id']['show'] == 'show' && $this->display['page_id']['ids'][$post->ID])
-				|| ($this->display['page_id']['show'] == 'hide' && !$this->display['page_id']['ids'][$post->ID]))
+				or ($this->display['page_id']['show'] == 'show' and $this->display['page_id']['ids'][$post->ID])
+				or ($this->display['page_id']['show'] == 'hide' and !$this->display['page_id']['ids'][$post->ID]))
 			)
-			|| ($this->display['error'] && (is_404() || !($post || have_posts()))
+			or ($this->display['error'] and (is_404() or !($post or have_posts()))
 		);
 	}
 
@@ -1232,7 +1232,7 @@ function unregister_widget_control($name, $callback) {
 /* Check if this is a direct request & load accordingly **************************************************************/
 
 // Fix for PHP CGI
-if(!isset($_SERVER['SCRIPT_FILENAME']) || strpos($_SERVER['SCRIPT_FILENAME'], 'php.cgi') == strlen($_SERVER['SCRIPT_FILENAME']) - 7) {
+if(!isset($_SERVER['SCRIPT_FILENAME']) or strpos($_SERVER['SCRIPT_FILENAME'], 'php.cgi') == strlen($_SERVER['SCRIPT_FILENAME']) - 7) {
 	$_SERVER['SCRIPT_FILENAME'] = $_SERVER['PATH_TRANSLATED'];
 }
 

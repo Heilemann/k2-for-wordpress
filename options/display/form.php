@@ -66,7 +66,7 @@
 							$scheme_files[] = $file;
 					}
 				}
-				if ($scheme_dir || $scheme_files) {
+				if ($scheme_dir or $scheme_files) {
 					foreach($scheme_files as $scheme_file)
 				 		echo '<option value="' . $scheme_file . '">' . $scheme_file . '</option>';
 				}

@@ -10,7 +10,7 @@
 
 <?php return; } } ?>
 
-	<?php if (($comments) || ('open' == $post->comment_status)) : $shownavigation = 'yes'; ?>
+	<?php if (($comments) or ('open' == $post->comment_status)) : $shownavigation = 'yes'; ?>
 
 	<div class="comments">
 
@@ -82,7 +82,7 @@
 		</ol> <!-- END #pinglist -->
 		<?php } ?>
 		
-		<?php /* Comments open, but empty */ if (!isset($counter) && ('open' == $post->comment_status)) { ?> 
+		<?php /* Comments open, but empty */ if (!isset($counter) and ('open' == $post->comment_status)) { ?> 
 		<ol id="commentlist">
 			<li id="leavecomment">
 				<?php _e('No Comments','k2_domain'); ?>
@@ -90,7 +90,7 @@
 		</ol>
 		<?php } ?>
 		
-		<?php /* Comments closed */ if (('open' != $post->comment_status) && is_single()) { ?>
+		<?php /* Comments closed */ if (('open' != $post->comment_status) and is_single()) { ?>
 			<div><?php _e('Comments are currently closed.','k2_domain'); ?></div>
 		<?php } ?>
 
@@ -102,7 +102,7 @@
 	<div class="comments">
 		<h4 id="respond" class="reply"><?php if (isset($_GET['jal_edit_comments'])) { _e('Edit Your Comment','k2_domain'); } else { _e('Leave a Reply','k2_domain'); } ?></h4>
 		
-		<?php if (get_option('comment_registration') && !$user_ID) { ?>
+		<?php if (get_option('comment_registration') and !$user_ID) { ?>
 		
 			<p><?php printf(__('You must <a href="%s">login</a> to post a comment.','k2_domain'), get_option('siteurl') . '/wp-login.php?redirect_to=' . get_permalink()) ?></p>
 		

@@ -14,7 +14,7 @@ require(TEMPLATEPATH . '/options/app/tools.php');
 
 // Install and update K2 if necessary
 global $options_revision;
-if (!get_option('k2optionsrevision') || get_option('k2optionsrevision') < $options_revision) {
+if (!get_option('k2optionsrevision') or get_option('k2optionsrevision') < $options_revision) {
 	installk2::installer();
 }
 
@@ -39,7 +39,7 @@ require(TEMPLATEPATH . '/options/display/headers.php');
 
 // Sidebar Modules for K2
 // Only bootstrap if not activating a plugin & no other plugin is installed for handling sidebars
-if(!function_exists('register_sidebar')	&& !(basename($_SERVER['SCRIPT_FILENAME']) == 'plugins.php' && $_GET['action'] == 'activate')) {
+if(!function_exists('register_sidebar')	and !(basename($_SERVER['SCRIPT_FILENAME']) == 'plugins.php' and $_GET['action'] == 'activate')) {
 	require(TEMPLATEPATH . '/options/app/sbm.php');
 	k2sbm::wp_bootstrap();
 }

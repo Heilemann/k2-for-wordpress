@@ -6,7 +6,7 @@ function findrandompicture() {
 	$picture_dir = @ dir($path);
 	if ($picture_dir) {
 		while (($file = $picture_dir->read()) !== false) {
-			if (!preg_match('|^\.+$|', $file) && !preg_match('|^CVS$|', $file) && !preg_match('|^\.|', $file)) {
+			if (!preg_match('|^\.+$|', $file) and !preg_match('|^CVS$|', $file) and !preg_match('|^\.|', $file)) {
 				$picture_files[] = $file;
 			}
 		}
@@ -22,13 +22,13 @@ function k2uploadupdate() {
  	if ($_POST['k2headertextalignment'] != "") { update_option('k2headertextalignment', $_POST['k2headertextalignment']); }
  	if ($_POST['k2headertextfontsize'] != "") { update_option('k2headertextfontsize', $_POST['k2headertextfontsize']); }
   	if ($_POST['backgroundcolor'] != "") { $backgroundcolor = substr(str_replace("#","", $_POST['backgroundcolor']),0,6); update_option('k2headerbackgroundcolor', "#".$backgroundcolor); }  
-  	if ($_POST['brightcolor'] != "" && ($_POST['brightcolor'] != get_option('k2headertextcolor_bright'))) { update_option('k2headertextcolor_bright', $_POST['brightcolor']); }
-	if ($_POST['darkcolor'] != "" && ($_POST['darkcolor'] != get_option('k2headertextcolor_dark'))) { update_option('k2headertextcolor_dark', $_POST['darkcolor']); }
+  	if ($_POST['brightcolor'] != "" and ($_POST['brightcolor'] != get_option('k2headertextcolor_bright'))) { update_option('k2headertextcolor_bright', $_POST['brightcolor']); }
+	if ($_POST['darkcolor'] != "" and ($_POST['darkcolor'] != get_option('k2headertextcolor_dark'))) { update_option('k2headertextcolor_dark', $_POST['darkcolor']); }
 	if (get_option('k2imagerandomfeature') == "") { update_option('k2imagerandomfeature', 'n'); }
-	if ((($_POST['userandomfeature'] != get_option('k2imagerandomfeature')) && ($_POST['userandomfeature']))) { update_option('k2imagerandomfeature', $_POST['userandomfeature']); }
-	if ($_FILES['picture']['name'] != "" && $_FILES['picture']['size'] > 0) { $target_path =  $path; move_uploaded_file($_FILES['picture']['tmp_name'], $target_path.$_FILES['picture']['name']); }
+	if ((($_POST['userandomfeature'] != get_option('k2imagerandomfeature')) and ($_POST['userandomfeature']))) { update_option('k2imagerandomfeature', $_POST['userandomfeature']); }
+	if ($_FILES['picture']['name'] != "" and $_FILES['picture']['size'] > 0) { $target_path =  $path; move_uploaded_file($_FILES['picture']['tmp_name'], $target_path.$_FILES['picture']['name']); }
 	if ($_POST['upload_activate'] == "active") { update_option('k2header_picture', $_FILES['picture']['name']); }
-	if (($_POST['k2header_picture'] != "") && (trim($_POST['k2header_picture']) != trim(get_option('k2header_picture'))) && ($_POST['upload_activate'] != "active")) { $k2header_picture = $_POST['k2header_picture']; update_option('k2header_picture', $k2header_picture, '',''); }
+	if (($_POST['k2header_picture'] != "") and (trim($_POST['k2header_picture']) != trim(get_option('k2header_picture'))) and ($_POST['upload_activate'] != "active")) { $k2header_picture = $_POST['k2header_picture']; update_option('k2header_picture', $k2header_picture, '',''); }
 }
 
 function k2_picupload_admin() {
@@ -109,12 +109,12 @@ function uploadmenu() {
 			$picture_dir = @ dir($path);
 			if ($picture_dir) {
 				while(($file = $picture_dir->read()) !== false) {
-					if (!preg_match('|^\.+$|', $file) && !preg_match('|^CVS$|', $file) && !preg_match('|^\.|', $file)) {
+					if (!preg_match('|^\.+$|', $file) and !preg_match('|^CVS$|', $file) and !preg_match('|^\.|', $file)) {
 						$picture_files[] = $file;
 					}
 				}
 
-				if ($picture_dir || $picture_files) {
+				if ($picture_dir or $picture_files) {
 					foreach ($picture_files as $picture_file) {
 						echo "<option value=\"".$picture_file."\">".$picture_file."</option>";
 					}
