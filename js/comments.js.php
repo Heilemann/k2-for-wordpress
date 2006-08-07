@@ -64,4 +64,5 @@ function initComment() {
 	$('error').hide();
 }
 
-Event.observe(window, 'load', initComment, false);
+//Event.observe(window, 'load', initComment, false);
+new FastInit(initComment);
