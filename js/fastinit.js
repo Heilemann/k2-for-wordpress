@@ -12,7 +12,7 @@ Object.extend(FastInit, {
 	},
 	actions : $A([]),
 	addOnLoad : function(func) {
-		if(!func || typeof func != 'function') return;
+		if(!func or typeof func != 'function') return;
 		FastInit.actions.push(func);
 	}
 });
