@@ -67,7 +67,7 @@ class k2sbm {
 	 * The function to bootstrap for the direct interface
 	 **/
 	function direct_bootstrap() {
-		global $k2sbm_registered_modules, $k2sbm_active_modules, $k2sbm_disabled_modules, $k2sbm_error_text;
+		global $k2sbm_registered_modules, $k2sbm_registered_sidebars, $k2sbm_disabled_modules, $k2sbm_error_text;
 
 		// You MUST be an admin to access this stuff
 		auth_redirect();
@@ -111,7 +111,10 @@ class k2sbm {
 			switch($_GET['action']) {
 				// List of the modules in the sidebar
 				case 'list':
-					$tmp_modules = $k2sbm_active_modules;
+					foreach($k2sbm_registered_sidebars as $sidebar) {
+						$tmp_modules[] = $sidebar->modules;
+					}
+
 					$tmp_modules[] = $k2sbm_disabled_modules;
 
 					if($tmp_modules) {
@@ -237,7 +240,7 @@ class k2sbm {
 			<div class="wrap">You have no modules or Widgets installed &amp; activated.</div>
 		<?php
 		} else {
-			include(TEMPLATEPATH . '/options/display/sbm/modules.php');
+			include(TEMPLATEPATH . '/options/display/modules.php');
 		}
 	}
 
@@ -972,7 +975,7 @@ class k2sbmModule {
 
 		// Display the generic edit form
 		extract(array('module' => $this));
-		include(TEMPLATEPATH . '/options/display/sbm/edit-module-form.php');
+		include(TEMPLATEPATH . '/options/display/sbm-ajax/edit-module-form.php');
 
 		// Get the base module details
 		$base_module = $k2sbm_registered_modules[$this->type];
@@ -1004,7 +1007,7 @@ class k2sbmModule {
 	function displayPostList() {
 		// Display the generic post list
 		extract(array('module' => $this));
-		include(TEMPLATEPATH . '/options/display/sbm/edit-module-posts-form.php');
+		include(TEMPLATEPATH . '/options/display/sbm-ajax/edit-module-posts-form.php');
 	?>
 		
 	<?php
@@ -1016,7 +1019,7 @@ class k2sbmModule {
 	function displayPageList() {
 		// Display the generic post list
 		extract(array('module' => $this));
-		include(TEMPLATEPATH . '/options/display/sbm/edit-module-pages-form.php');
+		include(TEMPLATEPATH . '/options/display/sbm-ajax/edit-module-pages-form.php');
 	}
 
 	/**
