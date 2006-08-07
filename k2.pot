@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2006-04-13 21:06+0800\n"
-"PO-Revision-Date: 2006-08-07 02:09+0800\n"
+"PO-Revision-Date: 2006-08-07 12:27+0800\n"
 "Last-Translator: Safirul Alredha <zeo@unic.net.my>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -92,6 +92,10 @@ msgstr ""
 msgid "Duplicate comment detected; it looks as though you've already said that!"
 msgstr ""
 
+#: comments-ajax.php:83
+msgid "Sorry, you can only post a new comment once every 15 seconds. Slow down cowboy."
+msgstr ""
+
 #: comments.php:3
 msgid "Please do not load this page directly. Thanks!"
 msgstr ""
@@ -125,40 +129,40 @@ msgstr ""
 msgid "Trackback Address"
 msgstr ""
 
-#: comments.php:45
+#: comments.php:33
 msgid "What is this?"
 msgstr ""
 
-#: comments.php:45
+#: comments.php:33
 msgid "Gravatar Icon"
 msgstr ""
 
-#: comments.php:46
-#: comments.php:51
-#: comments.php:79
-#: comments.php:87
+#: comments.php:34
+#: comments.php:39
+#: comments.php:64
+#: comments.php:72
 msgid "Permanent Link to this Comment"
 msgstr ""
 
-#: comments.php:51
-#: comments.php:87
+#: comments.php:39
+#: comments.php:72
 #, php-format
 msgid "%s ago."
 msgstr ""
 
-#: comments.php:52
-#: comments.php:88
+#: comments.php:40
+#: comments.php:73
 #, php-format
 msgid "%1$s at %2$s"
 msgstr ""
 
-#: comments.php:52
-#: comments.php:88
+#: comments.php:40
+#: comments.php:73
 msgid "M jS, Y"
 msgstr ""
 
-#: comments.php:55
-#: comments.php:93
+#: comments.php:43
+#: comments.php:78
 #: page-archives.php:31
 #: page-comments.php:19
 #: page.php:15
@@ -167,97 +171,97 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: comments.php:63
+#: comments.php:51
 msgid "Your comment is awaiting moderation."
 msgstr ""
 
-#: comments.php:83
+#: comments.php:68
 #, php-format
 msgid "%1$s on %2$s"
 msgstr ""
 
-#: comments.php:84
+#: comments.php:69
 msgid "Trackback"
 msgstr ""
 
-#: comments.php:84
+#: comments.php:69
 msgid "Pingback"
 msgstr ""
 
-#: comments.php:105
+#: comments.php:88
 msgid "No Comments"
 msgstr ""
 
-#: comments.php:111
+#: comments.php:94
 msgid "Comments are currently closed."
 msgstr ""
 
-#: comments.php:120
+#: comments.php:103
 msgid "Edit Your Comment"
 msgstr ""
 
-#: comments.php:120
+#: comments.php:103
 msgid "Leave a Reply"
 msgstr ""
 
-#: comments.php:124
+#: comments.php:107
 #, php-format
 msgid "You must <a href=\"%s\">login</a> to post a comment."
 msgstr ""
 
-#: comments.php:136
+#: comments.php:119
 #, php-format
 msgid "Logged in as %s."
 msgstr ""
 
-#: comments.php:136
+#: comments.php:119
 msgid "Log out of this account"
 msgstr ""
 
-#: comments.php:136
+#: comments.php:119
 msgid "Logout"
 msgstr ""
 
-#: comments.php:140
+#: comments.php:123
 #, php-format
 msgid "Welcome back <strong>%s</strong>"
 msgstr ""
 
-#: comments.php:141
+#: comments.php:124
 msgid "Change"
 msgstr ""
 
-#: comments.php:142
+#: comments.php:125
 msgid "Close"
 msgstr ""
 
-#: comments.php:148
+#: comments.php:132
 msgid "Name"
 msgstr ""
 
-#: comments.php:148
-#: comments.php:151
+#: comments.php:132
+#: comments.php:135
 msgid "(required)"
 msgstr ""
 
-#: comments.php:151
+#: comments.php:135
 msgid "Mail"
 msgstr ""
 
-#: comments.php:151
+#: comments.php:135
 msgid "will not be published"
 msgstr ""
 
-#: comments.php:154
+#: comments.php:138
 msgid "Website"
 msgstr ""
 
-#: comments.php:157
+#: comments.php:141
 #, php-format
 msgid "<strong>XHTML:</strong> You can use these tags %s:"
 msgstr ""
 
-#: comments.php:165
+#: comments.php:149
 msgid "Submit"
 msgstr ""
 
@@ -277,7 +281,7 @@ msgid "%d queries. %.4f seconds."
 msgstr ""
 
 #: functions.php:27
-#: options/display/form.php:14
+#: options/display/form.php:20
 msgid "K2 Options"
 msgstr ""
 
@@ -459,12 +463,12 @@ msgid "RSS Feed for Asides"
 msgstr ""
 
 #: sidebar.php:111
-#: modules/asides.php:14
+#: modules/asides.php:17
 msgid "Permanent Link to this aside"
 msgstr ""
 
 #: sidebar.php:111
-#: modules/asides.php:14
+#: modules/asides.php:17
 msgid "edit"
 msgstr ""
 
@@ -666,217 +670,221 @@ msgstr ""
 msgid "K2 Options have been updated"
 msgstr ""
 
-#: options/display/form.php:18
-#: options/display/form.php:208
+#: options/display/form.php:15
+msgid "K2 Options have been uninstall"
+msgstr ""
+
+#: options/display/form.php:24
+#: options/display/form.php:214
 #: options/display/headers.php:61
 #: options/display/headers.php:184
 msgid "Update Options"
 msgstr ""
 
-#: options/display/form.php:21
+#: options/display/form.php:27
 msgid "K2 Scheme"
 msgstr ""
 
-#: options/display/form.php:31
-#: options/display/form.php:38
+#: options/display/form.php:37
+#: options/display/form.php:44
 msgid "No Scheme"
 msgstr ""
 
-#: options/display/form.php:71
+#: options/display/form.php:77
 msgid "Choose the Custom Style you would like to use on this site."
 msgstr ""
 
-#: options/display/form.php:72
+#: options/display/form.php:78
 msgid "Formatting to be used for displaying the style info. Use: <strong>style</strong> for style name, <strong>stylelink</strong> for the style's homepage, <strong>author</strong> for author, <strong>site</strong> for author's site, <strong>version</strong> for version and <strong>comments</strong> for style comments."
 msgstr ""
 
-#: options/display/form.php:74
+#: options/display/form.php:80
 msgid "Outputs:"
 msgstr ""
 
-#: options/display/form.php:78
+#: options/display/form.php:84
 msgid "Live Search"
 msgstr ""
 
-#: options/display/form.php:81
+#: options/display/form.php:87
 msgid "Enable Livesearch (default)"
 msgstr ""
 
-#: options/display/form.php:83
+#: options/display/form.php:89
 msgid "Disable Livesearch"
 msgstr ""
 
-#: options/display/form.php:84
+#: options/display/form.php:90
 #, php-format
 msgid "Livesearch is a javascript powered search-as-you-type solution. %s."
 msgstr ""
 
-#: options/display/form.php:84
+#: options/display/form.php:90
 msgid "Would you like to know more?"
 msgstr ""
 
-#: options/display/form.php:89
+#: options/display/form.php:95
 msgid "Rolling Archives"
 msgstr ""
 
-#: options/display/form.php:92
+#: options/display/form.php:98
 msgid "Enable Rolling Archives (default)"
 msgstr ""
 
-#: options/display/form.php:94
+#: options/display/form.php:100
 msgid "Disable Rolling Archives"
 msgstr ""
 
-#: options/display/form.php:95
+#: options/display/form.php:101
 msgid "Rolling Archives allow you to page back into the archives without reloading the page."
 msgstr ""
 
-#: options/display/form.php:100
+#: options/display/form.php:106
 msgid "AJAX Commenting"
 msgstr ""
 
-#: options/display/form.php:103
+#: options/display/form.php:109
 msgid "Enable AJAX Commenting (default)"
 msgstr ""
 
-#: options/display/form.php:105
+#: options/display/form.php:111
 msgid "Disable AJAX Commenting"
 msgstr ""
 
-#: options/display/form.php:109
+#: options/display/form.php:115
 msgid "Width Type"
 msgstr ""
 
-#: options/display/form.php:112
+#: options/display/form.php:118
 msgid "Fixed Width (default)"
 msgstr ""
 
-#: options/display/form.php:114
+#: options/display/form.php:120
 msgid "Flexible Width"
 msgstr ""
 
-#: options/display/form.php:116
+#: options/display/form.php:122
 msgid "Flexible Width has the K2 page adjust itself according to the width of the browser, up to a maximum and down to a minimum width, so as to not entirely break readability at very high resolutions. Fixed width fixes K2's page width at 780px."
 msgstr ""
 
-#: options/display/form.php:116
+#: options/display/form.php:122
 msgid "<em><strong>Beta Note:</strong> Doesn't work in Internet Explorer as far as I know. Suggestions are welcome.</em>"
 msgstr ""
 
-#: options/display/form.php:121
+#: options/display/form.php:127
 msgid "Asides"
 msgstr ""
 
-#: options/display/form.php:124
+#: options/display/form.php:130
 msgid "Inline Asides"
 msgstr ""
 
-#: options/display/form.php:126
+#: options/display/form.php:132
 msgid "Sidebar Asides"
 msgstr ""
 
-#: options/display/form.php:127
+#: options/display/form.php:133
 msgid "Determines whether Asides (if they are active) are shown inline or on the sidebar."
 msgstr ""
 
-#: options/display/form.php:127
+#: options/display/form.php:133
 msgid "<em><strong>Beta Note:</strong> 'Sidebar Asides' doesn't work properly if there's more than one category assigned to the Asides entries. Suggestions are welcome.</em>"
 msgstr ""
 
-#: options/display/form.php:131
+#: options/display/form.php:137
 msgid "Asides Category"
 msgstr ""
 
-#: options/display/form.php:140
-#: options/display/form.php:147
+#: options/display/form.php:146
+#: options/display/form.php:153
 msgid "No Asides"
 msgstr ""
 
-#: options/display/form.php:154
+#: options/display/form.php:160
 #, php-format
 msgid "Just select a category and it will be displayed using %s."
 msgstr ""
 
-#: options/display/form.php:154
+#: options/display/form.php:160
 msgid "Matt's Asides Technique"
 msgstr ""
 
-#: options/display/form.php:158
+#: options/display/form.php:164
 msgid "Asides Number"
 msgstr ""
 
-#: options/display/form.php:161
+#: options/display/form.php:167
 msgid "Set the number of Asides to show in the Sidebar. Defaults to 3."
 msgstr ""
 
-#: options/display/form.php:165
+#: options/display/form.php:171
 msgid "About Text"
 msgstr ""
 
-#: options/display/form.php:169
+#: options/display/form.php:175
 msgid "Enter a blurp about yourself here, and it will show up on the frontpage. Deleting the content disables the about blurp."
 msgstr ""
 
-#: options/display/form.php:173
+#: options/display/form.php:179
 msgid "Blog?"
 msgstr ""
 
-#: options/display/form.php:177
+#: options/display/form.php:183
 msgid "The text on the first tab in the header navigation."
 msgstr ""
 
-#: options/display/form.php:181
+#: options/display/form.php:187
 msgid "Archives Page"
 msgstr ""
 
-#: options/display/form.php:184
+#: options/display/form.php:190
 msgid "Enable the K2 Archives page"
 msgstr ""
 
-#: options/display/form.php:185
+#: options/display/form.php:191
 msgid "Enabling this checkbox will create an Archives Page, which will show up in your blog menu as the first page."
 msgstr ""
 
-#: options/display/form.php:191
+#: options/display/form.php:197
 msgid "Set Extended Live Archive"
 msgstr ""
 
-#: options/display/form.php:194
+#: options/display/form.php:200
 msgid "Setup ELA for K2 Archives page"
 msgstr ""
 
-#: options/display/form.php:195
+#: options/display/form.php:201
 #, php-format
 msgid "Set the options of Arnaud's brilliant %s for K2."
 msgstr ""
 
-#: options/display/form.php:195
+#: options/display/form.php:201
 msgid "Find out more about ELA"
 msgstr ""
 
-#: options/display/form.php:200
-#: options/display/form.php:202
+#: options/display/form.php:206
+#: options/display/form.php:208
 msgid "Uninstall K2"
 msgstr ""
 
-#: options/display/form.php:203
+#: options/display/form.php:209
 msgid "Having trouble with K2, or you have decided to \"go another direction\" with your site style? Fine, we don't care... be that way. I promised myself I wouldn't cry..."
 msgstr ""
 
-#: options/display/form.php:214
+#: options/display/form.php:220
 #: options/display/headers.php:189
 #: options/display/sbm/modules.php:93
 #, php-format
 msgid "Help to be had at the %1$s or in the %2$s."
 msgstr ""
 
-#: options/display/form.php:214
+#: options/display/form.php:220
 #: options/display/headers.php:189
 #: options/display/sbm/modules.php:93
 msgid "K2 Support Forums"
 msgstr ""
 
-#: options/display/form.php:214
+#: options/display/form.php:220
 #: options/display/headers.php:189
 #: options/display/sbm/modules.php:93
 msgid "K2 Documentation"

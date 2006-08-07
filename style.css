@@ -563,16 +563,16 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	}
 
 .comments #error {
-	width: 100%;
-	text-align: center;
-	padding: 1px 0;
-	margin: 5px 0;
+	line-height: 2.0;
+	padding: 5px;
+	color: #FF0000;
 	background-color: #FFFF99;
 }
 
 .comments #commentload {
 	padding-top: 3px;
 	float: right;
+	vertical-align: middle;
 }
 
 .comments form {

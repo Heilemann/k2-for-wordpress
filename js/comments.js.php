@@ -21,6 +21,7 @@
 
 function AjaxComment(form) {
 	var url = '<?php bloginfo("template_url"); ?>/comments-ajax.php';
+	if (!$('commentlist')) { new Insertion.Before('pinglist', '<ol id="commentlist"></ol>'); };
 	new Ajax.Updater( {
 		success: 'commentlist',
 		failure: 'error'
@@ -56,9 +57,8 @@ function AjaxComment(form) {
 }
 
 function initComment() {
-	if (!$('commentlist')) { new Insertion.After('metalinks', '<ol id="commentlist"></ol>'); };
 	$('commentform').onsubmit = function() { AjaxComment(this); return false; };
-	new Insertion.Before('submit', '<p id="error"></p>');
+	new Insertion.After('comment', '<span id="error"></span>');
 	new Insertion.After('submit','<img src="<?php bloginfo("template_url"); ?>/images/spinner.gif" id="commentload" />');
 	$('commentload').hide();
 	$('error').hide();

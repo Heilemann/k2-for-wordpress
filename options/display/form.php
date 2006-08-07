@@ -10,6 +10,12 @@
 	</div>
 <?php endif; ?>
 
+<?php if (isset($_POST['uninstall'])) : ?>
+	<div class="updated">
+		<p><?php _e('K2 Options have been uninstall','k2_domain'); ?></p>
+	</div>
+<?php endif;?>
+
 <div class="wrap">
 <h2><?php _e('K2 Options','k2_domain'); ?></h2>
 <form name="dofollow" action="" method="post">

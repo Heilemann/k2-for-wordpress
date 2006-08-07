@@ -16,7 +16,7 @@
 
 		<h4><?php printf(__('%1$s %2$s to &#8220;%3$s&#8221;','k2_domain'), '<span id="comments">' . get_comments_number() . '</span>', ($post->comment_count == 1) ? __('Response','k2_domain'): __('Responses','k2_domain'), get_the_title() ) ?></h4>
 
-		<div class="metalinks" id="metalinks">
+		<div class="metalinks">
 			<span class="commentsrsslink"><?php comments_rss_link(__('Feed for this Entry','k2_domain')); ?></span>
 			<?php if ('open' == $post-> ping_status) { ?><span class="trackbacklink"><a href="<?php trackback_url() ?>" title="<?php _e('Copy this URI to trackback this entry.','k2_domain'); ?>"><?php _e('Trackback Address','k2_domain'); ?></a></span><?php } ?>
 		</div>

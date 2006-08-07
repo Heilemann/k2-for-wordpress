@@ -1,7 +1,7 @@
 <?php
-require_once('../../../wp-config.php');
-header('Content-type: ' . get_option('html_type') . '; charset=' . get_option('blog_charset'));
-global $comment, $comments, $post, $wpdb, $user_ID, $user_identity, $user_email, $user_url;
+
+require_once(dirname(__FILE__)."/../../../wp-config.php");
+nocache_headers();
 
 function fail($s) {
 	header('HTTP/1.0 500 Internal Server Error');
@@ -62,7 +62,28 @@ $commentdata = compact('comment_post_ID', 'comment_author', 'comment_author_emai
 		$dupe .= ") AND comment_content = '$comment_content' LIMIT 1";
 	if ( $wpdb->get_var($dupe) )
 		fail(__('Duplicate comment detected; it looks as though you\'ve already said that!','k2_domain'));
-                
+
+	// Simple flood-protection
+	if ( ! isset($comment_author_IP) )
+		$comment_author_IP = $_SERVER['REMOTE_ADDR'];         
+	if ( ! isset($comment_date) )
+		$comment_date = current_time('mysql');
+	if ( ! isset($comment_date_gmt) )
+		$comment_date_gmt = gmdate('Y-m-d H:i:s', strtotime($comment_date) );
+	if ( ! isset($comment_approved) )
+		$comment_approved = 1;
+
+	$comment_user_domain = apply_filters('pre_comment_user_domain', gethostbyaddr($comment_author_IP) );
+
+	if ( $lasttime = $wpdb->get_var("SELECT comment_date_gmt FROM $wpdb->comments WHERE comment_author_IP = '$comment_author_IP' OR comment_author_email = '$comment_author_email' ORDER BY comment_date DESC LIMIT 1") ) {
+		$time_lastcomment = mysql2date('U', $lasttime);
+		$time_newcomment  = mysql2date('U', $comment_date_gmt);
+		if ( ($time_newcomment - $time_lastcomment) < 15 ) {
+			do_action('comment_flood_trigger', $time_lastcomment, $time_newcomment);
+			fail(__('Sorry, you can only post a new comment once every 15 seconds. Slow down cowboy.','k2_domain') );
+		}
+	}
+	               
 $new_comment_ID = wp_new_comment($commentdata);
 
 if ( !$user_ID ) :
