@@ -87,7 +87,7 @@
 			
 					<p><small><?php _e('Choose the Custom Style you would like to use on this site.','k2_domain'); ?></small></p>
 
-					<p><?php _e('Formatting to be used for displaying the style info. Use: <strong>style</strong> for style name, <strong>stylelink</strong> for the style\'s homepage, <strong>author</strong> for author, <strong>site</strong> for author\'s site, <strong>version</strong> for version and <strong>comments</strong> for style comments.','k2_domain'); ?></p>
+					<p><?php _e('Formatting to be used for displaying the style info. Use: <strong>%style%</strong> for style name, <strong>%stylelink%</strong> for the style\'s homepage, <strong>%author%</strong> for author, <strong>%site%</strong> for author\'s site, <strong>%version%</strong> for version and <strong>%comments%</strong> for style comments.','k2_domain'); ?></p>
 
 					<p><textarea name="format" id="format" rows="3" cols="80"><?php echo(stripslashes(get_option('k2styleinfo_format'))); ?></textarea></p>
 
