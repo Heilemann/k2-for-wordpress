@@ -1,7 +1,11 @@
 <?php
 
 function rss_sidebar_module($args) {
-	require_once(ABSPATH . WPINC . '/rss-functions.php');
+	if(file_exists(ABSPATH . WPINC . '/rss.php')) {
+		require_once(ABSPATH . WPINC . '/rss.php');
+	} else {
+		require_once(ABSPATH . WPINC . '/rss-functions.php');
+	}
 
 	extract($args);
 
