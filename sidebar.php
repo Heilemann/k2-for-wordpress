@@ -198,3 +198,4 @@
 <?php } ?>
 
 </div>
+<div class="clear"></div>
