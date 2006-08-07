@@ -141,7 +141,7 @@ sbmDnDBox.prototype = {
 	},
 
 	listElementClick: function(evt) {
-		var moduleListElement = Event.element(evt or window.event).parentNode;
+		var moduleListElement = Event.element(evt || window.event).parentNode;
 		var moduleId = moduleListElement.id.match(/^sbm\_(.+)$/)[1];
 
 		sbmManager.optionsForm.showDesc();
@@ -214,7 +214,7 @@ sbmToggleLink.prototype = {
 	initialize: function(id, attachId) {
 		this.toggleLink = $(id);
 		this.attachElement = $(attachId);
-		this.toggleText = this.toggleLink.firstChild.textContent or this.toggleLink.innerText;
+		this.toggleText = this.toggleLink.firstChild.textContent || this.toggleLink.innerText;
 
 		this.toggleLink.innerHTML = this.toggleText + " &rarr;";
 		this.toggleLink.onclick = this.onToggleClick.bindAsEventListener(this);
@@ -233,7 +233,7 @@ sbmToggleLink.prototype = {
 
 		this.toggled = !this.toggled;
 
-		if(this.attachElement.contentURL and !this.attachElement.contentLoaded) {
+		if(this.attachElement.contentURL && !this.attachElement.contentLoaded) {
 			this.attachElement.innerHTML = "Loading...";
 
 			new Ajax.Updater(this.attachElement, this.attachElement.contentURL, {
@@ -342,7 +342,7 @@ sbmTab.prototype = {
 		this.tab.className = "selected";
 		this.control.style.display = "block";
 
-		if(this.tabBox.oldTab != null and this.tabBox.oldTab != this)
+		if(this.tabBox.oldTab != null && this.tabBox.oldTab != this)
 			this.tabBox.oldTab.hide();
 
 		this.tabBox.oldTab = this;
@@ -435,7 +435,7 @@ sbmOptionsForm.prototype = {
 
 		// Setup remove buttons
 		for(var i = 0; i < buttons.length; i++) {
-			if(buttons[i].type == "button" and buttons[i].className.indexOf("remove") != -1) {
+			if(buttons[i].type == "button" && buttons[i].className.indexOf("remove") != -1) {
 				buttons[i].onclick = function(e) {
 					self.optionsForm.onremove();
 
