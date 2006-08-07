@@ -57,7 +57,7 @@
 
 <?php if (isset($_POST['uninstall'])) : ?>
 	<div class="updated">
-		<p><?php _e('K2 Options have been uninstall','k2_domain'); ?></p>
+		<p><?php _e('K2 Options have been uninstalled','k2_domain'); ?></p>
 	</div>
 <?php endif;?>
 
