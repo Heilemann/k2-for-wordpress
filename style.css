@@ -321,11 +321,9 @@ body.staticpage .itemtext h4 {
 	}
 
 body.staticpage .editlink {
-	float: right;
-	}
-
-body.staticpage .comments .editlink {
-	float: none;
+	position: absolute;
+	right: 0px;
+	margin-top: 10px;
 	}
 
 .editlink a {
