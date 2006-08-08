@@ -130,7 +130,7 @@ function uploadmenu() {
 	<th scope="row"><?php _e('Background color','k2_domain'); ?></th>
 	<td>
 		<input type="text" name="backgroundcolor" value="<?php echo strtoupper(get_option('k2headerbackgroundcolor')); ?>">
-		<p><small><?php _e('Define the backgroundcolor for the header (default is #3371A3).','k2_domain'); ?></small></p>
+		<p><small><?php _e('Define the background color for the header (default is #3371A3).','k2_domain'); ?></small></p>
 </tr>
   
 <tr valign="top">

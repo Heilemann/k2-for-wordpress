@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2006-04-13 21:06+0800\n"
-"PO-Revision-Date: 2006-08-07 19:27+0800\n"
+"PO-Revision-Date: 2006-08-08 13:56+0800\n"
 "Last-Translator: Safirul Alredha <zeo@unic.net.my>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -281,7 +281,7 @@ msgid "%d queries. %.4f seconds."
 msgstr ""
 
 #: functions.php:27
-#: options/display/form.php:65
+#: options/display/form.php:59
 msgid "K2 Options"
 msgstr ""
 
@@ -487,7 +487,7 @@ msgid "RSS Feed for flickr"
 msgstr ""
 
 #: sidebar.php:167
-#: options/display/sbm/edit-module-form.php:36
+#: options/display/sbm-ajax/edit-module-form.php:36
 msgid "Archives"
 msgstr ""
 
@@ -598,15 +598,15 @@ msgstr ""
 msgid "on post"
 msgstr ""
 
-#: modules/rss.php:20
+#: modules/rss.php:24
 msgid "Syndicate as RSS"
 msgstr ""
 
-#: modules/rss.php:39
+#: modules/rss.php:43
 msgid "Untitled"
 msgstr ""
 
-#: modules/rss.php:52
+#: modules/rss.php:56
 msgid "No feed items, the feed may currently be unavaliable."
 msgstr ""
 
@@ -643,33 +643,33 @@ msgstr ""
 msgid "View all posts in %s"
 msgstr ""
 
-#: options/app/sbm.php:222
-#: options/display/sbm/modules.php:7
+#: options/app/sbm.php:225
+#: options/display/modules.php:7
 msgid "K2 Sidebar Modules"
 msgstr ""
 
-#: options/app/sbm.php:295
-#: options/app/sbm.php:341
+#: options/app/sbm.php:298
+#: options/app/sbm.php:344
 #, php-format
 msgid "Sidebar %d"
 msgstr ""
 
-#: options/app/sbm.php:345
+#: options/app/sbm.php:348
 #, php-format
 msgid " %d"
 msgstr ""
 
-#: options/app/sbm.php:369
+#: options/app/sbm.php:372
 msgid "Sidebar "
 msgstr ""
 
 #: options/display/form.php:9
-#: options/display/form.php:81
+#: options/display/form.php:75
 msgid "No Scheme"
 msgstr ""
 
 #: options/display/form.php:40
-#: options/display/form.php:171
+#: options/display/form.php:165
 msgid "No Asides"
 msgstr ""
 
@@ -681,355 +681,434 @@ msgstr ""
 msgid "K2 Options have been updated"
 msgstr ""
 
-#: options/display/form.php:60
-msgid "K2 Options have been uninstalled"
-msgstr ""
-
-#: options/display/form.php:72
-#: options/display/form.php:247
-#: options/display/headers.php:61
-#: options/display/headers.php:184
+#: options/display/form.php:66
+#: options/display/form.php:241
+#: options/display/headers.php:62
+#: options/display/headers.php:185
 msgid "Update Options"
 msgstr ""
 
-#: options/display/form.php:77
+#: options/display/form.php:71
 msgid "K2 Scheme"
 msgstr ""
 
-#: options/display/form.php:88
+#: options/display/form.php:82
 msgid "Choose the Custom Style you would like to use on this site."
 msgstr ""
 
-#: options/display/form.php:90
-msgid "Formatting to be used for displaying the style info. Use: <strong>style</strong> for style name, <strong>stylelink</strong> for the style's homepage, <strong>author</strong> for author, <strong>site</strong> for author's site, <strong>version</strong> for version and <strong>comments</strong> for style comments."
+#: options/display/form.php:84
+msgid "Formatting to be used for displaying the style info. Use: <strong>%style%</strong> for style name, <strong>%stylelink%</strong> for the style's homepage, <strong>%author%</strong> for author, <strong>%site%</strong> for author's site, <strong>%version%</strong> for version and <strong>%comments%</strong> for style comments."
 msgstr ""
 
-#: options/display/form.php:94
+#: options/display/form.php:88
 msgid "Outputs:"
 msgstr ""
 
-#: options/display/form.php:99
+#: options/display/form.php:93
 msgid "Live Search"
 msgstr ""
 
-#: options/display/form.php:103
+#: options/display/form.php:97
 msgid "Enable Livesearch (default)"
 msgstr ""
 
-#: options/display/form.php:106
+#: options/display/form.php:100
 msgid "Disable Livesearch"
 msgstr ""
 
-#: options/display/form.php:108
+#: options/display/form.php:102
 #, php-format
 msgid "Livesearch is a javascript powered search-as-you-type solution. %s."
 msgstr ""
 
-#: options/display/form.php:108
+#: options/display/form.php:102
 msgid "Would you like to know more?"
 msgstr ""
 
-#: options/display/form.php:113
+#: options/display/form.php:107
 msgid "Rolling Archives"
 msgstr ""
 
-#: options/display/form.php:117
+#: options/display/form.php:111
 msgid "Enable Rolling Archives (default)"
 msgstr ""
 
-#: options/display/form.php:120
+#: options/display/form.php:114
 msgid "Disable Rolling Archives"
 msgstr ""
 
-#: options/display/form.php:122
+#: options/display/form.php:116
 msgid "Rolling Archives allow you to page back into the archives without reloading the page."
 msgstr ""
 
-#: options/display/form.php:127
+#: options/display/form.php:121
 msgid "AJAX Commenting"
 msgstr ""
 
-#: options/display/form.php:131
+#: options/display/form.php:125
 msgid "Enable AJAX Commenting (default)"
 msgstr ""
 
-#: options/display/form.php:134
+#: options/display/form.php:128
 msgid "Disable AJAX Commenting"
 msgstr ""
 
-#: options/display/form.php:139
+#: options/display/form.php:133
 msgid "Width Type"
 msgstr ""
 
-#: options/display/form.php:143
+#: options/display/form.php:137
 msgid "Fixed Width (default)"
 msgstr ""
 
-#: options/display/form.php:146
+#: options/display/form.php:140
 msgid "Flexible Width"
 msgstr ""
 
-#: options/display/form.php:148
+#: options/display/form.php:142
 msgid "Flexible Width has the K2 page adjust itself according to the width of the browser, up to a maximum and down to a minimum width, so as to not entirely break readability at very high resolutions. Fixed width fixes K2's page width at 780px."
 msgstr ""
 
-#: options/display/form.php:148
+#: options/display/form.php:142
 msgid "<em><strong>Beta Note:</strong> Doesn't work in Internet Explorer as far as I know. Suggestions are welcome.</em>"
 msgstr ""
 
-#: options/display/form.php:153
+#: options/display/form.php:147
 msgid "Asides"
 msgstr ""
 
-#: options/display/form.php:157
+#: options/display/form.php:151
 msgid "Inline Asides"
 msgstr ""
 
-#: options/display/form.php:160
+#: options/display/form.php:154
 msgid "Sidebar Asides"
 msgstr ""
 
-#: options/display/form.php:162
+#: options/display/form.php:156
 msgid "Determines whether Asides (if they are active) are shown inline or on the sidebar."
 msgstr ""
 
-#: options/display/form.php:167
+#: options/display/form.php:161
 msgid "Asides Category"
 msgstr ""
 
-#: options/display/form.php:178
+#: options/display/form.php:172
 #, php-format
 msgid "Just select a category and it will be displayed using %s."
 msgstr ""
 
-#: options/display/form.php:178
+#: options/display/form.php:172
 msgid "Matt's Asides Technique"
 msgstr ""
 
-#: options/display/form.php:183
+#: options/display/form.php:177
 msgid "Asides Number"
 msgstr ""
 
-#: options/display/form.php:188
+#: options/display/form.php:182
 msgid "Set the number of Asides to show in the Sidebar. Defaults to 3."
 msgstr ""
 
-#: options/display/form.php:193
+#: options/display/form.php:187
 msgid "About Text"
 msgstr ""
 
-#: options/display/form.php:198
+#: options/display/form.php:192
 msgid "Enter a blurp about yourself here, and it will show up on the frontpage. Deleting the content disables the about blurp."
 msgstr ""
 
-#: options/display/form.php:203
+#: options/display/form.php:197
 msgid "Blog?"
 msgstr ""
 
-#: options/display/form.php:208
+#: options/display/form.php:202
 msgid "The text on the first tab in the header navigation."
 msgstr ""
 
-#: options/display/form.php:213
+#: options/display/form.php:207
 msgid "Archives Page"
 msgstr ""
 
-#: options/display/form.php:217
+#: options/display/form.php:211
 msgid "Enable the K2 Archives page"
 msgstr ""
 
-#: options/display/form.php:219
+#: options/display/form.php:213
 msgid "Enabling this checkbox will create an Archives Page, which will show up in your blog menu as the first page."
 msgstr ""
 
-#: options/display/form.php:225
+#: options/display/form.php:219
 msgid "Set Extended Live Archive"
 msgstr ""
 
-#: options/display/form.php:228
+#: options/display/form.php:222
 msgid "Setup ELA for K2 Archives page"
 msgstr ""
 
-#: options/display/form.php:230
+#: options/display/form.php:224
 #, php-format
 msgid "Set the options of Arnaud's brilliant %s for K2."
 msgstr ""
 
-#: options/display/form.php:230
+#: options/display/form.php:224
 msgid "Find out more about ELA"
 msgstr ""
 
-#: options/display/form.php:236
-#: options/display/form.php:239
+#: options/display/form.php:230
+#: options/display/form.php:233
 msgid "Uninstall K2"
 msgstr ""
 
-#: options/display/form.php:241
+#: options/display/form.php:235
 msgid "Having trouble with K2, or you have decided to \"go another direction\" with your site style? Fine, we don't care... be that way. I promised myself I wouldn't cry..."
 msgstr ""
 
-#: options/display/form.php:253
-#: options/display/headers.php:189
-#: options/display/sbm/modules.php:93
+#: options/display/form.php:247
+#: options/display/headers.php:190
+#: options/display/modules.php:93
 #, php-format
 msgid "Help to be had at the %1$s or in the %2$s."
 msgstr ""
 
-#: options/display/form.php:253
-#: options/display/headers.php:189
-#: options/display/sbm/modules.php:93
+#: options/display/form.php:247
+#: options/display/headers.php:190
+#: options/display/modules.php:93
 msgid "K2 Support Forums"
 msgstr ""
 
-#: options/display/form.php:253
-#: options/display/headers.php:189
-#: options/display/sbm/modules.php:93
+#: options/display/form.php:247
+#: options/display/headers.php:190
+#: options/display/modules.php:93
 msgid "K2 Documentation"
+msgstr ""
+
+#: options/display/headers.php:35
+msgid "K2 Custom Header"
+msgstr ""
+
+#: options/display/headers.php:43
+#, php-format
+msgid "<strong>ERROR:</strong><p>%s is missing.</p><p>Please add this directory at your earliest convenience.</p><p>Remember to also <strong>chmod 777</strong> the headers directory.</p>"
 msgstr ""
 
 #: options/display/headers.php:52
 msgid "Options has been updated."
 msgstr ""
 
-#: options/display/headers.php:59
-msgid "K2 Upload Picture Options"
+#: options/display/headers.php:60
+msgid "K2 Custom Header Options"
 msgstr ""
 
-#: options/display/headers.php:65
+#: options/display/headers.php:66
 msgid "Upload Picture"
 msgstr ""
 
-#: options/display/headers.php:73
+#: options/display/headers.php:70
+msgid "Choose the picture you would like to upload to the server"
+msgstr ""
+
+#: options/display/headers.php:74
 msgid "Active on upload"
 msgstr ""
 
-#: options/display/headers.php:79
+#: options/display/headers.php:78
+msgid "Automatically activate the uploaded picture as the active picture"
+msgstr ""
+
+#: options/display/headers.php:80
 msgid "Select random picture"
 msgstr ""
 
-#: options/display/headers.php:89
+#: options/display/headers.php:83
+msgid "Yes"
+msgstr ""
+
+#: options/display/headers.php:84
+msgid "No"
+msgstr ""
+
+#: options/display/headers.php:85
+msgid "Show random header picture"
+msgstr ""
+
+#: options/display/headers.php:90
 msgid "Manage Pictures"
 msgstr ""
 
-#: options/display/headers.php:129
+#: options/display/headers.php:102
+#: options/display/headers.php:108
+#: options/display/headers.php:206
+msgid "No Picture"
+msgstr ""
+
+#: options/display/headers.php:126
+msgid "Select the picture you want to show at the frontpage"
+msgstr ""
+
+#: options/display/headers.php:130
 msgid "Background color"
 msgstr ""
 
-#: options/display/headers.php:136
+#: options/display/headers.php:133
+msgid "Define the background color for the header (default is #3371A3)."
+msgstr ""
+
+#: options/display/headers.php:137
 msgid "Set header text alignment"
 msgstr ""
 
-#: options/display/headers.php:149
+#: options/display/headers.php:141
+msgid "Left"
+msgstr ""
+
+#: options/display/headers.php:142
+msgid "Center"
+msgstr ""
+
+#: options/display/headers.php:143
+msgid "Right"
+msgstr ""
+
+#: options/display/headers.php:145
+msgid "Set the alignment of the text over the header image."
+msgstr ""
+
+#: options/display/headers.php:150
 msgid "Set header text size"
 msgstr ""
 
-#: options/display/headers.php:157
+#: options/display/headers.php:153
+msgid "Set the font size in 'px' of the text over the header image."
+msgstr ""
+
+#: options/display/headers.php:158
 msgid "Set header text color"
 msgstr ""
 
-#: options/display/headers.php:169
+#: options/display/headers.php:162
+msgid "Bright"
+msgstr ""
+
+#: options/display/headers.php:163
+msgid "Dark"
+msgstr ""
+
+#: options/display/headers.php:165
+msgid "Set the color of the text over the header image."
+msgstr ""
+
+#: options/display/headers.php:170
 msgid "Define Bright & Dark text color"
 msgstr ""
 
-#: options/display/sbm/edit-module-form.php:5
-msgid "Module's options updated"
+#: options/display/headers.php:174
+msgid "Bright Color"
 msgstr ""
 
-#: options/display/sbm/edit-module-form.php:9
-#: options/display/sbm/modules.php:22
-msgid "Module's name"
+#: options/display/headers.php:178
+msgid "Dark Color"
 msgstr ""
 
-#: options/display/sbm/edit-module-form.php:14
-#: options/display/sbm/modules.php:27
-msgid "Module's type"
-msgstr ""
-
-#: options/display/sbm/edit-module-form.php:19
-msgid "Advanced options"
-msgstr ""
-
-#: options/display/sbm/edit-module-form.php:22
-msgid "Show module's title"
-msgstr ""
-
-#: options/display/sbm/edit-module-form.php:26
-msgid "Related CSS file"
-msgstr ""
-
-#: options/display/sbm/edit-module-form.php:34
-msgid "Homepage"
-msgstr ""
-
-#: options/display/sbm/edit-module-form.php:38
-msgid "Single posts"
-msgstr ""
-
-#: options/display/sbm/edit-module-form.php:38
-#: options/display/sbm/edit-module-form.php:44
-msgid "Detailed options"
-msgstr ""
-
-#: options/display/sbm/edit-module-form.php:42
-msgid "Search results"
-msgstr ""
-
-#: options/display/sbm/edit-module-form.php:44
-msgid "Static pages"
-msgstr ""
-
-#: options/display/sbm/edit-module-form.php:48
-msgid "Error page"
-msgstr ""
-
-#: options/display/sbm/edit-module-pages-form.php:14
-#: options/display/sbm/edit-module-posts-form.php:14
-msgid "Check all"
-msgstr ""
-
-#: options/display/sbm/edit-module-pages-form.php:14
-#: options/display/sbm/edit-module-posts-form.php:14
-msgid "Uncheck all"
-msgstr ""
-
-#: options/display/sbm/edit-module-pages-form.php:17
-#: options/display/sbm/edit-module-posts-form.php:17
-msgid "Show on checked"
-msgstr ""
-
-#: options/display/sbm/edit-module-pages-form.php:18
-#: options/display/sbm/edit-module-posts-form.php:18
-msgid "Hide on checked"
-msgstr ""
-
-#: options/display/sbm/edit-module-pages-form.php:21
-msgid "No pages"
-msgstr ""
-
-#: options/display/sbm/edit-module-posts-form.php:21
-msgid "No posts"
-msgstr ""
-
-#: options/display/sbm/modules.php:11
-#: options/display/sbm/modules.php:16
+#: options/display/modules.php:11
+#: options/display/modules.php:16
 msgid "Add module"
 msgstr ""
 
-#: options/display/sbm/modules.php:12
-#: options/display/sbm/modules.php:52
+#: options/display/modules.php:12
+#: options/display/modules.php:52
 msgid "Module's options"
 msgstr ""
 
-#: options/display/sbm/modules.php:36
+#: options/display/modules.php:22
+#: options/display/sbm-ajax/edit-module-form.php:9
+msgid "Module's name"
+msgstr ""
+
+#: options/display/modules.php:27
+#: options/display/sbm-ajax/edit-module-form.php:14
+msgid "Module's type"
+msgstr ""
+
+#: options/display/modules.php:36
 msgid "Add to"
 msgstr ""
 
-#: options/display/sbm/modules.php:41
-#: options/display/sbm/modules.php:80
+#: options/display/modules.php:41
+#: options/display/modules.php:80
 msgid "Disabled modules"
 msgstr ""
 
-#: options/display/sbm/modules.php:55
+#: options/display/modules.php:55
 msgid "Select a module to view it's options here"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-form.php:5
+msgid "Module's options updated"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-form.php:19
+msgid "Advanced options"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-form.php:22
+msgid "Show module's title"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-form.php:26
+msgid "Related CSS file"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-form.php:34
+msgid "Homepage"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-form.php:38
+msgid "Single posts"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-form.php:38
+#: options/display/sbm-ajax/edit-module-form.php:44
+msgid "Detailed options"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-form.php:42
+msgid "Search results"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-form.php:44
+msgid "Static pages"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-form.php:48
+msgid "Error page"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-pages-form.php:14
+#: options/display/sbm-ajax/edit-module-posts-form.php:14
+msgid "Check all"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-pages-form.php:14
+#: options/display/sbm-ajax/edit-module-posts-form.php:14
+msgid "Uncheck all"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-pages-form.php:17
+#: options/display/sbm-ajax/edit-module-posts-form.php:17
+msgid "Show on checked"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-pages-form.php:18
+#: options/display/sbm-ajax/edit-module-posts-form.php:18
+msgid "Hide on checked"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-pages-form.php:21
+msgid "No pages"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-posts-form.php:21
+msgid "No posts"
 msgstr ""
 
