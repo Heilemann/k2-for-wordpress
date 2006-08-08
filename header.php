@@ -10,7 +10,7 @@
  	<meta name="description" content="<?php bloginfo('description'); ?>" />
   
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
-	<link rel="stylesheet" type="text/css" media="print" href="<?php bloginfo('template_url'); ?>/print.css" />
+	<link rel="stylesheet" type="text/css" media="print" href="<?php bloginfo('template_url'); ?>/css/print.css" />
 	<?php /* Custom Style */ if (get_option('k2scheme') != '') { ?>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php k2info('scheme'); ?>" />
 	<?php } ?>
