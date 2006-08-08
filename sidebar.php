@@ -1,7 +1,7 @@
 
 <hr />
 
-<div class="secondary<?php /* Flexible Width? */ if (get_option('k2widthtype') == 0) echo ' flex'; ?> ">
+<div class="secondary">
 
 <?php /* WordPress Widget Support */ if (function_exists('dynamic_sidebar') and dynamic_sidebar()) { } else { ?>
 

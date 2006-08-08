@@ -99,5 +99,5 @@ Livesearch.prototype = {
 	}
 }
 
-//Event.observe(window, "load", function() { new Livesearch('searchform', 's', 'dynamic_content', 'current_content', '<?php bloginfo('template_url'); ?>/rollingarchive.php', '&s=', 'searchform', 'searchload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'searchreset'); } , false);
-new FastInit( function() { new Livesearch('searchform', 's', 'dynamic_content', 'current_content', '<?php bloginfo('template_url'); ?>/rollingarchive.php', '&s=', 'searchform', 'searchload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'searchreset'); } );
+//Event.observe(window, "load", function() { new Livesearch('searchform', 's', 'dynamic-content', 'current-content', '<?php bloginfo('template_url'); ?>/rollingarchive.php', '&s=', 'searchform', 'searchload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'searchreset'); } , false);
+new FastInit( function() { new Livesearch('searchform', 's', 'dynamic-content', 'current-content', '<?php bloginfo('template_url'); ?>/rollingarchive.php', '&s=', 'searchform', 'searchload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'searchreset'); } );

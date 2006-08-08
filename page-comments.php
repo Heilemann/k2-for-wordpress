@@ -7,7 +7,7 @@
 <div class="content">
 	
 	<div id="primary">
-		<div id="current_content">
+		<div id="current-content">
 			<div>
 
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
@@ -33,7 +33,7 @@
 			</div>
 		</div>
 
-		<div id="dynamic_content"></div>
+		<div id="dynamic-content"></div>
 	</div>
 
 	<?php get_sidebar(); ?>

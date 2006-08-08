@@ -7,7 +7,6 @@ Author: Various Artists
 Author URI: http://binarybonsai.com
 
 CSS Documentation: http://k2.stikipad.com/docs/show/CSS+Overview
-K2 uses Fam Fam Fam Silk Icons: http://www.famfamfam.com/lab/icons/silk/
 */
 
 
@@ -45,17 +44,12 @@ body {
 	margin: 0 auto;
 	padding: 20px 0 10px;
 	position: relative;
-	/* The entire template's width is set in this class. */
 	width: 780px;
 	border: 1px solid #ddd;
 	border-top: none;
 	}
 
 * html #page { width: 770px } /* IE hack */
-
-body.flex #page { /* For the flexible-width setting. */
-	width: 98%;
-	}
 
 #header {
 	padding: 0;
@@ -81,10 +75,6 @@ body.flex #page { /* For the flexible-width setting. */
 	color: #666;
 	position: relative;
 	}
-
-/* For the flexible-width setting. */
-body.flex #primary  { width: 65% } 
-.flex .secondary { width: 25% } 
 
 .comments {
 	text-align: left;
@@ -165,7 +155,7 @@ h1, h2, h3, h4 {
 	font-family: 'Trebuchet MS', Verdana, Sans-Serif;
 	}
 
-h1 { /* H1 is used for the title of your blog */
+h1 { /* H1 is the title in the header */
 	font-size: 3em;
 	font-weight: bold;
 	letter-spacing: -1px;
@@ -183,69 +173,59 @@ h1 a:hover {
 	text-decoration: underline;
 	}
 
-#header .description { /* Blog description, under blog title */
+#header .description { /* Description in header */
 	font-size: 1em;
 	margin: 0 40px;
-	display: inline; /* Checking for IE bug. If people start having problems with header width, then this is it */
 	}
 
-#staticheader { /* Used on static pages and archives */
+h2 { /* H2 is what kind of page you are on. Eg. 'Monthly Archive'. */
 	text-align: center;
-	margin: 20px 0 10px;
-	}
-
-.pagetitle {
-	text-align: center;
-	}
-
-.pagetitle h2 { /* H2 is what kind of page you are on. Eg. 'Monthly Archive'. */
 	font-size: 2.4em;
 	font-weight: bold;
 	letter-spacing: -1px;
-	display: inline;
 	}
 
 .secondary h2 { /* Secondary H2 is sidebar headlines */
-	font-size: 1.5em;
-	font-weight: normal;
-	padding: 0;
+	font-size: 1.5em !important;
+	font-weight: normal !important;
+	padding: 0 !important;
 	display: inline;
 	}
 
-#primary h3, #primary h4, .permalink #primary .aside h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
+#primary h3, #primary h4, .single #primary .category-asides h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
 	font-size: 2.4em;
 	font-weight: normal;
 	letter-spacing: -1px;
 	}
 
-#primary .itemtext h3 {
+#primary .entry-content h3 {
 	font-size: 1.8em;
 	font-weight: normal;
 	margin-top: 25px;
 	}
 
-#primary div.itemtext h4 {
+#primary .entry-content h4 {
 	font-size: 1.5em;
 	font-weight: normal;
 	margin-top: 25px;
 	}
 
-#primary .aside h3 {
+#primary .category-asides h3 {
 	font-size: 1.6em;
 	font-weight: normal;
 	}
 
-.itemhead {
+.entry-head {
 	margin-top: 10px;
 	}
 
-body.staticpage .itemtext h3 {
+body.page .entry-content h3 {
 	font-size: 1.7em;
 	display: block;
 	padding: 15px 0 0;
 	}
 
-body.staticpage .itemtext h4 {
+body.page .entry-content h4 {
 	font-size: 1.5em;
 	display: block;
 	padding: 15px 0 0;
@@ -267,23 +247,23 @@ body.staticpage .itemtext h4 {
 	font-weight: normal;
 	}
 
-#primary .item .itemhead .metalink, .comments #primary .metalink {
+#primary .hentry .entry-head .metalink, .comments #primary .metalink {
 	font-size: 1.8em;
 	letter-spacing: -1px;
 	text-transform: lowercase;
 	margin-left: 15px;
 	}
 
-#primary .aside .itemhead .metalink {
+#primary .category-asides .entry-head .metalink {
 	font-size: 1.4em;
 	}
 
-.permalink #primary .aside .itemtext {
+.single #primary .category-asides .entry-content {
 	font-size: 1.5em;
 	color: #999;
 	}
 
-.comments #primary .metalink {
+.comments-meta {
 	margin: 0 15px 0 0;
 	float: none;
 	}
@@ -301,18 +281,18 @@ body.staticpage .itemtext h4 {
 	right: 0;
 	}
 
-#primary .aside {
+#primary .category-asides {
 	padding: 8px;
 	margin: 0 4%;
 	}
 
-.secondary .aside {
+.secondary .category-asides {
 	margin: 0;
 	padding: 0 0 10px;
 	word-spacing: -1px;
 	}
 
-.secondary .aside .metalink {
+.secondary .category-asides .metalink {
 	padding-left: 0px;
 	}
 
@@ -320,13 +300,13 @@ body.staticpage .itemtext h4 {
 	margin-left: 10px;
 	}
 
-body.staticpage .editlink {
+body.page .entry-edit {
 	position: absolute;
-	right: 0px;
-	margin-top: 10px;
+	right: 0;
+	margin-top: -15px;
 	}
 
-.editlink a {
+.entry-edit a {
 	border: none;
 	padding: 2px;
 	padding-left: 23px;
@@ -335,21 +315,13 @@ body.staticpage .editlink {
 	height: 16px;
 	}
 
-.comments .editlink a {
+.comment-edit a {
 	border: none;
 	padding: 2px;
 	padding-left: 23px;
 	margin-left: 10px;
 	background: url('images/comment_edit.png') left center no-repeat;
 	height: 16px;
-	}
-
-.metalink a span {
-	display: none;
-	}
-
-.metalink a:hover span {
-	display: inline;
 	}
 
 h2, h2 a, h2 a:visited,
@@ -364,14 +336,14 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	text-decoration: none;
 	}
 
-.metadata { /* Time and category for blog entries */
+.entry-meta { /* Time and category for blog entries */
 	font-size: 1em;
 	display: block;
 	margin-top: 1px;
 	color: #bbb;
 	}
 
-.metadata a, .commentmetadata a {
+.entry-meta a, .comment-meta a {
 	color: #777;
 	}
 
@@ -392,7 +364,7 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	margin-left: 5px;
 	}
 
-.tagdata {
+.entry-tags {
 	display: block;
 	padding: 2px 0 2px 20px;
 	background: url('images/tag_blue.png') left center no-repeat;
@@ -400,39 +372,39 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 
 /*- Primary Contents */
 
-#primary .item {
+.hentry {
 	margin: 0;
 	padding: 5px 0 15px;
 	position: relative;
 	}
 
-#primary .item .itemtext {
+.entry-content {
 	font: 1.2em/1.8em 'Lucida Grande', Verdana, Arial, Sans-Serif;
 	text-align: justify;
 	color: #444;
 	}
 
-#primary .item .itemtext p,
-#primary .item .itemtext ul,
-#primary .item .itemtext ol,
-#primary .item .itemtext div,
-#primary .item .itemtext blockquote {
+.entry-content p,
+.entry-content ul,
+.entry-content ol,
+.entry-content div,
+.entry-content blockquote {
 	margin: 13px 0;
 	}
 
-#primary .aside .itemtext p,
-#primary .aside .itemtext ul,
-#primary .aside .itemtext ol,
-#primary .aside .itemtext div,
-#primary .aside .itemtext blockquote {
+.category-asides .entry-content p,
+.category-asides .entry-content ul,
+.category-asides .entry-content ol,
+.category-asides .entry-content div,
+.category-asides .entry-content blockquote {
 	margin: 5px 0;
 	}
 
-.permalink #primary .aside .itemtext p,
-.permalink #primary .aside .itemtext ul,
-.permalink #primary .aside .itemtext ol,
-.permalink #primary .aside .itemtext div,
-.permalink #primary .aside .itemtext blockquote {
+.single .category-asides .entry-content p,
+.single .category-asides .entry-content ul,
+.single .category-asides .entry-content ol,
+.single .category-asides .entry-content div,
+.single .category-asides .entry-content blockquote {
 	margin: 13px 0;
 	}
 
@@ -458,41 +430,50 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	padding: 2px;
 	}
 
-.comments #commentlist {
+.nopassword {
+	text-align: center;
+	}
+
+#commentlist {
 	margin: 0;
 	padding: 10px 0 20px;
 	position: relative;
 	}
 
-.comments #commentlist li {
+#commentlist li {
 	margin: 10px 0;
 	padding: 10px 10px 5px;
 	list-style: none;
 	}
 
-.comments #commentlist .commentmetadata {
+.comment-content {
+	padding: 10px 0;
+	font-size: 1.0em;
+	}
+
+.comment-meta {
 	padding: 2px 0 2px 20px;
 	background: url('images/time.png') left center no-repeat;
 	display: block;
 	}
 
-.comments #commentlist li img {
+#commentlist li img {
 	padding: 0;
 	border: none;
 	}
 
-.comments #commentlist li img.gravatar {
+#commentlist li img.gravatar {
 	float: right;
 	margin: -5px 0 0;
 	}
 
-.comments #commentlist li .commentauthor {
+#commentlist li .commentauthor {
 	font-size: 1.5em;
 	font-weight: bold;
 	letter-spacing: -1px;
 	}
 
-.comments #commentlist li .counter {
+#commentlist li .counter {
 	display: none;
 	font: normal 1.5em 'Century Gothic', 'Lucida Grande', Arial, Helvetica, Sans-Serif;
 	color: #999;
@@ -500,55 +481,54 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	width: 35px;
 	}
 
-.comments #commentlist li.authorcomment {
+li.byuser {
 	background: #f6f7f8;
 	}
 
-.comments #commentlist li.authorcomment blockquote {
+li.bypostauthor {
+	background: #eee;
+	}
+
+li.bypostauthor blockquote {
 	color: #333;
-	background: #f6f7f8 url('images/quote.png') no-repeat 10px 0;              
+	background: #eee url('images/quote.png') no-repeat 10px 0;              
 	}
 	 
-.comments #pinglist {
+#pinglist {
 	font-size: 1.2em;
 	padding: 0;
 	margin: 10px 0 10px;
 	background: #f6f7f8;
 	}
 
-.comments #pinglist li {
+#pinglist li {
 	margin-left: 40px;
 	padding: 7px 0;
 	list-style: none;
 	}
 
-.comments #pinglist li .commentauthor {
-	font-weight: bold;
-	display: block;
-	}
-
-.comments #pinglist li small {
+#pinglist li small {
 	font: .8em Arial, Sans-Serif;
 	display: block;
 	}
 
-.comments #pinglist li .counter {
+#pinglist li .counter {
 	display: none;
 	}
 
-.comments #pinglist li span.favatar img {
+#pinglist li span.favatar img {
 	margin-left: -25px;
 	border: none;
 	padding: 0;
 	float: left;
 	}
 
-.comments #pinglist li img {
+#pinglist li img {
 	padding: 0;
 	border: none;
 	}
 	
-.comments #leavecomment, .comments #loading {
+#leavecomment, .comments #loading {
 	text-align: center;
 	margin: 30px 0 20px !important;
 	color: #ddd;
@@ -641,7 +621,7 @@ a {
 	text-decoration: none;
 	}
 
-.itemtext a:visited {
+.entry-content a:visited {
 	color: #b41;
 	}
 
@@ -653,7 +633,7 @@ a {
 	padding: 0;
 	}
 
-#primary .itemtext img {
+#primary .entry-content img {
 	margin: 0 5px;
 	padding: 4px;
 	border: 1px solid #ccc;
@@ -773,12 +753,12 @@ img.wp-smiley {
 	}
 
 /*- Begin Lists */
-.itemtext ol, .itemtext ul {
+.entry-content ol, .entry-content ul {
 	padding: 0 0 0 35px;
 	margin: 0;
 	}
 
-.itemtext ol li, .itemtext ul li {
+.entry-content ol li, .entry-content ul li {
 	margin: 0 0 3px;
 	padding: 0;
 	}
@@ -999,9 +979,9 @@ div#brians-latest-comments small {
 	}
 
 /* Noteworthy */
-.noteworthy {                  
-        background: url('images/heart.png') no-repeat right center;
-        padding-right: 25px;
+.category-noteworthy h3.entry-title {
+	background: url('images/heart.png') no-repeat right center;
+	padding-right: 25px;
 	display: inline;
 }
 

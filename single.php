@@ -3,14 +3,14 @@
 <div class="content">
 	
 	<div id="primary">
-		<div id="current_content">
+		<div id="current-content">
 			<div>
 			<?php include (TEMPLATEPATH . '/theloop.php'); ?>
 			<?php comments_template(); ?>
 			</div>
 		</div>
 
-		<div id="dynamic_content"></div>
+		<div id="dynamic-content"></div>
 	</div>
 
 	<?php get_sidebar(); ?>

@@ -6,7 +6,7 @@
 	if (!empty($post->post_password)) { if ($_COOKIE['wp-postpass_' . COOKIEHASH] != $post->post_password) {
 ?>
 
-	<p class="center"><?php _e('This post is password protected. Enter the password to view comments.','k2_domain'); ?></p>
+	<p class="nopassword"><?php _e('This post is password protected. Enter the password to view comments.','k2_domain'); ?></p>
 
 <?php return; } } ?>
 
@@ -27,23 +27,25 @@
 
 		<?php /* Fetch Comments Only*/ if ($countComments != 0) { $counter = 1; ?>
 		<ol id="commentlist">
-			<?php foreach ($comments as $comment) { ?>
-			<?php if (get_comment_type() == "comment") { ?>
-			<li class="<?php /* Style differently if comment author is blog author */ if ($comment->comment_author_email == get_the_author_email()) { echo 'authorcomment'; } ?> item" id="comment-<?php comment_ID() ?>">
+
+			<?php foreach ($comments as $comment) { if (get_comment_type() == "comment") { ?>
+
+			<li class="<?php k2_comment_class() ?>" item" id="comment-<?php comment_ID() ?>">
 				<?php if (function_exists('gravatar')) { ?><a href="http://www.gravatar.com/" title="<?php _e('What is this?','k2_domain'); ?>"><img src="<?php gravatar("X", 32,  get_bloginfo('template_url')."/images/defaultgravatar.jpg"); ?>" class="gravatar" alt="<?php _e('Gravatar Icon','k2_domain'); ?>" /></a><?php } ?>
-				<a href="#comment-<?php comment_ID() ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $counter; $counter++; ?></a>
+				<a href="#comment-<?php comment_ID() ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $counter++; ?></a>
 				<span class="commentauthor"><?php comment_author_link() ?></span>
-				<small class="commentmetadata">
+
+				<small class="comment-meta">
 				<?php printf(('<a href="#comment-%1$s" title="%2$s">%3$s</a>'), 
 					get_comment_ID(),
 					function_exists('time_since') ?	sprintf(__('%s ago.','k2_domain'), time_since(abs(strtotime($comment->comment_date_gmt . " GMT")), time())) : sprintf(__('Permanent Link to this Comment','k2_domain')),
 					sprintf(__('%1$s at %2$s','k2_domain'),	get_comment_date(__('M jS, Y','k2_domain')), get_comment_time())            
 	        			); ?>
 				<?php if (function_exists('quoter_comment')) { quoter_comment(); } ?>
-				<?php if (function_exists('jal_edit_comment_link')) { jal_edit_comment_link(__('Edit','k2_domain'), '<span class="editlink">','</span>', '<em>(Editing)</em>'); } else { edit_comment_link(__('Edit','k2_domain'), '<span class="editlink">', '</span>'); } ?>
+				<?php if (function_exists('jal_edit_comment_link')) { jal_edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>'); } else { edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">', '</span>'); } ?>
 				</small>
 			
-				<div class="itemtext">
+				<div class="comment-content">
 					<?php comment_text() ?> 
 				</div>
 
@@ -51,7 +53,9 @@
 				<p class="alert"><strong><?php _e('Your comment is awaiting moderation.','k2_domain'); ?></strong></p>
 				<?php endif; ?>
 			</li>
+
 			<?php } } /* end for each comment */ ?>
+
 		</ol> <!-- END #commentlist -->
 		<?php } ?>
 		
@@ -61,9 +65,9 @@
 			<?php if (get_comment_type() != "comment") { ?>
 			<li class="item" id="comment-<?php comment_ID() ?>">
 				<?php if (function_exists('comment_favicon')) { ?><span class="favatar"><?php comment_favicon(); ?></span><?php } ?>
-				<a href="#comment-<?php comment_ID() ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>" class="counter"><?php echo $counter; $counter++; ?></a>
+				<a href="#comment-<?php comment_ID() ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>" class="counter"><?php echo $counter++; ?></a>
 				<span class="commentauthor"><?php comment_author_link() ?></span>
-				<small class="commentmetadata">				
+				<small class="comment-meta">				
 				<?php
 				printf(__('%1$s on %2$s','k2_domain'), 
 					'<span class="pingtype">' . get_k2_ping_type(__('Trackback','k2_domain'), __('Pingback','k2_domain')) . '</span>',
@@ -75,7 +79,7 @@
 					)
 				);
 				?>				
-				<?php if ($user_ID) { edit_comment_link(__('Edit','k2_domain'),'<span class="editlink">','</span>'); } ?>
+				<?php if ($user_ID) { edit_comment_link(__('Edit','k2_domain'),'<span class="comment-edit">','</span>'); } ?>
 				</small>
 			</li>
 			<?php } } /* end for each comment */ ?>

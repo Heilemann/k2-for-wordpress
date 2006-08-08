@@ -166,22 +166,22 @@ a, a:visited, .sidebar a:visited {
 	}
 
 /* Rolling Archives Slider */
-#current_content #pagetrack,
-#dynamic_content #nested_pagetrack {
+#current-content #pagetrack,
+#dynamic-content #nested_pagetrack {
 	margin: 0 auto;
 	width: 218px;
 	height: 18px;
 	background: url('sliderbgleft.png') no-repeat center left;
 }
 
-#current_content #pagetrackend,
-#dynamic_content #nested_pagetrackend {
+#current-content #pagetrackend,
+#dynamic-content #nested_pagetrackend {
 	height: 18px;
 	background: url('sliderbgright.png') no-repeat center right;
 	}
 
-#current_content #pagehandle,
-#dynamic_content #nested_pagehandle {
+#current-content #pagehandle,
+#dynamic-content #nested_pagehandle {
 	width: 18px;
 	height: 18px;
 	background: url('sliderhandle.png') no-repeat center center;

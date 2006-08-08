@@ -1,19 +1,14 @@
 <?php
 	// This is the loop, which fetches entries from your database.
-	// It is a delicate piece of machinery. Be gentle!
+	// It is a very delicate piece of machinery. Be gentle!
 
-	// Get Core WP Functions If Needed
-	if (isset($_GET['rolling'])) {
-		require (dirname(__FILE__).'/../../../wp-blog-header.php');
-	}
-
-	//print_r($wp_query->query);
+	// Get core WP functions when loaded dynamically
+	if (isset($_GET['rolling'])) { require (dirname(__FILE__).'/../../../wp-blog-header.php'); }
 ?>
 
-<div id="primarycontent">
+<div id="primarycontent" class="hfeed">
 
 	<?php /* Headlines for archives */ if ((!is_single() and !is_home()) or is_paged()) { ?>
-	<div class="pagetitle">
 		<h2>
 		<?php // Figure out what kind of page is being shown
 			if (is_category()) {
@@ -46,7 +41,6 @@
 				 printf(__('Archive Page %s','k2_domain'), $paged );
 			} ?>
 		</h2>
-	</div>
 	<?php } ?>
 
 	<?php if ((get_option('k2rollingarchives') == 0) and !is_single() and !is_home() and is_paged()) include (TEMPLATEPATH . '/navigation.php'); ?> 
@@ -87,12 +81,12 @@
 		if ($k2asidescategory and ($k2asidescheck == '0') and (in_category($k2asidescategory))) { 
 	    ?> 
 
-		<div id="post-<?php the_ID(); ?>" class="item aside">
-			<div class="itemhead">
+		<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
+			<div class="entry-head">
 				<h3 <?php /* Support for noteworthy plugin */ if($noteworthy_cat and in_category($noteworthy_cat)) { ?> class="noteworthy"<?php } ?>><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), strip_tags(get_the_title())) ?>'><?php the_title(); ?></a></h3>
 				<?php /* Support for noteworthy plugin */ if (($user_level == 10) and function_exists('nw_noteworthyLink')) nw_noteworthyLink($post->ID); ?>
 				
-				<small class="metadata">
+				<small class="entry-meta">
 					<span class="chronodata">
 						<?php /* Date & Author */
 						printf(__('Published %1$s %2$s','k2_domain'),
@@ -102,15 +96,15 @@
 
 					<?php /* Comments */ comments_popup_link('0&nbsp;<span>'.__('Comments','k2_domain').'</span>', '1&nbsp;<span>'.__('Comment','k2_domain').'</span>', '%&nbsp;<span>'.__('Comments','k2_domain').'</span>', 'commentslink', '<span class="commentslink">'.__('Closed','k2_domain').'</span>'); ?>
 
-					<?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="editlink">','</span>'); ?>
+					<?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="entry-edit">','</span>'); ?>
 
 					<?php /* Tags */ if (is_single() and function_exists('UTW_ShowTagsForCurrentPost')) { ?>
-						<span class="tagdata"><?php _e('Tags:','k2_domain'); ?> <?php UTW_ShowTagsForCurrentPost("commalist") ?>.</span>
+						<span class="entry-tags"><?php _e('Tags:','k2_domain'); ?> <?php UTW_ShowTagsForCurrentPost("commalist") ?>.</span>
 					<?php } ?>
 				</small>
 			</div>
 
-			<div class="itemtext">
+			<div class="entry-content">
 				<?php the_content(__('Continue reading','k2_domain') . " '" . the_title('', '', false) . "'"); ?>
 			</div>
 
@@ -118,32 +112,32 @@
 
 	<?php  /* Normal Entries */ } elseif (!(in_category($k2asidescategory))) { ?>
 
-		<div id="post-<?php the_ID(); ?>" class="item entry">
-			<div class="itemhead">
-				<h3 <?php /* Support for noteworthy plugin */ if ($noteworthy_cat and in_category($noteworthy_cat)) { ?> class="noteworthy"<?php } ?>><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), strip_tags(get_the_title())) ?>'><?php the_title(); ?></a></h3>
-				<?php /* Support for noteworthy plugin */ if (($user_level == 10) and function_exists('nw_noteworthyLink')) nw_noteworthyLink($post->ID); ?>
+		<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
+			<div class="entry-head">
+				<h3 class="entry-title"><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), strip_tags(get_the_title())) ?>'><?php the_title(); ?></a></h3>
+				<?php /* Support for Noteworthy plugin */ if (function_exists('nw_noteworthyLink')) { nw_noteworthyLink($post->ID); } ?>
 
-				<small class="metadata">
+				<small class="entry-meta">
 					<span class="chronodata">
 						<?php /* Date & Author */
 						printf(__('Published %1$s %2$s','k2_domain'),
-						($multiple_users ? sprintf(__('by %s','k2_domain'), '<a href="' . get_author_link(0, $authordata->ID, $authordata->user_nicename) .'">' . get_the_author() . '</a>') : ('')),
+						($multiple_users ? sprintf(__('by %s','k2_domain'), '<a href="' . get_author_link(0, $authordata->ID, $authordata->user_nicename) .' class="url fn">' . get_the_author() . '</a>') : ('')),
  							(function_exists('time_since') ? sprintf(__('%s ago','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")), time())) : get_the_time(__('F jS, Y','k2_domain')))); ?>
 					</span>
 
-					<?php /* Categories */ printf(__('<span class="categorydata">in %s.</span>','k2_domain'), k2_nice_category(', ', __(' and ','k2_domain')) ); ?>
+					<?php /* Categories */ printf(__('<span class="entry-category">in %s.</span>','k2_domain'), k2_nice_category(', ', __(' and ','k2_domain')) ); ?>
 
 					<?php /* Comments */ comments_popup_link('0&nbsp;<span>'.__('Comments','k2_domain').'</span>', '1&nbsp;<span>'.__('Comment','k2_domain').'</span>', '%&nbsp;<span>'.__('Comments','k2_domain').'</span>', 'commentslink', '<span class="commentslink">'.__('Closed','k2_domain').'</span>'); ?>
 				
-					<?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="editlink">','</span>'); ?>
+					<?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="entry-edit">','</span>'); ?>
 				
 					<?php /* Tags */ if (is_single() and function_exists('UTW_ShowTagsForCurrentPost')) { ?>
-						<span class="tagdata"><?php _e('Tags:','k2_domain'); ?> <?php UTW_ShowTagsForCurrentPost("commalist") ?>.</span>
+						<span class="entry-tags"><?php _e('Tags:','k2_domain'); ?> <?php UTW_ShowTagsForCurrentPost("commalist") ?>.</span>
 					<?php } ?>
 				</small>
 			</div>
 
-			<div class="itemtext">
+			<div class="entry-content">
 				<?php if (is_archive() or is_search() or (function_exists('is_tag') and is_tag())) {
 					the_excerpt();
 				} else {
@@ -171,7 +165,7 @@
 	</div>
 
 	<div class="item">
-		<div class="itemtext">
+		<div class="entry-content">
 			<p><?php _e('Oh no! You\'re looking for something which just isn\'t here! Fear not however, errors are to be expected, and luckily there are tools on the sidebar for you to use in your search for what you need.','k2_domain'); ?></p>
 		</div>
 	</div>
