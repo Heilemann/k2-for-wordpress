@@ -23,19 +23,19 @@ function rss_sidebar_module($args) {
 			if($feed_link) {
 				$title = '<a href="'. $feed_link .'" title="' . __('Syndicate as RSS') . '">' . $title . '</a>';
 			}
-
-			// Get the RSS feed icon
-			$icon = ($icon = sbm_get_option('icon')) ? $icon : get_bloginfo('template_directory') . '/images/feed.png';
-
-			// Add a link to the feed using the feed icon
-			$title = '<a href="' . sbm_get_option('feed') . '"><img src="' . $icon . '" alt="RSS Feed" /></a> ' . $title;
 		}
+
+		// Get the RSS feed icon
+		$icon = ($icon = sbm_get_option('icon')) ? $icon : get_bloginfo('template_directory') . '/images/feed.png';
 
 		echo($before_module . $before_title . $title . $after_title);
 
 		if($rss) {
 			$rss->items = array_slice($rss->items, 0, $num_items);
 		?>
+
+		<span class="metalink"><a href="<?php echo(sbm_get_option('feed')); ?>" title="<?php _e('RSS Feed','k2_domain'); ?>" class="feedlink"><img src="<?php echo($icon); ?>" alt="RSS" /></a></span>
+
 		<ul>
 			<?php
 				foreach($rss->items as $item):
@@ -53,7 +53,7 @@ function rss_sidebar_module($args) {
 		<?php
 		} else {
 		?>
-		<p><?php _e('No feed items, the feed may currently be unavaliable.'); ?></p>
+		<p><?php _e('No feed items, the feed may currently be unavaliable.','k2_domain'); ?></p>
 		<?php
 		}
 
