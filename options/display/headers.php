@@ -32,7 +32,7 @@ function k2uploadupdate() {
 }
 
 function k2_picupload_admin() {
-	add_submenu_page('themes.php','K2 Upload Options', 'K2 Upload Options', 5, 'options/display/headers.php', 'uploadmenu');
+	add_submenu_page('themes.php', __('K2 Custom Header','k2_domain'), __('K2 Custom Header','k2_domain'), 5, 'options/display/headers.php', 'uploadmenu');
 	}
 
 function uploadmenu() {
@@ -40,7 +40,7 @@ function uploadmenu() {
 	$error = FALSE;
 
 	if (!is_dir($path)) { 
-		echo '<div class="error "><strong>ERROR: <br />\'' . $path .'\'</strong> is missing.<br /><br />Please add this directory at your earliest convenience. <br /><br />Remember to also <b>chmod 777</b> the headers directory.</div>'; 
+		echo "<div class='error'>" . sprintf(__('<strong>ERROR:</strong><p>%s is missing.</p><p>Please add this directory at your earliest convenience.</p><p>Remember to also <strong>chmod 777</strong> the headers directory.</p>','k2_domain'), $path ) . "</div>\n"; 
 		$error = TRUE;
 	} 
 
@@ -49,44 +49,45 @@ function uploadmenu() {
 ?>
 
 <div class="updated">
-	<p><?php _e('Options has been updated.'); ?></p>
+	<p><?php _e('Options has been updated.','k2_domain'); ?></p>
 </div>
+
 <?php
 }
 ?>
 
 <div class="wrap">
-<h2><?php _e('K2 Upload Picture Options'); ?></h2>
+<h2><?php _e('K2 Custom Header Options','k2_domain'); ?></h2>
 <form name="dofollow" action="" method="post" enctype="multipart/form-data">
-<p class="submit"><input type="submit" name="Submit" value="<?php _e('Update Options') ?> &raquo;" /></p>
+<p class="submit"><input type="submit" name="Submit" value="<?php _e('Update Options','k2_domain') ?> &raquo;" /></p>
   <input type="hidden" name="action" value="<?php k2uploadupdate(); ?>" />
   <table width="700px" cellspacing="2" cellpadding="5" class="editform">
   <tr valign="top">
-	<th scope="row"><?php echo __('Upload Picture'); ?></th>
+	<th scope="row"><?php _e('Upload Picture','k2_domain'); ?></th>
 	<td>
 		<label for="k2upload_picture">
 		<input <?php echo ($error ? 'disabled' : ''); ?> type="file" name="picture">
-		<p><small>Choose the picture you would like to upload to the server</small><p>
+		<p><small><?php _e('Choose the picture you would like to upload to the server','k2_domain'); ?></small><p>
 	</td>
   </tr>
   <tr>
-	<th valign="top" scope="row"><?php echo __('Active on upload'); ?></th>
+	<th valign="top" scope="row"><?php _e('Active on upload','k2_domain'); ?></th>
 	<td>
 		<label for="k2upload_activate">
 		<input type="checkbox" name="upload_activate" value="active">
-		<p><small>Automatically activate the uploaded picture as the active picture</small>
+		<p><small><?php _e('Automatically activate the uploaded picture as the active picture','k2_domain'); ?></small></p>
   <tr valign="top">
-	<th scope="row"><?php echo __('Select random picture'); ?></th>
+	<th scope="row"><?php _e('Select random picture','k2_domain'); ?></th>
 	<td>
 		<label for="k2upload_picture">
-		Yes<input type="radio" name="userandomfeature" value="yes" <?php echo (get_option('k2imagerandomfeature') == "yes" ? 'checked' : '') ?> >&nbsp;
-		No<input type="radio" name="userandomfeature" value="no" <?php echo (get_option('k2imagerandomfeature') == "no" ? 'checked' : '') ?> >
-		<p><small>Show random header picture</small><p>
+		<?php _e('Yes','k2_domain'); ?><input type="radio" name="userandomfeature" value="yes" <?php echo (get_option('k2imagerandomfeature') == "yes" ? 'checked' : '') ?> >&nbsp;
+		<?php _e('No','k2_domain'); ?><input type="radio" name="userandomfeature" value="no" <?php echo (get_option('k2imagerandomfeature') == "no" ? 'checked' : '') ?> >
+		<p><small><?php _e('Show random header picture','k2_domain'); ?></small><p>
 	</td>
   </tr>
 
   <tr valign="top">
-	<th scope="row"><?php echo __('Manage Pictures'); ?></th>
+	<th scope="row"><?php _e('Manage Pictures','k2_domain'); ?></th>
 	<td>
 		<label for="k2manage_pictures">
 		<?php
@@ -98,13 +99,13 @@ function uploadmenu() {
 		}
 		else
 		{
-			$picture_title = 'No Picture';
+			$picture_title = __('No Picture','k2_domain');
 		}
 		?>
 		<select name="k2header_picture">
 			<option value="<?php echo get_option('k2header_picture')?>"><?php echo $picture_title; ?></option>
 			<option value="">----</option>
-			<option value="No Picture">No Picture</option>
+			<option value="No Picture"><?php _e('No Picture','k2_domain'); ?></option>
 			<?php
 			$picture_dir = @ dir($path);
 			if ($picture_dir) {
@@ -122,66 +123,66 @@ function uploadmenu() {
 			}
 			?>
 		</select>
-		<p><small>Select the picture you want to show at the frontpage</small></p>
+		<p><small><?php _e('Select the picture you want to show at the frontpage','k2_domain'); ?></small></p>
   </tr>
   
 <tr valign="top">
-	<th scope="row"><?php echo __('Background color'); ?></th>
+	<th scope="row"><?php _e('Background color','k2_domain'); ?></th>
 	<td>
 		<input type="text" name="backgroundcolor" value="<?php echo strtoupper(get_option('k2headerbackgroundcolor')); ?>">
-		<p><small>Define the backgroundcolor for the header (default is #3371A3).</small></p>
+		<p><small><?php _e('Define the backgroundcolor for the header (default is #3371A3).','k2_domain'); ?></small></p>
 </tr>
   
 <tr valign="top">
-	<th scope="row"><?php echo __('Set header text alignment'); ?></th>
+	<th scope="row"><?php _e('Set header text alignment','k2_domain'); ?></th>
 	<td>
 		<label for="k2upload_align">
     <select name="k2headertextalignment">
-      <option <?php echo (get_option('k2headertextalignment') == 'left' ? 'selected' : ''); ?> value="left">Left</option>
-      <option <?php echo (get_option('k2headertextalignment') == 'center' ? 'selected' : ''); ?> value="center">Center</option>
-      <option <?php echo (get_option('k2headertextalignment') == 'right' ? 'selected' : ''); ?> value="right">Right</option>
+      <option <?php echo (get_option('k2headertextalignment') == 'left' ? 'selected' : ''); ?> value="left"><?php _e('Left','k2_domain'); ?></option>
+      <option <?php echo (get_option('k2headertextalignment') == 'center' ? 'selected' : ''); ?> value="center"><?php _e('Center','k2_domain'); ?></option>
+      <option <?php echo (get_option('k2headertextalignment') == 'right' ? 'selected' : ''); ?> value="right"><?php _e('Right','k2_domain'); ?></option>
     </select>
-		<p><small>Set the alignment of the text over the header image.</small><p>
+		<p><small><?php _e('Set the alignment of the text over the header image.','k2_domain'); ?></small><p>
 	</td>
 </tr>
   
 <tr valign="top">
-	<th scope="row"><?php echo __('Set header text size'); ?></th>
+	<th scope="row"><?php _e('Set header text size','k2_domain'); ?></th>
 	<td>
-		<input type="text" size=2 name="k2headertextfontsize" value="<?php echo get_option('k2headertextfontsize'); ?>"> px.
-		<p><small>Set the font size in 'px' of the text over the header image.</small><p>
+		<input type="text" size="2" name="k2headertextfontsize" value="<?php echo get_option('k2headertextfontsize'); ?>"> px.
+		<p><small><?php _e('Set the font size in \'px\' of the text over the header image.','k2_domain'); ?></small><p>
 	</td>
 </tr>
 
 <tr valign="top">
-	<th scope="row"><?php echo __('Set header text color'); ?></th>
+	<th scope="row"><?php _e('Set header text color','k2_domain'); ?></th>
 	<td>
 		<label for="k2upload_color">
     <select name="k2headertextcolor">
-      <option <?php echo (get_option('k2headertextcolor_bright') == get_option('k2headertextcolor') ? 'selected' : ''); ?> value="<?php echo get_option('k2headertextcolor_bright'); ?>">Bright - <?php echo get_option('k2headertextcolor_bright'); ?></option>
-      <option <?php echo (get_option('k2headertextcolor_dark') == get_option('k2headertextcolor') ? 'selected' : ''); ?> value="<?php echo get_option('k2headertextcolor_dark'); ?>">Dark - <?php echo get_option('k2headertextcolor_dark'); ?></option>
+      <option <?php echo (get_option('k2headertextcolor_bright') == get_option('k2headertextcolor') ? 'selected' : ''); ?> value="<?php echo get_option('k2headertextcolor_bright'); ?>"><?php _e('Bright','k2_domain'); ?> - <?php echo get_option('k2headertextcolor_bright'); ?></option>
+      <option <?php echo (get_option('k2headertextcolor_dark') == get_option('k2headertextcolor') ? 'selected' : ''); ?> value="<?php echo get_option('k2headertextcolor_dark'); ?>"><?php _e('Dark','k2_domain'); ?> - <?php echo get_option('k2headertextcolor_dark'); ?></option>
     </select>
-		<p><small>Set the color of the text over the header image.</small><p>
+		<p><small><?php _e('Set the color of the text over the header image.','k2_domain'); ?></small><p>
 	</td>
 </tr>
 
 <tr valign="top">
-    <th scope="row"><?php echo __('Define Bright & Dark text color'); ?></th>
+    <th scope="row"><?php _e('Define Bright & Dark text color','k2_domain'); ?></th>
     <td valign="top">
        <table border=0 cellspacing=0 cellpadding=2>
           <tr>
-            <td>Bright Color</td>
+            <td><?php _e('Bright Color','k2_domain'); ?></td>
             <td><input type="text" name="brightcolor" value="<?php echo get_option('k2headertextcolor_bright'); ?>"></td>
           </tr>
           <tr>
-            <td>Dark Color</td>
+            <td><?php _e('Dark Color','k2_domain'); ?></td>
             <td><input type="text" name="darkcolor" value="<?php echo get_option('k2headertextcolor_dark'); ?>"></td>
           </tr>
        </table>
     </td>
     <tr>
   </table> 
-<p class="submit"><input type="submit" name="Submit" value="<?php _e('Update Options') ?> &raquo;" /></p>
+<p class="submit"><input type="submit" name="Submit" value="<?php _e('Update Options','k2_domain') ?> &raquo;" /></p>
 
 </form>
 </div>
@@ -202,7 +203,7 @@ function change_hpicture() {
 	}	
 
 	if ($picture != "") {
-		if ($picture != "No Picture") {
+		if ($picture != __('No Picture','k2_domain')) {
 			$pic = 'background: url('.get_bloginfo('template_url').'/images/headers/'.$picture.') no-repeat center center;';
 		}
 	echo '
