@@ -52,7 +52,7 @@
 	<?php wp_head(); ?>	
 </head>
 
-<body class="k2<?php if (get_option('k2widthtype') == 0) echo ' flex'; if (is_single()) echo ' permalink'; if (is_page()) echo ' staticpage'; ?>"<?php if (get_option('permalink_structure') != '' and is_page()) { echo ' id="'.get_query_var('name').'"'; } ?>>
+<body class="<?php k2_body_class() ?>" id="<?php k2_body_id() ?>">
 
 <div id="page">
 

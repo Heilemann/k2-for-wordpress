@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>style.css</string>
+	<string>header.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -25,6 +25,34 @@
 	<integer>200</integer>
 	<key>metaData</key>
 	<dict>
+		<key>comments-ajax.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>9</integer>
+				<key>line</key>
+				<integer>99</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>52</integer>
+		</dict>
+		<key>comments.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>23</integer>
+				<key>line</key>
+				<integer>47</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>27</integer>
+		</dict>
 		<key>header.php</key>
 		<dict>
 			<key>caret</key>
@@ -32,26 +60,28 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>29</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>js/comments.js.php</key>
-		<dict>
-			<key>caret</key>
+			<integer>17</integer>
+			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>49</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>23</integer>
+				<integer>0</integer>
 			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>11</integer>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>8</integer>
+				<key>line</key>
+				<integer>71</integer>
+			</dict>
 		</dict>
 		<key>js/effects.js.php</key>
 		<dict>
@@ -67,20 +97,6 @@
 			<key>firstVisibleLine</key>
 			<integer>73</integer>
 		</dict>
-		<key>js/livesearch.js.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>52</integer>
-		</dict>
 		<key>js/prototype.js.php</key>
 		<dict>
 			<key>caret</key>
@@ -95,102 +111,148 @@
 			<key>firstVisibleLine</key>
 			<integer>852</integer>
 		</dict>
-		<key>js/rollingarchives.js.php</key>
+		<key>options/app/info.php</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>93</integer>
-		</dict>
-		<key>modules/about.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>5</integer>
-				<key>line</key>
-				<integer>9</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>page-comments.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>27</integer>
-				<key>line</key>
-				<integer>16</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>rollingarchive.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>143</integer>
-				<key>line</key>
-				<integer>33</integer>
+				<integer>162</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>128</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>171</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>33</integer>
+				<integer>155</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>143</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>33</integer>
+				<integer>162</integer>
 			</dict>
+		</dict>
+		<key>page-comments.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>page.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>sidebar.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>6</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>single.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 		<key>style.css</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>19</integer>
+				<integer>24</integer>
 				<key>line</key>
-				<integer>319</integer>
+				<integer>406</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>351</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>9</integer>
+				<key>line</key>
+				<integer>406</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>24</integer>
+				<key>line</key>
+				<integer>406</integer>
+			</dict>
+		</dict>
+		<key>theloop.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>29</integer>
+				<key>line</key>
+				<integer>101</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>311</integer>
+			<integer>74</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>js/rollingarchives.js.php</string>
-		<string>rollingarchive.php</string>
+		<string>options/app/info.php</string>
 		<string>style.css</string>
-		<string>modules/about.php</string>
-		<string>js/comments.js.php</string>
+		<string>sidebar.php</string>
+		<string>comments.php</string>
+		<string>comments-ajax.php</string>
+		<string>theloop.php</string>
 		<string>header.php</string>
-		<string>js/livesearch.js.php</string>
+		<string>page.php</string>
+		<string>single.php</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
