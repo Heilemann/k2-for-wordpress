@@ -30,7 +30,7 @@
 </p>
 
 <fieldset>
-	<legend>Display on:</legend>
+<legend><?php _e('Display on:', 'k2_domain'); ?></legend>
 	<input id="display-home" name="display[home]" type="checkbox"<?php if($module->display['home']) { ?> checked="checked"<?php } ?> /> <label for="display-home"><?php _e('Homepage', 'k2_domain'); ?></label><br />
 
 	<input id="display-archives" name="display[archives]" type="checkbox"<?php if($module->display['archives']) { ?> checked="checked"<?php } ?> /> <label for="display-archives"><?php _e('Archives', 'k2_domain'); ?></label><br />

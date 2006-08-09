@@ -643,6 +643,24 @@ msgstr ""
 msgid "View all posts in %s"
 msgstr ""
 
+#: options/app/sbm.php:143
+#: options/app/sbm.php:934
+msgid "You must specify a valid module name"
+msgstr ""
+
+#: options/app/sbm.php:153
+#: options/app/sbm.php:163
+msgid "Missing sidebar and module ids"
+msgstr ""
+
+#: options/app/sbm.php:173
+msgid "Missing ordering data"
+msgstr ""
+
+#: options/app/sbm.php:180
+msgid "Invalid call"
+msgstr ""
+
 #: options/app/sbm.php:225
 #: options/display/modules.php:7
 msgid "K2 Sidebar Modules"
@@ -1039,8 +1057,20 @@ msgstr ""
 msgid "Disabled modules"
 msgstr ""
 
+#: options/display/modules.php:46
+msgid "Add &raquo;"
+msgstr ""
+
 #: options/display/modules.php:55
 msgid "Select a module to view it's options here"
+msgstr ""
+
+#: options/display/modules.php:62
+msgid "Remove &raquo;"
+msgstr ""
+
+#: options/display/modules.php:62
+msgid "Save &raquo;"
 msgstr ""
 
 #: options/display/sbm-ajax/edit-module-form.php:5
@@ -1057,6 +1087,10 @@ msgstr ""
 
 #: options/display/sbm-ajax/edit-module-form.php:26
 msgid "Related CSS file"
+msgstr ""
+
+#: options/display/sbm-ajax/edit-module-form.php:33
+msgid "Display on:"
 msgstr ""
 
 #: options/display/sbm-ajax/edit-module-form.php:34
