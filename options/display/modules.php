@@ -43,7 +43,7 @@
 				</p>
 
 				<p class="submit">
-					<input type="submit" value="Add &raquo;" />
+					<input type="submit" value="<?php _e('Add &raquo;', 'k2_domain') ?>" />
 				</p>
 			</form>
 		</div>
@@ -59,7 +59,7 @@
 					</div>
 
 					<p class="submit">
-						<input class="remove" type="button" value="Remove &raquo;" /> <input type="submit" value="Save &raquo;" />
+						<input class="remove" type="button" value="<?php _e('Remove &raquo;', 'k2_domain') ?>" /> <input type="submit" value="<?php _e('Save &raquo;', 'k2_domain') ?>" />
 					</p>
 				</form>
 			</div>

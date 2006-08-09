@@ -140,7 +140,7 @@ class k2sbm {
 					if(isset($_POST['add_name']) and trim((string)($_POST['add_name'])) != '') {
 						k2sbm::add_module($_POST['add_name'], $_POST['add_type'], $_POST['add_sidebar']);
 					} else {
-						k2sbm::set_error_text('You must specify a valid module name');
+						k2sbm::set_error_text(__('You must specify a valid module name', 'k2_domain'));
 					}
 
 					break;
@@ -150,7 +150,7 @@ class k2sbm {
 					if(isset($_POST['sidebar_id']) and isset($_POST['module_id'])) {
 						k2sbm::update_module($_POST['sidebar_id'], $_POST['module_id']);
 					} else {
-						k2sbm::set_error_text('Missing sidebar and module ids');
+						k2sbm::set_error_text(__('Missing sidebar and module ids', 'k2_domain'));
 					}
 
 					break;
@@ -160,7 +160,7 @@ class k2sbm {
 					if(isset($_POST['sidebar_id']) and isset($_POST['module_id'])) {
 						k2sbm::remove_module($_POST['sidebar_id'], $_POST['module_id']);
 					} else {
-						k2sbm::set_error_text('Missing sidebar and module ids');
+						k2sbm::set_error_text(__('Missing sidebar and module ids', 'k2_domain'));
 					}
 
 					break;
@@ -170,14 +170,14 @@ class k2sbm {
 					if(isset($_POST['sidebar_ordering'])) {
 						k2sbm::reorder_sidebar($_POST['sidebar_ordering']);
 					} else {
-						k2sbm::set_error_text('Missing ordering data');
+						k2sbm::set_error_text(__('Missing ordering data', 'k2_domain'));
 					}
 
 					break;
 
 				// Error
 				default:
-					k2sbm::set_error_text('Invalid call');
+					k2sbm::set_error_text(__('Invalid call', 'k2_domain'));
 					break;
 			}
 
@@ -931,7 +931,7 @@ class k2sbmModule {
 		if(isset($_POST['module_name']) and trim((string)$_POST['module_name']) != '') {
 			$this->name = stripslashes((string)$_POST['module_name']);
 		} else {
-			k2sbm::set_error_text('You must specify a valid module name');
+			k2sbm::set_error_text(__('You must specify a valid module name', 'k2_domain'));
 		}
 
 		// Handle the advanced output options form
