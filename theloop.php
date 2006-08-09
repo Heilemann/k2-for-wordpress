@@ -3,7 +3,12 @@
 	// It is a very delicate piece of machinery. Be gentle!
 
 	// Get core WP functions when loaded dynamically
-	if (isset($_GET['rolling'])) { require (dirname(__FILE__).'/../../../wp-blog-header.php'); }
+	if (isset($_GET['rolling'])) {
+		require (dirname(__FILE__).'/../../../wp-blog-header.php');
+	}
+
+	// Get the asides category - global
+	$k2asidescategory = get_option('k2asidescategory');
 ?>
 
 <div id="primarycontent" class="hfeed">
@@ -12,7 +17,7 @@
 		<h2>
 		<?php // Figure out what kind of page is being shown
 			if (is_category()) {
-				if (the_category_ID(false) != get_option('k2asidescategory')) {
+				if ($cat != $k2asidescategory) {
 					printf(__('Archive for the \'%s\' Category','k2_domain'), single_cat_title('', false));
 				} else {
 					echo single_cat_title();
@@ -46,7 +51,7 @@
 	<?php if ((get_option('k2rollingarchives') == 0) and !is_single() and !is_home() and is_paged()) include (TEMPLATEPATH . '/navigation.php'); ?> 
 
 	<?php /* Check if there are posts */
-		if(have_posts()) {
+		if ( have_posts() ) {
 			/* It saves time to only perform the following if there are posts to show */
 
 			// Get the 'Noteworthy' category, if it exists
@@ -58,59 +63,26 @@
 			// If there are 2+ users, this is a multiple-user blog
 			$multiple_users = ($count_users > 1);
 
-			// Check if to display asides inline or not
-			if(is_archive() or is_search() or is_single() or (function_exists('is_tag') and is_tag())) {
-				$k2asidescheck = '0';
-			} else {
-				$k2asidescheck = get_option('k2asidesposition');
-			}
-
-			// Get the asides category
-			$k2asidescategory = get_option('k2asidescategory');
-
 			// Get the user information
 			get_currentuserinfo();
 			global $user_level;
+
+			// For alternating posts - global
+			$k2_post_alt = true;
 	?>
 
-	<?php /* Start the loop */ while (have_posts()) { the_post(); ?>
+	<?php /* Start the loop */
+		while ( have_posts() ) {
+			the_post();
+
+			// Post is an aside - global
+			$k2_aside_post = in_category($k2asidescategory);
+
+			// Start alternating
+			$k2_post_alt = !($k2_post_alt);
+	?>
 
 	<?php /* Permalink nav has to be inside loop */ if (is_single()) include (TEMPLATEPATH . '/navigation.php'); ?>
-
-	<?php /* Asides (shown inline on all archive pages) */
-		if ($k2asidescategory and ($k2asidescheck == '0') and (in_category($k2asidescategory))) { 
-	    ?> 
-
-		<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
-			<div class="entry-head">
-				<h3 <?php /* Support for noteworthy plugin */ if($noteworthy_cat and in_category($noteworthy_cat)) { ?> class="noteworthy"<?php } ?>><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), strip_tags(get_the_title())) ?>'><?php the_title(); ?></a></h3>
-				<?php /* Support for noteworthy plugin */ if (($user_level == 10) and function_exists('nw_noteworthyLink')) nw_noteworthyLink($post->ID); ?>
-				
-				<small class="entry-meta">
-					<span class="chronodata">
-						<?php /* Date & Author */
-						printf(__('Published %1$s %2$s','k2_domain'),
-						($multiple_users ? sprintf(__('by %s','k2_domain'), '<a href="' . get_author_link(0, $authordata->ID, $authordata->user_nicename) .'">' . get_the_author() . '</a>') : ('')),
-						(function_exists('time_since') ? sprintf(__('%s ago','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")), time())) : get_the_time(__('F jS, Y','k2_domain')))); ?>
-					</span>
-
-					<?php /* Comments */ comments_popup_link('0&nbsp;<span>'.__('Comments','k2_domain').'</span>', '1&nbsp;<span>'.__('Comment','k2_domain').'</span>', '%&nbsp;<span>'.__('Comments','k2_domain').'</span>', 'commentslink', '<span class="commentslink">'.__('Closed','k2_domain').'</span>'); ?>
-
-					<?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="entry-edit">','</span>'); ?>
-
-					<?php /* Tags */ if (is_single() and function_exists('UTW_ShowTagsForCurrentPost')) { ?>
-						<span class="entry-tags"><?php _e('Tags:','k2_domain'); ?> <?php UTW_ShowTagsForCurrentPost("commalist") ?>.</span>
-					<?php } ?>
-				</small>
-			</div>
-
-			<div class="entry-content">
-				<?php the_content(__('Continue reading','k2_domain') . " '" . the_title('', '', false) . "'"); ?>
-			</div>
-
-		</div>
-
-	<?php  /* Normal Entries */ } elseif (!(in_category($k2asidescategory))) { ?>
 
 		<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
 			<div class="entry-head">
@@ -120,12 +92,12 @@
 				<small class="entry-meta">
 					<span class="chronodata">
 						<?php /* Date & Author */
-						printf(__('Published %1$s %2$s','k2_domain'),
-						($multiple_users ? sprintf(__('by %s','k2_domain'), '<a href="' . get_author_link(0, $authordata->ID, $authordata->user_nicename) .' class="url fn">' . get_the_author() . '</a>') : ('')),
- 							(function_exists('time_since') ? sprintf(__('%s ago','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")), time())) : get_the_time(__('F jS, Y','k2_domain')))); ?>
+							printf(	__('Published %1$s %2$s','k2_domain'),
+								( $multiple_users ? sprintf(__('by %s','k2_domain'), '<a href="' . get_author_link(0, $authordata->ID, $authordata->user_nicename) .' class="url fn">' . get_the_author() . '</a>') : ('') ),
+ 								( function_exists('time_since') ? sprintf(__('%s ago','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")), time())) : get_the_time(__('F jS, Y','k2_domain')) ) ); ?>
 					</span>
 
-					<?php /* Categories */ printf(__('<span class="entry-category">in %s.</span>','k2_domain'), k2_nice_category(', ', __(' and ','k2_domain')) ); ?>
+					<?php /* Categories */ if (!$k2_aside_post) { printf(__('<span class="entry-category">in %s.</span>','k2_domain'), k2_nice_category(', ', __(' and ','k2_domain')) ); } ?>
 
 					<?php /* Comments */ comments_popup_link('0&nbsp;<span>'.__('Comments','k2_domain').'</span>', '1&nbsp;<span>'.__('Comment','k2_domain').'</span>', '%&nbsp;<span>'.__('Comments','k2_domain').'</span>', 'commentslink', '<span class="commentslink">'.__('Closed','k2_domain').'</span>'); ?>
 				
@@ -147,14 +119,14 @@
 				<?php link_pages('<p><strong>'.__('Pages:','k2_domain').'</strong> ', '</p>', 'number'); ?>
 			</div>
 
+			<?php if (!$k2_aside_post) { ?>
 			<!--
 			<?php trackback_rdf(); ?>
 			-->
+			<?php } ?>
 		</div>
 				
-	<?php /* End Asides Segregation Code */ }
-
-	} /* End The Loop */ ?>
+	<?php } /* End The Loop */ ?>
 	
 	<?php /* Insert Paged Navigation */ if (!is_single() and get_option('k2rollingarchives') != 1) { include (TEMPLATEPATH.'/navigation.php'); } ?>
 
@@ -170,6 +142,6 @@
 		</div>
 	</div>
 
-<?php /* End Loop Init  */ } ?>
+<?php } /* End Loop Init  */ ?>
 
 </div><?php // ID: primarycontent ?>

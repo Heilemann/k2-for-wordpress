@@ -192,7 +192,7 @@ h2 { /* H2 is what kind of page you are on. Eg. 'Monthly Archive'. */
 	display: inline;
 	}
 
-#primary h3, #primary h4, .single #primary .category-asides h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
+#primary h3, #primary h4, .single #primary .k2-asides h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
 	font-size: 2.4em;
 	font-weight: normal;
 	letter-spacing: -1px;
@@ -210,7 +210,7 @@ h2 { /* H2 is what kind of page you are on. Eg. 'Monthly Archive'. */
 	margin-top: 25px;
 	}
 
-#primary .category-asides h3 {
+#primary .k2-asides h3 {
 	font-size: 1.6em;
 	font-weight: normal;
 	}
@@ -254,11 +254,11 @@ body.page .entry-content h4 {
 	margin-left: 15px;
 	}
 
-#primary .category-asides .entry-head .metalink {
+#primary .k2-asides .entry-head .metalink {
 	font-size: 1.4em;
 	}
 
-.single #primary .category-asides .entry-content {
+.single #primary .k2-asides .entry-content {
 	font-size: 1.5em;
 	color: #999;
 	}
@@ -281,13 +281,13 @@ body.page .entry-content h4 {
 	right: 0;
 	}
 
-.secondary .category-asides {
+.secondary .k2-asides {
 	margin: 0;
 	padding: 0 0 10px;
 	word-spacing: -1px;
 	}
 
-.secondary .category-asides .metalink {
+.secondary .k2-asides .metalink {
 	padding-left: 0px;
 	}
 
@@ -387,19 +387,19 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	margin: 13px 0;
 	}
 
-.category-asides .entry-content p,
-.category-asides .entry-content ul,
-.category-asides .entry-content ol,
-.category-asides .entry-content div,
-.category-asides .entry-content blockquote {
+.k2-asides .entry-content p,
+.k2-asides .entry-content ul,
+.k2-asides .entry-content ol,
+.k2-asides .entry-content div,
+.k2-asides .entry-content blockquote {
 	margin: 5px 0;
 	}
 
-.single .category-asides .entry-content p,
-.single .category-asides .entry-content ul,
-.single .category-asides .entry-content ol,
-.single .category-asides .entry-content div,
-.single .category-asides .entry-content blockquote {
+.single .k2-asides .entry-content p,
+.single .k2-asides .entry-content ul,
+.single .k2-asides .entry-content ol,
+.single .k2-asides .entry-content div,
+.single .k2-asides .entry-content blockquote {
 	margin: 13px 0;
 	}
 

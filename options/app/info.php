@@ -204,22 +204,27 @@ function k2_body_class() {
 
 // Template tag: echoes semantic classes for a post
 function k2_post_class() {
-	global $post, $k2_post_alt;
+	global $post, $k2_post_alt, $k2_aside_post;
 
 	$c = array('hentry', $post->post_type, $post->post_status);
 	$c[] = 'author-' . get_the_author_login();
 
-	foreach ( (array) get_the_category() as $cat )
+	foreach ( (array) get_the_category() as $cat ) {
 		$c[] = 'category-' . $cat->category_nicename;
+	}
 
 	k2_date_classes(mysql2date('U', $post->post_date), $c);
 
-	if ( ++$k2_post_alt % 2 )
+	if ($k2_aside_post) {
+		$c[] = 'k2-asides';
+	}
+
+	if ( $k2_post_alt ) {
 		$c[] = 'alt';
+	}
 
 	echo join(' ', apply_filters('post_class', $c));
 }
-$k2_post_alt = 1;
 
 // Template tag: echoes semantic classes for a comment
 function k2_comment_class() {
