@@ -69,6 +69,13 @@
 
 			// For alternating posts - global
 			$k2_post_alt = true;
+
+			// Check if to display asides inline or not
+			if(is_archive() or is_search() or is_single() or (function_exists('is_tag') and is_tag())) {
+				$k2asidescheck = '0';
+			} else {
+				$k2asidescheck = get_option('k2asidesposition');
+			}
 	?>
 
 	<?php /* Start the loop */
@@ -83,6 +90,8 @@
 	?>
 
 	<?php /* Permalink nav has to be inside loop */ if (is_single()) include (TEMPLATEPATH . '/navigation.php'); ?>
+
+	<?php /* Only display asides if sidebar asides are not active */ if(!$k2_post_asides || $k2asidescheck == '0') { ?>
 
 		<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
 			<div class="entry-head">
@@ -125,7 +134,9 @@
 			-->
 			<?php } ?>
 		</div>
-				
+
+	<?php } /* End sidebar asides test */ ?>
+
 	<?php } /* End The Loop */ ?>
 	
 	<?php /* Insert Paged Navigation */ if (!is_single() and get_option('k2rollingarchives') != 1) { include (TEMPLATEPATH.'/navigation.php'); } ?>
