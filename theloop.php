@@ -76,7 +76,7 @@
 			the_post();
 
 			// Post is an aside - global
-			$k2_aside_post = in_category($k2asidescategory);
+			$k2_post_asides = in_category($k2asidescategory);
 
 			// Start alternating
 			$k2_post_alt = !($k2_post_alt);
@@ -97,7 +97,7 @@
  								( function_exists('time_since') ? sprintf(__('%s ago','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")), time())) : get_the_time(__('F jS, Y','k2_domain')) ) ); ?>
 					</span>
 
-					<?php /* Categories */ if (!$k2_aside_post) { printf(__('<span class="entry-category">in %s.</span>','k2_domain'), k2_nice_category(', ', __(' and ','k2_domain')) ); } ?>
+					<?php /* Categories */ if (!$k2_post_asides) { printf(__('<span class="entry-category">in %s.</span>','k2_domain'), k2_nice_category(', ', __(' and ','k2_domain')) ); } ?>
 
 					<?php /* Comments */ comments_popup_link('0&nbsp;<span>'.__('Comments','k2_domain').'</span>', '1&nbsp;<span>'.__('Comment','k2_domain').'</span>', '%&nbsp;<span>'.__('Comments','k2_domain').'</span>', 'commentslink', '<span class="commentslink">'.__('Closed','k2_domain').'</span>'); ?>
 				
@@ -119,7 +119,7 @@
 				<?php link_pages('<p><strong>'.__('Pages:','k2_domain').'</strong> ', '</p>', 'number'); ?>
 			</div>
 
-			<?php if (!$k2_aside_post) { ?>
+			<?php if (!$k2_post_asides) { ?>
 			<!--
 			<?php trackback_rdf(); ?>
 			-->

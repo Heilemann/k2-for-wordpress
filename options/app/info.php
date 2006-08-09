@@ -204,7 +204,7 @@ function k2_body_class() {
 
 // Template tag: echoes semantic classes for a post
 function k2_post_class() {
-	global $post, $k2_post_alt, $k2_aside_post;
+	global $post, $k2_post_alt, $k2_post_asides;
 
 	$c = array('hentry', $post->post_type, $post->post_status);
 	$c[] = 'author-' . get_the_author_login();
@@ -215,7 +215,7 @@ function k2_post_class() {
 
 	k2_date_classes(mysql2date('U', $post->post_date), $c);
 
-	if ($k2_aside_post) {
+	if ($k2_post_asides) {
 		$c[] = 'k2-asides';
 	}
 
