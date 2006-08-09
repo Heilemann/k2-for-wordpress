@@ -816,12 +816,12 @@ input[type=text], textarea {
 	}
 
 #s.livesearch {
-	margin-right: 45px;
+	width: 89%;
 	}
 
 #searchreset {
 	position: absolute;
-	right: 24px;
+	right: 3px;
 	top: 3px;
 	height: 13px;
 	width: 13px;
