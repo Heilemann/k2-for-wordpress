@@ -154,18 +154,18 @@
 				} elseif ($user_ID) {
 			?>
 		
-			<div class="metalinks"><?php printf(__('Logged in as %s.','k2_domain'), '<a href="'.get_option('siteurl').'/wp-admin/profile.php">'.$user_identity.'</a>'); ?> <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="<?php _e('Log out of this account','k2_domain'); ?>"><?php _e('Logout','k2_domain'); ?> &raquo;</a></div>
+			<p class="comment-login"><?php printf(__('Logged in as %s.','k2_domain'), '<a href="'.get_option('siteurl').'/wp-admin/profile.php">'.$user_identity.'</a>'); ?> <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="<?php _e('Log out of this account','k2_domain'); ?>"><?php _e('Logout','k2_domain'); ?> &raquo;</a></p>
 	
-			<?php } elseif ('' != $comment_author) { ?>
+		<?php } elseif ('' != $comment_author) { ?>
 
-				<p><small><?php printf(__('Welcome back <strong>%s</strong>','k2_domain'), $comment_author); ?>
+				<p class="comment-welcomeback"><?php printf(__('Welcome back <strong>%s</strong>','k2_domain'), $comment_author); ?>
 				<span id="showinfo">(<a href="javascript:ShowUtils();"><?php _e('Change','k2_domain'); ?></a>)</span>
-				<span id="hideinfo">(<a href="javascript:HideUtils();"><?php _e('Close','k2_domain'); ?></a>)</span></small></p>
+				<span id="hideinfo">(<a href="javascript:HideUtils();"><?php _e('Close','k2_domain'); ?></a>)</span></p>
 
-			<?php } ?>
+		<?php } ?>
 			
 			<?php if (!$user_ID) { ?>
-				<div id="authorinfo">
+				<div id="comment-personaldetails">
 					<p><input type="text" name="author" id="author" value="<?php echo $comment_author; ?>" size="22" tabindex="1" />
 					<label for="author"><small><strong><?php _e('Name','k2_domain'); ?></strong> <?php if ($req) { __('(required)','k2_domain'); } ?></small></label></p>
 

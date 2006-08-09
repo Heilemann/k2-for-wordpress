@@ -235,10 +235,6 @@ body.page .entry-content h4 {
 	margin: 20px 0 0;
 	padding: 0;
 	}
-
-.secondary div div div {
-    margin: 0;
-    }
 	
 #primary .metalink a, #primary .metalink a:visited, /* The Metalink class takes care of the comments, edit, rss and trackback links next to the titles */
 .secondary .metalink a, .secondary .metalink a:visited,
@@ -247,7 +243,7 @@ body.page .entry-content h4 {
 	font-weight: normal;
 	}
 
-#primary .hentry .entry-head .metalink, .comments #primary .metalink {
+#primary .hentry .entry-head .metalink {
 	font-size: 1.8em;
 	letter-spacing: -1px;
 	text-transform: lowercase;
@@ -263,10 +259,19 @@ body.page .entry-content h4 {
 	color: #999;
 	}
 
-.comments-meta {
+.comment-meta {
 	margin: 0 15px 0 0;
 	float: none;
 	}
+
+.comment-login, .comment-welcomeback {
+	margin-top: 15px;
+	color: #777;
+}
+
+#comment-personaldetails {
+	margin-top: 10px;
+}
 
 .feedicon { /* Next to Comment Section Headline */
 	border: 0 !important;
@@ -441,12 +446,12 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	list-style: none;
 	}
 
-.comment-content {
+#commentlist li .comment-content {
 	padding: 10px 0;
-	font-size: 1.0em;
+	font-size: 1.2em;
 	}
 
-.comment-meta {
+#commentlist li .comment-meta {
 	padding: 2px 0 2px 20px;
 	background: url('images/time.png') left center no-repeat;
 	display: block;
@@ -554,8 +559,8 @@ li.bypostauthor blockquote {
 	margin: 0;
 	}
 
-input[type=text], textarea {
-	font: 1em Verdana, Arial, Helvetica, Sans-Serif;
+.comments input[type=text], .comments textarea {
+	font: 1.1em Verdana, Arial, Helvetica, Sans-Serif;
 	padding: 3px;
 	color: #777;
 	}
@@ -571,9 +576,8 @@ input[type=text]:focus, textarea:focus {
 	margin: 5px 5px 1px 0;
 	}
 
-.comments form textarea {
+.comments textarea {
 	height: 250px;
-	padding: 2px;
 	width: 100%;
 	margin: 10px 0;
 	}

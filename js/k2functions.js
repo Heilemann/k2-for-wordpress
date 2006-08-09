@@ -13,19 +13,20 @@ function addLoadEvent(func) {
 
 
 function OnLoadUtils() {
-	$("authorinfo").style.display = "none";
+	$("comment-personaldetails").style.display = "none";
 	$("showinfo").style.display = "";
 	$("hideinfo").style.display = "none";
 }
 
 function ShowUtils() {
-	new Effect.Phase('authorinfo');
+	new Effect.Phase('comment-personaldetails', {duration: 0.3});
+	//new Effect.Appear($('commentlist').lastChild, { duration: 1.0, afterFinish: function() { new Effect.ScrollTo($('commentlist').lastChild); } } );
 	$("showinfo").style.display = "none";
 	$("hideinfo").style.display = "";
 }
 
 function HideUtils() {
-	new Effect.Phase('authorinfo');
+	new Effect.Phase('comment-personaldetails', {duration: 0.3});
 	$("showinfo").style.display = "";
 	$("hideinfo").style.display = "none";
 }

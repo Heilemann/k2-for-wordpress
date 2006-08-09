@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>header.php</string>
+	<string>style.css</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -58,30 +58,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>14</integer>
 				<key>line</key>
-				<integer>29</integer>
+				<integer>19</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>17</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>8</integer>
-				<key>line</key>
-				<integer>71</integer>
-			</dict>
 		</dict>
 		<key>js/effects.js.php</key>
 		<dict>
@@ -202,30 +186,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>24</integer>
+				<integer>29</integer>
 				<key>line</key>
-				<integer>406</integer>
+				<integer>283</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>351</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>9</integer>
-				<key>line</key>
-				<integer>406</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>24</integer>
-				<key>line</key>
-				<integer>406</integer>
-			</dict>
+			<integer>238</integer>
 		</dict>
 		<key>theloop.php</key>
 		<dict>
