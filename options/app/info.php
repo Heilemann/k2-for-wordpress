@@ -215,7 +215,7 @@ function k2_post_class() {
 
 	k2_date_classes(mysql2date('U', $post->post_date), $c);
 
-	if ($k2_post_asides) {
+	if ( $k2_post_asides ) {
 		$c[] = 'k2-asides';
 	}
 
@@ -237,18 +237,17 @@ function k2_comment_class() {
 
 		$c[] = "byuser commentauthor-$user->user_login";
 
-		if ( $comment->user_id === $post->post_author )
+		if ( $comment->user_id === $post->post_author ) {
 			$c[] = 'bypostauthor';
+		}
 	}
 
 	k2_date_classes(mysql2date('U', $comment->comment_date), $c, 'c-');
-	if ( ++$k2_comment_alt % 2 )
-		$c[] = 'alt';
-		
-	if ( is_trackback() ) {
-		$c[] = 'trackback';
-	}
 
+	if ( $k2_comment_alt ) {
+		$c[] = 'alt';
+	}
+		
 	echo join(' ', apply_filters('comment_class', $c));
 }
 

@@ -14,79 +14,109 @@
 
 	<div class="comments">
 
-		<h4><?php printf(__('%1$s %2$s to &#8220;%3$s&#8221;','k2_domain'), '<span id="comments">' . get_comments_number() . '</span>', ($post->comment_count == 1) ? __('Response','k2_domain'): __('Responses','k2_domain'), get_the_title() ) ?></h4>
+		<h4><?php printf(__('%1$s %2$s to &#8220;%3$s&#8221;','k2_domain'), '<span id="comments">' . get_comments_number() . '</span>', (1 == $post->comment_count) ? __('Response','k2_domain'): __('Responses','k2_domain'), get_the_title() ); ?></h4>
 
 		<div class="metalinks">
 			<span class="commentsrsslink"><?php comments_rss_link(__('Feed for this Entry','k2_domain')); ?></span>
-			<?php if ('open' == $post-> ping_status) { ?><span class="trackbacklink"><a href="<?php trackback_url() ?>" title="<?php _e('Copy this URI to trackback this entry.','k2_domain'); ?>"><?php _e('Trackback Address','k2_domain'); ?></a></span><?php } ?>
+			<?php if ('open' == $post->ping_status) { ?><span class="trackbacklink"><a href="<?php trackback_url(); ?>" title="<?php _e('Copy this URI to trackback this entry.','k2_domain'); ?>"><?php _e('Trackback Address','k2_domain'); ?></a></span><?php } ?>
 		</div>
 
-		<?php /* Count comments and pings */ if ($comments) : $countComments  = 0; $countPingBacks = 0; foreach ($comments as $comment) { if (get_comment_type() != "comment") { $countPingBacks++; } else { $countComments++; } } endif; ?>
+		<?php /* Seperate comments and pings */
+			if ( $post->comment_count > 0 ) {
+				$countComments = 0;
+				$countPings    = 0;
+				
+				$k2_comment_list = array();
+				$k2_ping_list    = array();
+
+				foreach ($comments as $comment) {
+					if ( 'comment' == get_comment_type() ) {
+						$k2_comment_list[$countComments++] = $comment;
+					} else {
+						$k2_ping_list[$countPings++] = $comment;
+					}
+				}
+			}
+		?>
 
 	<hr />
 
-		<?php /* Fetch Comments Only*/ if ($countComments != 0) { $counter = 1; ?>
+		<?php /* Check for comments */ if ( $countComments > 0 ) { $k2_comment_alt = true; ?>
 		<ol id="commentlist">
 
-			<?php foreach ($comments as $comment) { if (get_comment_type() == "comment") { ?>
+			<?php foreach ($k2_comment_list as $key => $comment) { $k2_comment_alt = !($k2_comment_alt); ?>
 
-			<li class="<?php k2_comment_class() ?>" item" id="comment-<?php comment_ID() ?>">
+			<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class(); ?>">
 				<?php if (function_exists('gravatar')) { ?><a href="http://www.gravatar.com/" title="<?php _e('What is this?','k2_domain'); ?>"><img src="<?php gravatar("X", 32,  get_bloginfo('template_url')."/images/defaultgravatar.jpg"); ?>" class="gravatar" alt="<?php _e('Gravatar Icon','k2_domain'); ?>" /></a><?php } ?>
-				<a href="#comment-<?php comment_ID() ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $counter++; ?></a>
-				<span class="commentauthor"><?php comment_author_link() ?></span>
+				<a href="#comment-<?php comment_ID(); ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $key; ?></a>
+				<span class="commentauthor"><?php comment_author_link(); ?></span>
 
 				<small class="comment-meta">
-				<?php printf(('<a href="#comment-%1$s" title="%2$s">%3$s</a>'), 
-					get_comment_ID(),
-					function_exists('time_since') ?	sprintf(__('%s ago.','k2_domain'), time_since(abs(strtotime($comment->comment_date_gmt . " GMT")), time())) : sprintf(__('Permanent Link to this Comment','k2_domain')),
-					sprintf(__('%1$s at %2$s','k2_domain'),	get_comment_date(__('M jS, Y','k2_domain')), get_comment_time())            
-	        			); ?>
+				<?php
+					printf('<a href="#comment-%1$s" title="%2$s">%3$s</a>', 
+						get_comment_ID(),
+						(function_exists('time_since')?
+							sprintf(__('%s ago.','k2_domain'),
+								time_since(abs(strtotime($comment->comment_date_gmt . " GMT")), time())
+							):
+							__('Permanent Link to this Comment','k2_domain')
+						),
+						sprintf(__('%1$s at %2$s','k2_domain'),
+							get_comment_date(__('M jS, Y','k2_domain')),
+							get_comment_time()
+						)
+					);
+				?>
 				<?php if (function_exists('quoter_comment')) { quoter_comment(); } ?>
 				<?php if (function_exists('jal_edit_comment_link')) { jal_edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>'); } else { edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">', '</span>'); } ?>
 				</small>
 			
 				<div class="comment-content">
-					<?php comment_text() ?> 
+					<?php comment_text(); ?> 
 				</div>
 
-				<?php if ($comment->comment_approved == '0') : ?>
-				<p class="alert"><strong><?php _e('Your comment is awaiting moderation.','k2_domain'); ?></strong></p>
-				<?php endif; ?>
+				<?php if ('0' == $comment->comment_approved) { ?><p class="alert"><strong><?php _e('Your comment is awaiting moderation.','k2_domain'); ?></strong></p><?php } ?>
 			</li>
 
-			<?php } } /* end for each comment */ ?>
+			<?php } /* End foreach comment */ ?>
 
 		</ol> <!-- END #commentlist -->
-		<?php } ?>
+		<?php } /* end comment check */ ?>
 		
-		<?php /* Fetch Pings Only*/ if ($countPingBacks != 0) { $counter = 1; ?>
+		<?php /* Check for Pings */ if ( $countPings > 0 ) { $k2_comment_alt = true; ?>
 		<ol id="pinglist">
-			<?php foreach ($comments as $comment) { ?>
-			<?php if (get_comment_type() != "comment") { ?>
-			<li class="item" id="comment-<?php comment_ID() ?>">
+			<?php foreach ($k2_ping_list as $key => $comment) { $k2_comment_alt = !($k2_comment_alt); ?>
+			<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class(); ?>">
 				<?php if (function_exists('comment_favicon')) { ?><span class="favatar"><?php comment_favicon(); ?></span><?php } ?>
-				<a href="#comment-<?php comment_ID() ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>" class="counter"><?php echo $counter++; ?></a>
-				<span class="commentauthor"><?php comment_author_link() ?></span>
+				<a href="#comment-<?php comment_ID() ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>" class="counter"><?php echo $key; ?></a>
+				<span class="commentauthor"><?php comment_author_link(); ?></span>
 				<small class="comment-meta">				
 				<?php
-				printf(__('%1$s on %2$s','k2_domain'), 
-					'<span class="pingtype">' . get_k2_ping_type(__('Trackback','k2_domain'), __('Pingback','k2_domain')) . '</span>',
-					(sprintf(('<a href="#comment-%1$s" title="%2$s">%3$s</a>'),
-						get_comment_ID(),	
-						function_exists('time_since') ?	sprintf(__('%s ago.','k2_domain'), time_since(abs(strtotime($comment->comment_date_gmt . " GMT")), time())) : sprintf (__('Permanent Link to this Comment','k2_domain')),
-						sprintf(__('%1$s at %2$s','k2_domain'), get_comment_date(__('M jS, Y','k2_domain')), get_comment_time())			
+					printf(__('%1$s on %2$s','k2_domain'), 
+						'<span class="pingtype">' . get_k2_ping_type(__('Trackback','k2_domain'), __('Pingback','k2_domain')) . '</span>',
+						sprintf('<a href="#comment-%1$s" title="%2$s">%3$s</a>',
+							get_comment_ID(),	
+							(function_exists('time_since')?
+								sprintf(__('%s ago.','k2_domain'),
+									time_since(abs(strtotime($comment->comment_date_gmt . " GMT")), time())
+								):
+								__('Permanent Link to this Comment','k2_domain')
+							),
+							sprintf(__('%1$s at %2$s','k2_domain'),
+								get_comment_date(__('M jS, Y','k2_domain')),
+								get_comment_time()
+							)			
 						)
-					)
-				);
+					);
 				?>				
 				<?php if ($user_ID) { edit_comment_link(__('Edit','k2_domain'),'<span class="comment-edit">','</span>'); } ?>
 				</small>
 			</li>
-			<?php } } /* end for each comment */ ?>
+			<?php } /* end foreach ping */ ?>
 		</ol> <!-- END #pinglist -->
-		<?php } ?>
+		<?php } /* end ping check */ ?>
 		
-		<?php /* Comments open, but empty */ if (!isset($counter) and ('open' == $post->comment_status)) { ?> 
+		<?php /* Comments open, but empty */ if ( ($post->comment_count < 1) and ('open' == $post->comment_status) ) { ?> 
 		<ol id="commentlist">
 			<li id="leavecomment">
 				<?php _e('No Comments','k2_domain'); ?>
@@ -98,7 +128,7 @@
 			<div><?php _e('Comments are currently closed.','k2_domain'); ?></div>
 		<?php } ?>
 
-	</div> <!-- END .comments #1 -->
+	</div> <!-- END .comments 1 -->
 		
 	<?php endif; ?>
 	
@@ -108,23 +138,27 @@
 		
 		<?php if (get_option('comment_registration') and !$user_ID) { ?>
 		
-			<p><?php printf(__('You must <a href="%s">login</a> to post a comment.','k2_domain'), get_option('siteurl') . '/wp-login.php?redirect_to=' . get_permalink()) ?></p>
+			<p><?php printf(__('You must <a href="%s">login</a> to post a comment.','k2_domain'), get_option('siteurl') . '/wp-login.php?redirect_to=' . get_permalink()); ?></p>
 		
 		<?php } else { ?>
 
 			<form action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" method="post" id="commentform">
 
 			<?php
-				if (isset($_GET['jal_edit_comments']) ) {
+				if ( isset($_GET['jal_edit_comments']) ) {
 					$jal_comment = jal_edit_comment_init();
-					if (!$jal_comment) { return; }
-				} elseif ($user_ID) { ?>
-		
-			<div class="metalinks"><?php printf(__('Logged in as %s.','k2_domain'), '<a href="'.get_option('siteurl').'/wp-admin/profile.php">'.$user_identity.'</a>') ?> <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="<?php _e('Log out of this account','k2_domain'); ?>"><?php _e('Logout','k2_domain'); ?> &raquo;</a></div>
-	
-			<?php } elseif ($comment_author != "") { ?>
 
-				<p><small><?php printf(__('Welcome back <strong>%s</strong>','k2_domain'), $comment_author) ?>
+					if (!$jal_comment) {
+						return;
+					}
+				} elseif ($user_ID) {
+			?>
+		
+			<div class="metalinks"><?php printf(__('Logged in as %s.','k2_domain'), '<a href="'.get_option('siteurl').'/wp-admin/profile.php">'.$user_identity.'</a>'); ?> <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="<?php _e('Log out of this account','k2_domain'); ?>"><?php _e('Logout','k2_domain'); ?> &raquo;</a></div>
+	
+			<?php } elseif ('' != $comment_author) { ?>
+
+				<p><small><?php printf(__('Welcome back <strong>%s</strong>','k2_domain'), $comment_author); ?>
 				<span id="showinfo">(<a href="javascript:ShowUtils();"><?php _e('Change','k2_domain'); ?></a>)</span>
 				<span id="hideinfo">(<a href="javascript:HideUtils();"><?php _e('Close','k2_domain'); ?></a>)</span></small></p>
 
@@ -133,10 +167,10 @@
 			<?php if (!$user_ID) { ?>
 				<div id="authorinfo">
 					<p><input type="text" name="author" id="author" value="<?php echo $comment_author; ?>" size="22" tabindex="1" />
-					<label for="author"><small><strong><?php _e('Name','k2_domain'); ?></strong> <?php if ($req) __('(required)','k2_domain'); ?></small></label></p>
+					<label for="author"><small><strong><?php _e('Name','k2_domain'); ?></strong> <?php if ($req) { __('(required)','k2_domain'); } ?></small></label></p>
 
 					<p><input type="text" name="email" id="email" value="<?php echo $comment_author_email; ?>" size="22" tabindex="2" />
-					<label for="email"><small><strong><?php _e('Mail','k2_domain'); ?></strong> (<?php _e('will not be published','k2_domain'); ?>) <?php if ($req) __('(required)','k2_domain'); ?></small></label></p>
+					<label for="email"><small><strong><?php _e('Mail','k2_domain'); ?></strong> (<?php _e('will not be published','k2_domain'); ?>) <?php if ($req) { __('(required)','k2_domain'); } ?></small></label></p>
 
 					<p><input type="text" name="url" id="url" value="<?php echo $comment_author_url; ?>" size="22" tabindex="3" />
 					<label for="url"><small><strong><?php _e('Website','k2_domain'); ?></strong></small></label></p>
