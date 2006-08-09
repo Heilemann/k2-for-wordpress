@@ -93,7 +93,7 @@
 					<span class="chronodata">
 						<?php /* Date & Author */
 							printf(	__('Published %1$s %2$s','k2_domain'),
-								( $multiple_users ? sprintf(__('by %s','k2_domain'), '<a href="' . get_author_link(0, $authordata->ID, $authordata->user_nicename) .' class="url fn">' . get_the_author() . '</a>') : ('') ),
+								( $multiple_users ? sprintf(__('by %s','k2_domain'), '<a href="' . get_author_link(0, $authordata->ID, $authordata->user_nicename) .'" class="url fn">' . get_the_author() . '</a>') : ('') ),
  								( function_exists('time_since') ? sprintf(__('%s ago','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")), time())) : get_the_time(__('F jS, Y','k2_domain')) ) ); ?>
 					</span>
 
