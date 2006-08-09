@@ -129,7 +129,7 @@
 				</td>
 			</tr>
 
-			<tr valign="top">
+			<!--<tr valign="top">
 				<th scope="row"><?php _e('Width Type','k2_domain'); ?></th>
 
 				<td>
@@ -141,7 +141,7 @@
 
 					<p><small><?php _e('Flexible Width has the K2 page adjust itself according to the width of the browser, up to a maximum and down to a minimum width, so as to not entirely break readability at very high resolutions. Fixed width fixes K2\'s page width at 780px.','k2_domain'); ?><br /><?php _e('<em><strong>Beta Note:</strong> Doesn\'t work in Internet Explorer as far as I know. Suggestions are welcome.</em>','k2_domain'); ?></small></p>
 				</td>
-			</tr>
+			</tr>-->
 
 			<tr valign="top">
 				<th scope="row"><?php _e('Asides','k2_domain'); ?></th>

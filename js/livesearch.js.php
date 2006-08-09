@@ -46,7 +46,7 @@ Livesearch.prototype = {
 				input.style.display = "none";
 		}
 
-		Effect.Fade(this.resetbutton, { duration: .1 });
+		Effect.Fade(this.resetbutton, { duration: .1, to: 0.3 });
 		$(this.loaditem).style.display = 'none';
 
 		Event.observe(attachitem, 'focus', function() { if ($(attachitem).value == searchtext) $(attachitem).setAttribute('value', '') });
@@ -67,6 +67,7 @@ Livesearch.prototype = {
 	},
 
     doLivesearch: function() {
+		Effect.Fade(this.resetbutton, { duration: .1, to: 0 });
 		Effect.Appear(this.loaditem, {duration: .1});
 
 		new Ajax.Updater(
@@ -96,7 +97,7 @@ Livesearch.prototype = {
 
 	resetLivesearch: function() {
 		$(this.hideitem).style.display = 'block';
-		Effect.Fade(this.resetbutton, { duration: .1 });
+		Effect.Fade(this.resetbutton, { duration: .1, to: 0.3 });
 
 		$(this.attachitem).value = '';
 		$(this.target).innerHTML = '';
@@ -104,5 +105,4 @@ Livesearch.prototype = {
 	}
 }
 
-//Event.observe(window, "load", function() { new Livesearch('searchform', 's', 'dynamic-content', 'current-content', '<?php bloginfo('template_url'); ?>/rollingarchive.php', '&s=', 'searchform', 'searchload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'searchreset'); } , false);
 new FastInit( function() { new Livesearch('searchform', 's', 'dynamic-content', 'current-content', '<?php bloginfo('template_url'); ?>/rollingarchive.php', '&s=', 'searchform', 'searchload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'searchreset'); } );
