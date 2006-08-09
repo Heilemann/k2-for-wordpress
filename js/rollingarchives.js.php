@@ -132,6 +132,11 @@ RollingArchives.prototype = {
 
 	rollSuccess: function() {
 		this.rollRemoveLoad();
+
+		// Support for Lightbox
+		if (window.initLightbox) {
+			initLightbox();
+		}
 	},
 
 	rollError: function() {

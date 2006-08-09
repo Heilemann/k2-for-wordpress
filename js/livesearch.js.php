@@ -87,6 +87,11 @@ Livesearch.prototype = {
 
 		Event.observe(this.resetbutton, 'click', this.resetLivesearch.bindAsEventListener(this));
 		$(this.resetbutton).style.cursor = 'pointer';
+
+		// Support for Lightbox
+		if (window.initLightbox) {
+			initLightbox();
+		}
 	},
 
 	resetLivesearch: function() {
