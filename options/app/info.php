@@ -166,7 +166,7 @@ function k2_body_id() {
 function k2_body_class() {
 	global $wp_query;
 
-	$c = array('wordpress');
+	$c = array('wordpress', 'k2');
 
 	k2_date_classes(time(), $c);
 
