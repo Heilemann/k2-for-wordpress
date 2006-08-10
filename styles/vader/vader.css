@@ -81,7 +81,7 @@ h3 span a:visited {
 	font-weight: normal !important;
 	}
 
-.primary .metalink a, .primary .metalink a:visited, /* The Metalink class takes care of the comments, edit, rss and trackback links next to the titles */
+.primary .entry-meta a, .primary .entry-meta a:visited, /* The Metalink class takes care of the comments, edit, rss and trackback links next to the titles */
 .secondary .metalink a, .secondary .metalink a:visited,
 .secondary span a, .secondary span a:visited {
 	color: #444;

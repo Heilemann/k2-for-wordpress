@@ -28,11 +28,11 @@
 	/* Contains the main column */
 	}
 
-.item {
-	/* Each entry is contained within the 'item' class */
+.hentry {
+	/* Each entry is contained within the 'hentry' class */
 	}
 
-.itemtext {
+.entry-content {
 	/* The meat and potatoes of every entry */
 	}
 
