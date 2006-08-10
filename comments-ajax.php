@@ -95,12 +95,13 @@ endif;
 $comment = $wpdb->get_row("SELECT * FROM {$wpdb->comments} WHERE comment_ID = " . $new_comment_ID);
 
 $post->comment_status = $wpdb->get_var("SELECT comment_status FROM {$wpdb->posts} WHERE ID = {$comment_post_ID}");
+$post->comment_count++;
 
 ob_start();
 $comments = array($comment);
 include(TEMPLATEPATH . '/comments.php');
 $commentout = ob_get_clean();
 preg_match('#<li(.*?)>(.*)</li>#ims', $commentout, $matches);
-echo "<li style=\"display:none\"".$matches[1].">".$matches[2]."</li>";
+echo "<li style=\"\"".$matches[1].">".$matches[2]."</li>";
 
 ?>
