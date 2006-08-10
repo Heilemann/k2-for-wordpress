@@ -1,6 +1,8 @@
 <?php
 
 function about_sidebar_module($args) {
+	global $s;
+
 	extract($args);
 
 	$k2about = get_option('k2aboutblurp');
@@ -9,7 +11,7 @@ function about_sidebar_module($args) {
 	if($k2about != '') {
 		echo($before_module . $before_title . $title . $after_title);
 ?>
-		<?php /* Frontpage */ if (is_home() and !is_paged()) { ?>
+		<?php /* Frontpage */ if ((is_home() and !is_paged()) or is_single() or is_page()) { ?>
 		<p><?php echo stripslashes($k2about); ?></p>
 		
 		<?php /* Category Archive */ } elseif (is_category()) { ?>
@@ -43,7 +45,7 @@ function about_sidebar_module($args) {
 
 		<?php } ?>
 
-		<?php if (!is_home() and !is_paged() and !in_category($k2asidescategory) or is_day() or is_month() or is_year() or is_author() or is_search() or (function_exists('is_tag') and is_tag())) { ?>
+		<?php if (!is_home() and !is_paged() and !is_single() and !is_page() and !in_category($k2asidescategory) or is_day() or is_month() or is_year() or is_author() or is_search() or (function_exists('is_tag') and is_tag())) { ?>
 			<p><?php _e('Longer entries are truncated. Click the headline of an entry to read it in its entirety.','k2_domain'); ?></p>
 		<?php } ?>
 
