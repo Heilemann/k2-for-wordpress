@@ -52,7 +52,7 @@
 	<?php wp_head(); ?>	
 </head>
 
-<body class="<?php k2_body_class() ?>" id="<?php k2_body_id() ?>">
+<body class="<?php k2_body_class(); ?>" <?php k2_body_id(); ?>>
 
 <div id="page">
 

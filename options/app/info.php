@@ -155,7 +155,7 @@ function k2asides_filter($query) {
 
 function k2_body_id() {
 	if (get_option('permalink_structure') != '' and is_page()) {
-		echo get_query_var('name');
+		echo "id='" . get_query_var('name') . "'";
 	}
 }
 
