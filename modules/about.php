@@ -8,12 +8,12 @@ function about_sidebar_module($args) {
 	$k2about = get_option('k2aboutblurp');
 	$k2asidescategory = get_option('k2asidescategory');
 
-	if($k2about != '') {
+	if (!(((is_home() and !is_paged()) or is_single() or is_page()) and $k2about == '')) {
 		echo($before_module . $before_title . $title . $after_title);
 ?>
-		<?php /* Frontpage */ if ((is_home() and !is_paged()) or is_single() or is_page()) { ?>
+		<?php /* Frontpage */ if (((is_home() and !is_paged()) or is_single() or is_page()) and $k2about != '') { ?>
 		<p><?php echo stripslashes($k2about); ?></p>
-		
+
 		<?php /* Category Archive */ } elseif (is_category()) { ?>
 		<p><?php printf(__('You are currently browsing the %1$s weblog archives for the %2$s category.','k2_domain'), '<a href="' . get_settings('siteurl') .'">' . get_bloginfo('name') . '</a>', single_cat_title('', false) ) ?></p>
 
@@ -25,7 +25,7 @@ function about_sidebar_module($args) {
 
 		<?php /* Yearly Archive */ } elseif (is_year()) { ?>
 		<p><?php printf(__('You are currently browsing the %1$s weblog archives for the year %2$s.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>', get_the_time('Y')) ?></p>
-		
+
 		<?php /* Search */ } elseif (is_search()) { ?>
 		<p><?php printf(__('You have searched the %1$s weblog archives for \'<strong>%2$s</strong>\'.','k2_domain'),'<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>', wp_specialchars($s)) ?></p>
 
@@ -35,7 +35,7 @@ function about_sidebar_module($args) {
 
 		<?php } elseif (function_exists('is_tag') and is_tag()) { ?>
 		<p><?php printf(__('You are currently browsing the %1$s weblog archives for \'%2$s\' tag.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>', get_query_var('tag') ) ?></p>
-		
+
 		<?php /* Paged Archive */ } elseif (is_paged()) { ?>
 		<p><?php printf(__('You are currently browsing the %s weblog archives.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>') ?></p>
 
@@ -48,7 +48,6 @@ function about_sidebar_module($args) {
 		<?php if (!is_home() and !is_paged() and !is_single() and !is_page() and !in_category($k2asidescategory) or is_day() or is_month() or is_year() or is_author() or is_search() or (function_exists('is_tag') and is_tag())) { ?>
 			<p><?php _e('Longer entries are truncated. Click the headline of an entry to read it in its entirety.','k2_domain'); ?></p>
 		<?php } ?>
-
 <?php
 		echo($after_module);
 	}
