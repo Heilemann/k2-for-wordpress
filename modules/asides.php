@@ -1,6 +1,8 @@
 <?php
 
 function asides_sidebar_module($args) {
+	global $post;
+
 	extract($args);
 
 	$k2asidescategory = get_option('k2asidescategory');
