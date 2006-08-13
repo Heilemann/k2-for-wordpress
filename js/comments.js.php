@@ -64,5 +64,8 @@ function initComment() {
 	$('error').hide();
 }
 
-//Event.observe(window, 'load', initComment, false);
-new FastInit(initComment);
+// Only load if the comment form exists
+if ( $('commentform') ) {
+	//Event.observe(window, 'load', initComment, false);
+	new FastInit(initComment);
+}
