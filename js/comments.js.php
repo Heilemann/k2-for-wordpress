@@ -65,7 +65,7 @@ function initComment() {
 }
 
 // Only load if the comment form exists
-if ( $('commentform') ) {
+if ( document.getElementById('commentform') ) {
 	//Event.observe(window, 'load', initComment, false);
 	new FastInit(initComment);
 }
