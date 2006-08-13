@@ -1,18 +1,18 @@
 <?php
 
 function k2info($show='') {
-        $info = get_k2info($show);
-        echo $info;
+	echo get_k2info($show);
 }
 
 function get_k2info($show='') {
-global $current;
-	switch($show) {
+	global $current;
+
+	switch ($show) {
 		case 'version' :
-    			$output = 'Beta Two '. $current;
+    		$output = 'Beta Two '. $current;
 			break;
 		case 'scheme' :
-			$output = bloginfo('template_url') . '/styles/' . get_option('k2scheme');
+			$output = get_bloginfo('template_url') . '/styles/' . get_option('k2scheme');
 			break;
 	}
 	return $output;
@@ -121,24 +121,30 @@ function k2countpages($request) {
 
 /* By Mark Jaquith, http://txfx.net */
 function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' and ') { 
-    $categories = get_the_category(); 
-    
-      if (empty($categories)) { 
-        _e('Uncategorized','k2_domain'); 
-        return; 
-    } 
+	$categories = get_the_category(); 
 
-    $thelist = ''; 
-        $i = 1; 
-        $n = count($categories); 
-        foreach ($categories as $category) { 
-            $category->cat_name = $category->cat_name; 
-                if (1 < $i and $i != $n) $thelist .= $normal_separator; 
-                if (1 < $i and $i == $n) $thelist .= $penultimate_separator; 
-            $thelist .= '<a href="' . get_category_link($category->cat_ID) . '" title="' . sprintf(__("View all posts in %s"), $category->cat_name) . '">'.$category->cat_name.'</a>'; 
-                     ++$i; 
-        } 
-    return apply_filters('the_category', $thelist, $normal_separator); 
+	if (empty($categories)) { 
+		_e('Uncategorized','k2_domain'); 
+		return; 
+	} 
+
+	$thelist = ''; 
+	$i = 1; 
+	$n = count($categories); 
+
+	foreach ($categories as $category) { 
+		if (1 < $i and $i != $n) {
+			$thelist .= $normal_separator;
+		}
+
+		if (1 < $i and $i == $n) {
+			$thelist .= $penultimate_separator;
+		}
+
+		$thelist .= '<a href="' . get_category_link($category->cat_ID) . '" title="' . sprintf(__("View all posts in %s"), $category->cat_name) . '">'.$category->cat_name.'</a>'; 
+		++$i; 
+	} 
+	return apply_filters('the_category', $thelist, $normal_separator);
 }
 
 
