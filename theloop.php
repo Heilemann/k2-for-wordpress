@@ -7,11 +7,9 @@
 		require (dirname(__FILE__).'/../../../wp-blog-header.php');
 	}
 
-	// Get the asides category - global
+	// Get the asides category
 	$k2asidescategory = get_option('k2asidescategory');
 ?>
-
-<div id="primarycontent" class="hfeed">
 
 	<?php /* Headlines for archives */ if ((!is_single() and !is_home()) or is_paged()) { ?>
 		<h2>
@@ -53,9 +51,6 @@
 	<?php /* Check if there are posts */
 		if ( have_posts() ) {
 			/* It saves time to only perform the following if there are posts to show */
-
-			// Get the 'Noteworthy' category, if it exists
-			$noteworthy_cat = $wpdb->get_var("SELECT cat_ID FROM $wpdb->categories WHERE cat_name = 'Noteworthy' LIMIT 1");
 
 			// Count if there are 2+ users
 			$count_users = $wpdb->get_var("SELECT COUNT(1) FROM $wpdb->usermeta WHERE meta_key = '" . $table_prefix . "user_level' AND meta_value > 1 LIMIT 2");
@@ -115,8 +110,8 @@
 					<?php /* Tags */ if (is_single() and function_exists('UTW_ShowTagsForCurrentPost')) { ?>
 						<span class="entry-tags"><?php _e('Tags:','k2_domain'); ?> <?php UTW_ShowTagsForCurrentPost("commalist") ?>.</span>
 					<?php } ?>
-				</small>
-			</div>
+				</small> <!-- .entry-meta -->
+			</div> <!-- .entry-head -->
 
 			<div class="entry-content">
 				<?php if (is_archive() or is_search() or (function_exists('is_tag') and is_tag())) {
@@ -126,14 +121,14 @@
 				} ?>
 
 				<?php link_pages('<p><strong>'.__('Pages:','k2_domain').'</strong> ', '</p>', 'number'); ?>
-			</div>
+			</div> <!-- .entry-content -->
 
 			<?php if (!$k2_post_asides) { ?>
 			<!--
 			<?php trackback_rdf(); ?>
 			-->
 			<?php } ?>
-		</div>
+		</div> <!-- #post-ID -->
 
 	<?php } /* End sidebar asides test */ ?>
 
@@ -143,16 +138,16 @@
 
 <?php /* If there is nothing to loop */  } else { $notfound = '1'; ?>
 
-	<div class="center">
-		<h2><?php _e('Not Found','k2_domain'); ?></h2>
-	</div>
+	<div class="hentry four04">
 
-	<div class="item">
+		<div class="entry-head">
+			<h3 class="center"><?php _e('Not Found','k2_domain'); ?></h2>
+		</div>
+
 		<div class="entry-content">
 			<p><?php _e('Oh no! You\'re looking for something which just isn\'t here! Fear not however, errors are to be expected, and luckily there are tools on the sidebar for you to use in your search for what you need.','k2_domain'); ?></p>
 		</div>
-	</div>
+
+	</div> <!-- .hentry .four04 -->
 
 <?php } /* End Loop Init  */ ?>
-
-</div><?php // ID: primarycontent ?>

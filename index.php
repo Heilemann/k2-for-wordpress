@@ -4,16 +4,16 @@
 	
 	<div id="primary">
 		<div id="current-content">
-			<div>
+
 			<?php include (TEMPLATEPATH . '/rollingarchive.php'); ?>
-			</div>
-		</div>
+
+		</div> <!-- #current-content -->
 
 		<div id="dynamic-content"></div>
-	</div>
+	</div> <!-- #primary -->
 
 	<?php get_sidebar(); ?>
 	
-</div>
+</div> <!-- .content -->
 
 <?php get_footer(); ?>

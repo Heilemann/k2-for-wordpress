@@ -4,17 +4,19 @@
 	
 	<div id="primary">
 		<div id="current-content">
-			<div>
-			<?php include (TEMPLATEPATH . '/theloop.php'); ?>
-			<?php comments_template(); ?>
-			</div>
-		</div>
+			<div id="primarycontent" class="hfeed">
+
+				<?php include (TEMPLATEPATH . '/theloop.php'); ?>
+				<?php comments_template(); ?>
+
+			</div> <!-- #primarycontent .hfeed -->
+		</div> <!-- #current-content -->
 
 		<div id="dynamic-content"></div>
-	</div>
+	</div> <!-- #primary -->
 
 	<?php get_sidebar(); ?>
 
-</div>
+</div> <!-- .content -->
 
 <?php get_footer(); ?>

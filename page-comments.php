@@ -5,39 +5,52 @@
 <?php get_header(); ?>
 
 <div class="content">
-	
 	<div id="primary">
 		<div id="current-content">
-			<div>
+			<div id="primarycontent" class="hfeed">
 
-		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-	
-			<div class="item">
-	
-				<div class="pagetitle">
-					<h2 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), get_the_title()); ?>'><?php the_title(); ?></a></h2>
-					<?php edit_post_link(__('Edit','k2_domain'), '<span class="editlink">','</span>'); ?>
-				</div>
-			
-				<div class="itemtext">
-					<?php the_content(); ?>
+				<?php if (have_posts()) { while (have_posts()) { the_post(); ?>
+
+				<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
+
+					<div class="page-head">
+						<h2><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), get_the_title()) ?>'><?php the_title(); ?></a></h2>
+						<?php edit_post_link(__('Edit','k2_domain'), '<span class="entry-edit">','</span>'); ?>
+					</div>
 		
-					<?php link_pages('<p><strong>'.__('Pages:','k2_domain').'</strong> ', '</p>','number'); ?>
-				</div>
+					<div class="entry-content">
+						<?php the_content(); ?>
 	
-			</div>
-	
-		<?php endwhile; endif; ?>
+						<?php link_pages('<p><strong>'.__('Pages:','k2_domain').'</strong> ', '</p>', 'number'); ?>
+					</div>
 
-		<?php comments_template(); ?>
-			</div>
-		</div>
+				</div> <!-- #post-ID -->
+				<?php comments_template(); ?>
+
+				<?php } } else { $notfound = '1'; /* So we can tell the sidebar what to do */ ?>
+
+				<div class="hentry four04">
+
+					<div class="entry-head">
+						<h3 class="center"><?php _e('Not Found','k2_domain'); ?></h2>
+					</div>
+
+					<div class="entry-content">
+						<p><?php _e('Oh no! You\'re looking for something which just isn\'t here! Fear not however, errors are to be expected, and luckily there are tools on the sidebar for you to use in your search for what you need.','k2_domain'); ?></p>
+					</div>
+
+				</div> <!-- .hentry .four04 -->
+
+				<?php } // End the Loop ?>
+
+			</div> <!-- #primarycontent .hfeed -->
+		</div> <!-- #current-content -->
 
 		<div id="dynamic-content"></div>
-	</div>
+	</div> <!-- #primary -->
 
 	<?php get_sidebar(); ?>
 
-</div>
-
+</div> <!-- .content -->
+	
 <?php get_footer(); ?>
