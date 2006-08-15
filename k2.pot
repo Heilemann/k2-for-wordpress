@@ -663,6 +663,7 @@ msgstr ""
 
 #: options/app/sbm.php:298
 #: options/app/sbm.php:344
+#: options/app/sbm.php:372
 #, php-format
 msgid "Sidebar %d"
 msgstr ""
@@ -670,10 +671,6 @@ msgstr ""
 #: options/app/sbm.php:348
 #, php-format
 msgid " %d"
-msgstr ""
-
-#: options/app/sbm.php:372
-msgid "Sidebar "
 msgstr ""
 
 #: options/display/form.php:9

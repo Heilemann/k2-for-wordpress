@@ -7,9 +7,12 @@ function recent_comments_sidebar_module($args) {
 
 	echo($before_module . $before_title . $title . $after_title);
 
+	?>
+	<a href="<?php bloginfo('comments_rss2_url'); ?>" title="<?php _e('RSS Feed for all Comments','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a>
+	<?php
+
 	if(function_exists('blc_latest_comments')) {
 		?>
-		<a href="<?php bloginfo('comments_rss2_url'); ?>" title="<?php _e('RSS Feed for all Comments','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a>
 		<ul>
 			<?php blc_latest_comments(sbm_get_option('num_comments'),'3','false'); ?>
 		</ul>

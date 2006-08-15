@@ -369,7 +369,7 @@ class k2sbm {
 		if(count($k2sbm_registered_sidebars) > 0) {
 			// Check if this is an integer ID of a sidebar
 			if(is_int($name)) {
-				$name = __('Sidebar ' . $name, 'k2_domain');
+				$name = sprintf(__('Sidebar %d', 'k2_domain'), $name);
 			}
 
 			// Get the sidebar
