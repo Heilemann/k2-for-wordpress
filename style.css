@@ -68,7 +68,8 @@ body {
 	}
 
 .secondary {
-	font: 1em/1.5em 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	font-size: 1em;
+	line-height: 1.5em;
 	padding: 10px 0;
 	margin: 0 0 20px 71%;
 	width: 26%;
@@ -104,7 +105,7 @@ ul.menu li a {
 	}
 
 ul.menu li a {
-	font: 1em Verdana, Helvetica, Arial, Sans-Serif;
+	font-size: 1em;
 	color: white;
 	margin: 0;
 	}
@@ -379,7 +380,8 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	}
 
 .entry-content {
-	font: 1.2em/1.8em 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	font-size: 1.2em;
+	line-height: 1.8em;
 	text-align: justify;
 	color: #444;
 	}
@@ -441,7 +443,7 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	}
 
 #commentlist li {
-	margin: 10px 0;
+	margin: 10px 0 0;
 	padding: 10px 10px 5px;
 	list-style: none;
 	}
@@ -449,6 +451,15 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 #commentlist li .comment-content {
 	padding: 10px 0;
 	font-size: 1.2em;
+	line-height: 1.8em;
+	}
+
+.comment-content p,
+.comment-content ul,
+.comment-content ol,
+.comment-content div,
+.comment-content blockquote {
+	margin: 13px 0;
 	}
 
 #commentlist li .comment-meta {
@@ -508,7 +519,7 @@ li.bypostauthor blockquote {
 	}
 
 #pinglist li small {
-	font: .8em Arial, Sans-Serif;
+	font-size: 0.8em;
 	display: block;
 	}
 
@@ -560,7 +571,7 @@ li.bypostauthor blockquote {
 	}
 
 .comments input[type=text], .comments textarea {
-	font: 1.1em Verdana, Arial, Helvetica, Sans-Serif;
+	font-size: 1.1em;
 	padding: 3px;
 	color: #777;
 	}
@@ -674,7 +685,7 @@ img.noborder {
 	}
 
 small {
-	font-size: .9em;
+	font-size: 0.9em;
 	line-height: 1.5em;
 	}
 
