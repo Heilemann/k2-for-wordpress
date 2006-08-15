@@ -18,8 +18,6 @@
 
 				</div> <!-- .hentry .four04 -->
 
-				<?php } // End the Loop ?>
-
 			</div> <!-- #primarycontent .hfeed -->
 		</div> <!-- #current-content -->
 
