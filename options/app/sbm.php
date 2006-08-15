@@ -124,7 +124,7 @@ class k2sbm {
 
 							if($modules) {
 								foreach($modules as $module) {
-									echo('<module id="' . $module->id . '">' . $module->name . '</module>');
+									echo('<module id="' . $module->id . '">' . strip_tags($module->name) . '</module>');
 								}
 							}
 
@@ -1227,7 +1227,7 @@ function register_widget_control($name, $callback, $width = false, $height = fal
 /**
  * WPW function to unregister a widget's control
  **/
-function unregister_widget_control($name, $callback) {
+function unregister_widget_control($name) {
 	k2sbm::unregister_sidebar_module_control($name);
 }
 
