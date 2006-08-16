@@ -7,7 +7,7 @@
 
 <p>
 	<label for="module-name"><?php _e('Module\'s name', 'k2_domain'); ?>:</label><br />
-	<input id="module-name" name="module_name" type="text" value="<?php echo($module->name); ?>" />
+	<input id="module-name" name="module_name" type="text" value="<?php echo(wp_specialchars(htmlspecialchars(stripslashes($module->name), ENT_QUOTES), 1)); ?>" />
 </p>
 
 <p>

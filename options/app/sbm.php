@@ -138,7 +138,7 @@ class k2sbm {
 				case 'add':
 					// Check the title was correct
 					if(isset($_POST['add_name']) and trim((string)($_POST['add_name'])) != '') {
-						k2sbm::add_module($_POST['add_name'], $_POST['add_type'], $_POST['add_sidebar']);
+						k2sbm::add_module(stripslashes($_POST['add_name']), $_POST['add_type'], $_POST['add_sidebar']);
 					} else {
 						k2sbm::set_error_text(__('You must specify a valid module name', 'k2_domain'));
 					}
