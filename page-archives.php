@@ -25,7 +25,7 @@
 				<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
 
 					<div class="page-head">
-						<h2><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), get_the_title()); ?>'><?php the_title(); ?></a></h2>
+						<h2><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(get_the_title(),1) ); ?>'><?php the_title(); ?></a></h2>
 						<?php edit_post_link(__('Edit','k2_domain'), '<span class="entry-edit">','</span>'); ?>
 					</div>
 	
