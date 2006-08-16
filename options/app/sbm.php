@@ -253,7 +253,7 @@ class k2sbm {
 
 		<script type="text/javascript">
 			//<![CDATA[
-				var sbm_baseUrl = '<?php bloginfo('template_directory'); ?>/options/app/sbm.php';
+				var sbm_baseUrl = '<?php bloginfo('template_directory'); ?>/options/app/sbm-ajax.php';
 			//]]>
 		</script>
 
@@ -1229,19 +1229,6 @@ function register_widget_control($name, $callback, $width = false, $height = fal
  **/
 function unregister_widget_control($name) {
 	k2sbm::unregister_sidebar_module_control($name);
-}
-
-
-/* Check if this is a direct request & load accordingly **************************************************************/
-
-// Fix for PHP CGI
-if(!isset($_SERVER['SCRIPT_FILENAME']) or strpos($_SERVER['SCRIPT_FILENAME'], 'php.cgi') == strlen($_SERVER['SCRIPT_FILENAME']) - 7) {
-	$_SERVER['SCRIPT_FILENAME'] = $_SERVER['PATH_TRANSLATED'];
-}
-
-if(realpath($_SERVER['SCRIPT_FILENAME']) == realpath(SBMPLUGINPATH . '/sbm.php')) {
-	require_once('../../../../../wp-blog-header.php');
-	k2sbm::direct_bootstrap();
 }
 
 ?>

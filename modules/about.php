@@ -45,7 +45,7 @@ function about_sidebar_module($args) {
 
 		<?php } ?>
 
-		<?php if (!is_home() and !is_paged() and !is_single() and !is_page() and !in_category($k2asidescategory) or is_day() or is_month() or is_year() or is_author() or is_search() or (function_exists('is_tag') and is_tag())) { ?>
+		<?php if((!is_home() and !is_paged()) and !is_single() and !is_page() and !in_category($k2asidescategory) or is_day() or is_month() or is_year() or is_author() or is_search() or (function_exists('is_tag') and is_tag())) { ?>
 			<p><?php _e('Longer entries are truncated. Click the headline of an entry to read it in its entirety.','k2_domain'); ?></p>
 		<?php } ?>
 <?php
