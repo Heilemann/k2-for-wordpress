@@ -213,7 +213,7 @@ class k2sbm {
 	 **/
 	function post_bootstrap() {
 		// Allow the Widgets and SBM defined in plugins & themes to be loaded
-		do_action('k2sbm_init');
+		do_action('sbm_init');
 		do_action('widgets_init');
 	}
 
