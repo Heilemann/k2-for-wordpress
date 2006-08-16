@@ -704,6 +704,8 @@ acronym, abbr {
 	cursor: help;
 	}
 
+.chronodata abbr { border: 0; }
+
 blockquote {
 	margin: 20px 0;
 	padding: 0 20px 0 50px;
