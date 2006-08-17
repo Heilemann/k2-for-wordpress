@@ -37,6 +37,24 @@ class installk2 {
 		add_option('k2sbm_modules_active', array(), 'The active sidebar modules.', $autoload);
 		add_option('k2sbm_modules_disabled', array(), 'The disabled sidebar modules.', $autoload);
 		add_option('k2sbm_modules_next_id', 1, 'The ID for the next sidebar module.', $autoload);
+
+		// Add the SBM stub file to the plugins list
+		$sbm_stub_path = '../themes/' . get_option('template') . '/options/app/sbm-stub.php';
+		$plugins = (array)get_option('active_plugins');
+		$found = false;
+
+		// Check to see if the stub plugin is already there
+		for($i = 0; !$found && $i < count($plugins); $i++) {
+			if($plugins[$i] == $sbm_stub_path) {
+				$found = true;
+			}
+		}
+
+		// If not, we can add it
+		if(!$found) {
+			$plugins[] = $sbm_stub_path;
+			update_option('active_plugins', $plugins);
+		}
 	}
 }
 ?>
