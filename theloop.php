@@ -127,11 +127,6 @@
 				<?php link_pages('<p><strong>'.__('Pages:','k2_domain').'</strong> ', '</p>', 'number'); ?>
 			</div> <!-- .entry-content -->
 
-			<?php if (!$k2_post_asides) { ?>
-			<!--
-			<?php trackback_rdf(); ?>
-			-->
-			<?php } ?>
 		</div> <!-- #post-ID -->
 
 	<?php } /* End sidebar asides test */ ?>
