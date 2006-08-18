@@ -571,7 +571,7 @@ li.bypostauthor blockquote {
 	}
 
 .comments input[type=text], .comments textarea {
-	font-size: 1.1em;
+	font: 1.2em 'Courier New', Courier, Monospace;
 	padding: 3px;
 	color: #777;
 	}
