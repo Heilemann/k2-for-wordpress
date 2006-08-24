@@ -1,12 +1,5 @@
 <?php
 
-function k2sbm_load() {
-	// Only include SBM if no other plugin is installed for handling sidebars
-	if(!function_exists('register_sidebar') and !(basename($_SERVER['SCRIPT_FILENAME']) == 'plugins.php' and $_GET['action'] == 'activate')) {
-		require(dirname(__FILE__) . '/sbm.php');
-	}
-}
-
 // Get the directories of this theme and the currently activated theme
 $k2sbm_theme_path = get_theme_root() . DIRECTORY_SEPARATOR . get_option('template');
 $k2sbm_k2_path = dirname(dirname(dirname(__FILE__)));
@@ -19,6 +12,14 @@ if(DIRECTORY_SEPARATOR != '/') {
 
 // Is this K2?
 if($k2sbm_theme_path == $k2sbm_k2_path) {
+	// We only want this function to be exposed if this is K2
+	function k2sbm_load() {
+		// Only include SBM if no other plugin is installed for handling sidebars
+		if(!function_exists('register_sidebar') and !(basename($_SERVER['SCRIPT_FILENAME']) == 'plugins.php' and $_GET['action'] == 'activate')) {
+			require(dirname(__FILE__) . '/sbm.php');
+		}
+	}
+
 	add_action('plugins_loaded', 'k2sbm_load', 1);
 }
 
