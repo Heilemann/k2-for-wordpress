@@ -75,9 +75,9 @@ function rss_sidebar_module_control() {
 	}
 
 	?>
-		<p><label for="rss-module-feed">RSS feed's URL:</label> <input id="rss-module-feed" name="rss_module_feed" type="text" value="<?php echo(sbm_get_option('feed')); ?>" /></p>
-		<p><label for="rss-module-icon">RSS feed's icon:</label> <input id="rss-module-icon" name="rss_module_icon" type="text" value="<?php echo(sbm_get_option('icon')); ?>" /></p>
-		<p><label for="rss-module-num-items">Number of items:</label> <input id="rss-module-num-items" name="rss_module_num_items" type="text" value="<?php echo(sbm_get_option('num_items')); ?>" size="2" /></p>
+		<p><label for="rss-module-feed"><?php _e('RSS feed\'s URL:', 'k2_domain'); ?></label> <input id="rss-module-feed" name="rss_module_feed" type="text" value="<?php echo(sbm_get_option('feed')); ?>" /></p>
+		<p><label for="rss-module-icon"><?php _e('RSS feed\'s icon:', 'k2_domain'); ?></label> <input id="rss-module-icon" name="rss_module_icon" type="text" value="<?php echo(sbm_get_option('icon')); ?>" /></p>
+		<p><label for="rss-module-num-items"><?php _e('Number of items:', 'k2_domain'); ?></label> <input id="rss-module-num-items" name="rss_module_num_items" type="text" value="<?php echo(sbm_get_option('num_items')); ?>" size="2" /></p>
 	<?php
 }
 

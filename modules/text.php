@@ -14,7 +14,7 @@ function text_sidebar_module_control() {
 	}
 
 	?>
-		<p><label for="text-module-text">Module's text content:</label><br /><textarea id="text-module-text" name="text_module_text" rows="6" cols="30"><?php echo(sbm_get_option('text')); ?></textarea></p>
+		<p><label for="text-module-text"><?php _e('Module\'s text content:', 'k2_domain'); ?></label><br /><textarea id="text-module-text" name="text_module_text" rows="6" cols="30"><?php echo(sbm_get_option('text')); ?></textarea></p>
 	<?php
 }
 

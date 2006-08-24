@@ -14,7 +14,7 @@ function html_sidebar_module_control() {
 	}
 
 	?>
-		<p><label for="html-module-html">Module's HTML:</label><br /><textarea id="html-module-html" name="html_module_html" rows="6" cols="30"><?php echo(wp_specialchars(htmlspecialchars(stripslashes(sbm_get_option('html')), ENT_QUOTES), 1)); ?></textarea></p>
+		<p><label for="html-module-html"><?php _e('Module\'s HTML:', 'k2_domain'); ?></label><br /><textarea id="html-module-html" name="html_module_html" rows="6" cols="30"><?php echo(wp_specialchars(htmlspecialchars(stripslashes(sbm_get_option('html')), ENT_QUOTES), 1)); ?></textarea></p>
 	<?php
 }
 

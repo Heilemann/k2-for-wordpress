@@ -565,6 +565,49 @@ msgstr ""
 msgid "Page %1$d of %2$d"
 msgstr ""
 
+
+#: modules/about.php:56
+msgid "About module"
+msgstr ""
+
+#: modules/asides.php:27
+msgid "Asides module"
+msgstr ""
+
+#: modules/calendar.php:11
+msgid "Calendar module"
+msgstr ""
+
+#: modules/categories.php:15
+msgid "Category list module"
+msgstr ""
+
+#: modules/flickr.php:18
+msgid "Flickr module"
+msgstr ""
+
+#: modules/html.php:17
+msgid "Module's HTML:"
+msgstr ""
+
+#: modules/html.php:21
+#: modules/html.php:22
+msgid "HTML module"
+msgstr ""
+
+#: modules/latest_posts.php:25
+msgid "Number of posts:"
+msgstr ""
+
+#: modules/latest_posts.php:29
+#: modules/latest_posts.php:30
+msgid "Latest posts module"
+msgstr ""
+
+#: modules/links.php:15
+msgid "Links module"
+msgstr ""
+
 #: modules/meta.php:11
 msgid "Syndicate this site using RSS 2.0"
 msgstr ""
@@ -585,8 +628,56 @@ msgstr ""
 msgid "Powered by Wordpress, state-of-the-art semantic personal publishing platform."
 msgstr ""
 
-#: modules/recent_comments.php:25
+#: modules/meta.php:20
+msgid "Meta module"
+msgstr ""
+
+#: modules/monthly.php:15
+msgid "Month list module"
+msgstr ""
+
+#: modules/navigation.php:45
+msgid "Navigation module"
+msgstr ""
+
+#: modules/php.php:17
+msgid "Module's code:"
+msgstr ""
+
+#: modules/php.php:21
+#: modules/php.php:22
+msgid "PHP module"
+msgstr ""
+
+#: modules/recent_comments.php:28
+#, php-format
+msgid "%1$s %2$s <a href="%3$s#comment-%4$s">%5$s</a>"
+msgstr ""
+
+#: modules/recent_comments.php:28
 msgid "on post"
+msgstr ""
+
+#: modules/recent_comments.php:34
+msgid "No comments"
+msgstr ""
+
+#: modules/recent_comments.php:48
+msgid "Number of comments:"
+msgstr ""
+
+#: modules/recent_comments.php:52
+#: modules/recent_comments.php:53
+msgid "Recent comments module"
+msgstr ""
+
+#: modules/related_posts.php:25
+msgid "Maximum number of posts:"
+msgstr ""
+
+#: modules/related_posts.php:30
+#: modules/related_posts.php:31
+msgid "Related posts module"
 msgstr ""
 
 #: modules/rss.php:24
@@ -603,6 +694,36 @@ msgstr ""
 
 #: modules/rss.php:56
 msgid "No feed items, the feed may currently be unavaliable."
+msgstr ""
+
+#: modules/rss.php:78
+msgid "RSS feed's URL:"
+msgstr ""
+
+#: modules/rss.php:79
+msgid "RSS feed's icon:"
+msgstr ""
+
+#: modules/rss.php:80
+msgid "Number of items:"
+msgstr ""
+
+#: modules/rss.php:84
+#: modules/rss.php:85
+msgid "RSS module"
+msgstr ""
+
+#: modules/search.php:11
+msgid "Search module"
+msgstr ""
+
+#: modules/text.php:17
+msgid "Module's text content:"
+msgstr ""
+
+#: modules/text.php:21
+#: modules/text.php:22
+msgid "Text module"
 msgstr ""
 
 #: options/app/archive.php:84
@@ -1137,4 +1258,3 @@ msgstr ""
 #: options/display/sbm-ajax/edit-module-posts-form.php:21
 msgid "No posts"
 msgstr ""
-
