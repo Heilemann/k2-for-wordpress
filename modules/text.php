@@ -18,7 +18,7 @@ function text_sidebar_module_control() {
 	<?php
 }
 
-register_sidebar_module('Text module', 'text_sidebar_module', 'sb-text');
-register_sidebar_module_control('Text module', 'text_sidebar_module_control');
+register_sidebar_module(__('Text module', 'k2_domain'), 'text_sidebar_module', 'sb-text');
+register_sidebar_module_control(__('Text module', 'k2_domain'), 'text_sidebar_module_control');
 
 ?>

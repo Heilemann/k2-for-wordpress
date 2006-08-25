@@ -12,6 +12,6 @@ function months_sidebar_module($args) {
 	echo($after_module);
 }
 
-register_sidebar_module('Month list module', 'months_sidebar_module', 'sb-months');
+register_sidebar_module(__('Month list module', 'k2_domain'), 'months_sidebar_module', 'sb-months');
 
 ?>

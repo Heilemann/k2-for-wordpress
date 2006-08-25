@@ -8,6 +8,6 @@ function calendar_sidebar_module($args) {
 	echo($after_module);
 }
 
-register_sidebar_module('Calendar module', 'calendar_sidebar_module', 'sb-calendar');
+register_sidebar_module(__('Calendar module', 'k2_domain'), 'calendar_sidebar_module', 'sb-calendar');
 
 ?>

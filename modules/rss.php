@@ -81,7 +81,7 @@ function rss_sidebar_module_control() {
 	<?php
 }
 
-register_sidebar_module('RSS module', 'rss_sidebar_module', 'sb-feed', array('num_items' => '10'));
-register_sidebar_module_control('RSS module', 'rss_sidebar_module_control');
+register_sidebar_module(__('RSS module', 'k2_domain'), 'rss_sidebar_module', 'sb-feed', array('num_items' => '10'));
+register_sidebar_module_control(__('RSS module', 'k2_domain'), 'rss_sidebar_module_control');
 
 ?>

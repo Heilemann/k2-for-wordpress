@@ -26,7 +26,7 @@ function latest_posts_sidebar_module_control() {
 	<?php
 }
 
-register_sidebar_module('Latest posts module', 'latest_posts_sidebar_module', 'sb-latest', array('num_posts' => 10));
-register_sidebar_module_control('Latest posts module', 'latest_posts_sidebar_module_control');
+register_sidebar_module(__('Latest posts module', 'k2_domain'), 'latest_posts_sidebar_module', 'sb-latest', array('num_posts' => 10));
+register_sidebar_module_control(__('Latest posts module', 'k2_domain'), 'latest_posts_sidebar_module_control');
 
 ?>
