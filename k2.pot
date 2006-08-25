@@ -651,7 +651,7 @@ msgstr ""
 
 #: modules/recent_comments.php:28
 #, php-format
-msgid "%1$s %2$s <a href="%3$s#comment-%4$s">%5$s</a>"
+msgid "%1$s %2$s <a href=\"%3$s#comment-%4$s\">%5$s</a>"
 msgstr ""
 
 #: modules/recent_comments.php:28
