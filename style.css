@@ -235,6 +235,7 @@ body.page .entry-content h4 {
 .secondary div {
 	margin: 20px 0 0;
 	padding: 0;
+	position: relative;
 	}
 	
 #primary .metalink a, #primary .metalink a:visited, /* The Metalink class takes care of the comments, edit, rss and trackback links next to the titles */
@@ -291,6 +292,10 @@ body.page .entry-content h4 {
 	margin: 0;
 	padding: 0 0 10px;
 	word-spacing: -1px;
+	}
+
+.secondary .k2-asides p {
+	display: inline;
 	}
 
 .secondary .k2-asides .metalink {
@@ -873,7 +878,8 @@ input[type=text], textarea {
 
 .attachment {
 	text-align: center;
-}
+	}
+
 
 /* CSS Beyond this point is for various supported plugins and not the 'core' K2 template */
 

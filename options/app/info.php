@@ -166,18 +166,17 @@ function k2_body_id() {
 }
 
 
-// Semantic class functions from Sandbox (http://www.plaintxt.org/themes/sandbox/)
+// Semantic class functions from Sandbox 0.6.1 (http://www.plaintxt.org/themes/sandbox/)
 
-// Template tag: echoes semantic classes
+// Template tag: echoes semantic classes in the <body>
 function k2_body_class() {
-	global $wp_query;
+	global $wp_query, $current_user;
 
 	$c = array('wordpress', 'k2');
 
 	k2_date_classes(time(), $c);
 
 	is_home()       ? $c[] = 'home'       : null;
-	is_page()       ? $c[] = 'page'       : null;
 	is_archive()    ? $c[] = 'archive'    : null;
 	is_date()       ? $c[] = 'date'       : null;
 	is_search()     ? $c[] = 'search'     : null;
@@ -185,34 +184,50 @@ function k2_body_class() {
 	is_attachment() ? $c[] = 'attachment' : null;
 	is_404()        ? $c[] = 'four04'     : null; // CSS does not allow a digit as first character
 
-	if ( is_author() ) {
-		global $wp_query;
+	if ( is_single() ) {
+		the_post();
+		$c[] = 'single';
+		if ( isset($wp_query->post->post_date) ) {
+			k2_date_classes(mysql2date('U', $wp_query->post->post_date), $c, 's-');
+		}
+		foreach ( (array) get_the_category() as $cat ) {
+			$c[] = 's-category-' . $cat->category_nicename;
+		}
+		$c[] = 's-author-' . get_the_author_login();
+		rewind_posts();
+	}
+
+	else if ( is_author() ) {
 		$author = $wp_query->get_queried_object();
 		$c[] = 'author';
 		$c[] = 'author-' . $author->user_nicename;
 	}
 
-	if ( is_category() ) {
-		global $wp_query;
+	else if ( is_category() ) {
 		$cat = $wp_query->get_queried_object();
 		$c[] = 'category';
 		$c[] = 'category-' . $cat->category_nicename;
 	}
 
-	if ( is_single() ) {
-		$c[] = 'single';
-		if ( isset($wp_query->post->post_date) )
-			k2_date_classes(mysql2date('U', $wp_query->post->post_date), $c, 's-');
+	else if ( is_page() ) {
+		the_post();
+		$c[] = 'page';
+		$c[] = 'page-author-' . get_the_author_login();
+		rewind_posts();
 	}
+
+	if ( $current_user->ID )
+		$c[] = 'loggedin';
 
 	echo join(' ', apply_filters('body_class',  $c));
 }
 
-// Template tag: echoes semantic classes for a post
-function k2_post_class() {
-	global $post, $k2_post_alt, $k2_post_asides;
+// Template tag: echoes semantic classes in each post <div>
+function k2_post_class( $post_count = 1, $post_asides = false ) {
+	global $post;
 
-	$c = array('hentry', $post->post_type, $post->post_status);
+	$c = array('hentry', "p$post_count", $post->post_type, $post->post_status);
+
 	$c[] = 'author-' . get_the_author_login();
 
 	foreach ( (array) get_the_category() as $cat ) {
@@ -221,22 +236,22 @@ function k2_post_class() {
 
 	k2_date_classes(mysql2date('U', $post->post_date), $c);
 
-	if ( $k2_post_asides ) {
+	if ( $post_asides ) {
 		$c[] = 'k2-asides';
 	}
 
-	if ( $k2_post_alt ) {
+	if ( $post_count % 2 ) {
 		$c[] = 'alt';
 	}
 
 	echo join(' ', apply_filters('post_class', $c));
 }
 
-// Template tag: echoes semantic classes for a comment
-function k2_comment_class() {
-	global $comment, $post, $k2_comment_alt;
+// Template tag: echoes semantic classes for a comment <li>
+function k2_comment_class( $comment_count = 1 ) {
+	global $comment, $post;
 
-	$c = array($comment->comment_type);
+	$c = array($comment->comment_type, "c$comment_count");
 
 	if ( $comment->user_id > 0 ) {
 		$user = get_userdata($comment->user_id);
@@ -250,14 +265,19 @@ function k2_comment_class() {
 
 	k2_date_classes(mysql2date('U', $comment->comment_date), $c, 'c-');
 
-	if ( $k2_comment_alt ) {
+	if ( $comment_count % 2 ) {
 		$c[] = 'alt';
 	}
 		
+	if ( is_trackback() ) {
+		$c[] = 'trackback';
+	}
+
 	echo join(' ', apply_filters('comment_class', $c));
 }
 
-// Adds four time-based classes to an array
+// Adds four time- and date-based classes to an array
+// with all times relative to GMT (sometimes called UTC)
 function k2_date_classes($t, &$c, $p = '') {
 	$t = $t + (get_settings('gmt_offset') * 3600);
 	$c[] = $p . 'y' . gmdate('Y', $t); // Year
@@ -266,5 +286,7 @@ function k2_date_classes($t, &$c, $p = '') {
 	$c[] = $p . 'h' . gmdate('h', $t); // Hour
 }
 
+
+// Filter to remove asides from the loop
 add_filter('pre_get_posts', 'k2asides_filter');
 ?>

@@ -62,8 +62,8 @@
 			get_currentuserinfo();
 			global $user_level;
 
-			// For alternating posts - global
-			$k2_post_alt = true;
+			// Post index for semantic classes
+			$post_index = 1;
 
 			// Check if to display asides inline or not
 			if(is_archive() or is_search() or is_single() or (function_exists('is_tag') and is_tag())) {
@@ -77,18 +77,15 @@
 		while ( have_posts() ) {
 			the_post();
 
-			// Post is an aside - global
-			$k2_post_asides = in_category($k2asidescategory);
-
-			// Start alternating
-			$k2_post_alt = !($k2_post_alt);
+			// Post is an aside
+			$post_asides = in_category($k2asidescategory);
 	?>
 
 	<?php /* Permalink nav has to be inside loop */ if (is_single()) include (TEMPLATEPATH . '/navigation.php'); ?>
 
-	<?php /* Only display asides if sidebar asides are not active */ if(!$k2_post_asides || $k2asidescheck == '0') { ?>
+	<?php /* Only display asides if sidebar asides are not active */ if(!$post_asides || $k2asidescheck == '0') { ?>
 
-		<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
+		<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class($post_index++, $post_asides); ?>">
 			<div class="entry-head">
 				<h3 class="entry-title"><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(get_the_title(),1) ); ?>'><?php the_title(); ?></a></h3>
 				<?php /* Support for Noteworthy plugin */ if (function_exists('nw_noteworthyLink')) { nw_noteworthyLink($post->ID); } ?>
@@ -105,7 +102,7 @@
  						?>
 					</span>
 
-					<?php /* Categories */ if (!$k2_post_asides) { printf(__('<span class="entry-category">in %s.</span>','k2_domain'), k2_nice_category(', ', __(' and ','k2_domain')) ); } ?>
+					<?php /* Categories */ if (!$post_asides) { printf(__('<span class="entry-category">in %s.</span>','k2_domain'), k2_nice_category(', ', __(' and ','k2_domain')) ); } ?>
 
 					<?php /* Comments */ comments_popup_link('0&nbsp;<span>'.__('Comments','k2_domain').'</span>', '1&nbsp;<span>'.__('Comment','k2_domain').'</span>', '%&nbsp;<span>'.__('Comments','k2_domain').'</span>', 'commentslink', '<span class="commentslink">'.__('Closed','k2_domain').'</span>'); ?>
 				

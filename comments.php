@@ -41,14 +41,14 @@
 
 	<hr />
 
-		<?php /* Check for comments */ if ( $countComments > 0 ) { $k2_comment_alt = true; ?>
+		<?php /* Check for comments */ if ( $countComments > 0 ) { ?>
 		<ol id="commentlist">
 
-			<?php foreach ($k2_comment_list as $index => $comment) { $k2_comment_alt = !($k2_comment_alt); ?>
+			<?php foreach ($k2_comment_list as $comment_index => $comment) { ?>
 
-			<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class(); ?>">
+			<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class($comment_index); ?>">
 				<?php if (function_exists('gravatar')) { ?><a href="http://www.gravatar.com/" title="<?php _e('What is this?','k2_domain'); ?>"><img src="<?php gravatar("X", 32,  get_bloginfo('template_url')."/images/defaultgravatar.jpg"); ?>" class="gravatar" alt="<?php _e('Gravatar Icon','k2_domain'); ?>" /></a><?php } ?>
-				<a href="#comment-<?php comment_ID(); ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $index; ?></a>
+				<a href="#comment-<?php comment_ID(); ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $comment_index; ?></a>
 				<span class="commentauthor"><?php comment_author_link(); ?></span>
 
 				<small class="comment-meta">
@@ -83,12 +83,14 @@
 		</ol> <!-- END #commentlist -->
 		<?php } /* end comment check */ ?>
 		
-		<?php /* Check for Pings */ if ( $countPings > 0 ) { $k2_comment_alt = true; ?>
+		<?php /* Check for Pings */ if ( $countPings > 0 ) { ?>
 		<ol id="pinglist">
-			<?php foreach ($k2_ping_list as $index => $comment) { $k2_comment_alt = !($k2_comment_alt); ?>
-			<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class(); ?>">
+
+			<?php foreach ($k2_ping_list as $ping_index => $comment) { ?>
+
+			<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class($ping_index); ?>">
 				<?php if (function_exists('comment_favicon')) { ?><span class="favatar"><?php comment_favicon(); ?></span><?php } ?>
-				<a href="#comment-<?php comment_ID() ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>" class="counter"><?php echo $index; ?></a>
+				<a href="#comment-<?php comment_ID() ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>" class="counter"><?php echo $ping_index; ?></a>
 				<span class="commentauthor"><?php comment_author_link(); ?></span>
 				<small class="comment-meta">				
 				<?php
