@@ -18,7 +18,7 @@ function php_sidebar_module_control() {
 	<?php
 }
 
-register_sidebar_module(__('PHP module', 'k2_domain'), 'php_sidebar_module', 'sb-php');
-register_sidebar_module_control(__('PHP module', 'k2_domain'), 'php_sidebar_module_control');
+register_sidebar_module('PHP module', 'php_sidebar_module', 'sb-php');
+register_sidebar_module_control('PHP module', 'php_sidebar_module_control');
 
 ?>

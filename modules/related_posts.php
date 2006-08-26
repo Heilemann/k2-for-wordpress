@@ -27,8 +27,8 @@ function related_posts_sidebar_module_control() {
 }
 
 if(function_exists('related_posts')) {
-	register_sidebar_module(__('Related posts module', 'k2_domain'), 'related_posts_sidebar_module', 'sb-related', array('num_posts' => 10));
-	register_sidebar_module_control(__('Related posts module', 'k2_domain'), 'related_posts_sidebar_module_control');
+	register_sidebar_module('Related posts module', 'related_posts_sidebar_module', 'sb-related', array('num_posts' => 10));
+	register_sidebar_module_control('Related posts module', 'related_posts_sidebar_module_control');
 }
 
 ?>

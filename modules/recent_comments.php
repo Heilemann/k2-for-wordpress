@@ -49,7 +49,7 @@ function recent_comments_sidebar_module_control() {
 	<?php
 }
 
-register_sidebar_module(__('Recent comments module', 'k2_domain'), 'recent_comments_sidebar_module', 'sb-comments' . (function_exists('blc_latest_comments') ? ' sb-comments-blc' : ''), array('num_comments' => 10));
-register_sidebar_module_control(__('Recent comments module', 'k2_domain'), 'recent_comments_sidebar_module_control');
+register_sidebar_module('Recent comments module', 'recent_comments_sidebar_module', 'sb-comments' . (function_exists('blc_latest_comments') ? ' sb-comments-blc' : ''), array('num_comments' => 10));
+register_sidebar_module_control('Recent comments module', 'recent_comments_sidebar_module_control');
 
 ?>

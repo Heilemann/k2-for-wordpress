@@ -53,6 +53,6 @@ function about_sidebar_module($args) {
 	}
 }
 
-register_sidebar_module(__('About module', 'k2_domain'), 'about_sidebar_module', 'sb-about');
+register_sidebar_module('About module', 'about_sidebar_module', 'sb-about');
 
 ?>

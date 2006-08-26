@@ -240,7 +240,7 @@ function k2_post_class( $post_count = 1, $post_asides = false ) {
 		$c[] = 'k2-asides';
 	}
 
-	if ( $post_count % 2 ) {
+	if ( $post_count & 1 == 1 ) {
 		$c[] = 'alt';
 	}
 
@@ -265,7 +265,7 @@ function k2_comment_class( $comment_count = 1 ) {
 
 	k2_date_classes(mysql2date('U', $comment->comment_date), $c, 'c-');
 
-	if ( $comment_count % 2 ) {
+	if ( $comment_count & 1 == 1 ) {
 		$c[] = 'alt';
 	}
 		

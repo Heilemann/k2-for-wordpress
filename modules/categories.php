@@ -12,6 +12,6 @@ function categories_sidebar_module($args) {
 	echo($after_module);
 }
 
-register_sidebar_module(__('Category list module', 'k2_domain'), 'categories_sidebar_module', 'sb-categories');
+register_sidebar_module('Category list module', 'categories_sidebar_module', 'sb-categories');
 
 ?>

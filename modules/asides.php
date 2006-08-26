@@ -28,6 +28,6 @@ function asides_sidebar_module($args) {
 	} // End Asides check
 }
 
-register_sidebar_module(__('Asides module', 'k2_domain'), 'asides_sidebar_module', 'sb-asides');
+register_sidebar_module('Asides module', 'asides_sidebar_module', 'sb-asides');
 
 ?>

@@ -42,6 +42,6 @@ function nav_sidebar_module($args) {
 	}
 }
 
-register_sidebar_module(__('Navigation module', 'k2_domain'), 'nav_sidebar_module', 'sb-pagemenu');
+register_sidebar_module('Navigation module', 'nav_sidebar_module', 'sb-pagemenu');
 
 ?>
