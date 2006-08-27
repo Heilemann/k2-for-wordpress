@@ -5,39 +5,37 @@
 <?php get_header(); ?>
 
 <div class="content">
-	
 	<div id="primary">
 		<div id="current-content">
-			<div>
+			<div id="primarycontent" class="hfeed">
 
-		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-	
-			<div class="item">
-	
-				<div class="pagetitle">
-					<h2 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf(__('Permanent Link to "%s"','k2_domain'), get_the_title()); ?>'><?php the_title(); ?></a></h2>
-					<?php edit_post_link(__('Edit','k2_domain'), '<span class="editlink">','</span>'); ?>
-				</div>
-			
-				<div class="itemtext">
-					<?php the_content(); ?>
+				<?php while (have_posts()) { the_post(); ?>
+				<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
+
+					<div class="page-head">
+						<h2><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(get_the_title(),1) ); ?>'><?php the_title(); ?></a></h2>
+						<?php edit_post_link(__('Edit','k2_domain'), '<span class="entry-edit">','</span>'); ?>
+					</div>
 		
-					<?php link_pages('<p><strong>'.__('Pages:','k2_domain').'</strong> ', '</p>','number'); ?>
-				</div>
+					<div class="entry-content">
+						<?php the_content(); ?>
 	
-			</div>
-	
-		<?php endwhile; endif; ?>
+						<?php link_pages('<p><strong>'.__('Pages:','k2_domain').'</strong> ', '</p>', 'number'); ?>
+					</div>
 
-		<?php comments_template(); ?>
-			</div>
-		</div>
+				</div> <!-- #post-ID -->
+				<?php comments_template(); ?>
+
+				<?php } // End the Loop ?>
+
+			</div> <!-- #primarycontent .hfeed -->
+		</div> <!-- #current-content -->
 
 		<div id="dynamic-content"></div>
-	</div>
+	</div> <!-- #primary -->
 
 	<?php get_sidebar(); ?>
 
-</div>
-
+</div> <!-- .content -->
+	
 <?php get_footer(); ?>

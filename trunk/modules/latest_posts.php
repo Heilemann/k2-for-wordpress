@@ -22,7 +22,7 @@ function latest_posts_sidebar_module_control() {
 	}
 
 	?>
-		<p><label for="latest-posts-module-num-posts">Number of posts:</label> <input id="latest-posts-module-num-posts" name="latest_posts_module_num_posts" type="text" value="<?php echo(sbm_get_option('num_posts')); ?>" size="2" /></p>
+		<p><label for="latest-posts-module-num-posts"><?php _e('Number of posts:', 'k2_domain'); ?></label> <input id="latest-posts-module-num-posts" name="latest_posts_module_num_posts" type="text" value="<?php echo(sbm_get_option('num_posts')); ?>" size="2" /></p>
 	<?php
 }
 

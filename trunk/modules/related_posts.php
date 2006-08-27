@@ -22,7 +22,7 @@ function related_posts_sidebar_module_control() {
 	}
 
 	?>
-		<p><label for="related-posts-module-num-posts">Maximum number of posts:</label> <input id="related-posts-module-num-posts" name="related_posts_module_num_posts" type="text" value="<?php echo(sbm_get_option('num_posts')); ?>" size="2" /></p>
+		<p><label for="related-posts-module-num-posts"><?php _e('Maximum number of posts:', 'k2_domain'); ?></label> <input id="related-posts-module-num-posts" name="related_posts_module_num_posts" type="text" value="<?php echo(sbm_get_option('num_posts')); ?>" size="2" /></p>
 	<?php
 }
 

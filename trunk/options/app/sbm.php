@@ -124,7 +124,7 @@ class k2sbm {
 
 							if($modules) {
 								foreach($modules as $module) {
-									echo('<module id="' . $module->id . '">' . $module->name . '</module>');
+									echo('<module id="' . $module->id . '">' . strip_tags($module->name) . '</module>');
 								}
 							}
 
@@ -138,7 +138,7 @@ class k2sbm {
 				case 'add':
 					// Check the title was correct
 					if(isset($_POST['add_name']) and trim((string)($_POST['add_name'])) != '') {
-						k2sbm::add_module($_POST['add_name'], $_POST['add_type'], $_POST['add_sidebar']);
+						k2sbm::add_module(stripslashes($_POST['add_name']), $_POST['add_type'], $_POST['add_sidebar']);
 					} else {
 						k2sbm::set_error_text(__('You must specify a valid module name', 'k2_domain'));
 					}
@@ -213,7 +213,7 @@ class k2sbm {
 	 **/
 	function post_bootstrap() {
 		// Allow the Widgets and SBM defined in plugins & themes to be loaded
-		do_action('k2sbm_init');
+		do_action('sbm_init');
 		do_action('widgets_init');
 	}
 
@@ -253,7 +253,7 @@ class k2sbm {
 
 		<script type="text/javascript">
 			//<![CDATA[
-				var sbm_baseUrl = '<?php bloginfo('template_directory'); ?>/options/app/sbm.php';
+				var sbm_baseUrl = '<?php bloginfo('template_directory'); ?>/options/app/sbm-ajax.php';
 			//]]>
 		</script>
 
@@ -369,7 +369,7 @@ class k2sbm {
 		if(count($k2sbm_registered_sidebars) > 0) {
 			// Check if this is an integer ID of a sidebar
 			if(is_int($name)) {
-				$name = __('Sidebar ' . $name, 'k2_domain');
+				$name = sprintf(__('Sidebar %d', 'k2_domain'), $name);
 			}
 
 			// Get the sidebar
@@ -1227,21 +1227,8 @@ function register_widget_control($name, $callback, $width = false, $height = fal
 /**
  * WPW function to unregister a widget's control
  **/
-function unregister_widget_control($name, $callback) {
+function unregister_widget_control($name) {
 	k2sbm::unregister_sidebar_module_control($name);
-}
-
-
-/* Check if this is a direct request & load accordingly **************************************************************/
-
-// Fix for PHP CGI
-if(!isset($_SERVER['SCRIPT_FILENAME']) or strpos($_SERVER['SCRIPT_FILENAME'], 'php.cgi') == strlen($_SERVER['SCRIPT_FILENAME']) - 7) {
-	$_SERVER['SCRIPT_FILENAME'] = $_SERVER['PATH_TRANSLATED'];
-}
-
-if(realpath($_SERVER['SCRIPT_FILENAME']) == realpath(SBMPLUGINPATH . '/sbm.php')) {
-	require_once('../../../../../wp-blog-header.php');
-	k2sbm::direct_bootstrap();
 }
 
 ?>

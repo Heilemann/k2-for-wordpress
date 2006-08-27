@@ -18,11 +18,9 @@
 	<?php //global $pagenow; echo $pagenow; ?>
 		
 	<div class="navigation">
-	<?php $_SERVER['REQUEST_URI']  = preg_replace("/(.*?).php(.*?)&(.*?)&_=/","$2$3",$_SERVER['REQUEST_URI']);
-		posts_nav_link('',
-		'<div class="right">'.__('Next Entries','k2_domain').' <span>&raquo;</span></div>',
-		'<div class="left"><span>&laquo;</span> '.__('Previous Entries','k2_domain').'</div>'
-	); ?>
+	<?php $_SERVER['REQUEST_URI']  = preg_replace("/(.*?).php(.*?)&(.*?)&(.*?)&_=/","$2$3",$_SERVER['REQUEST_URI']); ?>
+		<div class="left"><?php next_posts_link('<span>&laquo;</span> '.__('Previous Entries','k2_domain').''); ?></div>
+		<div class="right"><?php previous_posts_link(''.__('Next Entries','k2_domain').' <span>&raquo;</span>'); ?></div>
 		<div class="clear"></div>
 	</div>
 

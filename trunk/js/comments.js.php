@@ -57,11 +57,13 @@ function AjaxComment(form) {
 }
 
 function initComment() {
-	$('commentform').onsubmit = function() { AjaxComment(this); return false; };
-	new Insertion.After('comment', '<span id="error"></span>');
-	new Insertion.After('submit','<img src="<?php bloginfo("template_url"); ?>/images/spinner.gif" id="commentload" />');
-	$('commentload').hide();
-	$('error').hide();
+	if ( document.getElementById('commentform') ) {
+		$('commentform').onsubmit = function() { AjaxComment(this); return false; };
+		new Insertion.After('comment', '<span id="error"></span>');
+		new Insertion.After('submit','<img src="<?php bloginfo("template_url"); ?>/images/spinner.gif" id="commentload" />');
+		$('commentload').hide();
+		$('error').hide();
+	}
 }
 
 //Event.observe(window, 'load', initComment, false);

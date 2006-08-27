@@ -2,7 +2,7 @@
 Theme Name: K2
 Theme URI: http://getk2.com
 Description: Configure from the <a href="themes.php?page=functions.php">K2 Options Panel</a>. Visit the <a href="http://getk2.com/forum">support forums</a>, <a href="http://k2.stikipad.com/docs/show/">the wiki</a> or <a href="http://code.google.com/p/kaytwo/issues/list">the bug tracker</a>.</p><p><small>Developed by <a href="http://binarybonsai.com">Michael</a>, <a href="http://chrisjdavis.org">Chris</a>, <a href="http://zeo.unic.net.my">Zeo</a>, <a href="http://stevelam.org">Steve</a> and <a href="http://nybblelabs.org.uk">Ben Sherratt</a>. Protected by <a href="http://www.opensource.org/licenses/gpl-license.php">GPL</a>.</small>
-Version: Beta Two
+Version: 0.9.1
 Author: Various Artists
 Author URI: http://binarybonsai.com
 
@@ -68,7 +68,8 @@ body {
 	}
 
 .secondary {
-	font: 1em/1.5em 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	font-size: 1em;
+	line-height: 1.5em;
 	padding: 10px 0;
 	margin: 0 0 20px 71%;
 	width: 26%;
@@ -104,7 +105,7 @@ ul.menu li a {
 	}
 
 ul.menu li a {
-	font: 1em Verdana, Helvetica, Arial, Sans-Serif;
+	font-size: 1em;
 	color: white;
 	margin: 0;
 	}
@@ -234,6 +235,7 @@ body.page .entry-content h4 {
 .secondary div {
 	margin: 20px 0 0;
 	padding: 0;
+	position: relative;
 	}
 	
 #primary .metalink a, #primary .metalink a:visited, /* The Metalink class takes care of the comments, edit, rss and trackback links next to the titles */
@@ -290,6 +292,10 @@ body.page .entry-content h4 {
 	margin: 0;
 	padding: 0 0 10px;
 	word-spacing: -1px;
+	}
+
+.secondary .k2-asides p {
+	display: inline;
 	}
 
 .secondary .k2-asides .metalink {
@@ -379,7 +385,8 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	}
 
 .entry-content {
-	font: 1.2em/1.8em 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	font-size: 1.2em;
+	line-height: 1.8em;
 	text-align: justify;
 	color: #444;
 	}
@@ -441,7 +448,7 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	}
 
 #commentlist li {
-	margin: 10px 0;
+	margin: 10px 0 0;
 	padding: 10px 10px 5px;
 	list-style: none;
 	}
@@ -449,6 +456,15 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 #commentlist li .comment-content {
 	padding: 10px 0;
 	font-size: 1.2em;
+	line-height: 1.8em;
+	}
+
+.comment-content p,
+.comment-content ul,
+.comment-content ol,
+.comment-content div,
+.comment-content blockquote {
+	margin: 13px 0;
 	}
 
 #commentlist li .comment-meta {
@@ -508,7 +524,7 @@ li.bypostauthor blockquote {
 	}
 
 #pinglist li small {
-	font: .8em Arial, Sans-Serif;
+	font-size: 0.8em;
 	display: block;
 	}
 
@@ -560,7 +576,7 @@ li.bypostauthor blockquote {
 	}
 
 .comments input[type=text], .comments textarea {
-	font: 1.1em Verdana, Arial, Helvetica, Sans-Serif;
+	font: 1.2em 'Courier New', Courier, Monospace;
 	padding: 3px;
 	color: #777;
 	}
@@ -674,7 +690,7 @@ img.noborder {
 	}
 
 small {
-	font-size: .9em;
+	font-size: 0.9em;
 	line-height: 1.5em;
 	}
 
@@ -692,6 +708,8 @@ acronym, abbr {
 	border-bottom: 1px dashed #999;
 	cursor: help;
 	}
+
+.chronodata abbr { border: 0; }
 
 blockquote {
 	margin: 20px 0;
@@ -860,7 +878,8 @@ input[type=text], textarea {
 
 .attachment {
 	text-align: center;
-}
+	}
+
 
 /* CSS Beyond this point is for various supported plugins and not the 'core' K2 template */
 
@@ -869,17 +888,17 @@ input[type=text], textarea {
 	Brian's Latest Comments
 	http://meidell.dk/archives/2004/09/12/brians-latest-comments/
 */
-.secondary div#brians-latest-comments ul li span a, div#brians-latest-comments ul li small a {
+.sb-comments-blc ul li span a, .sb-comments ul li small a {
 	color: #999;
 	font-weight: normal;
 	word-spacing: -1px;
 	}
 
-.secondary div#brians-latest-comments ul li {
+.sb-comments-blc ul li {
 	margin-bottom: 6px;
-	}
+}
 
-.secondary div#brians-latest-comments li > a[title="Go to the comments of this entry"] {
+.sb-comments-blc li > a[title="Go to the comments of this entry"] {
 	position: absolute;
 	right:0;
 	color: #999;

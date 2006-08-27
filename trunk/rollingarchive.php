@@ -31,11 +31,14 @@
 	</div>
 	<script type="text/javascript">
 	// <![CDATA[
-		var <?php echo $prefix; ?>rolling = new RollingArchives('<?php echo $prefix; ?>content', '<?php echo get_bloginfo('template_url').'/theloop.php'; ?>', '<?php echo $wp_query->query; ?>', <?php echo $k2pagecount; ?>, '<?php echo $prefix; ?>');
+		var raUrl = window.location.href.match(/^(http:\/\/[^/]+)/)[1]
+			+ '<?php bloginfo('template_url'); ?>'.match(/^http:\/\/[^/]+(.+)/)[1];
+
+		var <?php echo $prefix; ?>rolling = new RollingArchives('<?php echo $prefix; ?>primarycontent', raUrl + '/theloop.php', '<?php echo $wp_query->query; ?>', <?php echo $k2pagecount; ?>, '<?php echo $prefix; ?>');
 	// ]]>
 	</script>
 
 <?php } } ?>
-<div id="<?php echo $prefix; ?>content">
+<div id="<?php echo $prefix; ?>primarycontent" class="hfeed">
 	<?php include (TEMPLATEPATH . '/theloop.php'); ?>
-</div>
+</div><!-- #<?php echo $prefix; ?>primarycontent .hfeed -->

@@ -1,6 +1,6 @@
 <?php 
 /* Current version of K2 */
-$current = 'svn';
+$current = '0.9.1';
 
 load_theme_textdomain('k2_domain');
 
@@ -36,11 +36,6 @@ function menu() {
 
 // include Hasse R. Hansen's K2 header plugin - http://www.ramlev.dk
 require(TEMPLATEPATH . '/options/display/headers.php');
-
-// Only include SBM if no other plugin is installed for handling sidebars
-if(!function_exists('register_sidebar')	and !(basename($_SERVER['SCRIPT_FILENAME']) == 'plugins.php' and $_GET['action'] == 'activate')) {
-	require(TEMPLATEPATH . '/options/app/sbm.php');
-}
 
 // Sidebar Modules for K2
 if(class_exists('k2sbm')) {

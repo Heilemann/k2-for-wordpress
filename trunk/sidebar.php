@@ -1,4 +1,6 @@
-
+<?php
+	$k2asidescategory = get_option('k2asidescategory');
+?>
 <hr />
 
 <div class="secondary">
@@ -83,7 +85,7 @@
 
 		<?php } ?>
 
-		<?php $k2asidescategory = get_option('k2asidescategory'); if (!is_home() and !is_paged() and !in_category($k2asidescategory) or is_day() or is_month() or is_year() or is_author() or is_search() or (function_exists('is_tag') and is_tag())) { ?>
+		<?php if (!is_home() and !is_paged() and !in_category($k2asidescategory) or is_day() or is_month() or is_year() or is_author() or is_search() or (function_exists('is_tag') and is_tag())) { ?>
 			<p><?php _e('Longer entries are truncated. Click the headline of an entry to read it in its entirety.','k2_domain'); ?></p>
 		<?php } ?>
 	</div>
@@ -92,7 +94,7 @@
 
 
 	<?php /* Brian's Latest Comments */ if ((function_exists('blc_latest_comments')) and is_home()) { ?> 
-	<div class="sb-comments" id="brians-latest-comments">
+	<div class="sb-comments sb-comments-blc">
 		<h2><?php _e('Comments','k2_domain'); ?></h2>
 		
 		<a href="<?php bloginfo('comments_rss2_url'); ?>" title="<?php _e('RSS Feed for all Comments','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a>
@@ -102,17 +104,25 @@
 	</div>
 	<?php } ?>
 
-	<?php /* Show Asides only on the frontpage */ if (!is_paged() and is_home()) { if (get_option('k2asidesposition') != '0' and get_option('k2asidescategory') != '0') { ?>
+	<?php /* Show Asides only on the frontpage */ if (!is_paged() and is_home() and (get_option('k2asidesposition') != '0') and ($k2asidescategory != '0') ) { ?>
 	<div class="sb-asides">
-		<h2><?php echo get_the_category_by_ID(get_option('k2asidescategory')); ?></h2>
+		<h2><?php echo get_the_category_by_ID($k2asidescategory); ?></h2>
 		<span class="metalink"><a href="<?php bloginfo('url'); ?>/?feed=rss&amp;cat=<?php echo $k2asidescategory; ?>" title="<?php _e('RSS Feed for Asides','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
-		
-		<div><?php /* Choose a category to be an 'aside' in the K2 options panel */ $temp_query = $wp_query; query_posts("cat=".get_option('k2asidescategory')."&showposts=".get_option('k2asidesnumber')); while (have_posts()) : the_post(); ?>
-			<p id="post-<?php the_ID(); ?>" class="aside"><span>&raquo;&nbsp;</span><?php echo str_replace(array('<p>','</p>'), '', apply_filters('the_content', $post->post_content)); ?>&nbsp;<span class="metalink"><a href="<?php the_permalink($post->ID) ?>" rel="bookmark" title='<?php _e('Permanent Link to this aside','k2_domain'); ?>'>#</a></span>&nbsp;<span class="metalink"><?php comments_popup_link('0', '1', '%', '', ' '); ?></span><?php edit_post_link(__('edit','k2_domain'),'&nbsp;&nbsp;<span class="metalink">','</span>'); ?></p>
-			<?php /* End Asides Loop */ endwhile; $wp_query = $temp_query; ?>
+		<div>
+		<?php
+			/* Choose a category to be an 'aside' in the K2 options panel */
+			$temp_query = $wp_query;
+			$asides_count = 1;
+			query_posts('cat='.$k2asidescategory."&showposts=".get_option('k2asidesnumber'));
+			while (have_posts()) { the_post();
+		?>
+			<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class($asides_count++, true); ?>">
+				<span>&raquo;&nbsp;</span><?php the_content(__('(more)','k2_domain')); ?>&nbsp;<span class="metalink"><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php _e('Permanent Link to this aside','k2_domain'); ?>'>#</a></span>&nbsp;<span class="metalink"><?php comments_popup_link('0', '1', '%', '', ' '); ?></span><?php edit_post_link(__('edit','k2_domain'),'&nbsp;&nbsp;<span class="metalink">','</span>'); ?>
+			</div>
+			<?php /* End Asides Loop */ } $wp_query = $temp_query; ?>
 		</div>
 	</div>
-	<?php } } ?>
+	<?php } ?>
 
 
 	<?php /* Latest Entries */ if ( (is_home()) or (is_search() or (is_404()) or ($notfound == '1')) or (function_exists('is_tag') and is_tag()) or ( (is_archive()) and (!is_author()) ) ) { ?>

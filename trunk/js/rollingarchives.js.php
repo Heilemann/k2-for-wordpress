@@ -71,7 +71,7 @@ RollingArchives.prototype = {
 	},
 
 	updatePageText: function(v) {
-		var pagetext = '<?php _e('Page %1$d of %2$d',k2domain); ?>';
+		var pagetext = '<?php _e('Page %1$d of %2$d',k2_domain); ?>';
 		pagetext = pagetext.replace('%1$d', v);
 		pagetext = pagetext.replace('%2$d', this.pagecount);
 		

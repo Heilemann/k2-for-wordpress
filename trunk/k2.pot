@@ -1,62 +1,66 @@
 # Localization file for K2.
-# k2.pot was originally created by Ralph Inselsbacher <l10n@rainonline.ws>.
+# k2.pot was originally created by Ralph Inselsbacher <info@vernetzt.ws>.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2006-04-13 21:06+0800\n"
-"PO-Revision-Date: 2006-08-10 11:24+0800\n"
+"PO-Revision-Date: 2006-08-25 21:33+0800\n"
 "Last-Translator: Safirul Alredha <zeo@unic.net.my>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: 404.php:7
+#: 404.php:12
 msgid "Error 404 - Not Found"
 msgstr ""
 
+#: 404.php:16
+#: theloop.php:147
+msgid "Oh no! You're looking for something which just isn't here! Fear not however, errors are to be expected, and luckily there are tools on the sidebar for you to use in your search for what you need."
+msgstr ""
+
 #: attachment.php:21
-#: page-archives.php:29
-#: page-comments.php:18
-#: page.php:14
-#: theloop.php:98
+#: page-archives.php:28
+#: page-comments.php:16
+#: page.php:12
+#: theloop.php:93
 #, php-format
 msgid "Permanent Link to \"%s\""
 msgstr ""
 
-#: attachment.php:25
-#: theloop.php:104
+#: attachment.php:28
+#: theloop.php:99
 #, php-format
 msgid "Published %1$s %2$s"
 msgstr ""
 
-#: attachment.php:26
-#: theloop.php:105
+#: attachment.php:30
+#: theloop.php:100
 #, php-format
 msgid "by %s"
 msgstr ""
 
-#: attachment.php:27
-#: theloop.php:106
+#: attachment.php:34
+#: theloop.php:102
 #, php-format
 msgid "%s ago"
 msgstr ""
 
-#: attachment.php:27
-#: theloop.php:27
-#: theloop.php:106
+#: attachment.php:37
+#: theloop.php:25
+#: theloop.php:102
 msgid "F jS, Y"
 msgstr ""
 
-#: attachment.php:34
-#: page-archives.php:56
-#: page-comments.php:25
-#: page.php:21
-#: theloop.php:128
+#: attachment.php:48
+#: page-comments.php:23
+#: page.php:19
+#: theloop.php:127
 msgid "Pages:"
 msgstr ""
 
-#: attachment.php:42
+#: attachment.php:56
 msgid "Sorry, no attachments matched your criteria."
 msgstr ""
 
@@ -159,10 +163,10 @@ msgstr ""
 
 #: comments.php:71
 #: comments.php:112
-#: page-archives.php:30
-#: page-comments.php:19
-#: page.php:15
-#: theloop.php:113
+#: page-archives.php:29
+#: page-comments.php:17
+#: page.php:13
+#: theloop.php:112
 msgid "Edit"
 msgstr ""
 
@@ -280,47 +284,35 @@ msgstr ""
 msgid "K2 Options"
 msgstr ""
 
+#: navigation.php:22
+msgid "Previous Entries"
+msgstr ""
+
 #: navigation.php:23
 msgid "Next Entries"
 msgstr ""
 
-#: navigation.php:24
-msgid "Previous Entries"
-msgstr ""
-
-#: page-archives.php:35
+#: page-archives.php:34
 #, php-format
 msgid "This is the frontpage of the %1$s archives. Currently the archives are spanning %2$s posts and %3$s comments, contained within the meager confines of %4$s categories. Through here, you will be able to move down into the archives by way of time or category. If you are looking for something specific, perhaps you should try the search on the sidebar."
 msgstr ""
 
-#: page-archives.php:39
+#: page-archives.php:38
 msgid "Live Archives"
 msgstr ""
 
-#: page-archives.php:40
+#: page-archives.php:39
 #, php-format
-msgid "This is a 'live archive', which allows you to 'dig' into the %s repository in a fast an efficient way, without having to reload this page as you explore."
+msgid "This is a 'live archive', which allows you to 'dig' into the %s repository in a fast and efficient way without having to reload this page as you explore."
 msgstr ""
 
-#: page-archives.php:51
+#: page-archives.php:50
 msgid "Tag Cloud"
 msgstr ""
 
-#: page-archives.php:52
+#: page-archives.php:51
 #, php-format
 msgid "The following is a list of the tags used at %s, colored and 'weighed' in relation to their relative usage."
-msgstr ""
-
-#: page-archives.php:64
-#: page.php:29
-#: theloop.php:147
-msgid "Not Found"
-msgstr ""
-
-#: page-archives.php:69
-#: page.php:34
-#: theloop.php:152
-msgid "Oh no! You're looking for something which just isn't here! Fear not however, errors are to be expected, and luckily there are tools on the sidebar for you to use in your search for what you need."
 msgstr ""
 
 #: rollingarchive.php:19
@@ -370,101 +362,101 @@ msgid "About"
 msgstr ""
 
 #: sidebar.php:56
-#: modules/about.php:16
+#: modules/about.php:18
 #, php-format
 msgid "You are currently browsing the %1$s weblog archives for the %2$s category."
 msgstr ""
 
 #: sidebar.php:59
-#: modules/about.php:19
+#: modules/about.php:21
 #, php-format
 msgid "You are currently browsing the %1$s weblog archives for the day %2$s."
 msgstr ""
 
 #: sidebar.php:59
-#: modules/about.php:19
+#: modules/about.php:21
 msgid "l, F jS, Y"
 msgstr ""
 
 #: sidebar.php:62
-#: modules/about.php:22
+#: modules/about.php:24
 #, php-format
 msgid "You are currently browsing the %1$s weblog archives for the month %2$s."
 msgstr ""
 
 #: sidebar.php:62
-#: theloop.php:30
-#: modules/about.php:22
+#: theloop.php:28
+#: modules/about.php:24
 msgid "F, Y"
 msgstr ""
 
 #: sidebar.php:65
-#: modules/about.php:25
+#: modules/about.php:27
 #, php-format
 msgid "You are currently browsing the %1$s weblog archives for the year %2$s."
 msgstr ""
 
 #: sidebar.php:68
-#: modules/about.php:28
+#: modules/about.php:30
 #, php-format
 msgid "You have searched the %1$s weblog archives for '<strong>%2$s</strong>'."
 msgstr ""
 
 #: sidebar.php:71
-#: modules/about.php:31
+#: modules/about.php:33
 #, php-format
 msgid "Archive for <strong>%s</strong>."
 msgstr ""
 
 #: sidebar.php:75
-#: modules/about.php:35
+#: modules/about.php:37
 #, php-format
 msgid "You are currently browsing the %1$s weblog archives for '%2$s' tag."
 msgstr ""
 
 #: sidebar.php:78
-#: modules/about.php:38
+#: modules/about.php:40
 #, php-format
 msgid "You are currently browsing the %s weblog archives."
 msgstr ""
 
 #: sidebar.php:81
-#: modules/about.php:41
+#: modules/about.php:43
 msgid "Next: "
 msgstr ""
 
 #: sidebar.php:82
-#: modules/about.php:42
+#: modules/about.php:44
 msgid "Previous: "
 msgstr ""
 
 #: sidebar.php:87
-#: modules/about.php:47
+#: modules/about.php:49
 msgid "Longer entries are truncated. Click the headline of an entry to read it in its entirety."
 msgstr ""
 
 #: sidebar.php:96
-#: theloop.php:111
+#: theloop.php:110
 msgid "Comments"
 msgstr ""
 
 #: sidebar.php:98
-#: modules/recent_comments.php:12
+#: modules/recent_comments.php:11
 msgid "RSS Feed for all Comments"
 msgstr ""
 
 #: sidebar.php:108
-#: modules/asides.php:11
+#: modules/asides.php:13
 msgid "RSS Feed for Asides"
 msgstr ""
 
 #: sidebar.php:111
-#: modules/asides.php:17
+#: modules/asides.php:19
 msgid "Permanent Link to this aside"
 msgstr ""
 
 #: sidebar.php:111
-#: modules/asides.php:17
+#: modules/asides.php:19
 msgid "edit"
 msgstr ""
 
@@ -495,65 +487,69 @@ msgstr ""
 msgid "Related Entries"
 msgstr ""
 
-#: theloop.php:21
+#: theloop.php:19
 #, php-format
 msgid "Archive for the '%s' Category"
 msgstr ""
 
-#: theloop.php:27
-#: theloop.php:30
-#: theloop.php:33
+#: theloop.php:25
+#: theloop.php:28
+#: theloop.php:31
 #, php-format
 msgid "Archive for %s"
 msgstr ""
 
-#: theloop.php:33
+#: theloop.php:31
 msgid "Y"
 msgstr ""
 
-#: theloop.php:36
+#: theloop.php:34
 #, php-format
 msgid "Search Results for '%s'"
 msgstr ""
 
-#: theloop.php:39
+#: theloop.php:37
 #, php-format
 msgid "Tag Archive for '%s'"
 msgstr ""
 
-#: theloop.php:43
+#: theloop.php:41
 #, php-format
 msgid "Author Archive for %s"
 msgstr ""
 
-#: theloop.php:46
+#: theloop.php:44
 #, php-format
 msgid "Archive Page %s"
 msgstr ""
 
-#: theloop.php:109
+#: theloop.php:108
 #, php-format
 msgid "<span class=\"entry-category\">in %s.</span>"
 msgstr ""
 
-#: theloop.php:109
+#: theloop.php:108
 msgid " and "
 msgstr ""
 
-#: theloop.php:111
+#: theloop.php:110
 msgid "Comment"
 msgstr ""
 
-#: theloop.php:111
+#: theloop.php:110
 msgid "Closed"
 msgstr ""
 
-#: theloop.php:116
+#: theloop.php:115
 msgid "Tags:"
 msgstr ""
 
-#: theloop.php:125
+#: theloop.php:124
 msgid "Continue reading"
+msgstr ""
+
+#: theloop.php:143
+msgid "Not Found"
 msgstr ""
 
 #: js/livesearch.js.php:108
@@ -563,6 +559,48 @@ msgstr ""
 #: js/rollingarchives.js.php:74
 #, php-format
 msgid "Page %1$d of %2$d"
+msgstr ""
+
+#: modules/about.php:56
+msgid "About module"
+msgstr ""
+
+#: modules/asides.php:27
+msgid "Asides module"
+msgstr ""
+
+#: modules/calendar.php:11
+msgid "Calendar module"
+msgstr ""
+
+#: modules/categories.php:15
+msgid "Category list module"
+msgstr ""
+
+#: modules/flickr.php:18
+msgid "Flickr module"
+msgstr ""
+
+#: modules/html.php:17
+msgid "Module's HTML:"
+msgstr ""
+
+#: modules/html.php:21
+#: modules/html.php:22
+msgid "HTML module"
+msgstr ""
+
+#: modules/latest_posts.php:25
+msgid "Number of posts:"
+msgstr ""
+
+#: modules/latest_posts.php:29
+#: modules/latest_posts.php:30
+msgid "Latest posts module"
+msgstr ""
+
+#: modules/links.php:15
+msgid "Links module"
 msgstr ""
 
 #: modules/meta.php:11
@@ -585,8 +623,56 @@ msgstr ""
 msgid "Powered by Wordpress, state-of-the-art semantic personal publishing platform."
 msgstr ""
 
-#: modules/recent_comments.php:25
+#: modules/meta.php:20
+msgid "Meta module"
+msgstr ""
+
+#: modules/monthly.php:15
+msgid "Month list module"
+msgstr ""
+
+#: modules/navigation.php:45
+msgid "Navigation module"
+msgstr ""
+
+#: modules/php.php:17
+msgid "Module's code:"
+msgstr ""
+
+#: modules/php.php:21
+#: modules/php.php:22
+msgid "PHP module"
+msgstr ""
+
+#: modules/recent_comments.php:28
+#, php-format
+msgid "%1$s %2$s <a href=\"%3$s#comment-%4$s\">%5$s</a>"
+msgstr ""
+
+#: modules/recent_comments.php:28
 msgid "on post"
+msgstr ""
+
+#: modules/recent_comments.php:34
+msgid "No comments"
+msgstr ""
+
+#: modules/recent_comments.php:48
+msgid "Number of comments:"
+msgstr ""
+
+#: modules/recent_comments.php:52
+#: modules/recent_comments.php:53
+msgid "Recent comments module"
+msgstr ""
+
+#: modules/related_posts.php:25
+msgid "Maximum number of posts:"
+msgstr ""
+
+#: modules/related_posts.php:30
+#: modules/related_posts.php:31
+msgid "Related posts module"
 msgstr ""
 
 #: modules/rss.php:24
@@ -603,6 +689,36 @@ msgstr ""
 
 #: modules/rss.php:56
 msgid "No feed items, the feed may currently be unavaliable."
+msgstr ""
+
+#: modules/rss.php:78
+msgid "RSS feed's URL:"
+msgstr ""
+
+#: modules/rss.php:79
+msgid "RSS feed's icon:"
+msgstr ""
+
+#: modules/rss.php:80
+msgid "Number of items:"
+msgstr ""
+
+#: modules/rss.php:84
+#: modules/rss.php:85
+msgid "RSS module"
+msgstr ""
+
+#: modules/search.php:11
+msgid "Search module"
+msgstr ""
+
+#: modules/text.php:17
+msgid "Module's text content:"
+msgstr ""
+
+#: modules/text.php:21
+#: modules/text.php:22
+msgid "Text module"
 msgstr ""
 
 #: options/app/archive.php:84
@@ -633,7 +749,7 @@ msgstr ""
 msgid "Uncategorized"
 msgstr ""
 
-#: options/app/info.php:138
+#: options/app/info.php:144
 #, php-format
 msgid "View all posts in %s"
 msgstr ""
@@ -663,6 +779,7 @@ msgstr ""
 
 #: options/app/sbm.php:298
 #: options/app/sbm.php:344
+#: options/app/sbm.php:372
 #, php-format
 msgid "Sidebar %d"
 msgstr ""
@@ -670,10 +787,6 @@ msgstr ""
 #: options/app/sbm.php:348
 #, php-format
 msgid " %d"
-msgstr ""
-
-#: options/app/sbm.php:372
-msgid "Sidebar "
 msgstr ""
 
 #: options/display/form.php:9

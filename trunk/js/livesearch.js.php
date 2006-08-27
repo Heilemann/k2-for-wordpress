@@ -105,4 +105,7 @@ Livesearch.prototype = {
 	}
 }
 
-new FastInit( function() { new Livesearch('searchform', 's', 'dynamic-content', 'current-content', '<?php bloginfo('template_url'); ?>/rollingarchive.php', '&s=', 'searchform', 'searchload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'searchreset'); } );
+var lsUrl = window.location.href.match(/^(http:\/\/[^/]+)/)[1]
+	+ '<?php bloginfo('template_url'); ?>'.match(/^http:\/\/[^/]+(.+)/)[1];
+
+new FastInit( function() { new Livesearch('searchform', 's', 'dynamic-content', 'current-content', lsUrl + '/rollingarchive.php', '&s=', 'searchform', 'searchload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'searchreset'); } );
