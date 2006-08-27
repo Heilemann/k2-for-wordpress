@@ -62,7 +62,7 @@
 		<p class="description"><?php bloginfo('description'); ?></p>
 
 		<ul class="menu">
-			<li class="<?php if ( is_home() or is_archive() or is_single() or is_paged() or is_search() or (function_exists('is_tag') and is_tag()) ) { ?>current_page_item<?php } else { ?>page_item<?php } ?>"><a href="<?php echo get_settings('home'); ?>/"><?php echo get_option('k2blogornoblog'); ?></a></li>
+			<li class="<?php if ( is_home() or is_archive() or is_single() or is_paged() or is_search() or (function_exists('is_tag') and is_tag()) ) { ?>current_page_item<?php } else { ?>page_item<?php } ?>"><a href="<?php echo get_settings('home'); ?>/" title="<?php echo get_option('k2blogornoblog'); ?>"><?php echo get_option('k2blogornoblog'); ?></a></li>
 			<?php wp_list_pages('sort_column=menu_order&depth=1&title_li='); ?>
 			<?php wp_register('<li class="admintab">','</li>'); ?>
 		</ul>
