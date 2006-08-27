@@ -31,10 +31,7 @@
 	</div>
 	<script type="text/javascript">
 	// <![CDATA[
-		var raUrl = window.location.href.match(/^(http:\/\/[^/]+)/)[1]
-			+ '<?php bloginfo('template_url'); ?>'.match(/^http:\/\/[^/]+(.+)/)[1];
-
-		var <?php echo $prefix; ?>rolling = new RollingArchives('<?php echo $prefix; ?>primarycontent', raUrl + '/theloop.php', '<?php echo $wp_query->query; ?>', <?php echo $k2pagecount; ?>, '<?php echo $prefix; ?>');
+		var <?php echo $prefix; ?>rolling = new RollingArchives('<?php echo $prefix; ?>primarycontent', <?php k2info('js_url'); ?> + '/theloop.php', '<?php echo $wp_query->query; ?>', <?php echo $k2pagecount; ?>, '<?php echo $prefix; ?>');
 	// ]]>
 	</script>
 

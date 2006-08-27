@@ -14,6 +14,16 @@ function get_k2info($show='') {
 		case 'scheme' :
 			$output = get_bloginfo('template_url') . '/styles/' . get_option('k2scheme');
 			break;
+		case 'js_url' :
+			$template_url = get_bloginfo('template_url');
+
+			if(preg_match('/^http:\/\/[^\/]+(.+)/', $template_url, $url_parts)) {
+				$output = "window.location.href.match(/^(http:\\/\\/[^\\/]+)/)[1] + '" . $url_parts[1] . "'";
+
+			// This should never be executed, but it's well to be on the safe side
+			} else {
+				$output = $template_url;
+			}
 	}
 	return $output;
 }
