@@ -657,12 +657,24 @@ msgstr ""
 msgid "No comments"
 msgstr ""
 
-#: modules/recent_comments.php:48
+#: modules/recent_comments.php:61
+msgid "Number of posts:"
+msgstr ""
+
+#: modules/recent_comments.php:65
 msgid "Number of comments:"
 msgstr ""
 
-#: modules/recent_comments.php:52
-#: modules/recent_comments.php:53
+#: modules/recent_comments.php:70
+msgid "Newest color:"
+msgstr ""
+
+#: modules/recent_comments.php:72
+msgid "Oldest color:"
+msgstr ""
+
+#: modules/recent_comments.php:77
+#: modules/recent_comments.php:78
 msgid "Recent comments module"
 msgstr ""
 
