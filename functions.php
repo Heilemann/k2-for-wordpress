@@ -39,7 +39,7 @@ require(TEMPLATEPATH . '/options/display/headers.php');
 
 // Sidebar Modules for K2
 if(class_exists('k2sbm')) {
-	k2sbm::wp_bootstrap();
+	k2sbm::k2_init();
 }
 
 // Sidebar registration for dynamic sidebars

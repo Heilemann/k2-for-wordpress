@@ -46,14 +46,6 @@ class k2sbm {
 
 		k2sbm::pre_bootstrap();
 
-		// Add menus
-		add_action('admin_menu', array('k2sbm', 'add_menus'));
-
-		// Check if this page is the one being shown, if so then add stuff to the header
-		if($_GET['page'] == 'k2sbm-modules') {
-			add_action('admin_head', array('k2sbm', 'module_admin_head'));
-		}
-
 		// Post-bootstrap when everything is loaded
 		add_action('init', array('k2sbm', 'post_bootstrap'));
 
@@ -215,6 +207,19 @@ class k2sbm {
 		// Allow the Widgets and SBM defined in plugins & themes to be loaded
 		do_action('sbm_init');
 		do_action('widgets_init');
+	}
+
+	/**
+	 * The function to init for K2
+	 **/
+	function k2_init() {
+		// Add menus
+		add_action('admin_menu', array('k2sbm', 'add_menus'));
+
+		// Check if this page is the one being shown, if so then add stuff to the header
+		if($_GET['page'] == 'k2sbm-modules') {
+			add_action('admin_head', array('k2sbm', 'module_admin_head'));
+		}
 	}
 
 	/**
@@ -538,7 +543,7 @@ class k2sbm {
 	 * Function to scan for all the modules
 	 **/
 	function module_scan() {
-		k2sbm::module_scan_dir(TEMPLATEPATH . '/modules/');
+		k2sbm::module_scan_dir(dirname(dirname(dirname(__FILE__))) . '/modules/');
 	}
 
 	/**

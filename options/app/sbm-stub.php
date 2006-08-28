@@ -17,6 +17,7 @@ if($k2sbm_theme_path == $k2sbm_k2_path) {
 		// Only include SBM if no other plugin is installed for handling sidebars
 		if(!function_exists('register_sidebar')) {
 			require(dirname(__FILE__) . '/sbm.php');
+			k2sbm::wp_bootstrap();
 		}
 	}
 
