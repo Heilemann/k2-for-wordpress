@@ -111,22 +111,26 @@ function get_k2_ping_type($trackbacktxt = 'Trackback', $pingbacktxt = 'Pingback'
 function k2countpages($request) {
 	global $wpdb;
 
-	// get number of posts per page
-	if (preg_match('/LIMIT \d+, (\d+)/', $request, $matches)) {
-		$posts_per_page = $matches[1];
-	} else {
-		$posts_per_page = get_option('posts_per_page');
+	// from WP 2.1 r4112 function _max_num_pages
+
+	$posts_per = (int) get_option('posts_per_page');
+	if ( empty($posts_per) ) {
+		$posts_per = 1;
 	}
 
-	// modify the sql query
-	$search = array('/\* FROM/', '/LIMIT \d+, \d+/', '/ AND post_date [><]= \'.+?\'/');
-	$replace = array('ID FROM', '', '');
-	$request = preg_replace($search, $replace, $request);
+	if ( 'posts' == get_query_var('what_to_show') ) {
+		preg_match('#FROM\s(.*)\sORDER BY#siU', $request, $matches);
+		$fromwhere = $matches[1];
+		$numposts = $wpdb->get_var("SELECT COUNT(DISTINCT ID) FROM $fromwhere");
+		$num_pages = ceil($numposts / $posts_per);
+	} else {
+		preg_match('#FROM\s(.*)\sGROUP BY#siU', $request, $matches);
+		$fromwhere = preg_replace('/( AND )?post_date >= (\'|\")(.*?)(\'|\")( AND post_date <= (\'\")(.*?)(\'\"))?/siU', '', $matches[1]);
+		$num_days = $wpdb->query("SELECT DISTINCT post_date FROM $fromwhere GROUP BY year(post_date), month(post_date), dayofmonth(post_date)");
+		$num_pages = ceil($num_days / $posts_per);
+	}
 
-	// get post count
-	$post_count = count($wpdb->get_results($request));
-	
-	return ceil($post_count / $posts_per_page);
+	return $num_pages;
 }
 
 /* By Mark Jaquith, http://txfx.net */
