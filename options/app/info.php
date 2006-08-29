@@ -119,7 +119,7 @@ function k2countpages($request) {
 	}
 
 	if ( 'posts' == get_query_var('what_to_show') ) {
-		preg_match('#FROM\s(.*)\sORDER BY#siU', $request, $matches);
+		preg_match('#FROM\s(.*)\sGROUP BY#siU', $request, $matches);
 		$fromwhere = $matches[1];
 		$numposts = $wpdb->get_var("SELECT COUNT(DISTINCT ID) FROM $fromwhere");
 		$num_pages = ceil($numposts / $posts_per);
