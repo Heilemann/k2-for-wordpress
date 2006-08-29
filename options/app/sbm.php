@@ -1034,7 +1034,7 @@ class k2sbmModule {
 		global $post;
 
 		return ($this->display['home'] and is_home())
-			or ($this->display['archives'] and is_archive())
+			or ($this->display['archives'] and (is_archive() or (function_exists('is_tag') and is_tag()))
 			or ($this->display['post'] and is_single() and (
 				   !$this->display['post_id']['ids']
 				or ($this->display['post_id']['show'] == 'show' and $this->display['post_id']['ids'][$post->ID])
