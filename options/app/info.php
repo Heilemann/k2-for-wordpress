@@ -110,7 +110,7 @@ function get_k2_ping_type($trackbacktxt = 'Trackback', $pingbacktxt = 'Pingback'
 
 function k2countpages($request) {
 	global $wpdb;
-	
+
 	// get number of posts per page
 	if (preg_match('/LIMIT \d+, (\d+)/', $request, $matches)) {
 		$posts_per_page = $matches[1];
@@ -119,8 +119,8 @@ function k2countpages($request) {
 	}
 
 	// modify the sql query
-	$search = array('/\* FROM/', '/LIMIT \d+, \d+/');
-	$replace = array('ID FROM', '');
+	$search = array('/\* FROM/', '/LIMIT \d+, \d+/', '/ AND post_date [><]= \'.+?\'/');
+	$replace = array('ID FROM', '', '');
 	$request = preg_replace($search, $replace, $request);
 
 	// get post count
