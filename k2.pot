@@ -280,7 +280,7 @@ msgid "%d queries. %.4f seconds."
 msgstr ""
 
 #: functions.php:27
-#: options/display/form.php:59
+#: options/display/form.php:35
 msgid "K2 Options"
 msgstr ""
 
@@ -737,23 +737,23 @@ msgstr ""
 msgid "Text module"
 msgstr ""
 
-#: options/app/archive.php:84
+#: options/app/archive.php:88
 msgid "next 15 posts &raquo;"
 msgstr ""
 
-#: options/app/archive.php:85
+#: options/app/archive.php:89
 msgid "&laquo; previous 15 posts"
 msgstr ""
 
-#: options/app/archive.php:88
+#: options/app/archive.php:93
 msgid "Chronology"
 msgstr ""
 
-#: options/app/archive.php:89
+#: options/app/archive.php:94
 msgid "Taxonomy"
 msgstr ""
 
-#: options/app/archive.php:90
+#: options/app/archive.php:95
 msgid "Folksonomy"
 msgstr ""
 
@@ -810,203 +810,183 @@ msgstr ""
 msgid "No Scheme"
 msgstr ""
 
-#: options/display/form.php:40
-#: options/display/form.php:165
+#: options/display/form.php:16
+#: options/display/form.php:127
 msgid "No Asides"
 msgstr ""
 
-#: options/display/form.php:48
-msgid "ELA Options for K2 have been set"
-msgstr ""
-
-#: options/display/form.php:54
+#: options/display/form.php:24
 msgid "K2 Options have been updated"
 msgstr ""
 
-#: options/display/form.php:66
-#: options/display/form.php:241
+#: options/display/form.php:30
+msgid "ELA Options for K2 have been set"
+msgstr ""
+
+#: options/display/form.php:42
+#: options/display/form.php:203
 #: options/display/headers.php:62
 #: options/display/headers.php:185
 msgid "Update Options"
 msgstr ""
 
-#: options/display/form.php:71
+#: options/display/form.php:47
 msgid "K2 Scheme"
 msgstr ""
 
-#: options/display/form.php:82
+#: options/display/form.php:58
 msgid "Choose the Custom Style you would like to use on this site."
 msgstr ""
 
-#: options/display/form.php:84
+#: options/display/form.php:60
 msgid "Formatting to be used for displaying the style info. Use: <strong>%style%</strong> for style name, <strong>%stylelink%</strong> for the style's homepage, <strong>%author%</strong> for author, <strong>%site%</strong> for author's site, <strong>%version%</strong> for version and <strong>%comments%</strong> for style comments."
 msgstr ""
 
-#: options/display/form.php:88
+#: options/display/form.php:64
 msgid "Outputs:"
 msgstr ""
 
-#: options/display/form.php:93
+#: options/display/form.php:69
 msgid "Live Search"
 msgstr ""
 
-#: options/display/form.php:97
+#: options/display/form.php:73
 msgid "Enable Livesearch (default)"
 msgstr ""
 
-#: options/display/form.php:100
+#: options/display/form.php:76
 msgid "Disable Livesearch"
 msgstr ""
 
-#: options/display/form.php:102
+#: options/display/form.php:78
 #, php-format
 msgid "Livesearch is a javascript powered search-as-you-type solution. %s."
 msgstr ""
 
-#: options/display/form.php:102
+#: options/display/form.php:78
 msgid "Would you like to know more?"
 msgstr ""
 
-#: options/display/form.php:107
+#: options/display/form.php:83
 msgid "Rolling Archives"
 msgstr ""
 
-#: options/display/form.php:111
+#: options/display/form.php:87
 msgid "Enable Rolling Archives (default)"
 msgstr ""
 
-#: options/display/form.php:114
+#: options/display/form.php:90
 msgid "Disable Rolling Archives"
 msgstr ""
 
-#: options/display/form.php:116
+#: options/display/form.php:92
 msgid "Rolling Archives allow you to page back into the archives without reloading the page."
 msgstr ""
 
-#: options/display/form.php:121
+#: options/display/form.php:97
 msgid "AJAX Commenting"
 msgstr ""
 
-#: options/display/form.php:125
+#: options/display/form.php:101
 msgid "Enable AJAX Commenting (default)"
 msgstr ""
 
-#: options/display/form.php:128
+#: options/display/form.php:104
 msgid "Disable AJAX Commenting"
 msgstr ""
 
-#: options/display/form.php:133
-msgid "Width Type"
-msgstr ""
-
-#: options/display/form.php:137
-msgid "Fixed Width (default)"
-msgstr ""
-
-#: options/display/form.php:140
-msgid "Flexible Width"
-msgstr ""
-
-#: options/display/form.php:142
-msgid "Flexible Width has the K2 page adjust itself according to the width of the browser, up to a maximum and down to a minimum width, so as to not entirely break readability at very high resolutions. Fixed width fixes K2's page width at 780px."
-msgstr ""
-
-#: options/display/form.php:142
-msgid "<em><strong>Beta Note:</strong> Doesn't work in Internet Explorer as far as I know. Suggestions are welcome.</em>"
-msgstr ""
-
-#: options/display/form.php:147
+#: options/display/form.php:109
 msgid "Asides"
 msgstr ""
 
-#: options/display/form.php:151
+#: options/display/form.php:113
 msgid "Inline Asides"
 msgstr ""
 
-#: options/display/form.php:154
+#: options/display/form.php:116
 msgid "Sidebar Asides"
 msgstr ""
 
-#: options/display/form.php:156
+#: options/display/form.php:118
 msgid "Determines whether Asides (if they are active) are shown inline or on the sidebar."
 msgstr ""
 
-#: options/display/form.php:161
+#: options/display/form.php:123
 msgid "Asides Category"
 msgstr ""
 
-#: options/display/form.php:172
+#: options/display/form.php:134
 #, php-format
 msgid "Just select a category and it will be displayed using %s."
 msgstr ""
 
-#: options/display/form.php:172
+#: options/display/form.php:134
 msgid "Matt's Asides Technique"
 msgstr ""
 
-#: options/display/form.php:177
+#: options/display/form.php:139
 msgid "Asides Number"
 msgstr ""
 
-#: options/display/form.php:182
+#: options/display/form.php:144
 msgid "Set the number of Asides to show in the Sidebar. Defaults to 3."
 msgstr ""
 
-#: options/display/form.php:187
+#: options/display/form.php:149
 msgid "About Text"
 msgstr ""
 
-#: options/display/form.php:192
+#: options/display/form.php:154
 msgid "Enter a blurp about yourself here, and it will show up on the frontpage. Deleting the content disables the about blurp."
 msgstr ""
 
-#: options/display/form.php:197
+#: options/display/form.php:159
 msgid "Blog?"
 msgstr ""
 
-#: options/display/form.php:202
+#: options/display/form.php:164
 msgid "The text on the first tab in the header navigation."
 msgstr ""
 
-#: options/display/form.php:207
+#: options/display/form.php:169
 msgid "Archives Page"
 msgstr ""
 
-#: options/display/form.php:211
+#: options/display/form.php:173
 msgid "Enable the K2 Archives page"
 msgstr ""
 
-#: options/display/form.php:213
+#: options/display/form.php:175
 msgid "Enabling this checkbox will create an Archives Page, which will show up in your blog menu as the first page."
 msgstr ""
 
-#: options/display/form.php:219
+#: options/display/form.php:181
 msgid "Set Extended Live Archive"
 msgstr ""
 
-#: options/display/form.php:222
+#: options/display/form.php:184
 msgid "Setup ELA for K2 Archives page"
 msgstr ""
 
-#: options/display/form.php:224
+#: options/display/form.php:186
 #, php-format
 msgid "Set the options of Arnaud's brilliant %s for K2."
 msgstr ""
 
-#: options/display/form.php:224
+#: options/display/form.php:186
 msgid "Find out more about ELA"
 msgstr ""
 
-#: options/display/form.php:230
-#: options/display/form.php:233
+#: options/display/form.php:192
+#: options/display/form.php:195
 msgid "Uninstall K2"
 msgstr ""
 
-#: options/display/form.php:235
+#: options/display/form.php:197
 msgid "Having trouble with K2, or you have decided to \"go another direction\" with your site style? Fine, we don't care... be that way. I promised myself I wouldn't cry..."
 msgstr ""
 
-#: options/display/form.php:247
+#: options/display/form.php:209
 #: options/display/headers.php:190
 #: options/display/modules.php:93
 #, php-format

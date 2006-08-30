@@ -28,6 +28,38 @@ function get_k2info($show='') {
 	return $output;
 }
 
+function k2_files_scan($path, $ext = false, $depth = 1, $relative = true) {
+	$files = array();
+
+	// Scan for all matching files
+	_k2_files_scan($path, '', $ext, $depth, $relative, $files);
+
+	return $files;
+}
+
+function _k2_files_scan($base_path, $path, $ext, $depth, $relative, &$files) {
+	// Open the directory
+	if(($dir = @dir($base_path . $path)) !== false) {
+		// Get all the files
+		while(($file = $dir->read()) !== false) {
+			// Construct an absolute & relative file path
+			$file_path = $path . $file;
+			$file_full_path = $base_path . $file_path;
+
+			// If this is a directory, and the depth of scan is greater than 1 then scan it
+			if(is_dir($file_full_path) and $depth > 1 and !($file == '.' or $file == '..')) {
+				_k2_files_scan($base_path, $file_path . '/', $ext, $depth - 1, $relative, $files);
+
+			// If this is a matching file then add it to the list
+			} elseif(is_file($file_full_path) and (!$ext or preg_match('/\.' . $ext . '$/i', $file))) {
+				$files[] = $relative ? $file_path : $file_full_path;
+			}
+		}
+
+		// Close the directory
+		$dir->close();
+	}
+}
 
 function k2_style_info() {
 	$style_info = get_option('k2styleinfo');

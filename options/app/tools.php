@@ -3,6 +3,9 @@ class tools {
 	function uninstall() {
 		global $wpdb;
 
+		// Remove the archives page
+		archive::delete_archive();
+
 		// Remove the K2 options from the database
 		$cleanup = $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'k2%'");
 

@@ -470,19 +470,21 @@ class k2sbm {
 
 		$active = false;
 
-		$tmp_modules = array_values($k2sbm_active_modules);
+		if($k2sbm_active_modules) {
+			$tmp_modules = array_values($k2sbm_active_modules);
 
-		// Check if a module with this callback is active
-		for($i = 0; $i < count($tmp_modules) and !$active; $i++) {
-			for($j = 0; $j < count($tmp_modules[$i]) and !$active; $j++) {
-				$current_module = $tmp_modules[$i][$j];
+			// Check if a module with this callback is active
+			for($i = 0; $i < count($tmp_modules) and !$active; $i++) {
+				for($j = 0; $j < count($tmp_modules[$i]) and !$active; $j++) {
+					$current_module = $tmp_modules[$i][$j];
 
-				// We can only check if the module can be displayed if $wp_query is set
-				// Otherwise, just assume it can. Ugly, but true.
-				if($k2sbm_registered_modules[$current_module->type]['callback'] == $callback
-					and (!$wp_query or $current_module->canDisplay())
-				) {
-					$active = true;
+					// We can only check if the module can be displayed if $wp_query is set
+					// Otherwise, just assume it can. Ugly, but true.
+					if($k2sbm_registered_modules[$current_module->type]['callback'] == $callback
+						and (!$wp_query or $current_module->canDisplay())
+					) {
+						$active = true;
+					}
 				}
 			}
 		}
