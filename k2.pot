@@ -644,37 +644,41 @@ msgstr ""
 msgid "PHP module"
 msgstr ""
 
-#: modules/recent_comments.php:28
+#: modules/recent_comments.php:35
 #, php-format
 msgid "%1$s %2$s <a href=\"%3$s#comment-%4$s\">%5$s</a>"
 msgstr ""
 
-#: modules/recent_comments.php:28
+#: modules/recent_comments.php:35
 msgid "on post"
 msgstr ""
 
-#: modules/recent_comments.php:34
+#: modules/recent_comments.php:41
 msgid "No comments"
 msgstr ""
 
-#: modules/recent_comments.php:61
+#: modules/recent_comments.php:66
 msgid "Number of posts:"
 msgstr ""
 
-#: modules/recent_comments.php:65
+#: modules/recent_comments.php:70
 msgid "Number of comments:"
 msgstr ""
 
-#: modules/recent_comments.php:70
-msgid "Newest color:"
-msgstr ""
-
 #: modules/recent_comments.php:72
-msgid "Oldest color:"
+msgid "Hide trackbacks/pingbacks:"
 msgstr ""
 
 #: modules/recent_comments.php:77
-#: modules/recent_comments.php:78
+msgid "Newest color:"
+msgstr ""
+
+#: modules/recent_comments.php:79
+msgid "Oldest color:"
+msgstr ""
+
+#: modules/recent_comments.php:84
+#: modules/recent_comments.php:85
 msgid "Recent comments module"
 msgstr ""
 
