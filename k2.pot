@@ -306,11 +306,19 @@ msgstr ""
 msgid "This is a 'live archive', which allows you to 'dig' into the %s repository in a fast and efficient way without having to reload this page as you explore."
 msgstr ""
 
-#: page-archives.php:50
+#: page-archives.php:48
+msgid "Browse by Month"
+msgstr ""
+
+#: page-archives.php:55
+msgid "Browse by Category"
+msgstr ""
+
+#: page-archives.php:64
 msgid "Tag Cloud"
 msgstr ""
 
-#: page-archives.php:51
+#: page-archives.php:65
 #, php-format
 msgid "The following is a list of the tags used at %s, colored and 'weighed' in relation to their relative usage."
 msgstr ""
