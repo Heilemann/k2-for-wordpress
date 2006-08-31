@@ -217,7 +217,7 @@ class k2sbm {
 		add_action('admin_menu', array('k2sbm', 'add_menus'));
 
 		// Check if this page is the one being shown, if so then add stuff to the header
-		if($_GET['page'] == 'k2sbm-modules') {
+		if($_GET['page'] == 'k2-sbm-modules') {
 			add_action('admin_head', array('k2sbm', 'module_admin_head'));
 		}
 	}
@@ -227,7 +227,7 @@ class k2sbm {
 	 **/
 	function add_menus() {
 		// Add the submenus
-		add_submenu_page('themes.php', __('K2 Sidebar Modules', 'k2_domain'), __('K2 Sidebar Modules', 'k2_domain'), 5, 'k2sbm-modules', array('k2sbm', 'module_admin'));
+		add_submenu_page('themes.php', __('K2 Sidebar Modules', 'k2_domain'), __('K2 Sidebar Modules', 'k2_domain'), 5, 'k2-sbm-modules', array('k2sbm', 'module_admin'));
 	}
 
 	/**

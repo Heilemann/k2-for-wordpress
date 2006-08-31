@@ -2,7 +2,7 @@
 	global $wpdb;
 
 	// Update
-	$update = updater::k2update();
+	$update = options::update();
 
 	// Get the current K2 scheme
 	$scheme_name = get_option('k2scheme');

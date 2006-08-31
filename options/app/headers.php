@@ -87,7 +87,7 @@ class headers {
 				text-align: <?php echo(get_option('k2headertextalignment')); ?>;
 				font-size: <?php echo(get_option('k2headertextfontsize')); ?>px;
 				}
-      		
+
 			h1, h1 a,h1 a:visited, #header .description {
 				color: <?php echo(get_option('k2headertextcolor')); ?>;
       				}
