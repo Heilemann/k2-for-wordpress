@@ -33,23 +33,25 @@ class headers {
 			}
 		}
 
-		if(isset($_POST['k2'])) {
-			// Correct the colours
-			if(trim($_POST['k2']['backgroundcolor']) != '') {
-				$_POST['k2']['backgroundcolor'] = '#' . substr(str_replace('#', '', $_POST['k2']['backgroundcolor']),0,6);
-			} else {
-				unset($_POST['k2']['backgroundcolor']);
-			}
+		if(!empty($_POST)) {
+			if(isset($_POST['k2'])) {
+				// Correct the colours
+				if(trim($_POST['k2']['backgroundcolor']) != '') {
+					$_POST['k2']['backgroundcolor'] = '#' . substr(str_replace('#', '', $_POST['k2']['backgroundcolor']),0,6);
+				} else {
+					unset($_POST['k2']['backgroundcolor']);
+				}
 
-			if(trim($_POST['k2']['foregroundcolor']) != '') {
-				$_POST['k2']['foregroundcolor'] = '#' . substr(str_replace('#', '', $_POST['k2']['foregroundcolor']),0,6);
-			} else {
-				unset($_POST['k2']['foregroundcolor']);
-			}
+				if(trim($_POST['k2']['foregroundcolor']) != '') {
+					$_POST['k2']['foregroundcolor'] = '#' . substr(str_replace('#', '', $_POST['k2']['foregroundcolor']),0,6);
+				} else {
+					unset($_POST['k2']['foregroundcolor']);
+				}
 
-			// Set all the options
-			foreach($_POST['k2'] as $option => $value) {
-				update_option('k2' . $option, $value);
+				// Set all the options
+				foreach($_POST['k2'] as $option => $value) {
+					update_option('k2' . $option, $value);
+				}
 			}
 		}
 	}

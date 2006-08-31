@@ -81,7 +81,7 @@
 				<th scope="row"><?php _e('Background color','k2_domain'); ?></th>
 
 				<td>
-					<input id="k2-headerbackgroundcolor" name="k2[headerbackgroundcolor]" type="text" value="<?php echo(get_option('k2headerbackgroundcolor')); ?>" />
+					<input id="k2-headerbackgroundcolor" name="k2[headerbackgroundcolor]" type="text" size="7" value="<?php echo(get_option('k2headerbackgroundcolor')); ?>" />
 
 					<p><small><?php _e('Define the background color for the header (default is #3371A3).','k2_domain'); ?></small></p>
 				</td>
@@ -129,10 +129,10 @@
 
 				<td>
 					<label for="k2-headertextcolor-bright"><?php _e('Bright Color:','k2_domain'); ?></label>
-					<input id="k2-headertextcolor-bright" name="k2[headertextcolor_bright]" type="text" value="<?php echo(get_option('k2headertextcolor_bright')); ?>" /><br />
+					<input id="k2-headertextcolor-bright" name="k2[headertextcolor_bright]" type="text" size="7" value="<?php echo(get_option('k2headertextcolor_bright')); ?>" /><br />
 
 					<label for="k2-headertextcolor-dark"><?php _e('Dark Color:','k2_domain'); ?></label>
-					<input id="k2-headertextcolor-dark" name="k2[headertextcolor_dark]" type="text" value="<?php echo(get_option('k2headertextcolor_dark')); ?>" />
+					<input id="k2-headertextcolor-dark" name="k2[headertextcolor_dark]" type="text" size="7" value="<?php echo(get_option('k2headertextcolor_dark')); ?>" />
 				</td>
 			</tr>
 		</table>
