@@ -11,6 +11,7 @@ require(TEMPLATEPATH . '/options/app/options.php');
 require(TEMPLATEPATH . '/options/app/update.php');
 require(TEMPLATEPATH . '/options/app/info.php');
 require(TEMPLATEPATH . '/options/app/tools.php');
+require(TEMPLATEPATH . '/options/app/headers.php');
 
 // Install and update K2 if necessary
 global $options_revision;
@@ -34,8 +35,8 @@ function menu() {
 	include(TEMPLATEPATH . '/options/display/form.php');
 }
 
-// include Hasse R. Hansen's K2 header plugin - http://www.ramlev.dk
-require(TEMPLATEPATH . '/options/display/headers.php');
+// K2 Headers
+headers::init();
 
 // Sidebar Modules for K2
 if(class_exists('k2sbm')) {
