@@ -9,7 +9,7 @@ class K2Header {
 	function init() {
 		add_action('admin_menu', array('K2Header', 'add_menu'));
 
-		if(get_option('k2header_picture') === true or get_option('k2imagerandomfeature') == '1') {
+		if(!empty(get_option('k2header_picture')) or get_option('k2imagerandomfeature') == '1') {
 			add_action('wp_head', array('K2Header', 'output_css'));
 		}
 	}
