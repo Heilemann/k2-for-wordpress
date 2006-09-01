@@ -2,23 +2,24 @@
 
 // Based on Hasse R. Hansen's K2 header plugin - http://www.ramlev.dk
 
+global $k2_headers_path;
 $k2_headers_path = TEMPLATEPATH . '/images/headers/';
 
-class headers {
+class K2Header {
 	function init() {
-		add_action('admin_menu', array('headers', 'add_menu'));
+		add_action('admin_menu', array('K2Header', 'add_menu'));
 
-		if(get_option('k2header_picture') or get_option('k2imagerandomfeature')) {
-			add_action('wp_head', array('headers', 'output_css'));
+		if(get_option('k2header_picture') === true or get_option('k2imagerandomfeature') == '1') {
+			add_action('wp_head', array('K2Header', 'output_css'));
 		}
 	}
 
 	function add_menu() {
-		add_submenu_page('themes.php', __('K2 Custom Header','k2_domain'), __('K2 Custom Header','k2_domain'), 5, 'k2-header', array('headers', 'admin'));
+		add_submenu_page('themes.php', __('K2 Custom Header','k2_domain'), __('K2 Custom Header','k2_domain'), 5, 'k2-header', array('K2Header', 'admin'));
 	}
 
 	function admin() {
-		include(TEMPLATEPATH . '/options/display/headers.php');
+		include(TEMPLATEPATH . '/app/display/header.php');
 	}
 
 	function update() {
@@ -59,7 +60,7 @@ class headers {
 	function random_picture() {
 		global $k2_headers_path;
 
-		$picture_files = k2_files_scan($k2_headers_path, false, 1);
+		$picture_files = K2::files_scan($k2_headers_path, false, 1);
 		$size = count($picture_files);
 
 		if($size > 1) {
@@ -71,7 +72,7 @@ class headers {
 
 	function output_css() {
 		if(get_option('k2imagerandomfeature') == '1') {
-			$picture = headers::random_picture();
+			$picture = K2Header::random_picture();
 		} else {
 			$picture = get_option('k2header_picture');
 		}
@@ -101,6 +102,32 @@ class headers {
 		</style>
 		<?php
 	}
+
+	function install() {
+		add_option('k2imagerandomfeature', '1', "Whether to use a random image in K2's header");
+		add_option('k2header_picture', '', "The image to use in K2's header");
+		add_option('k2headerbackgroundcolor', '', "K2's header background color");
+		add_option('k2headertextalignment', 'left', "K2's header text alignment");
+		add_option('k2headertextfontsize', '', "K2's header text font size");
+		add_option('k2headertextcolor', '', "K2's header text font color");
+		add_option('k2headertextcolor_bright', '', "K2's header text bright font colour");
+		add_option('k2headertextcolor_dark', '', "K2's header text dark font colour");
+	}
+
+	function uninstall() {
+		delete_option('k2imagerandomfeature');
+		delete_option('k2header_picture');
+		delete_option('k2headerbackgroundcolor');
+		delete_option('k2headertextalignment');
+		delete_option('k2headertextfontsize');
+		delete_option('k2headertextcolor');
+		delete_option('k2headertextcolor_bright');
+		delete_option('k2headertextcolor_dark');
+	}
 }
+
+add_action('k2_init', array('K2Header', 'init'), 2);
+add_action('k2_install', array('K2Header', 'install'));
+add_action('k2_uninstall', array('K2Header', 'uninstall'));
 
 ?>

@@ -1,7 +1,7 @@
 <?php
 /* This class holds all the code for creating, deleting and setting up the archives, powered by Extended Live Archives: http://www.sonsofskadi.net/extended-live-archive/ */
 
-class archive {
+class K2Archive {
 	function create_archive() {
 		global $wpdb, $user_ID;
 

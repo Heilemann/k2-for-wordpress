@@ -2,7 +2,7 @@
 	global $k2_headers_path;
 
 	// Update
-	$update = headers::update();
+	$update = K2Header::update();
 
 	// Get the current K2 header picture
 	$header_picture = get_option('k2header_picture');
@@ -11,7 +11,7 @@
 	$is_header_dir = is_dir($k2_headers_path);
 
 	// Get the header pictures
-	$picture_files = $is_header_dir ? k2_files_scan($k2_headers_path, false, 1) : array();
+	$picture_files = $is_header_dir ? K2::files_scan($k2_headers_path, false, 1) : array();
 ?>
 
 <?php if(isset($_POST['submit'])) { ?>

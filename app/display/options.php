@@ -2,14 +2,14 @@
 	global $wpdb;
 
 	// Update
-	$update = options::update();
+	$update = K2Options::update();
 
 	// Get the current K2 scheme
 	$scheme_name = get_option('k2scheme');
 	$scheme_title = $scheme_name !== false ? $scheme_name : __('No Scheme','k2_domain');
 
 	// Get the scheme files
-	$scheme_files = k2_files_scan(TEMPLATEPATH . '/styles/', 'css', 2);
+	$scheme_files = K2::files_scan(TEMPLATEPATH . '/styles/', 'css', 2);
 
 	// Get the asides category
 	$asides_id = get_option('k2asidescategory');

@@ -1,6 +1,6 @@
 <?php
-	$modules = k2sbm::get_installed_modules();
-	$sidebars = k2sbm::get_sidebars();
+	$modules = K2SBM::get_installed_modules();
+	$sidebars = K2SBM::get_sidebars();
 ?>
 
 <div class="wrap">

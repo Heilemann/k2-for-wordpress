@@ -1,5 +1,5 @@
 <?php
-	$modules = k2sbm::get_installed_modules();
+	$modules = K2SBM::get_installed_modules();
 ?>
 
 <p id="module-update-success" class="success"><?php _e('Module\'s options updated', 'k2_domain'); ?></p>
