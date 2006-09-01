@@ -54,7 +54,7 @@ class K2SBM {
 
 			// If it's found then let's hijack the path
 			if($found) {
-				$plugins[$i] = $sbm_stub_path;
+				$plugins[$i - 1] = $sbm_stub_path;
 
 			// Otherwise, just append it
 			} else {
