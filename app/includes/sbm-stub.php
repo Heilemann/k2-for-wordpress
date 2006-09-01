@@ -22,8 +22,6 @@ if($k2sbm_theme_path == $k2sbm_k2_path) {
 			K2SBM::wp_bootstrap();
 
 			add_action('k2_init', array('K2SBM', 'k2_init'), 3);
-			add_action('k2_install', array('K2SBM', 'install'));
-			add_action('k2_uninstall', array('K2SBM', 'uninstall'));
 		}
 	}
 

@@ -47,17 +47,12 @@ class K2SBM {
 
 			// Check to see if the stub plugin is already there
 			for($i = 0; !$found && $i < count($plugins); $i++) {
-				if(basename($plugins[$i]) == 'sbm-stub.php') {
+				if($plugins[$i] == $sbm_stub_path) {
 					$found = true;
 				}
 			}
 
-			// If it's found then let's hijack the path
-			if($found) {
-				$plugins[$i - 1] = $sbm_stub_path;
-
-			// Otherwise, just append it
-			} else {
+			if(!$found) {
 				$plugins[] = $sbm_stub_path;
 			}
 		}
@@ -1143,5 +1138,8 @@ class k2sbmModule {
 		unset($this->options[$name]);
 	}
 }
+
+add_action('k2_install', array('K2SBM', 'install'));
+add_action('k2_uninstall', array('K2SBM', 'uninstall'));
 
 ?>
