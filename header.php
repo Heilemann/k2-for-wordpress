@@ -11,9 +11,6 @@
   
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
 	<link rel="stylesheet" type="text/css" media="print" href="<?php bloginfo('template_url'); ?>/css/print.css" />
-	<?php /* Custom Style */ if (get_option('k2scheme') != '') { ?>
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php k2info('scheme'); ?>" />
-	<?php } ?>
 
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="<?php bloginfo('rss2_url'); ?>" />
 	<link rel="alternate" type="text/xml" title="RSS .92" href="<?php bloginfo('rss_url'); ?>" />
@@ -50,6 +47,10 @@
 	<?php wp_get_archives('type=monthly&format=link'); ?>
 
 	<?php wp_head(); ?>	
+
+	<?php /* Custom Style */ if (get_option('k2scheme') != '') { ?>
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php k2info('scheme'); ?>" />
+	<?php } ?>
 </head>
 
 <body class="<?php k2_body_class(); ?>" <?php k2_body_id(); ?>>
