@@ -674,8 +674,8 @@ img.center, img[align="center"] {
 	}
 	
 img.alignright, img[align="right"] {
-	padding: 4px;
-	margin: 0 0 2px 7px;
+	padding: 4px !important;
+	margin: 0 0 2px 7px !important;
 	display: inline;
 	}
 
@@ -700,13 +700,6 @@ small, strike {
 	
 code {
 	font: 1.1em 'Courier New', Courier, Monospace;
-	}
-
-acronym, abbr {
-	font-size: 0.9em;
-	letter-spacing: .07em;
-	border-bottom: 1px dashed #999;
-	cursor: help;
 	}
 
 .chronodata abbr { border: 0; }
