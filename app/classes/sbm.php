@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Sidebar modules for K2
- **/
-
-/* Globals ****************************************************************************************/
-
 // The registered sidebars
 $k2sbm_registered_sidebars = array();
 
@@ -25,11 +19,6 @@ $k2sbm_current_module = false;
 $k2sbm_error_text = '';
 
 
-/* Classes ****************************************************************************************/
-
-/**
- * The main class
- **/
 class K2SBM {
 	function install() {
 		add_option('k2sbm_modules_active', array(), 'The active sidebar modules.');
@@ -79,11 +68,6 @@ class K2SBM {
 		}
 	}
 
-	/* Interface functions ********************************************************************/
-
-	/**
-	 * The function to bootstrap for the WP interface
-	 **/
 	function wp_bootstrap() {
 		global $k2sbm_active_modules;
 
@@ -98,9 +82,6 @@ class K2SBM {
 		}
 	}
 
-	/**
-	 * The function to bootstrap for the direct interface
-	 **/
 	function direct_bootstrap() {
 		global $k2sbm_registered_modules, $k2sbm_registered_sidebars, $k2sbm_disabled_modules, $k2sbm_error_text;
 
@@ -231,9 +212,6 @@ class K2SBM {
 		}
 	}
 
-	/**
-	 * The pre-bootstrap function
-	 **/
 	function pre_bootstrap() {
 		// Load the modules
 		K2SBM::load_modules();
@@ -243,18 +221,12 @@ class K2SBM {
 
 	}
 
-	/**
-	 * The post-bootstrap function
-	 **/
 	function post_bootstrap() {
 		// Allow the Widgets and SBM defined in plugins & themes to be loaded
 		do_action('sbm_init');
 		do_action('widgets_init');
 	}
 
-	/**
-	 * The function to init for K2
-	 **/
 	function k2_init() {
 		// Add menus
 		add_action('admin_menu', array('K2SBM', 'add_menus'));
@@ -270,17 +242,11 @@ class K2SBM {
 		}
 	}
 
-	/**
-	 * The function to add menus
-	 **/
 	function add_menus() {
 		// Add the submenus
 		add_submenu_page('themes.php', __('K2 Sidebar Modules', 'k2_domain'), __('K2 Sidebar Modules', 'k2_domain'), 5, 'k2-sbm-modules', array('K2SBM', 'module_admin'));
 	}
 
-	/**
-	 * The function to show the module admin interface
-	 **/
 	function module_admin() {
 		global $k2sbm_registered_sidebars, $k2sbm_registered_modules;
 
@@ -297,16 +263,13 @@ class K2SBM {
 		}
 	}
 
-	/**
-	 * The function to add stuff to the WP admin header
-	 **/
 	function module_admin_head() {
 	?>
 		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/sbm.css" />
 
 		<script type="text/javascript">
 			//<![CDATA[
-				var sbm_baseUrl = '<?php bloginfo('template_directory'); ?>/app/includes/sbm-ajax.php';
+				var sbm_baseUrl = <?php k2info('js_url'); ?> + '/app/includes/sbm-ajax.php';
 			//]]>
 		</script>
 
@@ -317,25 +280,12 @@ class K2SBM {
 	<?php
 	}
 
-	/**
-	 * The function to set the XML error text for a direct request
-	 *
-	 * $text - The new error text
-	 **/
 	function set_error_text($text) {
 		global $k2sbm_error_text;
 
 		$k2sbm_error_text = $text;
 	}
 
-
-	/* Sidebar functions **********************************************************************/
-
-	/**
-	 * Function to register a sidebar
-	 *
-	 * $args - Sidebar's arguments
-	 **/
 	function register_sidebar($args = array()) {
 		global $k2sbm_registered_sidebars;
 
@@ -360,9 +310,6 @@ class K2SBM {
 		$k2sbm_registered_sidebars[$sidebar->id] = $sidebar;
 	}
 
-	/**
-	 * Function to unregister a sidebar
-	 **/
 	function unregister_sidebar($name) {
 		global $k2sbm_registered_sidebars;
 
@@ -372,21 +319,12 @@ class K2SBM {
 		unset($k2sbm_registered_sidebars[$id]);
 	}
 
-	/**
-	 * Function to get the list of sidebars
-	 **/
 	function get_sidebars() {
 		global $k2sbm_registered_sidebars;
 
 		return $k2sbm_registered_sidebars;
 	}
 
-	/**
-	 * Function to register n sidebars
-	 *
-	 * $count - # of sidebars to register
-	 * $args - Arguments for the sidebars
-	 **/
 	function register_sidebars($count = 1, $args = array()) {
 		// Apparently, WPW lets you pass arguments as a string
 		if(is_string($args)) {
@@ -409,11 +347,6 @@ class K2SBM {
 		}
 	}
 
-	/**
-	 * Function to show a sidebar
-	 *
-	 * $name - Name of the sidebar to show
-	 **/
 	function dynamic_sidebar($name = 1) {
 		global $k2sbm_registered_sidebars;
 
@@ -437,11 +370,6 @@ class K2SBM {
 	}
 
 
-	/* Module functions ***********************************************************************/
-
-	/**
-	 * Function to load modules
-	 **/
 	function load_modules() {
 		global $k2sbm_active_modules, $k2sbm_disabled_modules;
 
@@ -451,9 +379,6 @@ class K2SBM {
 		}
 	}
 
-	/**
-	 * Function to save modules
-	 **/
 	function save_modules() {
 		global $k2sbm_active_modules, $k2sbm_disabled_modules;
 
@@ -461,14 +386,6 @@ class K2SBM {
 		update_option('k2sbm_modules_disabled', $k2sbm_disabled_modules);
 	}
 
-	/**
-	 * Function to register a module function
-	 *
-	 * $name - Module's name
-	 * $callback - Callback function
-	 * $css_class - The CSS class of this module
-	 * $options - The module's default options
-	 **/
 	function register_sidebar_module($name, $callback, $css_class = '', $options = array()) {
 		global $k2sbm_registered_modules;
 
@@ -494,11 +411,6 @@ class K2SBM {
 		);
 	}
 
-	/**
-	 * Function to unregister a module
-	 *
-	 * $name - Name of the module to unregister
-	 **/
 	function unregister_sidebar_module($name) {
 		global $k2sbm_registered_modules;
 
@@ -508,11 +420,6 @@ class K2SBM {
 		unset($k2sbm_registered_modules[$id]);
 	}
 
-	/**
-	 * Function to check if a module is active
-	 *
-	 * $callback - Callback to check for
-	 **/
 	function is_active_module($callback) {
 		global $k2sbm_registered_modules, $k2sbm_active_modules, $wp_query;
 
@@ -559,11 +466,6 @@ class K2SBM {
 		}
 	}
 
-	/**
-	 * Function to unregister a module control
-	 *
-	 * $name - Name of the module control to unregister
-	 **/
 	function unregister_sidebar_module_control($name) {
 		global $k2sbm_registered_modules;
 
@@ -576,9 +478,6 @@ class K2SBM {
 		}
 	}
 
-	/**
-	 * Function to get all the installed modules
-	 **/
 	function get_installed_modules() {
 		global $k2sbm_registered_modules;
 
@@ -589,18 +488,10 @@ class K2SBM {
 		return $k2sbm_registered_modules;
 	}
 
-	/**
-	 * Function to scan for all the modules
-	 **/
 	function module_scan() {
 		K2SBM::module_scan_dir(dirname(dirname(__FILE__)) . '/modules/');
 	}
 
-	/**
-	 * Function to scan a directory for usable modules
-	 *
-	 * $directory_path - The path to scan
-	 **/
 	function module_scan_dir($directory_path) {
 		// Open the module directory
 		$dir = dir($directory_path);
@@ -618,9 +509,6 @@ class K2SBM {
 		$dir->close();
 	}
 
-	/**
-	 * Function to get all modules, reguardless of sidebar
-	 **/
 	function get_all_modules() {
 		global $k2sbm_active_modules, $k2sbm_disabled_modules;
 
@@ -643,13 +531,6 @@ class K2SBM {
 		return $all_modules;
 	}
 
-	/**
-	 * Function to add a module
-	 *
-	 * $name - Name of the module
-	 * $type - Type of the module
-	 * $sidebar - Sidebar to add the module to
-	 **/
 	function add_module($name, $type, $sidebar) {
 		global $k2sbm_registered_modules, $k2sbm_active_modules, $k2sbm_disabled_modules;
 
@@ -680,12 +561,6 @@ class K2SBM {
 		}
 	}
 
-	/**
-	 * Function to update module
-	 *
-	 * $sidebar_id - The ID of the sidebar the module resides on
-	 * $module_id - The ID of the module itself
-	 **/
 	function update_module($sidebar_id, $module_id) {
 		global $k2sbm_disabled_modules, $k2sbm_active_modules;
 
@@ -712,12 +587,6 @@ class K2SBM {
 		ob_end_clean();
 	}
 
-	/**
-	 * Function to remove module
-	 *
-	 * $sidebar_id - The ID of the sidebar the module resides on
-	 * $module_id - The ID of the module itself
-	 **/
 	function remove_module($sidebar_id, $module_id) {
 		global $k2sbm_disabled_modules, $k2sbm_active_modules;
 
@@ -738,11 +607,6 @@ class K2SBM {
 		K2SBM::save_modules();
 	}
 
-	/**
-	 * Function to re-order modules
-	 *
-	 * $ordering - Array of modules' order in sidebars
-	 **/
 	function reorder_sidebar($ordering) {
 		global $k2sbm_disabled_modules, $k2sbm_active_modules;
 
@@ -766,9 +630,6 @@ class K2SBM {
 		K2SBM::save_modules();
 	}
 
-	/**
-	 * Function to output the CSS files of the modules to the header of the site
-	 **/
 	function output_module_css_files() {
 		global $k2sbm_active_modules;
 
@@ -795,23 +656,12 @@ class K2SBM {
 		}
 	}
 
-
-	/* Generic functions **********************************************************************/
-
-	/**
-	 * Function to change a name into an ID
-	 *
-	 * $name - Name to convert to an ID
-	 **/
 	function name_to_id($name) {
 		// Use the WP function to do this
 		return sanitize_title($name);
 	}
 }
 
-/**
- * Class to represent a sidebar
- **/
 class k2sbmSidebar {
 	var $id;
 	var $name;
@@ -822,15 +672,6 @@ class k2sbmSidebar {
 
 	var $modules;
 
-	/**
-	 * Sidebar constructor
-	 *
-	 * $name - The name of the sidebar
-	 * $before_module - The HTML code to display before each module
-	 * $after_module - The HTML code to display after each module
-	 * $before_title - The HTML code to display before each module title
-	 * $after_title - The HTML code to display after each module title
-	 **/
 	function k2sbmSidebar($name, $before_module, $after_module, $before_title, $after_title) {
 		global $k2sbm_active_modules;
 
@@ -852,9 +693,6 @@ class k2sbmSidebar {
 		}
 	}
 
-	/**
-	 * Displays the sidebar by outputting it's modules
-	 **/
 	function display() {
 		// Check there are some modules present
 		if(count($this->modules) > 0) {
@@ -872,9 +710,6 @@ class k2sbmSidebar {
 	}
 }
 
-/**
- * Class to represent a module
- **/
 class k2sbmModule {
 	var $id;
 	var $name;
@@ -884,14 +719,6 @@ class k2sbmModule {
 	var $output;
 	var $options;
 
-	/**
-	 * Module constructor
-	 *
-	 * $id - The ID of the module
-	 * $name - The name of the module
-	 * $type - The base type of the module, used for accessing data such as callbacks
-	 * $options - The default module options
-	 **/
 	function k2sbmModule($id, $name, $type, $options) {
 		// Set the generic data from the parameters
 		$this->id = $id;
@@ -912,11 +739,6 @@ class k2sbmModule {
 		$this->options = $options;
 	}
 
-	/**
-	 * Displays a module
-	 *
-	 * $sidebar - The sidebar the module belongs to
-	 **/
 	function display($sidebar) {
 		global $k2sbm_registered_modules, $k2sbm_current_module, $post;
 		static $k2sbm_count_id;
@@ -974,9 +796,6 @@ class k2sbmModule {
 		return false;
 	}
 
-	/**
-	 * Display's the module's controls for editing
-	 **/
 	function displayControl() {
 		global $k2sbm_registered_modules, $k2sbm_current_module;
 
@@ -1056,9 +875,6 @@ class k2sbmModule {
 		}
 	}
 
-	/**
-	 * Displays the checkbox list of specific posts this module will appear on
-	 **/
 	function displayPostList() {
 		// Display the generic post list
 		extract(array('module' => $this));
@@ -1068,18 +884,12 @@ class k2sbmModule {
 	<?php
 	}
 
-	/**
-	 * Displays the checkbox list of specific pages this module will appear on
-	 **/
 	function displayPageList() {
 		// Display the generic post list
 		extract(array('module' => $this));
 		include(TEMPLATEPATH . '/app/display/sbm-ajax/edit-module-pages-form.php');
 	}
 
-	/**
-	 * Returns whether this module is to be displayed on the current blog page
-	 **/
 	function canDisplay() {
 		global $post;
 
@@ -1100,40 +910,18 @@ class k2sbmModule {
 		);
 	}
 
-	/**
-	 * Gets the value of an option relating to this module
-	 *
-	 * $name - The name of the option
-	 **/
 	function get_option($name) {
 		return $this->options[$name];
 	}
 
-	/**
-	 * Adds an option relating to this module
-	 *
-	 * $name - The name of the option
-	 * $value - The value of the option
-	 **/
 	function add_option($name, $value = '') {
 		$this->options[$name] = $value;
 	}
 
-	/**
-	 * Updates an option relating to this module
-	 *
-	 * $name - The name of the option
-	 * $value - The value of the option
-	 **/
 	function update_option($name, $newvalue) {
 		$this->options[$name] = $newvalue;
 	}
 
-	/**
-	 * Deletes an option relating to this module
-	 *
-	 * $name - The name of the option
-	 **/
 	function delete_option($name) {
 		unset($this->options[$name]);
 	}
