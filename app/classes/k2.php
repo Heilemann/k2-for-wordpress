@@ -18,6 +18,11 @@ class K2 {
 			K2::install($last_modified);
 		}
 
+		// Register the sidebar - This will be moved hopefully in future revisions
+		if(function_exists('register_sidebar')) {
+			register_sidebar(array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>'));
+		}
+
 		// There may be some things we need to do before K2 is initialised
 		// Let's do them now
 		do_action('k2_init');

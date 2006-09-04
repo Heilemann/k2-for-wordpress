@@ -235,11 +235,6 @@ class K2SBM {
 		if($_GET['page'] == 'k2-sbm-modules') {
 			add_action('admin_head', array('K2SBM', 'module_admin_head'));
 		}
-
-		// Register the sidebar
-		if(function_exists('register_sidebar')) {
-			register_sidebar(array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>'));
-		}
 	}
 
 	function add_menus() {
