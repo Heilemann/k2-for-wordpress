@@ -1,16 +1,28 @@
 <?php
 
 function latest_posts_sidebar_module($args) {
+	global $post;
+
 	extract($args);
 
-	$num_posts = sbm_get_option('num_posts');
+	$query = 'showposts='.sbm_get_option('num_posts');
+	$k2asidescategory = get_option('k2asidescategory');
+	if ((get_option('k2asidesposition') == '1') and ($k2asidescategory != '0')) {
+		$query .= '&cat=-' . $k2asidescategory;
+	}
 
 	echo($before_module . $before_title . $title . $after_title);
 	?>
 	<span class="metalink"><a href="<?php bloginfo('rss2_url'); ?>" title="<?php _e('RSS Feed for Blog Entries','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
 
 		<ul>
-			<?php wp_get_archives('type=postbypost&limit=' . sbm_get_option('num_posts')); ?>
+		<?php
+			$latest = new WP_Query($query);
+			foreach ($latest->posts as $post) {
+				setup_postdata($post);
+		?>
+			<li><a href="<?php the_permalink(); ?>" title="<?php echo wp_specialchars(get_the_title(), 1); ?>"><?php the_title(); ?></a></li>
+		<?php } // End Latest loop ?>
 		</ul>
 	<?php
 	echo($after_module);
