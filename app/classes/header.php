@@ -75,7 +75,7 @@ class K2Header {
 		}
 
 		if($picture != '') {
-			$picture = 'background: url("' . get_bloginfo('template_url') . '/images/headers/' . $picture . '") no-repeat center center;';
+			$picture = 'background: url("' . get_bloginfo('template_url') . '/images/headers/' . $picture . '") no-repeat center center !important;';
 
 			?>
 			<style type="text/css">

@@ -46,11 +46,11 @@
 
 	<?php wp_get_archives('type=monthly&format=link'); ?>
 
-	<?php wp_head(); ?>	
-
 	<?php /* Custom Style */ if (get_option('k2scheme') != '') { ?>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php k2info('scheme'); ?>" />
 	<?php } ?>
+
+	<?php wp_head(); ?>	
 </head>
 
 <body class="<?php k2_body_class(); ?>" <?php k2_body_id(); ?>>
