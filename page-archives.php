@@ -58,7 +58,9 @@
 						</ul>
 
 						<br class="clear" />
-		
+
+						<?php } // End ELA Check ?>
+
 						<?php if (function_exists('UTW_ShowWeightedTagSetAlphabetical')) { ?>
 			
 						<h3><?php _e('Tag Cloud','k2_domain'); ?></h3>
