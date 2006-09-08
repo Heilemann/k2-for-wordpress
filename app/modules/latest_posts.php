@@ -21,7 +21,7 @@ function latest_posts_sidebar_module($args) {
 			foreach ($latest->posts as $post) {
 				setup_postdata($post);
 		?>
-			<li><a href="<?php the_permalink(); ?>" title="<?php echo wp_specialchars(get_the_title(), 1); ?>"><?php the_title(); ?></a></li>
+			<li><a href="<?php the_permalink(); ?>" title="<?php echo wp_specialchars(strip_tags(get_the_title()), 1); ?>"><?php the_title(); ?></a></li>
 		<?php } // End Latest loop ?>
 		</ul>
 	<?php
