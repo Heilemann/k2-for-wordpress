@@ -102,6 +102,7 @@ $comments = array($comment);
 include(TEMPLATEPATH . '/comments.php');
 $commentout = ob_get_clean();
 preg_match('#<li(.*?)>(.*)</li>#ims', $commentout, $matches);
++@header('Content-type: ' . get_option('html_type') . '; charset=' . get_option('blog_charset'));
 echo "<li style=\"\"".$matches[1].">".$matches[2]."</li>";
 
 ?>
