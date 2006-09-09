@@ -5,7 +5,11 @@
 	// Get core WP functions when loaded dynamically
 	if (isset($_GET['rolling'])) {
 		require (dirname(__FILE__).'/../../../wp-blog-header.php');
-	}
+?>
+
+<div id="type" class="<?php k2_body_class(); ?>">
+
+<?php }
 
 	// Get the asides category
 	$k2asidescategory = get_option('k2asidescategory');
@@ -146,4 +150,8 @@
 
 	</div> <!-- .hentry .four04 -->
 
-<?php } /* End Loop Init  */ ?>
+<?php } /* End Loop Init  */
+
+	if (isset($_GET['rolling'])) { ?> </div> <?php }
+
+?>
