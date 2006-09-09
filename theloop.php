@@ -7,7 +7,7 @@
 		require (dirname(__FILE__).'/../../../wp-blog-header.php');
 ?>
 
-<div id="type" class="<?php k2_body_class(); ?>">
+<div id="dynamictype" class="<?php k2_body_class(); ?>">
 
 <?php }
 
