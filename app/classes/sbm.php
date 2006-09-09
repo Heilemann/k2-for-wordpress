@@ -270,8 +270,8 @@ class K2SBM {
 
 		<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/prototype.js.php"></script>
 		<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/effects.js.php"></script>
-		<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/dragdrop.js"></script>
-		<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/sbm.js"></script>
+		<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/dragdrop.js.php"></script>
+		<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/sbm.js.php"></script>
 	<?php
 	}
 

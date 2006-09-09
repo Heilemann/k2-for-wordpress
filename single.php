@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
 <div class="content">
-	
+
 	<div id="primary">
 		<div id="current-content">
 			<div id="primarycontent" class="hfeed">

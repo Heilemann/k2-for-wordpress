@@ -18,6 +18,7 @@
 	header($LmStr);
 	header('Content-Type: text/javascript; charset: UTF-8');
 ?>
+
 /*  Prototype JavaScript framework, version 1.5.0_rc1
  *  (c) 2005 Sam Stephenson <sam@conio.net>
  *
@@ -963,7 +964,7 @@ if (!window.Element)
 
 Element.extend = function(element) {
   if (!element) return;
-  if (_nativeExtensions) return element;
+  if (_nativeExtensions || element.nodeType == 3) return element;
 
   if (!element._extended && element.tagName && element != window) {
     var methods = Object.clone(Element.Methods), cache = Element.extend.cache;
@@ -1153,10 +1154,12 @@ Element.Methods = {
   // removes whitespace-only text node children
   cleanWhitespace: function(element) {
     element = $(element);
-    for (var i = 0; i < element.childNodes.length; i++) {
-      var node = element.childNodes[i];
+    var node = element.firstChild;
+    while (node) {
+      var nextNode = node.nextSibling;
       if (node.nodeType == 3 && !/\S/.test(node.nodeValue))
-        Element.remove(node);
+        element.removeChild(node);
+      node = nextNode;
     }
     return element;
   },
@@ -1268,7 +1271,7 @@ Element.Methods = {
     element = $(element);
     if (!element._overflow) return;
     element.style.overflow = element._overflow == 'auto' ? '' : element._overflow;
-    delete element._overflow;
+    element._overflow = null;
     return element;
   }
 }
@@ -1297,7 +1300,7 @@ if(document.all){
       $A(element.childNodes).each(function(node){
         element.removeChild(node)
       });
-      depth.times(function(){ div = div.childNodes[0] });
+      depth.times(function(){ div = div.firstChild });
 
       $A(div.childNodes).each(
         function(node){ element.appendChild(node) });

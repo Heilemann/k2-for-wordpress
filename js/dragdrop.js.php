@@ -1,4 +1,25 @@
-// script.aculo.us dragdrop.js v1.6.3, Tue Sep 05 12:16:13 CEST 2006
+<?php
+	require(dirname(__FILE__)."/../../../../wp-blog-header.php");
+
+	// check to see if the user has enabled gzip compression in the WordPress admin panel
+	if ( !get_settings('gzipcompression') and !ini_get('zlib.output_compression') and ini_get('output_handler') != 'ob_gzhandler' and ini_get('output_handler') != 'mb_output_handler' ) {
+		ob_start('ob_gzhandler');
+	}
+
+	// The headers below tell the browser to cache the file and also tell the browser it is JavaScript.
+	header("Cache-Control: public");
+	header("Pragma: cache");
+
+	$offset = 60*60*24*60;
+	$ExpStr = "Expires: ".gmdate("D, d M Y H:i:s",time() + $offset)." GMT";
+	$LmStr = "Last-Modified: ".gmdate("D, d M Y H:i:s",filemtime(__FILE__))." GMT";
+
+	header($ExpStr);
+	header($LmStr);
+	header('Content-Type: text/javascript; charset: UTF-8');
+?>
+
+// script.aculo.us dragdrop.js v1.6.4, Wed Sep 06 11:30:58 CEST 2006
 
 // Copyright (c) 2005 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
 //           (c) 2005 Sammi Williams (http://www.oriontransfer.co.nz, sammi@oriontransfer.co.nz)

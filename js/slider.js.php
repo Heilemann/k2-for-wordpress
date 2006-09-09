@@ -19,9 +19,8 @@
 	header('Content-Type: text/javascript; charset: UTF-8');
 ?>
 
-// script.aculo.us slider.js v1.6.3, Tue Sep 05 12:16:13 CEST 2006
+// script.aculo.us slider.js v1.6.4, Wed Sep 06 11:30:58 CEST 2006
 // See http://script.aculo.us for more info
-
 
 if(!Control) var Control = {};
 Control.Slider = Class.create();
