@@ -66,7 +66,7 @@
 						<h3><?php _e('Tag Cloud','k2_domain'); ?></h3>
 						<p><?php printf(__('The following is a list of the tags used at %s, colored and \'weighed\' in relation to their relative usage.','k2_domain'), get_bloginfo('name')); ?></p>
 
-						<?php UTW_ShowWeightedTagSetAlphabetical("coloredsizedtagcloud"); } ?>
+						<?php UTW_ShowWeightedTagSetAlphabetical("coloredsizedtagcloud"); ?>
 
 						<?php } ?>
 
