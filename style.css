@@ -898,17 +898,17 @@ input[type=text], textarea {
 	Brian's Latest Comments
 	http://meidell.dk/archives/2004/09/12/brians-latest-comments/
 */
-ul#blcCommentList li span a, ul#blcCommentList li small a {
+.sb-comments-blc ul li span a, .sb-comments-blc ul li small a {
 	color: #999;
 	font-weight: normal;
 	word-spacing: -1px;
 	}
 
-ul#blcCommentList li {
+.sb-comments-blc ul li {
 	margin-bottom: 6px;
 }
 
-ul#blcCommentList li > a[title="Go to the comments of this entry"] {
+.sb-comments-blc ul li > a[title="Go to the comments of this entry"] {
 	position: absolute;
 	right:0;
 	color: #999;
