@@ -95,9 +95,8 @@
 
 	<?php /* Brian's Latest Comments */ if ((function_exists('blc_latest_comments')) and is_home()) { ?> 
 	<div class="sb-comments sb-comments-blc">
-		<h2><?php _e('Comments','k2_domain'); ?></h2>
-		
-		<a href="<?php bloginfo('comments_rss2_url'); ?>" title="<?php _e('RSS Feed for all Comments','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a>
+		<h2><?php _e('Comments','k2_domain'); ?></h2>	
+		<span class="metalink"><a href="<?php bloginfo('comments_rss2_url'); ?>" title="<?php _e('RSS Feed for all Comments','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
 		<ul>
 			<?php blc_latest_comments('5','3','false'); ?>
 		</ul>
