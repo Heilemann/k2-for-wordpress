@@ -13,7 +13,7 @@ foreach($_POST as $k=>$v) {
 	$_POST[$k] = urldecode($v);
 }
 
-$comment_post_ID = (int) $_POST['comment_post_ID'];
+$post->ID = $comment_post_ID = (int) $_POST['comment_post_ID'];
 
 $post_status = $wpdb->get_var("SELECT comment_status FROM $wpdb->posts WHERE ID = '$comment_post_ID'");
 
