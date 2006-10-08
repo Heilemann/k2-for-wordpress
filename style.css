@@ -507,7 +507,7 @@ li.bypostauthor {
 
 li.bypostauthor blockquote {
 	color: #333;
-	background: #eee url('images/quote.png') no-repeat 10px 0;              
+	background: url('images/quote.png') no-repeat 10px 0;              
 	}
 	 
 #pinglist {
@@ -708,7 +708,7 @@ blockquote {
 	margin: 20px 0;
 	padding: 0 20px 0 50px;
 	color: #333;
-	background: #fff url('images/quote.png') no-repeat 10px 0;
+	background: url('images/quote.png') no-repeat 10px 0;
 	border: none;
 	}
 
