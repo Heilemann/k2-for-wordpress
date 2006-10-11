@@ -599,6 +599,7 @@ msgid "HTML module"
 msgstr ""
 
 #: modules/latest_posts.php:25
+#: modules/recent_comments.php:66
 msgid "Number of posts:"
 msgstr ""
 
@@ -663,10 +664,6 @@ msgstr ""
 
 #: modules/recent_comments.php:41
 msgid "No comments"
-msgstr ""
-
-#: modules/recent_comments.php:66
-msgid "Number of posts:"
 msgstr ""
 
 #: modules/recent_comments.php:70
@@ -1257,4 +1254,3 @@ msgstr ""
 #: options/display/sbm-ajax/edit-module-posts-form.php:21
 msgid "No posts"
 msgstr ""
-
