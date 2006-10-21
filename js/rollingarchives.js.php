@@ -1,8 +1,6 @@
 <?php
-	require(dirname(__FILE__)."/../../../../wp-blog-header.php");
-
 	// check to see if the user has enabled gzip compression in the WordPress admin panel
-	if ( !get_settings('gzipcompression') and !ini_get('zlib.output_compression') and ini_get('output_handler') != 'ob_gzhandler' and ini_get('output_handler') != 'mb_output_handler' ) {
+	if ( ob_get_length() === FALSE and !ini_get('zlib.output_compression') and ini_get('output_handler') != 'ob_gzhandler' and ini_get('output_handler') != 'mb_output_handler' ) {
 		ob_start('ob_gzhandler');
 	}
 
@@ -22,7 +20,7 @@
 RollingArchives = Class.create();
 
 RollingArchives.prototype = {
-	initialize: function(targetitem, url, query, pagecount, prefix) {
+	initialize: function(targetitem, url, query, pagecount, prefix, pagetext) {
 		var rolling = this;
 
 		this.targetitem = targetitem;
@@ -30,6 +28,7 @@ RollingArchives.prototype = {
 		this.query = query;
 		this.pagecount = pagecount;
 		this.pagenumber = 1;
+		this.pagetext = pagetext;
 
 		this.rollnext = prefix+'rollnext';
 		this.rollprev = prefix+'rollprevious';
@@ -71,11 +70,10 @@ RollingArchives.prototype = {
 	},
 
 	updatePageText: function(v) {
-		var pagetext = '<?php _e('Page %1$d of %2$d',k2_domain); ?>';
-		pagetext = pagetext.replace('%1$d', v);
-		pagetext = pagetext.replace('%2$d', this.pagecount);
+		//pagetext = pagetext.replace('%1$d', v);
+		//pagetext = pagetext.replace('%2$d', this.pagecount);
 		
-		$(this.rollpages).innerHTML = pagetext;
+		$(this.rollpages).innerHTML = (this.pagetext.replace('%1$d', v)).replace('%2$d', this.pagecount);
 	},
 
 	gotoNextPage: function() {
