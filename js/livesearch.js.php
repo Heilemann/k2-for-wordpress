@@ -1,8 +1,6 @@
 <?php
-	require(dirname(__FILE__)."/../../../../wp-blog-header.php");
-
 	// check to see if the user has enabled gzip compression in the WordPress admin panel
-	if ( !get_settings('gzipcompression') and !ini_get('zlib.output_compression') and ini_get('output_handler') != 'ob_gzhandler' and ini_get('output_handler') != 'mb_output_handler' ) {
+	if ( ob_get_length() === FALSE and !ini_get('zlib.output_compression') and ini_get('output_handler') != 'ob_gzhandler' and ini_get('output_handler') != 'mb_output_handler' ) {
 		ob_start('ob_gzhandler');
 	}
 
@@ -22,7 +20,9 @@
 Livesearch = Class.create();
 
 Livesearch.prototype = {
-	initialize: function(father, attachitem, target, hideitem, url, pars, searchform, loaditem, searchtext, resetbutton) {
+	initialize: function(father, attachitem, target, hideitem, url, pars, searchform, loaditem, searchtext, resetbutton, buttonvalue) {
+		var search = this;
+
 		this.father = father;
 		this.attachitem = attachitem;
 		this.target = target;
@@ -33,10 +33,10 @@ Livesearch.prototype = {
 		this.loaditem = loaditem;
 		this.searchtext = searchtext;
 		this.resetbutton = resetbutton;
+		this.buttonvalue = buttonvalue;
 		this.t = null;  // Init timeout variable
 
-		var buttonvalue = '<?php _e('go','k2_domain'); ?>';
-		$(father).innerHTML = '<input type="text" id="s" name="s" class="livesearch" autocomplete="off" value="'+searchtext+'" /><span id="searchreset"></span><span id="searchload"></span><input type="submit" id="searchsubmit" value="'+buttonvalue+'" />';
+		$(father).innerHTML = '<input type="text" id="s" name="s" class="livesearch" autocomplete="off" value="'+this.searchtext+'" /><span id="searchreset"></span><span id="searchload"></span><input type="submit" id="searchsubmit" value="'+this.buttonvalue+'" />';
 
 		// Style the searchform for livesearch
 		var inputs = $(searchform).getElementsByTagName('input');
@@ -49,11 +49,17 @@ Livesearch.prototype = {
 		Effect.Fade(this.resetbutton, { duration: .1, to: 0.3 });
 		$(this.loaditem).style.display = 'none';
 
-		Event.observe(attachitem, 'focus', function() { if ($(attachitem).value == searchtext) $(attachitem).setAttribute('value', '') });
-		Event.observe(attachitem, 'blur', function() { if ($(attachitem).value == '') $(attachitem).setAttribute('value', searchtext) });
+		Event.observe(search.attachitem, 'focus', function() {
+			if ($(search.attachitem).value == search.searchtext)
+				$(search.attachitem).setAttribute('value', '');
+			});
+		Event.observe(search.attachitem, 'blur', function() {
+			if ($(search.attachitem).value == '')
+				$(search.attachitem).setAttribute('value', search.searchtext);
+			});
 
 		// Bind the keys to the input
-		Event.observe(attachitem, 'keyup', this.readyLivesearch.bindAsEventListener(this));
+		Event.observe(this.attachitem, 'keyup', this.readyLivesearch.bindAsEventListener(this));
 	},
 
 	readyLivesearch: function(event) {
@@ -99,10 +105,8 @@ Livesearch.prototype = {
 		$(this.hideitem).style.display = 'block';
 		Effect.Fade(this.resetbutton, { duration: .1, to: 0.3 });
 
-		$(this.attachitem).value = '';
+		$(this.attachitem).value = this.searchtext;
 		$(this.target).innerHTML = '';
 		$(this.resetbutton).style.cursor = 'default';
 	}
 }
-
-new FastInit( function() { new Livesearch('searchform', 's', 'dynamic-content', 'current-content', <?php k2info('js_url'); ?> + '/rollingarchive.php', '&s=', 'searchform', 'searchload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'searchreset'); } );
