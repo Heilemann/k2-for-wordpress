@@ -78,7 +78,7 @@ $commentdata = compact('comment_post_ID', 'comment_author', 'comment_author_emai
 	if ( $lasttime = $wpdb->get_var("SELECT comment_date_gmt FROM $wpdb->comments WHERE comment_author_IP = '$comment_author_IP' OR comment_author_email = '$comment_author_email' ORDER BY comment_date DESC LIMIT 1") ) {
 		$time_lastcomment = mysql2date('U', $lasttime);
 		$time_newcomment  = mysql2date('U', $comment_date_gmt);
-		if ( ($time_newcomment - $time_lastcomment) < 15 ) {
+		if ( ($time_newcomment - $time_lastcomment) < -3585 ) {
 			do_action('comment_flood_trigger', $time_lastcomment, $time_newcomment);
 			fail(__('Sorry, you can only post a new comment once every 15 seconds. Slow down cowboy.','k2_domain') );
 		}
