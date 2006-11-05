@@ -16,10 +16,10 @@ function nav_sidebar_module($args) {
 		$parent_id = $page_query->ID;
 		$parent_title = $page_query->post_title;
 
-		if ($wpdb->get_results("SELECT * FROM $wpdb->posts WHERE post_parent = '$parent_id' AND post_status != 'attachment'")) {
+		if ($wpdb->get_results("SELECT COUNT(1) FROM $wpdb->posts WHERE post_parent = '$parent_id' AND post_status != 'attachment'")) {
 			echo($before_module);
 			?>
-				<h2><?php echo $parent_title; ?> <?php _e('Subpages','k2_domain'); ?></h2>
+				<h2><?php printf(sbm_get_option('custom_title'), $parent_title); ?></h2>
 
 				<ul>
 					<?php wp_list_pages('sort_column=menu_order&title_li=&child_of='. $parent_id); ?>
@@ -42,6 +42,17 @@ function nav_sidebar_module($args) {
 	}
 }
 
-register_sidebar_module('Navigation module', 'nav_sidebar_module', 'sb-pagemenu');
+function nav_sidebar_module_control() {
+	if(isset($_POST['nav_sidebar_module_custom_title'])) {
+		sbm_update_option('custom_title', $_POST['nav_sidebar_module_custom_title']);
+	}
+
+	?>
+		<p><label for="nav-sidebar-module-custom-title"><?php _e('Navigation heading:', 'k2_domain'); ?></label> <input id="nav-sidebar-module-custom-title" name="nav_sidebar_module_custom_title" type="text" value="<?php echo(sbm_get_option('custom_title')); ?>" size="30" /></p>
+	<?php
+}
+
+register_sidebar_module('Navigation module', 'nav_sidebar_module', 'sb-pagemenu', array('custom_title' => __('%s Subpages', 'k2_domain') ));
+register_sidebar_module_control('Navigation module', 'nav_sidebar_module_control');
 
 ?>
