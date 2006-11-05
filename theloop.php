@@ -122,7 +122,7 @@
 				<?php if (is_archive() or is_search() or (function_exists('is_tag') and is_tag())) {
 					the_excerpt();
 				} else {
-					the_content(__('Continue reading','k2_domain') . " '" . the_title('', '', false) . "'");
+					the_content(sprintf(__("Continue reading '%s'", 'k2_domain'), the_title('', '', false)));
 				} ?>
 
 				<?php link_pages('<p><strong>'.__('Pages:','k2_domain').'</strong> ', '</p>', 'number'); ?>
