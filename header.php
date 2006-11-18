@@ -20,9 +20,15 @@
 	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 	<?php } ?>
 
+	<?php if ( ((get_option('k2livecommenting') == 1) and ((is_page() or is_single()) and (!isset($_GET['jal_edit_comments'])) and ('open' == $post-> comment_status) or ('comment' == $post-> comment_type) )) or (get_option('k2livesearch') == 1) or (get_option('k2rollingarchives') == 1) ) { ?>
 	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/prototype.js.php"></script>
 	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/effects.js.php"></script>
+	<?php } ?>
+
+	<?php if ( (get_option('k2livesearch') == 1 and get_option('k2rollingarchives') == 1 ) or (get_option('k2rollingarchives') == 1) ) { ?>	
 	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/slider.js.php"></script>
+	<?php } ?>
+	
 	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/k2functions.js.php"></script>
 
 	<?php /* Live Commenting */ if ((get_option('k2livecommenting') == 1) and ((is_page() or is_single()) and (!isset($_GET['jal_edit_comments'])) and ('open' == $post-> comment_status) or ('comment' == $post-> comment_type) )) { ?>
