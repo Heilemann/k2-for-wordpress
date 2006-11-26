@@ -35,7 +35,7 @@
 				printf(__('Archive for %s','k2_domain'), get_the_time(__('Y','k2_domain')));
 
 			} elseif (is_search()) {
-				printf(__('Search Results for \'%s\'','k2_domain'), $s);
+				printf(__('Search Results for \'%s\'','k2_domain'), htmlspecialchars($s, ENT_QUOTES));
 
 			} elseif (function_exists('is_tag') and is_tag()) {
 				printf(__('Tag Archive for \'%s\'','k2_domain'), get_query_var('tag') );
