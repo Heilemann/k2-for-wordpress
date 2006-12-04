@@ -27,11 +27,15 @@
 			<a href="#" id="<?php echo $prefix; ?>rollnext"><?php _e('Newer','k2_domain'); ?> <span>&raquo;</span></a>
 		</div>
 
+		<div id="trimmer"></div>
+
+
 		<div id="<?php echo $prefix; ?>rollnotices"></div>
 	</div>
 	<script type="text/javascript">
 	// <![CDATA[
 		var <?php echo $prefix; ?>rolling = new RollingArchives("<?php echo $prefix; ?>primarycontent", <?php k2info('js_url'); ?> + '/theloop.php', "<?php echo $wp_query->query; ?>", <?php echo $k2pagecount; ?>, "<?php echo $prefix; ?>", "<?php _e('Page %1$d of %2$d',k2_domain); ?>");
+		var MyTrimmer = new TextTrimmer();
 	// ]]>
 	</script>
 

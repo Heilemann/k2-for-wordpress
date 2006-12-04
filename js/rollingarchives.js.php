@@ -51,6 +51,7 @@ RollingArchives.prototype = {
 			range: $R(rolling.pagecount, 1),
 			values: sliderValues,
 			sliderValue: 1,
+			alignX: -10,
 			onSlide: function(v) { rolling.updatePageText(v); },
 			onChange: function(v) { rolling.gotoPage(v); },
 			handleImage: rolling.pagehandle
@@ -117,24 +118,29 @@ RollingArchives.prototype = {
 				{
 					method: 'get',
 					parameters: this.query,
-					onSuccess: this.rollSuccess.bind(this),
+					onComplete: this.rollComplete.bind(this),
 					onFailure: this.rollError.bind(this)
 				}
 			);
+
 		}
 	},
 
-	rollRemoveLoad: function() {
-		new Effect.Fade(this.rollload, {duration: .1});
-	},
+	rollComplete: function() {
+		// Spool Texttrimmer
+		MyTrimmer.chunks = false;
+		MyTrimmer.doTrim(MyTrimmer.curValue);
 
-	rollSuccess: function() {
 		this.rollRemoveLoad();
 
 		// Support for Lightbox
 		if (window.initLightbox) {
 			initLightbox();
 		}
+	},
+	
+	rollRemoveLoad: function() {
+		new Effect.Fade(this.rollload, {duration: .1});
 	},
 
 	rollError: function() {

@@ -1,3 +1,5 @@
+/* @override http://localhost/wp-content/themes/kaytwo/css/rollingarchives.css */
+
 #rollingarchives,
 #nested_rollingarchives {
 	position: relative;
@@ -82,7 +84,7 @@
 #rollnotices a,
 #nested_rollnotices a {
 	color: #227EE9;
-}
+	}
 
 #rollnotices img,
 #nested_rollnotices img {
@@ -95,23 +97,30 @@
 	}
 
 #pagetrack,
-#nested_pagetrack {
+#nested_pagetrack,
+#trimmertrack,
+#nested_trimmertrack {
 	margin: 0 auto;
-	width: 218px;
-	height: 18px;
+	width: 220px;
+	height: 16px;
 	background: url('../images/sliderbgleft.png') no-repeat center left;
-}
+	}
 
 #pagetrackend,
-#nested_pagetrackend {
-	height: 18px;
+#nested_pagetrackend,
+#trimmertrackend,
+#nested_trimmertrackend {
+	height: 16px;
 	background: url('../images/sliderbgright.png') no-repeat center right;
 	}
 
 #pagehandle,
-#nested_pagehandle {
+#nested_pagehandle,
+#trimmerhandle,
+#nested_trimmerhandle {
 	width: 18px;
 	height: 18px;
 	background: url('../images/sliderhandle.png') no-repeat center center;
 	cursor: e-resize;
-}
+	margin-left: -5px;
+	}

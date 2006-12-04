@@ -27,6 +27,7 @@
 
 	<?php if ( (get_option('k2livesearch') == 1 and get_option('k2rollingarchives') == 1 ) or (get_option('k2rollingarchives') == 1) ) { ?>	
 	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/slider.js.php"></script>
+	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/trimmer.js.php"></script>
 	<?php } ?>
 	
 	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/k2functions.js.php"></script>
@@ -39,9 +40,7 @@
 	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/livesearch.js.php"></script>
 	<script type="text/javascript">
 	//<![CDATA[
-		new FastInit( function() {
-			new Livesearch('searchform', 's', 'dynamic-content', 'current-content', <?php k2info('js_url'); ?> + '/rollingarchive.php', '&s=', 'searchform', 'searchload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'searchreset', '<?php _e('go','k2_domain'); ?>');
-		} );
+		new FastInit( function() { new Livesearch('searchform', 's', 'dynamic-content', 'current-content', <?php k2info('js_url'); ?> + '/rollingarchive.php', '&s=', 'searchform', 'searchload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'searchreset', '<?php _e('go','k2_domain'); ?>'); } );
 	//]]>
 	</script>
 	<?php } ?>
@@ -53,7 +52,7 @@
 
 	<?php /* Hide Author Elements */ if (!is_user_logged_in() and (is_page() or is_single()) and ($comment_author = $_COOKIE['comment_author_'.COOKIEHASH]) and ('open' == $post-> comment_status) or ('comment' == $post-> comment_type) ) { ?>
 	<script type="text/javascript">
-		new FastInit(OnLoadUtils);
+		new FastInit( OnLoadUtils );
 	</script>
 	<?php } ?>
 
