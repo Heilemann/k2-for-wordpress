@@ -20,7 +20,7 @@
 RollingArchives = Class.create();
 
 RollingArchives.prototype = {
-	initialize: function(targetitem, url, query, pagecount, prefix, pagetext) {
+	initialize: function(targetitem, url, query, pagecount, prefix, pagetext, slideralign) {
 		var rolling = this;
 
 		this.targetitem = targetitem;
@@ -29,6 +29,7 @@ RollingArchives.prototype = {
 		this.pagecount = pagecount;
 		this.pagenumber = 1;
 		this.pagetext = pagetext;
+		this.slideralign = slideralign;
 
 		this.rollnext = prefix+'rollnext';
 		this.rollprev = prefix+'rollprevious';
@@ -51,7 +52,7 @@ RollingArchives.prototype = {
 			range: $R(rolling.pagecount, 1),
 			values: sliderValues,
 			sliderValue: 1,
-			alignX: -10,
+			alignX: rolling.slideralign,
 			onSlide: function(v) { rolling.updatePageText(v); },
 			onChange: function(v) { rolling.gotoPage(v); },
 			handleImage: rolling.pagehandle
@@ -128,8 +129,14 @@ RollingArchives.prototype = {
 
 	rollComplete: function() {
 		// Spool Texttrimmer
-		MyTrimmer.chunks = false;
-		MyTrimmer.doTrim(MyTrimmer.curValue);
+		if (this.pagenumber == 1) {
+			$(MyTrimmer.sliderID).style.display = 'none';
+		} else {
+			$(MyTrimmer.sliderID).style.display = 'block';
+
+			MyTrimmer.chunks = false;
+			MyTrimmer.doTrim(MyTrimmer.curValue);
+		}
 
 		this.rollRemoveLoad();
 

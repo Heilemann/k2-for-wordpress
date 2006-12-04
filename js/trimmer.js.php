@@ -22,16 +22,16 @@
 TextTrimmer = Class.create();
 
 TextTrimmer.prototype = {
-    initialize: function() {
+    initialize: function(sliderID, chunkClass, minValue, maxValue) {
 		var trimming = this;
-		this.chunkClass	= 'entry-content';
-		this.minValue = 0;
-		this.maxValue = 100;
-		this.curValue = 100;
+		this.sliderID = sliderID;
+		this.chunkClass	= chunkClass;
+		this.minValue = minValue;
+		this.maxValue = maxValue;
+		this.curValue = maxValue;
 		this.chunks = false;
-		this.test = 0;
 
-		$('trimmer').innerHTML = '<div id="trimmertrack"><div id="trimmertrackend"><div id="trimmerhandle"></div></div></div>';
+		$(sliderID).innerHTML = '<div id="trimmertrack"><div id="trimmertrackend"><div id="trimmerhandle"></div></div></div>';
 
 		this.TrimSlider = new Control.Slider("trimmerhandle", "trimmertrack", {
 			range: $R(trimming.minValue, trimming.maxValue),
@@ -39,7 +39,9 @@ TextTrimmer.prototype = {
 			alignX: -10,
 			onSlide: function(v) { trimming.curValue = v; trimming.doTrim(v); }
 		});
-    },
+
+		$(sliderID).style.display = 'none';
+   	},
 
     loadChunks: function() {
 		var everything = document.getElementsByClassName(this.chunkClass);

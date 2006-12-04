@@ -100,7 +100,7 @@
 #nested_pagetrack,
 #trimmertrack,
 #nested_trimmertrack {
-	margin: 0 auto;
+	margin: -2px auto 0;
 	width: 220px;
 	height: 16px;
 	background: url('../images/sliderbgleft.png') no-repeat center left;
