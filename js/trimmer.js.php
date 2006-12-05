@@ -17,7 +17,7 @@
 	header('Content-Type: text/javascript; charset: UTF-8');
 ?>
 
-//Based on Drew McLellan's code: http://24ways.org/2006/tasty-text-trimmer
+// Based on Drew McLellan's code: http://24ways.org/2006/tasty-text-trimmer
 
 TextTrimmer = Class.create();
 
@@ -30,26 +30,26 @@ TextTrimmer.prototype = {
 		this.maxValue = maxValue;
 		this.curValue = maxValue;
 		this.chunks = false;
+		this.zebra = false;
 
 		$(sliderID).innerHTML = '<div id="trimmertrack"><div id="trimmertrackend"><div id="trimmerhandle"></div></div></div>';
 
 		this.TrimSlider = new Control.Slider("trimmerhandle", "trimmertrack", {
 			range: $R(trimming.minValue, trimming.maxValue),
 			sliderValue: trimming.curValue,
-			alignX: -10,
 			onSlide: function(v) { trimming.curValue = v; trimming.doTrim(v); }
 		});
 
 		$(sliderID).style.display = 'none';
+		$('texttrimmer').style.display = 'none';
    	},
 
     loadChunks: function() {
 		var everything = document.getElementsByClassName(this.chunkClass);
 
-		var i, l;
 		this.chunks = [];
 
-		for (i=0, l=everything.length; i<l; i++) {
+		for (i=0; i<everything.length; i++) {
 			this.chunks.push({
 				ref: everything[i],
 				original: everything[i].innerHTML
@@ -60,9 +60,7 @@ TextTrimmer.prototype = {
     doTrim: function(interval) {
 		if (!this.chunks) this.loadChunks();
 		
-		var i, l;
-		
-		for (i=0, l=this.chunks.length; i<l; i++){
+		for (i=0; i<this.chunks.length; i++){
 
 			if (interval == this.maxValue){
 				this.chunks[i].ref.innerHTML = this.chunks[i].original;
@@ -74,5 +72,29 @@ TextTrimmer.prototype = {
 				this.chunks[i].ref.innerHTML = a.join(' ') + '&hellip;';
 			}
 		}
+
+		if (this.zebra == true) this.doZebra();
+	},
+	
+	doZebra: function() {
+		var alts = document.getElementsByTagName('body');
+		
+		for (i = 0; i < alts.length; i++)
+			Element.addClassName(alts[i], " trimmed");
+
+		this.zebra = true;
+	},
+	
+	undoZebra: function() {
+		var alts = document.getElementsByTagName('body');
+
+		for (i = 0; i < alts.length; i++)
+			Element.removeClassName(alts[i], 'trimmed');
+
+		this.zebra = false;
 	}
+	
+
 }
+
+function KillClass(obj,cName) { return obj && (obj.className=obj.className.replace(new RegExp("^"+cName+"\\b\\s*|\\s*\\b"+cName+"\\b",'g'),'')); }

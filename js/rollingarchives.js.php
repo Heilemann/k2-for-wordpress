@@ -20,7 +20,7 @@
 RollingArchives = Class.create();
 
 RollingArchives.prototype = {
-	initialize: function(targetitem, url, query, pagecount, prefix, pagetext, slideralign) {
+	initialize: function(targetitem, url, query, pagecount, prefix, pagetext) {
 		var rolling = this;
 
 		this.targetitem = targetitem;
@@ -29,7 +29,6 @@ RollingArchives.prototype = {
 		this.pagecount = pagecount;
 		this.pagenumber = 1;
 		this.pagetext = pagetext;
-		this.slideralign = slideralign;
 
 		this.rollnext = prefix+'rollnext';
 		this.rollprev = prefix+'rollprevious';
@@ -52,7 +51,6 @@ RollingArchives.prototype = {
 			range: $R(rolling.pagecount, 1),
 			values: sliderValues,
 			sliderValue: 1,
-			alignX: rolling.slideralign,
 			onSlide: function(v) { rolling.updatePageText(v); },
 			onChange: function(v) { rolling.gotoPage(v); },
 			handleImage: rolling.pagehandle
@@ -72,9 +70,6 @@ RollingArchives.prototype = {
 	},
 
 	updatePageText: function(v) {
-		//pagetext = pagetext.replace('%1$d', v);
-		//pagetext = pagetext.replace('%2$d', this.pagecount);
-		
 		$(this.rollpages).innerHTML = (this.pagetext.replace('%1$d', v)).replace('%2$d', this.pagecount);
 	},
 
@@ -130,9 +125,9 @@ RollingArchives.prototype = {
 	rollComplete: function() {
 		// Spool Texttrimmer
 		if (this.pagenumber == 1) {
-			$(MyTrimmer.sliderID).style.display = 'none';
+			$('texttrimmer').style.display = 'none';
 		} else {
-			$(MyTrimmer.sliderID).style.display = 'block';
+			$('texttrimmer').style.display = 'block';
 
 			MyTrimmer.chunks = false;
 			MyTrimmer.doTrim(MyTrimmer.curValue);

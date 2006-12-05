@@ -7,6 +7,14 @@
 	margin: 0 0 10px;
 	}
 
+body.trimmed .hentry {
+	background: #eee;
+	}
+
+body.trimmed .hentry.alt {
+	background: transparent;
+	}
+	
 #rollingarchives a,
 #nested_rollingarchives a {
 	color: #888;
@@ -25,7 +33,7 @@
 #rollprevious, #rollnext, #rollpages, #rollload,
 #nested_rollprevious, #nested_rollnext, #nested_rollpages, #nested_rollload {
 	position: absolute;
-	width: 90px;
+	width: 50px;
 	padding: 7px 5px;
 	top: 3px;
 	text-align: center;
@@ -39,16 +47,19 @@
 
 #rollload,
 #nested_rollload {
-	right: 40px;
+	right: 45px;
 	padding-left: 24px;
 	background: url('../images/spinner.gif') no-repeat left center;
+	background-color: white !important;
+	z-index: 10;
 	width: 50px;
 	text-align: left;
 	}
 
 #rollpages,
 #nested_rollpages {
-	left: 50px;
+	width: 90px;
+	left: 40px;
 	color: #777;
 	}
 
@@ -100,10 +111,10 @@
 #nested_pagetrack,
 #trimmertrack,
 #nested_trimmertrack {
-	margin: -2px auto 0;
-	width: 220px;
+	margin: -1px auto 0;
+	width: 230px;
 	height: 16px;
-	background: url('../images/sliderbgleft.png') no-repeat center left;
+	background: url('../images/sliderbgleft.png') no-repeat 5px center;
 	}
 
 #pagetrackend,
@@ -111,7 +122,7 @@
 #trimmertrackend,
 #nested_trimmertrackend {
 	height: 16px;
-	background: url('../images/sliderbgright.png') no-repeat center right;
+	background: url('../images/sliderbgright.png') no-repeat right center;
 	}
 
 #pagehandle,
@@ -120,7 +131,17 @@
 #nested_trimmerhandle {
 	width: 18px;
 	height: 18px;
+	margin-left: 2px;
 	background: url('../images/sliderhandle.png') no-repeat center center;
-	cursor: e-resize;
-	margin-left: -5px;
+	cursor: col-resize;
+	}
+	
+#texttrimmer,
+#nested_texttrimmer {
+	text-align: center;
+	width: 70px;
+	position: absolute;
+	top: 3px;
+	right: 60px;
+	padding: 7px 0;
 	}
