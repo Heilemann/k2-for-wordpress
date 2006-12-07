@@ -17,7 +17,8 @@
 	header('Content-Type: text/javascript; charset: UTF-8');
 ?>
 
-// Based on Drew McLellan's code: http://24ways.org/2006/tasty-text-trimmer
+/*	Thank you Drew McLellan for starting us off
+	with http://24ways.org/2006/tasty-text-trimmer	*/
 
 TextTrimmer = Class.create();
 
@@ -30,8 +31,8 @@ TextTrimmer.prototype = {
 		this.maxValue = maxValue;
 		this.curValue = maxValue;
 		this.chunks = false;
-		this.zebra = false;
 
+		/* Init Slider */
 		$(sliderID).innerHTML = '<div id="trimmertrack"><div id="trimmertrackend"><div id="trimmerhandle"></div></div></div>';
 
 		this.TrimSlider = new Control.Slider("trimmerhandle", "trimmertrack", {
@@ -40,7 +41,13 @@ TextTrimmer.prototype = {
 			onSlide: function(v) { trimming.curValue = v; trimming.doTrim(v); }
 		});
 
-		$(sliderID).style.display = 'none';
+		/* Add functionality to trimmer links */
+		Event.observe($('trimmerLess'), 'click', function(){ this.doTrim(curValue - 10) });
+		Event.observe($('trimmerMore'), 'click', function(){ this.doTrim(curValue + 10) });
+		Event.observe($('trimmerExcerpts'), 'click', function(){ this.doTrim(40, self, 'trimmerHeadlines') });
+		Event.observe($('trimmerHeadlines'), 'click', function(){ this.doTrim(0, self, 'trimmerFulllength') });
+		Event.observe($('trimmerFulllength'), 'click', function(){ this.doTrim(100, self, 'trimmerExcerpts') });
+
 		$('texttrimmer').style.display = 'none';
    	},
 
@@ -57,44 +64,39 @@ TextTrimmer.prototype = {
 		}
 	},
 
-    doTrim: function(interval) {
+    doTrim: function(interval, hide, show) {
 		if (!this.chunks) this.loadChunks();
-		
-		for (i=0; i<this.chunks.length; i++){
 
+/*		if (hide != '') $(hide).style.display = 'none';
+		if (show != '') $(show).style.display = 'block';
+*/
+		/* Spit it out! */
+		for (i=0; i<this.chunks.length; i++){
 			if (interval == this.maxValue){
 				this.chunks[i].ref.innerHTML = this.chunks[i].original;
 			} else if (interval == this.minValue) {
-				this.chunks[i].ref.innerHTML	= '';
+				this.chunks[i].ref.innerHTML = '';
 			} else {
-				var a = this.chunks[i].original.split(' ');
-				a = a.slice(0, interval);
-				this.chunks[i].ref.innerHTML = a.join(' ') + '&hellip;';
+				var a = this.chunks[i].original.stripTags();
+				a = a.truncate(interval * 4, ' [...]');
+				this.chunks[i].ref.innerHTML = '<p>' + a + '</p>';;
 			}
 		}
 
-		if (this.zebra == true) this.doZebra();
-	},
-	
-	doZebra: function() {
+		/* Update Slider */
+		if (this.TrimSlider.value != interval) this.TrimSlider.setValue(interval);
+
+		/* Add 'trimmed' class to <BODY> */
 		var alts = document.getElementsByTagName('body');
 		
-		for (i = 0; i < alts.length; i++)
-			Element.addClassName(alts[i], " trimmed");
+		for (i = 0; i < alts.length; i++) {
+			if (this.curValue != this.maxValue) {
+				Element.addClassName(alts[i], "trimmed");
+			} else {
+				Element.removeClassName(alts[i], 'trimmed');
+			}
+		}
 
-		this.zebra = true;
 	},
-	
-	undoZebra: function() {
-		var alts = document.getElementsByTagName('body');
-
-		for (i = 0; i < alts.length; i++)
-			Element.removeClassName(alts[i], 'trimmed');
-
-		this.zebra = false;
-	}
-	
-
 }
 
-function KillClass(obj,cName) { return obj && (obj.className=obj.className.replace(new RegExp("^"+cName+"\\b\\s*|\\s*\\b"+cName+"\\b",'g'),'')); }

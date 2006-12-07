@@ -135,6 +135,30 @@ body.trimmed .hentry.alt {
 	background: url('../images/sliderhandle.png') no-repeat center center;
 	cursor: col-resize;
 	}
+
+#trimmertrack,
+#nested_trimmertrack {
+	margin: -2px auto 0;
+	width: 50px;
+	height: 16px;
+	background: url('../images/sliderbgleft.png') no-repeat 5px center;
+	}
+
+#trimmertrackend,
+#nested_trimmertrackend {
+	height: 16px;
+	background: url('../images/sliderbgright.png') no-repeat right center;
+	}
+
+#trimmerhandle,
+#nested_trimmerhandle {
+	width: 18px;
+	height: 18px;
+	margin-left: 2px;
+	background: url('../images/sliderhandle.png') no-repeat center center;
+	cursor: col-resize;
+	}
+
 	
 #texttrimmer,
 #nested_texttrimmer {
@@ -144,4 +168,8 @@ body.trimmed .hentry.alt {
 	top: 3px;
 	right: 60px;
 	padding: 7px 0;
+	}
+	
+#trimmershortcuts {
+	display: none;
 	}

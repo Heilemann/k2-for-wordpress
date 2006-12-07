@@ -14,7 +14,7 @@
 
 		if ($k2pagecount > 1) {
 ?>
-	<div id="<?php echo $prefix; ?>rollingarchives">
+	<a name="archives"></a><div id="<?php echo $prefix; ?>rollingarchives">
 		<div id="<?php echo $prefix; ?>rollnavigation">
 			<a href="#" id="<?php echo $prefix; ?>rollprevious"><span>&laquo;</span> <?php _e('Older','k2_domain'); ?></a>
 			<a href="#" id="<?php echo $prefix; ?>rollhome"><img src="<?php bloginfo('template_directory'); ?>/images/house.png" alt="Home" /></a>
@@ -29,9 +29,13 @@
 			<div id="<?php echo $prefix; ?>texttrimmer">
 				<div id="trimmer"></div>
 
-				<a href="javascript:MyTrimmer.doTrim(40); MyTrimmer.curValue = 40; $('trimmerExcerpts').style.display = 'none'; $('trimmerHeadlines').style.display = 'block';" id="trimmerExcerpts"><?php _e('Excerpts','k2_domain'); ?></a>
-				<a href="javascript:MyTrimmer.doTrim(0); MyTrimmer.curValue = 0; MyTrimmer.doZebra(); $('trimmerHeadlines').style.display = 'none'; $('trimmerFulllength').style.display = 'block';" id="trimmerHeadlines" style="display: none;"><?php _e('Headlines','k2_domain'); ?></a>
-				<a href="javascript:MyTrimmer.doTrim(100); MyTrimmer.curValue = 100; MyTrimmer.undoZebra(); $('trimmerFulllength').style.display = 'none'; new Effect.BlindDown('trimmerExcerpts').style.display = 'block';" id="trimmerFulllength" style="display: none;"><?php _e('Full Length','k2_domain'); ?></a>
+				<div id="trimmershortcuts">
+					<a href="#" id="trimmerMore"><?php _e("More","k2_domain"); ?></a>
+					<a href="#" id="trimmerLess"><?php _e("Less","k2_domain"); ?></a>
+					<a href="#" id="trimmerExcerpts"><?php _e("Excerpts","k2_domain"); ?></a>
+					<a href="#" id="trimmerHeadlines"><?php _e("Headlines","k2_domain"); ?></a>
+					<a href="#" id="trimmerFulllength"><?php _e("Full Length","k2_domain"); ?></a>
+				</div>
 			</div>
 		</div>
 
