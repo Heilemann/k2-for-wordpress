@@ -56,8 +56,8 @@ RollingArchives.prototype = {
 			handleImage: rolling.pagehandle
 		});
 
-		Event.observe(this.rollprev, 'click', function(){ location.hash = 'rollingarchives'; rolling.gotoPrevPage(); });
-		Event.observe(this.rollnext, 'click', function(){ rolling.gotoNextPage(); });
+		Event.observe(this.rollprev, 'click', function() { rolling.gotoPrevPage(); });
+		Event.observe(this.rollnext, 'click', function() { rolling.gotoNextPage(); });
 		$(this.rollprev).onclick = function() { return false; };
 		$(this.rollnext).onclick = function() { return false; };
 
@@ -108,25 +108,20 @@ RollingArchives.prototype = {
 			this.updatePageText(this.pagenumber);
 			this.processQuery();
 
-			new Ajax.Updater(
-				this.targetitem,
-				this.url,
-				{
+			new Ajax.Updater(this.targetitem, this.url, {
 					method: 'get',
 					parameters: this.query,
 					onComplete: this.rollComplete.bind(this),
 					onFailure: this.rollError.bind(this)
-				}
-			);
-
+			});
 		}
 	},
 
 	rollComplete: function() {
-		// Spool Texttrimmer
-		if (this.pagenumber == 1) {
+		console.log('Complete');
+		/* Spool Texttrimmer */
+		if (this.pagenumber <= 1) {
 			$('texttrimmer').style.display = 'none';
-			MyTrimmer.undoZebra();
 		} else {
 			$('texttrimmer').style.display = 'block';
 
@@ -136,7 +131,7 @@ RollingArchives.prototype = {
 
 		this.rollRemoveLoad();
 
-		// Support for Lightbox
+		/* Support for Lightbox */
 		if (window.initLightbox) {
 			initLightbox();
 		}

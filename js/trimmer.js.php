@@ -37,21 +37,23 @@ TextTrimmer.prototype = {
 
 		this.TrimSlider = new Control.Slider("trimmerhandle", "trimmertrack", {
 			range: $R(trimming.minValue, trimming.maxValue),
-			sliderValue: trimming.curValue,
-			onSlide: function(v) { trimming.curValue = v; trimming.doTrim(v); }
+			onSlide: function(v) { trimming.curValue = v; trimming.doTrim(v); },
+			onChange: function(v) { trimming.curValue = v; trimming.doTrim(v); }
 		});
 
 		/* Add functionality to trimmer links */
-		Event.observe($('trimmerLess'), 'click', function(){ this.doTrim(curValue - 10) });
-		Event.observe($('trimmerMore'), 'click', function(){ this.doTrim(curValue + 10) });
-		Event.observe($('trimmerExcerpts'), 'click', function(){ this.doTrim(40, self, 'trimmerHeadlines') });
-		Event.observe($('trimmerHeadlines'), 'click', function(){ this.doTrim(0, self, 'trimmerFulllength') });
-		Event.observe($('trimmerFulllength'), 'click', function(){ this.doTrim(100, self, 'trimmerExcerpts') });
+		Event.observe($('trimmerLess'), 'click', function() { MyTrimmer.doTrim(curValue - 10) });
+		Event.observe($('trimmerMore'), 'click', function() { MyTrimmer.doTrim(curValue + 10) });
+		Event.observe($('trimmerExcerpts'), 'click', function() { MyTrimmer.doTrim(40); $('trimmerExcerpts').style.display = 'none'; $('trimmerHeadlines').style.display = 'block'; });
+		Event.observe($('trimmerHeadlines'), 'click', function() { MyTrimmer.doTrim(0); $('trimmerHeadlines').style.display = 'none'; $('trimmerFulllength').style.display = 'block'; });
+		Event.observe($('trimmerFulllength'), 'click', function() { MyTrimmer.doTrim(100); $('trimmerFulllength').style.display = 'none'; $('trimmerExcerpts').style.display = 'block'; });
 
+		/* Hide trimmer until it is summoned by the almighty RA */
 		$('texttrimmer').style.display = 'none';
    	},
 
     loadChunks: function() {
+		/* Slice n' dice the text for trimming */
 		var everything = document.getElementsByClassName(this.chunkClass);
 
 		this.chunks = [];
@@ -64,13 +66,10 @@ TextTrimmer.prototype = {
 		}
 	},
 
-    doTrim: function(interval, hide, show) {
+    doTrim: function(interval) {
 		if (!this.chunks) this.loadChunks();
 
-/*		if (hide != '') $(hide).style.display = 'none';
-		if (show != '') $(show).style.display = 'block';
-*/
-		/* Spit it out! */
+		/* Spit out the trimmed text */
 		for (i=0; i<this.chunks.length; i++){
 			if (interval == this.maxValue){
 				this.chunks[i].ref.innerHTML = this.chunks[i].original;
@@ -78,25 +77,23 @@ TextTrimmer.prototype = {
 				this.chunks[i].ref.innerHTML = '';
 			} else {
 				var a = this.chunks[i].original.stripTags();
-				a = a.truncate(interval * 4, ' [...]');
+				a = a.truncate(interval * 4, '&nbsp;[...]');
 				this.chunks[i].ref.innerHTML = '<p>' + a + '</p>';;
 			}
 		}
 
-		/* Update Slider */
-		if (this.TrimSlider.value != interval) this.TrimSlider.setValue(interval);
-
-		/* Add 'trimmed' class to <BODY> */
-		var alts = document.getElementsByTagName('body');
-		
-		for (i = 0; i < alts.length; i++) {
-			if (this.curValue != this.maxValue) {
-				Element.addClassName(alts[i], "trimmed");
-			} else {
-				Element.removeClassName(alts[i], 'trimmed');
-			}
+		/* Make sure slider is sync'd */
+		if (this.TrimSlider.value != interval) {
+			this.TrimSlider.setValue(interval);
+			this.curValue = interval;
 		}
 
+		/* Add 'trimmed' class to <BODY> while active */
+		if (this.curValue != this.maxValue) {
+			document.body.addClassName("trimmed");
+		} else {
+			document.body.removeClassName("trimmed");
+		}
 	},
 }
 
