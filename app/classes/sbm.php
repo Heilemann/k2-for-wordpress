@@ -35,9 +35,11 @@ class K2SBM {
 			$found = false;
 
 			// Check to see if the stub plugin is already there
-			for($i = 0; !$found && $i < count($plugins); $i++) {
+			for($i = 0; $i < count($plugins); $i++) {
 				if($plugins[$i] == $sbm_stub_path) {
 					$found = true;
+				} elseif(strpos($plugins[$i], 'sbm-stub.php') !== false) {
+					unset($plugins[$i]);
 				}
 			}
 
@@ -55,17 +57,15 @@ class K2SBM {
 		delete_option('k2sbm_modules_next_id');
 
 		// Remove the SBM stub
-		$sbm_stub_path = '../themes/' . get_option('template') . '/app/includes/sbm-stub.php';
 		$plugins = (array)get_option('active_plugins');
-		$found = false;
 
-		for($i = 0; !$found && $i < count($plugins); $i++) {
-			if($plugins[$i] == $sbm_stub_path) {
+		for($i = 0; $i < count($plugins); $i++) {
+			if(strpos($plugins[$i], 'sbm-stub.php') !== false) {
 				unset($plugins[$i]);
-				update_option('active_plugins', $plugins);
-				$found = true;
 			}
 		}
+
+		update_option('active_plugins', $plugins);
 	}
 
 	function wp_bootstrap() {
