@@ -118,7 +118,6 @@ RollingArchives.prototype = {
 	},
 
 	rollComplete: function() {
-		console.log('Complete');
 		/* Spool Texttrimmer */
 		if (this.pagenumber <= 1) {
 			$('texttrimmer').style.display = 'none';

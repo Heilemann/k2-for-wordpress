@@ -11,6 +11,9 @@
   
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
 	<link rel="stylesheet" type="text/css" media="print" href="<?php bloginfo('template_url'); ?>/css/print.css" />
+	<?php /* Custom Style */ if (get_option('k2scheme') != '') { ?>
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php k2info('scheme'); ?>" />
+	<?php } ?>
 
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="<?php bloginfo('rss2_url'); ?>" />
 	<link rel="alternate" type="text/xml" title="RSS .92" href="<?php bloginfo('rss_url'); ?>" />
@@ -58,10 +61,6 @@
 
 	<?php wp_get_archives('type=monthly&format=link'); ?>
 
-	<?php /* Custom Style */ if (get_option('k2scheme') != '') { ?>
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php k2info('scheme'); ?>" />
-	<?php } ?>
-
 	<?php wp_head(); ?>	
 </head>
 
@@ -75,9 +74,7 @@
 		<p class="description"><?php bloginfo('description'); ?></p>
 
 		<ul class="menu">
-			<?php /* If custom blog tab text exists use it, otherwise disable the tab */ $k2customtab = get_option('k2blogornoblog'); if ((is_home() and $k2customtab != '') or (is_archive() and $k2customtab != '') or (is_single() and $k2customtab != '') or (is_paged() and $k2customtab != '') or (is_page() and $k2customtab != '') or (is_search() and $k2customtab != '') or (function_exists('is_tag') and is_tag() and $k2customtab != '')) { ?>
-			<li class="<?php if ( is_home() or is_archive() or is_single() or is_paged() or is_search() or (function_exists('is_tag') and is_tag()) ) { ?>current_page_item<?php } else { ?>page_item<?php } ?>"><a href="<?php echo get_settings('home'); ?>/" title="<?php echo stripslashes($k2customtab); ?>"><?php echo stripslashes($k2customtab); ?></a></li>
-			<?php } ?>
+			<li class="<?php if ( is_home() or is_archive() or is_single() or is_paged() or is_search() or (function_exists('is_tag') and is_tag()) ) { ?>current_page_item<?php } else { ?>page_item<?php } ?>"><a href="<?php echo get_settings('home'); ?>/" title="<?php echo get_option('k2blogornoblog'); ?>"><?php echo get_option('k2blogornoblog'); ?></a></li>
 			<?php wp_list_pages('sort_column=menu_order&depth=1&title_li='); ?>
 			<?php wp_register('<li class="admintab">','</li>'); ?>
 		</ul>
