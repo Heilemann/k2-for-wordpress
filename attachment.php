@@ -18,7 +18,7 @@
 
 				<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
 					<div class="entry-head">
-						<h3 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(get_the_title()),1) ); ?>'><?php the_title(); ?></a></h3>
+						<h3 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php the_title(); ?></a></h3>
 
 						<small class="entry-meta">
 							<span class="chronodata">
