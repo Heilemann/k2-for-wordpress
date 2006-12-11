@@ -42,15 +42,24 @@ TextTrimmer.prototype = {
 		});
 
 		/* Add functionality to trimmer links */
-		Event.observe($('trimmerLess'), 'click', function() { MyTrimmer.doTrim(curValue - 10) });
-		Event.observe($('trimmerMore'), 'click', function() { MyTrimmer.doTrim(curValue + 10) });
-		Event.observe($('trimmerExcerpts'), 'click', function() { MyTrimmer.doTrim(40); $('trimmerExcerpts').style.display = 'none'; $('trimmerHeadlines').style.display = 'block'; });
-		Event.observe($('trimmerHeadlines'), 'click', function() { MyTrimmer.doTrim(0); $('trimmerHeadlines').style.display = 'none'; $('trimmerFulllength').style.display = 'block'; });
-		Event.observe($('trimmerFulllength'), 'click', function() { MyTrimmer.doTrim(100); $('trimmerFulllength').style.display = 'none'; $('trimmerExcerpts').style.display = 'block'; });
+		Event.observe($('trimmerLess'), 'click', function() { trimming.doTrim(curValue - 10) });
+		Event.observe($('trimmerMore'), 'click', function() { trimming.doTrim(curValue + 10) });
+		Event.observe($('trimmerExcerpts'), 'click', function() { trimming.doTrim(40); $('trimmerExcerpts').style.display = 'none'; $('trimmerHeadlines').style.display = 'block'; });
+		Event.observe($('trimmerHeadlines'), 'click', function() { trimming.doTrim(0); $('trimmerHeadlines').style.display = 'none'; $('trimmerFulllength').style.display = 'block'; });
+		Event.observe($('trimmerFulllength'), 'click', function() { trimming.doTrim(100); $('trimmerFulllength').style.display = 'none'; $('trimmerExcerpts').style.display = 'block'; });
 
 		/* Hide trimmer until it is summoned by the almighty RA */
-		$('texttrimmer').style.display = 'none';
+		this.hideSlider();
    	},
+
+	showSlider: function() {
+		$(this.sliderID).style.display = 'block';
+	},
+	
+	hideSlider: function() {
+		$(this.sliderID).style.display = 'none';
+	},
+
 
     loadChunks: function() {
 		/* Slice n' dice the text for trimming */
@@ -94,6 +103,5 @@ TextTrimmer.prototype = {
 		} else {
 			document.body.removeClassName("trimmed");
 		}
-	},
+	}
 }
-

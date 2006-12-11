@@ -30,6 +30,7 @@ RollingArchives.prototype = {
 		this.pagenumber = 1;
 		this.pagetext = pagetext;
 
+		this.prefix = prefix;
 		this.rollnext = prefix+'rollnext';
 		this.rollprev = prefix+'rollprevious';
 		this.rollpages = prefix+'rollpages';
@@ -40,6 +41,8 @@ RollingArchives.prototype = {
 		this.pagehandle = prefix+'pagehandle';
 		this.pagetrack = prefix+'pagetrack';
 		this.pagetrackend = prefix+'pagetrackend';
+
+		this.trimmer = new TextTrimmer(prefix+'trimmer', 'entry-content', 0, 100);
 
 		this.rollRemoveLoad();
 
@@ -120,12 +123,11 @@ RollingArchives.prototype = {
 	rollComplete: function() {
 		/* Spool Texttrimmer */
 		if (this.pagenumber <= 1) {
-			$('texttrimmer').style.display = 'none';
+			this.trimmer.hideSlider();
 		} else {
-			$('texttrimmer').style.display = 'block';
-
-			MyTrimmer.chunks = false;
-			MyTrimmer.doTrim(MyTrimmer.curValue);
+			this.trimmer.showSlider();
+			this.trimmer.chunks = false;
+			this.trimmer.doTrim(this.trimmer.curValue);
 		}
 
 		this.rollRemoveLoad();
@@ -156,4 +158,4 @@ RollingArchives.prototype = {
 			this.query += '&rolling=1';
 		}
 	}
-};
+}
