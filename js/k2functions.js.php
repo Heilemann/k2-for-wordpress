@@ -84,3 +84,60 @@ function deleteCookie(name, path, domain) {
     "; expires=Thu, 01-Jan-70 00:00:01 GMT";
   }
 }
+
+/*
+ * FastInit
+ * http://tetlaw.id.au/view/blog/prototype-class-fastinit/
+ * Andrew Tetlaw
+ * Version 1.2 (2006-10-19)
+ * Based on:
+ * http://dean.edwards.name/weblog/2006/03/faster
+ * http://dean.edwards.name/weblog/2006/06/again/
+ * 
+ */
+var FastInit = {
+	done : false,
+	onload : function() {
+		if (FastInit.done) return;
+		FastInit.done = true;
+		FastInit.actions.each(function(func) {
+			func();
+		})
+	},
+	actions : $A([]),
+	addOnLoad : function() {
+		for(var x = 0; x < arguments.length; x++) {
+			var func = arguments[x];
+			if(!func || typeof func != 'function') continue;
+			FastInit.actions.push(func);
+		}
+	}
+}
+
+if (/WebKit|khtml/i.test(navigator.userAgent)) {
+	var _timer = setInterval(function() {
+        if (/loaded|complete/.test(document.readyState)) {
+            clearInterval(_timer);
+            delete _timer;
+            FastInit.onload();
+        }
+	}, 10);
+}
+if (document.addEventListener) {
+	document.addEventListener('DOMContentLoaded', FastInit.onload, false);
+	FastInit.legacy = false;
+}
+
+Event.observe(window, 'load', FastInit.onload);
+
+
+/*@cc_on @*/
+/*@if (@_win32)
+document.write('<script id="__ie_onload" defer src="javascript:void(0)"><\/script>');
+var script = $('__ie_onload');
+script.onreadystatechange = function() {
+    if (this.readyState == 'complete') {
+        FastInit.onload();
+    }
+};
+/*@end @*/
