@@ -67,4 +67,4 @@ function initComment() {
 }
 
 //Event.observe(window, 'load', initComment, false);
-new FastInit(initComment);
+FastInit.addOnLoad(initComment);

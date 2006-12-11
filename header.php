@@ -43,7 +43,7 @@
 	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/livesearch.js.php"></script>
 	<script type="text/javascript">
 	//<![CDATA[
-		new FastInit( function() { new Livesearch('searchform', 's', 'dynamic-content', 'current-content', <?php k2info('js_url'); ?> + '/rollingarchive.php', '&s=', 'searchform', 'searchload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'searchreset', '<?php _e('go','k2_domain'); ?>'); } );
+		FastInit.addOnLoad( function() { new Livesearch('searchform', 's', 'dynamic-content', 'current-content', <?php k2info('js_url'); ?> + '/rollingarchive.php', '&s=', 'searchform', 'searchload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'searchreset', '<?php _e('go','k2_domain'); ?>'); } );
 	//]]>
 	</script>
 	<?php } ?>
@@ -55,7 +55,7 @@
 
 	<?php /* Hide Author Elements */ if (!is_user_logged_in() and (is_page() or is_single()) and ($comment_author = $_COOKIE['comment_author_'.COOKIEHASH]) and ('open' == $post-> comment_status) or ('comment' == $post-> comment_type) ) { ?>
 	<script type="text/javascript">
-		new FastInit( OnLoadUtils );
+		FastInit.addOnLoad( OnLoadUtils );
 	</script>
 	<?php } ?>
 
