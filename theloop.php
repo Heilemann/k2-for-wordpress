@@ -35,7 +35,7 @@
 				printf(__('Archive for %s','k2_domain'), get_the_time(__('Y','k2_domain')));
 
 			} elseif (is_search()) {
-				printf(__('Search Results for \'%s\'','k2_domain'), htmlspecialchars($s, ENT_QUOTES));
+				printf(__('Search Results for \'%s\'','k2_domain'), $s);
 
 			} elseif (function_exists('is_tag') and is_tag()) {
 				printf(__('Tag Archive for \'%s\'','k2_domain'), get_query_var('tag') );
@@ -119,11 +119,7 @@
 			</div> <!-- .entry-head -->
 
 			<div class="entry-content">
-				<?php if (is_archive() or is_search() or (function_exists('is_tag') and is_tag())) {
-					the_excerpt();
-				} else {
-					the_content(sprintf(__("Continue reading '%s'", 'k2_domain'), the_title('', '', false)));
-				} ?>
+				<?php the_content(sprintf(__("Continue reading '%s'", 'k2_domain'), the_title('', '', false))); ?>
 
 				<?php link_pages('<p><strong>'.__('Pages:','k2_domain').'</strong> ', '</p>', 'number'); ?>
 			</div> <!-- .entry-content -->

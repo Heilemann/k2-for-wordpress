@@ -23,33 +23,38 @@
 TextTrimmer = Class.create();
 
 TextTrimmer.prototype = {
-    initialize: function(sliderID, chunkClass, minValue, maxValue) {
+    initialize: function(trimmerContainer, sliderID, chunkClass, minValue, maxValue, prefix) {
+		if (prefix == '') console.log('Trimmer Init Detected');
+		if (prefix != '') console.log('Livesearch Trimmer Init');
+
 		var trimming = this;
-		this.sliderID = sliderID;
+		this.trimmerContainer = prefix+trimmerContainer;
+		this.sliderID = prefix+sliderID;
 		this.chunkClass	= chunkClass;
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 		this.curValue = maxValue;
+		this.prefix = prefix;
 		this.chunks = false;
 
-		/* Init Slider */
-		$(sliderID).innerHTML = '<div id="trimmertrack"><div id="trimmertrackend"><div id="trimmerhandle"></div></div></div>';
+		/* Initialize slider */
+		$(this.sliderID).innerHTML = '<div id="'+prefix+'trimmertrackwrap"><div id="'+prefix+'trimmertrack"><div id="'+prefix+'trimmerhandle"></div></div></div>';
 
-		this.TrimSlider = new Control.Slider("trimmerhandle", "trimmertrack", {
+		this.TrimSlider = new Control.Slider(prefix+"trimmerhandle", prefix+"trimmertrack", {
 			range: $R(trimming.minValue, trimming.maxValue),
-			onSlide: function(v) { trimming.curValue = v; trimming.doTrim(v); },
-			onChange: function(v) { trimming.curValue = v; trimming.doTrim(v); }
+			onSlide: function(value) { trimming.doTrim(value); },
+			onChange: function(value) { trimming.doTrim(value); },
 		});
 
 		/* Add functionality to trimmer links */
-		Event.observe($('trimmerLess'), 'click', function() { trimming.doTrim(curValue - 10) });
-		Event.observe($('trimmerMore'), 'click', function() { trimming.doTrim(curValue + 10) });
-		Event.observe($('trimmerExcerpts'), 'click', function() { trimming.doTrim(40); $('trimmerExcerpts').style.display = 'none'; $('trimmerHeadlines').style.display = 'block'; });
-		Event.observe($('trimmerHeadlines'), 'click', function() { trimming.doTrim(0); $('trimmerHeadlines').style.display = 'none'; $('trimmerFulllength').style.display = 'block'; });
-		Event.observe($('trimmerFulllength'), 'click', function() { trimming.doTrim(100); $('trimmerFulllength').style.display = 'none'; $('trimmerExcerpts').style.display = 'block'; });
+		Event.observe($(prefix+'trimmerLess'), 'click', function() { MyTrimmer.TrimSlider.setValue(MyTrimmer.curValue - 10); return false; });
+		Event.observe($(prefix+'trimmerMore'), 'click', function() { MyTrimmer.TrimSlider.setValue(MyTrimmer.curValue + 10); return false; });
+		Event.observe($(prefix+'trimmerExcerpts'), 'click', function() { MyTrimmer.TrimSlider.setValue(40); $(prefix+'trimmerExcerpts').style.display = 'none'; $(prefix+'trimmerHeadlines').style.display = 'block'; return false; });
+		Event.observe($(prefix+'trimmerHeadlines'), 'click', function() { MyTrimmer.TrimSlider.setValue(0); $(prefix+'trimmerHeadlines').style.display = 'none'; $(prefix+'trimmerFulllength').style.display = 'block'; return false; });
+		Event.observe($(prefix+'trimmerFulllength'), 'click', function() { MyTrimmer.TrimSlider.setValue(100); $(prefix+'trimmerFulllength').style.display = 'none'; $(prefix+'trimmerExcerpts').style.display = 'block'; return false; });
 
-		/* Hide trimmer until it is summoned by the almighty RA */
-		this.hideSlider();
+		if (prefix == '')
+			$(this.trimmerContainer).style.display = 'none';
    	},
 
 	showSlider: function() {
@@ -62,8 +67,13 @@ TextTrimmer.prototype = {
 
 
     loadChunks: function() {
-		/* Slice n' dice the text for trimming */
-		var everything = document.getElementsByClassName(this.chunkClass);
+		if (this.prefix != '') {
+			/* Livesearch chunks */
+			var everything = $('dynamic-content').getElementsByClassName(this.chunkClass);
+		} else {
+			/* Normal chunks */
+			var everything = $('current-content').getElementsByClassName(this.chunkClass);
+		}
 
 		this.chunks = [];
 
@@ -76,25 +86,23 @@ TextTrimmer.prototype = {
 	},
 
     doTrim: function(interval) {
-		if (!this.chunks) this.loadChunks();
-
 		/* Spit out the trimmed text */
-		for (i=0; i<this.chunks.length; i++){
-			if (interval == this.maxValue){
+		if (!this.chunks)
+			this.loadChunks();
+
+		/* var interval = parseInt(interval); */
+		this.curValue = interval;
+
+		for (i=0; i<this.chunks.length; i++) {
+			if (interval == this.maxValue) {
 				this.chunks[i].ref.innerHTML = this.chunks[i].original;
 			} else if (interval == this.minValue) {
 				this.chunks[i].ref.innerHTML = '';
 			} else {
 				var a = this.chunks[i].original.stripTags();
-				a = a.truncate(interval * 4, '&nbsp;[...]');
-				this.chunks[i].ref.innerHTML = '<p>' + a + '</p>';;
+				a = a.truncate(interval * 5, '');
+				this.chunks[i].ref.innerHTML = '<p>' + a + '&nbsp;[...]</p>';
 			}
-		}
-
-		/* Make sure slider is sync'd */
-		if (this.TrimSlider.value != interval) {
-			this.TrimSlider.setValue(interval);
-			this.curValue = interval;
 		}
 
 		/* Add 'trimmed' class to <BODY> while active */

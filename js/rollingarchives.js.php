@@ -23,12 +23,13 @@ RollingArchives.prototype = {
 	initialize: function(targetitem, url, query, pagecount, prefix, pagetext) {
 		var rolling = this;
 
-		this.targetitem = targetitem;
+		this.targetitem = prefix+targetitem;
 		this.url = url;
 		this.query = query;
 		this.pagecount = pagecount;
 		this.pagenumber = 1;
 		this.pagetext = pagetext;
+		this.prefix = prefix;
 
 		this.prefix = prefix;
 		this.rollnext = prefix+'rollnext';
@@ -47,9 +48,8 @@ RollingArchives.prototype = {
 		this.rollRemoveLoad();
 
 		var sliderValues = new Array(this.pagecount);
-		for (var i = 0; i < this.pagecount; i++) {
-			sliderValues[i] = i + 1;
-		}
+		for (var i = 0; i < this.pagecount; i++) sliderValues[i] = i + 1;
+		
 		this.PageSlider = new Control.Slider(rolling.pagehandle,rolling.pagetrack, {
 			range: $R(rolling.pagecount, 1),
 			values: sliderValues,
@@ -58,6 +58,8 @@ RollingArchives.prototype = {
 			onChange: function(v) { rolling.gotoPage(v); },
 			handleImage: rolling.pagehandle
 		});
+
+		$(this.pagetrack+'wrap').style.display = 'none';
 
 		Event.observe(this.rollprev, 'click', function() { rolling.gotoPrevPage(); });
 		Event.observe(this.rollnext, 'click', function() { rolling.gotoNextPage(); });
@@ -94,7 +96,7 @@ RollingArchives.prototype = {
 				$(this.rollhome).className = null;
 
 				this.pagenumber = this.pagecount;
-			} else if (newpage <= 1) {
+			} else if (newpage == 1) {
 				$(this.rollprev).className = null;
 				$(this.rollnext).className = 'inactive';
 				$(this.rollhome).className = 'inactive';
@@ -112,30 +114,45 @@ RollingArchives.prototype = {
 			this.processQuery();
 
 			new Ajax.Updater(this.targetitem, this.url, {
-					method: 'get',
-					parameters: this.query,
-					onComplete: this.rollComplete.bind(this),
-					onFailure: this.rollError.bind(this)
+				method: 'get',
+				parameters: this.query,
+				onComplete: this.rollComplete.bind(this),
+				onFailure: function() {this.rollComplete.bind(this); this.rollError.bind(this)}
 			});
 		}
 	},
 
 	rollComplete: function() {
-		/* Spool Texttrimmer */
-		if (this.pagenumber <= 1) {
-			this.trimmer.hideSlider();
-		} else {
-			this.trimmer.showSlider();
-			this.trimmer.chunks = false;
-			this.trimmer.doTrim(this.trimmer.curValue);
-		}
-
 		this.rollRemoveLoad();
 
-		/* Support for Lightbox */
-		if (window.initLightbox) {
-			initLightbox();
+		/* Spool Texttrimmer */
+		if (this.pagenumber == 1) {
+			new Effect.Fade(this.pagetrack+'wrap', {duration: .3});
+			if (this.prefix == '') {
+				new Effect.Fade(MyTrimmer.trimmerContainer, {duration: .3});
+				MyTrimmer.TrimSlider.setValue(MyTrimmer.maxValue);
+			} else {
+				new Effect.Fade($('nested_trimmerContainer'), {duration: .3});
+				nested_MyTrimmer.TrimSlider.setValue(nested_MyTrimmer.maxValue);
+			}
+		} else {
+			new Effect.Appear(this.pagetrack+'wrap', {duration: .3});
+
+			if (this.prefix == '') {
+				new Effect.Appear(MyTrimmer.trimmerContainer, {duration: .3});
+				MyTrimmer.chunks = false;
+				MyTrimmer.TrimSlider.setValue(MyTrimmer.curValue);
+			} else {
+				/* Refuses to catch the container. FUCK */
+				new Effect.Appear(nested_MyTrimmer.trimmerContainer, {duration: .3});
+				nested_MyTrimmer.chunks = false;
+				nested_MyTrimmer.TrimSlider.setValue(nested_MyTrimmer.curValue);
+			}
 		}
+
+		/* Support for Lightbox */
+		if (window.initLightbox)
+			initLightbox();
 	},
 	
 	rollRemoveLoad: function() {
@@ -144,7 +161,7 @@ RollingArchives.prototype = {
 
 	rollError: function() {
 		$(this.rollnotices).style.display = 'block';
-		$(this.rollnotices).innerHTML = 'An error has occurred. Danger, Will Robinson! Danger!';
+		$(this.rollnotices).innerHTML = 'Some kind of error has occurred! Danger, Will Robinson! Danger!';
 	},
 
 	processQuery: function() {
@@ -154,8 +171,7 @@ RollingArchives.prototype = {
 			this.query += "&paged=" + this.pagenumber;
 		}
 
-		if (this.query.indexOf('&rolling=') == -1) {
+		if (this.query.indexOf('&rolling=') == -1)
 			this.query += '&rolling=1';
-		}
 	}
 }

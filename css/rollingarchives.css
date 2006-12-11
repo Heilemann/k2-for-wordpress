@@ -107,20 +107,16 @@ body.trimmed .hentry.alt {
 	background: url('../images/reset-fff.gif') no-repeat center center;
 	}
 
-#pagetrack,
-#nested_pagetrack,
-#trimmertrack,
-#nested_trimmertrack {
+#pagetrackwrap,
+#nested_pagetrackwrap {
 	margin: -1px auto 0;
 	width: 230px;
 	height: 16px;
 	background: url('../images/sliderbgleft.png') no-repeat 5px center;
 	}
 
-#pagetrackend,
-#nested_pagetrackend,
-#trimmertrackend,
-#nested_trimmertrackend {
+#pagetrack,
+#nested_pagetrack {
 	height: 16px;
 	background: url('../images/sliderbgright.png') no-repeat right center;
 	}
@@ -136,16 +132,22 @@ body.trimmed .hentry.alt {
 	cursor: col-resize;
 	}
 
-#trimmertrack,
-#nested_trimmertrack {
-	margin: -2px auto 0;
-	width: 50px;
+#trimmer {
+	position: absolute;
+	top: 10px;
+	right: 60px;
+	width: 60px;
 	height: 16px;
+	}
+
+#trimmertrackwrap,
+#nested_trimmertrackwrap {
+	margin: -2px auto 0;
 	background: url('../images/sliderbgleft.png') no-repeat 5px center;
 	}
 
-#trimmertrackend,
-#nested_trimmertrackend {
+#trimmertrack,
+#nested_trimmertrack {
 	height: 16px;
 	background: url('../images/sliderbgright.png') no-repeat right center;
 	}
@@ -158,18 +160,12 @@ body.trimmed .hentry.alt {
 	background: url('../images/sliderhandle.png') no-repeat center center;
 	cursor: col-resize;
 	}
-
 	
-#texttrimmer,
-#nested_texttrimmer {
-	text-align: center;
-	width: 70px;
-	position: absolute;
-	top: 3px;
-	right: 60px;
-	padding: 7px 0;
+#trimmerMore, #nested_trimmerMore,
+#trimmerLess, #nested_trimmerLess {
+	display: none;
 	}
 	
-#trimmershortcuts {
+#trimmerShortcuts, #nested_trimmerShortcuts {
 	display: none;
 	}

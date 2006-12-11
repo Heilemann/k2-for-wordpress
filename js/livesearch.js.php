@@ -34,6 +34,7 @@ Livesearch.prototype = {
 		this.searchtext = searchtext;
 		this.resetbutton = resetbutton;
 		this.buttonvalue = buttonvalue;
+		this.searchstring = '';
 		this.t = null;  // Init timeout variable
 
 		$(father).innerHTML = '<input type="text" id="s" name="s" class="livesearch" autocomplete="off" value="'+this.searchtext+'" /><span id="searchreset"></span><span id="searchload"></span><input type="submit" id="searchsubmit" value="'+this.buttonvalue+'" />';
@@ -42,21 +43,22 @@ Livesearch.prototype = {
 		var inputs = $(searchform).getElementsByTagName('input');
 		for (var i = 0; i < inputs.length; i++) {
 			var input = inputs.item(i);
-			if (input.type == 'submit')
+			if (input.type == 'submit') 
 				input.style.display = "none";
 		}
 
-		Effect.Fade(this.resetbutton, { duration: .1, to: 0.3 });
+		Effect.Fade(this.resetbutton, { duration: 0, to: 0.3 });
 		$(this.loaditem).style.display = 'none';
 
 		Event.observe(search.attachitem, 'focus', function() {
 			if ($(search.attachitem).value == search.searchtext)
 				$(search.attachitem).setAttribute('value', '');
-			});
+		});
+
 		Event.observe(search.attachitem, 'blur', function() {
 			if ($(search.attachitem).value == '')
 				$(search.attachitem).setAttribute('value', search.searchtext);
-			});
+		});
 
 		// Bind the keys to the input
 		Event.observe(this.attachitem, 'keyup', this.readyLivesearch.bindAsEventListener(this));
@@ -66,14 +68,16 @@ Livesearch.prototype = {
 		var code = event.keyCode;
 		if (code == Event.KEY_ESC || ((code == Event.KEY_DELETE || code == Event.KEY_BACKSPACE) && $F(this.attachitem) == '')) {
 			this.resetLivesearch.bind(this);
-		} else if (code != Event.KEY_LEFT && code != Event.KEY_RIGHT && code != Event.KEY_DOWN && code != Event.KEY_UP && code != Event.KEY_RETURN) {
-			if (this.t) { clearTimeout(this.t) };
+		} else if (code != Event.KEY_RETURN) {
+			if (this.t) clearTimeout(this.t);
 	        this.t = setTimeout(this.doLivesearch.bind(this), 400);
 		}
 	},
 
     doLivesearch: function() {
-		Effect.Fade(this.resetbutton, { duration: .1, to: 0 });
+		if ($F(this.attachitem) == this.searchstring) return;
+
+		Effect.Fade(this.resetbutton, { duration: .1});
 		Effect.Appear(this.loaditem, {duration: .1});
 
 		new Ajax.Updater(
@@ -83,15 +87,23 @@ Livesearch.prototype = {
 				method: 'get',
 				evalScripts: true,
 				parameters: this.pars + encodeURIComponent($F(this.attachitem)) + '&rolling=1',
-				onSuccess: this.searchComplete.bind(this)
+				onComplete: this.searchComplete.bind(this)
 		});
+
+		this.searchstring = $F(this.attachitem);
 	},
 	
 	searchComplete: function() {
 		$(this.hideitem).style.display = 'none';
 		Effect.Fade(this.loaditem, {duration: .1});
 		Effect.Appear(this.resetbutton, { duration: .1 });
-
+		
+		/* Spool Texttrimmer */
+		if (MyTrimmer.chunks != false)
+			MyTrimmer.loadChunks(this.target);
+		/*TAKE INTO ACCOUNT NESTEDNESS*/
+		Effect.Appear(MyTrimmer.trimmerContainer, { duration: .3 });
+		
 		Event.observe(this.resetbutton, 'click', this.resetLivesearch.bindAsEventListener(this));
 		$(this.resetbutton).style.cursor = 'pointer';
 
@@ -102,11 +114,11 @@ Livesearch.prototype = {
 	},
 
 	resetLivesearch: function() {
+		$(this.target).innerHTML = '';
 		$(this.hideitem).style.display = 'block';
-		Effect.Fade(this.resetbutton, { duration: .1, to: 0.3 });
 
 		$(this.attachitem).value = this.searchtext;
-		$(this.target).innerHTML = '';
+		Effect.Fade(this.resetbutton, { duration: .1, to: 0.3 });
 		$(this.resetbutton).style.cursor = 'default';
 	}
 }
