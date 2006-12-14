@@ -17,8 +17,12 @@
 	header('Content-Type: text/javascript; charset: UTF-8');
 ?>
 
-// script.aculo.us slider.js v1.6.4, Wed Sep 06 11:30:58 CEST 2006
-// See http://script.aculo.us for more info
+// script.aculo.us slider.js v1.6.5, Wed Nov 08 14:17:49 CET 2006
+
+// Copyright (c) 2005, 2006 Marty Haught, Thomas Fuchs 
+//
+// script.aculo.us is freely distributable under the terms of an MIT-style license.
+// For details, see the script.aculo.us web site: http://script.aculo.us/
 
 if(!Control) var Control = {};
 Control.Slider = Class.create();
@@ -238,14 +242,16 @@ Control.Slider.prototype = {
           // find the handle (prevents issues with Safari)
           while((this.handles.indexOf(handle) == -1) && handle.parentNode) 
             handle = handle.parentNode;
-        
-          this.activeHandle    = handle;
-          this.activeHandleIdx = this.handles.indexOf(this.activeHandle);
-          this.updateStyles();
-        
-          var offsets  = Position.cumulativeOffset(this.activeHandle);
-          this.offsetX = (pointer[0] - offsets[0]);
-          this.offsetY = (pointer[1] - offsets[1]);
+            
+          if(this.handles.indexOf(handle)!=-1) {
+            this.activeHandle    = handle;
+            this.activeHandleIdx = this.handles.indexOf(this.activeHandle);
+            this.updateStyles();
+            
+            var offsets  = Position.cumulativeOffset(this.activeHandle);
+            this.offsetX = (pointer[0] - offsets[0]);
+            this.offsetY = (pointer[1] - offsets[1]);
+          }
         }
       }
       Event.stop(event);
