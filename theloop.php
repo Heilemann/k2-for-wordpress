@@ -4,12 +4,15 @@
 
 	// Get core WP functions when loaded dynamically
 	if (isset($_GET['rolling'])) {
-		require (dirname(__FILE__).'/../../../wp-blog-header.php');
-?>
+		require (dirname(__FILE__).'/../../../wp-blog-header.php'); ?>
 
 <div id="dynamictype" class="<?php k2_body_class(); ?>">
 
 <?php }
+
+	if (is_search()) {
+		
+	}
 
 	// Get the asides category
 	$k2asidescategory = get_option('k2asidescategory');
@@ -35,7 +38,7 @@
 				printf(__('Archive for %s','k2_domain'), get_the_time(__('Y','k2_domain')));
 
 			} elseif (is_search()) {
-				printf(__('Search Results for \'%s\'','k2_domain'), $s);
+				printf(__('Search Results for \'%s\'','k2_domain'), htmlspecialchars(stripslashes(stripslashes($s))));
 
 			} elseif (function_exists('is_tag') and is_tag()) {
 				printf(__('Tag Archive for \'%s\'','k2_domain'), get_query_var('tag') );

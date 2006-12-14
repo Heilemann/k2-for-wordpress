@@ -21,7 +21,7 @@ Livesearch = Class.create();
 
 Livesearch.prototype = {
 	initialize: function(father, attachitem, target, hideitem, url, pars, searchform, loaditem, searchtext, resetbutton, buttonvalue) {
-		var search = this;
+		var thisSearch = this;
 
 		this.father = father;
 		this.attachitem = attachitem;
@@ -50,14 +50,14 @@ Livesearch.prototype = {
 		Effect.Fade(this.resetbutton, { duration: 0, to: 0.3 });
 		$(this.loaditem).style.display = 'none';
 
-		Event.observe(search.attachitem, 'focus', function() {
-			if ($(search.attachitem).value == search.searchtext)
-				$(search.attachitem).setAttribute('value', '');
+		Event.observe(thisSearch.attachitem, 'focus', function() {
+			if ($(thisSearch.attachitem).value == thisSearch.searchtext)
+				$(thisSearch.attachitem).setAttribute('value', '');
 		});
 
-		Event.observe(search.attachitem, 'blur', function() {
-			if ($(search.attachitem).value == '')
-				$(search.attachitem).setAttribute('value', search.searchtext);
+		Event.observe(thisSearch.attachitem, 'blur', function() {
+			if ($(thisSearch.attachitem).value == '')
+				$(thisSearch.attachitem).setAttribute('value', thisSearch.searchtext);
 		});
 
 		// Bind the keys to the input
@@ -97,12 +97,6 @@ Livesearch.prototype = {
 		$(this.hideitem).style.display = 'none';
 		Effect.Fade(this.loaditem, {duration: .1});
 		Effect.Appear(this.resetbutton, { duration: .1 });
-		
-		/* Spool Texttrimmer */
-		if (MyTrimmer.chunks != false)
-			MyTrimmer.loadChunks(this.target);
-		/*TAKE INTO ACCOUNT NESTEDNESS*/
-		Effect.Appear(MyTrimmer.trimmerContainer, { duration: .3 });
 		
 		Event.observe(this.resetbutton, 'click', this.resetLivesearch.bindAsEventListener(this));
 		$(this.resetbutton).style.cursor = 'pointer';

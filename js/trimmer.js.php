@@ -27,7 +27,7 @@ TextTrimmer.prototype = {
 		if (prefix == '') console.log('Trimmer Init Detected');
 		if (prefix != '') console.log('Livesearch Trimmer Init');
 
-		var trimming = this;
+		var thisTrimmer = this;
 		this.trimmerContainer = prefix+trimmerContainer;
 		this.sliderID = prefix+sliderID;
 		this.chunkClass	= chunkClass;
@@ -41,20 +41,42 @@ TextTrimmer.prototype = {
 		$(this.sliderID).innerHTML = '<div id="'+prefix+'trimmertrackwrap"><div id="'+prefix+'trimmertrack"><div id="'+prefix+'trimmerhandle"></div></div></div>';
 
 		this.TrimSlider = new Control.Slider(prefix+"trimmerhandle", prefix+"trimmertrack", {
-			range: $R(trimming.minValue, trimming.maxValue),
-			onSlide: function(value) { trimming.doTrim(value); },
-			onChange: function(value) { trimming.doTrim(value); },
+			range: $R(thisTrimmer.minValue, thisTrimmer.maxValue),
+			sliderValue: thisTrimmer.maxValue,
+			onSlide: function(value) { thisTrimmer.doTrim(value); },
+			onChange: function(value) { thisTrimmer.doTrim(value); },
 		});
 
 		/* Add functionality to trimmer links */
-		Event.observe($(prefix+'trimmerLess'), 'click', function() { MyTrimmer.TrimSlider.setValue(MyTrimmer.curValue - 10); return false; });
-		Event.observe($(prefix+'trimmerMore'), 'click', function() { MyTrimmer.TrimSlider.setValue(MyTrimmer.curValue + 10); return false; });
-		Event.observe($(prefix+'trimmerExcerpts'), 'click', function() { MyTrimmer.TrimSlider.setValue(40); $(prefix+'trimmerExcerpts').style.display = 'none'; $(prefix+'trimmerHeadlines').style.display = 'block'; return false; });
-		Event.observe($(prefix+'trimmerHeadlines'), 'click', function() { MyTrimmer.TrimSlider.setValue(0); $(prefix+'trimmerHeadlines').style.display = 'none'; $(prefix+'trimmerFulllength').style.display = 'block'; return false; });
-		Event.observe($(prefix+'trimmerFulllength'), 'click', function() { MyTrimmer.TrimSlider.setValue(100); $(prefix+'trimmerFulllength').style.display = 'none'; $(prefix+'trimmerExcerpts').style.display = 'block'; return false; });
+		Event.observe($(prefix+'trimmerLess'), 'click', function() {
+			thisTrimmer.TrimSlider.setValue(thisTrimmer.curValue - 10);
+			return false;
+		});
+		Event.observe($(prefix+'trimmerMore'), 'click', function() {
+			thisTrimmer.TrimSlider.setValue(thisTrimmer.curValue + 10);
+			return false;
+		});
+		Event.observe($(prefix+'trimmerExcerpts'), 'click', function() {
+			thisTrimmer.TrimSlider.setValue(40);
+			$(prefix+'trimmerExcerpts').style.display = 'none';
+			$(prefix+'trimmerHeadlines').style.display = 'block';
+			return false;
+		});
+		Event.observe($(prefix+'trimmerHeadlines'), 'click', function() {
+			thisTrimmer.TrimSlider.setValue(0);
+			$(prefix+'trimmerHeadlines').style.display = 'none';
+			$(prefix+'trimmerFulllength').style.display = 'block';
+			return false;
+		});
+		Event.observe($(prefix+'trimmerFulllength'), 'click', function() {
+			thisTrimmer.TrimSlider.setValue(100);
+			$(prefix+'trimmerFulllength').style.display = 'none';
+			$(prefix+'trimmerExcerpts').style.display = 'block';
+			return false;
+		});
 
-		if (prefix == '')
-			$(this.trimmerContainer).style.display = 'none';
+		//if (prefix == '')
+			//$(this.trimmerContainer).style.display = 'none';
    	},
 
 	showSlider: function() {
@@ -65,10 +87,14 @@ TextTrimmer.prototype = {
 		$(this.sliderID).style.display = 'none';
 	},
 
+	trimAgain: function() {
+		this.loadChunks();
+		this.doTrim(this.curValue);
+	},
 
     loadChunks: function() {
 		if (this.prefix != '') {
-			/* Livesearch chunks */
+			/* Dynamic chunks */
 			var everything = $('dynamic-content').getElementsByClassName(this.chunkClass);
 		} else {
 			/* Normal chunks */

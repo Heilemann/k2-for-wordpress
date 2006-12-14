@@ -45,8 +45,7 @@
 	</div>
 	<script type="text/javascript">
 	// <![CDATA[
-		var <?php echo $prefix; ?>rolling = new RollingArchives("primarycontent", <?php k2info('js_url'); ?> + '/theloop.php', "<?php $array = array_keys($wp_query->query); $keys = $array; echo $array[0].'='.urlencode($wp_query->query[$keys[0]]); ?>", <?php echo $k2pagecount; ?>, "<?php echo $prefix; ?>", "<?php _e('Page %1$d of %2$d',k2_domain); ?>");
-		var <?php echo $prefix; ?>MyTrimmer = new TextTrimmer("trimmerContainer", "trimmer", "entry-content", 1, 100, "<?php echo $prefix; ?>");
+		var <?php echo $prefix; ?>rolling = new RollingArchives("primarycontent", <?php k2info('js_url'); ?> + '/theloop.php', "<?php echo urlencode($wp_query->query); ?>", <?php echo $k2pagecount; ?>, "<?php echo $prefix; ?>", "<?php _e('Page %1$d of %2$d',k2_domain); ?>");
 	// ]]>
 	</script>
 

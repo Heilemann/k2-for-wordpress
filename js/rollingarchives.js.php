@@ -21,7 +21,7 @@ RollingArchives = Class.create();
 
 RollingArchives.prototype = {
 	initialize: function(targetitem, url, query, pagecount, prefix, pagetext) {
-		var rolling = this;
+		var thisRolling = this;
 
 		this.targetitem = prefix+targetitem;
 		this.url = url;
@@ -43,26 +43,26 @@ RollingArchives.prototype = {
 		this.pagetrack = prefix+'pagetrack';
 		this.pagetrackend = prefix+'pagetrackend';
 
-		this.trimmer = new TextTrimmer(prefix+'trimmer', 'entry-content', 0, 100);
-
+		this.trimmer = new TextTrimmer("trimmerContainer", "trimmer", "entry-content", 1, 100, prefix);
 		this.rollRemoveLoad();
 
 		var sliderValues = new Array(this.pagecount);
 		for (var i = 0; i < this.pagecount; i++) sliderValues[i] = i + 1;
 		
-		this.PageSlider = new Control.Slider(rolling.pagehandle,rolling.pagetrack, {
-			range: $R(rolling.pagecount, 1),
+		this.PageSlider = new Control.Slider(thisRolling.pagehandle, thisRolling.pagetrack, {
+			range: $R(thisRolling.pagecount, 1),
 			values: sliderValues,
 			sliderValue: 1,
-			onSlide: function(v) { rolling.updatePageText(v); },
-			onChange: function(v) { rolling.gotoPage(v); },
-			handleImage: rolling.pagehandle
+			onSlide: function(v) { thisRolling.updatePageText(v); },
+			onChange: function(v) { thisRolling.gotoPage(v); },
+			handleImage: thisRolling.pagehandle
 		});
 
 		$(this.pagetrack+'wrap').style.display = 'none';
+		$(this.trimmer.trimmerContainer).style.display = 'none';
 
-		Event.observe(this.rollprev, 'click', function() { rolling.gotoPrevPage(); });
-		Event.observe(this.rollnext, 'click', function() { rolling.gotoNextPage(); });
+		Event.observe(this.rollprev, 'click', function() { thisRolling.gotoPrevPage(); });
+		Event.observe(this.rollnext, 'click', function() { thisRolling.gotoNextPage(); });
 		$(this.rollprev).onclick = function() { return false; };
 		$(this.rollnext).onclick = function() { return false; };
 
@@ -128,27 +128,13 @@ RollingArchives.prototype = {
 		/* Spool Texttrimmer */
 		if (this.pagenumber == 1) {
 			new Effect.Fade(this.pagetrack+'wrap', {duration: .3});
-			if (this.prefix == '') {
-				new Effect.Fade(MyTrimmer.trimmerContainer, {duration: .3});
-				MyTrimmer.TrimSlider.setValue(MyTrimmer.maxValue);
-			} else {
-				new Effect.Fade($('nested_trimmerContainer'), {duration: .3});
-				nested_MyTrimmer.TrimSlider.setValue(nested_MyTrimmer.maxValue);
-			}
+			new Effect.Fade(this.trimmer.trimmerContainer, {duration: .3});
 		} else {
 			new Effect.Appear(this.pagetrack+'wrap', {duration: .3});
-
-			if (this.prefix == '') {
-				new Effect.Appear(MyTrimmer.trimmerContainer, {duration: .3});
-				MyTrimmer.chunks = false;
-				MyTrimmer.TrimSlider.setValue(MyTrimmer.curValue);
-			} else {
-				/* Refuses to catch the container. FUCK */
-				new Effect.Appear(nested_MyTrimmer.trimmerContainer, {duration: .3});
-				nested_MyTrimmer.chunks = false;
-				nested_MyTrimmer.TrimSlider.setValue(nested_MyTrimmer.curValue);
-			}
+			new Effect.Appear(this.trimmer.trimmerContainer, {duration: .3});
 		}
+
+		this.trimmer.trimAgain();
 
 		/* Support for Lightbox */
 		if (window.initLightbox)
