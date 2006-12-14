@@ -44,7 +44,7 @@ TextTrimmer.prototype = {
 			range: $R(thisTrimmer.minValue, thisTrimmer.maxValue),
 			sliderValue: thisTrimmer.maxValue,
 			onSlide: function(value) { thisTrimmer.doTrim(value); },
-			onChange: function(value) { thisTrimmer.doTrim(value); },
+			onChange: function(value) { thisTrimmer.doTrim(value); }
 		});
 
 		/* Add functionality to trimmer links */
@@ -75,17 +75,8 @@ TextTrimmer.prototype = {
 			return false;
 		});
 
-		//if (prefix == '')
-			//$(this.trimmerContainer).style.display = 'none';
+		$(this.trimmerContainer).style.display = 'none';
    	},
-
-	showSlider: function() {
-		$(this.sliderID).style.display = 'block';
-	},
-	
-	hideSlider: function() {
-		$(this.sliderID).style.display = 'none';
-	},
 
 	trimAgain: function() {
 		this.loadChunks();

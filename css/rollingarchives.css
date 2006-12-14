@@ -50,7 +50,6 @@ body.trimmed .hentry.alt {
 	right: 45px;
 	padding-left: 24px;
 	background: url('../images/spinner.gif') no-repeat left center;
-	background-color: white !important;
 	z-index: 10;
 	width: 50px;
 	text-align: left;

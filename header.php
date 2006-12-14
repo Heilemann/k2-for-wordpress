@@ -57,7 +57,9 @@
 
 	<?php /* Hide Author Elements */ if (!is_user_logged_in() and (is_page() or is_single()) and ($comment_author = $_COOKIE['comment_author_'.COOKIEHASH]) and ('open' == $post-> comment_status) or ('comment' == $post-> comment_type) ) { ?>
 	<script type="text/javascript">
+	// <![CDATA[
 		FastInit.addOnLoad( OnLoadUtils );
+	// ]]>
 	</script>
 	<?php } ?>
 

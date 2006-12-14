@@ -44,7 +44,6 @@ RollingArchives.prototype = {
 		this.pagetrackend = prefix+'pagetrackend';
 
 		this.trimmer = new TextTrimmer("trimmerContainer", "trimmer", "entry-content", 1, 100, prefix);
-		this.rollRemoveLoad();
 
 		var sliderValues = new Array(this.pagecount);
 		for (var i = 0; i < this.pagecount; i++) sliderValues[i] = i + 1;
@@ -58,9 +57,6 @@ RollingArchives.prototype = {
 			handleImage: thisRolling.pagehandle
 		});
 
-		$(this.pagetrack+'wrap').style.display = 'none';
-		$(this.trimmer.trimmerContainer).style.display = 'none';
-
 		Event.observe(this.rollprev, 'click', function() { thisRolling.gotoPrevPage(); });
 		Event.observe(this.rollnext, 'click', function() { thisRolling.gotoNextPage(); });
 		$(this.rollprev).onclick = function() { return false; };
@@ -68,9 +64,12 @@ RollingArchives.prototype = {
 
 		$(this.rollnext).className = 'inactive';
 		$(this.rollhome).className = 'inactive';
-		$(this.rollnotices).style.display = 'none';
-		this.updatePageText(this.pagenumber);
 
+		$(this.rollnotices).style.display = 'none';
+		$(this.rollload).style.display = 'none';
+		$(this.pagetrack+'wrap').style.display = 'none';
+
+		this.updatePageText(this.pagenumber);
 		this.initialized = true;
 	},
 
@@ -88,7 +87,8 @@ RollingArchives.prototype = {
 
 	gotoPage: function(newpage) {
 		if (newpage != this.pagenumber) {
-			new Effect.Appear(this.rollload, {duration: .1});
+			new Effect.Fade(this.trimmer.trimmerContainer, {duration: .3});
+			new Effect.Appear(this.rollload, {duration: .3});
 
 			if (newpage >= this.pagecount) {
 				$(this.rollprev).className = 'inactive';
@@ -128,7 +128,6 @@ RollingArchives.prototype = {
 		/* Spool Texttrimmer */
 		if (this.pagenumber == 1) {
 			new Effect.Fade(this.pagetrack+'wrap', {duration: .3});
-			new Effect.Fade(this.trimmer.trimmerContainer, {duration: .3});
 		} else {
 			new Effect.Appear(this.pagetrack+'wrap', {duration: .3});
 			new Effect.Appear(this.trimmer.trimmerContainer, {duration: .3});
@@ -142,7 +141,7 @@ RollingArchives.prototype = {
 	},
 	
 	rollRemoveLoad: function() {
-		new Effect.Fade(this.rollload, {duration: .1});
+		new Effect.Fade(this.rollload, {duration: .3});
 	},
 
 	rollError: function() {
