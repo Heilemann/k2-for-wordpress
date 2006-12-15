@@ -17,20 +17,6 @@
 	header('Content-Type: text/javascript; charset: UTF-8');
 ?>
 
-// ABC Boot Loader Simon: http://simon.incutio.com/archive/2004/05/26/addLoadEvent
-function addLoadEvent(func) {
-	var oldonload = window.onload;
-	if (typeof window.onload != 'function') {
-		window.onload = func;
-	} else {
-		window.onload = function() {
-			oldonload();
-			func();
-		}
-	}
-}
-
-
 function OnLoadUtils() {
 	$("comment-personaldetails").style.display = "none";
 	$("showinfo").style.display = "";
@@ -38,14 +24,16 @@ function OnLoadUtils() {
 }
 
 function ShowUtils() {
-	new Effect.Phase('comment-personaldetails', {duration: 0.3});
+	new Effect.BlindDown('comment-personaldetails', {duration: 0.3});
+	new Effect.Appear('comment-personaldetails', {duration: 0.3});
 	//new Effect.Appear($('commentlist').lastChild, { duration: 1.0, afterFinish: function() { new Effect.ScrollTo($('commentlist').lastChild); } } );
 	$("showinfo").style.display = "none";
 	$("hideinfo").style.display = "";
 }
 
 function HideUtils() {
-	new Effect.Phase('comment-personaldetails', {duration: 0.3});
+	new Effect.Fade('comment-personaldetails', {duration: 0.3});
+	new Effect.BlindUp('comment-personaldetails', {duration: 0.3});
 	$("showinfo").style.display = "";
 	$("hideinfo").style.display = "none";
 }
