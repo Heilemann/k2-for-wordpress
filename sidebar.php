@@ -195,7 +195,7 @@
 		<h2><?php _e('Related Entries','k2_domain'); ?></h2>
 		
 		<ul>
-			<?php related_posts(10, 0, '<li>', '</li>', '', '', false, false); ?>
+			<?php related_posts(); ?>
 		</ul>
 	</div>
 	<?php } ?>
