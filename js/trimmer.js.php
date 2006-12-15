@@ -78,9 +78,25 @@ TextTrimmer.prototype = {
 		$(this.trimmerContainer).style.display = 'none';
    	},
 
-	trimAgain: function() {
+	addClass: function() {
+		if (this.prefix != '') {
+			$('dynamic-content').addClassName("trimmed");
+		} else {
+			$('current-content').addClassName("trimmed");
+		}
+	},
+	
+	removeClass: function() {
+		if (this.prefix != '') {
+			$('dynamic-content').removeClassName("trimmed");
+		} else {
+			$('current-content').removeClassName("trimmed");
+		}
+	},
+
+	trimAgain: function(value) {
 		this.loadChunks();
-		this.doTrim(this.curValue);
+		this.doTrim(value);
 	},
 
     loadChunks: function() {
@@ -124,9 +140,9 @@ TextTrimmer.prototype = {
 
 		/* Add 'trimmed' class to <BODY> while active */
 		if (this.curValue != this.maxValue) {
-			document.body.addClassName("trimmed");
+			this.addClass();
 		} else {
-			document.body.removeClassName("trimmed");
+			this.removeClass();
 		}
 	}
 }

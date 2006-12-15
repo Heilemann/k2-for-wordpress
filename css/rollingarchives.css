@@ -7,11 +7,11 @@
 	margin: 0 0 10px;
 	}
 
-body.trimmed .hentry {
+div.trimmed .hentry {
 	background: #eee;
 	}
 
-body.trimmed .hentry.alt {
+div.trimmed .hentry.alt {
 	background: transparent;
 	}
 	
@@ -161,11 +161,14 @@ body.trimmed .hentry.alt {
 	cursor: col-resize;
 	}
 	
-#trimmerMore, #nested_trimmerMore,
-#trimmerLess, #nested_trimmerLess {
+#trimmerMore,
+#nested_trimmerMore,
+#trimmerLess,
+#nested_trimmerLess {
 	display: none;
 	}
 	
-#trimmerShortcuts, #nested_trimmerShortcuts {
+#trimmerShortcuts,
+#nested_trimmerShortcuts {
 	display: none;
 	}

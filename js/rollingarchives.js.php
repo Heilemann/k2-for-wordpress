@@ -87,7 +87,7 @@ RollingArchives.prototype = {
 
 	gotoPage: function(newpage) {
 		if (newpage != this.pagenumber) {
-			new Effect.Fade(this.trimmer.trimmerContainer, {duration: .3});
+			$(this.trimmer.trimmerContainer).style.display = 'none';
 			new Effect.Appear(this.rollload, {duration: .3});
 
 			if (newpage >= this.pagecount) {
@@ -117,7 +117,10 @@ RollingArchives.prototype = {
 				method: 'get',
 				parameters: this.query,
 				onComplete: this.rollComplete.bind(this),
-				onFailure: function() {this.rollComplete.bind(this); this.rollError.bind(this)}
+				onFailure: function() {
+					this.rollComplete.bind(this);
+					this.rollError.bind(this);
+				}
 			});
 		}
 	},
@@ -128,12 +131,12 @@ RollingArchives.prototype = {
 		/* Spool Texttrimmer */
 		if (this.pagenumber == 1) {
 			new Effect.Fade(this.pagetrack+'wrap', {duration: .3});
+			this.trimmer.removeClass();
 		} else {
 			new Effect.Appear(this.pagetrack+'wrap', {duration: .3});
 			new Effect.Appear(this.trimmer.trimmerContainer, {duration: .3});
+			this.trimmer.trimAgain(this.trimmer.curValue);
 		}
-
-		this.trimmer.trimAgain();
 
 		/* Support for Lightbox */
 		if (window.initLightbox)
