@@ -24,9 +24,9 @@ TextTrimmer = Class.create();
 
 TextTrimmer.prototype = {
     initialize: function(trimmerContainer, sliderID, chunkClass, minValue, maxValue, prefix) {
-		if (prefix == '') console.log('Trimmer Init Detected');
+/*		if (prefix == '') console.log('Trimmer Init Detected');
 		if (prefix != '') console.log('Livesearch Trimmer Init');
-
+*/
 		var thisTrimmer = this;
 		this.trimmerContainer = prefix+trimmerContainer;
 		this.sliderID = prefix+sliderID;
