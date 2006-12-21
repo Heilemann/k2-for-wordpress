@@ -140,7 +140,7 @@ class K2SBM {
 
 							if($modules) {
 								foreach($modules as $module) {
-									echo('<module id="' . $module->id . '">' . htmlspecialchars(strip_tags($module->name)) . '</module>');
+									echo('<module id="' . $module->id . '">' . htmlentities(strip_tags($module->name), ENT_QUOTES, 'UTF-8') . '</module>');
 								}
 							}
 
