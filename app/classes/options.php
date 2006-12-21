@@ -3,6 +3,11 @@
 class K2Options {
 	function init() {
 		add_action('admin_menu', array('K2Options', 'add_menu'));
+
+		// Check for K2 uninstallation. Do here to avoid header output.
+		if($_GET['page'] == 'k2-options' and isset($_POST['uninstall'])) {
+			K2::uninstall();
+		}
 	}
 
 	function add_menu() {
@@ -41,10 +46,6 @@ class K2Options {
 
 			if(isset($_POST['configela']) and !K2Archive::setup_archive()) {
 				unset($_POST['configela']);
-			}
-
-			if(isset($_POST['uninstall'])) {
-				K2::uninstall();
 			}
 		}
 	}
