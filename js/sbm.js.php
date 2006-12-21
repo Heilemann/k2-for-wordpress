@@ -391,12 +391,12 @@ sbmAddForm.prototype = {
 
 	add: function() {
 		this.errorElement.style.display = "none";
+    
+		// Serialize the data
+		var formData = Form.serialize(this.addForm);
 
 		// Disable the form
 		Form.disable(this.addForm);
-
-		// Serialize the data
-		var formData = Form.serialize(this.addForm);
 
 		// Send the information via AJAX
 		new Ajax.Request(sbm_baseUrl + "?action=add", {
@@ -485,11 +485,11 @@ sbmOptionsForm.prototype = {
 		this.successElement.style.display = "none";
 		this.errorElement.style.display = "none";
 
-		// Disable the form
-		Form.disable(this.optionsForm);
-
 		// Serialize the data
 		var formData = "sidebar_id=" + this.sidebarId + "&module_id=" + this.moduleId + "&" + Form.serialize(this.optionsForm);
+
+		// Disable the form
+		Form.disable(this.optionsForm);
 
 		// Send the information via AJAX
 		new Ajax.Request(sbm_baseUrl + "?action=update", {

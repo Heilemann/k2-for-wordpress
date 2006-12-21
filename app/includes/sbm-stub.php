@@ -14,10 +14,12 @@ if(DIRECTORY_SEPARATOR != '/') {
 if($k2sbm_theme_path == $k2sbm_k2_path) {
 	// We only want this function to be exposed if this is K2
 	function k2sbm_load() {
+		global $k2sbm_k2_path;
+
 		// Only include SBM if no other plugin is installed for handling sidebars
 		if(!function_exists('register_sidebar')) {
-			require_once(dirname(dirname(__FILE__)) . '/classes/sbm.php');
-			require_once(dirname(__FILE__) . '/sbm.php');
+			require_once($k2sbm_k2_path . '/app/classes/sbm.php');
+			require_once($k2sbm_k2_path . '/app/includes/sbm.php');
 
 			K2SBM::wp_bootstrap();
 
