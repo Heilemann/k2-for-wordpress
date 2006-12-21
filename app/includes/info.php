@@ -107,33 +107,32 @@ function get_k2_ping_type($trackbacktxt = 'Trackback', $pingbacktxt = 'Pingback'
 	return false;
 }
 
-function k2countpages($request) {
+function k2countpages($query) {
 	global $wpdb, $wp_version;
 
-	$posts_per = (int) get_option('posts_per_page');
-	if ( empty($posts_per) ) {
-		$posts_per = 1;
-	}
-
+	// WP 2.0
 	if (strpos($wp_version, '2.1') === false) {
-		$search = '/FROM\s+?(.*)\s+?GROUP BY/siU'; // Wordpress 2.0.x
-	} else {
-		$search = '/FROM\s+?(.*)\s+?ORDER BY/siU'; // Wordpress 2.1
+		$posts_per = (int) get_option('posts_per_page');
+		if ( empty($posts_per) ) {
+			$posts_per = 1;
+		}
+
+		$search = '/FROM\s+?(.*)\s+?GROUP BY/siU';
+		preg_match($search, $query->request, $matches);
+
+		if ( 'posts' == get_query_var('what_to_show') ) {
+			$from_where = $matches[1];
+			$num_posts = $wpdb->get_var("SELECT COUNT(DISTINCT ID) FROM $from_where");
+		} else {
+			$from_where = preg_replace('/( AND )?post_date >= (\'|\")(.*?)(\'|\")( AND post_date <= (\'\")(.*?)(\'\"))?/siU', '', $matches[1]);
+			$num_posts = $wpdb->query("SELECT DISTINCT post_date FROM $from_where GROUP BY year(post_date), month(post_date), dayofmonth(post_date)");
+		}
+
+		return ceil($num_posts / $posts_per);
 	}
 
-	preg_match($search, $request, $matches);
-
-	if ( 'posts' == get_query_var('what_to_show') ) {
-		$from_where = $matches[1];
-		$num_posts = $wpdb->get_var("SELECT COUNT(DISTINCT ID) FROM $from_where");
-		$num_pages = ceil($num_posts / $posts_per);
-	} else {
-		$from_where = preg_replace('/( AND )?post_date >= (\'|\")(.*?)(\'|\")( AND post_date <= (\'\")(.*?)(\'\"))?/siU', '', $matches[1]);
-		$num_days = $wpdb->query("SELECT DISTINCT post_date FROM $from_where GROUP BY year(post_date), month(post_date), dayofmonth(post_date)");
-		$num_pages = ceil($num_days / $posts_per);
-	}
-
-	return $num_pages;
+	// WP 2.1
+	return($query->max_num_pages);
 }
 
 /* By Mark Jaquith, http://txfx.net */
