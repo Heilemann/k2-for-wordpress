@@ -655,6 +655,10 @@ a {
 	max-width: 100%;
 	}
 
+#primary table img {
+	max-width: none;
+	}
+
 .center {
 	text-align: center;
 	}
