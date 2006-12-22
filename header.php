@@ -46,7 +46,9 @@
 	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/livesearch.js.php"></script>
 	<script type="text/javascript">
 	//<![CDATA[
-		FastInit.addOnLoad( function() { new Livesearch('searchform', 's', 'dynamic-content', 'current-content', <?php k2info('js_url'); ?> + '/rollingarchive.php', '&s=', 'searchform', 'searchload', '<?php _e('Type and Wait to Search','k2_domain'); ?>', 'searchreset', '<?php _e('go','k2_domain'); ?>'); } );
+		Event.observe(window, "load", function() {
+			new Livesearch("searchform", "s", "dynamic-content", "current-content", <?php k2info('js_url'); ?> + "/rollingarchive.php", "&s=", "searchload", "<?php _e('Type and Wait to Search','k2_domain'); ?>", "searchreset", "searchsubmit", "<?php _e('go','k2_domain'); ?>");
+		});
 	//]]>
 	</script>
 	<?php } ?>

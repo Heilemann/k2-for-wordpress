@@ -20,43 +20,36 @@
 Livesearch = Class.create();
 
 Livesearch.prototype = {
-	initialize: function(father, attachitem, target, hideitem, url, pars, searchform, loaditem, searchtext, resetbutton, buttonvalue) {
+	initialize: function(searchform, attachitem, targetitem, hideitem, url, pars, loaditem, searchtext, resetbutton, submitbutton, buttonvalue) {
 		var thisSearch = this;
 
-		this.father = father;
+		this.searchform = searchform;
 		this.attachitem = attachitem;
-		this.target = target;
+		this.targetitem = targetitem;
 		this.hideitem = hideitem;
 		this.url = url;
 		this.pars = pars;
-		this.searchform = searchform;
 		this.loaditem = loaditem;
 		this.searchtext = searchtext;
 		this.resetbutton = resetbutton;
+		this.submitbutton = submitbutton;
 		this.buttonvalue = buttonvalue;
 		this.searchstring = '';
 		this.t = null;  // Init timeout variable
 
-		$(father).innerHTML = '<input type="text" id="s" name="s" class="livesearch" autocomplete="off" value="'+this.searchtext+'" /><span id="searchreset"></span><span id="searchload"></span><input type="submit" id="searchsubmit" value="'+this.buttonvalue+'" />';
+		$(this.searchform).innerHTML = '<input type="text" id="'+this.attachitem+'" name="'+this.attachitem+'" class="livesearch" autocomplete="off" value="'+this.searchtext+'" /><span id="'+this.resetbutton+'"></span><span id="'+this.loaditem+'"></span><input type="submit" id="'+this.submitbutton+'" value="'+this.buttonvalue+'" />';
 
-		// Style the searchform for livesearch
-		var inputs = $(searchform).getElementsByTagName('input');
-		for (var i = 0; i < inputs.length; i++) {
-			var input = inputs.item(i);
-			if (input.type == 'submit') 
-				input.style.display = "none";
-		}
-
-		Effect.Fade(this.resetbutton, { duration: 0, to: 0.3 });
-		$(this.loaditem).style.display = 'none';
+		$(this.submitbutton).style.display = "none";
+		$(this.loaditem).style.display = "none";
+		new Effect.Fade(this.resetbutton, { duration: 0, to: 0.3 });
 
 		Event.observe(thisSearch.attachitem, 'focus', function() {
-			if ($(thisSearch.attachitem).value == thisSearch.searchtext)
+			if ($F(thisSearch.attachitem) == thisSearch.searchtext)
 				$(thisSearch.attachitem).setAttribute('value', '');
 		});
 
 		Event.observe(thisSearch.attachitem, 'blur', function() {
-			if ($(thisSearch.attachitem).value == '')
+			if ($F(thisSearch.attachitem) == '')
 				$(thisSearch.attachitem).setAttribute('value', thisSearch.searchtext);
 		});
 
@@ -77,11 +70,11 @@ Livesearch.prototype = {
     doLivesearch: function() {
 		if ($F(this.attachitem) == this.searchstring) return;
 
-		Effect.Fade(this.resetbutton, { duration: .1});
-		Effect.Appear(this.loaditem, {duration: .1});
+		new Effect.Fade(this.resetbutton, { duration: 0.1 });
+		new Effect.Appear(this.loaditem, { duration: 0.1 });
 
 		new Ajax.Updater(
-			this.target,
+			this.targetitem,
 			this.url,
 			{
 				method: 'get',
@@ -95,8 +88,8 @@ Livesearch.prototype = {
 	
 	searchComplete: function() {
 		$(this.hideitem).style.display = 'none';
-		Effect.Fade(this.loaditem, {duration: .1});
-		Effect.Appear(this.resetbutton, { duration: .1 });
+		new Effect.Fade(this.loaditem, { duration: 0.1 });
+		new Effect.Appear(this.resetbutton, { duration: 0.1 });
 		
 		Event.observe(this.resetbutton, 'click', this.resetLivesearch.bindAsEventListener(this));
 		$(this.resetbutton).style.cursor = 'pointer';
@@ -108,11 +101,11 @@ Livesearch.prototype = {
 	},
 
 	resetLivesearch: function() {
-		$(this.target).innerHTML = '';
+		$(this.targetitem).innerHTML = '';
 		$(this.hideitem).style.display = 'block';
 
 		$(this.attachitem).value = this.searchtext;
-		Effect.Fade(this.resetbutton, { duration: .1, to: 0.3 });
+		new Effect.Fade(this.resetbutton, { duration: 0.1, to: 0.3 });
 		$(this.resetbutton).style.cursor = 'default';
 	}
 }
