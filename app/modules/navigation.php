@@ -16,17 +16,18 @@ function nav_sidebar_module($args) {
 		$parent_id = $page_query->ID;
 		$parent_title = $page_query->post_title;
 
-		if ($wpdb->get_results("SELECT COUNT(1) FROM $wpdb->posts WHERE post_parent = '$parent_id' AND post_status != 'attachment'")) {
+		$page_menu = wp_list_pages('echo=0&sort_column=menu_order&title_li=&child_of='. $parent_id);
+		if ($page_menu) {
 			echo($before_module);
 			?>
 				<h2><?php printf(sbm_get_option('custom_title'), $parent_title); ?></h2>
 
 				<ul>
-					<?php wp_list_pages('sort_column=menu_order&title_li=&child_of='. $parent_id); ?>
+					<?php echo $page_menu; ?>
 				</ul>
 
 				<?php if ($parent_id != $post->ID) { ?>
-					<a href="<?php echo get_permalink($parent_id); ?>"><?php printf(__('Back to %s','k2_domain'), $parent_title ) ?></a>
+				<a href="<?php echo get_permalink($parent_id); ?>"><?php printf(__('Back to %s','k2_domain'), $parent_title ) ?></a>
 				<?php } ?>
 			<?php
 			echo($after_module);
@@ -36,7 +37,7 @@ function nav_sidebar_module($args) {
 	if(is_attachment()) {
 	?>
 		<div class="sb-pagemenu">
-			<a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><?php printf(__('Back to \'%s\'','k2_domain'), get_the_title($post->post_parent) ) ?></a>
+			<a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><?php printf(__('Back to \'%s\'','k2_domain'), get_the_title($post->post_parent) ); ?></a>
 		</div>
 	<?php
 	}

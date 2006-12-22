@@ -23,14 +23,15 @@
 			$parent_id = $page_query->ID;
 			$parent_title = $page_query->post_title;
 
-			if ($wpdb->get_results("SELECT * FROM $wpdb->posts WHERE post_parent = '$parent_id' AND post_status != 'attachment'")) {
+			$page_menu = wp_list_pages('echo=0&sort_column=menu_order&title_li=&child_of='. $parent_id);
+			if ($page_menu) {
 	?>
 
 	<div class="sb-pagemenu">
 		<h2><?php echo $parent_title; ?> <?php _e('Subpages','k2_domain'); ?></h2>
 		
 		<ul>
-			<?php wp_list_pages('sort_column=menu_order&title_li=&child_of='. $parent_id); ?>
+			<?php echo $page_menu; ?>
 		</ul>
 			
 		<?php if ($parent_id != $post->ID) { ?>
