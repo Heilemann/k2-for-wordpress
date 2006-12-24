@@ -1,7 +1,7 @@
 <?php
 	global $wpdb, $post;
 
-	$pages = $wpdb->get_results("SELECT ID, post_title FROM $wpdb->posts WHERE post_status = 'static' ORDER BY menu_order");
+	$pages = $wpdb->get_results("SELECT ID, post_title FROM $wpdb->posts WHERE (post_status = 'static' OR post_type = 'page') ORDER BY menu_order");
 ?>
 
 <?php if($pages): ?>

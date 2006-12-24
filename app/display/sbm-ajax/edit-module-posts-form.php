@@ -1,7 +1,7 @@
 <?php
 	global $wpdb, $post;
 
-	$posts = $wpdb->get_results("SELECT ID, post_title FROM $wpdb->posts WHERE post_status = 'publish' ORDER BY post_date_gmt DESC");
+	$posts = $wpdb->get_results("SELECT ID, post_title FROM $wpdb->posts WHERE post_status = 'publish' AND post_type != 'page' ORDER BY post_date_gmt DESC");
 ?>
 
 <?php if($posts): ?>
