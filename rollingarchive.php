@@ -6,6 +6,13 @@
 		require (dirname(__FILE__)."/../../../wp-blog-header.php");
 		$prefix = 'nested_';
 	}
+
+	// WP 2.1 support
+	if (is_array($wp_query->query)) {
+		$rolling_query = http_build_query($wp_query->query);
+	} else {
+		$rolling_query = $wp_query->query;
+	}
 ?>
 <?php
 	// Load Rolling Archives?
@@ -45,7 +52,7 @@
 	</div>
 	<script type="text/javascript">
 	// <![CDATA[
-		var <?php echo $prefix; ?>rolling = new RollingArchives("primarycontent", <?php k2info('js_url'); ?> + '/theloop.php', "<?php echo $wp_query->query; ?>", <?php echo $k2pagecount; ?>, "<?php echo $prefix; ?>", "<?php _e('Page %1$d of %2$d',k2_domain); ?>");
+		var <?php echo $prefix; ?>rolling = new RollingArchives("primarycontent", <?php k2info('js_url'); ?> + '/theloop.php', "<?php echo $rolling_query; ?>", <?php echo $k2pagecount; ?>, "<?php echo $prefix; ?>", "<?php _e('Page %1$d of %2$d',k2_domain); ?>");
 	// ]]>
 	</script>
 

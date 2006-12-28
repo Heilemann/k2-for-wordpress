@@ -303,6 +303,33 @@ function k2_date_classes($t, &$c, $p = '') {
 }
 
 
+if (!function_exists('http_build_query')) {
+	function http_build_query($data, $prefix='', $sep='', $key='') {
+		$ret = array();
+		foreach ((array)$data as $k => $v) {
+			if (is_int($k) and $prefix != null) {
+				$k = urlencode($prefix . $k);
+			}
+
+			if (!empty($key)) {
+				$k = $key.'['.urlencode($k).']';
+			}
+
+			if (is_array($v) or is_object($v)) {
+				array_push($ret, http_build_query($v, '', $sep, $k));
+			} else {
+				array_push($ret, $k.'='.urlencode($v));
+			}
+		}
+
+		if (empty($sep)) {
+			$sep = ini_get('arg_separator.output');
+		}
+
+		return implode($sep, $ret);
+	}
+}
+
 // Filter to remove asides from the loop
 add_filter('pre_get_posts', 'k2asides_filter');
 ?>
