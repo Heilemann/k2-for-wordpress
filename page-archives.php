@@ -3,7 +3,7 @@
 */ ?>
 
 <?php /* Counts the posts, comments and categories on your blog */
-	$numposts = $wpdb->get_var("SELECT COUNT(1) FROM $wpdb->posts WHERE post_status = 'publish'");
+	$numposts = $wpdb->get_var("SELECT COUNT(1) FROM $wpdb->posts WHERE post_status = 'publish' AND post_type != 'page'");
 	if (0 < $numposts) $numposts = number_format($numposts); 
 	
 	$numcomms = $wpdb->get_var("SELECT COUNT(1) FROM $wpdb->comments WHERE comment_approved = '1'");
