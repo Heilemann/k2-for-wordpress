@@ -7,17 +7,17 @@ $k2_headers_path = TEMPLATEPATH . '/images/headers/';
 
 class K2Header {
 	function init() {
-		add_action('admin_menu', array('K2Header', 'add_menu'));
+		/*add_action('admin_menu', array('K2Header', 'add_menu'));*/
 		add_action('wp_head', array('K2Header', 'output_css'));
 	}
 
-	function add_menu() {
+	/*function add_menu() {
 		add_submenu_page('themes.php', __('K2 Custom Header','k2_domain'), __('K2 Custom Header','k2_domain'), 5, 'k2-header', array('K2Header', 'admin'));
 	}
 
 	function admin() {
 		include(TEMPLATEPATH . '/app/display/header.php');
-	}
+	}*/
 
 	function update() {
 		global $k2_headers_path;

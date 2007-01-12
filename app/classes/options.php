@@ -21,7 +21,23 @@ class K2Options {
 	function update() {
 		if(!empty($_POST)) {
 			if(isset($_POST['k2'])) {
-				// Archives is a special case
+				// Advanced Navigation
+				if(isset($_POST['k2']['advnav'])) {
+					update_option('k2livesearch', '1');
+					update_option('k2rollingarchives', '1');
+				} else {
+					update_option('k2livesearch', '0');
+					update_option('k2rollingarchives', '0');
+				}
+
+				// Live Commenting
+				if(isset($_POST['k2']['livecommenting'])) {
+					update_option('k2livecommenting', '1');
+				} else {
+					update_option('k2livecommenting', '0');
+				}
+
+				// Archives Page
 				if(isset($_POST['k2']['archives'])) {
 					K2Archive::create_archive();
 				} else {
@@ -30,6 +46,14 @@ class K2Options {
 					K2Archive::delete_archive();
 				}
 
+				// Live Commenting
+				if(isset($_POST['k2']['imagerandomfeature'])) {
+					update_option('k2imagerandomfeature', '1');
+				} else {
+					update_option('k2imagerandomfeature', '0');
+				}
+
+			
 				// Set all the options
 				foreach($_POST['k2'] as $option => $value) {
 					update_option('k2' . $option, $value);

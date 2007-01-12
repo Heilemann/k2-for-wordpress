@@ -52,11 +52,6 @@
 				<th scope="row"><?php _e('Select random picture','k2_domain'); ?></th>
 
 				<td>
-					<input id="k2-imagerandomfeature-yes" name="k2[imagerandomfeature]" type="radio" value="1"<?php checked('1', get_option('k2imagerandomfeature')); ?> />
-					<label for="k2-imagerandomfeature-yes"><?php _e('Yes','k2_domain'); ?></label><br />
-
-					<input id="k2-imagerandomfeature-no" name="k2[imagerandomfeature]" type="radio" value="0"<?php checked('0', get_option('k2imagerandomfeature')); ?> />
-					<label for="k2-imagerandomfeature-no"><?php _e('No','k2_domain'); ?></label>
 
 					<p><small><?php _e('Show random header picture','k2_domain'); ?></small><p>
 				</td>
