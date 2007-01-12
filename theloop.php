@@ -73,10 +73,8 @@
 			$post_index = 1;
 
 			// Check if to display asides inline or not
-			if(is_archive() or is_search() or is_single() or (function_exists('is_tag') and is_tag())) {
-				$k2asidescheck = '0';
-			} else {
-				$k2asidescheck = get_option('k2asidesposition');
+			if (is_home() and is_active_module('asides_sidebar_module')) {
+				$hide_asides = true;
 			}
 	?>
 
@@ -90,7 +88,7 @@
 
 	<?php /* Permalink nav has to be inside loop */ if (is_single()) include (TEMPLATEPATH . '/navigation.php'); ?>
 
-	<?php /* Only display asides if sidebar asides are not active */ if(!$post_asides || $k2asidescheck == '0') { ?>
+	<?php /* Only display asides if sidebar asides are not active */ if (!$post_asides or !$hide_asides) { ?>
 
 		<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class($post_index++, $post_asides); ?>">
 			<div class="entry-head">

@@ -14,7 +14,7 @@ function asides_sidebar_module($args) {
 		<div>
 		<?php
 			$asides_count = 1;
-			$asides = new WP_Query('cat=' . $k2asidescategory . '&showposts=' . get_option('k2asidesnumber'));
+			$asides = new WP_Query('cat=' . $k2asidescategory . '&showposts=' . sbm_get_option('num_posts'));
 
 			foreach ($asides->posts as $post) {
 				setup_postdata($post);
@@ -29,6 +29,15 @@ function asides_sidebar_module($args) {
 	} // End Asides check
 }
 
-register_sidebar_module('Asides module', 'asides_sidebar_module', 'sb-asides');
+function asides_sidebar_module_control() {
+	if (isset($_POST['asides_module_num_posts'])) {
+		sbm_update_option('num_posts', $_POST['asides_module_num_posts']);
+	}
+	?>
+		<p><label for="asides-module-num-posts"><?php _e('Number of posts:', 'k2_domain'); ?></label> <input id="asides-module-num-posts" name="asides_module_num_posts" type="text" value="<?php echo(sbm_get_option('num_posts')); ?>" size="2" /></p>
+	<?php
+}
 
+register_sidebar_module('Asides module', 'asides_sidebar_module', 'sb-asides', array('num_posts' => 3));
+register_sidebar_module_control('Asides module', 'asides_sidebar_module_control');
 ?>

@@ -166,9 +166,8 @@ function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' a
 
 function k2asides_filter($query) {
 	$k2asidescategory = get_option('k2asidescategory');
-	$k2asidesposition = get_option('k2asidesposition');
 
-	if ( ($k2asidescategory != 0) and ($k2asidesposition == 1) and ($query->is_home) ) {
+	if ( ($k2asidescategory != 0) and (is_active_module('asides_sidebar_module')) and ($query->is_home) ) {
 		$query->set('cat', '-'.$k2asidescategory);
 	}
 
