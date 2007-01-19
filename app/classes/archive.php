@@ -3,35 +3,27 @@
 
 class K2Archive {
 	function create_archive() {
-		global $wpdb, $user_ID;
+		global $wpdb, $wp_version;
 
-		$check = $wpdb->get_var("SELECT COUNT(1) FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = 'page-archives.php' LIMIT 1");
+		$archives_id = $wpdb->get_var("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = 'page-archives.php' LIMIT 1");
 
-		if($check == 0) {
-			get_currentuserinfo();
+		$archives_page = array();
+		$archives_page['ID'] = $archives_id;
+		$archives_page['post_content'] = __('Do not edit this page', 'k2_domain');
+		$archives_page['post_excerpt'] = __('Do not edit this page', 'k2_domain');
+		$archives_page['post_title'] = __('Archives', 'k2_domain');
 
-			$message = "Do not edit this page";
-			$title_message = 'Archives';
-			$content = apply_filters('content_save_pre', $message);
-			$post_title = apply_filters('title_save_pre', $title_message);
-			$now = current_time('mysql');
-			$now_gmt = current_time('mysql', 1);
-			$post_author = $user_ID;
-			$post_name = sanitize_title($post_title, $post_ID);
-			$ping_status = get_option('default_ping_status');
-			$comment_status = get_option('default_comment_status');
-
-			$postquery ="INSERT INTO $wpdb->posts
-					(post_author, post_date, post_date_gmt, post_content, post_title, post_excerpt,  post_status, comment_status, ping_status, post_password, post_name, to_ping, post_modified, post_modified_gmt, post_parent, menu_order) 
-					VALUES 
-					('$post_author', '$now', '$now_gmt', '$content', '$post_title', '', 'static', '$comment_status', '$ping_status', '', '$post_name', '', '$now', '$now_gmt', '', '')";
-
-			$result = $wpdb->query($postquery);
-
-			$metaquery = "INSERT INTO $wpdb->postmeta(meta_id, post_id, meta_key, meta_value) VALUES('', '$wpdb->insert_id()', '_wp_page_template', 'page-archives.php')";
-
-			$result2 = $wpdb->query($metaquery);
+		if (strpos($wp_version, '2.1') === false) {
+			// WP 2.0
+			$archives_page['post_status'] = 'static';
+		} else {
+			// WP 2.1
+			$archives_page['post_status'] = 'publish';
+			$archives_page['post_type'] = 'page';
 		}
+		$archives_page['page_template'] = 'page-archives.php';
+
+		wp_insert_post($archives_page);
 	}
 
 	function delete_archive() {
@@ -39,9 +31,8 @@ class K2Archive {
 
 		$archives_id = $wpdb->get_var("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = 'page-archives.php' LIMIT 1");
 
-		if($archives_id) {
-			$result = $wpdb->query("DELETE FROM $wpdb->posts WHERE ID = '$archives_id' LIMIT 1");
-			$result2 = $wpdb->query("DELETE FROM $wpdb->postmeta WHERE post_id = '$archives_id'");
+		if (!empty($archives_id)) {
+			wp_delete_post($archives_id);
 		}
 	}
 
