@@ -96,6 +96,13 @@ class K2 {
 	}
 
 	function _files_scan($base_path, $path, $ext, $depth, $relative, &$files) {
+		if (!empty($ext)) {
+			if (!is_array($ext)) {
+				$ext = array($ext);
+			}
+			$ext_match = implode('|', $ext);
+		}
+
 		// Open the directory
 		if(($dir = @dir($base_path . $path)) !== false) {
 			// Get all the files
@@ -109,7 +116,7 @@ class K2 {
 					K2::_files_scan($base_path, $file_path . '/', $ext, $depth - 1, $relative, $files);
 
 				// If this is a matching file then add it to the list
-				} elseif(is_file($file_full_path) and (!$ext or preg_match('/\.' . $ext . '$/i', $file))) {
+				} elseif(is_file($file_full_path) and (empty($ext) or preg_match('/\.(' . $ext_match . ')$/i', $file))) {
 					$files[] = $relative ? $file_path : $file_full_path;
 				}
 			}

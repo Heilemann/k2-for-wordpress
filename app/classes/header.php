@@ -2,13 +2,24 @@
 
 // Based on Hasse R. Hansen's K2 header plugin - http://www.ramlev.dk
 
-global $k2_headers_path;
-$k2_headers_path = TEMPLATEPATH . '/images/headers/';
-
 class K2Header {
 	function init() {
-		/*add_action('admin_menu', array('K2Header', 'add_menu'));*/
-		add_action('wp_head', array('K2Header', 'output_css'));
+		define('K2_HEADERS_PATH', TEMPLATEPATH . '/images/headers/');
+
+		if (function_exists('add_custom_image_header')) {
+			$scheme_info = get_scheme_info(get_option('k2scheme'));
+			$header_image = get_option('k2header_picture');
+
+			define('HEADER_IMAGE_HEIGHT', empty($scheme_info['header_height'])? 200 : $scheme_info['header_height']);
+			define('HEADER_IMAGE_WIDTH', empty($scheme_info['header_width'])? 780 : $scheme_info['header_width']);
+			define('HEADER_TEXTCOLOR', empty($scheme_info['header_text_color'])? 'ffffff' : $scheme_info['header_text_color']);
+			define('HEADER_IMAGE', empty($header_image)? '%s/images/transparent.gif' : '%s/images/headers/'.$header_image);
+
+			add_custom_image_header(array('K2Header', 'header_style'), array('K2Header', 'admin_header_style'));
+		} else {
+			/*add_action('admin_menu', array('K2Header', 'add_menu'));*/
+			add_action('wp_head', array('K2Header', 'output_css'));
+		}
 	}
 
 	/*function add_menu() {
@@ -20,11 +31,9 @@ class K2Header {
 	}*/
 
 	function update() {
-		global $k2_headers_path;
-
 		// Manage the uploaded picture
 		if($_FILES['picture']['name'] != "" and $_FILES['picture']['size'] > 0) {
-			move_uploaded_file($_FILES['picture']['tmp_name'], $k2_headers_path . $_FILES['picture']['name']);
+			move_uploaded_file($_FILES['picture']['tmp_name'], K2_HEADERS_PATH . $_FILES['picture']['name']);
 
 			if(isset($_POST['upload_activate'])) {
 				update_option('k2header_picture', $_FILES['picture']['name']);
@@ -33,31 +42,34 @@ class K2Header {
 
 		if(!empty($_POST)) {
 			if(isset($_POST['k2'])) {
-				// Correct the colours
-				if(trim($_POST['k2']['backgroundcolor']) != '') {
-					$_POST['k2']['backgroundcolor'] = '#' . substr(str_replace('#', '', $_POST['k2']['backgroundcolor']),0,6);
+
+				// Random Image
+				if(isset($_POST['k2']['imagerandomfeature'])) {
+					update_option('k2imagerandomfeature', '1');
 				} else {
-					unset($_POST['k2']['backgroundcolor']);
+					update_option('k2imagerandomfeature', '0');
 				}
 
-				if(trim($_POST['k2']['foregroundcolor']) != '') {
-					$_POST['k2']['foregroundcolor'] = '#' . substr(str_replace('#', '', $_POST['k2']['foregroundcolor']),0,6);
-				} else {
-					unset($_POST['k2']['foregroundcolor']);
-				}
+				// Header Image
+				if (isset($_POST['k2']['header_picture'])) {
+					update_option('k2header_picture', $_POST['k2']['header_picture']);
 
-				// Set all the options
-				foreach($_POST['k2'] as $option => $value) {
-					update_option('k2' . $option, $value);
+					// Update Custom Image Header
+					if (function_exists('set_theme_mod')) {
+						if (empty($_POST['k2']['header_picture'])) {
+							set_theme_mod('header_image', get_bloginfo('template_url').'/images/transparent.gif');
+						} else {
+							set_theme_mod('header_image', get_bloginfo('template_url').'/images/headers/'.$_POST['k2']['header_picture']);
+						}
+					}
+					unset($_POST['k2']['header_picture']);
 				}
 			}
 		}
 	}
 
 	function random_picture() {
-		global $k2_headers_path;
-
-		$picture_files = K2::files_scan($k2_headers_path, false, 1);
+		$picture_files = K2::files_scan(K2_HEADERS_PATH, array('gif','jpg','png'), 1);
 		$size = count($picture_files);
 
 		if($size > 1) {
@@ -74,48 +86,112 @@ class K2Header {
 			$picture = get_option('k2header_picture');
 		}
 
-		if($picture != '') {
-			$picture = 'background: url("' . get_bloginfo('template_url') . '/images/headers/' . $picture . '") no-repeat center center !important;';
-
+		if (!empty($picture)) {
 			?>
 			<style type="text/css">
 				#header {
-					<?php echo($picture); ?>
-					background-color: <?php echo(get_option('k2headerbackgroundcolor')); ?>;
-					}
-
-				#header h1 {
-					text-align: <?php echo(get_option('k2headertextalignment')); ?>;
-					font-size: <?php echo(get_option('k2headertextfontsize')); ?>px;
-					}
-
-				h1, h1 a,h1 a:visited, #header .description {
-					color: <?php echo(get_option('k2headertextcolor')); ?>;
-      					}
-
-				.description {
-					display: block !important;
-					text-align: <?php echo(get_option('k2headertextalignment')); ?>;
-					}
+					background: url("<?php echo get_bloginfo('template_url').'/images/headers/'.$picture; ?>") !important;
+				}
 			</style>
 			<?php
 		}
 	}
 
+	// Custom Image Header
+	function header_style() {
+		if (get_option('k2imagerandomfeature') == '1') {
+			$picture = K2Header::random_picture();
+		} else {
+			$picture = get_option('k2header_picture');
+		}
+		?>
+		<style type="text/css">
+		<?php if (!empty($picture)) { ?>
+		#header {
+			background: url("<?php echo get_bloginfo('template_url').'/images/headers/'.$picture; ?>");
+		}
+		<?php } ?>
+		<?php if ( 'blank' == get_header_textcolor() ) { ?>
+		#header h1, #header .description {
+			display: none;
+		}
+		<?php } else { ?>
+		#header h1 a, #header .description {
+			color: #<?php header_textcolor(); ?>;
+		}
+		<?php } ?>
+		</style>
+		<?php
+	}
+
+	function admin_header_style() {
+		?>
+		<style type="text/css">
+		#headimg {
+			height: <?php echo HEADER_IMAGE_HEIGHT; ?>px;
+			width: <?php echo HEADER_IMAGE_WIDTH; ?>px;
+			background-color: #3371A3 !important;
+		}
+
+		#headimg h1 {
+			font-size: 30px;
+			font-weight: bold;
+			letter-spacing: -1px;
+			margin: 0;
+			padding: 75px 40px 0;
+			border: none;
+		}
+
+		#headimg h1 a {
+			text-decoration: none;
+			border: none;
+		}
+
+		#headimg h1 a:hover {
+			text-decoration: underline;
+		}
+
+		#headimg #desc {
+			font-size: 10px;
+			margin: 0 40px;
+		}
+
+		<?php if ( 'blank' == get_header_textcolor() ) { ?>
+		#headimg h1, #headimg #desc {
+			display: none;
+		}
+		<?php } else { ?>
+		#headimg h1 a, #headimg #desc {
+			color: #<?php echo HEADER_TEXTCOLOR ?>;
+		}
+		<?php } ?>
+		</style>
+		<?php
+	}
+
+	function move_custom_header_image($source) {
+		// Handle only the final step
+		if (strpos(basename($source),'midsize-') === false) {
+			$dest = K2_HEADERS_PATH . basename($source);
+
+			// Move the final image
+			if (rename($source, $dest)) {
+				update_option('k2header_picture', basename($source));
+
+				return $dest;
+			}
+		}
+		return $source;
+	}
+
 	function install() {
 		add_option('k2imagerandomfeature', '1', "Whether to use a random image in K2's header");
 		add_option('k2header_picture', '', "The image to use in K2's header");
-		add_option('k2headerbackgroundcolor', '', "K2's header background color");
-		add_option('k2headertextalignment', 'left', "K2's header text alignment");
-		add_option('k2headertextfontsize', '', "K2's header text font size");
-		add_option('k2headertextcolor', '', "K2's header text font color");
-		add_option('k2headertextcolor_bright', '', "K2's header text bright font colour");
-		add_option('k2headertextcolor_dark', '', "K2's header text dark font colour");
 	}
 
-	function uninstall() {
-		delete_option('k2imagerandomfeature');
-		delete_option('k2header_picture');
+	function cleanup_depreciated() {
+		// Removes options that are no longer used.
+
 		delete_option('k2headerbackgroundcolor');
 		delete_option('k2headertextalignment');
 		delete_option('k2headertextfontsize');
@@ -123,10 +199,16 @@ class K2Header {
 		delete_option('k2headertextcolor_bright');
 		delete_option('k2headertextcolor_dark');
 	}
+
+	function uninstall() {
+		delete_option('k2imagerandomfeature');
+		delete_option('k2header_picture');
+	}
 }
 
 add_action('k2_init', array('K2Header', 'init'), 2);
 add_action('k2_install', array('K2Header', 'install'));
+add_action('k2_install', array('K2Header', 'cleanup_depreciated'));
 add_action('k2_uninstall', array('K2Header', 'uninstall'));
-
+add_filter('wp_create_file_in_uploads', array('K2Header', 'move_custom_header_image'));
 ?>

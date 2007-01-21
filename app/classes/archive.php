@@ -3,7 +3,7 @@
 
 class K2Archive {
 	function create_archive() {
-		global $wpdb, $wp_version;
+		global $wpdb;
 
 		$archives_id = $wpdb->get_var("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = 'page-archives.php' LIMIT 1");
 
@@ -13,11 +13,11 @@ class K2Archive {
 		$archives_page['post_excerpt'] = __('Do not edit this page', 'k2_domain');
 		$archives_page['post_title'] = __('Archives', 'k2_domain');
 
-		if (strpos($wp_version, '2.1') === false) {
+		if (get_wp_version() < 2.1) {
 			// WP 2.0
 			$archives_page['post_status'] = 'static';
 		} else {
-			// WP 2.1
+			// WP 2.1+
 			$archives_page['post_status'] = 'publish';
 			$archives_page['post_type'] = 'page';
 		}

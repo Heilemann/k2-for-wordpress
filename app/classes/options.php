@@ -21,6 +21,7 @@ class K2Options {
 	function update() {
 		if(!empty($_POST)) {
 			if(isset($_POST['k2'])) {
+
 				// Advanced Navigation
 				if(isset($_POST['k2']['advnav'])) {
 					update_option('k2livesearch', '1');
@@ -30,6 +31,16 @@ class K2Options {
 					update_option('k2rollingarchives', '0');
 				}
 
+				// Archives Page
+				if(isset($_POST['k2']['archives'])) {
+					update_option('k2archives', '1');
+					K2Archive::create_archive();
+				} else {
+					// thanks to Michael Hampton, http://www.ioerror.us/ for the assist
+					update_option('k2archives', '0');
+					K2Archive::delete_archive();
+				}
+
 				// Live Commenting
 				if(isset($_POST['k2']['livecommenting'])) {
 					update_option('k2livecommenting', '1');
@@ -37,28 +48,11 @@ class K2Options {
 					update_option('k2livecommenting', '0');
 				}
 
-				// Archives Page
-				if(isset($_POST['k2']['archives'])) {
-					K2Archive::create_archive();
-				} else {
-					// thanks to Michael Hampton, http://www.ioerror.us/ for the assist
-					$_POST['k2']['archives'] = '';
-					K2Archive::delete_archive();
-				}
-
-				// Live Commenting
-				if(isset($_POST['k2']['imagerandomfeature'])) {
-					update_option('k2imagerandomfeature', '1');
-				} else {
-					update_option('k2imagerandomfeature', '0');
-				}
-
-			
 				// Set all the options
 				foreach($_POST['k2'] as $option => $value) {
 					update_option('k2' . $option, $value);
 				}
-
+				
 				if(isset($_POST['k2']['scheme'])) {
 					k2styleinfo_update();
 				}
@@ -77,11 +71,8 @@ class K2Options {
 	function install() {
 		add_option('k2aboutblurp', '', 'Allows you to write a small blurp about you and your blog, which will be put on the frontpage');
 		add_option('k2asidescategory', '0', 'A category which will be treated differently from other categories');
-		add_option('k2asidesposition', '0', 'Whether to use inline or sidebar asides');
 		add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on"); // (live & classic)
-		add_option('k2asidesnumber', '3', 'The number of Asides to show in the Sidebar. Default is 3.');
-		add_option('k2widthtype', '1', "Determines whether to use flexible or fixed width. Default is fixed."); // (flexible & fixed)
-		add_option('k2archives', '', 'Set whether K2 has a Live Archive page');
+		add_option('k2archives', '0', 'Set whether K2 has a Live Archive page');
 		add_option('k2scheme', '', 'Choose the Scheme you want K2 to use');
 		add_option('k2livecommenting', '1', "If you don't trust JavaScript, you can turn off Live Commenting. Otherwise it is suggested you leave it on");
 		add_option('k2styleinfo_format', 'Current style is <a href="%stylelink%" title="%style% by %author%">%style% %version%</a> by <a href="%site%">%author%</a><br />', 'Format for displaying the current selected style info.');
@@ -90,16 +81,21 @@ class K2Options {
 		add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.');
 	}
 
+	function cleanup_depreciated() {
+		// Removes options that are no longer used.
+
+		delete_option('k2asidesposition');
+		delete_option('k2asidesnumber');
+		delete_option('k2widthtype');
+	}
+
 	function uninstall() {
 		// Ensure the archives are deleted
 		K2Archive::delete_archive();
 
 		delete_option('k2aboutblurp');
 		delete_option('k2asidescategory');
-		delete_option('k2asidesposition');
 		delete_option('k2livesearch');
-		delete_option('k2asidesnumber');
-		delete_option('k2widthtype');
 		delete_option('k2archives');
 		delete_option('k2scheme');
 		delete_option('k2livecommenting');
@@ -112,6 +108,7 @@ class K2Options {
 
 add_action('k2_init', array('K2Options', 'init'), 1);
 add_action('k2_install', array('K2Options', 'install'));
+add_action('k2_install', array('K2Options', 'cleanup_depreciated'));
 add_action('k2_uninstall', array('K2Options', 'uninstall'));
 
 ?>

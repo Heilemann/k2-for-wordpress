@@ -11,9 +11,11 @@ function get_k2info($show='') {
 		case 'version' :
     		$output = 'Beta Two '. $current;
 			break;
+
 		case 'scheme' :
 			$output = get_bloginfo('template_url') . '/styles/' . get_option('k2scheme');
 			break;
+
 		case 'js_url' :
 			$template_url = get_bloginfo('template_url');
 
@@ -24,6 +26,7 @@ function get_k2info($show='') {
 			} else {
 				$output = $template_url;
 			}
+			break;
 	}
 	return $output;
 }
@@ -35,7 +38,7 @@ function k2_style_info() {
 
 function k2styleinfo_update() {
 	$style_info = '';
-	$data = k2styleinfo_parse( get_option('k2scheme') );
+	$data = get_scheme_info( get_option('k2scheme') );
 
 	if ('' != $data) {
 		$style_info = get_option('k2styleinfo_format');
@@ -52,7 +55,7 @@ function k2styleinfo_update() {
 
 function k2styleinfo_demo() {
 	$style_info = get_option('k2styleinfo_format');
-	$data = k2styleinfo_parse( get_option('k2scheme') );
+	$data = get_scheme_info( get_option('k2scheme') );
 
 	if ('' != $data) {
 		$style_info = str_replace("%style%", $data['style'], $style_info);
@@ -73,14 +76,14 @@ function k2styleinfo_demo() {
 	echo stripslashes($style_info);
 }
 
-function k2styleinfo_parse($style_file = '') {
+function get_scheme_info($style_file = '') {
 	// if no style selected, exit
 	if ( '' == $style_file ) {
-		return;
+		return false;
 	}
 
 	$style_path = TEMPLATEPATH . '/styles/' . $style_file;
-	if (!file_exists($style_path)) return;
+	if (!file_exists($style_path)) return false;
 	$style_data = implode( '', file( $style_path ) );
 
 	// parse the data
@@ -90,8 +93,21 @@ function k2styleinfo_parse($style_file = '') {
 	preg_match("|Style URI\s*:(.*)|i", $style_data, $stylelink);
 	preg_match("|Version\s*:(.*)|i", $style_data, $version);
 	preg_match("|Comments\s*:(.*)|i", $style_data, $comments);
+	preg_match("|Header Text Color\s*:(.*)|i", $style_data, $header_text_color);
+	preg_match("|Header Width\s*:(.*)|i", $style_data, $header_width);
+	preg_match("|Header Height\s*:(.*)|i", $style_data, $header_height);
 
-	return array('style' => trim($style[1]), 'stylelink' => trim($stylelink[1]), 'author' => trim($author[1]), 'site' => trim($site[1]), 'version' => trim($version[1]), 'comments' => trim($comments[1]));
+	return array(
+		'style' => trim($style[1]),
+		'stylelink' => trim($stylelink[1]),
+		'author' => trim($author[1]),
+		'site' => trim($site[1]),
+		'version' => trim($version[1]),
+		'comments' => trim($comments[1]),
+		'header_text_color' => trim($header_text_color[1]),
+		'header_width' => trim($header_width[1]),
+		'header_height' => trim($header_height[1])
+	);
 }
 
 function get_k2_ping_type($trackbacktxt = 'Trackback', $pingbacktxt = 'Pingback') {
@@ -108,10 +124,10 @@ function get_k2_ping_type($trackbacktxt = 'Trackback', $pingbacktxt = 'Pingback'
 }
 
 function k2countpages($query) {
-	global $wpdb, $wp_version;
+	global $wpdb;
 
 	// WP 2.0
-	if (strpos($wp_version, '2.1') === false) {
+	if (get_wp_version() < 2.1) {
 		$posts_per = (int) get_option('posts_per_page');
 		if ( empty($posts_per) ) {
 			$posts_per = 1;
@@ -131,7 +147,7 @@ function k2countpages($query) {
 		return ceil($num_posts / $posts_per);
 	}
 
-	// WP 2.1
+	// WP 2.1+
 	return($query->max_num_pages);
 }
 
@@ -327,6 +343,12 @@ if (!function_exists('http_build_query')) {
 
 		return implode($sep, $ret);
 	}
+}
+
+function get_wp_version() {
+	global $wp_version;
+	preg_match("/^\d+\.\d+(\.\d+)*/i", $wp_version, $match);
+	return $match[0];
 }
 
 // Filter to remove asides from the loop
