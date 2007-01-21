@@ -22,14 +22,6 @@ class K2Header {
 		}
 	}
 
-	/*function add_menu() {
-		add_submenu_page('themes.php', __('K2 Custom Header','k2_domain'), __('K2 Custom Header','k2_domain'), 5, 'k2-header', array('K2Header', 'admin'));
-	}
-
-	function admin() {
-		include(TEMPLATEPATH . '/app/display/header.php');
-	}*/
-
 	function update() {
 		// Manage the uploaded picture
 		if($_FILES['picture']['name'] != "" and $_FILES['picture']['size'] > 0) {
