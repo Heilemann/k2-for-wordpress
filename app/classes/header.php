@@ -15,46 +15,42 @@ class K2Header {
 			define('HEADER_TEXTCOLOR', empty($scheme_info['header_text_color'])? 'ffffff' : $scheme_info['header_text_color']);
 			define('HEADER_IMAGE', empty($header_image)? '%s/images/transparent.gif' : '%s/images/headers/'.$header_image);
 
-			add_custom_image_header(array('K2Header', 'header_style'), array('K2Header', 'admin_header_style'));
+			add_custom_image_header(array('K2Header', 'output_header_css'), array('K2Header', 'output_admin_header_css'));
 		} else {
-			/*add_action('admin_menu', array('K2Header', 'add_menu'));*/
-			add_action('wp_head', array('K2Header', 'output_css'));
+			add_action('wp_head', array('K2Header', 'output_header_css'));
 		}
 	}
 
 	function update() {
 		// Manage the uploaded picture
-		if($_FILES['picture']['name'] != "" and $_FILES['picture']['size'] > 0) {
+		if (!empty($_FILES['picture']['name']) and !empty($_FILES['picture']['size'])) {
 			move_uploaded_file($_FILES['picture']['tmp_name'], K2_HEADERS_PATH . $_FILES['picture']['name']);
 
-			if(isset($_POST['upload_activate'])) {
+			if (isset($_POST['upload_activate'])) {
 				update_option('k2header_picture', $_FILES['picture']['name']);
 			}
 		}
 
-		if(!empty($_POST)) {
-			if(isset($_POST['k2'])) {
+		if (!empty($_POST['k2'])) {
 
-				// Random Image
-				if(isset($_POST['k2']['imagerandomfeature'])) {
-					update_option('k2imagerandomfeature', '1');
-				} else {
-					update_option('k2imagerandomfeature', '0');
-				}
+			// Random Image
+			if(isset($_POST['k2']['imagerandomfeature'])) {
+				update_option('k2imagerandomfeature', '1');
+			} else {
+				update_option('k2imagerandomfeature', '0');
+			}
 
-				// Header Image
-				if (isset($_POST['k2']['header_picture'])) {
-					update_option('k2header_picture', $_POST['k2']['header_picture']);
+			// Header Image
+			if (isset($_POST['k2']['header_picture'])) {
+				update_option('k2header_picture', $_POST['k2']['header_picture']);
 
-					// Update Custom Image Header
-					if (function_exists('set_theme_mod')) {
-						if (empty($_POST['k2']['header_picture'])) {
-							set_theme_mod('header_image', get_bloginfo('template_url').'/images/transparent.gif');
-						} else {
-							set_theme_mod('header_image', get_bloginfo('template_url').'/images/headers/'.$_POST['k2']['header_picture']);
-						}
+				// Update Custom Image Header
+				if (function_exists('set_theme_mod')) {
+					if (empty($_POST['k2']['header_picture'])) {
+						set_theme_mod('header_image', get_bloginfo('template_url').'/images/transparent.gif');
+					} else {
+						set_theme_mod('header_image', get_bloginfo('template_url').'/images/headers/'.$_POST['k2']['header_picture']);
 					}
-					unset($_POST['k2']['header_picture']);
 				}
 			}
 		}
@@ -71,26 +67,7 @@ class K2Header {
 		}
 	}
 
-	function output_css() {
-		if(get_option('k2imagerandomfeature') == '1') {
-			$picture = K2Header::random_picture();
-		} else {
-			$picture = get_option('k2header_picture');
-		}
-
-		if (!empty($picture)) {
-			?>
-			<style type="text/css">
-				#header {
-					background: url("<?php echo get_bloginfo('template_url').'/images/headers/'.$picture; ?>") !important;
-				}
-			</style>
-			<?php
-		}
-	}
-
-	// Custom Image Header
-	function header_style() {
+	function output_header_css() {
 		if (get_option('k2imagerandomfeature') == '1') {
 			$picture = K2Header::random_picture();
 		} else {
@@ -103,20 +80,22 @@ class K2Header {
 			background: url("<?php echo get_bloginfo('template_url').'/images/headers/'.$picture; ?>");
 		}
 		<?php } ?>
-		<?php if ( 'blank' == get_header_textcolor() ) { ?>
-		#header h1, #header .description {
-			display: none;
-		}
-		<?php } else { ?>
-		#header h1 a, #header .description {
-			color: #<?php header_textcolor(); ?>;
-		}
+		<?php if (function_exists('add_custom_image_header')) { ?>
+			<?php if ( 'blank' == get_header_textcolor() ) { ?>
+			#header h1, #header .description {
+				display: none;
+			}
+			<?php } else { ?>
+			#header h1 a, #header .description {
+				color: #<?php header_textcolor(); ?>;
+			}
+			<?php } ?>
 		<?php } ?>
 		</style>
 		<?php
 	}
 
-	function admin_header_style() {
+	function output_admin_header_css() {
 		?>
 		<style type="text/css">
 		#headimg {
