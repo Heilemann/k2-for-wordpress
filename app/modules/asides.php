@@ -1,23 +1,21 @@
 <?php
 
 function asides_sidebar_module($args) {
-	global $post;
-
 	extract($args);
 
 	$k2asidescategory = get_option('k2asidescategory');
 
-	if ( (get_option('k2asidesposition') != '0') and ($k2asidescategory != '0') ) {
+	if ( $k2asidescategory != '0') {
 		echo $before_module . $before_title . $title . $after_title;
 ?>
 		<span class="metalink"><a href="<?php bloginfo('url'); ?>/?feed=rss&amp;cat=<?php echo $k2asidescategory; ?>" title="<?php _e('RSS Feed for Asides','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
 		<div>
 		<?php
 			$asides_count = 1;
-			$asides = new WP_Query('cat=' . $k2asidescategory . '&showposts=' . sbm_get_option('num_posts'));
+			$asides_posts = get_posts('category=' . $k2asidescategory . '&numberposts=' . sbm_get_option('num_posts'));
 
-			foreach ($asides->posts as $post) {
-				setup_postdata($post);
+			foreach ($asides_posts as $aside) {
+				setup_postdata($aside);
 		?>
 			<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class($asides_count++, true); ?>">
 				<span>&raquo;&nbsp;</span><?php the_content(__('(more)','k2_domain')); ?>&nbsp;<span class="metalink"><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php _e('Permanent Link to this aside','k2_domain'); ?>'>#</a></span>&nbsp;<span class="metalink"><?php comments_popup_link('0', '1', '%', '', ' '); ?></span><?php edit_post_link(__('edit','k2_domain'),'&nbsp;&nbsp;<span class="metalink">','</span>'); ?>
