@@ -118,7 +118,7 @@ class K2SBM {
 			header('Content-type: text/xml');
 
 			// XML prelude
-			echo('<?xml version="1.0"?>');
+			echo('<?xml version="1.0" encoding="UTF-8"?>');
 
 			// Begin the response
 			echo('<response>');
@@ -140,7 +140,9 @@ class K2SBM {
 
 							if($modules) {
 								foreach($modules as $module) {
-									echo('<module id="' . $module->id . '">' . htmlentities(strip_tags($module->name), ENT_QUOTES, 'UTF-8') . '</module>');
+									// With a little help from PHP.net - Woo!
+									echo('<module id="' . $module->id . '">' . preg_replace('/([^\x09\x0A\x0D\x20-\x7F]|[\x21-\x2F]|[\x3A-\x40]|[\x5B-\x60])/e', '"&#".ord("$0").";"', utf8_decode($module->name)) . '</module>'); 
+
 								}
 							}
 
