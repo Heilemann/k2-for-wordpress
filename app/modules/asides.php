@@ -1,6 +1,8 @@
 <?php
 
 function asides_sidebar_module($args) {
+	global $post;
+
 	extract($args);
 
 	$k2asidescategory = get_option('k2asidescategory');
@@ -10,21 +12,21 @@ function asides_sidebar_module($args) {
 ?>
 		<span class="metalink"><a href="<?php bloginfo('url'); ?>/?feed=rss&amp;cat=<?php echo $k2asidescategory; ?>" title="<?php _e('RSS Feed for Asides','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
 		<div>
-		<?php
-			$asides_count = 1;
-			$asides_posts = get_posts('category=' . $k2asidescategory . '&numberposts=' . sbm_get_option('num_posts'));
+			<?php
+				$asides_count = 1;
+				$asides = new WP_Query('cat=' . $k2asidescategory . '&showposts=' . sbm_get_option('num_posts'));
 
-			foreach ($asides_posts as $aside) {
-				setup_postdata($aside);
-		?>
+				foreach ($asides->posts as $post) {
+					setup_postdata($post);
+			?>
 			<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class($asides_count++, true); ?>">
-				<span>&raquo;&nbsp;</span><?php the_content(__('(more)','k2_domain')); ?>&nbsp;<span class="metalink"><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php _e('Permanent Link to this aside','k2_domain'); ?>'>#</a></span>&nbsp;<span class="metalink"><?php comments_popup_link('0', '1', '%', '', ' '); ?></span><?php edit_post_link(__('edit','k2_domain'),'&nbsp;&nbsp;<span class="metalink">','</span>'); ?>
+				<span>&raquo;&nbsp;</span><?php the_content(__('(more)','k2_domain')); ?>&nbsp;<span class="metalink"><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php comments_number('(0)','(1)','(%)'); ?></a></span><?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="entry-edit">','</span>'); ?>
 			</div>
-		<?php } // End Asides loop ?>
+			<?php } /* end asides loop */ ?>
 		</div>
 <?php
 		echo $after_module;
-	} // End Asides check
+	} /* end asides check */
 }
 
 function asides_sidebar_module_control() {
