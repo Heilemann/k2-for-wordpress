@@ -21,31 +21,44 @@ $k2sbm_error_text = '';
 
 class K2SBM {
 	function install() {
+		$sbm_stub_path = '../themes/'.get_option('template').'/app/includes/sbm-stub.php';
+
 		add_option('k2sbm_modules_active', array(), 'The active sidebar modules.');
 		add_option('k2sbm_modules_disabled', array(), 'The disabled sidebar modules.');
 		add_option('k2sbm_modules_next_id', 1, 'The ID for the next sidebar module.');
+		add_option('k2sbm_stub_path', $sbm_stub_path, 'The location of sbm-stub.php');
 
-		// Add the SBM stub file to the plugins list
-		$sbm_stub_path = '../themes/' . get_option('template') . '/app/includes/sbm-stub.php';
-		$plugins = (array)get_option('active_plugins');
+		// Activate sbm-stub
+		K2SBM::process_stub($sbm_stub_path);
+	}
 
-		if(count($plugins) == 0) {
-			$plugins = array($sbm_stub_path);
-		} else {
-			$found = false;
+	function init() {
+		// Check to see if sbm-stub needs to be activated
+		$sbm_stub_path = '../themes/'.get_option('template').'/app/includes/sbm-stub.php';
 
-			// Check to see if the stub plugin is already there
-			for($i = 0; $i < count($plugins); $i++) {
-				if($plugins[$i] == $sbm_stub_path) {
-					$found = true;
-				} elseif(strpos($plugins[$i], 'sbm-stub.php') !== false) {
-					unset($plugins[$i]);
-				}
+		if (get_option('k2sbm_stub_path') != $sbm_stub_path) {
+			K2SBM::process_stub($sbm_stub_path);
+		}
+	}
+
+	function process_stub($sbm_stub_path = false) {
+		$plugins = (array) get_option('active_plugins');
+
+		// Remove all existing sbm-stub paths
+		for ($i = 0; $i < count($plugins); $i++) {
+			if (strpos($plugins[$i], 'sbm-stub.php') !== false) {
+				unset($plugins[$i]);
 			}
+		}
 
-			if(!$found) {
+		// Insert the new sbm-stub path
+		if (!empty($sbm_stub_path)) {
+			if (count($plugins) == 0) {
+				$plugins = array($sbm_stub_path);
+			} else {
 				$plugins[] = $sbm_stub_path;
 			}
+			update_option('k2sbm_stub_path', $sbm_stub_path);
 		}
 
 		update_option('active_plugins', $plugins);
@@ -55,17 +68,10 @@ class K2SBM {
 		delete_option('k2sbm_modules_active');
 		delete_option('k2sbm_modules_disabled');
 		delete_option('k2sbm_modules_next_id');
+		delete_option('k2sbm_stub_path');
 
-		// Remove the SBM stub
-		$plugins = (array)get_option('active_plugins');
-
-		for($i = 0; $i < count($plugins); $i++) {
-			if(strpos($plugins[$i], 'sbm-stub.php') !== false) {
-				unset($plugins[$i]);
-			}
-		}
-
-		update_option('active_plugins', $plugins);
+		// Remove sbm-stub
+		K2SBM::process_stub();
 	}
 
 	function wp_bootstrap() {
@@ -924,6 +930,7 @@ class k2sbmModule {
 	}
 }
 
+add_action('k2_init', array('K2SBM', 'init'));
 add_action('k2_install', array('K2SBM', 'install'));
 add_action('k2_uninstall', array('K2SBM', 'uninstall'));
 
