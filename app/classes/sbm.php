@@ -239,6 +239,8 @@ class K2SBM {
 		// Add menus
 		add_action('admin_menu', array('K2SBM', 'add_menus'));
 
+		K2SBM::register_sidebar(array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>'));
+
 		// Check if this page is the one being shown, if so then add stuff to the header
 		if($_GET['page'] == 'k2-sbm-modules') {
 			add_action('admin_head', array('K2SBM', 'module_admin_head'));
@@ -346,7 +348,7 @@ class K2SBM {
 		for($i = 0; $i < $count; $i++) {
 			$args['name'] = sprintf($arg_name, $i + 1);
 
-			register_sidebar($args);
+			K2SBM::register_sidebar($args);
 		}
 	}
 
