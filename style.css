@@ -349,6 +349,11 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	color: #bbb;
 	}
 
+.entry-meta address {
+	display: inline;
+	font-style: normal;
+	}
+
 .entry-meta a, .comment-meta a {
 	color: #777;
 	}
