@@ -69,7 +69,6 @@ class K2Options {
 	}
 
 	function install() {
-		add_option('k2aboutblurp', '', 'Allows you to write a small blurp about you and your blog, which will be put on the frontpage');
 		add_option('k2asidescategory', '0', 'A category which will be treated differently from other categories');
 		add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on"); // (live & classic)
 		add_option('k2archives', '0', 'Set whether K2 has a Live Archive page');
@@ -87,13 +86,13 @@ class K2Options {
 		delete_option('k2asidesposition');
 		delete_option('k2asidesnumber');
 		delete_option('k2widthtype');
+		delete_option('k2aboutblurp');
 	}
 
 	function uninstall() {
 		// Ensure the archives are deleted
 		K2Archive::delete_archive();
 
-		delete_option('k2aboutblurp');
 		delete_option('k2asidescategory');
 		delete_option('k2livesearch');
 		delete_option('k2archives');
