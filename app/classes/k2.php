@@ -120,6 +120,49 @@ class K2 {
 			$dir->close();
 		}
 	}
+
+	function move_file($source, $dest, $overwrite = false) {
+		// check source and destination folder
+		if ( file_exists($source) and is_dir(dirname($dest)) ) {
+
+			// destination is a folder, assume move to there
+			if ( is_dir($dest) ) {
+				if ( DIRECTORY_SEPARATOR != substr($dest, -1) )
+					$dest .= DIRECTORY_SEPARATOR;
+
+				$dest = $dest . basename($source);
+			}
+
+			// destination file exists
+			if ( is_file($dest) ) {
+				if ($overwrite) {
+					// Delete existing destination file
+					@unlink($dest);
+				} else {
+					// Find a unique name
+					$dest = K2::get_unique_path($dest);
+				}
+			}
+
+			if (rename($source, $dest)) {
+				return $dest;
+			}
+		}
+		return false;
+	}
+
+	function get_unique_path($source) {
+		$source = pathinfo($source);
+		
+		$path = $source['dirname'];
+		$filename = $source['filename'];
+		$ext = $source['extension'];
+
+		$number = 0;
+		while ( file_exists($path . $filename . ++$number . $ext) );
+
+		return $path . sanitize_title_with_dashes($filename . $number) . $ext;
+	}
 }
 
 ?>

@@ -6,7 +6,7 @@ class K2Header {
 	function init() {
 		define('K2_HEADERS_PATH', TEMPLATEPATH . '/images/headers/');
 
-		if (function_exists('add_custom_image_header')) {
+		if ( function_exists('add_custom_image_header') and is_writable(K2_HEADERS_PATH) ) {
 			$scheme_info = get_scheme_info(get_option('k2scheme'));
 			$header_image = get_option('k2header_picture');
 
@@ -47,9 +47,9 @@ class K2Header {
 				// Update Custom Image Header
 				if (function_exists('set_theme_mod')) {
 					if (empty($_POST['k2']['header_picture'])) {
-						set_theme_mod('header_image', get_bloginfo('template_url').'/images/transparent.gif');
+						remove_theme_mod('header_image');
 					} else {
-						set_theme_mod('header_image', get_bloginfo('template_url').'/images/headers/'.$_POST['k2']['header_picture']);
+						set_theme_mod('header_image', get_bloginfo('template_url') . '/images/headers/' . $_POST['k2']['header_picture']);
 					}
 				}
 			}
@@ -57,7 +57,7 @@ class K2Header {
 	}
 
 	function random_picture() {
-		$picture_files = K2::files_scan(K2_HEADERS_PATH, array('gif','jpg','png'), 1);
+		$picture_files = K2::files_scan(K2_HEADERS_PATH, array('gif','jpeg','jpg','png'), 1);
 		$size = count($picture_files);
 
 		if($size > 1) {
@@ -140,14 +140,21 @@ class K2Header {
 		<?php
 	}
 
-	function move_custom_header_image($source) {
+	function process_custom_header_image($source, $id = false) {
+		// Workaround for WP 2.1 bug
+		if ( empty($source) ) {
+			$uploads = wp_upload_dir();
+			$source = str_replace($uploads['url'], $uploads['path'], get_theme_mod('header_image'));
+		}
+	
 		// Handle only the final step
-		if (strpos(basename($source),'midsize-') === false) {
-			$dest = K2_HEADERS_PATH . basename($source);
+		if ( file_exists($source) and (strpos(basename($source),'midsize-') === false) ) {
 
-			// Move the final image
-			if (rename($source, $dest)) {
-				update_option('k2header_picture', basename($source));
+			$dest = K2::move_file($source, K2_HEADERS_PATH . basename($source));
+
+			if (false !== $dest) {
+				update_option('k2header_picture', basename($dest));
+				set_theme_mod('header_image', get_bloginfo('template_directory') . '/images/headers/' . basename($dest));
 
 				return $dest;
 			}
@@ -181,5 +188,5 @@ add_action('k2_init', array('K2Header', 'init'), 2);
 add_action('k2_install', array('K2Header', 'install'));
 add_action('k2_install', array('K2Header', 'cleanup_depreciated'));
 add_action('k2_uninstall', array('K2Header', 'uninstall'));
-add_filter('wp_create_file_in_uploads', array('K2Header', 'move_custom_header_image'));
+add_filter('wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'));
 ?>
