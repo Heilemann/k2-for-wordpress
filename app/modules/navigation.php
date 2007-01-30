@@ -1,11 +1,11 @@
 <?php
 
 function nav_sidebar_module($args) {
-	global $notfound, $post, $wpdb;
+	global $post, $wpdb;
 
 	extract($args);
 
-	if(is_page() and ($notfound != '1')) {
+	if(is_page() and !defined('K2_NOT_FOUND')) {
 		$current_page = $post->ID;
 
 		while($current_page) {

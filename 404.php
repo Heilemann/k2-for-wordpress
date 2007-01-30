@@ -24,7 +24,7 @@
 		<div id="dynamic-content"></div>
 	</div> <!-- #primary -->
 
-	<?php $notfound = '1'; /* So we can tell the sidebar what to do */ ?>
+	<?php define('K2_NOT_FOUND', true); /* So we can tell the sidebar what to do */ ?>
 	<?php get_sidebar(); ?>
 
 </div> <!-- .content -->

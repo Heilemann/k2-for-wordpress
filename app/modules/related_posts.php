@@ -1,11 +1,9 @@
 <?php
 
 function related_posts_sidebar_module($args) {
-	global $notfound;
-
 	extract($args);
 
-	if(is_single() and ($notfound != '1')) {
+	if(is_single() and !defined('K2_NOT_FOUND')) {
 		echo($before_module . $before_title . $title . $after_title);
 		?>
 			<ul>
