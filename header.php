@@ -1,4 +1,22 @@
-<?php load_theme_textdomain('k2_domain'); ?>
+<?php
+	// Load localizatons
+	load_theme_textdomain('k2_domain');
+
+	// Load our scripts
+	wp_enqueue_script('k2functions');
+
+	if (get_option('k2rollingarchives') == 1) {
+		wp_enqueue_script('k2rollingarchives');
+	}
+
+	if (get_option('k2livesearch') == 1) {
+		wp_enqueue_script('k2livesearch');
+	}
+
+	if ((get_option('k2livecommenting') == 1) and ((is_page() or is_single()) and (!isset($_GET['jal_edit_comments'])) and ('open' == $post-> comment_status) or ('comment' == $post-> comment_type) )) {
+		wp_enqueue_script('k2comments');
+	}
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -26,24 +44,9 @@
 	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 	<?php } ?>
 
-	<?php if ( ((get_option('k2livecommenting') == 1) and ((is_page() or is_single()) and (!isset($_GET['jal_edit_comments'])) and ('open' == $post-> comment_status) or ('comment' == $post-> comment_type) )) or (get_option('k2livesearch') == 1) or (get_option('k2rollingarchives') == 1) ) { ?>
-	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/prototype.js.php"></script>
-	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/effects.js.php"></script>
-	<?php } ?>
-
-	<?php if ( (get_option('k2livesearch') == 1 and get_option('k2rollingarchives') == 1 ) or (get_option('k2rollingarchives') == 1) ) { ?>	
-	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/slider.js.php"></script>
-	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/trimmer.js.php"></script>
-	<?php } ?>
-	
-	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/k2functions.js.php"></script>
-
-	<?php /* Live Commenting */ if ((get_option('k2livecommenting') == 1) and ((is_page() or is_single()) and (!isset($_GET['jal_edit_comments'])) and ('open' == $post-> comment_status) or ('comment' == $post-> comment_type) )) { ?>
-	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/comments.js.php"></script>
-	<?php } ?>
+	<?php wp_head(); ?>	
 
 	<?php /* LiveSearch */ if (get_option('k2livesearch') == 1) { ?>
-	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/livesearch.js.php"></script>
 	<script type="text/javascript">
 	//<![CDATA[
 		Event.observe(window, "load", function() {
@@ -51,10 +54,6 @@
 		});
 	//]]>
 	</script>
-	<?php } ?>
-
-	<?php /* Rolling Archives */ if (get_option('k2rollingarchives') == 1) { ?>
-	<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/rollingarchives.js.php"></script>
 	<?php } ?>
 
 	<?php /* Hide Author Elements */ if (!is_user_logged_in() and (is_page() or is_single()) and ($comment_author = $_COOKIE['comment_author_'.COOKIEHASH]) and ('open' == $post-> comment_status) or ('comment' == $post-> comment_type) ) { ?>
@@ -66,8 +65,6 @@
 	<?php } ?>
 
 	<?php wp_get_archives('type=monthly&format=link'); ?>
-
-	<?php wp_head(); ?>	
 </head>
 
 <body class="<?php k2_body_class(); ?>" <?php k2_body_id(); ?>>

@@ -243,6 +243,7 @@ class K2SBM {
 
 		// Check if this page is the one being shown, if so then add stuff to the header
 		if($_GET['page'] == 'k2-sbm-modules') {
+			wp_enqueue_script('k2sbm');
 			add_action('admin_head', array('K2SBM', 'module_admin_head'));
 		}
 	}
@@ -277,11 +278,6 @@ class K2SBM {
 				var sbm_baseUrl = <?php k2info('js_url'); ?> + '/app/includes/sbm-ajax.php';
 			//]]>
 		</script>
-
-		<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/prototype.js.php"></script>
-		<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/effects.js.php"></script>
-		<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/dragdrop.js.php"></script>
-		<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/sbm.js.php"></script>
 	<?php
 	}
 
