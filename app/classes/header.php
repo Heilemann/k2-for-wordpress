@@ -145,12 +145,17 @@ class K2Header {
 		if ( empty($source) ) {
 			$uploads = wp_upload_dir();
 			$source = str_replace($uploads['url'], $uploads['path'], get_theme_mod('header_image'));
+			$id = true;
 		}
 	
 		// Handle only the final step
 		if ( file_exists($source) and (strpos(basename($source),'midsize-') === false) ) {
 
-			$dest = K2::move_file($source, K2_HEADERS_PATH . basename($source));
+			if ($id) {
+				$dest = K2::copy_file($source, K2_HEADERS_PATH . basename($source));
+			} else {
+				$dest = K2::move_file($source, K2_HEADERS_PATH . basename($source));
+			}
 
 			if (false !== $dest) {
 				update_option('k2header_picture', basename($dest));

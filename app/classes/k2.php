@@ -143,6 +143,14 @@ class K2 {
 	}
 
 	function move_file($source, $dest, $overwrite = false) {
+		return K2::_copy_or_move_file($source, $dest, $overwrite, true);
+	}
+
+	function copy_file($source, $dest, $overwrite = false) {
+		return K2::_copy_or_move_file($source, $dest, $overwrite, false);
+	}
+
+	function _copy_or_move_file($source, $dest, $overwrite = false, $move = false) {
 		// check source and destination folder
 		if ( file_exists($source) and is_dir(dirname($dest)) ) {
 
@@ -165,8 +173,12 @@ class K2 {
 				}
 			}
 
-			if (rename($source, $dest)) {
-				return $dest;
+			if ($move) {
+				if ( rename($source, $dest) )
+					return $dest;
+			} else {
+				if ( copy($source, $dest) )
+					return $dest;
 			}
 		}
 		return false;
