@@ -95,7 +95,7 @@ class K2SBM {
 		auth_redirect();
 
 		K2SBM::pre_bootstrap();
-		K2SBM::post_bootstrap();
+		//K2SBM::post_bootstrap();
 
 		// Check for specific actions that return a HTML response
 		if($_GET['action'] == 'control-show') {
@@ -238,8 +238,6 @@ class K2SBM {
 	function k2_init() {
 		// Add menus
 		add_action('admin_menu', array('K2SBM', 'add_menus'));
-
-		K2SBM::register_sidebar(array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>'));
 
 		// Check if this page is the one being shown, if so then add stuff to the header
 		if($_GET['page'] == 'k2-sbm-modules') {

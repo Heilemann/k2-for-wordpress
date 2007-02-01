@@ -42,6 +42,11 @@ class K2 {
 		// There may be some things we need to do before K2 is initialised
 		// Let's do them now
 		do_action('k2_init');
+
+		// Register our sidebar with SBM or Widgets
+		if (function_exists('register_sidebar')) {
+			register_sidebar(array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>'));
+		}
 	}
 
 	function install($last_modified) {

@@ -16,12 +16,15 @@ if($k2sbm_theme_path == $k2sbm_k2_path) {
 	function k2sbm_load() {
 		global $k2sbm_k2_path;
 
-		require_once($k2sbm_k2_path . '/app/classes/sbm.php');
-		require_once($k2sbm_k2_path . '/app/includes/sbm.php');
+		// Only include SBM if no other plugin is installed for handling sidebars
+		if(!function_exists('register_sidebar')) {
+			require_once($k2sbm_k2_path . '/app/classes/sbm.php');
+			require_once($k2sbm_k2_path . '/app/includes/sbm.php');
 
-		K2SBM::wp_bootstrap();
+			K2SBM::wp_bootstrap();
 
-		add_action('k2_init', array('K2SBM', 'k2_init'), 3);
+			add_action('k2_init', array('K2SBM', 'k2_init'), 3);
+		}
 	}
 
 	// DON'T do this if we're activating another plugin

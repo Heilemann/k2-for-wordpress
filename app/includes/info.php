@@ -179,12 +179,15 @@ function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' a
 	return apply_filters('the_category', $thelist, $normal_separator);
 }
 
-
 function k2asides_filter($query) {
-	$k2asidescategory = get_option('k2asidescategory');
+	// Check to see if SBM is active
+	if (function_exists('is_active_module')) {
+		$k2asidescategory = get_option('k2asidescategory');
 
-	if ( ($k2asidescategory != 0) and (is_active_module('asides_sidebar_module')) and ($query->is_home) ) {
-		$query->set('cat', '-'.$k2asidescategory);
+		// Only filter when it's in the homepage
+		if ( ($k2asidescategory != 0) and (is_active_module('asides_sidebar_module')) and ($query->is_home) ) {
+			$query->set('cat', '-'.$k2asidescategory);
+		}
 	}
 
 	return $query;
