@@ -18,6 +18,12 @@ class K2 {
 			K2::install($last_modified);
 		}
 
+		// Register our prototype, WP 2.1 is using 1.5.0RC1
+		wp_deregister_script('prototype');
+		wp_register_script('prototype',
+			get_bloginfo('template_directory') . '/js/prototype.js.php',
+			false, '1.5.0');
+
 		// Register our scripts with WordPress, version is Last Changed Revision
 		wp_register_script('k2rollingarchives',
 			get_bloginfo('template_directory') . '/js/rollingarchives.js.php',
