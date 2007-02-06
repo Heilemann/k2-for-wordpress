@@ -121,7 +121,7 @@
 	<div class="hentry four04">
 
 		<div class="entry-head">
-			<h3 class="center"><?php _e('Not Found','k2_domain'); ?></h2>
+			<h3 class="center"><?php _e('Not Found','k2_domain'); ?></h3>
 		</div>
 
 		<div class="entry-content">
