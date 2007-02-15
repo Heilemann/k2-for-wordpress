@@ -121,7 +121,7 @@ class K2SBM {
 			}
 		} else {
 			// Set the output type
-			header('Content-type: text/xml');
+			header('Content-type: text/xml; charset: UTF-8');
 
 			// XML prelude
 			echo('<?xml version="1.0" encoding="UTF-8"?>');
@@ -146,9 +146,7 @@ class K2SBM {
 
 							if($modules) {
 								foreach($modules as $module) {
-									// With a little help from PHP.net - Woo!
-									echo('<module id="' . $module->id . '">' . preg_replace('/([^\x09\x0A\x0D\x20-\x7F]|[\x21-\x2F]|[\x3A-\x40]|[\x5B-\x60])/e', '"&#".ord("$0").";"', utf8_decode($module->name)) . '</module>'); 
-
+									echo('<module id="' . $module->id . '"><![CDATA[' . $module->name . ']]></module>'); 
 								}
 							}
 
@@ -276,6 +274,10 @@ class K2SBM {
 				var sbm_baseUrl = <?php k2info('js_url'); ?> + '/app/includes/sbm-ajax.php';
 			//]]>
 		</script>
+
+		<script type="text/javascript" src="<?php bloginfo('siteurl'); ?>/wp-includes/js/scriptaculous/prototype.js"></script>
+		<script type="text/javascript" src="<?php bloginfo('siteurl'); ?>/wp-includes/js/scriptaculous/scriptaculous.js"></script>
+		<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/sbm.js.php"></script>
 	<?php
 	}
 
