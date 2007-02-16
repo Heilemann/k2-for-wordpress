@@ -236,17 +236,14 @@ class K2SBM {
 	function k2_init() {
 		// Add menus
 		add_action('admin_menu', array('K2SBM', 'add_menus'));
-
-		// Check if this page is the one being shown, if so then add stuff to the header
-		if($_GET['page'] == 'k2-sbm-modules') {
-			wp_enqueue_script('k2sbm');
-			add_action('admin_head', array('K2SBM', 'module_admin_head'));
-		}
 	}
 
 	function add_menus() {
 		// Add the submenus
-		add_submenu_page('themes.php', __('K2 Sidebar Modules', 'k2_domain'), __('K2 Sidebar Modules', 'k2_domain'), 5, 'k2-sbm-modules', array('K2SBM', 'module_admin'));
+		$page = add_theme_page(__('K2 Sidebar Modules','k2_domain'), __('K2 Sidebar Modules','k2_domain'), 'edit_themes', 'k2-sbm-modules', array('K2SBM', 'module_admin'));
+
+		add_action("admin_head-$page", array('K2SBM', 'module_admin_head'));
+		add_action("admin_print_scripts-$page", array('K2SBM', 'module_admin_scripts'));
 	}
 
 	function module_admin() {
@@ -265,19 +262,17 @@ class K2SBM {
 		}
 	}
 
+	function module_admin_scripts() {
+		wp_enqueue_script('k2sbm');
+	}
+
 	function module_admin_head() {
 	?>
-		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/sbm.css" />
-
 		<script type="text/javascript">
 			//<![CDATA[
 				var sbm_baseUrl = <?php k2info('js_url'); ?> + '/app/includes/sbm-ajax.php';
 			//]]>
 		</script>
-
-		<script type="text/javascript" src="<?php bloginfo('siteurl'); ?>/wp-includes/js/scriptaculous/prototype.js"></script>
-		<script type="text/javascript" src="<?php bloginfo('siteurl'); ?>/wp-includes/js/scriptaculous/scriptaculous.js"></script>
-		<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/sbm.js.php"></script>
 	<?php
 	}
 

@@ -27,15 +27,6 @@
 	<meta name="template" content="K2 <?php if (function_exists('k2info')) { k2info('version'); } ?>" />
  	<meta name="description" content="<?php bloginfo('description'); ?>" />
   
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
-	<link rel="stylesheet" type="text/css" media="print" href="<?php bloginfo('template_url'); ?>/css/print.css" />
-	<?php /* Rolling Archives */ if (get_option('k2rollingarchives') == 1) { ?>
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_directory'); ?>/css/rollingarchives.css" />
-	<?php } ?>
-	<?php /* Custom Style */ if (get_option('k2scheme') != '') { ?>
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php k2info('scheme'); ?>" />
-	<?php } ?>
-
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="<?php bloginfo('rss2_url'); ?>" />
 	<link rel="alternate" type="text/xml" title="RSS .92" href="<?php bloginfo('rss_url'); ?>" />
 	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="<?php bloginfo('atom_url'); ?>" />

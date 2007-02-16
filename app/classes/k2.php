@@ -1,4 +1,5 @@
 <?php
+$k2_registered_css = array();
 
 class K2 {
 	function init() {
@@ -18,32 +19,45 @@ class K2 {
 			K2::install($last_modified);
 		}
 
-		// Register our prototype, WP 2.1 is using 1.5.0RC1
-		wp_deregister_script('prototype');
-		wp_register_script('prototype',
+		// Register our prototype and scriptaculous
+		wp_register_script('k2prototype',
 			get_bloginfo('template_directory') . '/js/prototype.js.php',
 			false, '1.5.0');
+		wp_register_script('k2effects',
+			get_bloginfo('template_directory') . '/js/effects.js.php',
+			array('k2prototype'), '1.7.0');
+		wp_register_script('k2dragdrop',
+			get_bloginfo('template_directory') . '/js/dragdrop.js.php',
+			array('k2effects'), '1.7.0');
+		wp_register_script('k2slider',
+			get_bloginfo('template_directory') . '/js/slider.js.php',
+			array('k2effects'), '1.7.0');
 
 		// Register our scripts with WordPress, version is Last Changed Revision
-		wp_register_script('k2rollingarchives',
-			get_bloginfo('template_directory') . '/js/rollingarchives.js.php',
-			array('scriptaculous-slider', 'k2trimmer'), '224');
-		wp_register_script('k2livesearch',
-			get_bloginfo('template_directory') . '/js/livesearch.js.php',
-			array('scriptaculous-effects'), '262');
-		wp_register_script('k2comments',
-			get_bloginfo('template_directory') . '/js/comments.js.php',
-			array('scriptaculous-effects'), '216');
-		wp_register_script('k2trimmer',
-			get_bloginfo('template_directory') . '/js/trimmer.js.php',
-			array('scriptaculous-slider'), '247');
 		wp_register_script('k2functions',
 			get_bloginfo('template_directory') . '/js/k2functions.js.php',
-			array('scriptaculous-effects'), '223');
+			array('k2prototype', 'k2effects'), '223');
+		wp_register_script('k2rollingarchives',
+			get_bloginfo('template_directory') . '/js/rollingarchives.js.php',
+			array('k2functions', 'k2trimmer', 'k2slider'), '224');
+		wp_register_script('k2livesearch',
+			get_bloginfo('template_directory') . '/js/livesearch.js.php',
+			array('k2functions'), '262');
+		wp_register_script('k2comments',
+			get_bloginfo('template_directory') . '/js/comments.js.php',
+			array('k2functions'), '216');
+		wp_register_script('k2trimmer',
+			get_bloginfo('template_directory') . '/js/trimmer.js.php',
+			array('k2functions', 'k2slider'), '247');
 		wp_register_script('k2sbm',
 			get_bloginfo('template_directory') . '/js/sbm.js.php',
-			array('scriptaculous-effects', 'scriptaculous-dragdrop'), '248');
+			array('k2effects', 'k2dragdrop'), '248');
 
+		// Register our css
+		K2::register_css('k2rollingarchives',
+			get_bloginfo('template_directory') . '/css/rollingarchives.css');
+		K2::register_css('k2sbm',
+			get_bloginfo('template_directory') . '/css/sbm.css');
 
 		// There may be some things we need to do before K2 is initialised
 		// Let's do them now
@@ -95,6 +109,46 @@ class K2 {
 		// Go back to the themes page
 		header('Location: themes.php');
 		exit;
+	}
+
+	function register_css($handle, $path) {
+		global $k2_registered_css;
+
+		$k2_registered_css[$handle] = $path;
+	}
+
+	function output_header_css() {
+		global $wp_scripts, $k2_registered_css;
+		
+		// Output main css
+?>
+
+		<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
+		<link rel="stylesheet" type="text/css" media="print" href="<?php bloginfo('template_url'); ?>/css/print.css" />
+
+		<?php
+		// Output any css that is associated with the printed scripts
+		foreach ($wp_scripts->queue as $handle) {
+			if ( isset($k2_registered_css[$handle]) ) {
+				echo '<link rel="stylesheet" type="text/css" media="screen" href="' . $k2_registered_css[$handle] . '" />'."\n";
+			}
+		}
+
+		// Output the custom scheme
+		if (get_option('k2scheme') != '') {
+			echo '<link rel="stylesheet" type="text/css" media="screen" href="' .get_k2info('scheme'). '" />'."\n";
+		}
+	}
+
+	function output_admin_css() {
+		global $wp_scripts, $k2_registered_css;
+
+		// Output any css that is associated with the printed scripts
+		foreach ($wp_scripts->queue as $handle) {
+			if ( isset($k2_registered_css[$handle]) ) {
+				echo '<link rel="stylesheet" type="text/css" media="screen" href="' . $k2_registered_css[$handle] . '" />'."\n";
+			}
+		}
 	}
 
 	function include_all($dir_path, $ignore = false) {
@@ -209,4 +263,6 @@ class K2 {
 	}
 }
 
+add_action('wp_head', array('K2', 'output_header_css'));
+add_action('admin_head', array('K2', 'output_admin_css'));
 ?>
