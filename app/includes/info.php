@@ -186,7 +186,11 @@ function k2asides_filter($query) {
 
 		// Only filter when it's in the homepage
 		if ( ($k2asidescategory != 0) and (is_active_module('asides_sidebar_module')) and ($query->is_home) ) {
-			$query->set('cat', '-'.$k2asidescategory);
+			$priorcat = $query->get('cat');
+			if ( !empty($priorcat) ) {
+				$priorcat .= ',';
+			}
+			$query->set('cat', $priorcat . '-' . $k2asidescategory);
 		}
 	}
 
