@@ -33,7 +33,10 @@ function get_k2info($show='') {
 
 function k2_style_info() {
 	$style_info = get_option('k2styleinfo');
-	echo stripslashes($style_info);
+	
+	if ('' != $style_info) {
+		echo '<p>' . stripslashes($style_info) . '</p>';
+	}
 }
 
 function k2styleinfo_update() {

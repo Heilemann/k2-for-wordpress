@@ -35,7 +35,6 @@ body {
 	color: #444;
 	background: #EDEDED;
 	text-align: center;
-	margin: 0 0 30px;
 	}
 
 #page {
@@ -609,8 +608,10 @@ input[type=text]:focus, textarea:focus {
 	}
 
 #footer {
-	margin-top: 20px;
+	margin: 0 auto;
+	padding: 20px 0;
 	text-align: center;
+	color: #777;
 	}
 
 #footer a {
@@ -622,7 +623,7 @@ input[type=text]:focus, textarea:focus {
 #footer a:hover {
 	border: none;
 	text-decoration: none;
-	color: black;
+	color: #000;
 	}
 
 /*- Links */
