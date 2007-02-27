@@ -895,11 +895,9 @@ input[type=text], textarea {
 	}
 
 /*- Attachment */
-
-.attachment {
-	text-align: center;
+.entry-content .attachment { 
+	text-align: center; 
 	}
-
 
 /* CSS Beyond this point is for various supported plugins and not the 'core' K2 template */
 
