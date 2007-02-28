@@ -51,7 +51,7 @@
 				<a href="#comment-<?php comment_ID(); ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $comment_index; ?></a>
 				<span class="commentauthor"><?php comment_author_link(); ?></span>
 
-				<small class="comment-meta">
+				<div class="comment-meta">
 				<?php
 					printf('<a href="#comment-%1$s" title="%2$s">%3$s</a>', 
 						get_comment_ID(),
@@ -69,7 +69,7 @@
 				?>
 				<?php if (function_exists('quoter_comment')) { quoter_comment(); } ?>
 				<?php if (function_exists('jal_edit_comment_link')) { jal_edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>'); } else { edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">', '</span>'); } ?>
-				</small>
+				</div>
 			
 				<div class="comment-content">
 					<?php comment_text(); ?> 
@@ -92,7 +92,7 @@
 				<?php if (function_exists('comment_favicon')) { ?><span class="favatar"><?php comment_favicon(); ?></span><?php } ?>
 				<a href="#comment-<?php comment_ID() ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>" class="counter"><?php echo $ping_index; ?></a>
 				<span class="commentauthor"><?php comment_author_link(); ?></span>
-				<small class="comment-meta">				
+				<div class="comment-meta">				
 				<?php
 					printf(__('%1$s on %2$s','k2_domain'), 
 						'<span class="pingtype">' . get_k2_ping_type(__('Trackback','k2_domain'), __('Pingback','k2_domain')) . '</span>',
@@ -112,7 +112,7 @@
 					);
 				?>				
 				<?php if ($user_ID) { edit_comment_link(__('Edit','k2_domain'),'<span class="comment-edit">','</span>'); } ?>
-				</small>
+				</div>
 			</li>
 			<?php } /* end foreach ping */ ?>
 		</ol> <!-- END #pinglist -->
@@ -169,26 +169,24 @@
 			<?php if (!$user_ID) { ?>
 				<div id="comment-personaldetails">
 					<p><input type="text" name="author" id="author" value="<?php echo $comment_author; ?>" size="22" tabindex="1" />
-					<label for="author"><small><strong><?php _e('Name','k2_domain'); ?></strong> <?php if ($req) { __('(required)','k2_domain'); } ?></small></label></p>
-
+					<label for="author"><strong><?php _e('Name','k2_domain'); ?></strong> <?php if ($req) _e('(required)','k2_domain') ?></label></p>
+					
 					<p><input type="text" name="email" id="email" value="<?php echo $comment_author_email; ?>" size="22" tabindex="2" />
-					<label for="email"><small><strong><?php _e('Mail','k2_domain'); ?></strong> (<?php _e('will not be published','k2_domain'); ?>) <?php if ($req) { __('(required)','k2_domain'); } ?></small></label></p>
-
+					<label for="email"><strong><?php _e('Mail','k2_domain'); ?></strong> (<?php _e('will not be published','k2_domain'); ?>) <?php if ($req) _e('(required)', 'k2_domain') ?></label></p>
+					
 					<p><input type="text" name="url" id="url" value="<?php echo $comment_author_url; ?>" size="22" tabindex="3" />
-					<label for="url"><small><strong><?php _e('Website','k2_domain'); ?></strong></small></label></p>
+					<label for="url"><strong><?php _e('Website','k2_domain'); ?></strong></label></p>			
 				</div>
 			<?php } ?>
-				<!--<p><small><?php printf(__('<strong>XHTML:</strong> You can use these tags %s:','k2_domain'), allowed_tags()) ?></small></p>-->
+				<!--<p><?php printf(__('<strong>XHTML:</strong> You can use these tags %s:','k2_domain'), allowed_tags()) ?></p>-->
 		
 				<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"><?php if (function_exists('jal_edit_comment_link')) { jal_comment_content($jal_comment); }; if (function_exists('quoter_comment_server')) { quoter_comment_server(); } ?></textarea></p>
 		
 				<?php if (function_exists('show_subscription_checkbox')) { show_subscription_checkbox(); } ?>
 				<?php if (function_exists('quoter_page')) { quoter_page(); } ?>
 
-				<p>
-					<input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit','k2_domain'); ?>" />
-					<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
-				</p>
+				<p><input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit','k2_domain'); ?>" />
+				<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" /></p>
 				
 				<div class="clear"></div>
 
