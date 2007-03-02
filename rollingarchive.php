@@ -5,6 +5,11 @@
 	if (isset($_GET['rolling'])) {
 		require (dirname(__FILE__)."/../../../wp-blog-header.php");
 		$prefix = 'nested_';
+
+		// Workaround for category in permalinks
+		if (get_query_var('category_name') == 'rollingarchivephp') {
+			query_posts($_GET);
+		}
 	}
 
 	// WP 2.1 support

@@ -4,7 +4,13 @@
 
 	// Get core WP functions when loaded dynamically
 	if (isset($_GET['rolling'])) {
-		require (dirname(__FILE__).'/../../../wp-blog-header.php'); ?>
+		require (dirname(__FILE__).'/../../../wp-blog-header.php');
+
+		// Workaround for category in permalinks
+		if ( get_query_var('category_name') == 'theloopphp') {
+			query_posts($_GET);
+		}
+	?>
 
 <div id="dynamictype" class="<?php k2_body_class(); ?>">
 
