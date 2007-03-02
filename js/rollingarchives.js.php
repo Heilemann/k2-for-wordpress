@@ -115,6 +115,7 @@ RollingArchives.prototype = {
 
 			new Ajax.Updater(this.targetitem, this.url, {
 				method: 'get',
+				evalScripts: true,
 				parameters: this.query,
 				onComplete: this.rollComplete.bind(this),
 				onFailure: function() {
