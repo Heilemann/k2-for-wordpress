@@ -24,7 +24,7 @@ function get_k2info($show='') {
 
 			// This should never be executed, but it's well to be on the safe side
 			} else {
-				$output = $template_url;
+				$output = "'" . $template_url . "'";
 			}
 			break;
 	}
