@@ -44,7 +44,6 @@
 </div>
 <?php } ?>
 
-
 <div class="wrap">
 	<form name="dofollow" action="" method="post">
 		<input type="hidden" name="action" value="<?php echo($update); ?>" />
@@ -54,7 +53,7 @@
 			<input type="submit" name="submit" value="<?php _e('Update Options &raquo;','k2_domain'); ?>" />
 		</p>
 
-		<style>
+		<style type="text/css">
 		h3 {
 			font: normal 1.8em Georgia;
 			margin: 30px 0 0;
@@ -97,15 +96,12 @@
 		}
 		</style>
 
-
 		<div class="configstuff">
 			<h3><?php _e('Advanced Navigation','k2_domain'); ?></h3>
 
 			<p><input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2livesearch')); ?> /> <?php _e('Enable Advanced Navigation','k2_domain'); ?></p>
 
 			<p><small><?php _e('K2\'s Advanced Navigation is in reality a couple of features which, when combined, work to make the task of searching through your blog faster and easier. This includes inline AJAX-powered livesearch as well as the ability to flip back and forth between archive pages, without ever reloading the page.','k2_domain'); ?></small></p>
-
-
 
 			<h3><?php _e('Archives Page','k2_domain'); ?></h3>
 
@@ -119,15 +115,11 @@
 				</small></p><p style="text-align: center;"><input id="configela" name="configela" type="submit" value="<?php _e('Setup Extended Live Archives for K2','k2_domain') ?>" /></p>
 			<?php } ?>
 
-
-
 			<h3><?php _e('Live Commenting','k2_domain'); ?></h3>
 
 			<p><input id="k2-livecommenting" name="k2[livecommenting]" type="checkbox" value="1" <?php checked('1', get_option('k2livecommenting')); ?> /> <?php _e('Enable Live Commenting','k2_domain'); ?></p>
 				
 			<p><small><?php _e('Live comments use AJAX to submit comments to the server without reloading the page, making the experience more seamless for the user.','k2_domain'); ?></small></p>
-
-
 
 			<h3><?php _e('Asides','k2_domain'); ?></h3>
 
@@ -143,8 +135,6 @@
 				</select>
 			</p>
 
-
-
 			<h3><?php _e('Custom Scheme','k2_domain'); ?></h3>
 
 			<p><small><?php printf(__('K2 schemes are CSS files that allow you to visually customize your blog, without ever touching K2\'s core files. The structure of K2 has been designed specifically for this purpose, and offers some truly great styling opportunities. %s','k2_domain'), '<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS">' . __('Read more','k2_domain') . '</a>.'  ); ?></small></p>
@@ -157,15 +147,12 @@
 				<?php } ?>
 			</select></p>
 
-
-
 			<h3><?php _e('Custom Header','k2_domain'); ?></h3>
 
 			<p><small>
 			<?php _e('Your header is the crown of your blog, with plenty of room to express yourself. Through here you can upload and manipulated images for use as header backgrounds, as well as decide whether to it\'s blog or journal.','k2_domain'); ?>
 			<?php if (function_exists('add_custom_image_header')) { _e('Use the <b>Custom Image Header</b> panel to upload, crop and customize the header.','k2_domain'); } ?>
 			</small></p>
-
 
 			<table>
 			<?php if ($is_headers_dir) { ?>
@@ -208,16 +195,13 @@
 				</small></div>
 			<?php } ?>
 
-
 			<tr><td style="width: 160px">
 				<small><?php _e('Rename the \'Blog\' tab','k2_domain'); ?></small>
 			</td><td>
-				<input id="k2-blogornoblog" name="k2[blogornoblog]" value="<?php echo(stripslashes(get_option('k2blogornoblog'))); ?>">
+				<input id="k2-blogornoblog" name="k2[blogornoblog]" value="<?php echo(stripslashes(get_option('k2blogornoblog'))); ?>" />
 			</td></tr>
 			</table>
 				
-
-
 		</div>
 
 <p class="submit">
@@ -231,7 +215,6 @@
 
 				<p style="text-align: center;"><input id="uninstall" name="uninstall" type="submit" value="<?php _e('Reset and Uninstall K2','k2_domain'); ?>" /></p>
 		</div>
-
 
 	</form>
 </div>
