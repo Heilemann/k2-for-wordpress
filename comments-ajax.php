@@ -64,6 +64,7 @@ $commentdata = compact('comment_post_ID', 'comment_author', 'comment_author_emai
 		fail(__('Duplicate comment detected; it looks as though you\'ve already said that!','k2_domain'));
 
 	// Simple flood-protection
+	/*
 	if ( ! isset($comment_author_IP) )
 		$comment_author_IP = $_SERVER['REMOTE_ADDR'];         
 	if ( ! isset($comment_date) )
@@ -83,6 +84,7 @@ $commentdata = compact('comment_post_ID', 'comment_author', 'comment_author_emai
 			fail(__('Sorry, you can only post a new comment once every 15 seconds. Slow down cowboy.','k2_domain') );
 		}
 	}
+	*/
 	               
 $new_comment_ID = wp_new_comment($commentdata);
 
