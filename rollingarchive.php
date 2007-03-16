@@ -18,8 +18,12 @@
 	} else {
 		$rolling_query = $wp_query->query;
 	}
-?>
-<?php
+
+	// Debugging
+	if ( isset($_GET['k2debug']) ) {
+		$rolling_query .= '&k2debug=1';
+	}
+
 	// Load Rolling Archives?
 	if ( (get_option('k2rollingarchives') == 1) ) { 
 		$k2pagecount = k2countpages($wp_query);

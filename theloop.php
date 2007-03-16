@@ -6,6 +6,13 @@
 	if (isset($_GET['rolling'])) {
 		require (dirname(__FILE__).'/../../../wp-blog-header.php');
 
+		// Debugging
+		if ( isset($_GET['k2debug']) ) {
+			echo '<div class="alert">';
+			echo '<b>Query:</b><br />'; var_dump($wp_query->query); echo '<br />';
+			echo '</div>';
+		}
+
 		// Workaround for category in permalinks
 		if ( get_query_var('category_name') == 'theloopphp') {
 			query_posts($_GET);
