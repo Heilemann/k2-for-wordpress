@@ -53,6 +53,28 @@ class K2 {
 			get_bloginfo('template_directory') . '/js/sbm.js.php',
 			array('k2effects', 'k2dragdrop'), '248');
 
+		/*
+		// Register our scripts with WordPress, version is Last Changed Revision
+		wp_register_script('k2functions',
+			get_bloginfo('template_directory') . '/js/k2functions.js.php',
+			array('prototype', 'scriptaculous-effects'), '223');
+		wp_register_script('k2rollingarchives',
+			get_bloginfo('template_directory') . '/js/rollingarchives.js.php',
+			array('k2functions', 'k2trimmer', 'scriptaculous-slider'), '224');
+		wp_register_script('k2livesearch',
+			get_bloginfo('template_directory') . '/js/livesearch.js.php',
+			array('k2functions'), '262');
+		wp_register_script('k2comments',
+			get_bloginfo('template_directory') . '/js/comments.js.php',
+			array('k2functions'), '216');
+		wp_register_script('k2trimmer',
+			get_bloginfo('template_directory') . '/js/trimmer.js.php',
+			array('k2functions', 'scriptaculous-slider'), '247');
+		wp_register_script('k2sbm',
+			get_bloginfo('template_directory') . '/js/sbm.js.php',
+			array('scriptaculous-effects', 'scriptaculous-dragdrop'), '248');
+		*/
+
 		// Register our css
 		K2::register_css('k2rollingarchives',
 			get_bloginfo('template_directory') . '/css/rollingarchives.css');
@@ -63,9 +85,9 @@ class K2 {
 		// Let's do them now
 		do_action('k2_init');
 
-		// Register our sidebar with SBM or Widgets
-		if (function_exists('register_sidebar')) {
-			register_sidebar(array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>'));
+		// Register our sidebar with SBM/Widgets
+		if ( function_exists('register_sidebars') ) {
+			register_sidebars(2, array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>'));
 		}
 	}
 

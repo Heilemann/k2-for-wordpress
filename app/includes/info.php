@@ -260,6 +260,22 @@ function k2_body_class() {
 	if ( $current_user->ID )
 		$c[] = 'loggedin';
 
+	if (function_exists('dynamic_sidebar')) {
+		switch (get_option('k2sidebarnumber')) {
+			case '0':
+				$c[] = 'sidebar-none';
+				break;
+			case '1':
+				$c[] = 'sidebar-single';
+				break;
+			case '2':
+				$c[] = 'sidebar-dual';
+				break;
+		}
+	} else {
+		$c[] = 'sidebar-single';
+	}
+
 	echo join(' ', apply_filters('body_class',  $c));
 }
 

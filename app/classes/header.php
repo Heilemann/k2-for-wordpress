@@ -11,7 +11,7 @@ class K2Header {
 			$header_image = get_option('k2header_picture');
 
 			define('HEADER_IMAGE_HEIGHT', empty($scheme_info['header_height'])? 200 : $scheme_info['header_height']);
-			define('HEADER_IMAGE_WIDTH', empty($scheme_info['header_width'])? 780 : $scheme_info['header_width']);
+			define('HEADER_IMAGE_WIDTH', empty($scheme_info['header_width'])? 950 : $scheme_info['header_width']);
 			define('HEADER_TEXTCOLOR', empty($scheme_info['header_text_color'])? 'ffffff' : $scheme_info['header_text_color']);
 			define('HEADER_IMAGE', empty($header_image)? '%s/images/transparent.gif' : '%s/images/headers/'.$header_image);
 

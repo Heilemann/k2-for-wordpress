@@ -43,12 +43,22 @@ body {
 	margin: 0 auto;
 	padding: 20px 0 10px;
 	position: relative;
-	width: 780px;
 	border: 1px solid #ddd;
 	border-top: none;
+	clear: both;
 	}
 
-* html #page { width: 770px } /* IE hack */
+.sidebar-none #page {
+	width: 560px;
+	}
+
+.sidebar-single #page {
+	width: 780px;
+	}
+
+.sidebar-dual #page {
+	width: 950px;
+	}
 
 #header {
 	padding: 0;
@@ -58,20 +68,44 @@ body {
 	background: #3371A3;
 	}
 
+.content {
+	padding: 0 20px;
+	}
+
 #primary {
-	width: 500px;
+	position: relative;
 	float: left;
-	padding: 20px 0 10px;
-	margin: 0 10px 0 30px;
+	width: 500px;
+	padding: 10px;
+	}
+
+* html #primary {
 	display: inline;
+	}
+
+.sidebar-dual #primary {
+	margin-left: 170px;
+	padding: 10px;
+	}
+
+#sidebar-main {
+	float: left;
+	width: 200px;
+	padding: 10px;
+	}
+
+#sidebar-alt {
+	float: left;
+	width: 150px;
+	padding: 10px;
+	left: -740px;
+	margin-left: -170px;
 	}
 
 .secondary {
 	font-size: 1em;
 	line-height: 1.5em;
 	padding: 10px 0;
-	margin: 0 0 20px 71%;
-	width: 26%;
 	color: #666;
 	position: relative;
 	}
@@ -608,6 +642,7 @@ input[type=text]:focus, textarea:focus {
 	}
 
 #footer {
+	clear: both;
 	margin: 0 auto;
 	padding: 20px 0;
 	text-align: center;

@@ -78,6 +78,7 @@ class K2Options {
 		add_option('k2styleinfo', '', 'Formatted string for style info display.');
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
 		add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.');
+		add_option('k2sidebarnumber', '1', 'Number of sidebars to display.');
 	}
 
 	function cleanup_depreciated() {
@@ -102,6 +103,7 @@ class K2Options {
 		delete_option('k2styleinfo');
 		delete_option('k2rollingarchives');
 		delete_option('k2blogornoblog');
+		delete_option('k2sidebarnumber');
 	}
 }
 

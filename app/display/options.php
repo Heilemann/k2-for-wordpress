@@ -11,6 +11,9 @@
 	// Get the scheme files
 	$scheme_files = K2::files_scan(TEMPLATEPATH . '/styles/', 'css', 2);
 
+	// Get the sidebar
+	$sidebar_number = get_option('k2sidebarnumber');
+
 	// Get the asides category
 	$asides_id = get_option('k2asidescategory');
 	$asides_title = $asides_id != 0 ? $wpdb->get_var("SELECT cat_name from $wpdb->categories WHERE cat_ID = $asides_id LIMIT 1") : __('No Asides','k2_domain');
@@ -120,6 +123,22 @@
 			<p><input id="k2-livecommenting" name="k2[livecommenting]" type="checkbox" value="1" <?php checked('1', get_option('k2livecommenting')); ?> /> <?php _e('Enable Live Commenting','k2_domain'); ?></p>
 				
 			<p><small><?php _e('Live comments use AJAX to submit comments to the server without reloading the page, making the experience more seamless for the user.','k2_domain'); ?></small></p>
+
+
+			<?php if (function_exists('dynamic_sidebar')) { ?>
+			<h3><?php _e('Sidebars','k2_domain'); ?></h3>
+
+			<p><small><?php _e('This sets the number of sidebars that K2 will display.','k2_domain'); ?></small></p>
+
+			<p style="text-align: center">
+				<select id="k2-sidebarnumber" name="k2[sidebarnumber]">
+					<option value="0"<?php selected($sidebar_number, '0'); ?>><?php _e('No Sidebars','k2_domain'); ?></option>
+					<option value="1"<?php selected($sidebar_number, '1'); ?>><?php _e('Single Sidebar','k2_domain'); ?></option>
+					<option value="2"<?php selected($sidebar_number, '2'); ?>><?php _e('Dual Sidebars','k2_domain'); ?></option>
+				</select>
+			</p>
+			<?php } ?>
+
 
 			<h3><?php _e('Asides','k2_domain'); ?></h3>
 
