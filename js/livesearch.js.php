@@ -37,24 +37,26 @@ Livesearch.prototype = {
 		this.searchstring = '';
 		this.t = null;  // Init timeout variable
 
-		$(this.searchform).innerHTML = '<input type="text" id="'+this.attachitem+'" name="'+this.attachitem+'" class="livesearch" autocomplete="off" value="'+this.searchtext+'" /><span id="'+this.resetbutton+'"></span><span id="'+this.loaditem+'"></span><input type="submit" id="'+this.submitbutton+'" value="'+this.buttonvalue+'" />';
+		if ($(this.searchform)) {
+			$(this.searchform).innerHTML = '<input type="text" id="'+this.attachitem+'" name="'+this.attachitem+'" class="livesearch" autocomplete="off" value="'+this.searchtext+'" /><span id="'+this.resetbutton+'"></span><span id="'+this.loaditem+'"></span><input type="submit" id="'+this.submitbutton+'" value="'+this.buttonvalue+'" />';
 
-		$(this.submitbutton).style.display = "none";
-		$(this.loaditem).style.display = "none";
-		new Effect.Fade(this.resetbutton, { duration: 0, to: 0.3 });
+			$(this.submitbutton).style.display = "none";
+			$(this.loaditem).style.display = "none";
+			new Effect.Fade(this.resetbutton, { duration: 0, to: 0.3 });
 
-		Event.observe(thisSearch.attachitem, 'focus', function() {
-			if ($F(thisSearch.attachitem) == thisSearch.searchtext)
-				$(thisSearch.attachitem).setAttribute('value', '');
-		});
+			Event.observe(thisSearch.attachitem, 'focus', function() {
+				if ($F(thisSearch.attachitem) == thisSearch.searchtext)
+					$(thisSearch.attachitem).setAttribute('value', '');
+			});
 
-		Event.observe(thisSearch.attachitem, 'blur', function() {
-			if ($F(thisSearch.attachitem) == '')
-				$(thisSearch.attachitem).setAttribute('value', thisSearch.searchtext);
-		});
+			Event.observe(thisSearch.attachitem, 'blur', function() {
+				if ($F(thisSearch.attachitem) == '')
+					$(thisSearch.attachitem).setAttribute('value', thisSearch.searchtext);
+			});
 
-		// Bind the keys to the input
-		Event.observe(this.attachitem, 'keyup', this.readyLivesearch.bindAsEventListener(this));
+			// Bind the keys to the input
+			Event.observe(this.attachitem, 'keyup', this.readyLivesearch.bindAsEventListener(this));
+		}
 	},
 
 	readyLivesearch: function(event) {
