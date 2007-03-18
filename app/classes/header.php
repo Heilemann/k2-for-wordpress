@@ -170,9 +170,11 @@ class K2Header {
 	function install() {
 		add_option('k2imagerandomfeature', '1', "Whether to use a random image in K2's header");
 		add_option('k2header_picture', '', "The image to use in K2's header");
+
+		K2Header::cleanup_deprecated();
 	}
 
-	function cleanup_depreciated() {
+	function cleanup_deprecated() {
 		// Removes options that are no longer used.
 
 		delete_option('k2headerbackgroundcolor');
@@ -191,7 +193,6 @@ class K2Header {
 
 add_action('k2_init', array('K2Header', 'init'), 2);
 add_action('k2_install', array('K2Header', 'install'));
-add_action('k2_install', array('K2Header', 'cleanup_depreciated'));
 add_action('k2_uninstall', array('K2Header', 'uninstall'));
 add_filter('wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'));
 ?>

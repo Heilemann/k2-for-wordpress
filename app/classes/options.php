@@ -79,9 +79,11 @@ class K2Options {
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
 		add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.');
 		add_option('k2sidebarnumber', '1', 'Number of sidebars to display.');
+
+		K2Options::cleanup_deprecated();
 	}
 
-	function cleanup_depreciated() {
+	function cleanup_deprecated() {
 		// Removes options that are no longer used.
 
 		delete_option('k2asidesposition');
@@ -109,7 +111,6 @@ class K2Options {
 
 add_action('k2_init', array('K2Options', 'init'), 1);
 add_action('k2_install', array('K2Options', 'install'));
-add_action('k2_install', array('K2Options', 'cleanup_depreciated'));
 add_action('k2_uninstall', array('K2Options', 'uninstall'));
 
 ?>
