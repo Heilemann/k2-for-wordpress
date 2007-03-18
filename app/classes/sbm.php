@@ -18,49 +18,29 @@ $k2sbm_current_module = false;
 // Error text for XML
 $k2sbm_error_text = '';
 
+// Counter for semantic classes
+$k2sbm_module_index = 0;
+
 
 class K2SBM {
 	function install() {
-		$sbm_stub_path = '../themes/'.get_option('template').'/app/includes/sbm-stub.php';
-
 		add_option('k2sbm_modules_active', array(), 'The active sidebar modules.');
 		add_option('k2sbm_modules_disabled', array(), 'The disabled sidebar modules.');
 		add_option('k2sbm_modules_next_id', 1, 'The ID for the next sidebar module.');
-		add_option('k2sbm_stub_path', $sbm_stub_path, 'The location of sbm-stub.php');
 
-		// Activate sbm-stub
-		K2SBM::process_stub($sbm_stub_path);
+		K2SBM::cleanup_deprecated();
 	}
 
-	function init() {
-		// Check to see if sbm-stub needs to be activated
-		$sbm_stub_path = '../themes/'.get_option('template').'/app/includes/sbm-stub.php';
-
-		if (get_option('k2sbm_stub_path') != $sbm_stub_path) {
-			K2SBM::process_stub($sbm_stub_path);
-		}
-	}
-
-	function process_stub($sbm_stub_path = false) {
-		$plugins = (array) get_option('active_plugins');
+	function cleanup_deprecated() {
+		delete_option('k2sbm_stub_path');
 
 		// Remove all existing sbm-stub paths
+		$plugins = (array) get_option('active_plugins');
 		for ($i = 0; $i < count($plugins); $i++) {
 			if (strpos($plugins[$i], 'sbm-stub.php') !== false) {
 				unset($plugins[$i]);
 			}
 		}
-
-		// Insert the new sbm-stub path
-		if (!empty($sbm_stub_path)) {
-			if (count($plugins) == 0) {
-				$plugins = array($sbm_stub_path);
-			} else {
-				$plugins[] = $sbm_stub_path;
-			}
-			update_option('k2sbm_stub_path', $sbm_stub_path);
-		}
-
 		update_option('active_plugins', $plugins);
 	}
 
@@ -68,14 +48,12 @@ class K2SBM {
 		delete_option('k2sbm_modules_active');
 		delete_option('k2sbm_modules_disabled');
 		delete_option('k2sbm_modules_next_id');
-		delete_option('k2sbm_stub_path');
-
-		// Remove sbm-stub
-		K2SBM::process_stub();
 	}
 
-	function wp_bootstrap() {
+	function init() {
 		global $k2sbm_active_modules;
+
+		add_action('admin_menu', array('K2SBM', 'add_menus'));
 
 		K2SBM::pre_bootstrap();
 
@@ -95,7 +73,6 @@ class K2SBM {
 		auth_redirect();
 
 		K2SBM::pre_bootstrap();
-		//K2SBM::post_bootstrap();
 
 		// Check for specific actions that return a HTML response
 		if($_GET['action'] == 'control-show') {
@@ -231,11 +208,6 @@ class K2SBM {
 		// Allow the Widgets and SBM defined in plugins & themes to be loaded
 		do_action('sbm_init');
 		do_action('widgets_init');
-	}
-
-	function k2_init() {
-		// Add menus
-		add_action('admin_menu', array('K2SBM', 'add_menus'));
 	}
 
 	function add_menus() {
@@ -690,6 +662,11 @@ class k2sbmSidebar {
 	}
 
 	function display() {
+		global $k2sbm_module_index;
+
+		// Reset the counter
+		$k2sbm_module_index = 1;
+
 		// Check there are some modules present
 		if(count($this->modules) > 0) {
 			$return = false;
@@ -736,7 +713,7 @@ class k2sbmModule {
 	}
 
 	function display($sidebar) {
-		global $k2sbm_registered_modules, $k2sbm_current_module, $post;
+		global $k2sbm_registered_modules, $k2sbm_current_module, $k2sbm_module_index;
 		static $k2sbm_count_id;
 
 		// Get the base module details
@@ -754,7 +731,7 @@ class k2sbmModule {
 
 				// Call the display callback
 				$params[0] = array(
-					'before_module' => sprintf($sidebar->before_module, $id, $base_module['css_class']),
+					'before_module' => sprintf($sidebar->before_module, $id, $this->css_class($k2sbm_module_index++, $base_module['css_class'])),
 					'after_module' => $sidebar->after_module
 				);
 
@@ -920,6 +897,16 @@ class k2sbmModule {
 
 	function delete_option($name) {
 		unset($this->options[$name]);
+	}
+
+	function css_class($module_count, $module_class) {
+		$c = array('module', "module$module_count", $module_class);
+
+		if ( $module_count & 1 == 1 ) {
+			$c[] = 'alt';
+		}
+
+		return join(' ', apply_filters('module_class', $c));
 	}
 }
 

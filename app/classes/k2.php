@@ -6,9 +6,16 @@ class K2 {
 		// Load the localisation text
 		load_theme_textdomain('k2_domain');
 
+		$exclude = array('sbm-ajax.php');
+
+		// Exclude SBM if there's already a sidebar manager
+		if (function_exists('register_sidebar')) {
+			$exclude[] = 'sbm.php';
+		}
+
 		// Scan for includes and classes
-		K2::include_all(TEMPLATEPATH . '/app/includes/', array('sbm-ajax.php', 'sbm-stub.php', 'sbm.php'));
-		K2::include_all(TEMPLATEPATH . '/app/classes/');
+		K2::include_all(TEMPLATEPATH . '/app/includes/', $exclude);
+		K2::include_all(TEMPLATEPATH . '/app/classes/', $exclude);
 
 		// Get the last modified time of the classes folder
 		$last_modified = filemtime(dirname(__FILE__));
