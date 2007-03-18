@@ -67,14 +67,19 @@
 	</div>
 
 	<div id="sbm-dnd" class="sbm-block">
-		<?php foreach($sidebars as $id => $sidebar): ?>
+		<?php $sidebar_count = 1; foreach($sidebars as $id => $sidebar) { ?>
 			<div class="module-list">
-				<h4><?php echo($sidebar->name);?></h4>
+				<h4>
+					<?php echo($sidebar->name); ?>
+					<?php if ($sidebar_count++ > get_option('k2sidebarnumber')) { ?>
+						<span><?php _e('(Inactive)','k2_domain'); ?></span>
+					<?php } ?>
+				</h4>
 
 				<ul id="<?php echo($id); ?>">
 				</ul>
 			</div>
-		<?php endforeach; ?>
+		<?php } ?>
 
 		<div class="module-list">
 			<h4><?php _e('Disabled modules', 'k2_domain'); ?></h4>
