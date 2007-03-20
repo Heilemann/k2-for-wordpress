@@ -373,7 +373,13 @@ if (!function_exists('http_build_query')) {
 
 function get_wp_version() {
 	global $wp_version;
-	preg_match("/^\d+\.\d+(\.\d+)*/i", $wp_version, $match);
+
+	preg_match("/\d\.\d/i", $wp_version, $match);
+
+	// wpmu - increment version by 1.0 to match wp
+	if (strpos($wp_version, 'wordpress-mu') !== false) {
+		$match[0] = $match[0] + 1.0;
+	}
 	return $match[0];
 }
 
