@@ -11,7 +11,7 @@ class K2Options {
 	}
 
 	function add_menu() {
-		add_submenu_page('themes.php', __('K2 Options','k2_domain'), __('K2 Options','k2_domain'), 5, 'k2-options', array('K2Options', 'admin'));
+		add_theme_page(__('K2 Options','k2_domain'), __('K2 Options','k2_domain'), 'edit_themes', 'k2-options', array('K2Options', 'admin'));
 	}
 
 	function admin() {
