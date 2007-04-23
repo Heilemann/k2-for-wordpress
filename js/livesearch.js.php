@@ -81,7 +81,7 @@ Livesearch.prototype = {
 			{
 				method: 'get',
 				evalScripts: true,
-				parameters: this.pars + encodeURIComponent($F(this.attachitem)) + '&rolling=1',
+				parameters: this.pars + encodeURIComponent($F(this.attachitem)) + '&k2dynamic=1',
 				onComplete: this.searchComplete.bind(this)
 		});
 

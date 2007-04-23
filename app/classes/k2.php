@@ -3,13 +3,24 @@ $k2_registered_css = array();
 
 class K2 {
 	function init() {
+		global $wp_version;
+
 		// Load the localisation text
 		load_theme_textdomain('k2_domain');
+
+		// Define our folders for WordPress & WordpressMU
+		if ( false === strpos($wp_version, 'wordpress-mu') ) {
+			define('K2STYLESPATH', TEMPLATEPATH . '/styles/');
+			define('K2HEADERSPATH', TEMPLATEPATH . '/images/headers/');
+		} else {
+			define('K2STYLESPATH', ABSPATH . UPLOADS . '/k2support/styles/');
+			define('K2HEADERSPATH', ABSPATH . UPLOADS . '/k2support/headers/');
+		}
 
 		$exclude = array('sbm-ajax.php');
 
 		// Exclude SBM if there's already a sidebar manager
-		if (function_exists('register_sidebar')) {
+		if ( function_exists('register_sidebar') ) {
 			$exclude[] = 'sbm.php';
 		}
 
@@ -26,41 +37,6 @@ class K2 {
 			K2::install($last_modified);
 		}
 
-		// Register our prototype and scriptaculous
-		wp_register_script('k2prototype',
-			get_bloginfo('template_directory') . '/js/prototype.js.php',
-			false, '1.5.0');
-		wp_register_script('k2effects',
-			get_bloginfo('template_directory') . '/js/effects.js.php',
-			array('k2prototype'), '1.7.0');
-		wp_register_script('k2dragdrop',
-			get_bloginfo('template_directory') . '/js/dragdrop.js.php',
-			array('k2effects'), '1.7.0');
-		wp_register_script('k2slider',
-			get_bloginfo('template_directory') . '/js/slider.js.php',
-			array('k2effects'), '1.7.0');
-
-		// Register our scripts with WordPress, version is Last Changed Revision
-		wp_register_script('k2functions',
-			get_bloginfo('template_directory') . '/js/k2functions.js.php',
-			array('k2prototype', 'k2effects'), '223');
-		wp_register_script('k2rollingarchives',
-			get_bloginfo('template_directory') . '/js/rollingarchives.js.php',
-			array('k2functions', 'k2trimmer', 'k2slider'), '224');
-		wp_register_script('k2livesearch',
-			get_bloginfo('template_directory') . '/js/livesearch.js.php',
-			array('k2functions'), '262');
-		wp_register_script('k2comments',
-			get_bloginfo('template_directory') . '/js/comments.js.php',
-			array('k2functions'), '216');
-		wp_register_script('k2trimmer',
-			get_bloginfo('template_directory') . '/js/trimmer.js.php',
-			array('k2functions', 'k2slider'), '247');
-		wp_register_script('k2sbm',
-			get_bloginfo('template_directory') . '/js/sbm.js.php',
-			array('k2effects', 'k2dragdrop'), '248');
-
-		/*
 		// Register our scripts with WordPress, version is Last Changed Revision
 		wp_register_script('k2functions',
 			get_bloginfo('template_directory') . '/js/k2functions.js.php',
@@ -80,7 +56,6 @@ class K2 {
 		wp_register_script('k2sbm',
 			get_bloginfo('template_directory') . '/js/sbm.js.php',
 			array('scriptaculous-effects', 'scriptaculous-dragdrop'), '248');
-		*/
 
 		// Register our css
 		K2::register_css('k2rollingarchives',
@@ -115,6 +90,19 @@ class K2 {
 			update_option('k2lastmodified', $last_modified);
 		}
 
+		// Create support folders for WordPressMU
+		if ( false !== strpos($wp_version, 'wordpress-mu') ) {
+			if ( ! is_dir(ABSPATH . UPLOADS . '/k2support/') ) {
+				wp_mkdir_p(ABSPATH . UPLOADS . '/k2support/');
+			}
+			if ( ! is_dir(K2STYLESPATH) ) {
+				wp_mkdir_p(K2STYLESPATH);
+			}
+			if ( ! is_dir(K2HEADERSPATH) ) {
+				wp_mkdir_p(K2HEADERSPATH);
+			}
+		}
+
 		// Call the install handlers
 		do_action('k2_install');
 	}
@@ -140,6 +128,21 @@ class K2 {
 		exit;
 	}
 
+	function get_styles() {
+		return K2::files_scan(K2STYLESPATH, 'css', 2);
+	}
+
+	function replace_wp_scripts() {
+		global $wp_version;
+
+		if ( get_wp_version() < 2.2 ) {
+			// Register our prototype
+			wp_deregister_script('prototype');
+			wp_register_script('prototype',	get_bloginfo('template_directory') . '/js/prototype.js.php',
+				false, '1.5.0');
+		}
+	}
+
 	function register_css($handle, $path) {
 		global $k2_registered_css;
 
@@ -163,9 +166,9 @@ class K2 {
 			}
 		}
 
-		// Output the custom scheme
+		// Output the custom style
 		if (get_option('k2scheme') != '') {
-			echo '<link rel="stylesheet" type="text/css" media="screen" href="' .get_k2info('scheme'). '" />'."\n";
+			echo '<link rel="stylesheet" type="text/css" media="screen" href="' .get_k2info('style'). '" />'."\n";
 		}
 	}
 
@@ -281,7 +284,7 @@ class K2 {
 	function get_unique_path($source) {
 		$source = pathinfo($source);
 		
-		$path = $source['dirname'];
+		$path = trailingslashit($source['dirname']);
 		$filename = $source['filename'];
 		$ext = $source['extension'];
 

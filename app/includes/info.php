@@ -12,20 +12,16 @@ function get_k2info($show='') {
     		$output = 'Beta Two '. $current;
 			break;
 
-		case 'scheme' :
-			$output = get_bloginfo('template_url') . '/styles/' . get_option('k2scheme');
+		case 'style' :
+			$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2STYLESPATH) . get_option('k2scheme');
 			break;
 
-		case 'js_url' :
-			$template_url = get_bloginfo('template_url');
+		case 'styles_url' :
+			$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2STYLESPATH);
+			break;
 
-			if(preg_match('/^http:\/\/[^\/]+(.+)/', $template_url, $url_parts)) {
-				$output = "window.location.href.match(/^(http:\\/\\/[^\\/]+)/)[1] + '" . $url_parts[1] . "'";
-
-			// This should never be executed, but it's well to be on the safe side
-			} else {
-				$output = "'" . $template_url . "'";
-			}
+		case 'headers_url' :
+			$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2HEADERSPATH);
 			break;
 	}
 	return $output;
@@ -41,7 +37,7 @@ function k2_style_info() {
 
 function k2styleinfo_update() {
 	$style_info = '';
-	$data = get_scheme_info( get_option('k2scheme') );
+	$data = get_style_info( get_option('k2scheme') );
 
 	if ('' != $data) {
 		$style_info = get_option('k2styleinfo_format');
@@ -79,13 +75,13 @@ function k2styleinfo_demo() {
 	echo stripslashes($style_info);
 }
 
-function get_scheme_info($style_file = '') {
+function get_style_info($style_file = '') {
 	// if no style selected, exit
 	if ( '' == $style_file ) {
 		return false;
 	}
 
-	$style_path = TEMPLATEPATH . '/styles/' . $style_file;
+	$style_path = K2STYLESPATH . $style_file;
 	if (!file_exists($style_path)) return false;
 	$style_data = implode( '', file( $style_path ) );
 
@@ -96,9 +92,9 @@ function get_scheme_info($style_file = '') {
 	preg_match("|Style URI\s*:(.*)|i", $style_data, $stylelink);
 	preg_match("|Version\s*:(.*)|i", $style_data, $version);
 	preg_match("|Comments\s*:(.*)|i", $style_data, $comments);
-	preg_match("|Header Text Color\s*:(.*)|i", $style_data, $header_text_color);
-	preg_match("|Header Width\s*:(.*)|i", $style_data, $header_width);
-	preg_match("|Header Height\s*:(.*)|i", $style_data, $header_height);
+	preg_match("|Header Text Color\s*:\s*#*([\dABCDEF]+)|i", $style_data, $header_text_color);
+	preg_match("|Header Width\s*:\s*(\d+)|i", $style_data, $header_width);
+	preg_match("|Header Height\s*:\s*(\d+)|i", $style_data, $header_height);
 
 	return array(
 		'style' => trim($style[1]),
@@ -126,33 +122,72 @@ function get_k2_ping_type($trackbacktxt = 'Trackback', $pingbacktxt = 'Pingback'
 	return false;
 }
 
-function k2countpages($query) {
+function get_rolling_page_dates($query) {
 	global $wpdb;
 
-	// WP 2.0
-	if (get_wp_version() < 2.1) {
-		$posts_per = (int) get_option('posts_per_page');
-		if ( empty($posts_per) ) {
-			$posts_per = 1;
-		}
+	$per_page = get_query_var('posts_per_page');
+	$num_pages = $query->max_num_pages;
 
-		$search = '/FROM\s+?(.*)\s+?GROUP BY/siU';
-		preg_match($search, $query->request, $matches);
+	$search = '/FROM\s+?(.*)\s+?LIMIT/siU';
+	preg_match($search, $query->request, $matches);
 
-		if ( 'posts' == get_query_var('what_to_show') ) {
-			$from_where = $matches[1];
-			$num_posts = $wpdb->get_var("SELECT COUNT(DISTINCT ID) FROM $from_where");
-		} else {
-			$from_where = preg_replace('/( AND )?post_date >= (\'|\")(.*?)(\'|\")( AND post_date <= (\'\")(.*?)(\'\"))?/siU', '', $matches[1]);
-			$num_posts = $wpdb->query("SELECT DISTINCT post_date FROM $from_where GROUP BY year(post_date), month(post_date), dayofmonth(post_date)");
-		}
+	$post_dates = $wpdb->get_results("SELECT {$wpdb->posts}.post_date_gmt FROM {$matches[1]}");
 
-		return ceil($num_posts / $posts_per);
+	$page_dates = array();
+	for ($i = 0; $i < $num_pages; $i++) {
+		$page_dates[] = date(__('F, Y','k2_domain'), abs(strtotime($post_dates[$i * $per_page]->post_date_gmt . ' GMT')));
 	}
 
-	// WP 2.1+
-	return($query->max_num_pages);
+	return $page_dates;
 }
+
+function output_javascript_url($file) {
+	$template_url = get_bloginfo('template_url');
+
+	if (preg_match('/^http:\/\/[^\/]+(.+)/', $template_url, $url_parts)) {
+		$output = 'window.location.href.match(/^(http:\\/\\/[^\\/]+)/)[1] + "' . $url_parts[1] .'/'. $file . '"';
+
+	// This should never be executed, but it's well to be on the safe side
+	} else {
+		$output = $template_url .'/'. $file;
+	}
+
+	echo $output;
+}
+
+function output_javascript_array($array) {
+	$output = 'new Array(';
+
+	if ( is_array($array) ) {
+		$last_item = array_pop($array);
+		foreach ($array as $item) {
+			$output .= '"' . $item . '", ';
+		}
+		$output .= '"' . $last_item . '"';
+	}
+
+	$output .= ')';
+
+	echo $output;
+}
+
+function output_javascript_hash($array) {
+	$output = 'new Hash({';
+
+	if ( is_array($array) and !empty($array) ) {
+		$last_key = end(array_keys($array));
+		$last_item = array_pop($array);
+		foreach ($array as $key => $item) {
+			$output .= $key . ': ' . (is_numeric($item)? $item : "'$item'") . ', ';
+		}
+		$output .= $last_key . ': ' . (is_numeric($last_item)? $last_item : "'$last_item'");
+	}
+
+	$output .= '})';
+
+	echo $output;
+}
+
 
 /* By Mark Jaquith, http://txfx.net */
 function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' and ') { 
@@ -199,6 +234,23 @@ function k2asides_filter($query) {
 
 	return $query;
 }
+
+// Filter to remove asides from the loop
+add_filter('pre_get_posts', 'k2asides_filter');
+
+
+function get_wp_version() {
+	global $wp_version;
+
+	preg_match("/\d\.\d/i", $wp_version, $match);
+
+	// wpmu - increment version by 1.0 to match wp
+	if (strpos($wp_version, 'wordpress-mu') !== false) {
+		$match[0] = $match[0] + 1.0;
+	}
+	return $match[0];
+}
+
 
 function k2_body_id() {
 	if (get_option('permalink_structure') != '' and is_page()) {
@@ -343,46 +395,4 @@ function k2_date_classes($t, &$c, $p = '') {
 	$c[] = $p . 'h' . gmdate('h', $t); // Hour
 }
 
-
-if (!function_exists('http_build_query')) {
-	function http_build_query($data, $prefix='', $sep='', $key='') {
-		$ret = array();
-		foreach ((array)$data as $k => $v) {
-			if (is_int($k) and $prefix != null) {
-				$k = urlencode($prefix . $k);
-			}
-
-			if (!empty($key)) {
-				$k = $key.'['.urlencode($k).']';
-			}
-
-			if (is_array($v) or is_object($v)) {
-				array_push($ret, http_build_query($v, '', $sep, $k));
-			} else {
-				array_push($ret, $k.'='.urlencode($v));
-			}
-		}
-
-		if (empty($sep)) {
-			$sep = ini_get('arg_separator.output');
-		}
-
-		return implode($sep, $ret);
-	}
-}
-
-function get_wp_version() {
-	global $wp_version;
-
-	preg_match("/\d\.\d/i", $wp_version, $match);
-
-	// wpmu - increment version by 1.0 to match wp
-	if (strpos($wp_version, 'wordpress-mu') !== false) {
-		$match[0] = $match[0] + 1.0;
-	}
-	return $match[0];
-}
-
-// Filter to remove asides from the loop
-add_filter('pre_get_posts', 'k2asides_filter');
 ?>

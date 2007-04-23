@@ -2,6 +2,9 @@
 	// Load localizatons
 	load_theme_textdomain('k2_domain');
 
+	// Replace bundled scripts with our own
+	K2::replace_wp_scripts();
+
 	// Load our scripts
 	wp_enqueue_script('k2functions');
 
@@ -41,7 +44,7 @@
 	<script type="text/javascript">
 	//<![CDATA[
 		Event.observe(window, "load", function() {
-			new Livesearch("searchform", "s", "dynamic-content", "current-content", <?php k2info('js_url'); ?> + "/rollingarchive.php", "&s=", "searchload", "<?php _e('Type and Wait to Search','k2_domain'); ?>", "searchreset", "searchsubmit", "<?php _e('go','k2_domain'); ?>");
+			new Livesearch("searchform", "s", "dynamic-content", "current-content", <?php output_javascript_url('rollingarchive.php'); ?>, "&s=", "searchload", "<?php _e('Type and Wait to Search','k2_domain'); ?>", "searchreset", "searchsubmit", "<?php _e('go','k2_domain'); ?>");
 		});
 	//]]>
 	</script>

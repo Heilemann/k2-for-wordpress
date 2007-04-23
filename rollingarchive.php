@@ -1,9 +1,9 @@
 <?php
 	$prefix = '';
 
-	// Get Core WP Functions If Needed
-	if (isset($_GET['rolling'])) {
-		require (dirname(__FILE__)."/../../../wp-blog-header.php");
+	// Get core WP functions if needed
+	if (isset($_GET['k2dynamic'])) {
+		require (dirname(__FILE__).'/../../../wp-blog-header.php');
 		$prefix = 'nested_';
 
 		// Workaround for category in permalinks
@@ -12,60 +12,61 @@
 		}
 	}
 
-	// WP 2.1 support
-	if (is_array($wp_query->query)) {
-		$rolling_query = http_build_query($wp_query->query);
-	} else {
-		$rolling_query = $wp_query->query;
-	}
-
-	// Debugging
-	if ( isset($_GET['k2debug']) ) {
-		$rolling_query .= '&k2debug=1';
-	}
-
 	// Load Rolling Archives?
-	if ( (get_option('k2rollingarchives') == 1) ) { 
-		$k2pagecount = k2countpages($wp_query);
+	if ( (get_option('k2rollingarchives') == 1) and ($wp_query->max_num_pages > 1) ) { 
 
-		if ($k2pagecount > 1) {
+		// Get list of page dates
+		$page_dates = get_rolling_page_dates($wp_query);
+
+		// Debugging
+		if ( isset($_GET['k2debug']) ) {
+			$rolling_query .= '&k2debug=1';
+		}
 ?>
-	<div id="<?php echo $prefix; ?>rollingarchives">
-		<div id="<?php echo $prefix; ?>rollnavigation">
-			<a href="#" id="<?php echo $prefix; ?>rollprevious"><span>&laquo;</span> <?php _e('Older','k2_domain'); ?></a>
-			<a href="#" id="<?php echo $prefix; ?>rollhome"><img src="<?php bloginfo('template_directory'); ?>/images/house.png" alt="Home" /></a>
 
-			<div id="<?php echo $prefix; ?>pagetrackwrap"><div id="<?php echo $prefix; ?>pagetrack"><div id="<?php echo $prefix; ?>pagehandle"></div></div></div>
+<div id="<?php echo $prefix; ?>rollingarchives">
+	<div id="<?php echo $prefix; ?>texttrimmer">
+		<div id="<?php echo $prefix; ?>trimmertrackwrap"><div id="<?php echo $prefix; ?>trimmertrack"><div id="<?php echo $prefix; ?>trimmerhandle"></div></div></div>
+		
+		<div id="<?php echo $prefix; ?>trimmerless"><span><?php _e('Less','k2_domain'); ?></span></div>
+		<div id="<?php echo $prefix; ?>trimmermore"><span><?php _e('More','k2_domain'); ?></span></div>
+	</div> <!-- #<?php echo $prefix; ?>texttrimmer -->
 
-			<span id="<?php echo $prefix; ?>rollload"><?php _e('Loading','k2_domain'); ?></span>
-			<span id="<?php echo $prefix; ?>rollpages"></span>
+	<div id="<?php echo $prefix; ?>rollnavigation">
+		<div id="<?php echo $prefix; ?>pagetrackwrap"><div id="<?php echo $prefix; ?>pagetrack"><div id="<?php echo $prefix; ?>pagehandle"></div></div></div>
 
-			<a href="#" id="<?php echo $prefix; ?>rollnext"><?php _e('Newer','k2_domain'); ?> <span>&raquo;</span></a>
-
-			<div id="<?php echo $prefix; ?>trimmerContainer">
-
-				<a href="#" id="<?php echo $prefix; ?>trimmerMore"><?php _e("More","k2_domain"); ?></a>
-				<div id="<?php echo $prefix; ?>trimmer"></div>
-				<a href="#" id="<?php echo $prefix; ?>trimmerLess"><?php _e("Less","k2_domain"); ?></a>
-
-				<div id="<?php echo $prefix; ?>trimmerShortcuts">
-					<a href="#" id="<?php echo $prefix; ?>trimmerExcerpts"><?php _e("Excerpts","k2_domain"); ?></a>
-					<a href="#" id="<?php echo $prefix; ?>trimmerHeadlines"><?php _e("Headlines","k2_domain"); ?></a>
-					<a href="#" id="<?php echo $prefix; ?>trimmerFulllength"><?php _e("Full Length","k2_domain"); ?></a>
-				</div>
-			</div>
+		<div id="<?php echo $prefix; ?>rollprevious" title="<?php _e('Older','k2_domain'); ?>">
+			<span>&laquo;</span> <?php _e('Older','k2_domain'); ?>
+		</div>
+		<div id="<?php echo $prefix; ?>rollhome" title="<?php _e('Home','k2_domain'); ?>">
+			<span><?php _e('Home','k2_domain'); ?></span>
+		</div>
+		<div id="<?php echo $prefix; ?>rollload" title="<?php _e('Loading','k2_domain'); ?>">
+			<span><?php _e('Loading','k2_domain'); ?></span>
+		</div>
+		<div id="<?php echo $prefix; ?>rollnext" title="<?php _e('Newer','k2_domain'); ?>">
+			<?php _e('Newer','k2_domain'); ?> <span>&raquo;</span>
 		</div>
 
-		<div id="<?php echo $prefix; ?>rollnotices"></div>
+		<div id="<?php echo $prefix; ?>rollpages"></div>
+		<div id="<?php echo $prefix; ?>rolldates"></div>
+	</div> <!-- #<?php echo $prefix; ?>rollnavigation -->
 
-	</div>
-	<script type="text/javascript">
-	// <![CDATA[
-		var <?php echo $prefix; ?>rolling = new RollingArchives("primarycontent", <?php k2info('js_url'); ?> + '/theloop.php', "<?php echo $rolling_query; ?>", <?php echo $k2pagecount; ?>, "<?php echo $prefix; ?>", "<?php _e('Page %1$d of %2$d',k2_domain); ?>");
-	// ]]>
-	</script>
+	<div id="<?php echo $prefix; ?>rollnotices"></div>
+</div> <!-- #<?php echo $prefix; ?>rollingarchives -->
 
-<?php } } ?>
+<script type="text/javascript">
+// <![CDATA[
+	var <?php echo $prefix; ?>rolling = new RollingArchives(
+		"<?php echo $prefix; ?>", "rollingarchives", "primarycontent", "<?php _e('Page %1$d of %2$d',k2_domain); ?>", <?php echo $wp_query->max_num_pages; ?>,
+		<?php output_javascript_url('theloop.php'); ?>,
+		<?php output_javascript_hash($wp_query->query); ?>,
+		<?php output_javascript_array($page_dates); ?>
+	);
+// ]]>
+</script>
+
+<?php } ?>
 <div id="<?php echo $prefix; ?>primarycontent" class="hfeed">
 	<?php include (TEMPLATEPATH . '/theloop.php'); ?>
 </div><!-- #<?php echo $prefix; ?>primarycontent .hfeed -->

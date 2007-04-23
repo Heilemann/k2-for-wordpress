@@ -17,38 +17,39 @@
 	header('Content-Type: text/javascript; charset: UTF-8');
 ?>
 
+var RollingArchives = {};
 RollingArchives = Class.create();
 
 RollingArchives.prototype = {
-	initialize: function(targetitem, url, query, pagecount, prefix, pagetext) {
+	initialize: function(prefix, attachitem, targetitem, pagetext, pagecount, url, query, pagedates) {
 		var thisRolling = this;
 
+		this.attachitem = prefix+attachitem;
 		this.targetitem = prefix+targetitem;
 		this.url = url;
-		this.query = query;
-		this.pagecount = pagecount;
-		this.pagenumber = 1;
 		this.pagetext = pagetext;
-		this.prefix = prefix;
+		this.query = query;
+		this.pagenumber = 1;
+		this.pagecount = pagecount;
+		this.pagedates = pagedates;
 
-		this.prefix = prefix;
 		this.rollnext = prefix+'rollnext';
 		this.rollprev = prefix+'rollprevious';
 		this.rollpages = prefix+'rollpages';
 		this.rollload = prefix+'rollload';
 		this.rollhome = prefix+'rollhome';
+		this.rolldates = prefix+'rolldates';
 		this.rollnotices = prefix+'rollnotices';
 
 		this.pagehandle = prefix+'pagehandle';
 		this.pagetrack = prefix+'pagetrack';
-		this.pagetrackend = prefix+'pagetrackend';
 
-		this.trimmer = new TextTrimmer("trimmerContainer", "trimmer", "entry-content", 1, 100, prefix);
+		this.trimmer = new TextTrimmer(prefix, "texttrimmer", "entry-content", 1, 100);
 
 		var sliderValues = new Array(this.pagecount);
 		for (var i = 0; i < this.pagecount; i++) sliderValues[i] = i + 1;
 		
-		this.PageSlider = new Control.Slider(thisRolling.pagehandle, thisRolling.pagetrack, {
+		this.pageSlider = new Control.Slider(thisRolling.pagehandle, thisRolling.pagetrack, {
 			range: $R(thisRolling.pagecount, 1),
 			values: sliderValues,
 			sliderValue: 1,
@@ -57,72 +58,84 @@ RollingArchives.prototype = {
 			handleImage: thisRolling.pagehandle
 		});
 
-		Event.observe(this.rollprev, 'click', function() { thisRolling.gotoPrevPage(); });
-		Event.observe(this.rollnext, 'click', function() { thisRolling.gotoNextPage(); });
-		$(this.rollprev).onclick = function() { return false; };
-		$(this.rollnext).onclick = function() { return false; };
-
-		$(this.rollnext).className = 'inactive';
-		$(this.rollhome).className = 'inactive';
+		this.nextPageListener = this.gotoNextPage.bindAsEventListener(this);
+		this.prevPageListener = this.gotoPrevPage.bindAsEventListener(this);
+		this.homePageListener = this.gotoHomePage.bindAsEventListener(this);
+		Event.observe(this.rollprev, 'click', this.prevPageListener);
+		Event.observe(this.rollnext, 'click', this.nextPageListener);
+		Event.observe(this.rollhome, 'click', this.homePageListener);
 
 		$(this.rollnotices).style.display = 'none';
 		$(this.rollload).style.display = 'none';
-		$(this.pagetrack+'wrap').style.display = 'none';
 
-		this.updatePageText(this.pagenumber);
+		this.validatePage(this.pagenumber);
 		this.initialized = true;
 	},
 
 	updatePageText: function(v) {
 		$(this.rollpages).innerHTML = (this.pagetext.replace('%1$d', v)).replace('%2$d', this.pagecount);
+		$(this.rolldates).innerHTML = this.pagedates[v - 1];
 	},
 
-	gotoNextPage: function() {
-		this.PageSlider.setValueBy(-1);
-	},
-
-	gotoPrevPage: function() {
-		this.PageSlider.setValueBy(1);
-	},
-
-	gotoPage: function(newpage) {
-		if (newpage != this.pagenumber) {
-			$(this.trimmer.trimmerContainer).style.display = 'none';
-			new Effect.Appear(this.rollload, {duration: .3});
-
+	validatePage: function(newpage) {
+		if (this.pagecount > 1) {
 			if (newpage >= this.pagecount) {
-				$(this.rollprev).className = 'inactive';
-				$(this.rollnext).className = null;
-				$(this.rollhome).className = null;
-
+				$(this.attachitem).className = 'lastpage';
 				this.pagenumber = this.pagecount;
+
 			} else if (newpage == 1) {
-				$(this.rollprev).className = null;
-				$(this.rollnext).className = 'inactive';
-				$(this.rollhome).className = 'inactive';
-
+				$(this.attachitem).className = 'firstpage';
 				this.pagenumber = 1;
-			} else {
-				$(this.rollprev).className = null;
-				$(this.rollnext).className = null;
-				$(this.rollhome).className = null;
 
+			} else {
+				$(this.attachitem).className = 'nthpage';
 				this.pagenumber = newpage;
 			}
 
 			this.updatePageText(this.pagenumber);
+			return true;
+		}
+
+		$(this.attachitem).className = 'emptypage';
+		return false;
+	},
+
+	gotoNextPage: function() {
+		this.pageSlider.setValueBy(-1);
+	},
+
+	gotoPrevPage: function() {
+		this.pageSlider.setValueBy(1);
+	},
+
+	gotoHomePage: function() {
+		this.pageSlider.setValue(1);
+	},
+
+	gotoPage: function(newpage) {
+		if (newpage != this.pagenumber) {
+			new Effect.Appear(this.rollload, {duration: .3});
+
+			this.validatePage(newpage);
 			this.processQuery();
 
-			new Ajax.Updater(this.targetitem, this.url, {
-				method: 'get',
-				evalScripts: true,
-				parameters: this.query,
-				onComplete: this.rollComplete.bind(this),
-				onFailure: function() {
-					this.rollComplete.bind(this);
-					this.rollError.bind(this);
+			new Ajax.Updater(
+				{
+					success: this.targetitem,
+					failure: this.rollnotices
+				},
+				this.url,
+				{
+					method: 'get',
+					evalScripts: true,
+					parameters: this.query,
+					onComplete: this.rollComplete.bind(this),
+					onFailure: function() {
+						this.rollComplete.bind(this);
+						this.rollError.bind(this);
+					}
 				}
-			});
+			);
 		}
 	},
 
@@ -131,11 +144,8 @@ RollingArchives.prototype = {
 
 		/* Spool Texttrimmer */
 		if (this.pagenumber == 1) {
-			new Effect.Fade(this.pagetrack+'wrap', {duration: .3});
 			this.trimmer.removeClass();
 		} else {
-			new Effect.Appear(this.pagetrack+'wrap', {duration: .3});
-			new Effect.Appear(this.trimmer.trimmerContainer, {duration: .3});
 			this.trimmer.trimAgain(this.trimmer.curValue);
 		}
 
@@ -154,13 +164,6 @@ RollingArchives.prototype = {
 	},
 
 	processQuery: function() {
-		if (this.query.indexOf('&paged=') != -1) {
-			this.query = this.query.replace(/&paged=\d+/,'&paged='+this.pagenumber);
-		} else {
-			this.query += "&paged=" + this.pagenumber;
-		}
-
-		if (this.query.indexOf('&rolling=') == -1)
-			this.query += '&rolling=1';
+		this.query.merge({ paged: this.pagenumber, k2dynamic: 1 });
 	}
 }

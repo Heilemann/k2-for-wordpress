@@ -72,7 +72,7 @@ class K2Options {
 		add_option('k2asidescategory', '0', 'A category which will be treated differently from other categories');
 		add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on"); // (live & classic)
 		add_option('k2archives', '0', 'Set whether K2 has a Live Archive page');
-		add_option('k2scheme', '', 'Choose the Scheme you want K2 to use');
+		add_option('k2scheme', '', 'Choose the Style you want K2 to use');
 		add_option('k2livecommenting', '1', "If you don't trust JavaScript, you can turn off Live Commenting. Otherwise it is suggested you leave it on");
 		add_option('k2styleinfo_format', 'Current style is <a href="%stylelink%" title="%style% by %author%">%style% %version%</a> by <a href="%site%">%author%</a>', 'Format for displaying the current selected style info.');
 		add_option('k2styleinfo', '', 'Formatted string for style info display.');

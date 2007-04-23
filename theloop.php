@@ -3,13 +3,14 @@
 	// It is a very delicate piece of machinery. Be gentle!
 
 	// Get core WP functions when loaded dynamically
-	if (isset($_GET['rolling'])) {
+	if (isset($_GET['k2dynamic'])) {
 		require (dirname(__FILE__).'/../../../wp-blog-header.php');
 
 		// Debugging
 		if ( isset($_GET['k2debug']) ) {
 			echo '<div class="alert">';
 			echo '<b>Query:</b><br />'; var_dump($wp_query->query); echo '<br />';
+			echo '<b>Request:</b><br />'; var_dump($wp_query->request); echo '<br />';
 			echo '</div>';
 		}
 
@@ -60,8 +61,13 @@
 				printf(__('Author Archive for %s','k2_domain'), get_author_name(get_query_var('author')));
 
 			} elseif (is_paged() and (get_query_var('paged') > 1)) { 
-				 printf(__('Archive Page %s','k2_domain'), get_query_var('paged'));
-			} ?>
+				 _e('Archive','k2_domain');
+			}
+			if ( get_query_var('paged') > 1 ) {
+				printf(__(' &mdash; Page %1$s of %2$s','k2_domain'), get_query_var('paged'), $wp_query->max_num_pages);
+			}
+			?>
+
 		</h2>
 	<?php } ?>
 
@@ -97,7 +103,7 @@
 							printf(	__('Published %1$s %2$s','k2_domain'),
 								( $multiple_users ? sprintf(__('by %s','k2_domain'), '<address class="vcard author"><a href="' . get_author_posts_url(get_the_author_ID()) .'" class="url fn" title="'. sprintf(__('View all posts by %s','k2_domain'), attribute_escape(get_the_author())) .'">' . get_the_author() . '</a></address>') : ('') ), 
 								'<abbr class="published" title="'. get_the_time('Y-m-d\TH:i:sO') . '">' .
- 								( function_exists('time_since') ? sprintf(__('%s ago','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")), time())) : get_the_time($dateformat) ) 
+ 								( function_exists('time_since') ? sprintf(__('%s ago','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")), time())) : sprintf(__('at %s','k2-domain'), get_the_time($dateformat)) ) 
  								. '</abbr>'
  								); 
  						?>
@@ -145,6 +151,6 @@
 
 <?php } /* End Loop Init  */
 
-	if (isset($_GET['rolling'])) { ?> </div> <?php }
+	if (isset($_GET['k2dynamic'])) { ?> </div> <?php }
 
 ?>

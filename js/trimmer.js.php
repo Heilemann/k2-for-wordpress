@@ -23,60 +23,42 @@
 TextTrimmer = Class.create();
 
 TextTrimmer.prototype = {
-    initialize: function(trimmerContainer, sliderID, chunkClass, minValue, maxValue, prefix) {
-/*		if (prefix == '') console.log('Trimmer Init Detected');
-		if (prefix != '') console.log('Livesearch Trimmer Init');
-*/
+    initialize: function(prefix, attachitem, chunkClass, minValue, maxValue) {
 		var thisTrimmer = this;
-		this.trimmerContainer = prefix+trimmerContainer;
-		this.sliderID = prefix+sliderID;
+
+		this.prefix = prefix;
+		this.attachitem = prefix+attachitem;
 		this.chunkClass	= chunkClass;
 		this.minValue = minValue;
 		this.maxValue = maxValue;
+
 		this.curValue = maxValue;
-		this.prefix = prefix;
 		this.chunks = false;
+		this.sliderhandle = prefix+'trimmerhandle';
+		this.slidertrack = prefix+'trimmertrack';
+		this.trimmore = prefix+'trimmermore';
+		this.trimless = prefix+'trimmerless';
 
-		/* Initialize slider */
-		$(this.sliderID).innerHTML = '<div id="'+prefix+'trimmertrackwrap"><div id="'+prefix+'trimmertrack"><div id="'+prefix+'trimmerhandle"></div></div></div>';
-
-		this.TrimSlider = new Control.Slider(prefix+"trimmerhandle", prefix+"trimmertrack", {
+		this.trimSlider = new Control.Slider(thisTrimmer.sliderhandle, thisTrimmer.slidertrack, {
 			range: $R(thisTrimmer.minValue, thisTrimmer.maxValue),
 			sliderValue: thisTrimmer.maxValue,
 			onSlide: function(value) { thisTrimmer.doTrim(value); },
 			onChange: function(value) { thisTrimmer.doTrim(value); }
 		});
 
-		/* Add functionality to trimmer links */
-		Event.observe($(prefix+'trimmerLess'), 'click', function() {
-			thisTrimmer.TrimSlider.setValue(thisTrimmer.curValue - 10);
-			return false;
-		});
-		Event.observe($(prefix+'trimmerMore'), 'click', function() {
-			thisTrimmer.TrimSlider.setValue(thisTrimmer.curValue + 10);
-			return false;
-		});
-		Event.observe($(prefix+'trimmerExcerpts'), 'click', function() {
-			thisTrimmer.TrimSlider.setValue(40);
-			$(prefix+'trimmerExcerpts').style.display = 'none';
-			$(prefix+'trimmerHeadlines').style.display = 'block';
-			return false;
-		});
-		Event.observe($(prefix+'trimmerHeadlines'), 'click', function() {
-			thisTrimmer.TrimSlider.setValue(0);
-			$(prefix+'trimmerHeadlines').style.display = 'none';
-			$(prefix+'trimmerFulllength').style.display = 'block';
-			return false;
-		});
-		Event.observe($(prefix+'trimmerFulllength'), 'click', function() {
-			thisTrimmer.TrimSlider.setValue(100);
-			$(prefix+'trimmerFulllength').style.display = 'none';
-			$(prefix+'trimmerExcerpts').style.display = 'block';
-			return false;
-		});
-
-		$(this.trimmerContainer).style.display = 'none';
+		this.trimMoreListener = this.trimMoreAction.bindAsEventListener(this);
+		this.trimLessListener = this.trimLessAction.bindAsEventListener(this);
+		Event.observe(this.trimmore, 'click', this.trimMoreListener);
+		Event.observe(this.trimless, 'click', this.trimLessListener);
    	},
+
+	trimMoreAction: function() {
+		this.trimSlider.setValue(this.curValue + 20);
+	},
+
+	trimLessAction: function() {
+		this.trimSlider.setValue(this.curValue - 20);
+	},
 
 	addClass: function() {
 		if (this.prefix != '') {

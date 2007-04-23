@@ -1,15 +1,25 @@
 <?php
+	// Handle style editing
+	if ( isset($_POST['editstyle']) and !empty($_POST['k2']['style']) ) {
+		$file = str_replace(ABSPATH, '', K2STYLESPATH) . $_POST['k2']['style'];
+		header("Location: templates.php?file=$file");
+		exit;
+	}
+
 	global $wpdb;
 
 	// Update
 	$update = K2Options::update();
 
-	// Get the current K2 scheme
-	$scheme_name = get_option('k2scheme');
-	$scheme_title = $scheme_name !== false ? $scheme_name : __('No Scheme','k2_domain');
+	// Get the current K2 Style
+	$style_name = get_option('k2scheme');
+	$style_title = $style_name !== false ? $style_name : __('No Style','k2_domain');
+
+	// Check that the styles folder exists
+	$is_styles_dir = is_dir(K2STYLESPATH);
 
 	// Get the scheme files
-	$scheme_files = K2::files_scan(TEMPLATEPATH . '/styles/', 'css', 2);
+	$style_files = K2::get_styles();
 
 	// Get the sidebar
 	$sidebar_number = get_option('k2sidebarnumber');
@@ -28,11 +38,11 @@
 	$header_picture = get_option('k2header_picture');
 
 	// Check that we can write to the headers folder and that it exists
-	$is_headers_writable = is_writable(K2_HEADERS_PATH);
-	$is_headers_dir = is_dir(K2_HEADERS_PATH);
+	$is_headers_writable = is_writable(K2HEADERSPATH);
+	$is_headers_dir = is_dir(K2HEADERSPATH);
 
 	// Get the header pictures
-	$picture_files = $is_headers_dir ? K2::files_scan(K2_HEADERS_PATH, array('gif','jpeg','jpg','png'), 1) : array();
+	$picture_files = K2Header::get_header_images();
 ?>
 
 <?php if(isset($_POST['submit'])) { ?>
@@ -48,7 +58,23 @@
 <?php } ?>
 
 <div class="wrap">
-	<form name="dofollow" action="" method="post">
+	<?php if (!$is_styles_dir) { ?>
+		<div class="error"><small>
+		<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom styles is missing.</p><p>For you to be able to use custom styles, you need to add this directory.</p>','k2_domain'), K2STYLESPATH ); ?>
+		</small></div>
+	<?php } ?>
+
+	<?php if (!$is_headers_dir) { ?>
+		<div class="error"><small>
+		<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom headers is missing.</p><p>For you to be able to customize your header, you need to add this directory and <code>chmod 777</code> it, to make it writable.</p>','k2_domain'), K2HEADERSPATH ); ?>
+		</small></div>
+	<?php } elseif (!$is_headers_writable) { ?>
+		<div class="error"><small>
+		<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom headers is not writable.</p><p>You won\'t be able to upload any images here. You will need to <code>chmod 777</code> it to make it writable.</p>','k2_domain'), K2HEADERSPATH ); ?>
+		</small></div>
+	<?php } ?>
+
+	<form name="dofollow" action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="action" value="<?php echo($update); ?>" />
 		<input type="hidden" name="page_options" value="'dofollow_timeout'" />
 
@@ -67,8 +93,12 @@
 			color: #666;
 		}
 		
-		.configstuff input[type=submit], #k2-blogornoblog, .configstuff select  {
+		.configstuff #k2-blogornoblog, .configstuff select  {
 			width: 300px;
+		}
+
+		.configstuff p select {
+			margin-left: 200px;
 		}
 
 		.configstuff input[type=file] {
@@ -95,7 +125,7 @@
 		}
 		
 		table tr td {
-			height: 30px;
+			padding: 5px;
 		}
 		</style>
 
@@ -115,7 +145,7 @@
 			<?php if (!function_exists('af_ela_set_config')) { ?>
 				<?php printf(__('We highly recommend that you install %s for maximum archival pleasure.','k2_domain'), '<a href="http://www.sonsofskadi.net/index.php/extended-live-archive/">' . __('Arnaud Froment\'s Extended Live Archives','k2_domain') . '</a>'); ?></small></p>
 			<?php } else { ?>
-				</small></p><p style="text-align: center;"><input id="configela" name="configela" type="submit" value="<?php _e('Setup Extended Live Archives for K2','k2_domain') ?>" /></p>
+				</small></p><p><input id="configela" name="configela" type="submit" value="<?php _e('Setup Extended Live Archives for K2','k2_domain') ?>" /></p>
 			<?php } ?>
 
 			<h3><?php _e('Live Commenting','k2_domain'); ?></h3>
@@ -124,13 +154,12 @@
 				
 			<p><small><?php _e('Live comments use AJAX to submit comments to the server without reloading the page, making the experience more seamless for the user.','k2_domain'); ?></small></p>
 
-
 			<?php if (function_exists('dynamic_sidebar')) { ?>
 			<h3><?php _e('Sidebars','k2_domain'); ?></h3>
 
 			<p><small><?php _e('This sets the number of sidebars that K2 will display.','k2_domain'); ?></small></p>
 
-			<p style="text-align: center">
+			<p>
 				<select id="k2-sidebarnumber" name="k2[sidebarnumber]">
 					<option value="0"<?php selected($sidebar_number, '0'); ?>><?php _e('No Sidebars','k2_domain'); ?></option>
 					<option value="1"<?php selected($sidebar_number, '1'); ?>><?php _e('Single Sidebar','k2_domain'); ?></option>
@@ -139,12 +168,11 @@
 			</p>
 			<?php } ?>
 
-
 			<h3><?php _e('Asides','k2_domain'); ?></h3>
 
 			<p><small><?php _e('\'Asides\' is a category of entries, meant to be \'smaller\' and perhaps of \'less importance\', like for instance links with minor commentary. They are styles differently than other entries to separate them content-wise. Below you can select a category to be shown as Asides.','k2_domain'); ?></small></p>
 
-			<p style="text-align: center">
+			<p>
 				<select id="k2-asidescategory" name="k2[asidescategory]">
 					<option value="0"<?php selected($asides_id, '0'); ?>><?php _e('No Asides','k2_domain'); ?></option>
 
@@ -154,17 +182,21 @@
 				</select>
 			</p>
 
-			<h3><?php _e('Custom Scheme','k2_domain'); ?></h3>
+			<?php if ($is_styles_dir) { ?>
+			<h3><?php _e('Custom Style','k2_domain'); ?></h3>
 
-			<p><small><?php printf(__('K2 schemes are CSS files that allow you to visually customize your blog, without ever touching K2\'s core files. The structure of K2 has been designed specifically for this purpose, and offers some truly great styling opportunities. %s','k2_domain'), '<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS">' . __('Read more','k2_domain') . '</a>.'  ); ?></small></p>
+			<p><small><?php printf(__('K2 Styles are CSS files that allow you to visually customize your blog, without ever touching K2\'s core files. The structure of K2 has been designed specifically for this purpose, and offers some truly great styling opportunities. %s','k2_domain'), '<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS">' . __('Read more','k2_domain') . '</a>.'  ); ?></small></p>
 
-			<p style="text-align: center"><select id="k2-scheme" name="k2[scheme]">
-				<option value=""<?php selected($scheme_name, ''); ?>><?php _e('No Scheme','k2_domain'); ?></option>
+			<p><select id="k2-scheme" name="k2[scheme]">
+				<option value=""<?php selected($style_name, ''); ?>><?php _e('No Style','k2_domain'); ?></option>
 
-				<?php foreach($scheme_files as $scheme_file) { ?>
-				<option value="<?php echo($scheme_file); ?>"<?php selected($scheme_name, $scheme_file); ?>><?php echo($scheme_file); ?></option>
+				<?php foreach($style_files as $style_file) { ?>
+				<option value="<?php echo($style_file); ?>"<?php selected($style_name, $style_file); ?>><?php echo($style_file); ?></option>
 				<?php } ?>
-			</select></p>
+			</select>
+			<input type="submit" name="editstyle" id="editstyle" value="<?php _e('Edit Style &raquo;','k2_domain'); ?>" />
+			</p>
+			<?php } ?>
 
 			<h3><?php _e('Custom Header','k2_domain'); ?></h3>
 
@@ -175,15 +207,14 @@
 
 			<table>
 			<?php if ($is_headers_dir) { ?>
-
-				<?php if (!function_exists('add_custom_image_header') and $is_headers_writable) { ?>
-				<tr><td>
-					<small><?php _e('Upload an Image','k2_domain'); ?></small>
-				</td><td>
-					<input id="picture" name="picture" type="file" disabled="disabled" />
-					<input id="upload-activate" name="upload_activate" type="checkbox" value="1" />
-					<label for="upload-activate"><small><?php _e('Activate immediately','k2_domain'); ?></small></label>
-				</td></tr>
+				<?php if ($is_headers_writable) { ?>
+			<tr><td>
+				<small><?php _e('Upload an Image','k2_domain'); ?></small>
+			</td><td>
+				<input type="file" id="image_upload" name="image_upload" />
+			</td><td>
+				<label for="upload-activate"><input id="upload-activate" name="upload_activate" type="checkbox" value="1" /><small><?php _e('Activate immediately','k2_domain'); ?></small></label>
+			</td></tr>
 				<?php } ?>
 
 			<tr><td style="width: 160px">
@@ -195,25 +226,11 @@
 					<option value="<?php echo($picture_file); ?>"<?php selected($header_picture, $picture_file); ?>><?php echo($picture_file); ?></option>
 					<?php } ?>
 				</select>
+			</td><td>	
+				<label for="k2-imagerandomfeature"><input id="k2-imagerandomfeature" name="k2[imagerandomfeature]" type="checkbox" value="1" <?php checked('1', get_option('k2imagerandomfeature')); ?> /><small><?php _e('Randomize Header Image','k2_domain'); ?></small></label>
 			</td></tr>
-			
-			<tr><td>
-				<small><?php _e('Randomize Header Image','k2_domain'); ?></small>
-			</td><td>
-				<input id="k2-imagerandomfeature" name="k2[imagerandomfeature]" type="checkbox" value="1" <?php checked('1', get_option('k2imagerandomfeature')); ?> />
-			</td></tr>
-			<?php } /* End is_headers_dir check */ ?>
-
-			<?php if (!$is_headers_dir) { ?>
-				<div class="error"><small>
-				<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom headers is missing.</p><p>For you to be able to customize your header, you need to add this directory and <code>chmod 777</code> it, to make it writable.</p>','k2_domain'), K2_HEADERS_PATH ); ?>
-				</small></div>
-			<?php } elseif (!$is_headers_writable) { ?>
-				<div class="error"><small>
-				<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom headers is not writable.</p><p>You won\'t be able to upload any images here. You will need to <code>chmod 777</code> it to make it writable.</p>','k2_domain'), K2_HEADERS_PATH ); ?>
-				</small></div>
 			<?php } ?>
-
+			
 			<tr><td style="width: 160px">
 				<small><?php _e('Rename the \'Blog\' tab','k2_domain'); ?></small>
 			</td><td>

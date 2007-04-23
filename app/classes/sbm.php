@@ -208,6 +208,7 @@ class K2SBM {
 		// Allow the Widgets and SBM defined in plugins & themes to be loaded
 		do_action('sbm_init');
 		do_action('widgets_init');
+		do_action('plugins_loaded');
 	}
 
 	function add_menus() {
@@ -239,6 +240,8 @@ class K2SBM {
 	}
 
 	function module_admin_head() {
+		// Replace bundled scripts with our own
+		K2::replace_wp_scripts();
 	?>
 		<script type="text/javascript">
 			//<![CDATA[
