@@ -133,13 +133,28 @@ class K2 {
 	}
 
 	function replace_wp_scripts() {
-		global $wp_version;
-
 		if ( get_wp_version() < 2.2 ) {
-			// Register our prototype
+			// Register prototype 1.5
 			wp_deregister_script('prototype');
-			wp_register_script('prototype',	get_bloginfo('template_directory') . '/js/prototype.js.php',
+			wp_register_script('prototype',
+				get_bloginfo('template_directory').'/js/prototype.js.php',
 				false, '1.5.0');
+
+			// Register scriptaculous 1.7
+			wp_deregister_script('scriptaculous-effects');
+			wp_register_script('scriptaculous-effects',
+				get_bloginfo('template_directory').'/js/effects.js.php',
+				array('prototype'), '1.7.0');
+
+			wp_deregister_script('scriptaculous-slider');
+			wp_register_script('scriptaculous-slider',
+				get_bloginfo('template_directory').'/js/slider.js.php',
+				array('scriptaculous-effects'), '1.7.0');
+
+			wp_deregister_script('scriptaculous-dragdrop');
+			wp_register_script('scriptaculous-dragdrop',
+				get_bloginfo('template_directory').'/js/dragdrop.js.php',
+				array('prototype'), '1.7.0');
 		}
 	}
 
