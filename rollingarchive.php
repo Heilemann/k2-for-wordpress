@@ -15,6 +15,13 @@
 	// Load Rolling Archives?
 	if ( (get_option('k2rollingarchives') == 1) and ($wp_query->max_num_pages > 1) ) { 
 
+		// Parse the query
+		if ( is_array($wp_query->query) ) {
+			$rolling_query = http_build_query($wp_query->query);
+		} else {
+			$rolling_query = $wp_query->query;
+		}
+
 		// Get list of page dates
 		$page_dates = get_rolling_page_dates($wp_query);
 
@@ -60,7 +67,7 @@
 	var <?php echo $prefix; ?>rolling = new RollingArchives(
 		"<?php echo $prefix; ?>", "rollingarchives", "primarycontent", "<?php _e('Page %1$d of %2$d',k2_domain); ?>", <?php echo $wp_query->max_num_pages; ?>,
 		<?php output_javascript_url('theloop.php'); ?>,
-		<?php output_javascript_hash($wp_query->query); ?>,
+		"<?php echo $rolling_query; ?>",
 		<?php output_javascript_array($page_dates); ?>
 	);
 // ]]>

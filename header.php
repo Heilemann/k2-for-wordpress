@@ -43,9 +43,7 @@
 	<?php /* LiveSearch */ if (get_option('k2livesearch') == 1) { ?>
 	<script type="text/javascript">
 	//<![CDATA[
-		Event.observe(window, "load", function() {
-			new Livesearch("searchform", "s", "dynamic-content", "current-content", <?php output_javascript_url('rollingarchive.php'); ?>, "&s=", "searchload", "<?php _e('Type and Wait to Search','k2_domain'); ?>", "searchreset", "searchsubmit", "<?php _e('go','k2_domain'); ?>");
-		});
+		var k2search = new Livesearch("searchform", "dynamic-content", "current-content", <?php output_javascript_url('rollingarchive.php'); ?>, "<?php _e('Type and Wait to Search','k2_domain'); ?>", "<?php _e('go','k2_domain'); ?>");
 	//]]>
 	</script>
 	<?php } ?>

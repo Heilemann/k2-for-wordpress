@@ -175,17 +175,61 @@ function output_javascript_hash($array) {
 	$output = 'new Hash({';
 
 	if ( is_array($array) and !empty($array) ) {
-		$last_key = end(array_keys($array));
-		$last_item = array_pop($array);
-		foreach ($array as $key => $item) {
-			$output .= $key . ': ' . (is_numeric($item)? $item : "'$item'") . ', ';
+		$keys = array_keys($array);
+		$values = array_values($array);
+		$n = count($array);
+
+		for ($i = 0; $i < $n; $i++) {
+			$output .= $keys[$i] . ': ';
+
+			if ( is_string($values[$i]) ) {
+				$output .= "'$values[$i]'";
+			} elseif ( empty($values[$i]) ) {
+				$output .= '0';
+			} else {
+				$output .= strval($values[$i]);
+			}
+
+			if ($i < $n - 1) {
+				$output .= ',';
+			}
 		}
-		$output .= $last_key . ': ' . (is_numeric($last_item)? $last_item : "'$last_item'");
 	}
 
 	$output .= '})';
 
 	echo $output;
+}
+
+
+/* By mqchen at gmail dot com, http://us.php.net/manual/en/function.http-build-query.php#72911 */
+if (!function_exists('http_build_query')) {
+	function http_build_query($data, $prefix = null, $sep = '', $key = '') {
+		$ret = array();
+		foreach ( (array) $data as $k => $v) {
+			$k = urlencode($k);
+
+			if ( is_int($k) && $prefix != null ) {
+				$k = $prefix.$k;
+			}
+
+			if ( !empty($key) ) {
+				$k = $key.'['.$k.']';
+			}
+
+			if ( is_array($v) or is_object($v) ) {
+				array_push($ret, http_build_query($v, '', $sep, $k));
+			} else {
+				array_push($ret, $k.'='.urlencode($v));
+			}
+		}
+
+        if ( empty($sep) ) {
+            $sep = ini_get("arg_separator.output");
+        }
+
+        return implode($sep, $ret);
+    }
 }
 
 

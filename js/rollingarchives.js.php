@@ -22,13 +22,11 @@ RollingArchives = Class.create();
 
 RollingArchives.prototype = {
 	initialize: function(prefix, attachitem, targetitem, pagetext, pagecount, url, query, pagedates) {
-		var thisRolling = this;
-
 		this.attachitem = prefix+attachitem;
 		this.targetitem = prefix+targetitem;
 		this.url = url;
 		this.pagetext = pagetext;
-		this.query = query;
+		this.query = $H(query.toQueryParams());
 		this.pagenumber = 1;
 		this.pagecount = pagecount;
 		this.pagedates = pagedates;
@@ -46,8 +44,12 @@ RollingArchives.prototype = {
 
 		this.trimmer = new TextTrimmer(prefix, "texttrimmer", "entry-content", 1, 100);
 
+		var thisRolling = this;
 		var sliderValues = new Array(this.pagecount);
-		for (var i = 0; i < this.pagecount; i++) sliderValues[i] = i + 1;
+
+		for (var i = 0; i < this.pagecount; i++) {
+			sliderValues[i] = i + 1;
+		}
 		
 		this.pageSlider = new Control.Slider(thisRolling.pagehandle, thisRolling.pagetrack, {
 			range: $R(thisRolling.pagecount, 1),
@@ -130,10 +132,7 @@ RollingArchives.prototype = {
 					evalScripts: true,
 					parameters: this.query,
 					onComplete: this.rollComplete.bind(this),
-					onFailure: function() {
-						this.rollComplete.bind(this);
-						this.rollError.bind(this);
-					}
+					onFailure: this.rollError.bind(this)
 				}
 			);
 		}
@@ -143,15 +142,7 @@ RollingArchives.prototype = {
 		this.rollRemoveLoad();
 
 		/* Spool Texttrimmer */
-		if (this.pagenumber == 1) {
-			this.trimmer.removeClass();
-		} else {
-			this.trimmer.trimAgain(this.trimmer.curValue);
-		}
-
-		/* Support for Lightbox */
-		if (window.initLightbox)
-			initLightbox();
+		this.trimmer.trimAgain(this.trimmer.curValue);
 	},
 	
 	rollRemoveLoad: function() {
