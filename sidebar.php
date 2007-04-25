@@ -1,27 +1,6 @@
-<?php /* Widgets/SBM Check */ if ( function_exists('dynamic_sidebar') ) { ?>
-
-	<?php /* First Sidebar */ if (get_option('k2sidebarnumber') > 0) { ?>
-		<hr />
-		<div id="sidebar-main" class="secondary">
-
-		<?php dynamic_sidebar(1); ?>
-
-		</div> <!-- #sidebar-main -->
-	<?php } ?>
-
-	<?php /* Second Sidebar */ if (get_option('k2sidebarnumber') > 1) { ?>
-		<hr />
-		<div id="sidebar-alt" class="secondary">
-
-		<?php dynamic_sidebar(2); ?>
-
-		</div> <!-- #sidebar-alt -->
-	<?php } ?>
-
-<?php } else { ?>
-
 <hr />
 <div id="sidebar-main" class="secondary">
+<?php /* Widgets/SBM Check */ if ( !(function_exists('dynamic_sidebar') and get_option('k2sidebarnumber') > 0 and dynamic_sidebar(1)) ) { ?>
 
 	<div id="search"><h2><?php _e('Search','k2_domain'); ?></h2>
 		<?php include (TEMPLATEPATH . '/searchform.php'); ?>
@@ -204,5 +183,14 @@
 
 </div> <!-- #sidebar-main -->
 <?php } /* End Widgets/SBM check */ ?>
+
+<?php /* Second Sidebar */ if (function_exists('dynamic_sidebar') and get_option('k2sidebarnumber') > 1) { ?>
+	<hr />
+	<div id="sidebar-alt" class="secondary">
+
+	<?php dynamic_sidebar(2); ?>
+
+	</div> <!-- #sidebar-alt -->
+<?php } ?>
 
 <div class="clear"></div>
