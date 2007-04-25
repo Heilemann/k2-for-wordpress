@@ -245,7 +245,7 @@ class K2SBM {
 	?>
 		<script type="text/javascript">
 			//<![CDATA[
-				var sbm_baseUrl = <?php k2info('js_url'); ?> + '/app/includes/sbm-ajax.php';
+				var sbm_baseUrl = <?php output_javascript_url('app/includes/sbm-ajax.php'); ?>;
 			//]]>
 		</script>
 	<?php
