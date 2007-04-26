@@ -181,8 +181,8 @@
 	</div>
 	<?php } ?>
 
-</div> <!-- #sidebar-main -->
 <?php } /* End Widgets/SBM check */ ?>
+</div> <!-- #sidebar-main -->
 
 <?php /* Second Sidebar */ if (function_exists('dynamic_sidebar') and get_option('k2sidebarnumber') > 1) { ?>
 	<hr />
