@@ -109,6 +109,7 @@ Livesearch.prototype = {
 	},
 
 	resetLivesearch: function() {
+		this.lastsearch = '';
 		$(this.targetitem).update();
 		$(this.hideitem).style.display = 'block';
 
