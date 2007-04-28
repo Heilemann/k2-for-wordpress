@@ -7,13 +7,16 @@ function k2info($show='') {
 function get_k2info($show='') {
 	global $current;
 
+	$output = '';
 	switch ($show) {
 		case 'version' :
     		$output = 'Beta Two '. $current;
 			break;
 
 		case 'style' :
-			$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2STYLESPATH) . get_option('k2scheme');
+			if ( get_option('k2scheme') != '' ) {
+				$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2STYLESPATH) . get_option('k2scheme');
+			}
 			break;
 
 		case 'styles_url' :
@@ -22,6 +25,12 @@ function get_k2info($show='') {
 
 		case 'headers_url' :
 			$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2HEADERSPATH);
+			break;
+
+		case 'current_style_dir' :
+			if ( get_option('k2scheme') != '' ) {
+				$output = K2STYLESPATH . dirname(get_option('k2scheme'));
+			}
 			break;
 	}
 	return $output;
