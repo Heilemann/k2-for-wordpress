@@ -36,6 +36,43 @@ function get_k2info($show='') {
 	return $output;
 }
 
+function k2_parse_query($query) {
+	if ( is_array($query) and !empty($query) ) {
+		$valid_keys = array(
+			'error'
+			, 'm'
+			, 'hour'
+			, 'second'
+			, 'minute'
+			, 'hour'
+			, 'day'
+			, 'monthnum'
+			, 'year'
+			, 'w'
+			, 's'
+			, 'category_name'
+			, 'author_name'
+			, 'paged'
+			, 'showposts'
+			, 'posts_per_page'
+			, 'posts_per_archive_page'
+			, 'nopaging'
+			, 'order'
+			, 'orderby'
+			, 'offset'
+			, 'tag'
+		);
+
+		foreach ($query as $key => $value) {
+			if ( ! in_array($key, $valid_keys) ) {
+				unset($query[$key]);
+			}
+		}
+	}
+
+	return $query;
+}
+
 function k2_style_info() {
 	$style_info = get_option('k2styleinfo');
 	
@@ -271,18 +308,18 @@ function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' a
 }
 
 function k2asides_filter($query) {
-	// Check to see if SBM is active
-	if (function_exists('is_active_module')) {
-		$k2asidescategory = get_option('k2asidescategory');
+	$k2asidescategory = get_option('k2asidescategory');
 
-		// Only filter when it's in the homepage
-		if ( ($k2asidescategory != 0) and (is_active_module('asides_sidebar_module')) and ($query->is_home) ) {
-			$priorcat = $query->get('cat');
-			if ( !empty($priorcat) ) {
-				$priorcat .= ',';
-			}
-			$query->set('cat', $priorcat . '-' . $k2asidescategory);
+	// Only filter when it's in the homepage
+	if ( ($k2asidescategory != 0) and (
+		(function_exists('is_active_module') and is_active_module('asides_sidebar_module')) or
+		(function_exists('is_active_widget') and is_active_widget('k2_widget_asides'))
+		) and ($query->is_home) ) {
+		$priorcat = $query->get('cat');
+		if ( !empty($priorcat) ) {
+			$priorcat .= ',';
 		}
+		$query->set('cat', $priorcat . '-' . $k2asidescategory);
 	}
 
 	return $query;

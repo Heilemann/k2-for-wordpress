@@ -6,10 +6,8 @@
 		require (dirname(__FILE__).'/../../../wp-blog-header.php');
 		$prefix = 'nested_';
 
-		// Workaround for category in permalinks
-		if (get_query_var('category_name') == 'rollingarchivephp') {
-			query_posts($_GET);
-		}
+		$query = k2_parse_query($_GET);
+		query_posts($query);
 	}
 
 	// Load Rolling Archives?

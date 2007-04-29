@@ -92,7 +92,7 @@ Livesearch.prototype = {
 			{
 				method: 'get',
 				evalScripts: true,
-				parameters: query + '&k2dynamic=1',
+				parameters: query + '&k2dynamic=init',
 				onComplete: this.searchComplete.bind(this)
 		});
 

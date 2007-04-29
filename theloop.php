@@ -6,17 +6,17 @@
 	if (isset($_GET['k2dynamic'])) {
 		require (dirname(__FILE__).'/../../../wp-blog-header.php');
 
+		if ($_GET['k2dynamic'] != 'init') {
+			$query = k2_parse_query($_GET);
+			query_posts($query);
+		}
+
 		// Debugging
 		if ( isset($_GET['k2debug']) ) {
 			echo '<div class="alert">';
 			echo '<b>Query:</b><br />'; var_dump($wp_query->query); echo '<br />';
 			echo '<b>Request:</b><br />'; var_dump($wp_query->request); echo '<br />';
 			echo '</div>';
-		}
-
-		// Workaround for category in permalinks
-		if ( get_query_var('category_name') == 'theloopphp') {
-			query_posts($_GET);
 		}
 	?>
 
