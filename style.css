@@ -689,7 +689,7 @@ a {
 	padding: 0;
 	}
 
-#primary .entry-content img {
+.entry-content img {
 	margin: 0 5px;
 	padding: 4px;
 	border: 1px solid #ccc;
@@ -719,8 +719,8 @@ img.center, img[align="center"] {
 	}
 	
 img.alignright, img[align="right"] {
-	padding: 4px !important;
-	margin: 0 0 2px 7px !important;
+	padding: 4px;
+	margin: 0 0 2px 7px;
 	display: inline;
 	}
 
