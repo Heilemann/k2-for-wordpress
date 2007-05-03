@@ -12,15 +12,8 @@ class K2Archive {
 		$archives_page['post_content'] = __('Do not edit this page', 'k2_domain');
 		$archives_page['post_excerpt'] = __('Do not edit this page', 'k2_domain');
 		$archives_page['post_title'] = __('Archives', 'k2_domain');
-
-		if (get_wp_version() < 2.1) {
-			// WP 2.0
-			$archives_page['post_status'] = 'static';
-		} else {
-			// WP 2.1+
-			$archives_page['post_status'] = 'publish';
-			$archives_page['post_type'] = 'page';
-		}
+		$archives_page['post_status'] = 'publish';
+		$archives_page['post_type'] = 'page';
 		$archives_page['page_template'] = 'page-archives.php';
 
 		wp_insert_post($archives_page);

@@ -154,6 +154,14 @@
 				
 			<p><small><?php _e('Live comments use AJAX to submit comments to the server without reloading the page, making the experience more seamless for the user.','k2_domain'); ?></small></p>
 
+
+			<h3><?php _e('Sidebar Modules','k2_domain'); ?></h3>
+
+			<p><input id="k2-sidebarmodules" name="k2[sidebarmodules]" type="checkbox" value="1" <?php checked('1', get_option('k2sidebarmodules')); ?> /> <?php _e('Enable Sidebar Modules','k2_domain'); ?></p>
+
+			<p><small><?php _e('Sidebar Modules is similar to Widgets. However, it makes substansial improvements over the basic Widgets by allowing you to control the visibility options of each module, allowing more than one module of any type without restrictions and allowing each module their own unique title.','k2_domain'); ?></small></p>
+
+
 			<?php if (function_exists('dynamic_sidebar')) { ?>
 			<h3><?php _e('Sidebars','k2_domain'); ?></h3>
 
