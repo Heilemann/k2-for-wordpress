@@ -24,61 +24,36 @@ $k2sbm_module_index = 0;
 
 class K2SBM {
 	function install() {
-		$sbm_stub_path = '../themes/'.get_option('template').'/app/includes/sbm-stub.php';
-
 		add_option('k2sbm_modules_active', array(), 'The active sidebar modules.');
 		add_option('k2sbm_modules_disabled', array(), 'The disabled sidebar modules.');
 		add_option('k2sbm_modules_next_id', 1, 'The ID for the next sidebar module.');
-		add_option('k2sbm_stub_path', $sbm_stub_path, 'The location of sbm-stub.php');
 
-		// Activate sbm-stub
-		K2SBM::process_stub($sbm_stub_path);
+		K2SBM::cleanup_deprecated();
+	}
+
+	function cleanup_deprecated() {
+		delete_option('k2sbm_stub_path');
+
+		// Remove all existing sbm-stub paths
+		$plugins = (array) get_option('active_plugins');
+		for ($i = 0; $i < count($plugins); $i++) {
+			if (strpos($plugins[$i], 'sbm-stub.php') !== false) {
+				unset($plugins[$i]);
+			}
+		}
+		update_option('active_plugins', $plugins);
 	}
 
 	function uninstall() {
 		delete_option('k2sbm_modules_active');
 		delete_option('k2sbm_modules_disabled');
 		delete_option('k2sbm_modules_next_id');
-		delete_option('k2sbm_stub_path');
-
-		// Remove sbm-stub
-		K2SBM::process_stub();
 	}
 
 	function init() {
-		// Check to see if sbm-stub needs to be activated
-		$sbm_stub_path = '../themes/'.get_option('template').'/app/includes/sbm-stub.php';
-
-		if (get_option('k2sbm_stub_path') != $sbm_stub_path) {
-			K2SBM::process_stub($sbm_stub_path);
-		}
-	}
-
-	function process_stub($sbm_stub_path = false) {
-		$plugins = (array) get_option('active_plugins');
-
-		// Remove all existing sbm-stub paths
-		for ($i = 0; $i < count($plugins); $i++) {
-			if (strpos($plugins[$i], 'sbm-stub.php') !== false) {
-				unset($plugins[$i]);
-			}
-		}
-
-		// Insert the new sbm-stub path
-		if (!empty($sbm_stub_path)) {
-			if (count($plugins) == 0) {
-				$plugins = array($sbm_stub_path);
-			} else {
-				$plugins[] = $sbm_stub_path;
-			}
-			update_option('k2sbm_stub_path', $sbm_stub_path);
-		}
-
-		update_option('active_plugins', $plugins);
-	}
-
-	function wp_bootstrap() {
 		global $k2sbm_active_modules;
+
+		add_action('admin_menu', array('K2SBM', 'add_menus'));
 
 		K2SBM::pre_bootstrap();
 
@@ -233,13 +208,7 @@ class K2SBM {
 		// Allow the Widgets and SBM defined in plugins & themes to be loaded
 		do_action('sbm_init');
 		do_action('widgets_init');
-	}
-
-	function k2_init() {
-		// Add menus
-		if (get_option('k2sidebarmodules') == '1') {
-			add_action('admin_menu', array('K2SBM', 'add_menus'));
-		}
+		do_action('plugins_loaded');
 	}
 
 	function add_menus() {

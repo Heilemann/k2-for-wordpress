@@ -17,9 +17,16 @@ class K2 {
 			define('K2HEADERSPATH', ABSPATH . UPLOADS . '/k2support/headers/');
 		}
 
+		$exclude = array('sbm-ajax.php');
+
+		// Exclude SBM if there's already a sidebar manager
+		if ( function_exists('register_sidebar') ) {
+			$exclude[] = 'sbm.php';
+		}
+
 		// Scan for includes and classes
-		K2::include_all(TEMPLATEPATH . '/app/includes/', array('sbm-ajax.php', 'sbm-stub.php', 'sbm.php'));
-		K2::include_all(TEMPLATEPATH . '/app/classes/');
+		K2::include_all(TEMPLATEPATH . '/app/includes/', $exclude);
+		K2::include_all(TEMPLATEPATH . '/app/classes/', $exclude);
 
 		// Get the last modified time of the classes folder
 		$last_modified = filemtime(dirname(__FILE__));
@@ -62,7 +69,7 @@ class K2 {
 
 		// Register our sidebar with SBM/Widgets
 		if ( function_exists('register_sidebars') ) {
-			register_sidebars((int)get_option('k2sidebarnumber'), array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>'));
+			register_sidebars(2, array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>'));
 		}
 	}
 
@@ -126,7 +133,7 @@ class K2 {
 	}
 
 	function replace_wp_scripts() {
-		if ( K2::get_wp_version() < 2.2 ) {
+		if ( get_wp_version() < 2.2 ) {
 			// Register prototype 1.5
 			wp_deregister_script('prototype');
 			wp_register_script('prototype',
@@ -300,18 +307,6 @@ class K2 {
 		while ( file_exists($path . $filename . ++$number . $ext) );
 
 		return $path . sanitize_title_with_dashes($filename . $number) . $ext;
-	}
-
-	function get_wp_version() {
-		global $wp_version;
-
-		preg_match("/\d\.\d/i", $wp_version, $match);
-
-		// wpmu - increment version by 1.0 to match wp
-		if (strpos($wp_version, 'wordpress-mu') !== false) {
-			$match[0] = $match[0] + 1.0;
-		}
-		return $match[0];
 	}
 }
 

@@ -313,7 +313,7 @@ function k2asides_filter($query) {
 	// Only filter when it's in the homepage
 	if ( ($k2asidescategory != 0) and (
 		(function_exists('is_active_module') and is_active_module('asides_sidebar_module')) or
-		(function_exists('is_active_widget') and is_active_widget('k2_asides_widget'))
+		(function_exists('is_active_widget') and is_active_widget('k2_widget_asides'))
 		) and ($query->is_home) ) {
 		$priorcat = $query->get('cat');
 		if ( !empty($priorcat) ) {
@@ -327,6 +327,19 @@ function k2asides_filter($query) {
 
 // Filter to remove asides from the loop
 add_filter('pre_get_posts', 'k2asides_filter');
+
+
+function get_wp_version() {
+	global $wp_version;
+
+	preg_match("/\d\.\d/i", $wp_version, $match);
+
+	// wpmu - increment version by 1.0 to match wp
+	if (strpos($wp_version, 'wordpress-mu') !== false) {
+		$match[0] = $match[0] + 1.0;
+	}
+	return $match[0];
+}
 
 
 function k2_body_id() {

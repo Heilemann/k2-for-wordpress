@@ -8,10 +8,6 @@ class K2Options {
 		if($_GET['page'] == 'k2-options' and isset($_POST['uninstall'])) {
 			K2::uninstall();
 		}
-
-		if($_GET['page'] == 'k2-options' and isset($_POST['k2']['sidebarmodules'])) {
-			add_action('admin_menu', array('K2SBM', 'add_menus'));
-		}
 	}
 
 	function add_menu() {
@@ -52,13 +48,6 @@ class K2Options {
 					update_option('k2livecommenting', '0');
 				}
 
-				// Sidebar Modules
-				if(isset($_POST['k2']['sidebarmodules'])) {
-					update_option('k2sidebarmodules', '1');
-				} else {
-					update_option('k2sidebarmodules', '0');
-				}
-
 				// Set all the options
 				foreach($_POST['k2'] as $option => $value) {
 					update_option('k2' . $option, $value);
@@ -90,7 +79,6 @@ class K2Options {
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
 		add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.');
 		add_option('k2sidebarnumber', '1', 'Number of sidebars to display.');
-		add_option('k2sidebarmodules', '1', 'Set whether K2 loads Sidebar Modules.');
 
 		K2Options::cleanup_deprecated();
 	}
@@ -118,7 +106,6 @@ class K2Options {
 		delete_option('k2rollingarchives');
 		delete_option('k2blogornoblog');
 		delete_option('k2sidebarnumber');
-		delete_option('k2sidebarmodules');
 	}
 }
 
