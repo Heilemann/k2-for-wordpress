@@ -1,7 +1,7 @@
 <?php
 	// Handle style editing
 	if ( isset($_POST['editstyle']) and !empty($_POST['k2']['style']) ) {
-		$file = str_replace(ABSPATH, '', K2STYLESPATH) . $_POST['k2']['style'];
+		$file = str_replace(ABSPATH, '', K2STYLESPATH) . attribute_escape($_POST['k2']['style']);
 		header("Location: templates.php?file=$file");
 		exit;
 	}
@@ -75,11 +75,11 @@
 	<?php } ?>
 
 	<form name="dofollow" action="" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="action" value="<?php echo($update); ?>" />
+		<input type="hidden" name="action" value="<?php echo attribute_escape($update); ?>" />
 		<input type="hidden" name="page_options" value="'dofollow_timeout'" />
 
 		<p class="submit">
-			<input type="submit" name="submit" value="<?php _e('Update Options &raquo;','k2_domain'); ?>" />
+			<input type="submit" name="submit" value="<?php echo attribute_escape(__('Update Options &raquo;','k2_domain')); ?>" />
 		</p>
 
 		<style type="text/css">
@@ -145,7 +145,7 @@
 			<?php if (!function_exists('af_ela_set_config')) { ?>
 				<?php printf(__('We highly recommend that you install %s for maximum archival pleasure.','k2_domain'), '<a href="http://www.sonsofskadi.net/index.php/extended-live-archive/">' . __('Arnaud Froment\'s Extended Live Archives','k2_domain') . '</a>'); ?></small></p>
 			<?php } else { ?>
-				</small></p><p><input id="configela" name="configela" type="submit" value="<?php _e('Setup Extended Live Archives for K2','k2_domain') ?>" /></p>
+				</small></p><p><input id="configela" name="configela" type="submit" value="<?php echo attribute_escape(__('Setup Extended Live Archives for K2','k2_domain')); ?>" /></p>
 			<?php } ?>
 
 			<h3><?php _e('Live Commenting','k2_domain'); ?></h3>
@@ -161,9 +161,9 @@
 
 			<p>
 				<select id="k2-sidebarnumber" name="k2[sidebarnumber]">
-					<option value="0"<?php selected($sidebar_number, '0'); ?>><?php _e('No Sidebars','k2_domain'); ?></option>
-					<option value="1"<?php selected($sidebar_number, '1'); ?>><?php _e('Single Sidebar','k2_domain'); ?></option>
-					<option value="2"<?php selected($sidebar_number, '2'); ?>><?php _e('Dual Sidebars','k2_domain'); ?></option>
+					<option value="0" <?php selected($sidebar_number, '0'); ?>><?php _e('No Sidebars','k2_domain'); ?></option>
+					<option value="1" <?php selected($sidebar_number, '1'); ?>><?php _e('Single Sidebar','k2_domain'); ?></option>
+					<option value="2" <?php selected($sidebar_number, '2'); ?>><?php _e('Dual Sidebars','k2_domain'); ?></option>
 				</select>
 			</p>
 			<?php } ?>
@@ -174,10 +174,10 @@
 
 			<p>
 				<select id="k2-asidescategory" name="k2[asidescategory]">
-					<option value="0"<?php selected($asides_id, '0'); ?>><?php _e('No Asides','k2_domain'); ?></option>
+					<option value="0" <?php selected($asides_id, '0'); ?>><?php _e('No Asides','k2_domain'); ?></option>
 
 					<?php foreach ($asides_cats as $cat) { ?>
-					<option value="<?php echo($cat->cat_ID); ?>"<?php selected($asides_id, $cat->cat_ID); ?>><?php echo($cat->cat_name); ?></option>
+					<option value="<?php echo attribute_escape($cat->cat_ID); ?>" <?php selected($asides_id, $cat->cat_ID); ?>><?php echo($cat->cat_name); ?></option>
 					<?php } ?>
 				</select>
 			</p>
@@ -188,13 +188,13 @@
 			<p><small><?php printf(__('K2 Styles are CSS files that allow you to visually customize your blog, without ever touching K2\'s core files. The structure of K2 has been designed specifically for this purpose, and offers some truly great styling opportunities. %s','k2_domain'), '<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS">' . __('Read more','k2_domain') . '</a>.'  ); ?></small></p>
 
 			<p><select id="k2-scheme" name="k2[scheme]">
-				<option value=""<?php selected($style_name, ''); ?>><?php _e('No Style','k2_domain'); ?></option>
+				<option value="" <?php selected($style_name, ''); ?>><?php _e('No Style','k2_domain'); ?></option>
 
 				<?php foreach($style_files as $style_file) { ?>
-				<option value="<?php echo($style_file); ?>"<?php selected($style_name, $style_file); ?>><?php echo($style_file); ?></option>
+				<option value="<?php echo attribute_escape($style_file); ?>" <?php selected($style_name, $style_file); ?>><?php echo($style_file); ?></option>
 				<?php } ?>
 			</select>
-			<input type="submit" name="editstyle" id="editstyle" value="<?php _e('Edit Style &raquo;','k2_domain'); ?>" />
+			<input type="submit" name="editstyle" id="editstyle" value="<?php echo attribute_escape(__('Edit Style &raquo;','k2_domain')); ?>" />
 			</p>
 			<?php } ?>
 
@@ -221,9 +221,9 @@
 				<small><?php _e('Select an Image','k2_domain'); ?></small>
 			</td><td>	
 				<select id="k2-header-picture" name="k2[header_picture]">
-					<option value=""<?php selected($header_picture, ''); ?>><?php _e('No Picture','k2_domain'); ?></option>
+					<option value="" <?php selected($header_picture, ''); ?>><?php _e('No Picture','k2_domain'); ?></option>
 					<?php foreach($picture_files as $picture_file) { ?>
-					<option value="<?php echo($picture_file); ?>"<?php selected($header_picture, $picture_file); ?>><?php echo($picture_file); ?></option>
+					<option value="<?php echo attribute_escape($picture_file); ?>" <?php selected($header_picture, $picture_file); ?>><?php echo($picture_file); ?></option>
 					<?php } ?>
 				</select>
 			</td><td>	
@@ -234,14 +234,14 @@
 			<tr><td style="width: 160px">
 				<small><?php _e('Rename the \'Blog\' tab','k2_domain'); ?></small>
 			</td><td>
-				<input id="k2-blogornoblog" name="k2[blogornoblog]" value="<?php echo(stripslashes(get_option('k2blogornoblog'))); ?>" />
+				<input id="k2-blogornoblog" name="k2[blogornoblog]" value="<?php echo attribute_escape(get_option('k2blogornoblog')); ?>" />
 			</td></tr>
 			</table>
 				
 		</div>
 
 <p class="submit">
-	<input type="submit" name="submit" value="<?php _e('Update Options &raquo;','k2_domain'); ?>" />
+	<input type="submit" name="submit" value="<?php echo attribute_escape(__('Update Options &raquo;','k2_domain')); ?>" />
 </p>
 
 		<div class="configstuff">
@@ -249,7 +249,7 @@
 
 				<p><small><?php _e('Pressing the uninstall button does not delete any files. It simply disables K2 as a theme, reverting to the default theme, and removes all the K2 settings from the database. Perfect for if you want to start afresh.','k2_domain'); ?></small></p>
 
-				<p style="text-align: center;"><input id="uninstall" name="uninstall" type="submit" value="<?php _e('Reset and Uninstall K2','k2_domain'); ?>" /></p>
+				<p style="text-align: center;"><input id="uninstall" name="uninstall" type="submit" value="<?php echo attribute_escape(__('Reset and Uninstall K2','k2_domain')); ?>" /></p>
 		</div>
 
 	</form>

@@ -63,7 +63,7 @@
 <script type="text/javascript">
 // <![CDATA[
 	var <?php echo $prefix; ?>rolling = new RollingArchives(
-		"<?php echo $prefix; ?>", "rollingarchives", "primarycontent", "<?php _e('Page %1$d of %2$d',k2_domain); ?>", <?php echo $wp_query->max_num_pages; ?>,
+		"<?php echo $prefix; ?>", "rollingarchives", "primarycontent", "<?php echo attribute_escape(__('Page %1$d of %2$d',k2_domain)); ?>", <?php echo $wp_query->max_num_pages; ?>,
 		<?php output_javascript_url('theloop.php'); ?>,
 		"<?php echo $rolling_query; ?>",
 		<?php output_javascript_array($page_dates); ?>

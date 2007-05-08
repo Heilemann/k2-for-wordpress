@@ -24,7 +24,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
 
 <head profile="http://gmpg.org/xfn/11">
-	<title><?php wp_title(''); if (function_exists('is_tag') and is_tag()) { ?>Tag Archive for <?php echo $tag; } if (is_archive()) { ?> archive<?php } elseif (is_search()) { ?> Search for <?php echo $s; } if ( !(is_404()) and (is_search()) or (is_single()) or (is_page()) or (function_exists('is_tag') and is_tag()) or (is_archive()) ) { ?> at <?php } ?> <?php bloginfo('name'); ?></title>
+	<title><?php wp_title(''); if (function_exists('is_tag') and is_tag()) { ?>Tag Archive for <?php echo get_query_var('tag'); } if (is_archive()) { ?> archive<?php } elseif (is_search()) { ?> Search for <?php echo get_query_var('s'); } if ( !(is_404()) and (is_search()) or (is_single()) or (is_page()) or (function_exists('is_tag') and is_tag()) or (is_archive()) ) { ?> at <?php } ?> <?php bloginfo('name'); ?></title>
 	<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 	<meta name="generator" content="WordPress <?php bloginfo('version'); ?>" />
 	<meta name="template" content="K2 <?php if (function_exists('k2info')) { k2info('version'); } ?>" />
@@ -43,7 +43,7 @@
 	<?php /* LiveSearch */ if (get_option('k2livesearch') == 1) { ?>
 	<script type="text/javascript">
 	//<![CDATA[
-		var k2search = new Livesearch("searchform", "dynamic-content", "current-content", <?php output_javascript_url('rollingarchive.php'); ?>, "<?php _e('Type and Wait to Search','k2_domain'); ?>", "<?php _e('go','k2_domain'); ?>");
+		var k2search = new Livesearch("searchform", "dynamic-content", "current-content", <?php output_javascript_url('rollingarchive.php'); ?>, "<?php echo attribute_escape(__('Type and Wait to Search','k2_domain')); ?>", "<?php echo attribute_escape(__('go','k2_domain')); ?>");
 	//]]>
 	</script>
 	<?php } ?>
