@@ -38,6 +38,7 @@ RollingArchives.prototype = {
 		this.rollhome = prefix+'rollhome';
 		this.rolldates = prefix+'rolldates';
 		this.rollnotices = prefix+'rollnotices';
+		this.rollhover = prefix+'rollhover';
 
 		this.pagehandle = prefix+'pagehandle';
 		this.pagetrack = prefix+'pagetrack';
@@ -72,9 +73,12 @@ RollingArchives.prototype = {
 
 		this.validatePage(this.pagenumber);
 		this.initialized = true;
+		$(this.rollhover).style.display = 'none';
 	},
 
 	updatePageText: function(v) {
+		$(this.rollhover).style.display = 'block';
+		
 		$(this.rollpages).innerHTML = (this.pagetext.replace('%1$d', v)).replace('%2$d', this.pagecount);
 		$(this.rolldates).innerHTML = this.pagedates[v - 1];
 	},
@@ -135,20 +139,19 @@ RollingArchives.prototype = {
 					onFailure: this.rollError.bind(this)
 				}
 			);
+		} else {
+			new Effect.Fade(this.rollhover, {duration: 1});
 		}
 	},
 
 	rollComplete: function() {
-		this.rollRemoveLoad();
+		new Effect.Fade(this.rollhover, {duration: 1});
+		new Effect.Fade(this.rollload, {duration: .3});
 
 		/* Spool Texttrimmer */
 		this.trimmer.trimAgain(this.trimmer.curValue);
 	},
 	
-	rollRemoveLoad: function() {
-		new Effect.Fade(this.rollload, {duration: .3});
-	},
-
 	rollError: function() {
 		$(this.rollnotices).style.display = 'block';
 		$(this.rollnotices).innerHTML = 'Some kind of error has occurred! Danger, Will Robinson! Danger!';

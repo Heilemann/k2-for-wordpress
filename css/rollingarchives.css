@@ -1,6 +1,8 @@
+/* @override http://localhost/wp-content/themes/kaytwo/css/rollingarchives.css */
+
 #rollingarchives, #nested_rollingarchives {
-	margin: 0 0 3em;
 	position: relative;
+	padding: 10px 0 30px;
 	display: block;
 	}
 
@@ -19,7 +21,7 @@
 #rollpages, #nested_rollpages,
 #rolldates, #nested_rolldates {
 	position: absolute;
-	top: 4px;
+	top: 3px;
 	}
 
 #rollprevious:hover, #nested_rollprevious:hover,
@@ -30,6 +32,7 @@
 	}
 
 #rollhome, #nested_rollhome {
+	display: none;
 	left: 54px;
 	background: url('../images/house.png') no-repeat center center;
 	width: 16px;
@@ -37,7 +40,8 @@
 	}
 
 #rollload, #nested_rollload {
-	right: 54px;
+	top: 1px;
+	right: 242px;
 	background: url('../images/spinner.gif') no-repeat center center;
 	width: 16px;
 	height: 16px;
@@ -48,37 +52,50 @@
 	display: none;
 	}
 
-#rollpages, #nested_rollpages,
 #rollnext, #nested_rollnext,
-#rollprevious, #nested_rollprevious,
-#rolldates, #nested_rolldates {
-	color: #888;
+#rollprevious, #nested_rollprevious {
+	color: #666;
+	font-weight: bold;
 	}
+
+#rollhover, #nested_rollhover {
+	position: absolute;
+	top: 7px;
+	left: -47px;
+	z-index: 100;
+	height: 45px;
+	background: url('../images/rollhover.png') no-repeat center top;
+	}
+
+#rollhover, #nested_rollhover,
+#rollpages, #nested_rollpages,
+#rolldates, #nested_rolldates {
+	width: 100px;
+}
 
 #rollpages, #nested_rollpages,
 #rolldates, #nested_rolldates {
-	top: 20px;
-	width: 100px;
+	position: absolute;
+	color: #999;
 	text-align: center;
+	font-size: .9em;
 	}
 
 #rollpages, #nested_rollpages {
-	right: 88px;
+	top: 15px;
 	}
 
 #rolldates, #nested_rolldates {
-	left: 88px;
+	top: 28px;
 	}
 
 #rollprevious, #nested_rollprevious {
 	left: 0;
-	width: 50px;
 	text-align: left;
 	}
 
 #rollnext, #nested_rollnext {
 	right: 0;
-	width: 50px;
 	text-align: right;
 	}
 
@@ -130,22 +147,24 @@
 	}
 
 #pagetrackwrap, #nested_pagetrackwrap {
-	margin: 0 auto 2em;
-	background: url('../images/sliderbgright.png') no-repeat right center;
-	height: 18px;
-	padding-right: 4px;
-	width: 200px;
+	background: url('../images/sliderbgleft.png') no-repeat left center;
+	position: absolute;
+	top: 6px;
+	left: 60px;
+	height: 7px;
+	width: 380px;
 	}
 
 #pagetrack, #nested_pagetrack {
-	background: url('../images/sliderbgleft.png') no-repeat left center;
+	background: url('../images/sliderbgright.png') no-repeat right center;
 	}
 
 #pagehandle, #nested_pagehandle {
-	width: 18px;
-	height: 18px;
+	width: 7px;
+	height: 7px;
 	background: url('../images/sliderhandle.png') no-repeat center center;
 	cursor: col-resize;
+	position: relative;
 	}
 
 #primarycontent, #nested_primarycontent {
@@ -161,14 +180,10 @@ div.trimmed .hentry.alt {
 	}
 
 #texttrimmer, #nested_texttrimmer {
+	display: none;
 	position: relative;
 	width: 100px;
-	float: left;
 	}
-
-#rollnavigation, #nested_rollnavigation {
-	margin-left: 120px;
-}
 
 /*
 .firstpage #pagetrackwrap, .firstpage #nested_pagetrackwrap {

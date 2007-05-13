@@ -38,7 +38,7 @@
 	</div> <!-- #<?php echo $prefix; ?>texttrimmer -->
 
 	<div id="<?php echo $prefix; ?>rollnavigation">
-		<div id="<?php echo $prefix; ?>pagetrackwrap"><div id="<?php echo $prefix; ?>pagetrack"><div id="<?php echo $prefix; ?>pagehandle"></div></div></div>
+		<div id="<?php echo $prefix; ?>pagetrackwrap"><div id="<?php echo $prefix; ?>pagetrack"><div id="<?php echo $prefix; ?>pagehandle"><div id="<?php echo $prefix; ?>rollhover"><div id="<?php echo $prefix; ?>rollpages"></div><div id="<?php echo $prefix; ?>rolldates"></div></div></div></div></div>
 
 		<div id="<?php echo $prefix; ?>rollprevious" title="<?php _e('Older','k2_domain'); ?>">
 			<span>&laquo;</span> <?php _e('Older','k2_domain'); ?>
@@ -53,8 +53,6 @@
 			<?php _e('Newer','k2_domain'); ?> <span>&raquo;</span>
 		</div>
 
-		<div id="<?php echo $prefix; ?>rollpages"></div>
-		<div id="<?php echo $prefix; ?>rolldates"></div>
 	</div> <!-- #<?php echo $prefix; ?>rollnavigation -->
 
 	<div id="<?php echo $prefix; ?>rollnotices"></div>
