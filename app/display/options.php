@@ -118,6 +118,10 @@
 			font-size: 1.1em;
 		}
 		
+		.configelap {
+			text-align: center;
+		}
+		
 		table {
 			margin: 0 auto;
 			padding: 0;
@@ -145,7 +149,7 @@
 			<?php if (!function_exists('af_ela_set_config')) { ?>
 				<?php printf(__('We highly recommend that you install %s for maximum archival pleasure.','k2_domain'), '<a href="http://www.sonsofskadi.net/index.php/extended-live-archive/">' . __('Arnaud Froment\'s Extended Live Archives','k2_domain') . '</a>'); ?></small></p>
 			<?php } else { ?>
-				</small></p><p><input id="configela" name="configela" type="submit" value="<?php echo attribute_escape(__('Setup Extended Live Archives for K2','k2_domain')); ?>" /></p>
+				</small></p><p class="configelap"><input id="configela" name="configela" type="submit" value="<?php echo attribute_escape(__('Setup Extended Live Archives for K2','k2_domain')); ?>" /></p>
 			<?php } ?>
 
 			<h3><?php _e('Live Commenting','k2_domain'); ?></h3>
@@ -194,7 +198,6 @@
 				<option value="<?php echo attribute_escape($style_file); ?>" <?php selected($style_name, $style_file); ?>><?php echo($style_file); ?></option>
 				<?php } ?>
 			</select>
-			<input type="submit" name="editstyle" id="editstyle" value="<?php echo attribute_escape(__('Edit Style &raquo;','k2_domain')); ?>" />
 			</p>
 			<?php } ?>
 
