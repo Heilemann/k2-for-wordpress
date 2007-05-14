@@ -1,4 +1,7 @@
-/* @override http://localhost/wp-content/themes/kaytwo/css/rollingarchives.css */
+/* @override 
+	http://localhost/wp-content/themes/kaytwo/css/rollingarchives.css
+	http://binarybonsai.com/wp-content/themes/k2/css/rollingarchives.css
+*/
 
 #rollingarchives, #nested_rollingarchives {
 	position: relative;
@@ -147,24 +150,21 @@
 	}
 
 #pagetrackwrap, #nested_pagetrackwrap {
-	background: url('../images/sliderbgleft.png') no-repeat left center;
-	position: absolute;
-	top: 6px;
-	left: 60px;
-	height: 7px;
+	background: #eee;
 	width: 380px;
+	position: absolute;
+	top: 7px;
+	left: 55px;
 	}
 
 #pagetrack, #nested_pagetrack {
-	background: url('../images/sliderbgright.png') no-repeat right center;
 	}
 
 #pagehandle, #nested_pagehandle {
-	width: 7px;
-	height: 7px;
-	background: url('../images/sliderhandle.png') no-repeat center center;
+	width: 6px;
+	height: 6px;
+	background: #999;
 	cursor: col-resize;
-	position: relative;
 	}
 
 #primarycontent, #nested_primarycontent {
