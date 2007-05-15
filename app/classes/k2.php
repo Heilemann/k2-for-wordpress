@@ -310,6 +310,6 @@ class K2 {
 	}
 }
 
-add_action('wp_head', array('K2', 'output_header_css'));
-add_action('admin_head', array('K2', 'output_admin_css'));
+add_action('wp_head', array('K2', 'output_header_css'), 9);
+add_action('admin_head', array('K2', 'output_admin_css'), 9);
 ?>
