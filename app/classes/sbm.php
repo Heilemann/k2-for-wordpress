@@ -208,7 +208,6 @@ class K2SBM {
 		// Allow the Widgets and SBM defined in plugins & themes to be loaded
 		do_action('sbm_init');
 		do_action('widgets_init');
-		do_action('plugins_loaded');
 	}
 
 	function add_menus() {
@@ -243,6 +242,7 @@ class K2SBM {
 		// Replace bundled scripts with our own
 		K2::replace_wp_scripts();
 	?>
+		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/sbm.css" />
 		<script type="text/javascript">
 			//<![CDATA[
 				var sbm_baseUrl = <?php output_javascript_url('app/includes/sbm-ajax.php'); ?>;

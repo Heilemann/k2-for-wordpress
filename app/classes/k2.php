@@ -1,5 +1,4 @@
 <?php
-$k2_registered_css = array();
 
 class K2 {
 	function init() {
@@ -56,12 +55,6 @@ class K2 {
 		wp_register_script('k2sbm',
 			get_bloginfo('template_directory') . '/js/sbm.js.php',
 			array('scriptaculous-effects', 'scriptaculous-dragdrop'), '248');
-
-		// Register our css
-		K2::register_css('k2rollingarchives',
-			get_bloginfo('template_directory') . '/css/rollingarchives.css');
-		K2::register_css('k2sbm',
-			get_bloginfo('template_directory') . '/css/sbm.css');
 
 		// There may be some things we need to do before K2 is initialised
 		// Let's do them now
@@ -155,46 +148,6 @@ class K2 {
 			wp_register_script('scriptaculous-dragdrop',
 				get_bloginfo('template_directory').'/js/dragdrop.js.php',
 				array('prototype'), '1.7.0');
-		}
-	}
-
-	function register_css($handle, $path) {
-		global $k2_registered_css;
-
-		$k2_registered_css[$handle] = $path;
-	}
-
-	function output_header_css() {
-		global $wp_scripts, $k2_registered_css;
-		
-		// Output main css
-?>
-
-		<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
-		<link rel="stylesheet" type="text/css" media="print" href="<?php bloginfo('template_url'); ?>/css/print.css" />
-
-		<?php
-		// Output any css that is associated with the printed scripts
-		foreach ($wp_scripts->queue as $handle) {
-			if ( isset($k2_registered_css[$handle]) ) {
-				echo '<link rel="stylesheet" type="text/css" media="screen" href="' . $k2_registered_css[$handle] . '" />'."\n";
-			}
-		}
-
-		// Output the custom style
-		if (get_option('k2scheme') != '') {
-			echo '<link rel="stylesheet" type="text/css" media="screen" href="' .get_k2info('style'). '" />'."\n";
-		}
-	}
-
-	function output_admin_css() {
-		global $wp_scripts, $k2_registered_css;
-
-		// Output any css that is associated with the printed scripts
-		foreach ($wp_scripts->queue as $handle) {
-			if ( isset($k2_registered_css[$handle]) ) {
-				echo '<link rel="stylesheet" type="text/css" media="screen" href="' . $k2_registered_css[$handle] . '" />'."\n";
-			}
 		}
 	}
 
@@ -309,7 +262,4 @@ class K2 {
 		return $path . sanitize_title_with_dashes($filename . $number) . $ext;
 	}
 }
-
-add_action('wp_head', array('K2', 'output_header_css'), 9);
-add_action('admin_head', array('K2', 'output_admin_css'), 9);
 ?>
