@@ -19,7 +19,7 @@
 				<p id="module-add-error" class="error"></p>
 
 				<p>
-					<label for="add-name"><?php _e('Module\'s name', 'k2_domain'); ?>:</label><br />
+					<label for="add-name"><strong><?php _e('Module\'s title:', 'k2_domain'); ?></strong></label><br />
 					<input id="add-name" name="add_name" type="text" />
 				</p>
 
@@ -27,7 +27,7 @@
 					<label for="add-type"><?php _e('Module\'s type', 'k2_domain'); ?>:</label><br />
 					<select id="add-type" name="add_type" size="10">
 						<?php $selected = false; foreach($modules as $id => $module): ?>
-							<option value="<?php echo($id); ?>"<?php if(!$selected) { ?> selected="selected"<?php $selected = true; } ?>><?php echo($module['name']); ?></option>
+							<option value="<?php echo attribute_escape($id); ?>" <?php if(!$selected) { ?> selected="selected"<?php $selected = true; } ?>><?php echo($module['name']); ?></option>
 						<?php endforeach; ?>
 					</select>
 				</p>
@@ -36,14 +36,14 @@
 					<label for="add-sidebar"><?php _e('Add to', 'k2_domain'); ?>:</label><br />
 					<select id="add-sidebar" name="add_sidebar">
 						<?php $selected = false; foreach($sidebars as $id => $sidebar): ?>
-							<option value="<?php echo($id); ?>"<?php if(!$selected) { ?> selected="selected"<?php $selected = true; } ?>><?php echo($sidebar->name); ?></option>
+							<option value="<?php echo attribute_escape($id); ?>" <?php if(!$selected) { ?> selected="selected"<?php $selected = true; } ?>><?php echo($sidebar->name); ?></option>
 						<?php endforeach; ?>
 						<option value="disabled"><?php _e('Disabled modules', 'k2_domain'); ?></option>
 					</select>
 				</p>
 
 				<p class="submit">
-					<input type="submit" value="<?php _e('Add &raquo;', 'k2_domain') ?>" />
+					<input type="submit" value="<?php echo attribute_escape(__('Add &raquo;', 'k2_domain')); ?>" />
 				</p>
 			</form>
 		</div>
@@ -59,7 +59,7 @@
 					</div>
 
 					<p class="submit">
-						<input class="remove" type="button" value="<?php _e('Remove &raquo;', 'k2_domain') ?>" /> <input type="submit" value="<?php _e('Save &raquo;', 'k2_domain') ?>" />
+						<input class="remove" type="button" value="<?php echo attribute_escape(__('Remove &raquo;', 'k2_domain')); ?>" /> <input type="submit" value="<?php echo attribute_escape(__('Save &raquo;', 'k2_domain')); ?>" />
 					</p>
 				</form>
 			</div>

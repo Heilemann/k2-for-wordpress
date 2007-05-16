@@ -6,31 +6,18 @@
 <p id="module-update-error" class="error"></p>
 
 <p>
-	<label for="module-name"><?php _e('Module\'s name', 'k2_domain'); ?>:</label><br />
-	<input id="module-name" name="module_name" type="text" value="<?php echo(wp_specialchars(htmlspecialchars(stripslashes($module->name), ENT_QUOTES), 1)); ?>" />
+	<label for="module-name"><strong><?php _e('Module\'s title:', 'k2_domain'); ?></strong></label><br />
+	<input id="module-name" name="module_name" type="text" value="<?php echo attribute_escape($module->name); ?>" /><br />
+	<input id="output-show-title" name="output[show_title]" type="checkbox"<?php if($module->output['show_title']) { ?> checked="checked"<?php } ?> /> <label for="output-show-title"><?php _e('Display module\'s title', 'k2_domain'); ?></label>
 </p>
 
 <p>
-	<?php _e('Module\'s type', 'k2_domain'); ?>:<br />
+	<strong><?php _e('Module\'s type:', 'k2_domain'); ?></strong><br />
 	<?php echo($modules[$module->type]['name']); ?>
 </p>
 
-<p>
-	<a id="toggle-advanced-output-options" href="#"><?php _e('Advanced options', 'k2_domain'); ?></a>
-	<div id="advanced-output-options" class="toggle-item">
-		<p>
-			<input id="output-show-title" name="output[show_title]" type="checkbox"<?php if($module->output['show_title']) { ?> checked="checked"<?php } ?> /> <label for="output-show-title"><?php _e('Show module\'s title', 'k2_domain'); ?></label>
-		</p>
-
-		<p>
-			<label for="output-css-file"><?php _e('Related CSS file', 'k2_domain'); ?>:</label><br />
-			<input id="output-css-file" name="output[css_file]" type="text" value="<?php echo($module->output['css_file']); ?>" />
-		</p>
-	</div>
-</p>
-
 <fieldset>
-<legend><?php _e('Display on:', 'k2_domain'); ?></legend>
+<legend><strong><?php _e('Display on:', 'k2_domain'); ?></strong></legend>
 	<input id="display-home" name="display[home]" type="checkbox"<?php if($module->display['home']) { ?> checked="checked"<?php } ?> /> <label for="display-home"><?php _e('Homepage', 'k2_domain'); ?></label><br />
 
 	<input id="display-archives" name="display[archives]" type="checkbox"<?php if($module->display['archives']) { ?> checked="checked"<?php } ?> /> <label for="display-archives"><?php _e('Archives', 'k2_domain'); ?></label><br />
