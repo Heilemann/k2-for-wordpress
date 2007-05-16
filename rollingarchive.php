@@ -1,17 +1,14 @@
 <?php
-	$prefix = '';
-
 	// Get core WP functions if needed
 	if (isset($_GET['k2dynamic'])) {
 		require (dirname(__FILE__).'/../../../wp-blog-header.php');
-		$prefix = 'nested_';
 
 		$query = k2_parse_query($_GET);
 		query_posts($query);
 	}
 
 	// Load Rolling Archives?
-	if ( (get_option('k2rollingarchives') == 1) and ($wp_query->max_num_pages > 1) ) { 
+	if ( get_option('k2rollingarchives') == 1 ) { 
 
 		// Parse the query
 		if ( is_array($wp_query->query) ) {
@@ -21,7 +18,15 @@
 		}
 
 		// Get list of page dates
-		$page_dates = get_rolling_page_dates($wp_query);
+		if ( !is_page() and !is_single() ) {
+			$page_dates = get_rolling_page_dates($wp_query);
+		}
+
+		// Get the current page
+		$rolling_page = get_query_var('paged');
+		if ( empty($rolling_page) ) {
+			$rolling_page = 1;
+		}
 
 		// Debugging
 		if ( isset($_GET['k2debug']) ) {
@@ -29,47 +34,42 @@
 		}
 ?>
 
-<div id="<?php echo $prefix; ?>rollingarchives">
-	<div id="<?php echo $prefix; ?>texttrimmer">
-		<div id="<?php echo $prefix; ?>trimmertrackwrap"><div id="<?php echo $prefix; ?>trimmertrack"><div id="<?php echo $prefix; ?>trimmerhandle"></div></div></div>
+<div id="rollingarchives" style="visibility: hidden;">
+	<div id="texttrimmer">
+		<div id="trimmertrackwrap"><div id="trimmertrack"><div id="trimmerhandle"></div></div></div>
 		
-		<div id="<?php echo $prefix; ?>trimmerless"><span><?php _e('Less','k2_domain'); ?></span></div>
-		<div id="<?php echo $prefix; ?>trimmermore"><span><?php _e('More','k2_domain'); ?></span></div>
-	</div> <!-- #<?php echo $prefix; ?>texttrimmer -->
+		<div id="trimmerless"><span><?php _e('Less','k2_domain'); ?></span></div>
+		<div id="trimmermore"><span><?php _e('More','k2_domain'); ?></span></div>
+	</div> <!-- #texttrimmer -->
 
-	<div id="<?php echo $prefix; ?>rollnavigation">
-		<div id="<?php echo $prefix; ?>pagetrackwrap"><div id="<?php echo $prefix; ?>pagetrack"><div id="<?php echo $prefix; ?>pagehandle"><div id="<?php echo $prefix; ?>rollhover"><div id="<?php echo $prefix; ?>rollpages"></div><div id="<?php echo $prefix; ?>rolldates"></div></div></div></div></div>
+	<div id="rollnavigation">
+		<div id="pagetrackwrap"><div id="pagetrack"><div id="pagehandle"><div id="rollhover"><div id="rollpages"></div><div id="rolldates"></div></div></div></div></div>
 
-		<div id="<?php echo $prefix; ?>rollprevious" title="<?php _e('Older','k2_domain'); ?>">
+		<div id="rollprevious" title="<?php _e('Older','k2_domain'); ?>">
 			<span>&laquo;</span> <?php _e('Older','k2_domain'); ?>
 		</div>
-		<div id="<?php echo $prefix; ?>rollhome" title="<?php _e('Home','k2_domain'); ?>">
+		<div id="rollhome" title="<?php _e('Home','k2_domain'); ?>">
 			<span><?php _e('Home','k2_domain'); ?></span>
 		</div>
-		<div id="<?php echo $prefix; ?>rollload" title="<?php _e('Loading','k2_domain'); ?>">
+		<div id="rollload" title="<?php _e('Loading','k2_domain'); ?>">
 			<span><?php _e('Loading','k2_domain'); ?></span>
 		</div>
-		<div id="<?php echo $prefix; ?>rollnext" title="<?php _e('Newer','k2_domain'); ?>">
+		<div id="rollnext" title="<?php _e('Newer','k2_domain'); ?>">
 			<?php _e('Newer','k2_domain'); ?> <span>&raquo;</span>
 		</div>
 
-	</div> <!-- #<?php echo $prefix; ?>rollnavigation -->
+	</div> <!-- #rollnavigation -->
 
-	<div id="<?php echo $prefix; ?>rollnotices"></div>
-</div> <!-- #<?php echo $prefix; ?>rollingarchives -->
+	<div id="rollnotices"></div>
+</div> <!-- #rollingarchives -->
 
 <script type="text/javascript">
 // <![CDATA[
-	var <?php echo $prefix; ?>rolling = new RollingArchives(
-		"<?php echo $prefix; ?>", "rollingarchives", "primarycontent", "<?php echo attribute_escape(__('Page %1$d of %2$d',k2_domain)); ?>", <?php echo $wp_query->max_num_pages; ?>,
-		<?php output_javascript_url('theloop.php'); ?>,
-		"<?php echo $rolling_query; ?>",
-		<?php output_javascript_array($page_dates); ?>
-	);
+	K2.RollingArchives.setRollingState(<?php echo $rolling_page; ?>, <?php echo $wp_query->max_num_pages; ?>, "<?php echo $rolling_query; ?>", <?php output_javascript_array($page_dates); ?>);
 // ]]>
 </script>
 
 <?php } ?>
-<div id="<?php echo $prefix; ?>primarycontent" class="hfeed">
+<div id="rollingcontent" class="hfeed">
 	<?php include (TEMPLATEPATH . '/theloop.php'); ?>
-</div><!-- #<?php echo $prefix; ?>primarycontent .hfeed -->
+</div><!-- #rollingcontent .hfeed -->

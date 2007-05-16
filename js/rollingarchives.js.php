@@ -21,15 +21,11 @@ var RollingArchives = {};
 RollingArchives = Class.create();
 
 RollingArchives.prototype = {
-	initialize: function(prefix, attachitem, targetitem, pagetext, pagecount, url, query, pagedates) {
+	initialize: function(prefix, attachitem, targetitem, url, pagetext) {
 		this.attachitem = prefix+attachitem;
 		this.targetitem = prefix+targetitem;
 		this.url = url;
 		this.pagetext = pagetext;
-		this.query = $H(query.toQueryParams());
-		this.pagenumber = 1;
-		this.pagecount = pagecount;
-		this.pagedates = pagedates;
 
 		this.rollnext = prefix+'rollnext';
 		this.rollprev = prefix+'rollprevious';
@@ -43,41 +39,62 @@ RollingArchives.prototype = {
 		this.pagehandle = prefix+'pagehandle';
 		this.pagetrack = prefix+'pagetrack';
 
-		this.trimmer = new TextTrimmer(prefix, "texttrimmer", "entry-content", 1, 100);
+		//this.trimmer = new TextTrimmer(prefix, "texttrimmer", "entry-content", 1, 100);
 
-		var thisRolling = this;
-		var sliderValues = new Array(this.pagecount);
-
-		for (var i = 0; i < this.pagecount; i++) {
-			sliderValues[i] = i + 1;
-		}
+		this.query = null;
+		this.pagenumber = 0;
+		this.pagecount = 0;
+		this.pagedates = null;
 		
-		this.pageSlider = new Control.Slider(thisRolling.pagehandle, thisRolling.pagetrack, {
-			range: $R(thisRolling.pagecount, 1),
-			values: sliderValues,
-			sliderValue: 1,
-			onSlide: function(v) { thisRolling.updatePageText(v); },
-			onChange: function(v) { thisRolling.gotoPage(v); },
-			handleImage: thisRolling.pagehandle
-		});
+		this.rollingState = null;
 
 		this.nextPageListener = this.gotoNextPage.bindAsEventListener(this);
 		this.prevPageListener = this.gotoPrevPage.bindAsEventListener(this);
 		this.homePageListener = this.gotoHomePage.bindAsEventListener(this);
+
+		this.initialized = false;
+	},
+
+	startEvents: function() {
+		if (this.initialized) {
+			this.stopEvents();
+		}
+
 		Event.observe(this.rollprev, 'click', this.prevPageListener);
 		Event.observe(this.rollnext, 'click', this.nextPageListener);
 		Event.observe(this.rollhome, 'click', this.homePageListener);
+	},
 
-		$(this.rollnotices).style.display = 'none';
-		$(this.rollload).style.display = 'none';
+	stopEvents: function() {
+		Event.stopObserving(this.rollprev, 'click', this.prevPageListener);
+		Event.stopObserving(this.rollnext, 'click', this.nextPageListener);
+		Event.stopObserving(this.rollhome, 'click', this.homePageListener);
+	},
 
-		this.validatePage(this.pagenumber);
-		this.initialized = true;
-		$(this.rollhover).style.display = 'none';
+	setupSlider: function() {
+		var thisRolling = this;
+		var sliderValues = new Array(this.pagecount);
+
+		if (this.pageSlider instanceof Control.Slider) {
+			this.pageSlider.dispose();
+		}
+
+		for (var i = 0; i < this.pagecount; i++) {
+			sliderValues[i] = i + 1;
+		}
+
+		this.pageSlider = new Control.Slider(thisRolling.pagehandle, thisRolling.pagetrack, {
+			range: $R(thisRolling.pagecount, 1),
+			values: sliderValues,
+			sliderValue: thisRolling.pagenumber,
+			onSlide: function(v) { thisRolling.updatePageText(v); },
+			onChange: function(v) { thisRolling.gotoPage(v); },
+			handleImage: thisRolling.pagehandle
+		});
 	},
 
 	updatePageText: function(v) {
-		$(this.rollhover).style.display = 'block';
+		$(this.rollhover).show();
 		
 		$(this.rollpages).innerHTML = (this.pagetext.replace('%1$d', v)).replace('%2$d', this.pagecount);
 		$(this.rolldates).innerHTML = this.pagedates[v - 1];
@@ -119,29 +136,25 @@ RollingArchives.prototype = {
 	},
 
 	gotoPage: function(newpage) {
-		if (newpage != this.pagenumber) {
-			new Effect.Appear(this.rollload, {duration: .3});
+		new Effect.Appear(this.rollload, {duration: .3});
 
-			this.validatePage(newpage);
-			this.processQuery();
+		this.validatePage(newpage);
+		this.processQuery();
 
-			new Ajax.Updater(
-				{
-					success: this.targetitem,
-					failure: this.rollnotices
-				},
-				this.url,
-				{
-					method: 'get',
-					evalScripts: true,
-					parameters: this.query,
-					onComplete: this.rollComplete.bind(this),
-					onFailure: this.rollError.bind(this)
-				}
-			);
-		} else {
-			new Effect.Fade(this.rollhover, {duration: 1});
-		}
+		new Ajax.Updater(
+			{
+				success: this.targetitem,
+				failure: this.rollnotices
+			},
+			this.url,
+			{
+				method: 'get',
+				evalScripts: true,
+				parameters: this.query,
+				onComplete: this.rollComplete.bind(this),
+				onFailure: this.rollError.bind(this)
+			}
+		);
 	},
 
 	rollComplete: function() {
@@ -149,7 +162,7 @@ RollingArchives.prototype = {
 		new Effect.Fade(this.rollload, {duration: .3});
 
 		/* Spool Texttrimmer */
-		this.trimmer.trimAgain(this.trimmer.curValue);
+		//this.trimmer.trimAgain(this.trimmer.curValue);
 	},
 	
 	rollError: function() {
@@ -159,5 +172,57 @@ RollingArchives.prototype = {
 
 	processQuery: function() {
 		this.query.merge({ paged: this.pagenumber, k2dynamic: 1 });
+	},
+
+	setRollingState: function(pagenumber, pagecount, query, pagedates) {
+		if ( typeof(query) == 'string' ) {
+			query = $H(query.toQueryParams());
+		}
+
+		this.query = query;
+		this.pagenumber = pagenumber;
+		this.pagecount = pagecount;
+		this.pagedates = pagedates;
+
+		if (this.validatePage(this.pagenumber)) {
+			this.startEvents();
+			$(this.rollload).hide();
+			$(this.rollnotices).hide();
+			$(this.rollhover).hide()
+			this.setupSlider();
+
+			$(this.attachitem).style.visibility = 'visible';
+		} else {
+			$(this.attachitem).style.visibility = 'hidden';
+		}
+
+		this.initialized = true;
+	},
+
+	saveRollingState: function() {
+		this.rollingState = new Hash({
+			query: this.query,
+			pagenumber: this.pagenumber,
+			pagecount: this.pagecount,
+			pagedates: this.pagedates
+		});
+	},
+
+	restoreRollingState: function() {
+		if (this.initialized) {
+			//console.log(this.rollingState.inspect());
+
+			this.setRollingState(this.rollingState.pagenumber, this.rollingState.pagecount, this.rollingState.query, this.rollingState.pagedates);
+
+			if (this.pagecount > 1) {
+				this.pageSlider.setValue(this.rollingState.pagenumber);
+			}
+
+			this.rollingState = null;
+		}
+	},
+
+	saveCookie: function() {
+		setCookie('k2RollingQuery', this.query.toQueryString());
 	}
 }

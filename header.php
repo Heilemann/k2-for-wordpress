@@ -52,7 +52,19 @@
 	<?php /* LiveSearch */ if (get_option('k2livesearch') == 1) { ?>
 	<script type="text/javascript">
 	//<![CDATA[
-		var k2search = new Livesearch("searchform", "dynamic-content", "current-content", <?php output_javascript_url('rollingarchive.php'); ?>, "<?php echo attribute_escape(__('Type and Wait to Search','k2_domain')); ?>", "<?php echo attribute_escape(__('go','k2_domain')); ?>");
+		if (!K2) var K2 = {};
+		K2.LiveSearch = new Livesearch("searchform", "dynamic-content", "current-content", <?php output_javascript_url('rollingarchive.php'); ?>, "<?php echo attribute_escape(__('Type and Wait to Search','k2_domain')); ?>", "<?php echo attribute_escape(__('go','k2_domain')); ?>");
+	//]]>
+	</script>
+	<?php } ?>
+
+	<?php /* Rolling Archives */ if (get_option('k2rollingarchives') == 1) { ?>
+	<script type="text/javascript">
+	//<![CDATA[
+		if (!K2) var K2 = {};
+		K2.RollingArchives = new RollingArchives("", "rollingarchives", "rollingcontent",
+			<?php output_javascript_url('theloop.php'); ?>,
+			"<?php echo attribute_escape(__('Page %1$d of %2$d',k2_domain)); ?>");
 	//]]>
 	</script>
 	<?php } ?>

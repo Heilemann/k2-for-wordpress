@@ -21,8 +21,6 @@ Livesearch = Class.create();
 
 Livesearch.prototype = {
 	initialize: function(searchform, targetitem, hideitem, url, searchprompt, buttonvalue) {
-		var thisSearch = this;
-
 		this.searchform = searchform;
 		this.targetitem = targetitem;
 		this.hideitem = hideitem;
@@ -34,8 +32,10 @@ Livesearch.prototype = {
 		this.loaditem = 'searchload';
 		this.resetbutton = 'searchreset';
 		this.submitbutton = 'searchsubmit';
+
 		this.lastsearch = '';
 		this.t = null;  // Init timeout variable
+		this.isActive = false;
 
 		Event.observe(window, "load", this.onLoading.bindAsEventListener(this));
 	},
@@ -44,16 +44,15 @@ Livesearch.prototype = {
 		if ( $(this.searchform) ) {
 			$(this.searchform).update('<input type="text" id="'+this.searchfield+'" name="'+this.searchfield+'" class="livesearch" autocomplete="off" value="'+this.searchprompt+'" /><span id="'+this.resetbutton+'"></span><span id="'+this.loaditem+'"></span><input type="submit" id="'+this.submitbutton+'" value="'+this.buttonvalue+'" />');
 
-			$(this.submitbutton).style.display = "none";
-			$(this.loaditem).style.display = "none";
+			$(this.submitbutton).hide();
+			$(this.loaditem).hide();
 			new Effect.Fade(this.resetbutton, { duration: 0, to: 0.3 });
 
-			this.focusListener = this.onInputFocus.bindAsEventListener(this);
-			this.blurListener = this.onInputBlur.bindAsEventListener(this);
-			this.keyupListener = this.readyLivesearch.bindAsEventListener(this);
-			Event.observe(this.searchfield, 'focus', this.focusListener);
-			Event.observe(this.searchfield, 'blur', this.blurListener);
-			Event.observe(this.searchfield, 'keyup', this.keyupListener);
+			Event.observe(this.searchfield, 'focus', this.onInputFocus.bindAsEventListener(this));
+			Event.observe(this.searchfield, 'blur', this.onInputBlur.bindAsEventListener(this));
+			Event.observe(this.searchfield, 'keyup', this.readyLivesearch.bindAsEventListener(this));
+
+			this.resetListener = this.resetLivesearch.bindAsEventListener(this);
 		}
 	},
 
@@ -85,7 +84,17 @@ Livesearch.prototype = {
 		new Effect.Fade(this.resetbutton, { duration: 0.1 });
 		new Effect.Appear(this.loaditem, { duration: 0.1 });
 
+		if (!this.isActive) {
+			this.isActive = true;
+
+			if ( ! $(this.hideitem) && K2.RollingArchives instanceof RollingArchives ) {
+				K2.RollingArchives.saveRollingState();
+			}
+		}
+
+		this.lastsearch = $F(this.searchfield);
 		var query = $(this.searchfield).serialize();
+
 		new Ajax.Updater(
 			this.targetitem,
 			this.url,
@@ -95,26 +104,36 @@ Livesearch.prototype = {
 				parameters: query + '&k2dynamic=init',
 				onComplete: this.searchComplete.bind(this)
 		});
-
-		this.lastsearch = $F(this.searchfield);
 	},
 	
 	searchComplete: function() {
-		$(this.hideitem).style.display = 'none';
+		if ( $(this.hideitem) ) {
+			$(this.hideitem).hide();
+		}
+
 		new Effect.Fade(this.loaditem, { duration: 0.1 });
-		new Effect.Appear(this.resetbutton, { duration: 0.1 });
 		
-		Event.observe(this.resetbutton, 'click', this.resetLivesearch.bindAsEventListener(this));
+		Event.observe(this.resetbutton, 'click', this.resetListener);
+		new Effect.Appear(this.resetbutton, { duration: 0.1 });
 		$(this.resetbutton).style.cursor = 'pointer';
 	},
 
 	resetLivesearch: function() {
+		this.isActive = false;
 		this.lastsearch = '';
-		$(this.targetitem).update();
-		$(this.hideitem).style.display = 'block';
 
 		$(this.searchfield).value = this.searchprompt;
+
+		Event.stopObserving(this.resetbutton, 'click', this.resetListener);
 		new Effect.Fade(this.resetbutton, { duration: 0.1, to: 0.3 });
 		$(this.resetbutton).style.cursor = 'default';
+
+		if ( $(this.hideitem) ) {
+			$(this.targetitem).hide();
+			$(this.hideitem).show();
+			$(this.targetitem).update();
+		} else if (K2.RollingArchives instanceof RollingArchives) {
+			K2.RollingArchives.restoreRollingState();
+		}
 	}
 }

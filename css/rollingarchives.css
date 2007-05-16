@@ -3,38 +3,38 @@
 	http://binarybonsai.com/wp-content/themes/k2/css/rollingarchives.css
 */
 
-#rollingarchives, #nested_rollingarchives {
+#rollingarchives {
 	position: relative;
 	padding: 10px 0 30px;
 	display: block;
 	}
 
-#rollingarchives a:hover, #nested_rollingarchives a:hover {
+#rollingarchives a:hover {
 	text-decoration: underline;
 	}
 
-#rollnavigation, #nested_rollnavigation {
+#rollnavigation {
 	position: relative;
 	}
 
-#rollprevious, #nested_rollprevious,
-#rollnext, #nested_rollnext,
-#rollload, #nested_rollload,
-#rollhome, #nested_rollhome,
-#rollpages, #nested_rollpages,
-#rolldates, #nested_rolldates {
+#rollprevious,
+#rollnext,
+#rollload,
+#rollhome,
+#rollpages,
+#rolldates {
 	position: absolute;
 	top: 3px;
 	}
 
-#rollprevious:hover, #nested_rollprevious:hover,
-#rollnext:hover, #nested_rollnext:hover,
-#rollhome:hover, #nested_rollhome:hover {
+#rollprevious:hover,
+#rollnext:hover,
+#rollhome:hover {
 	text-decoration: underline;
 	cursor: pointer;
 	}
 
-#rollhome, #nested_rollhome {
+#rollhome {
 	display: none;
 	left: 54px;
 	background: url('../images/house.png') no-repeat center center;
@@ -42,7 +42,7 @@
 	height: 16px;
 	}
 
-#rollload, #nested_rollload {
+#rollload {
 	top: 1px;
 	right: 242px;
 	background: url('../images/spinner.gif') no-repeat center center;
@@ -50,18 +50,18 @@
 	height: 16px;
 	}
 
-#rollload span, #nested_rollload span,
-#rollhome span, #nested_rollhome span {
+#rollload span,
+#rollhome span {
 	display: none;
 	}
 
-#rollnext, #nested_rollnext,
-#rollprevious, #nested_rollprevious {
+#rollnext,
+#rollprevious {
 	color: #666;
 	font-weight: bold;
 	}
 
-#rollhover, #nested_rollhover {
+#rollhover {
 	position: absolute;
 	top: 7px;
 	left: -47px;
@@ -70,49 +70,49 @@
 	background: url('../images/rollhover.png') no-repeat center top;
 	}
 
-#rollhover, #nested_rollhover,
-#rollpages, #nested_rollpages,
-#rolldates, #nested_rolldates {
+#rollhover,
+#rollpages,
+#rolldates {
 	width: 100px;
 }
 
-#rollpages, #nested_rollpages,
-#rolldates, #nested_rolldates {
+#rollpages,
+#rolldates {
 	position: absolute;
 	color: #999;
 	text-align: center;
 	font-size: .9em;
 	}
 
-#rollpages, #nested_rollpages {
+#rollpages {
 	top: 15px;
 	}
 
-#rolldates, #nested_rolldates {
+#rolldates {
 	top: 28px;
 	}
 
-#rollprevious, #nested_rollprevious {
+#rollprevious {
 	left: 0;
 	text-align: left;
 	}
 
-#rollnext, #nested_rollnext {
+#rollnext {
 	right: 0;
 	text-align: right;
 	}
 
-#rollnotices, #nested_rollnotices {
+#rollnotices {
 	padding: 7px;
 	text-align: center;
 	border-top: 1px solid #f3f3f3;
 	}
 
-#rollnotices a, #nested_rollnotices a {
+#rollnotices a {
 	color: #227EE9;
 	}
 
-#rollnotices img, #nested_rollnotices img {
+#rollnotices img {
 	float: right;
 	cursor: pointer;
 	height: 13px;
@@ -121,35 +121,35 @@
 	background: url('../images/reset-fff.gif') no-repeat center center;
 	}
 
-.emptypage #rollnavigation, .emptypage #nested_rollnavigation {
+.emptypage #rollnavigation {
 	visibility: hidden;
 	}
 
-.firstpage #rollprevious, .firstpage #nested_rollprevious {
+.firstpage #rollprevious {
 	visibility: visible;
 	}
 
-.firstpage #rollnext, .firstpage #nested_rollnext,
-.firstpage #rollhome, .firstpage #nested_rollhome {
+.firstpage #rollnext,
+.firstpage #rollhome {
 	visibility: hidden;
 	}
 
-.nthpage #rollnext, .nthpage #nested_rollnext,
-.nthpage #rollprevious, .nthpage #nested_rollprevious,
-.nthpage #rollhome, .nthpage #nested_rollhome {
+.nthpage #rollnext,
+.nthpage #rollprevious,
+.nthpage #rollhome {
 	visibility: visible;
 	}
 
-.lastpage #rollnext, .lastpage #nested_rollnext,
-.lastpage #rollhome, .lastpage #nested_rollhome {
+.lastpage #rollnext,
+.lastpage #rollhome {
 	visibility: visible;
 	}
 
-.lastpage #rollprevious, .lastpage #nested_rollprevious {
+.lastpage #rollprevious {
 	visibility: hidden;
 	}
 
-#pagetrackwrap, #nested_pagetrackwrap {
+#pagetrackwrap {
 	background: #eee;
 	width: 380px;
 	position: absolute;
@@ -157,17 +157,17 @@
 	left: 55px;
 	}
 
-#pagetrack, #nested_pagetrack {
+#pagetrack {
 	}
 
-#pagehandle, #nested_pagehandle {
+#pagehandle {
 	width: 6px;
 	height: 6px;
 	background: #999;
 	cursor: col-resize;
 	}
 
-#primarycontent, #nested_primarycontent {
+#primarycontent {
 	clear: both;
 	}
 
@@ -179,31 +179,31 @@ div.trimmed .hentry.alt {
 	background: transparent;
 	}
 
-#texttrimmer, #nested_texttrimmer {
+#texttrimmer {
 	display: none;
 	position: relative;
 	width: 100px;
 	}
 
 /*
-.firstpage #pagetrackwrap, .firstpage #nested_pagetrackwrap {
+.firstpage #pagetrackwrap {
 	visibility: hidden;
 	}
 
-.nthpage #pagetrackwrap, .nthpage #nested_pagetrackwrap {
+.nthpage #pagetrackwrap {
 	visibility: visible;
 	}
 
-.firstpage #texttrimmer, .firstpage #nested_texttrimmer {
+.firstpage #texttrimmer {
 	visibility: hidden;
 	}
 
-.nthpage #texttrimmer, .nthpage #nested_texttrimmer {
+.nthpage #texttrimmer {
 	visibility: visible;
 	}
 */
 
-#trimmertrackwrap, #nested_trimmertrackwrap {
+#trimmertrackwrap {
 	margin: 0 auto 2em;
 	background: url('../images/sliderbgright.png') no-repeat right center;
 	height: 18px;
@@ -211,41 +211,41 @@ div.trimmed .hentry.alt {
 	width: 50px;
 	}
 
-#trimmertrack, #nested_trimmertrack {
+#trimmertrack {
 	background: url('../images/sliderbgleft.png') no-repeat left center;
 	}
 
-#trimmerhandle, #nested_trimmerhandle {
+#trimmerhandle {
 	width: 18px;
 	height: 18px;
 	background: url('../images/sliderhandle.png') no-repeat center center;
 	cursor: col-resize;
 	}
 
-#trimmermore, #nested_trimmermore,
-#trimmerless, #nested_trimmerless {
+#trimmermore,
+#trimmerless {
 	position: absolute;
 	top: 2px;
 	height: 16px;
 	width: 16px;
 	}
 
-#trimmermore span, #nested_trimmermore span,
-#trimmerless span, #nested_trimmerless span {
+#trimmermore span,
+#trimmerless span {
 	display: none;
 	}
 
-#trimmermore:hover, #nested_trimmermore:hover,
-#trimmerless:hover, #nested_trimmerless:hover {
+#trimmermore:hover,
+#trimmerless:hover {
 	cursor: pointer;
 	}
 
-#trimmermore, #nested_trimmermore {
+#trimmermore {
 	right: 0;
 	background: url('../images/trim_more.png');
 	}
 
-#trimmerless, #nested_trimmerless {
+#trimmerless {
 	left: 0;
 	background: url('../images/trim_less.png');
 	}

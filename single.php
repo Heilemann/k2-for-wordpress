@@ -3,13 +3,11 @@
 <div class="content">
 
 	<div id="primary">
-		<div id="current-content">
-			<div id="primarycontent" class="hfeed">
+		<div id="current-content" class="hfeed">
 
-				<?php include (TEMPLATEPATH . '/theloop.php'); ?>
-				<?php comments_template(); ?>
+			<?php include (TEMPLATEPATH . '/theloop.php'); ?>
+			<?php comments_template(); ?>
 
-			</div> <!-- #primarycontent .hfeed -->
 		</div> <!-- #current-content -->
 
 		<div id="dynamic-content"></div>

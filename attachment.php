@@ -3,8 +3,7 @@
 <div class="content">
 	
 	<div id="primary">
-		<div id="current-content">
-			<div id="primarycontent" class="hfeed">
+		<div id="current-content" class="hfeed">
 
 <?php
 	/* Check if there are posts */
@@ -60,7 +59,6 @@
 				<h2><?php _e('Sorry, no attachments matched your criteria.','k2_domain'); ?></h2>
 
 	<?php } ?>
-			</div> <!-- #primarycontent -->
 		</div> <!-- #current-content -->
 
 		<div id="dynamic-content"></div>
