@@ -146,6 +146,10 @@
 	visibility: hidden;
 	}
 
+#dynamictype .page-head {
+	display: none;
+	}
+
 #pagetrackwrap {
 	position: absolute;
 	top: 6px;

@@ -43,8 +43,10 @@
 	</div> <!-- #texttrimmer -->
 
 	<div id="rollnavigation">
-		<div id="pagetrackwrap"><div id="pagetrack"><div id="pagehandle"><div id="rollhover"><div id="rollpages"></div><div id="rolldates"></div></div></div></div></div>
+		<div id="pagetrackwrap"><div id="pagetrack"><div id="pagehandle"><div id="rollhover"><div id="rolldates"></div></div></div></div></div>
 
+		<div id="rollpages"></div>
+		
 		<div id="rollprevious" title="<?php _e('Older','k2_domain'); ?>">
 			<span>&laquo;</span> <?php _e('Older','k2_domain'); ?>
 		</div>

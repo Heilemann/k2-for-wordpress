@@ -33,7 +33,7 @@
 ?>
 
 	<?php /* Headlines for archives */ if ((!is_single() and !is_home()) or is_paged()) { ?>
-		<h2>
+		<div class="page-head"><h2>
 		<?php // Figure out what kind of page is being shown
 			if (is_category()) {
 				if (get_query_var('cat') != $k2asidescategory) {
@@ -64,14 +64,14 @@
 				 _e('Archive','k2_domain');
 			}
 			if ( get_query_var('paged') > 1 ) {
-				printf(__(' &mdash; Page %1$s of %2$s','k2_domain'), get_query_var('paged'), $wp_query->max_num_pages);
+				printf(__(' <span class="archivepages">Page %1$s of %2$s</span>','k2_domain'), get_query_var('paged'), $wp_query->max_num_pages);
 			}
 			?>
 
-		</h2>
+		</h2></div>
 	<?php } ?>
 
-	<?php if ((get_option('k2rollingarchives') == 0) and !is_single() and !is_home() and is_paged()) include (TEMPLATEPATH . '/navigation.php'); ?> 
+	<?php if ((get_option('k2rollingarchives') == 0) and !is_single() and is_paged()) include (TEMPLATEPATH . '/navigation.php'); ?> 
 
 <?php
 	/* Check if there are posts */

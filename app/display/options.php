@@ -64,15 +64,7 @@
 		</small></div>
 	<?php } ?>
 
-	<?php if (!$is_headers_dir) { ?>
-		<div class="error"><small>
-		<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom headers is missing.</p><p>For you to be able to customize your header, you need to add this directory and <code>chmod 777</code> it, to make it writable.</p>','k2_domain'), K2HEADERSPATH ); ?>
-		</small></div>
-	<?php } elseif (!$is_headers_writable) { ?>
-		<div class="error"><small>
-		<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom headers is not writable.</p><p>You won\'t be able to upload any images here. You will need to <code>chmod 777</code> it to make it writable.</p>','k2_domain'), K2HEADERSPATH ); ?>
-		</small></div>
-	<?php } ?>
+
 
 	<form name="dofollow" action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="action" value="<?php echo attribute_escape($update); ?>" />
@@ -93,6 +85,11 @@
 			color: #666;
 		}
 		
+		.error {
+		color #666;
+		font-size: .8em;
+		}
+
 		.configstuff #k2-blogornoblog, .configstuff select  {
 			width: 300px;
 		}
@@ -161,13 +158,13 @@
 			<?php if (function_exists('dynamic_sidebar')) { ?>
 			<h3><?php _e('Sidebars','k2_domain'); ?></h3>
 
-			<p><small><?php _e('This sets the number of sidebars that K2 will display.','k2_domain'); ?></small></p>
+			<p><small><?php _e('This sets the number of sidebars that K2 will display. \'No Sidebars\' will place a default sidebar below the main column.', 'k2_domain'); ?></small></p>
 
 			<p>
 				<select id="k2-sidebarnumber" name="k2[sidebarnumber]">
 					<option value="0" <?php selected($sidebar_number, '0'); ?>><?php _e('No Sidebars','k2_domain'); ?></option>
-					<option value="1" <?php selected($sidebar_number, '1'); ?>><?php _e('Single Sidebar','k2_domain'); ?></option>
-					<option value="2" <?php selected($sidebar_number, '2'); ?>><?php _e('Dual Sidebars','k2_domain'); ?></option>
+					<option value="1" <?php selected($sidebar_number, '1'); ?>><?php _e('One Sidebar','k2_domain'); ?></option>
+					<option value="2" <?php selected($sidebar_number, '2'); ?>><?php _e('Two Sidebars','k2_domain'); ?></option>
 				</select>
 			</p>
 			<?php } ?>
@@ -187,7 +184,7 @@
 			</p>
 
 			<?php if ($is_styles_dir) { ?>
-			<h3><?php _e('Custom Style','k2_domain'); ?></h3>
+			<h3><?php _e('Style','k2_domain'); ?></h3>
 
 			<p><small><?php printf(__('K2 Styles are CSS files that allow you to visually customize your blog, without ever touching K2\'s core files. The structure of K2 has been designed specifically for this purpose, and offers some truly great styling opportunities. %s','k2_domain'), '<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS">' . __('Read more','k2_domain') . '</a>.'  ); ?></small></p>
 
@@ -201,12 +198,26 @@
 			</p>
 			<?php } ?>
 
-			<h3><?php _e('Custom Header','k2_domain'); ?></h3>
+			<h3><?php _e('Header','k2_domain'); ?></h3>
 
 			<p><small>
-			<?php _e('Your header is the crown of your blog, with plenty of room to express yourself. Through here you can upload and manipulated images for use as header backgrounds, as well as decide whether to it\'s blog or journal.','k2_domain'); ?>
-			<?php if (function_exists('add_custom_image_header')) { _e('Use the <b>Custom Image Header</b> panel to upload, crop and customize the header.','k2_domain'); } ?>
-			</small></p>
+			<?php _e('Your header is the crown of your blog, with plenty of room to express yourself. Here you can decide on the ultimate question: Is it a a blog or a journal? But more importantly, you can upload images for use as header backgrounds. The default K2 header size for your current setup is 
+			
+			560x200px
+			780x200px
+			950x200px
+			
+			','k2_domain'); ?></small></p>
+
+			<?php if (!$is_headers_dir) { ?>
+				<div class="error">
+				<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom headers is missing.</p>','k2_domain'), K2HEADERSPATH ); ?>
+				</div>
+			<?php } elseif (!$is_headers_writable) { ?>
+				<div class="error">
+				<?php printf(__('<p>The directory <code>%s</code> should be writable (CHMOD 777) to upload custom headers through this interface. You can still manually upload images to the directory however.</p>','k2_domain'), K2HEADERSPATH ); ?>
+				</div>
+			<?php } ?>
 
 			<table>
 			<?php if ($is_headers_dir) { ?>
@@ -240,6 +251,7 @@
 				<input id="k2-blogornoblog" name="k2[blogornoblog]" value="<?php echo attribute_escape(get_option('k2blogornoblog')); ?>" />
 			</td></tr>
 			</table>
+
 				
 		</div>
 

@@ -10,7 +10,6 @@ class K2Header {
 
 			define('HEADER_IMAGE_HEIGHT', empty($styleinfo['header_height'])? 200 : $styleinfo['header_height']);
 			define('HEADER_IMAGE_WIDTH', empty($styleinfo['header_width'])? 950 : $styleinfo['header_width']);
-			define('HEADER_TEXTCOLOR', empty($styleinfo['header_text_color'])? 'ffffff' : $styleinfo['header_text_color']);
 			define('HEADER_IMAGE', empty($header_image)? '%s/images/transparent.gif' : get_k2info('headers_url') . $header_image);
 
 			add_custom_image_header(array('K2Header', 'output_header_css'), array('K2Header', 'output_admin_header_css'));
@@ -83,17 +82,6 @@ class K2Header {
 			background: url("<?php echo get_k2info('headers_url') . $picture; ?>");
 		}
 		<?php } ?>
-		<?php if (function_exists('add_custom_image_header')) { ?>
-			<?php if ( 'blank' == get_header_textcolor() ) { ?>
-			#header h1, #header .description {
-				display: none;
-			}
-			<?php } else { ?>
-			#header h1 a, #header .description {
-				color: #<?php header_textcolor(); ?>;
-			}
-			<?php } ?>
-		<?php } ?>
 		</style>
 		<?php
 	}
@@ -129,16 +117,6 @@ class K2Header {
 			font-size: 10px;
 			margin: 0 40px;
 		}
-
-		<?php if ( 'blank' == get_header_textcolor() ) { ?>
-		#headimg h1, #headimg #desc {
-			display: none;
-		}
-		<?php } else { ?>
-		#headimg h1 a, #headimg #desc {
-			color: #<?php echo HEADER_TEXTCOLOR ?>;
-		}
-		<?php } ?>
 		</style>
 		<?php
 	}
