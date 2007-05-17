@@ -49,33 +49,34 @@
 
 	<?php wp_head(); ?>	
 
-	<?php /* LiveSearch */ if (get_option('k2livesearch') == 1) { ?>
 	<script type="text/javascript">
 	//<![CDATA[
-		if (!K2) var K2 = {};
-		K2.LiveSearch = new Livesearch("searchform", "dynamic-content", "current-content", <?php output_javascript_url('rollingarchive.php'); ?>, "<?php echo attribute_escape(__('Type and Wait to Search','k2_domain')); ?>", "<?php echo attribute_escape(__('go','k2_domain')); ?>");
-	//]]>
-	</script>
-	<?php } ?>
+		var K2 = {};
 
-	<?php /* Rolling Archives */ if (get_option('k2rollingarchives') == 1) { ?>
-	<script type="text/javascript">
-	//<![CDATA[
-		if (!K2) var K2 = {};
+		<?php /* LiveSearch */ if (get_option('k2livesearch') == 1) { ?>
+		K2.LiveSearch = new Livesearch("searchform", "dynamic-content", "current-content",
+			<?php
+				if (get_option('k2rollingarchives') == 1) {
+					output_javascript_url('rollingarchive.php');
+				} else {
+					output_javascript_url('theloop.php');
+				}
+			?>,
+			"<?php echo attribute_escape(__('Type and Wait to Search','k2_domain')); ?>",
+			"<?php echo attribute_escape(__('go','k2_domain')); ?>");
+		<?php } ?>
+
+		<?php /* Rolling Archives */ if (get_option('k2rollingarchives') == 1) { ?>
 		K2.RollingArchives = new RollingArchives("", "rollingarchives", "rollingcontent",
 			<?php output_javascript_url('theloop.php'); ?>,
 			"<?php echo attribute_escape(__('Page %1$d of %2$d',k2_domain)); ?>");
+		<?php } ?>
+
+		<?php /* Hide Author Elements */ if (!is_user_logged_in() and (is_page() or is_single()) and ($comment_author = $_COOKIE['comment_author_'.COOKIEHASH]) and ('open' == $post-> comment_status) or ('comment' == $post-> comment_type) ) { ?>
+		FastInit.addOnLoad( OnLoadUtils );
+		<?php } ?>
 	//]]>
 	</script>
-	<?php } ?>
-
-	<?php /* Hide Author Elements */ if (!is_user_logged_in() and (is_page() or is_single()) and ($comment_author = $_COOKIE['comment_author_'.COOKIEHASH]) and ('open' == $post-> comment_status) or ('comment' == $post-> comment_type) ) { ?>
-	<script type="text/javascript">
-	// <![CDATA[
-		FastInit.addOnLoad( OnLoadUtils );
-	// ]]>
-	</script>
-	<?php } ?>
 
 	<?php wp_get_archives('type=monthly&format=link'); ?>
 </head>

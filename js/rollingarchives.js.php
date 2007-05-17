@@ -39,7 +39,7 @@ RollingArchives.prototype = {
 		this.pagehandle = prefix+'pagehandle';
 		this.pagetrack = prefix+'pagetrack';
 
-		//this.trimmer = new TextTrimmer(prefix, "texttrimmer", "entry-content", 1, 100);
+		this.trimmer = new TextTrimmer(prefix, "texttrimmer", "entry-content", 1, 100);
 
 		this.query = null;
 		this.pagenumber = 0;
@@ -162,7 +162,7 @@ RollingArchives.prototype = {
 		new Effect.Fade(this.rollload, {duration: .3});
 
 		/* Spool Texttrimmer */
-		//this.trimmer.trimAgain(this.trimmer.curValue);
+		this.trimmer.trimAgain(this.trimmer.curValue);
 	},
 	
 	rollError: function() {

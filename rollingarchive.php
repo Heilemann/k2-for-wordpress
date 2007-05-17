@@ -5,6 +5,8 @@
 
 		$query = k2_parse_query($_GET);
 		query_posts($query);
+
+		unset($_GET['k2dynamic']);
 	}
 
 	// Load Rolling Archives?

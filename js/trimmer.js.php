@@ -24,8 +24,6 @@ TextTrimmer = Class.create();
 
 TextTrimmer.prototype = {
     initialize: function(prefix, attachitem, chunkClass, minValue, maxValue) {
-		var thisTrimmer = this;
-
 		this.prefix = prefix;
 		this.attachitem = prefix+attachitem;
 		this.chunkClass	= chunkClass;
@@ -38,6 +36,12 @@ TextTrimmer.prototype = {
 		this.slidertrack = prefix+'trimmertrack';
 		this.trimmore = prefix+'trimmermore';
 		this.trimless = prefix+'trimmerless';
+
+		Event.observe(window, "load", this.onLoading.bindAsEventListener(this));
+	},
+	
+	onLoading: function() {
+		var thisTrimmer = this;
 
 		this.trimSlider = new Control.Slider(thisTrimmer.sliderhandle, thisTrimmer.slidertrack, {
 			range: $R(thisTrimmer.minValue, thisTrimmer.maxValue),
@@ -61,19 +65,11 @@ TextTrimmer.prototype = {
 	},
 
 	addClass: function() {
-		if (this.prefix != '') {
-			$('dynamic-content').addClassName("trimmed");
-		} else {
-			$('current-content').addClassName("trimmed");
-		}
+		$('dynamic-content').addClassName("trimmed");
 	},
 	
 	removeClass: function() {
-		if (this.prefix != '') {
-			$('dynamic-content').removeClassName("trimmed");
-		} else {
-			$('current-content').removeClassName("trimmed");
-		}
+		$('dynamic-content').removeClassName("trimmed");
 	},
 
 	trimAgain: function(value) {
@@ -82,13 +78,7 @@ TextTrimmer.prototype = {
 	},
 
     loadChunks: function() {
-		if (this.prefix != '') {
-			/* Dynamic chunks */
-			var everything = $('dynamic-content').getElementsByClassName(this.chunkClass);
-		} else {
-			/* Normal chunks */
-			var everything = $('current-content').getElementsByClassName(this.chunkClass);
-		}
+		var everything = $('dynamic-content').getElementsByClassName(this.chunkClass);
 
 		this.chunks = [];
 

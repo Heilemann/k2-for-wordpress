@@ -87,7 +87,7 @@ Livesearch.prototype = {
 		if (!this.isActive) {
 			this.isActive = true;
 
-			if ( ! $(this.hideitem) && K2.RollingArchives instanceof RollingArchives ) {
+			if ( ! $(this.hideitem) && K2.RollingArchives ) {
 				K2.RollingArchives.saveRollingState();
 			}
 		}
@@ -101,7 +101,7 @@ Livesearch.prototype = {
 			{
 				method: 'get',
 				evalScripts: true,
-				parameters: query + '&k2dynamic=init',
+				parameters: query + '&k2dynamic=1',
 				onComplete: this.searchComplete.bind(this)
 		});
 	},
@@ -132,7 +132,7 @@ Livesearch.prototype = {
 			$(this.targetitem).hide();
 			$(this.hideitem).show();
 			$(this.targetitem).update();
-		} else if (K2.RollingArchives instanceof RollingArchives) {
+		} else if ( K2.RollingArchives ) {
 			K2.RollingArchives.restoreRollingState();
 		}
 	}
