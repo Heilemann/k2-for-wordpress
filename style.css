@@ -1,4 +1,7 @@
-/* @override http://localhost/wp-content/themes/kaytwo/style.css */
+/* @override 
+	http://getk2.com/wp-content/themes/k2/style.css
+	http://localhost/wp-content/themes/kaytwo/style.css
+*/
 
 /*
 Theme Name: K2
@@ -216,9 +219,23 @@ h1 a:hover {
 
 h2 { /* H2 is what kind of page you are on. Eg. 'Monthly Archive'. */
 	text-align: center;
-	font-size: 2.4em;
+	font-size: 2.5em;
 	font-weight: bold;
 	letter-spacing: -1px;
+	}
+
+.page-head {
+	margin: 20px 0;
+	}
+
+.archivepages {
+	color: #999;
+	display: block;
+	font-size: .45em;
+	font-weight: normal;
+	letter-spacing: 0;
+	text-transform: lowercase;
+	margin-top: 2px;
 	}
 
 .secondary h2 { /* Secondary H2 is sidebar headlines */
@@ -638,7 +655,6 @@ input[type=text]:focus, textarea:focus {
 	}
 
 .comments textarea {
-	height: 250px;
 	width: 100%;
 	margin: 10px 0;
 	}
@@ -948,16 +964,20 @@ input[type=text], textarea {
 	Brian's Latest Comments
 	http://meidell.dk/archives/2004/09/12/brians-latest-comments/
 */
+
+#brians-latest-comments ul li span a, #brians-latest-comments ul li small a,
 .sb-comments-blc ul li span a, .sb-comments-blc ul li small a {
 	color: #999;
 	font-weight: normal;
 	word-spacing: -1px;
 	}
 
+#brians-latest-comments ul li,
 .sb-comments-blc ul li {
 	margin-bottom: 6px;
 }
 
+#brians-latest-comments ul li > a[title="Go to the comments of this entry"],
 .sb-comments-blc ul li > a[title="Go to the comments of this entry"] {
 	position: absolute;
 	right:0;
