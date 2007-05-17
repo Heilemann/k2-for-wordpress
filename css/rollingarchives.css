@@ -1,11 +1,8 @@
-/* @override 
-	http://localhost/wp-content/themes/kaytwo/css/rollingarchives.css
-	http://binarybonsai.com/wp-content/themes/k2/css/rollingarchives.css
-*/
+/* @override http://localhost/wp-content/themes/kaytwo/css/rollingarchives.css */
 
 #rollingarchives {
 	position: relative;
-	padding: 10px 0 30px;
+	padding: 10px 0 20px;
 	display: block;
 	}
 
@@ -61,6 +58,12 @@
 	font-weight: bold;
 	}
 
+#rollpages {
+	top: 3px;
+	left: 55px;
+	color: #aaa;
+	}
+
 #rollhover {
 	position: absolute;
 	top: 7px;
@@ -71,12 +74,10 @@
 	}
 
 #rollhover,
-#rollpages,
 #rolldates {
 	width: 100px;
 }
 
-#rollpages,
 #rolldates {
 	position: absolute;
 	color: #999;
@@ -84,12 +85,8 @@
 	font-size: .9em;
 	}
 
-#rollpages {
-	top: 15px;
-	}
-
 #rolldates {
-	top: 28px;
+	top: 22px;
 	}
 
 #rollprevious {
@@ -150,20 +147,22 @@
 	}
 
 #pagetrackwrap {
-	background: #eee;
-	width: 380px;
 	position: absolute;
-	top: 7px;
-	left: 55px;
+	top: 6px;
+	left: 140px;
+	width: 290px;
+	padding-right: 4px;
+	background: url('../images/sliderbgright.png') no-repeat right center;
 	}
 
 #pagetrack {
+	background: url('../images/sliderbgleft.png') no-repeat left center;
 	}
 
 #pagehandle {
-	width: 6px;
-	height: 6px;
-	background: #999;
+	width: 7px;
+	height: 7px;
+	background: url('../images/sliderhandle.png') no-repeat center center;
 	cursor: col-resize;
 	}
 
@@ -183,9 +182,11 @@ div.trimmed .hentry.alt {
 	display: none;
 	position: relative;
 	width: 100px;
+	height: 15px;
+	top: 23px;
+	left: 365px;
 	}
 
-/*
 .firstpage #pagetrackwrap {
 	visibility: hidden;
 	}
@@ -201,13 +202,10 @@ div.trimmed .hentry.alt {
 .nthpage #texttrimmer {
 	visibility: visible;
 	}
-*/
 
 #trimmertrackwrap {
-	margin: 0 auto 2em;
 	background: url('../images/sliderbgright.png') no-repeat right center;
-	height: 18px;
-	padding-right: 4px;
+	height: 7px;
 	width: 50px;
 	}
 
@@ -216,8 +214,8 @@ div.trimmed .hentry.alt {
 	}
 
 #trimmerhandle {
-	width: 18px;
-	height: 18px;
+	width: 7px;
+	height: 7px;
 	background: url('../images/sliderhandle.png') no-repeat center center;
 	cursor: col-resize;
 	}
@@ -225,7 +223,7 @@ div.trimmed .hentry.alt {
 #trimmermore,
 #trimmerless {
 	position: absolute;
-	top: 2px;
+	top: 0;
 	height: 16px;
 	width: 16px;
 	}
