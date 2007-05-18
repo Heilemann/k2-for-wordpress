@@ -21,25 +21,25 @@ var RollingArchives = {};
 RollingArchives = Class.create();
 
 RollingArchives.prototype = {
-	initialize: function(prefix, attachitem, targetitem, url, pagetext) {
-		this.attachitem = prefix+attachitem;
-		this.targetitem = prefix+targetitem;
+	initialize: function(attachitem, targetitem, url, pagetext) {
+		this.attachitem = attachitem;
+		this.targetitem = targetitem;
 		this.url = url;
 		this.pagetext = pagetext;
 
-		this.rollnext = prefix+'rollnext';
-		this.rollprev = prefix+'rollprevious';
-		this.rollpages = prefix+'rollpages';
-		this.rollload = prefix+'rollload';
-		this.rollhome = prefix+'rollhome';
-		this.rolldates = prefix+'rolldates';
-		this.rollnotices = prefix+'rollnotices';
-		this.rollhover = prefix+'rollhover';
+		this.rollnext = 'rollnext';
+		this.rollprev = 'rollprevious';
+		this.rollpages = 'rollpages';
+		this.rollload = 'rollload';
+		this.rollhome = 'rollhome';
+		this.rolldates = 'rolldates';
+		this.rollnotices = 'rollnotices';
+		this.rollhover = 'rollhover';
 
-		this.pagehandle = prefix+'pagehandle';
-		this.pagetrack = prefix+'pagetrack';
+		this.pagehandle = 'pagehandle';
+		this.pagetrack = 'pagetrack';
 
-		this.trimmer = new TextTrimmer(prefix, "texttrimmer", "entry-content", 1, 100);
+		this.trimmer = new TextTrimmer("texttrimmer", "dynamic-content", "entry-content", 1, 100);
 
 		this.query = null;
 		this.pagenumber = 0;
@@ -196,6 +196,8 @@ RollingArchives.prototype = {
 			$(this.attachitem).style.visibility = 'hidden';
 		}
 
+		this.trimmer.setupTrimmer(100);
+
 		this.initialized = true;
 	},
 
@@ -206,10 +208,12 @@ RollingArchives.prototype = {
 			pagecount: this.pagecount,
 			pagedates: this.pagedates
 		});
+
+		this.trimmer.saveState();
 	},
 
 	restoreRollingState: function() {
-		if (this.initialized) {
+		if (this.rollingState instanceof Hash) {
 			//console.log(this.rollingState.inspect());
 
 			this.setRollingState(this.rollingState.pagenumber, this.rollingState.pagecount, this.rollingState.query, this.rollingState.pagedates);
@@ -219,6 +223,8 @@ RollingArchives.prototype = {
 			}
 
 			this.rollingState = null;
+
+			this.trimmer.restoreState();
 		}
 	},
 

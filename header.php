@@ -67,7 +67,7 @@
 		<?php } ?>
 
 		<?php /* Rolling Archives */ if (get_option('k2rollingarchives') == 1) { ?>
-		K2.RollingArchives = new RollingArchives("", "rollingarchives", "rollingcontent",
+		K2.RollingArchives = new RollingArchives("rollingarchives", "rollingcontent",
 			<?php output_javascript_url('theloop.php'); ?>,
 			"<?php echo attribute_escape(__('Page %1$d of %2$d',k2_domain)); ?>");
 		<?php } ?>

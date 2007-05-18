@@ -23,37 +23,61 @@
 TextTrimmer = Class.create();
 
 TextTrimmer.prototype = {
-    initialize: function(prefix, attachitem, chunkClass, minValue, maxValue) {
-		this.prefix = prefix;
-		this.attachitem = prefix+attachitem;
+    initialize: function(attachitem, targetitem, chunkClass, minValue, maxValue) {
+		this.attachitem = attachitem;
+		this.targetitem = targetitem;
 		this.chunkClass	= chunkClass;
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 
 		this.curValue = maxValue;
 		this.chunks = false;
-		this.sliderhandle = prefix+'trimmerhandle';
-		this.slidertrack = prefix+'trimmertrack';
-		this.trimmore = prefix+'trimmermore';
-		this.trimless = prefix+'trimmerless';
+		this.sliderhandle = 'trimmerhandle';
+		this.slidertrack = 'trimmertrack';
+		this.trimmore = 'trimmermore';
+		this.trimless = 'trimmerless';
 
-		Event.observe(window, "load", this.onLoading.bindAsEventListener(this));
+		this.prevState = null;
+
+		this.trimMoreListener = this.trimMoreAction.bindAsEventListener(this);
+		this.trimLessListener = this.trimLessAction.bindAsEventListener(this);
+
+		this.init = false;
 	},
 	
-	onLoading: function() {
+	setupTrimmer: function(newvalue) {
+		this.curValue = newvalue;
+
+		if (this.curValue >= this.maxValue) {
+			this.curValue = this.maxValue;
+			$(this.targetitem).removeClassName("trimmed");
+		} else if (this.curValue < this.minValue) {
+			this.curValue = this.minValue;
+		}
+
+		this.chunks = false;
+
 		var thisTrimmer = this;
+		if (this.trimSlider instanceof Control.Slider) {
+			this.trimSlider.dispose();
+		}
 
 		this.trimSlider = new Control.Slider(thisTrimmer.sliderhandle, thisTrimmer.slidertrack, {
 			range: $R(thisTrimmer.minValue, thisTrimmer.maxValue),
-			sliderValue: thisTrimmer.maxValue,
+			sliderValue: thisTrimmer.curValue,
 			onSlide: function(value) { thisTrimmer.doTrim(value); },
 			onChange: function(value) { thisTrimmer.doTrim(value); }
 		});
 
-		this.trimMoreListener = this.trimMoreAction.bindAsEventListener(this);
-		this.trimLessListener = this.trimLessAction.bindAsEventListener(this);
+		if (this.init) {
+			Event.stopObserving(this.trimmore, 'click', this.trimMoreListener);
+			Event.stopObserving(this.trimless, 'click', this.trimLessListener);
+		}
+
 		Event.observe(this.trimmore, 'click', this.trimMoreListener);
 		Event.observe(this.trimless, 'click', this.trimLessListener);
+
+		this.init = true;
    	},
 
 	trimMoreAction: function() {
@@ -64,21 +88,13 @@ TextTrimmer.prototype = {
 		this.trimSlider.setValue(this.curValue - 20);
 	},
 
-	addClass: function() {
-		$('dynamic-content').addClassName("trimmed");
-	},
-	
-	removeClass: function() {
-		$('dynamic-content').removeClassName("trimmed");
-	},
-
 	trimAgain: function(value) {
 		this.loadChunks();
 		this.doTrim(value);
 	},
 
     loadChunks: function() {
-		var everything = $('dynamic-content').getElementsByClassName(this.chunkClass);
+		var everything = $(this.targetitem).getElementsByClassName(this.chunkClass);
 
 		this.chunks = [];
 
@@ -112,9 +128,22 @@ TextTrimmer.prototype = {
 
 		/* Add 'trimmed' class to <BODY> while active */
 		if (this.curValue != this.maxValue) {
-			this.addClass();
+			$(this.targetitem).addClassName("trimmed");
 		} else {
-			this.removeClass();
+			$(this.targetitem).removeClassName("trimmed");
+		}
+	},
+
+	saveState: function() {
+		this.prevState = new Hash({
+			curValue: this.curValue
+		});
+	},
+
+	restoreState: function() {
+		if (this.prevState instanceof Hash) {
+			this.setupTrimmer(this.prevState.curValue);
+			this.prevState = null;
 		}
 	}
 }
