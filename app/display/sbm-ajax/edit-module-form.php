@@ -16,6 +16,16 @@
 	<?php echo($modules[$module->type]['name']); ?>
 </p>
 
+<p>
+	<a id="toggle-advanced-output-options" href="#"><?php _e('Advanced options', 'k2_domain'); ?></a>
+	<div id="advanced-output-options" class="toggle-item">
+		<p>
+			<label for="output-css-file"><?php _e('Related CSS file', 'k2_domain'); ?>:</label><br />
+			<input id="output-css-file" name="output[css_file]" type="text" value="<?php echo attribute_escape($module->output['css_file']); ?>" />
+		</p>
+	</div>
+</p>
+
 <fieldset>
 <legend><strong><?php _e('Display on:', 'k2_domain'); ?></strong></legend>
 	<input id="display-home" name="display[home]" type="checkbox"<?php if($module->display['home']) { ?> checked="checked"<?php } ?> /> <label for="display-home"><?php _e('Homepage', 'k2_domain'); ?></label><br />
