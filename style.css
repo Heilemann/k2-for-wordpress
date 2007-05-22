@@ -224,6 +224,10 @@ h2 { /* H2 is what kind of page you are on. Eg. 'Monthly Archive'. */
 	letter-spacing: -1px;
 	}
 
+#rollingarchives.emptypage {
+	display: none;
+	}
+
 .page-head {
 	margin: 20px 0;
 	}
@@ -1005,6 +1009,10 @@ div#latest-comments small {
 	padding: 5px;
 }
 
+.sb-flickr div a {
+	margin-left:  10px;
+	}
+	
 .sb-flickr div a img {
 	border: 1px solid #ccc;
 	padding: 3px;
@@ -1015,24 +1023,29 @@ div#latest-comments small {
 	border: 1px solid #999;
 }
 
-/*-
-	WordPress: Touched
-	http://twilightuniverse.com/2005/03/wordpress-touched/
-	
-	No support for Touched 0.6 in the rest of K2.
-	Seems a bit flaky just now. Waiting for new version.
+/*
+	Calendar Module
 */
 
-#poststuff fieldset {
-	border: none;
+#wp-calendar {
+	width: 100%;
 	}
 
-#poststuff #title, #poststuff #excerpt, #poststuff #tags {
-	width: 470px;
+#wp-calendar td {
+	text-align: center;
 	}
-	
-#poststuff #title {
-	font-size: 2em;
+
+#wp-calendar caption {
+	font-size: 1.2em;
+	padding: 5px;
+	}
+
+#wp-calendar #prev {
+	text-align: left;
+	}
+
+#wp-calendar #next {
+	text-align: right;
 	}
 
 /*
