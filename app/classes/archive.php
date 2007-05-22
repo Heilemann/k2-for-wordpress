@@ -2,6 +2,12 @@
 /* This class holds all the code for creating, deleting and setting up the archives, powered by Extended Live Archives: http://www.sonsofskadi.net/extended-live-archive/ */
 
 class K2Archive {
+	function install() {
+		if ( '1' == get_option('k2archives') ) {
+			K2Archive::create_archive();
+		}
+	}
+
 	function create_archive() {
 		global $wpdb;
 
@@ -98,4 +104,6 @@ class K2Archive {
 		return $ret;
 	}
 }
+
+add_action( 'k2_install', array('K2Archive', 'install') );
 ?>
