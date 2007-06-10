@@ -101,7 +101,7 @@ function print_r_html($data,$return_data=false)
 			<div class="droppable">
 				<ul id="<?php echo($id); ?>" class="sortable reorderable">
 
-					<?php foreach ($sidebar as $id => $modulelist) { foreach ($modulelist as $id => $module) { ?>
+					<?php foreach ($sidebar->modules as $id => $module) { ?>
 
 						<li id="<?php print attribute_escape($module->id); ?>" class="module">
 							<div>
@@ -111,7 +111,7 @@ function print_r_html($data,$return_data=false)
 							</div>
 						</li>
 
-					<?php } } ?>
+					<?php } ?>
 
 				</ul>
 			</div>

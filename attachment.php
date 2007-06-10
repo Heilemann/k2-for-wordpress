@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
 <div class="content">
-	
+
 	<div id="primary">
 		<div id="current-content" class="hfeed">
 
@@ -15,10 +15,10 @@
 
 		/* If there are 2+ users, this is a multiple-user blog */
 		$multiple_users = ($count_users > 1);
-	
+
 		// Get date formats
 		$dateformat = get_option('date_format');
-		
+
 		// This also populates the iconsize for the next line
 		$attachment_link = get_the_attachment_link($post->ID, true, array(450, 800)); 
 
