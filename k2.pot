@@ -467,7 +467,7 @@ msgid "Comments"
 msgstr ""
 
 #: sidebar.php:100
-#: app/modules/recent_comments.php:11
+#: app/modules/latest_comments.php:11
 msgid "RSS Feed for all Comments"
 msgstr ""
 
@@ -960,7 +960,7 @@ msgstr ""
 
 #: app/modules/asides.php:37
 #: app/modules/latest_posts.php:41
-#: app/modules/recent_comments.php:66
+#: app/modules/latest_comments.php:66
 msgid "Number of posts:"
 msgstr ""
 
@@ -1049,36 +1049,36 @@ msgstr ""
 msgid "PHP module"
 msgstr ""
 
-#: app/modules/recent_comments.php:35
+#: app/modules/latest_comments.php:35
 #, php-format
 msgid "%1$s %2$s <a href=\"%3$s#comment-%4$s\">%5$s</a>"
 msgstr ""
 
-#: app/modules/recent_comments.php:35
+#: app/modules/latest_comments.php:35
 msgid "on post"
 msgstr ""
 
-#: app/modules/recent_comments.php:41
+#: app/modules/latest_comments.php:41
 msgid "No comments"
 msgstr ""
 
-#: app/modules/recent_comments.php:70
+#: app/modules/latest_comments.php:70
 msgid "Number of comments:"
 msgstr ""
 
-#: app/modules/recent_comments.php:72
+#: app/modules/latest_comments.php:72
 msgid "Hide trackbacks/pingbacks:"
 msgstr ""
 
-#: app/modules/recent_comments.php:77
+#: app/modules/latest_comments.php:77
 msgid "Newest color:"
 msgstr ""
 
-#: app/modules/recent_comments.php:79
+#: app/modules/latest_comments.php:79
 msgid "Oldest color:"
 msgstr ""
 
-#: app/modules/recent_comments.php:84
+#: app/modules/latest_comments.php:84
 msgid "Recent comments module"
 msgstr ""
 
