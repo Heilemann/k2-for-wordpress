@@ -44,7 +44,7 @@ function latest_posts_sidebar_module_control() {
 	<?php
 }
 
-register_sidebar_module('Latest posts module', 'latest_posts_sidebar_module', 'sb-latest', array( 'num_posts' => 10, 'hide_asides' => false ));
-register_sidebar_module_control('Latest posts module', 'latest_posts_sidebar_module_control');
+register_sidebar_module('Latest Posts', 'latest_posts_sidebar_module', 'sb-latest', array( 'num_posts' => 10, 'hide_asides' => false ));
+register_sidebar_module_control('Latest Posts', 'latest_posts_sidebar_module_control');
 
 ?>

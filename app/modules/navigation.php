@@ -53,7 +53,7 @@ function nav_sidebar_module_control() {
 	<?php
 }
 
-register_sidebar_module('Navigation module', 'nav_sidebar_module', 'sb-pagemenu', array('custom_title' => __('%s Subpages', 'k2_domain') ));
-register_sidebar_module_control('Navigation module', 'nav_sidebar_module_control');
+register_sidebar_module('Page Menu', 'nav_sidebar_module', 'sb-pagemenu', array('custom_title' => __('%s Subpages', 'k2_domain') ));
+register_sidebar_module_control('Page Menu', 'nav_sidebar_module_control');
 
 ?>

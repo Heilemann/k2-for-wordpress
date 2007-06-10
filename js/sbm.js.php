@@ -23,6 +23,7 @@
 
 /* Classes ****************************************************************************************/
 
+
 /**
  * The main class for managing SBMs
  **/
@@ -34,10 +35,10 @@ var sbmManager = {
 
 	initialize: function() {
 		// Setup the DnD for the sidebar lists
-		sbmManager.dndBox = new sbmDnDBox("sbm-dnd", "tab-module-options");
+		sbmManager.dndBox = new sbmDnDBox("module-list", "tab-module-options");
 
 		// Setup the tabs
-		sbmManager.optionsBox = new sbmTabBox("sbm-options");
+//		sbmManager.optionsBox = new sbmTabBox("sbm-options");
 
 		// Setup the add form
 		sbmManager.addForm = new sbmAddForm("module-add", "module-add-error");
@@ -52,15 +53,12 @@ var sbmManager = {
  **/
 var sbmDnDBox = Class.create();
 sbmDnDBox.prototype = {
-	initialize: function(id, selectTab) {
-		// Get the Dnd box
-		this.dndBox = $(id);
-
+	initialize: function(class, selectTab) {
 		// The tab to select
 		this.selectTab = selectTab;
 
 		// Get the lists
-		this.lists = this.dndBox.getElementsByTagName("ul");
+		this.lists = $$('.' + class);
 
 		// Get the list ids
 		this.listIds = [];
@@ -98,8 +96,9 @@ sbmDnDBox.prototype = {
 		// Only update the order if it's different
 		if(orderData != this.lastOrderData) {
 			// Check if the currently selected module, if any, has changed position
+//			console.log(sbmManager.optionsForm.moduleId);
 			if(sbmManager.optionsForm.moduleId != null) {
-				sbmManager.optionsForm.sidebarId = $("sbm_" + sbmManager.optionsForm.moduleId).parentNode.id;
+				sbmManager.optionsForm.sidebarId = $(sbmManager.optionsForm.moduleId).parentNode.id;
 			}
 
 			new Ajax.Request(sbm_baseUrl + "?action=reorder", {
@@ -124,12 +123,12 @@ sbmDnDBox.prototype = {
 			var list = this.lists[i];
 
 			// Delete the old nodes
-			while(list.hasChildNodes()) {
+			while (list.hasChildNodes()) {
 				list.removeChild(list.firstChild);
 			}
 
 			var moduleList = moduleLists[i];
-
+			
 			// Create module elements and add them to the lists
 			if(moduleList.hasChildNodes()) {
 				for(var j = 0; j < moduleList.childNodes.length; j++) {
@@ -138,6 +137,7 @@ sbmDnDBox.prototype = {
 					var listLinkElement = document.createElement("a");
 
 					listElement.id = "sbm_" + module.getAttribute("id");
+					listElement.className = "installedmodule";
 
 					listLinkElement.href = "#";
 					listLinkElement.onclick = this.listElementClick.bindAsEventListener(this);
@@ -146,16 +146,46 @@ sbmDnDBox.prototype = {
 					listElement.appendChild(listLinkElement);
 
 					list.appendChild(listElement);
+					
+					// Ready Available Modules for Trash Drop
+					new Draggable(listElement.id, {revert:true});
 				}
 			}
 
-			// Make the lists sortable
+			// Config Available Modules as Draggable
+			for(var j = 0; j < $$('.availablemodule').length; j++) {
+				new Draggable($$('.availablemodule')[j].id, {revert: true, ghosting: true});
+			}
+
+			// Make the current list sortable
 			Sortable.create(list, {
-					dropOnEmpty: true,
-					constraint: false,
-					containment: this.listIds,
-					onUpdate: this.reorder.bindAsEventListener(this)
-				});
+				dropOnEmpty: true,
+				constraint: false,
+				containment: this.listIds,
+				onUpdate: this.reorder.bindAsEventListener(this)
+			});
+
+			// Make Sidebar 1 Droppable
+/*			Droppables.add(list, {
+				accept: 'availablemodule',
+				hoverclass: 'hovering',
+				onDrop: function(element, droppableElement) {
+					$('add-name').value = element.innerHTML;
+					$('add-type').value = element.id;
+					$('add-sidebar').value = droppableElement.id;
+			}});
+
+			// Make Trash Droppable
+			Droppables.add('trash', {
+				accept: 'installedmodule',
+				hoverclass: 'hovering',
+				onDrop: function(element) {
+					$(element.id).style.display = 'none';
+					sbmManager.optionsForm.sidebarId = element.parentNode.id;
+					sbmManager.optionsForm.moduleId = element.id;
+					sbmManager.optionsForm.remove();
+			}});*/
+
 		}
 	},
 
@@ -197,7 +227,7 @@ sbmDnDBox.prototype = {
 		
 		sbmManager.optionsForm.showForm();
 
-		sbmManager.optionsBox.tabs[this.selectTab].show();
+//		sbmManager.optionsBox.tabs[this.selectTab].show();
 	}
 }
 
@@ -382,21 +412,28 @@ sbmTab.prototype = {
 var sbmAddForm = Class.create();
 sbmAddForm.prototype = {
 	initialize: function(id, errorId) {
+		var self = this;
 		this.addForm = $(id);
 		this.errorElement = $(errorId);
 
 		// Setup the submit event
 		this.addForm.onsubmit = this.add.bindAsEventListener(this);
+
+		// Check form for modules added to sidebar
+		new Form.Observer(this.addForm, 1, function() {self.add();}); 
 	},
 
 	add: function() {
 		this.errorElement.style.display = "none";
     
 		// Serialize the data
-		var formData = Form.serialize(this.addForm);
+		var formData = '&add_name=' + escape($('add-name').value) + '&add_type=' + $('add-type').value + '&add_sidebar=' + $('add-sidebar').value;
+
+//		var formData = Form.serialize(this.addForm);
 
 		// Disable the form
-		Form.disable(this.addForm);
+//		Form.disable(this.addForm);
+
 
 		// Send the information via AJAX
 		new Ajax.Request(sbm_baseUrl + "?action=add", {
@@ -410,20 +447,22 @@ sbmAddForm.prototype = {
 
 	addComplete: function(response) {
 		if(sbmResponse.checkValid(response, this.addError.bindAsEventListener(this))) {
+//			console.log('1');
 			// Reset the form's data
-			Form.reset(this.addForm);
+//			Form.reset(this.addForm);
 
 			// Enable the form
-			Form.enable(this.addForm);
+//			Form.enable(this.addForm);
 
 			// Update the DnD box
 			sbmManager.dndBox.update();
 		} else {
+//			console.log('2');
 			// Enable the form
-			Form.enable(this.addForm);
+//			Form.enable(this.addForm);
 
 			// Select the form
-			Form.findFirstElement(this.addForm).focus();
+//			Form.findFirstElement(this.addForm).focus();
 		}
 	},
 
@@ -466,6 +505,9 @@ sbmOptionsForm.prototype = {
 		// Setup the form events
 		this.optionsForm.onsubmit = this.update.bindAsEventListener(this);
 		this.optionsForm.onremove = this.remove.bindAsEventListener(this);
+
+		// Look for changes to the 'remove form'
+//		new Form.Observer($('module-remove'), 1, function(v) { self.remove(v) }); 
 
 		this.showDesc();
 	},
@@ -521,15 +563,20 @@ sbmOptionsForm.prototype = {
 		this.errorElement.innerHTML = error;
 	},
 
-	remove: function() {
+	remove: function(element) {
+		var object = element; 
+
 		// Disable the form
 		Form.disable(this.optionsForm);
 
-		var removeData = "sidebar_id=" + this.sidebarId + "&module_id=" + this.moduleId;
+		var moduleId = this.moduleId.match(/^sbm\_(.+)$/)[1];
+		console.log('Remove '+moduleId);
+
+		var formData = "sidebar_id=" + this.sidebarId + "&module_id=" + moduleId + "&" + Form.serialize(this.optionsForm);
 
 		// Send the delete information via AJAX
 		new Ajax.Request(sbm_baseUrl + "?action=remove", {
-				postBody: removeData,
+				postBody: formData,
 				onComplete: this.removeComplete.bindAsEventListener(this)
 			});
 	},

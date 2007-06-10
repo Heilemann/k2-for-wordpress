@@ -17,6 +17,6 @@ function meta_sidebar_module($args) {
 	echo($after_module);
 }
 
-register_sidebar_module('Meta module', 'meta_sidebar_module', 'sb-meta');
+register_sidebar_module('Meta Information', 'meta_sidebar_module', 'sb-meta');
 
 ?>

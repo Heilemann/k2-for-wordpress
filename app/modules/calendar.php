@@ -8,6 +8,6 @@ function calendar_sidebar_module($args) {
 	echo($after_module);
 }
 
-register_sidebar_module('Calendar module', 'calendar_sidebar_module', 'sb-calendar');
+register_sidebar_module('Calendar', 'calendar_sidebar_module', 'sb-calendar');
 
 ?>

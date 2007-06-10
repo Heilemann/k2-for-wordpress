@@ -15,7 +15,7 @@ function flickr_sidebar_module($args) {
 }
 
 if(function_exists('get_flickrRSS')) {
-	register_sidebar_module('Flickr module', 'flickr_sidebar_module', 'sb-flickr');
+	register_sidebar_module('Flickr', 'flickr_sidebar_module', 'sb-flickr');
 }
 
 ?>

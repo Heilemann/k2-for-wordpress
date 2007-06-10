@@ -8,6 +8,6 @@ function search_sidebar_module($args) {
 	echo($after_module);
 }
 
-register_sidebar_module('Search module', 'search_sidebar_module', 'sb-search');
+register_sidebar_module('Search', 'search_sidebar_module', 'sb-search');
 
 ?>

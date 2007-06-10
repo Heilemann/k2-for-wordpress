@@ -112,6 +112,7 @@ class K2SBM {
 				case 'list':
 					foreach($k2sbm_registered_sidebars as $sidebar) {
 						$tmp_modules[] = $sidebar->modules;
+						print_r($sidebar);
 					}
 
 					$tmp_modules[] = $k2sbm_disabled_modules;
@@ -212,7 +213,7 @@ class K2SBM {
 
 	function add_menus() {
 		// Add the submenus
-		$page = add_theme_page(__('K2 Sidebar Modules','k2_domain'), __('K2 Sidebar Modules','k2_domain'), 'edit_themes', 'k2-sbm-modules', array('K2SBM', 'module_admin'));
+		$page = add_theme_page(__('K2 Sidebar Manager','k2_domain'), __('K2 Sidebar Manager','k2_domain'), 'edit_themes', 'k2-sbm-manager', array('K2SBM', 'module_admin'));
 
 		add_action("admin_head-$page", array('K2SBM', 'module_admin_head'));
 		add_action("admin_print_scripts-$page", array('K2SBM', 'module_admin_scripts'));
@@ -296,6 +297,12 @@ class K2SBM {
 		return $k2sbm_registered_sidebars;
 	}
 
+	function get_disabled() {
+		global $k2sbm_disabled_modules;
+
+		return $k2sbm_disabled_modules;
+	}
+
 	function register_sidebars($count = 1, $args = array()) {
 		// Apparently, WPW lets you pass arguments as a string
 		if(is_string($args)) {
@@ -339,7 +346,6 @@ class K2SBM {
 
 		return $return;
 	}
-
 
 	function load_modules() {
 		global $k2sbm_active_modules, $k2sbm_disabled_modules;
@@ -478,6 +484,14 @@ class K2SBM {
 
 		// Close the widget directory
 		$dir->close();
+	}
+
+	function get_active_modules($sidebar) {
+		foreach($k2sbm_registered_sidebars as $sidebar) {
+			$tmp_modules[] = $sidebar->modules;
+		}
+
+		return $active_modules;
 	}
 
 	function get_all_modules() {

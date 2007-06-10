@@ -10,7 +10,7 @@ function get_k2info($show='') {
 	$output = '';
 	switch ($show) {
 		case 'version' :
-    		$output = 'Beta Two '. $current;
+    		$output = 'Beta '. $current;
 			break;
 
 		case 'style' :

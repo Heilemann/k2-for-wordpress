@@ -12,6 +12,6 @@ function links_sidebar_module($args) {
 	echo($after_module);
 }
 
-register_sidebar_module('Links module', 'links_sidebar_module', 'sb-links');
+register_sidebar_module('Links', 'links_sidebar_module', 'sb-links');
 
 ?>

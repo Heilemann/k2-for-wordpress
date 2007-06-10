@@ -1,120 +1,253 @@
-.wrap {
-	min-width: 800px;
-}
+/* @override http://localhost/wp-content/themes/kaytwo/css/sbm.css */
 
-.sbm-block {
-	background: #f0f8ff;
-	border: 1px solid #aaa;
-	margin: 10px 330px 10px 10px;
-	padding: 10px;
-}
+/* @override http://localhost/wp-content/themes/kaytwo/css/sbm.css */
 
-.sbm-block ul {
-	list-style: none;
-	padding: 0;
-}
 
-.sbm-block .module-list {
-	border-right: 1px solid #ccc;
+h2 {
+	border: 0;
+	font: 1.6em Helvetica, Arial, Verdana, Sans-Serif;
+	color: #777;
+	margin: 16px 20px 12px;
+	width: 220px;
 	float: left;
-	margin-right: 10px;
-	padding-right: 10px;
-	width: 150px;
-}
+	}
 
-.sbm-block h4 {
-	text-align: center;
-}
-
-.sbm-block ul {
-	margin-left: 0;
-	min-height: 300px;
-}
-
-.sbm-block ul li {
-	background: #eee;
-	border: 1px solid #ccc;
-	cursor: move;
-	margin: 10px;
-	padding: 5px;
-}
-
-.tab-box {
-	background: #f0f8ff;
-	border: 1px solid #aaa;
-	margin: 0 10px 10px;
-	padding: 0;
-	width: 300px;
-}
-
-.tab-box ul.tab-bar {
-	background: #0d324f;
+.wrap {
+	background: #eee url('../images/sbmmanager/sbmbg.png') repeat-x;
+	min-width: 800px;
 	margin: 0;
-	padding: 5px 20px 0;
+	border: 0;
+	border-bottom: 1px solid #ddd;
 }
 
-.tab-box ul.tab-bar li {
-	display: inline;
-	line-height: 200%;
-	margin: 0 10px 0 0;
+.container {
+	width: 230px;
+	float: left;
+	padding: 0 10px;
+	border-right: 1px solid #ddd;
 }
 
-.tab-box ul.tab-bar li a {
+
+#trashcontainer {
 	border: none;
-	color: #fff;
-	padding: 5px;
-	text-decoration: none;
 }
 
-.tab-box ul.tab-bar li.selected a {
-	background: #f0f8ff;
-	color: #000;
+.wrap ul {
+	padding: 0;
+	min-height: 400px;
 }
 
-.tab-box ul.tab-bar li a:hover {
-	background: #fff;
-	color: #000;
+.wrap li, #sorthelper, #draghelper {
+	list-style-type: none;
+	font-size: .9em;
 }
 
-.tab-box .tab {
+span.id {
 	display: none;
+	}
+
+
+.marker, .sorthelper {
+	color: #777;
+	background: white;
+	border: 1px dashed #c2c2c2;
+	padding: 3px;
+	}
+
+.spinner, spinner:hover {
+	background: white url('../images/spinner.gif') no-repeat center center;
+	}
+	
+.availablemodule, .module, #trashcontainer .sorthelper {
+	background: #222;
+	color: white;
+	padding: 4px;
+	margin: 5px 0;
+	cursor: move;
+	z-index: 500;
+	border: 0;
+	}
+
+.module div {
+	position: relative;
+	}
+
+#disabled .module {
+	background: #999;
+	}
+
+#disabled .module span {
+	color: white;
+	}
+
+.module .type, .sorthelper .type {
+	display: block;
+	font-size: .8em;
+	line-height: 1.2em;
+	color: #999;
+	}
+
+.availablemodule:hover, .module:hover {
+	background: black;
+	}
+
+.hovering {
+	background: #ddd !important;
+}
+
+.marker .type {
+	color: #999;
+	} 
+
+.selecthelper {
+	background: #999;
+	border: 1px dashed #333;
+	}
+
+#trash {
+	}
+
+.inplace_form {
+	z-index: 100;
+	}
+
+.openoptions {
+	background: red;
+	padding: 1px 3px;
+	margin: 0 0 0 auto;
+	}
+
+.optionslink {
+	border: 0;
+	background: url('../images/sbmmanager/optionsbutton.png') no-repeat center center;
+	display: block;
+	height: 20px;
+	width: 20px;
+	margin-top: -10px;
+	position: absolute;
+	top: 50%;
+	right: 3px;
+	cursor: pointer;
+	}	
+
+#optionswindow {
+	position: fixed;
+	display: none;
+	border: 4px solid #222;
+	background: #111;
 	padding: 10px;
-}
+	}
 
-.tab-box .tab fieldset {
-	border: 1px groove;
-}
-
-.tab-box .tab .checkbox-list {
-	list-style: none;
+#optionswindow h2 {
+	width: 100%;
 	margin: 0;
-	max-height: 100px;
-	_height: 100px; /* IE hack, yuk */
-	overflow: auto;
-	padding-left: 0;
 }
 
-.tab-box .tab .error {
+#optionswindow .tabs {
+	border-bottom: 1px solid #333;
+	padding-bottom: 2px;
+}
+
+.tabs #closelink {
+	border: none;
+	position: absolute;
+	top: -14px;
+	right: -14px;
+	height: 25px;
+	width: 25px;
+	background: url('../images/sbmmanager/closebutton.png') no-repeat center center;
+}
+
+#optionstab, #advancedtab, #displaytab {
+	background: #222;
+	border-bottom: none;
+	padding: 2px 15px;
+	color: white;
+}
+
+#optionswindow {
+	font-size: .9em;
+	color: #aaa;
+}
+
+#options label {
+	color: white;
+	}
+
+#options .defaultoptions {
+	border-bottom: 1px solid #333;
+	}
+
+#name-container .titlelabel {
+	display: block;
+	}
+
+#options #module-name {
+	width: 280px;
+	margin-right: 10px;
+}
+
+#options #type-container {
+	display: none;	
+	color: #888;
+	}
+
+#options #type-container span {
+	color: white;
+	font-weight: bold;
+	margin-right: 10px;
+	}
+
+#optionswindow textarea {
+	width: 100%;
+	}
+
+#advancedtab-content, #displaytab-content, #module-update-success, #module-update-error {
 	display: none;
-	margin: 0;
-	padding: 3px;
+	}
+
+.selected {
+	background: #555;
 }
 
-.tab-box .tab .success {
-	background: #afa;
-	border: 1px solid #080;
-	display: none;
-	padding: 3px;
+.submit {
+	position: absolute;
+	bottom: 0;
+	right: 10px;
 }
 
-.tab-box .tab .toggle-item {
-	background: #fff;
-	border: 1px solid #000;
-	display: none;
-	margin: 10px;
-	padding: 3px;
-}
+#parentwrapper {
+	position: relative;
+	}
 
-.right {
-	float: right;
-}
+#msg {
+	position: absolute;
+	left: 50%;
+	height: 18px;
+	width: 250px;
+	margin: 13px 0 0 -125px;
+	padding: 4px 20px 4px 40px;
+	background-color: #f3f3f3;
+	border: 1px solid #eee;
+	color: #444;
+	}
+
+.loader {
+	background: white url('../images/spinner.gif') no-repeat 5px 4px;
+	}
+	
+form#dofollow {
+	position: absolute;
+	top: 16px;
+	right: 10px;
+	}
+
+form#dofollow select {
+	width: 150px;
+	}
+
+textarea, input, select {
+	border: normal;
+	background: normal;
+	padding: 0;
+	}

@@ -18,6 +18,6 @@ function categories_sidebar_module($args) {
 	echo($after_module);
 }
 
-register_sidebar_module('Category list module', 'categories_sidebar_module', 'sb-categories');
+register_sidebar_module('Category List', 'categories_sidebar_module', 'sb-categories');
 
 ?>

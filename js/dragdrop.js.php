@@ -367,7 +367,8 @@ Draggable.prototype = {
     Draggables.notify('onStart', this, event);
         
     if(this.options.starteffect) this.options.starteffect(this.element);
-  },
+	if(this.options.dragStart) this.options.dragStart(this.element); // NOTE: Added new callback for dragStart
+	},
   
   updateDrag: function(event, pointer) {
     if(!this.dragging) this.startDrag(event);

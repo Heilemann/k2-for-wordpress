@@ -15,7 +15,7 @@ function related_posts_sidebar_module($args) {
 }
 
 if(function_exists('related_posts')) {
-	register_sidebar_module('Related posts module', 'related_posts_sidebar_module', 'sb-related');
+	register_sidebar_module('Related Posts', 'related_posts_sidebar_module', 'sb-related');
 }
 
 ?>

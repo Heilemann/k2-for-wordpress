@@ -38,6 +38,6 @@ function asides_sidebar_module_control() {
 	<?php
 }
 
-register_sidebar_module('Asides module', 'asides_sidebar_module', 'sb-asides', array('num_posts' => 3));
-register_sidebar_module_control('Asides module', 'asides_sidebar_module_control');
+register_sidebar_module('Asides', 'asides_sidebar_module', 'sb-asides', array('num_posts' => 3));
+register_sidebar_module_control('Asides', 'asides_sidebar_module_control');
 ?>

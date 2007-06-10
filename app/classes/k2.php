@@ -38,7 +38,7 @@ class K2 {
 
 		// Register our scripts with WordPress, version is Last Changed Revision
 		wp_register_script('k2functions',
-			get_bloginfo('template_directory') . '/js/k2functions.js.php',
+			get_bloginfo('template_directory') . '/js/k2.functions.js.php',
 			array('prototype', 'scriptaculous-effects'), '223');
 		wp_register_script('k2rollingarchives',
 			get_bloginfo('template_directory') . '/js/rollingarchives.js.php',
@@ -52,9 +52,19 @@ class K2 {
 		wp_register_script('k2trimmer',
 			get_bloginfo('template_directory') . '/js/trimmer.js.php',
 			array('k2functions', 'scriptaculous-slider'), '247');
+		wp_register_script('jquerydimensions',
+	       get_bloginfo('template_directory') . '/js/jquery.dimensions.js.php',
+	       array('jquery', 'interface'), '');
+		wp_register_script('jquerydimscreen',
+	       get_bloginfo('template_directory') . '/js/jquery.dimscreen.js.php',
+	       array('jquery', 'interface'), '');
+		wp_register_script('inplace',
+	       get_bloginfo('template_directory') . '/js/jquery.inplace.js.php',
+	       array('jquery'), '');
 		wp_register_script('k2sbm',
-			get_bloginfo('template_directory') . '/js/sbm.js.php',
-			array('scriptaculous-effects', 'scriptaculous-dragdrop'), '248');
+	       get_bloginfo('template_directory') . '/js/k2.sbm.js.php',
+	       array('jquery', 'interface', 'jquerydimscreen', 'jquerydimensions', 'inplace' ), '');
+
 
 		// There may be some things we need to do before K2 is initialised
 		// Let's do them now
