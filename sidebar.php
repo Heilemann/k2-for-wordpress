@@ -76,12 +76,12 @@
 		<p><?php printf(__('You are currently browsing the %s weblog archives.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>') ?></p>
 
 		<?php /* Permalink */ } elseif (is_single()) { ?>
-		<p><?php next_post('%', __('Next: ','k2_domain'),'yes') ?><br/>
-		<?php previous_post('%', __('Previous: ','k2_domain') ,'yes') ?></p>
+		<p><?php next_post_link('%link', __('Next: %title', 'k2_domain')) ?><br/>
+		<?php previous_post_link('%link', __('Previous: %title', 'k2_domain')) ?></p>
 
 		<?php } ?>
 
-		<?php if (!is_home() and !is_paged() and !in_category($k2asidescategory) or is_day() or is_month() or is_year() or is_author() or is_search() or (function_exists('is_tag') and is_tag())) { ?>
+		<?php if (!is_home() and !is_paged() and !is_single() and !in_category($k2asidescategory) or is_day() or is_month() or is_year() or is_author() or is_search() or (function_exists('is_tag') and is_tag())) { ?>
 			<p><?php _e('Longer entries are truncated. Click the headline of an entry to read it in its entirety.','k2_domain'); ?></p>
 		<?php } ?>
 	</div>
