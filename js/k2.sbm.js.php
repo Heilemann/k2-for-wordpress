@@ -282,35 +282,39 @@ $('document').ready(
 			curOptModule = $(moduleID).attr('id');
 			curOptSidebar = $(moduleID).parent().attr('id');
 
+			// Dim screen
+			$('#overlay').css({ zIndex: '500' }).fadeTo('normal', 0.7)
+
 			// Get the options via AJAX
 			$.post(sbm_baseUrl + "?action=control-show", {
 				module_id:	$(moduleID).attr('id')
 			}, function (data) {
 				$('#options').append(data)
+				$('#optionswindow')
+					.show()
+					.css({
+						position: 'fixed',
+						top: originalPosition.top,
+						left: originalPosition.left,
+						width: originalWidth,
+						height: originalHeight,
+						zIndex: '1000',
+						opacity: '0'
+					})
+					.animate({ top: optionsY, left: optionsX, width: optionsWidth, height: optionsHeight, opacity: 1 }, 200)
 			});
-
-			// Dim screen and show options window
-			$.dimScreen(300, 0.9);
-			$('#optionswindow')
-				.show()
-				.css({
-					position: 'fixed',
-					top: originalPosition.top,
-					left: originalPosition.left,
-					width: originalWidth,
-					height: originalHeight,
-					zIndex: '1000',
-					opacity: '0'
-				})
-				.animate({ top: optionsY, left: optionsX, width: optionsWidth, height: optionsHeight, opacity: 1 }, 200)
 		}
 
 		function closeOptions() {
 			$('#options').empty()
 			$('#optionswindow').hide()
-			$.dimScreenStop();
+			// Dim overlay
+			$('#overlay').fadeTo('normal', 0).css({ zIndex: '-100' })
 			return false;
 		}
+
+		// Ready overlay
+		$('#overlay').fadeTo('normal', 0)
 
 		
 		// Remove any new messages on load

@@ -55,15 +55,9 @@ class K2 {
 		wp_register_script('jquerydimensions',
 	       get_bloginfo('template_directory') . '/js/jquery.dimensions.js.php',
 	       array('jquery', 'interface'), '');
-		wp_register_script('jquerydimscreen',
-	       get_bloginfo('template_directory') . '/js/jquery.dimscreen.js.php',
-	       array('jquery', 'interface'), '');
-		wp_register_script('inplace',
-	       get_bloginfo('template_directory') . '/js/jquery.inplace.js.php',
-	       array('jquery'), '');
 		wp_register_script('k2sbm',
 	       get_bloginfo('template_directory') . '/js/k2.sbm.js.php',
-	       array('jquery', 'interface', 'jquerydimscreen', 'jquerydimensions', 'inplace' ), '');
+	       array('jquery', 'interface', 'jquerydimensions' ), '');
 
 
 		// There may be some things we need to do before K2 is initialised
