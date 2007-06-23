@@ -38,7 +38,6 @@ $('document').ready(
 					.css({ position: "static" })
 					.append('<span class="type">'+$(drag).children().text()+'</span><a href="#" class="optionslink"> </a>')
 					.appendTo($(this).children());
-					debugger;
 			},
 			onOut: function (drag) {
 				// Remove temp 'result' markers
