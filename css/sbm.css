@@ -78,6 +78,10 @@ span.id {
 	position: relative;
 	}
 
+.module .name, .module .croppedname {
+	white-space: pre;
+	}
+
 #disabled .module {
 	background: #999;
 	}

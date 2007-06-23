@@ -260,10 +260,41 @@ $('document').ready(
 		function resizeLists() {
 			calculateSecretFormula();
 			$('.container').width(secretFormula)
+			cropTitles()
 		}
+
+		function cropTitles() {
+			$('.croppedname').remove()
+			$('.sortable>.module>div>.name').each(function() {
+				var availableWidth = $(this).parents('li').width() - parseInt($(this).parents('li').css('paddingRight')) - parseInt($(this).parents('li').css('paddingRight')) - $(this).siblings('a.optionslink').width() - 10;
+				var nameWidth = $(this).width();
+
+				// If name doesn't fit
+				if (nameWidth > availableWidth) {
+
+					// Prepare cropped name
+					$(this).hide()
+						.clone().removeClass('name').addClass('croppedname').insertAfter($(this)).show().each(function() {
+							var crank = $(this).text();
+							var life = '';
+							
+							// Resize name to fit
+							while (life != 42) {
+								crank = crank.substring(0, crank.length-1);
+								$(this).html(crank+'&hellip;');
+
+								// Are we done yet?
+								if ($(this).width() < availableWidth) life = 42; 
+							} // End While
+						}) // End close & prep
+
+				} // End if
+			})
+		} // End function
 		
 		$(window).resize(resizeLists)
 		$('.container').width(secretFormula)
+		cropTitles()
 
 		
 
