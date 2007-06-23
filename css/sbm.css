@@ -43,9 +43,9 @@ h2 {
 	min-height: 400px;
 }
 
-.wrap li, #sorthelper, #draghelper {
+.wrap li, #sortHelper, #dragHelper {
 	list-style-type: none;
-	font-size: .9em;
+	font-size: 12px;
 }
 
 span.id {
@@ -78,7 +78,7 @@ span.id {
 	position: relative;
 	}
 
-.module .name, .module .croppedname {
+.name, .croppedname {
 	white-space: pre;
 	}
 
@@ -115,10 +115,6 @@ span.id {
 	}
 
 #trash {
-	}
-
-.inplace_form {
-	z-index: 100;
 	}
 
 .openoptions {
