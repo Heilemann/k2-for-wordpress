@@ -106,9 +106,9 @@ $('document').ready(
 					$('.sorthelper')
 						.removeAttr('style')
 						.html( $(drag).html() )
+//						debugger;
 				},
 				onChange:		function(serial) {
-
 					// If something is being trashed
 					var trashedModule = $.SortSerialize('trash').o.trash[0];
 
@@ -132,9 +132,7 @@ $('document').ready(
 							module_id:		trashedModule,
 							sidebar_id:		trashedFromList
 						}, function() {
-							$("#loader")
-								.fadeOut(10000)
-								.text();
+							$("#loader").fadeOut(10000).empty();
 						});
 
 					// If the order has been changed
