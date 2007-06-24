@@ -181,12 +181,11 @@ $('document').ready(
 					$('#' + $(this).attr('id') + '-content').show()
 
 					return false;
-				})
+				});
+
 			$(tabContainer)
 				.children('#closelink')
-				.click(function() {
-					closeOptions()
-				})
+				.click(closeOptions)
 		}
 
 		tabSystem();
