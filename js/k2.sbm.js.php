@@ -347,7 +347,7 @@ $('document').ready(
 			$.post(sbm_baseUrl + "?action=control-show", {
 				module_id:	$(moduleID).attr('id')
 			}, function (data) {
-				$('#options').append(data)
+				$('#options').empty().append(data)
 				$('#module-name').focus()
 				$('#optionswindow').removeClass('optionsspinner')
 
