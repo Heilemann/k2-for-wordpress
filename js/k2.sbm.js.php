@@ -106,17 +106,19 @@ $('document').ready(
 					$('.sorthelper')
 						.removeAttr('style')
 						.html( $(drag).html() )
-//						debugger;
 				},
 				onChange:		function(serial) {
 					// If something is being trashed
 					var trashedModule = $.SortSerialize('trash').o.trash[0];
+					console.log($('#'+trashedModule+' .name').text())
 
-					// Show 'loading'
+					// Show feedback
 					if (trashedModule != undefined) {
-						$("#loader")
-							.text("Trashing '" + $('#'+trashedModule+'>.name').text() +"' module")
-							.css({ display: 'inline' })
+						$("#msg")
+							.text("'" + $('#'+trashedModule+' .name').text() + "' was trashed")
+							.fadeIn(1000)
+
+						setTimeout( function() { $('#msg').fadeOut('3000') }, 4000)
 
 						// Get the trashed module's parent list
 						var trashedFromList = $('#'+trashedModule).attr('class').split(' ')[1];
@@ -175,6 +177,9 @@ $('document').ready(
 			$(tabContainer)
 				.children()
 				.click(function() {
+					$(this).addClass('selected')
+						.siblings().removeClass('selected')
+					
 					$('.tabcontent').hide()
 					
 					// Show the tabs' content
@@ -183,8 +188,7 @@ $('document').ready(
 					return false;
 				});
 
-			$(tabContainer)
-				.children('#closelink')
+			$('#closelink')
 				.click(closeOptions)
 		}
 
@@ -216,6 +220,17 @@ $('document').ready(
 			})
 
 			// Set up options submit process 
+			$('#submit').click(function() {
+				$(this).parents('form').trigger('submit');
+				return false;
+			})
+
+			$('#submitclose').click(function() {
+				$(this).parents('form').trigger('submit');
+				closeOptions();
+				return false;
+			})
+
 			$('#module-options-form').submit(function() {
 				// Collect form values for POST
 	        	var inputs = [];
@@ -230,6 +245,9 @@ $('document').ready(
 					data: "sidebar_id=" + curOptSidebar + "&module_id=" + curOptModule + "&" + inputs.join('&'),
 					success: function() {
 						$('#'+curOptModule+' .name').text($('#module-name').val());
+						$('#msg').text("Options for '" + $("#"+curOptModule+" .name").text() + "' saved successfully").fadeIn('1000')
+						setTimeout( function() { $('#msg').fadeOut('3000') }, 4000)
+						cropTitles();
 					}
 				})
 
@@ -309,25 +327,30 @@ $('document').ready(
 			curOptSidebar = $(moduleID).parent().attr('id');
 
 			// Dim screen
-			$('#overlay').css({ zIndex: '500' }).fadeTo('normal', 0.7)
+			$('#overlay').css({ zIndex: '500' }).fadeTo('normal', 0.5)
+
+			$('#optionswindow')
+				.addClass('optionsspinner')
+				.show()
+				.css({
+					position: 'fixed',
+					top: originalPosition.top,
+					left: originalPosition.left,
+					width: originalWidth,
+					height: originalHeight,
+					zIndex: '1000',
+					opacity: '0'
+				})
+				.css({ top: optionsY, left: optionsX, width: optionsWidth, height: optionsHeight, opacity: 1 })
 
 			// Get the options via AJAX
 			$.post(sbm_baseUrl + "?action=control-show", {
 				module_id:	$(moduleID).attr('id')
 			}, function (data) {
 				$('#options').append(data)
-				$('#optionswindow')
-					.show()
-					.css({
-						position: 'fixed',
-						top: originalPosition.top,
-						left: originalPosition.left,
-						width: originalWidth,
-						height: originalHeight,
-						zIndex: '1000',
-						opacity: '0'
-					})
-					.animate({ top: optionsY, left: optionsX, width: optionsWidth, height: optionsHeight, opacity: 1 }, 200)
+				$('#module-name').focus()
+				$('#optionswindow').removeClass('optionsspinner')
+
 			})
 		}
 
@@ -335,16 +358,17 @@ $('document').ready(
 			$('#options').empty()
 			$('#optionswindow').hide()
 			// Dim overlay
-			$('#overlay').fadeTo('normal', 0).css({ zIndex: '-100' })
+			$('#overlay').fadeTo('normal', 0, function() { $(this).css({ zIndex: '-100' }) })
 			return false;
 		}
 
 		// Ready overlay
 		$('#overlay').fadeTo('normal', 0)
 
-		
+		$('#msg').hide()
+
 		// Remove any new messages on load
-		function messageHandler() {
+/*		function messageHandler() {
 			var messageContainer = $('#msg');
 			if ($(messageContainer).text() == '') {
 				$(messageContainer).hide();
@@ -352,6 +376,6 @@ $('document').ready(
 				$(messageContainer).fadeOut(10000).text()
 			}
 		}
-		messageHandler();
+		messageHandler();*/
 	}
 )
