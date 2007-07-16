@@ -240,8 +240,6 @@ class K2SBM {
 	}
 
 	function module_admin_head() {
-		// Replace bundled scripts with our own
-		K2::replace_wp_scripts();
 	?>
 		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/sbm.css" />
 		<script type="text/javascript">
@@ -353,6 +351,9 @@ class K2SBM {
 		if(empty($k2sbm_active_modules) and empty($k2sbm_disabled_modules)) {
 			$k2sbm_active_modules = get_option('k2sbm_modules_active');
 			$k2sbm_disabled_modules = get_option('k2sbm_modules_disabled');
+
+			if ( empty($k2sbm_active_modules) ) $k2sbm_active_modules = array();
+			if ( empty($k2sbm_disabled_modules) ) $k2sbm_disabled_modules = array();
 		}
 	}
 
@@ -529,6 +530,10 @@ class K2SBM {
 			// Create the ID for the module
 			// Quick & cheap
 			$next_id = get_option('k2sbm_modules_next_id');
+
+			// Make sure it's at least 1
+			if ( $next_id < 1 ) $next_id = 1;
+
 			$module_id = 'module-' . $next_id;
 			update_option('k2sbm_modules_next_id', ++$next_id);
 

@@ -57,7 +57,7 @@ $('document').ready(
 									.css({ position: "static" });
 
 				// Show spinner on marker module
-				$('.marker').addClass('spinner')
+				$('.marker').addClass('spinner');
 
 				// Submit new module info
 				$.ajax({
@@ -77,13 +77,13 @@ $('document').ready(
 						$('.marker').remove();
 
 						// Clone dropped module to new home
-						$('#'+sidebar).append(newModule)
+						$('#'+sidebar).append(newModule);
 
 						// Reinitialize the sortable lists
 						destroySortables();
 						initSortables();
 					}
-				})
+				});
 
 			}
 		});
@@ -105,20 +105,20 @@ $('document').ready(
 				onHover:		function(drag) {
 					$('.sorthelper')
 						.removeAttr('style')
-						.html( $(drag).html() )
+						.html( $(drag).html() );
 				},
 				onChange:		function(serial) {
 					// If something is being trashed
 					var trashedModule = $.SortSerialize('trash').o.trash[0];
-					console.log($('#'+trashedModule+' .name').text())
+					console.log($('#'+trashedModule+' .name').text());
 
 					// Show feedback
 					if (trashedModule != undefined) {
 						$("#msg")
 							.text("'" + $('#'+trashedModule+' .name').text() + "' was trashed")
-							.fadeIn(1000)
+							.fadeIn(1000);
 
-						setTimeout( function() { $('#msg').fadeOut('3000') }, 4000)
+						setTimeout( function() { $('#msg').fadeOut('3000') }, 4000);
 
 						// Get the trashed module's parent list
 						var trashedFromList = $('#'+trashedModule).attr('class').split(' ')[1];
@@ -148,10 +148,10 @@ $('document').ready(
 							for (var i = 0; i < modules.length; i++) {
 								orderData += 'sidebar_ordering[' + $(lists[j]).attr('id') + '][' + i + ']=' + $(modules[i]).attr('id');
 
-								if(i < modules.length - 1) { orderData += "&" }
+								if (i < modules.length - 1) orderData += "&";
 							}
 
-							if (j < lists.length - 1) { orderData += "&" }
+							if (j < lists.length - 1) orderData += "&";
 						}
 
 						// Submit New World Order to db
@@ -178,18 +178,18 @@ $('document').ready(
 				.children()
 				.click(function() {
 					$(this).addClass('selected')
-						.siblings().removeClass('selected')
+						.siblings().removeClass('selected');
 					
-					$('.tabcontent').hide()
+					$('.tabcontent').hide();
 					
 					// Show the tabs' content
-					$('#' + $(this).attr('id') + '-content').show()
+					$('#' + $(this).attr('id') + '-content').show();
 
 					return false;
 				});
 
 			$('#closelink')
-				.click(closeOptions)
+				.click(closeOptions);
 		}
 
 		tabSystem();
@@ -216,44 +216,38 @@ $('document').ready(
 					curOptName = $(this).siblings('.name').text();
 					openOptions(curOptModule);
 					return false;
-				})
-			})
+				});
+			});
 
 			// Set up options submit process 
 			$('#submit').click(function() {
 				$(this).parents('form').trigger('submit');
 				return false;
-			})
+			});
 
 			$('#submitclose').click(function() {
 				$(this).parents('form').trigger('submit');
 				closeOptions();
 				return false;
-			})
+			});
 
 			$('#module-options-form').submit(function() {
-				// Collect form values for POST
-	        	var inputs = [];
-				$(':input', this).each(function() {
-					inputs.push(this.name + '=' + escape(this.value));
-				})
-
 				$.ajax({
 					type: "POST",
 					processdata: false,
 					url: sbm_baseUrl + '?action=update',
-					data: "sidebar_id=" + curOptSidebar + "&module_id=" + curOptModule + "&" + inputs.join('&'),
+					data: "sidebar_id=" + curOptSidebar + "&module_id=" + curOptModule + "&" + $('#module-options-form').formSerialize(),
 					success: function() {
 						$('#'+curOptModule+' .name').text($('#module-name').val());
-						$('#msg').text("Options for '" + $("#"+curOptModule+" .name").text() + "' saved successfully").fadeIn('1000')
-						setTimeout( function() { $('#msg').fadeOut('3000') }, 4000)
+						$('#msg').text("Options for '" + $("#"+curOptModule+" .name").text() + "' saved successfully").fadeIn('1000');
+						setTimeout( function() { $('#msg').fadeOut('3000'); }, 4000);
 						cropTitles();
 					}
-				})
+				});
 
 	        	return false;
-	        })
-		};
+	        });
+		}
 
 
 		// Auto-resize lists on window resize
@@ -272,12 +266,12 @@ $('document').ready(
 
 		function resizeLists() {
 			calculateSecretFormula();
-			$('.container').width(secretFormula)
-			cropTitles()
+			$('.container').width(secretFormula);
+			cropTitles();
 		}
 
 		function cropTitles() {
-			$('.croppedname').remove()
+			$('.croppedname').remove();
 			$('.sortable>.module>div>.name').each(function() {
 				var availableWidth = $(this).parents('li').width() - parseInt($(this).parents('li').css('paddingRight')) - parseInt($(this).parents('li').css('paddingRight')) - $(this).siblings('a.optionslink').width() - 10;
 				var nameWidth = $(this).width();
@@ -286,8 +280,14 @@ $('document').ready(
 				if (nameWidth > availableWidth) {
 
 					// Prepare cropped name
-					$(this).hide()
-						.clone().removeClass('name').addClass('croppedname').insertAfter($(this)).show().each(function() {
+					$(this)
+						.hide()
+						.clone()
+						.removeClass('name')
+						.addClass('croppedname')
+						.insertAfter( $(this) )
+						.show()
+						.each(function() {
 							var crank = $(this).text();
 							var life = '';
 							
@@ -299,15 +299,15 @@ $('document').ready(
 								// Are we done yet?
 								if ($(this).width() < availableWidth) life = 42; 
 							} // End While
-						}) // End close & prep
+						}); // End close & prep
 
 				} // End if
-			})
+			});
 		} // End function
 		
-		$(window).resize(resizeLists)
-		$('.container').width(secretFormula)
-		cropTitles()
+		$(window).resize(resizeLists);
+		$('.container').width(secretFormula);
+		cropTitles();
 
 		
 
@@ -327,7 +327,7 @@ $('document').ready(
 			curOptSidebar = $(moduleID).parent().attr('id');
 
 			// Dim screen
-			$('#overlay').css({ zIndex: '500' }).fadeTo('normal', 0.5)
+			$('#overlay').css({ zIndex: '500' }).fadeTo('normal', 0.5);
 
 			$('#optionswindow')
 				.addClass('optionsspinner')
@@ -341,31 +341,34 @@ $('document').ready(
 					zIndex: '1000',
 					opacity: '0'
 				})
-				.css({ top: optionsY, left: optionsX, width: optionsWidth, height: optionsHeight, opacity: 1 })
+				.css({ top: optionsY, left: optionsX, width: optionsWidth, height: optionsHeight, opacity: 1 });
 
 			// Get the options via AJAX
-			$.post(sbm_baseUrl + "?action=control-show", {
-				module_id:	$(moduleID).attr('id')
-			}, function (data) {
-				$('#options').empty().append(data)
-				$('#module-name').focus()
-				$('#optionswindow').removeClass('optionsspinner')
-
-			})
+			$.post(
+				sbm_baseUrl + "?action=control-show",
+				{
+					module_id: $(moduleID).attr('id')
+				},
+				function (data) {
+					$('#options').empty().append(data);
+					$('#module-name').focus();
+					$('#optionswindow').removeClass('optionsspinner');
+				}
+			);
 		}
 
 		function closeOptions() {
-			$('#options').empty()
-			$('#optionswindow').hide()
+			$('#options').empty();
+			$('#optionswindow').hide();
 			// Dim overlay
-			$('#overlay').fadeTo('normal', 0, function() { $(this).css({ zIndex: '-100' }) })
+			$('#overlay').fadeTo('normal', 0, function() { $(this).css({ zIndex: '-100' }) });
 			return false;
 		}
 
 		// Ready overlay
-		$('#overlay').fadeTo('normal', 0)
+		$('#overlay').fadeTo('normal', 0);
 
-		$('#msg').hide()
+		$('#msg').hide();
 
 		// Remove any new messages on load
 /*		function messageHandler() {

@@ -12,8 +12,8 @@ class K2 {
 			define('K2STYLESPATH', TEMPLATEPATH . '/styles/');
 			define('K2HEADERSPATH', TEMPLATEPATH . '/images/headers/');
 		} else {
-			define('K2STYLESPATH', ABSPATH . UPLOADS . '/k2support/styles/');
-			define('K2HEADERSPATH', ABSPATH . UPLOADS . '/k2support/headers/');
+			define('K2STYLESPATH', ABSPATH . UPLOADS . 'k2support/styles/');
+			define('K2HEADERSPATH', ABSPATH . UPLOADS . 'k2support/headers/');
 		}
 
 		$exclude = array('sbm-ajax.php');
@@ -52,12 +52,24 @@ class K2 {
 		wp_register_script('k2trimmer',
 			get_bloginfo('template_directory') . '/js/trimmer.js.php',
 			array('k2functions', 'scriptaculous-slider'), '247');
-		wp_register_script('jquerydimensions',
-	       get_bloginfo('template_directory') . '/js/jquery.dimensions.js.php',
-	       array('jquery', 'interface'), '');
 		wp_register_script('k2sbm',
 	       get_bloginfo('template_directory') . '/js/k2.sbm.js.php',
-	       array('jquery', 'interface', 'jquerydimensions' ), '');
+	       array('jquery', 'interface', 'jquery-form', 'jquery-dimensions' ), '');
+
+		// Register jQuery
+		wp_register_script('jquery',
+			get_bloginfo('template_directory').'/js/jquery.js.php',
+			false, '1.1.3.1');
+		wp_register_script('interface',
+			get_bloginfo('template_directory').'/js/jquery.interface.js.php',
+			array('jquery'), '1.2');
+		wp_register_script('jquery-form',
+			get_bloginfo('template_directory').'/js/jquery.form.js.php',
+			array('jquery'), '1.0.3');
+
+		wp_register_script('jquery-dimensions',
+	       get_bloginfo('template_directory') . '/js/jquery.dimensions.js.php',
+	       array('jquery', 'interface'), '');
 
 
 		// There may be some things we need to do before K2 is initialised
@@ -89,8 +101,8 @@ class K2 {
 
 		// Create support folders for WordPressMU
 		if ( false !== strpos($wp_version, 'wordpress-mu') ) {
-			if ( ! is_dir(ABSPATH . UPLOADS . '/k2support/') ) {
-				wp_mkdir_p(ABSPATH . UPLOADS . '/k2support/');
+			if ( ! is_dir(ABSPATH . UPLOADS . 'k2support/') ) {
+				wp_mkdir_p(ABSPATH . UPLOADS . 'k2support/');
 			}
 			if ( ! is_dir(K2STYLESPATH) ) {
 				wp_mkdir_p(K2STYLESPATH);
