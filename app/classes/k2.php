@@ -76,8 +76,10 @@ class K2 {
 		// Let's do them now
 		do_action('k2_init');
 
-		// Register our sidebar with SBM/Widgets
-		if ( function_exists('register_sidebars') ) {
+		// Register our sidebar with SBM
+		if ( function_exists('register_sidebar_module') ) {
+			register_sidebars(2, array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>'));
+		} else if ( function_exists('register_sidebars') ) {
 			register_sidebars(get_option('k2sidebarnumber'), array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>'));
 		}
 	}

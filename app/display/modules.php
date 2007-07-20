@@ -14,10 +14,10 @@ function print_r_html($data,$return_data=false)
 } ?>
 
 <?php
-	global $wpdb;
-
 	// Update
-	$update = K2Options::update();
+	if ( isset($_POST['sidebarnumber']) ) {
+		update_option('k2sidebarnumber', $_POST['sidebarnumber']);
+	}
 
 	$sidebar_number = get_option('k2sidebarnumber');
 	$modules = K2SBM::get_installed_modules();
@@ -67,24 +67,21 @@ function print_r_html($data,$return_data=false)
 	<h2><?php _e('K2 Sidebar Modules', 'k2_domain') ?></h2>
 
 	<div id="msg">
-		<?php if(isset($_POST['submit'])) {
+		<?php if(isset($_POST['submitsidebars'])) {
 			_e('Updated sidebar options','k2_domain');
 		} ?>
 	</div>
 
 	<div id="next_id" style="display: none;"><?php echo $next_id; ?></div>
 
-	<form name="dofollow" id="dofollow" action="" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="action" value="<?php echo attribute_escape($update); ?>" />
+	<form name="dofollow" id="dofollow" action="<?php echo attribute_escape($_SERVER['REQUEST_URI']); ?>" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="page_options" value="'dofollow_timeout'" />
 
-		<?php if (function_exists('dynamic_sidebar')) { ?>
-		<select id="k2-sidebarnumber" name="k2[sidebarnumber]">
+		<select id="k2-sidebarnumber" name="sidebarnumber">
 			<option value="0" <?php selected($sidebar_number, '0'); ?>><?php _e('No Sidebars','k2_domain'); ?></option>
 			<option value="1" <?php selected($sidebar_number, '1'); ?>><?php _e('One Sidebar','k2_domain'); ?></option>
 			<option value="2" <?php selected($sidebar_number, '2'); ?>><?php _e('Two Sidebars','k2_domain'); ?></option>
 		</select>
-		<?php } ?>
 
 		<input type="submit" name="submitsidebars" id="submitsidebars" value="<?php echo attribute_escape(__('Update','k2_domain')); ?>" />
 	</form>

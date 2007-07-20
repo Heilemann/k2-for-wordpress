@@ -1,11 +1,4 @@
 <?php
-	// Handle style editing
-	if ( isset($_POST['editstyle']) and !empty($_POST['k2']['style']) ) {
-		$file = str_replace(ABSPATH, '', K2STYLESPATH) . attribute_escape($_POST['k2']['style']);
-		header("Location: templates.php?file=$file");
-		exit;
-	}
-
 	global $wpdb;
 
 	// Update
