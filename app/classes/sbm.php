@@ -850,20 +850,6 @@ class k2sbmModule {
 		$base_module = $k2sbm_registered_modules[$this->type];
 
 		if(function_exists($base_module['control_callback'])) {
-			$k2sbm_current_module = $this;
-
-			// Call the control callback
-			call_user_func($base_module['control_callback']);
-
-			// Update options in any PHP < 5
-			if(version_compare(PHP_VERSION, '5.0') < 0) {
-				foreach($k2sbm_current_module->options as $key => $value) {
-					$this->update_option($key, $value);
-				}
-			}
-
-			$k2sbm_current_module = false;
-
 			return true;
 		} else {
 			return false;
@@ -903,6 +889,10 @@ class k2sbmModule {
 			)
 			or ($this->display['error'] and (is_404() or !($post or have_posts()))
 		);
+	}
+
+	function get_options() {
+		return $this->options;
 	}
 
 	function get_option($name) {

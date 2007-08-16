@@ -21,6 +21,8 @@ class K2 {
 		// Exclude SBM if there's already a sidebar manager
 		if ( function_exists('register_sidebar') ) {
 			$exclude[] = 'sbm.php';
+		} else {
+			$exclude[] = 'widgets.php';
 		}
 
 		// Scan for includes and classes
@@ -76,16 +78,14 @@ class K2 {
 		// Let's do them now
 		do_action('k2_init');
 
-		// Register our sidebar with SBM
-		if ( function_exists('register_sidebar_module') ) {
+		// Register our sidebar with SBM/Widgets
+		if ( function_exists('register_sidebars') ) {
 			register_sidebars(2, array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>'));
-		} else if ( function_exists('register_sidebars') ) {
-			register_sidebars(get_option('k2sidebarnumber'), array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>'));
 		}
 	}
 
 	function install($last_modified) {
-		global $current;
+		global $current, $wp_version;
 
 		// Add / update the version number
 		if(get_option('k2version') === false) {

@@ -78,18 +78,21 @@ class K2Options {
 		add_option('k2styleinfo', '', 'Formatted string for style info display.');
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
 		add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.');
-		add_option('k2sidebarnumber', '1', 'Number of sidebars to display.');
+		add_option('k2columns', '2', 'Number of columns to display.');
 
 		K2Options::cleanup_deprecated();
 	}
 
 	function cleanup_deprecated() {
-		// Removes options that are no longer used.
+		// Convert deprecated options
+		update_option('k2columns', 1 + (int) get_option('k2sidebarnumber') );
 
+		// Remove options that are no longer used.
 		delete_option('k2asidesposition');
 		delete_option('k2asidesnumber');
 		delete_option('k2widthtype');
 		delete_option('k2aboutblurp');
+		delete_option('k2sidebarnumber');
 	}
 
 	function uninstall() {
@@ -105,7 +108,7 @@ class K2Options {
 		delete_option('k2styleinfo');
 		delete_option('k2rollingarchives');
 		delete_option('k2blogornoblog');
-		delete_option('k2sidebarnumber');
+		delete_option('k2columns');
 	}
 }
 

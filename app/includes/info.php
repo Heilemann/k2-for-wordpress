@@ -313,7 +313,7 @@ function k2asides_filter($query) {
 	// Only filter when it's in the homepage
 	if ( ($k2asidescategory != 0) and (
 		(function_exists('is_active_module') and is_active_module('asides_sidebar_module')) or
-		(function_exists('is_active_widget') and is_active_widget('k2_widget_asides'))
+		(function_exists('is_active_widget') and is_active_widget('k2_asides_widget'))
 		) and ($query->is_home) ) {
 		$priorcat = $query->get('cat');
 		if ( !empty($priorcat) ) {
@@ -403,19 +403,20 @@ function k2_body_class() {
 		$c[] = 'loggedin';
 
 	if (function_exists('dynamic_sidebar')) {
-		switch (get_option('k2sidebarnumber')) {
-			case '0':
-				$c[] = 'sidebar-none';
-				break;
+		switch (get_option('k2columns')) {
 			case '1':
-				$c[] = 'sidebar-single';
+				$c[] = 'columns-one';
 				break;
+			default:
 			case '2':
-				$c[] = 'sidebar-dual';
+				$c[] = 'columns-two';
+				break;
+			case '3':
+				$c[] = 'columns-three';
 				break;
 		}
 	} else {
-		$c[] = 'sidebar-single';
+		$c[] = 'columns-two';
 	}
 
 	echo join(' ', apply_filters('body_class',  $c));

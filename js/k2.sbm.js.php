@@ -358,6 +358,10 @@ $('document').ready(
 		}
 
 		function closeOptions() {
+			// Reset the tab system
+			$('.tabs').children().removeClass('selected');
+			$('#optionstab').addClass('selected');
+
 			$('#options').empty();
 			$('#optionswindow').hide();
 			// Dim overlay

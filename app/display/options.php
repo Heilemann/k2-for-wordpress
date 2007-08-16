@@ -15,7 +15,12 @@
 	$style_files = K2::get_styles();
 
 	// Get the sidebar
-	$sidebar_number = get_option('k2sidebarnumber');
+	$column_number = get_option('k2columns');
+	$column_options = array(
+		1 => __('Single Column','k2_domain'),
+		__('Two Columns', 'k2_domain'),
+		__('Three Columns', 'k2_domain')
+	);
 
 	// Get the asides category
 	$asides_id = get_option('k2asidescategory');
@@ -29,6 +34,12 @@
 
 	// Get the current K2 header picture
 	$header_picture = get_option('k2header_picture');
+
+	$header_sizes = array(
+		1 => __('560 x 200 px','k2_domain'),
+		__('780 x 200 px','k2_domain'),
+		__('950 x 200 px','k2_domain')
+	);
 
 	// Check that we can write to the headers folder and that it exists
 	$is_headers_writable = is_writable(K2HEADERSPATH);
@@ -149,15 +160,15 @@
 			<p><small><?php _e('Live comments use AJAX to submit comments to the server without reloading the page, making the experience more seamless for the user.','k2_domain'); ?></small></p>
 
 			<?php if (function_exists('dynamic_sidebar')) { ?>
-			<h3><?php _e('Sidebars','k2_domain'); ?></h3>
+			<h3><?php _e('Columns','k2_domain'); ?></h3>
 
-			<p><small><?php _e('This sets the number of sidebars that K2 will display. \'No Sidebars\' will place a default sidebar below the main column.', 'k2_domain'); ?></small></p>
+			<p><small><?php printf(__('This sets the number of columns that K2 will display. <strong>%s</strong> will place both sidebars below the main column.', 'k2_domain'), $column_options[1]); ?></small></p>
 
 			<p>
-				<select id="k2-sidebarnumber" name="k2[sidebarnumber]">
-					<option value="0" <?php selected($sidebar_number, '0'); ?>><?php _e('No Sidebars','k2_domain'); ?></option>
-					<option value="1" <?php selected($sidebar_number, '1'); ?>><?php _e('One Sidebar','k2_domain'); ?></option>
-					<option value="2" <?php selected($sidebar_number, '2'); ?>><?php _e('Two Sidebars','k2_domain'); ?></option>
+				<select id="k2-columns" name="k2[columns]">
+				<?php foreach ($column_options as $option => $label) { ?>
+					<option value="<?php echo $option; ?>" <?php selected($column_number, $option); ?>><?php echo $label; ?></option>
+				<?php } ?>
 				</select>
 			</p>
 			<?php } ?>
@@ -194,13 +205,8 @@
 			<h3><?php _e('Header','k2_domain'); ?></h3>
 
 			<p><small>
-			<?php _e('Your header is the crown of your blog, with plenty of room to express yourself. Here you can decide on the ultimate question: Is it a a blog or a journal? But more importantly, you can upload images for use as header backgrounds. The default K2 header size for your current setup is 
-			
-			560x200px
-			780x200px
-			950x200px
-			
-			','k2_domain'); ?></small></p>
+			<?php printf(__('Your header is the crown of your blog, with plenty of room to express yourself. Here you can decide on the ultimate question: Is it a a blog or a journal? But more importantly, you can upload images for use as header backgrounds. The default K2 header size for your current setup is: <strong>%s</strong>.','k2_domain'), $header_sizes[$column_number] ); ?>
+			</small></p>
 
 			<?php if (!$is_headers_dir) { ?>
 				<div class="error">

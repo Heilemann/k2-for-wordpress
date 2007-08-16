@@ -1,6 +1,6 @@
 <hr />
 <div id="sidebar-main" class="secondary">
-<?php /* Widgets/SBM Check */ if ( !(function_exists('dynamic_sidebar') and get_option('k2sidebarnumber') > 0 and dynamic_sidebar(1)) ) { ?>
+<?php /* Widgets/SBM Check */ if ( !(function_exists('dynamic_sidebar') and dynamic_sidebar(1)) ) { ?>
 
 	<div id="search"><h2><?php _e('Search','k2_domain'); ?></h2>
 		<?php include (TEMPLATEPATH . '/searchform.php'); ?>
@@ -184,13 +184,11 @@
 <?php } /* End Widgets/SBM check */ ?>
 </div> <!-- #sidebar-main -->
 
-<?php /* Second Sidebar */ if (function_exists('dynamic_sidebar') and get_option('k2sidebarnumber') > 1) { ?>
-	<hr />
-	<div id="sidebar-alt" class="secondary">
+<hr />
+<div id="sidebar-alt" class="secondary">
+<?php /* Widgets/SBM Check */ if ( !(function_exists('dynamic_sidebar') and dynamic_sidebar(2)) ) { ?>
 
-	<?php dynamic_sidebar(2); ?>
-
-	</div> <!-- #sidebar-alt -->
 <?php } ?>
+</div> <!-- #sidebar-alt -->
 
 <div class="clear"></div>
