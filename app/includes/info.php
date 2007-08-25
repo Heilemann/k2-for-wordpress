@@ -349,16 +349,18 @@ function k2_body_id() {
 }
 
 
-// Semantic class functions from Sandbox 0.6.1 (http://www.plaintxt.org/themes/sandbox/)
+// Semantic class functions from Sandbox 0.9.7 (http://www.plaintxt.org/themes/sandbox/)
 
-// Template tag: echoes semantic classes in the <body>
-function k2_body_class() {
+// Generates semantic classes for BODY element
+function k2_body_class( $print = true ) {
 	global $wp_query, $current_user;
-
+	
 	$c = array('wordpress', 'k2');
 
+	// Applies the time- and date-based classes (below) to BODY element
 	k2_date_classes(time(), $c);
 
+	// Generic semantic classes for what type of content is displayed
 	is_home()       ? $c[] = 'home'       : null;
 	is_archive()    ? $c[] = 'archive'    : null;
 	is_date()       ? $c[] = 'date'       : null;
@@ -367,41 +369,68 @@ function k2_body_class() {
 	is_attachment() ? $c[] = 'attachment' : null;
 	is_404()        ? $c[] = 'four04'     : null; // CSS does not allow a digit as first character
 
+	// Special classes for BODY element when a single post
 	if ( is_single() ) {
+		$postID = $wp_query->post->ID;
 		the_post();
-		$c[] = 'single';
-		if ( isset($wp_query->post->post_date) ) {
+		$c[] = 'single postid-' . $postID;
+
+		if ( isset($wp_query->post->post_date) )
 			k2_date_classes(mysql2date('U', $wp_query->post->post_date), $c, 's-');
-		}
-		foreach ( (array) get_the_category() as $cat ) {
+
+		foreach ( (array) get_the_category() as $cat )
 			$c[] = 's-category-' . $cat->category_nicename;
-		}
-		$c[] = 's-author-' . get_the_author_login();
+
+		$c[] = 's-author-' . sanitize_title_with_dashes(strtolower(get_the_author()));
 		rewind_posts();
 	}
 
+	// Author name classes for BODY on author archives
 	else if ( is_author() ) {
 		$author = $wp_query->get_queried_object();
 		$c[] = 'author';
 		$c[] = 'author-' . $author->user_nicename;
 	}
 
+	// Category name classes for BODY on category archvies
 	else if ( is_category() ) {
 		$cat = $wp_query->get_queried_object();
 		$c[] = 'category';
 		$c[] = 'category-' . $cat->category_nicename;
 	}
 
+	// Page author for BODY on 'pages'
 	else if ( is_page() ) {
+		$pageID = $wp_query->post->ID;
 		the_post();
-		$c[] = 'page';
-		$c[] = 'page-author-' . get_the_author_login();
+		$c[] = 'page pageid-' . $pageID;
+		$c[] = 'page-author-' . sanitize_title_with_dashes(strtolower(get_the_author()));
 		rewind_posts();
 	}
 
+	// For when a visitor is logged in while browsing
 	if ( $current_user->ID )
 		$c[] = 'loggedin';
 
+	// Paged classes; for 'page X' classes of index, single, etc.
+	if ( ( ( $page = $wp_query->get("paged") ) || ( $page = $wp_query->get("page") ) ) && $page > 1 ) {
+		$c[] = 'paged-'.$page.'';
+		if ( is_single() ) {
+			$c[] = 'single-paged-'.$page.'';
+		} else if ( is_page() ) {
+			$c[] = 'page-paged-'.$page.'';
+		} else if ( is_category() ) {
+			$c[] = 'category-paged-'.$page.'';
+		} else if ( is_date() ) {
+			$c[] = 'date-paged-'.$page.'';
+		} else if ( is_author() ) {
+			$c[] = 'author-paged-'.$page.'';
+		} else if ( is_search() ) {
+			$c[] = 'search-paged-'.$page.'';
+		}
+	}
+
+	// Sidebar layout settings
 	if (function_exists('dynamic_sidebar')) {
 		switch (get_option('k2columns')) {
 			case '1':
@@ -419,71 +448,96 @@ function k2_body_class() {
 		$c[] = 'columns-two';
 	}
 
-	echo join(' ', apply_filters('body_class',  $c));
+	// Separates classes with a single space, collates classes for BODY
+	$c = join(' ', apply_filters('body_class',  $c));
+
+	// And tada!
+	return $print ? print($c) : $c;
 }
 
-// Template tag: echoes semantic classes in each post <div>
-function k2_post_class( $post_count = 1, $post_asides = false ) {
+// Generates semantic classes for each post DIV element
+function k2_post_class( $post_count = 1, $post_asides = false, $print = true ) {
 	global $post;
 
+	// hentry for hAtom compliace, gets 'alt' for every other post DIV, describes the post type and p[n]
 	$c = array('hentry', "p$post_count", $post->post_type, $post->post_status);
 
-	$c[] = 'author-' . get_the_author_login();
+	// Author for the post queried
+	$c[] = 'author-' . sanitize_title_with_dashes(strtolower(get_the_author()));
 
-	foreach ( (array) get_the_category() as $cat ) {
+	// Category for the post queried
+	foreach ( (array) get_the_category() as $cat )
 		$c[] = 'category-' . $cat->category_nicename;
-	}
 
+	// For password-protected posts
+	if ( $post->post_password )
+		$c[] = 'protected';
+
+	// Applies the time- and date-based classes (below) to post DIV
 	k2_date_classes(mysql2date('U', $post->post_date), $c);
 
+	// Asides post
 	if ( $post_asides ) {
 		$c[] = 'k2-asides';
 	}
 
+	// If it's the other to the every, then add 'alt' class
 	if ( $post_count & 1 == 1 ) {
 		$c[] = 'alt';
 	}
 
-	echo join(' ', apply_filters('post_class', $c));
+	// Separates classes with a single space, collates classes for post DIV
+	$c = join(' ', apply_filters('post_class', $c));
+
+	// And tada!
+	return $print ? print($c) : $c;
 }
 
-// Template tag: echoes semantic classes for a comment <li>
-function k2_comment_class( $comment_count = 1 ) {
+// Generates semantic classes for each comment LI element
+function k2_comment_class( $comment_count = 1, $print = true ) {
 	global $comment, $post;
 
-	$c = array($comment->comment_type, "c$comment_count");
+	// Collects the comment type (comment, trackback),
+	$c = array($comment->comment_type);
 
+	// Counts trackbacks (t[n]) or comments (c[n])
+	if ($comment->comment_type == 'trackback') {
+		$c[] = "t$comment_count";
+	} else {
+		$c[] = "c$comment_count";
+	}
+
+	// If the comment author has an id (registered), then print the display name
 	if ( $comment->user_id > 0 ) {
 		$user = get_userdata($comment->user_id);
 
-		$c[] = "byuser commentauthor-$user->user_login";
-
-		if ( $comment->user_id === $post->post_author ) {
+		// For all registered users, 'byuser'; to specificy the registered user, 'comment-author-[display_name]'
+		$c[] = "byuser comment-author-" . sanitize_title_with_dashes(strtolower($user->display_name));
+		// For comment authors who are the author of the post
+		if ( $comment->user_id === $post->post_author )
 			$c[] = 'bypostauthor';
-		}
 	}
 
+	// If it's the other to the every, then add 'alt' class; collects time- and date-based classes
 	k2_date_classes(mysql2date('U', $comment->comment_date), $c, 'c-');
-
 	if ( $comment_count & 1 == 1 ) {
 		$c[] = 'alt';
 	}
-		
-	if ( is_trackback() ) {
-		$c[] = 'trackback';
-	}
 
-	echo join(' ', apply_filters('comment_class', $c));
+	// Separates classes with a single space, collates classes for comment LI
+	$c = join(' ', apply_filters('comment_class', $c));
+
+	// Tada again!
+	return $print ? print($c) : $c;
 }
 
-// Adds four time- and date-based classes to an array
-// with all times relative to GMT (sometimes called UTC)
+// Generates time- and date-based classes for BODY, post DIVs, and comment LIs; relative to GMT (UTC)
 function k2_date_classes($t, &$c, $p = '') {
 	$t = $t + (get_settings('gmt_offset') * 3600);
 	$c[] = $p . 'y' . gmdate('Y', $t); // Year
 	$c[] = $p . 'm' . gmdate('m', $t); // Month
 	$c[] = $p . 'd' . gmdate('d', $t); // Day
-	$c[] = $p . 'h' . gmdate('h', $t); // Hour
+	$c[] = $p . 'h' . gmdate('H', $t); // Hour
 }
 
 ?>
