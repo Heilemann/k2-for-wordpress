@@ -17,8 +17,8 @@
 	header('Content-Type: text/javascript; charset: UTF-8');
 ?>
 
-$('document').ready(
-	function() {
+jQuery('document').ready(
+	function($) {
 		// Next available module ID
 		var lastModuleID = $('#next_id').text();
 		
