@@ -50,7 +50,7 @@
 		<div id="rollpages"></div>
 		
 		<a id="rollprevious" title="<?php _e('Older','k2_domain'); ?>" href="#">
-			<span>&laquo;</span> <?php _e('Prev','k2_domain'); ?>
+			<span>&laquo;</span> <?php _e('Older','k2_domain'); ?>
 		</a>
 		<div id="rollhome" title="<?php _e('Home','k2_domain'); ?>">
 			<span><?php _e('Home','k2_domain'); ?></span>
@@ -59,7 +59,7 @@
 			<span><?php _e('Loading','k2_domain'); ?></span>
 		</div>
 		<a id="rollnext" title="<?php _e('Newer','k2_domain'); ?>" href="#">
-			<?php _e('Next','k2_domain'); ?> <span>&raquo;</span>
+			<?php _e('Newer','k2_domain'); ?> <span>&raquo;</span>
 		</a>
 
 	</div> <!-- #rollnavigation -->
