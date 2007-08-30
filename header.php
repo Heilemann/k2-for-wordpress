@@ -2,9 +2,6 @@
 	// Load localizatons
 	load_theme_textdomain('k2_domain');
 
-	// Replace bundled scripts with our own
-	K2::replace_wp_scripts();
-
 	// Load our scripts
 	wp_enqueue_script('k2functions');
 
@@ -47,34 +44,29 @@
 	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 	<?php } ?>
 
-	<?php wp_head(); ?>	
+	<?php wp_head(); ?>
 
 	<script type="text/javascript">
 	//<![CDATA[
-		var K2 = {};
-
 		<?php /* LiveSearch */ if (get_option('k2livesearch') == 1) { ?>
-		K2.LiveSearch = new Livesearch("searchform", "dynamic-content", "current-content",
-			<?php
-				if (get_option('k2rollingarchives') == 1) {
-					output_javascript_url('rollingarchive.php');
-				} else {
-					output_javascript_url('theloop.php');
-				}
-			?>,
-			"<?php echo attribute_escape(__('Type and Wait to Search','k2_domain')); ?>",
-			"<?php echo attribute_escape(__('go','k2_domain')); ?>");
-		<?php } ?>
-
-		<?php /* Rolling Archives */ if (get_option('k2rollingarchives') == 1) { ?>
-		K2.RollingArchives = new RollingArchives("rollingarchives", "rollingcontent",
-			<?php output_javascript_url('theloop.php'); ?>,
-			"<?php echo attribute_escape(__('Page %1$d of %2$d',k2_domain)); ?>");
+			jQuery(document).ready(function(){
+				jQuery('form#searchform').newLiveSearch(
+					"<?php if (get_option('k2rollingarchives') == 1) { output_javascript_url('rollingarchive.php'); } else { output_javascript_url('theloop.php'); } ?>",
+					"<?php echo attribute_escape(__('Type and Wait to Search','k2_domain')); ?>"
+				);
+			});
 		<?php } ?>
 
 		<?php /* Hide Author Elements */ if (!is_user_logged_in() and (is_page() or is_single()) and ($comment_author = $_COOKIE['comment_author_'.COOKIEHASH]) and ('open' == $post-> comment_status) or ('comment' == $post-> comment_type) ) { ?>
-		FastInit.addOnLoad( OnLoadUtils );
+			jQuery(document).ready(function(){ OnLoadUtils(); });
 		<?php } ?>
+
+		<?php if ((get_option('k2livecommenting') == 1) and ((is_page() or is_single()) and (!isset($_GET['jal_edit_comments'])) and ('open' == $post-> comment_status) or ('comment' == $post-> comment_type) )) { ?>
+			var k2CommentOptions = {
+				url: "<?php output_javascript_url('comments-ajax.php'); ?>"
+			};
+		<?php } ?>
+
 	//]]>
 	</script>
 

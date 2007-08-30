@@ -160,6 +160,7 @@
 	}
 
 #pagetrack {
+	height: 7px;
 	background: url('../images/sliderbgleft.png') no-repeat left center;
 	}
 

@@ -180,13 +180,19 @@
 			<?php } ?>
 				<!--<p><?php printf(__('<strong>XHTML:</strong> You can use these tags %s:','k2_domain'), allowed_tags()) ?></p>-->
 		
-				<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"><?php if (function_exists('jal_edit_comment_link')) { jal_comment_content($jal_comment); }; if (function_exists('quoter_comment_server')) { quoter_comment_server(); } ?></textarea></p>
+				<p>
+					<textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"><?php if (function_exists('jal_edit_comment_link')) { jal_comment_content($jal_comment); }; if (function_exists('quoter_comment_server')) { quoter_comment_server(); } ?></textarea>
+					<span id="commenterror"></span>
+				</p>
 		
 				<?php if (function_exists('show_subscription_checkbox')) { show_subscription_checkbox(); } ?>
 				<?php if (function_exists('quoter_page')) { quoter_page(); } ?>
 
-				<p><input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit','k2_domain'); ?>" />
-				<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" /></p>
+				<p>
+					<input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit','k2_domain'); ?>" />
+					<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
+					<span id="commentload"></span>
+				</p>
 				
 				<div class="clear"></div>
 

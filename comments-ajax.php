@@ -99,12 +99,31 @@ $comment = $wpdb->get_row("SELECT * FROM {$wpdb->comments} WHERE comment_ID = " 
 $post->comment_status = $wpdb->get_var("SELECT comment_status FROM {$wpdb->posts} WHERE ID = {$comment_post_ID}");
 $post->comment_count++;
 
-ob_start();
-$comments = array($comment);
-include(TEMPLATEPATH . '/comments.php');
-$commentout = ob_get_clean();
-preg_match('#<li(.*?)>(.*)</li>#ims', $commentout, $matches);
 @header('Content-type: ' . get_option('html_type') . '; charset=' . get_option('blog_charset'));
-echo "<li style=\"\"".$matches[1].">".$matches[2]."</li>";
-
 ?>
+<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class($ping_index); ?>">
+	<?php if (function_exists('comment_favicon')) { ?><span class="favatar"><?php comment_favicon(); ?></span><?php } ?>
+	<a href="#comment-<?php comment_ID() ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>" class="counter"><?php echo $ping_index; ?></a>
+	<span class="commentauthor"><?php comment_author_link(); ?></span>
+	<div class="comment-meta">				
+	<?php
+		printf(__('%1$s on %2$s','k2_domain'), 
+			'<span class="pingtype">' . get_k2_ping_type(__('Trackback','k2_domain'), __('Pingback','k2_domain')) . '</span>',
+			sprintf('<a href="#comment-%1$s" title="%2$s">%3$s</a>',
+				get_comment_ID(),	
+				(function_exists('time_since')?
+					sprintf(__('%s ago.','k2_domain'),
+						time_since(abs(strtotime($comment->comment_date_gmt . " GMT")), time())
+					):
+					__('Permanent Link to this Comment','k2_domain')
+				),
+				sprintf(__('%1$s at %2$s','k2_domain'),
+					get_comment_date(__('M jS, Y','k2_domain')),
+					get_comment_time()
+				)			
+			)
+		);
+	?>				
+	<?php if ($user_ID) { edit_comment_link(__('Edit','k2_domain'),'<span class="comment-edit">','</span>'); } ?>
+	</div>
+</li>

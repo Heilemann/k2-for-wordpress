@@ -626,7 +626,8 @@ li.bypostauthor blockquote {
 	margin-top: 20px !important;
 	}
 
-.comments #error {
+.comments #commenterror {
+	display: none;
 	line-height: 2.0;
 	padding: 5px;
 	color: #FF0000;
@@ -634,9 +635,13 @@ li.bypostauthor blockquote {
 }
 
 .comments #commentload {
+	display: none;
 	padding-top: 3px;
 	float: right;
 	vertical-align: middle;
+	height: 18px;
+	width: 18px;
+	background: url('images/spinner.gif') center center no-repeat;
 }
 
 .comments form {

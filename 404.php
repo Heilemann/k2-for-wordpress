@@ -3,6 +3,8 @@
 <div class="content">
 	
 	<div id="primary">
+		<div id="notices"></div>
+
 		<div id="current-content" class="hfeed">
 
 			<div class="hentry four04">

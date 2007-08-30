@@ -189,20 +189,17 @@ function get_rolling_page_dates($query) {
 
 function output_javascript_url($file) {
 	$template_url = get_bloginfo('template_url');
+	$url_parts = parse_url( $template_url );
 
-	if (preg_match('/^http:\/\/[^\/]+(.+)/', $template_url, $url_parts)) {
-		$output = 'window.location.href.match(/^(http:\\/\\/[^\\/]+)/)[1] + "' . $url_parts[1] .'/'. $file . '"';
-
-	// This should never be executed, but it's well to be on the safe side
-	} else {
-		$output = $template_url .'/'. $file;
+	if ( $url_parts->host != $_SERVER['HTTP_HOST'] ) {
+		$template_url = str_replace($url_parts->host, $_SERVER['HTTP_HOST'], $template_url);
 	}
 
-	echo $output;
+	echo $template_url .'/'. $file;
 }
 
 function output_javascript_array($array) {
-	$output = 'new Array(';
+	$output = '[';
 
 	if ( is_array($array) ) {
 		$last_item = array_pop($array);
@@ -212,13 +209,13 @@ function output_javascript_array($array) {
 		$output .= '"' . $last_item . '"';
 	}
 
-	$output .= ')';
+	$output .= ']';
 
 	echo $output;
 }
 
 function output_javascript_hash($array) {
-	$output = 'new Hash({';
+	$output = '{';
 
 	if ( is_array($array) and !empty($array) ) {
 		$keys = array_keys($array);
@@ -242,7 +239,7 @@ function output_javascript_hash($array) {
 		}
 	}
 
-	$output .= '})';
+	$output .= '}';
 
 	echo $output;
 }

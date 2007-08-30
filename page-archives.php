@@ -17,6 +17,8 @@
 
 <div class="content">
 	<div id="primary">
+		<div id="notices"></div>
+
 		<div id="current-content" class="hfeed">
 
 			<?php the_post(); ?>

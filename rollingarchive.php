@@ -6,18 +6,18 @@
 		$query = k2_parse_query($_GET);
 		query_posts($query);
 
-		unset($_GET['k2dynamic']);
+		$_GET['k2dynamic'] = 'init';
 	}
 
 	// Load Rolling Archives?
 	if ( get_option('k2rollingarchives') == 1 ) { 
 
 		// Parse the query
-		if ( is_array($wp_query->query) ) {
-			$rolling_query = http_build_query($wp_query->query);
-		} else {
+		//if ( is_array($wp_query->query) ) {
+			//$rolling_query = http_build_query($wp_query->query);
+		//} else {
 			$rolling_query = $wp_query->query;
-		}
+		//}
 
 		// Get list of page dates
 		if ( !is_page() and !is_single() ) {
@@ -36,7 +36,7 @@
 		}
 ?>
 
-<div id="rollingarchives" style="visibility: hidden;">
+<div id="rollingarchives">
 	<div id="texttrimmer">
 		<div id="trimmertrackwrap"><div id="trimmertrack"><div id="trimmerhandle"></div></div></div>
 		
@@ -49,31 +49,37 @@
 
 		<div id="rollpages"></div>
 		
-		<div id="rollprevious" title="<?php _e('Older','k2_domain'); ?>">
-			<span>&laquo;</span> <?php _e('Older','k2_domain'); ?>
-		</div>
+		<a id="rollprevious" title="<?php _e('Older','k2_domain'); ?>" href="#">
+			<span>&laquo;</span> <?php _e('Prev','k2_domain'); ?>
+		</a>
 		<div id="rollhome" title="<?php _e('Home','k2_domain'); ?>">
 			<span><?php _e('Home','k2_domain'); ?></span>
 		</div>
 		<div id="rollload" title="<?php _e('Loading','k2_domain'); ?>">
 			<span><?php _e('Loading','k2_domain'); ?></span>
 		</div>
-		<div id="rollnext" title="<?php _e('Newer','k2_domain'); ?>">
-			<?php _e('Newer','k2_domain'); ?> <span>&raquo;</span>
-		</div>
+		<a id="rollnext" title="<?php _e('Newer','k2_domain'); ?>" href="#">
+			<?php _e('Next','k2_domain'); ?> <span>&raquo;</span>
+		</a>
 
 	</div> <!-- #rollnavigation -->
-
-	<div id="rollnotices"></div>
 </div> <!-- #rollingarchives -->
 
+<?php if ( !isset($_GET['k2dynamic']) or ($_GET['k2dynamic'] == 'init') ) { ?>
 <script type="text/javascript">
 // <![CDATA[
-	K2.RollingArchives.setRollingState(<?php echo $rolling_page; ?>, <?php echo $wp_query->max_num_pages; ?>, "<?php echo $rolling_query; ?>", <?php output_javascript_array($page_dates); ?>);
+	var k2RollingArchives = jQuery('div#rollingarchives').newRollingArchives(
+		"<?php output_javascript_url('theloop.php'); ?>",
+		"<?php echo attribute_escape(__('Page %1$d of %2$d',k2_domain)); ?>",
+		<?php echo $rolling_page; ?>,
+		<?php echo $wp_query->max_num_pages; ?>,
+		<?php output_javascript_hash($rolling_query); ?>,
+		<?php output_javascript_array($page_dates); ?>
+	);
 // ]]>
 </script>
+<?php } } ?>
 
-<?php } ?>
 <div id="rollingcontent" class="hfeed">
 	<?php include (TEMPLATEPATH . '/theloop.php'); ?>
 </div><!-- #rollingcontent .hfeed -->
