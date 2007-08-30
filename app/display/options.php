@@ -24,10 +24,9 @@
 
 	// Get the asides category
 	$asides_id = get_option('k2asidescategory');
-	$asides_title = $asides_id != 0 ? $wpdb->get_var("SELECT cat_name from $wpdb->categories WHERE cat_ID = $asides_id LIMIT 1") : __('No Asides','k2_domain');
 
 	// Get the categories we might use for asides
-	$asides_cats = $wpdb->get_results("SELECT cat_ID, cat_name FROM $wpdb->categories");
+	$asides_cats = get_categories();
 
 	// Update
 	$update = K2Header::update();
