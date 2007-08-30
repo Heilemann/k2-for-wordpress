@@ -281,8 +281,7 @@ function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' a
 	$categories = get_the_category(); 
 
 	if (empty($categories)) { 
-		_e('Uncategorized','k2_domain'); 
-		return; 
+		return __('Uncategorized','k2_domain');
 	} 
 
 	$thelist = ''; 
