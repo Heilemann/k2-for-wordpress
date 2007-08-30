@@ -44,7 +44,8 @@
 						<div class="clear"></div>
 					</div>
 
-					<?php } else { ?>
+					<noscript>
+					<?php } ?>
 
 					<h3><?php _e('Browse by Month','k2_domain'); ?></h3>
 					<ul class="archive-list">
@@ -60,6 +61,8 @@
 
 					<br class="clear" />
 
+					<?php if (function_exists('af_ela_super_archive')) { ?>
+					</noscript>
 					<?php } // End ELA Check ?>
 
 					<?php if (function_exists('UTW_ShowWeightedTagSetAlphabetical')) { ?>
@@ -70,8 +73,10 @@
 					<?php } elseif (function_exists('wp_tag_cloud')) { ?>
 					<h3><?php _e('Tag Cloud','k2_domain'); ?></h3>
 					<p><?php printf(__('The following is a list of the tags used at %s, colored and \'weighed\' in relation to their relative usage.','k2_domain'), get_bloginfo('name')); ?></p>
-					<?php wp_tag_cloud(); ?>
 
+					<div id="tag-cloud">
+					<?php wp_tag_cloud(); ?>
+					</div>
  					<?php } // End Tag Check ?>
 
 				</div> <!-- .entry-content -->
