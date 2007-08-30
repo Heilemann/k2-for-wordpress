@@ -1,5 +1,9 @@
 /* @override http://localhost/wp-content/themes/kaytwo/css/rollingarchives.css */
 
+#rollingarchives #dragHelper {
+	overflow: visible !important;
+}
+
 #rollingarchives {
 	position: relative;
 	padding: 10px 0 20px;
