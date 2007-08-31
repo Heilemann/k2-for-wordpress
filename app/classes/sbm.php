@@ -244,7 +244,7 @@ class K2SBM {
 		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/sbm.css" />
 		<script type="text/javascript">
 			//<![CDATA[
-				var sbm_baseUrl = <?php output_javascript_url('app/includes/sbm-ajax.php'); ?>;
+				var sbm_baseUrl = "<?php output_javascript_url('app/includes/sbm-ajax.php'); ?>"
 			//]]>
 		</script>
 	<?php
