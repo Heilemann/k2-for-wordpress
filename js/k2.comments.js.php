@@ -39,11 +39,11 @@ var k2Comment = {
 	submitError: function(request) {
 		jQuery('#commentload').hide();
 
-		jQuery('#commenterror').html(request.responseText).show();
+		jQuery('#commenterror').show().html(request.responseText);
 	},
 
 	submitSuccess: function(data) {
-		jQuery('#commenterror').html().hide();
+		jQuery('#commenterror').hide().html();
 
 		if ( jQuery('#leavecomment').length ) {
 			jQuery('#leavecomment').remove();
@@ -56,17 +56,13 @@ var k2Comment = {
 		}
 
 		jQuery('#commentlist').append(data);
-
-		jQuery('form#commentform input[@type=submit]').attr('disabled', 'disabled');
-		jQuery('form#commentform').attr('disabled', 'disabled');
-
+		jQuery('#commentform :input').attr('disabled', true);
 		jQuery('#commentload').hide();
 
-		setTimeout(k2Comment.enableForm, 5000);
+		setTimeout(k2Comment.enableForm, 15000);
 	},
 
 	enableForm: function() {
-		jQuery('form#commentform input[@type=submit]').removeAttr('disabled');
-		jQuery('#commentform').removeAttr('disabled');
+		jQuery('#commentform :input').removeAttr('disabled');
 	}
 };

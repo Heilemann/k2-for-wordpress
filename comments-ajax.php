@@ -1,4 +1,10 @@
 <?php
+if ($_SERVER["REQUEST_METHOD"] != "POST") {
+    header('Allow: POST');
+	header("HTTP/1.1 405 Method Not Allowed");
+	header("Content-type: text/plain");
+    exit;
+}
 
 require_once(dirname(__FILE__)."/../../../wp-config.php");
 nocache_headers();
@@ -9,121 +15,110 @@ function fail($s) {
 	exit;
 }
 
-foreach($_POST as $k=>$v) {
-	$_POST[$k] = urldecode($v);
-}
+$comment_post_ID = (int) $_POST['comment_post_ID'];
 
-$post->ID = $comment_post_ID = (int) $_POST['comment_post_ID'];
+$status = $wpdb->get_row("SELECT post_status, comment_status FROM $wpdb->posts WHERE ID = '$comment_post_ID'");
 
-$post_status = $wpdb->get_var("SELECT comment_status FROM $wpdb->posts WHERE ID = '$comment_post_ID'");
-
-if ( empty($post_status) ) {
+if ( empty($status->comment_status) ) {
 	do_action('comment_id_not_found', $comment_post_ID);
-	fail(__('The post you are trying to comment on does not curently exist in the database.','k2_domain'));
-} elseif ( 'closed' ==  $post_status ) {
+	fail( __('The post you are trying to comment on does not currently exist in the database.','k2_domain') );
+} elseif ( 'closed' ==  $status->comment_status ) {
 	do_action('comment_closed', $comment_post_ID);
-	fail(__('Sorry, comments are closed for this item.','k2_domain'));
+	fail( __('Sorry, comments are closed for this item.','k2_domain') );
+} elseif ( in_array($status->post_status, array('draft', 'pending') ) ) {
+	do_action('comment_on_draft', $comment_post_ID);
+	fail( __('The post you are trying to comment on has not been published.','k2_domain') );
 }
 
-$comment_author       = trim($_POST['author']);
+$comment_author       = trim(strip_tags($_POST['author']));
 $comment_author_email = trim($_POST['email']);
 $comment_author_url   = trim($_POST['url']);
 $comment_content      = trim($_POST['comment']);
 
 // If the user is logged in
-get_currentuserinfo();
-if ( $user_ID ) :
-	$comment_author       = addslashes($user_identity);
-	$comment_author_email = addslashes($user_email);
-	$comment_author_url   = addslashes($user_url);
-else :
+$user = wp_get_current_user();
+if ( $user->ID ) {
+	$comment_author       = $wpdb->escape($user->display_name);
+	$comment_author_email = $wpdb->escape($user->user_email);
+	$comment_author_url   = $wpdb->escape($user->user_url);
+	if ( current_user_can('unfiltered_html') ) {
+		if ( wp_create_nonce('unfiltered-html-comment_' . $comment_post_ID) != $_POST['_wp_unfiltered_html_comment'] ) {
+			kses_remove_filters(); // start with a clean slate
+			kses_init_filters(); // set up the filters
+		}
+	}
+} else {
 	if ( get_option('comment_registration') )
-		fail(__('Sorry, you must be logged in to post a comment.','k2_domain'));
-endif;
+		fail( __('Sorry, you must be logged in to post a comment.','k2_domain') );
+}
 
 $comment_type = '';
 
-if ( get_settings('require_name_email') and !$user_ID ) {
-	if ( 6 > strlen($comment_author_email) or '' == $comment_author )
-		fail(__('Error: please fill the required fields (name, email).','k2_domain'));
+if ( get_option('require_name_email') && !$user->ID ) {
+	if ( 6 > strlen($comment_author_email) || '' == $comment_author )
+		fail( __('Error: please fill the required fields (name, email).','k2_domain') );
 	elseif ( !is_email($comment_author_email))
-		fail(__('Error: please enter a valid email address.','k2_domain'));
+		fail( __('Error: please enter a valid email address.','k2_domain') );
 }
 
 if ( '' == $comment_content )
-	fail(__('Error: please type a comment.','k2_domain'));
+	fail( __('Error: please type a comment.','k2_domain') );
+
+
+// Simple duplicate check
+$dupe = "SELECT comment_ID FROM $wpdb->comments WHERE comment_post_ID = '$comment_post_ID' AND ( comment_author = '$comment_author' ";
+if ( $comment_author_email ) $dupe .= "OR comment_author_email = '$comment_author_email' ";
+$dupe .= ") AND comment_content = '$comment_content' LIMIT 1";
+if ( $wpdb->get_var($dupe) ) {
+	fail( __('Duplicate comment detected; it looks as though you\'ve already said that!','k2_domain') );
+}
+
 
 $commentdata = compact('comment_post_ID', 'comment_author', 'comment_author_email', 'comment_author_url', 'comment_content', 'comment_type', 'user_ID');
 
-	// Simple duplicate check
-	$dupe = "SELECT comment_ID FROM $wpdb->comments WHERE comment_post_ID = '$comment_post_ID' AND ( comment_author = '$comment_author' ";
-	if ( $comment_author_email )
-		$dupe .= "OR comment_author_email = '$comment_author_email' ";
-		$dupe .= ") AND comment_content = '$comment_content' LIMIT 1";
-	if ( $wpdb->get_var($dupe) )
-		fail(__('Duplicate comment detected; it looks as though you\'ve already said that!','k2_domain'));
+$comment_id = wp_new_comment( $commentdata );
 
-	// Simple flood-protection
-	/*
-	if ( ! isset($comment_author_IP) )
-		$comment_author_IP = $_SERVER['REMOTE_ADDR'];         
-	if ( ! isset($comment_date) )
-		$comment_date = current_time('mysql');
-	if ( ! isset($comment_date_gmt) )
-		$comment_date_gmt = gmdate('Y-m-d H:i:s', strtotime($comment_date) );
-	if ( ! isset($comment_approved) )
-		$comment_approved = 1;
-
-	$comment_user_domain = apply_filters('pre_comment_user_domain', gethostbyaddr($comment_author_IP) );
-
-	if ( $lasttime = $wpdb->get_var("SELECT comment_date_gmt FROM $wpdb->comments WHERE comment_author_IP = '$comment_author_IP' OR comment_author_email = '$comment_author_email' ORDER BY comment_date DESC LIMIT 1") ) {
-		$time_lastcomment = mysql2date('U', $lasttime);
-		$time_newcomment  = mysql2date('U', $comment_date_gmt);
-		if ( ($time_newcomment - $time_lastcomment) < -3585 ) {
-			do_action('comment_flood_trigger', $time_lastcomment, $time_newcomment);
-			fail(__('Sorry, you can only post a new comment once every 15 seconds. Slow down cowboy.','k2_domain') );
-		}
-	}
-	*/
-	               
-$new_comment_ID = wp_new_comment($commentdata);
-
-if ( !$user_ID ) :
-        setcookie('comment_author_' . COOKIEHASH, stripslashes($comment_author), time() + 30000000, COOKIEPATH, COOKIE_DOMAIN);
-        setcookie('comment_author_email_' . COOKIEHASH, stripslashes($comment_author_email), time() + 30000000, COOKIEPATH, COOKIE_DOMAIN);
-        setcookie('comment_author_url_' . COOKIEHASH, stripslashes($comment_author_url), time() + 30000000, COOKIEPATH, COOKIE_DOMAIN);
-endif;
-
-$comment = $wpdb->get_row("SELECT * FROM {$wpdb->comments} WHERE comment_ID = " . $new_comment_ID);
-
-$post->comment_status = $wpdb->get_var("SELECT comment_status FROM {$wpdb->posts} WHERE ID = {$comment_post_ID}");
-$post->comment_count++;
+$comment = get_comment($comment_id);
+if ( !$user->ID ) {
+	setcookie('comment_author_' . COOKIEHASH, $comment->comment_author, time() + 30000000, COOKIEPATH, COOKIE_DOMAIN);
+	setcookie('comment_author_email_' . COOKIEHASH, $comment->comment_author_email, time() + 30000000, COOKIEPATH, COOKIE_DOMAIN);
+	setcookie('comment_author_url_' . COOKIEHASH, clean_url($comment->comment_author_url), time() + 30000000, COOKIEPATH, COOKIE_DOMAIN);
+}
 
 @header('Content-type: ' . get_option('html_type') . '; charset=' . get_option('blog_charset'));
+
+$comment->comment_type = 'comment';
+$comment_index = $_POST['comment_count'] + 1;
 ?>
-<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class($ping_index); ?>">
-	<?php if (function_exists('comment_favicon')) { ?><span class="favatar"><?php comment_favicon(); ?></span><?php } ?>
-	<a href="#comment-<?php comment_ID() ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>" class="counter"><?php echo $ping_index; ?></a>
+
+<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class($comment_index); ?>">
+	<?php if (function_exists('gravatar')) { ?><a href="http://www.gravatar.com/" title="<?php _e('What is this?','k2_domain'); ?>"><img src="<?php gravatar("X", 32,  get_bloginfo('template_url')."/images/defaultgravatar.jpg"); ?>" class="gravatar" alt="<?php _e('Gravatar Icon','k2_domain'); ?>" /></a><?php } ?>
+	<a href="#comment-<?php comment_ID(); ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $comment_index; ?></a>
 	<span class="commentauthor"><?php comment_author_link(); ?></span>
-	<div class="comment-meta">				
+
+	<div class="comment-meta">
 	<?php
-		printf(__('%1$s on %2$s','k2_domain'), 
-			'<span class="pingtype">' . get_k2_ping_type(__('Trackback','k2_domain'), __('Pingback','k2_domain')) . '</span>',
-			sprintf('<a href="#comment-%1$s" title="%2$s">%3$s</a>',
-				get_comment_ID(),	
-				(function_exists('time_since')?
-					sprintf(__('%s ago.','k2_domain'),
-						time_since(abs(strtotime($comment->comment_date_gmt . " GMT")), time())
-					):
-					__('Permanent Link to this Comment','k2_domain')
-				),
-				sprintf(__('%1$s at %2$s','k2_domain'),
-					get_comment_date(__('M jS, Y','k2_domain')),
-					get_comment_time()
-				)			
+		printf('<a href="#comment-%1$s" title="%2$s">%3$s</a>', 
+			get_comment_ID(),
+			(function_exists('time_since')?
+				sprintf(__('%s ago.','k2_domain'),
+					time_since(abs(strtotime($comment->comment_date_gmt . " GMT")), time())
+				):
+				__('Permanent Link to this Comment','k2_domain')
+			),
+			sprintf(__('%1$s at %2$s','k2_domain'),
+				get_comment_date(__('M jS, Y','k2_domain')),
+				get_comment_time()
 			)
 		);
-	?>				
-	<?php if ($user_ID) { edit_comment_link(__('Edit','k2_domain'),'<span class="comment-edit">','</span>'); } ?>
+	?>
+	<?php if (function_exists('quoter_comment')) { quoter_comment(); } ?>
+	<?php if (function_exists('jal_edit_comment_link')) { jal_edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>'); } else { edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">', '</span>'); } ?>
 	</div>
+
+	<div class="comment-content">
+		<?php comment_text(); ?> 
+	</div>
+
+	<?php if ('0' == $comment->comment_approved) { ?><p class="alert"><strong><?php _e('Your comment is awaiting moderation.','k2_domain'); ?></strong></p><?php } ?>
 </li>

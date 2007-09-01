@@ -23,17 +23,17 @@
 
 		<?php /* Seperate comments and pings */
 			if ( $post->comment_count > 0 ) {
-				$countComments = 0;
-				$countPings    = 0;
-				
-				$k2_comment_list = array();
-				$k2_ping_list    = array();
+				$num_comments = 0;
+				$num_pings    = 0;
+
+				$comment_list = array();
+				$ping_list    = array();
 
 				foreach ($comments as $comment) {
 					if ( 'comment' == get_comment_type() ) {
-						$k2_comment_list[++$countComments] = $comment;
+						$comment_list[++$num_comments] = $comment;
 					} else {
-						$k2_ping_list[++$countPings] = $comment;
+						$ping_list[++$num_pings] = $comment;
 					}
 				}
 			}
@@ -41,10 +41,10 @@
 
 	<hr />
 
-		<?php /* Check for comments */ if ( $countComments > 0 ) { ?>
+		<?php /* Check for comments */ if ( $num_comments > 0 ) { ?>
 		<ol id="commentlist">
 
-			<?php foreach ($k2_comment_list as $comment_index => $comment) { ?>
+			<?php foreach ($comment_list as $comment_index => $comment) { ?>
 
 			<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class($comment_index); ?>">
 				<?php if (function_exists('gravatar')) { ?><a href="http://www.gravatar.com/" title="<?php _e('What is this?','k2_domain'); ?>"><img src="<?php gravatar("X", 32,  get_bloginfo('template_url')."/images/defaultgravatar.jpg"); ?>" class="gravatar" alt="<?php _e('Gravatar Icon','k2_domain'); ?>" /></a><?php } ?>
@@ -83,10 +83,10 @@
 		</ol> <!-- END #commentlist -->
 		<?php } /* end comment check */ ?>
 		
-		<?php /* Check for Pings */ if ( $countPings > 0 ) { ?>
+		<?php /* Check for Pings */ if ( $num_pings > 0 ) { ?>
 		<ol id="pinglist">
 
-			<?php foreach ($k2_ping_list as $ping_index => $comment) { ?>
+			<?php foreach ($ping_list as $ping_index => $comment) { ?>
 
 			<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class($ping_index); ?>">
 				<?php if (function_exists('comment_favicon')) { ?><span class="favatar"><?php comment_favicon(); ?></span><?php } ?>
@@ -118,7 +118,7 @@
 		</ol> <!-- END #pinglist -->
 		<?php } /* end ping check */ ?>
 		
-		<?php /* Comments open, but empty */ if ( ($post->comment_count < 1) and ('open' == $post->comment_status) ) { ?> 
+		<?php /* Comments open, but empty */ if ( ($post->comment_count < 1) and comments_open() ) { ?> 
 		<ol id="commentlist">
 			<li id="leavecomment">
 				<?php _e('No Comments','k2_domain'); ?>
@@ -126,8 +126,8 @@
 		</ol>
 		<?php } ?>
 		
-		<?php /* Comments closed */ if (('open' != $post->comment_status) and is_single()) { ?>
-			<div><?php _e('Comments are currently closed.','k2_domain'); ?></div>
+		<?php /* Comments closed */ if ( !comments_open() and is_single() ) { ?>
+			<div id="comments-closed-msg"><?php _e('Comments are currently closed.','k2_domain'); ?></div>
 		<?php } ?>
 
 	</div> <!-- END .comments 1 -->
@@ -190,6 +190,7 @@
 
 				<p>
 					<input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit','k2_domain'); ?>" />
+					<input type="hidden" name="comment_count" value="<?php echo $num_comments; ?>" />
 					<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
 					<span id="commentload"></span>
 				</p>
