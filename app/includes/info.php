@@ -450,6 +450,16 @@ function k2_body_class( $print = true ) {
 		$c[] = 'columns-two';
 	}
 
+	// Language settings
+	$locale = get_locale();
+	if ( empty($locale) ) {
+		$locale = 'en';
+	} else {
+		$lang_array = split('_', $locale);
+		$locale = $lang_array[0];
+	}
+	$c[] = 'lang-' . $locale;
+
 	// Separates classes with a single space, collates classes for BODY
 	$c = join(' ', apply_filters('body_class',  $c));
 

@@ -37,6 +37,18 @@ body {
 	text-align: center;
 	}
 
+body.lang-ar,
+body.lang-fa,
+body.lang-he,
+body.lang-hi,
+body.lang-km,
+body.lang-ko,
+body.lang-ja,
+body.lang-th,
+body.lang-zh {
+	font-size: 75%; /* Resets 1em to 12px */
+	}
+
 #page {
 	background: white;
 	text-align: left;
