@@ -103,9 +103,9 @@
 							printf(	__('Published %1$s %2$s','k2_domain'),
 								( $multiple_users ? sprintf(__('by %s','k2_domain'), '<span class="vcard author"><a href="' . get_author_posts_url(get_the_author_ID()) .'" class="url fn" title="'. sprintf(__('View all posts by %s','k2_domain'), attribute_escape(get_the_author())) .'">' . get_the_author() . '</a></span>') : ('') ), 
 								'<abbr class="published" title="'. get_the_time('Y-m-d\TH:i:sO') . '">' .
- 								( function_exists('time_since') ? sprintf(__('%s ago','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")), time())) : sprintf(__('at %s','k2_domain'), get_the_time($dateformat)) ) 
+ 								( function_exists('time_since') ? sprintf(__('%s ago','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")), time())) : sprintf(__('on %s','k2_domain'), get_the_time($dateformat)) ) 
  								. '</abbr>'
- 								); 
+							); 
  						?>
 					</span>
 
