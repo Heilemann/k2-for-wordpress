@@ -1,5 +1,3 @@
-/* @override http://localhost/wp-content/themes/kaytwo/css/rollingarchives.css */
-
 #rollingarchives #dragHelper {
 	overflow: visible !important;
 }
@@ -119,7 +117,7 @@
 	height: 13px;
 	width: 13px;
 	margin-right: 5px;
-	background: url('../images/reset-fff.gif') no-repeat center center;
+	background: url('../images/reset-fff.png') no-repeat center center;
 	}
 
 .emptypage #rollnavigation {

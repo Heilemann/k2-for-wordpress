@@ -1,5 +1,3 @@
-/* @override http://localhost/wp-content/themes/kaytwo/css/sbm.css */
-
 h2 {
 	border: 0;
 	font: 1.6em Helvetica, Arial, Verdana, Sans-Serif;
@@ -259,6 +257,10 @@ span.id {
 	text-align: center;
 	font-size: 11px;
 }
+
+#output-css-file {
+	width: 400px;
+	}
 
 .selected {
 	background: url('../images/sbmmanager/tabbgselected.png') no-repeat center bottom !important;

@@ -407,6 +407,7 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 
 .entry-meta { /* Time and category for blog entries */
 	font-size: 1em;
+	line-height: 1.6em;
 	display: block;
 	margin-top: 1px;
 	color: #bbb;
@@ -948,7 +949,7 @@ input[type=text], textarea {
 #searchcontrols {
 	text-align: center;
 	padding: 1px;
-	background: #ddd url('images/livesearchbgdark.jpg') center repeat-y;
+	background: #ddd;
 	}
 
 #searchcontrols small {

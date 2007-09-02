@@ -38,7 +38,7 @@
 
 <div id="advancedtab-content" class="tabcontent">
 	<p>
-		<label for="output-css-file"><?php _e('Related CSS file', 'k2_domain'); ?>:</label>
+		<label for="output-css-file"><?php _e('Load the following CSS file with this module', 'k2_domain'); ?>:</label><br/>
 		<input id="output-css-file" name="output[css_file]" type="text" value="<?php echo attribute_escape($module->output['css_file']); ?>" />
 	</p>
 </div><!-- #advancedtab-content -->
