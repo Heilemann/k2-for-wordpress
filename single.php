@@ -8,7 +8,7 @@
 		<div id="current-content" class="hfeed">
 
 			<?php include (TEMPLATEPATH . '/theloop.php'); ?>
-			<?php comments_template(); ?>
+  			<?php if (!defined('K2_NOT_FOUND')) { comments_template(); } ?>  
 
 		</div> <!-- #current-content -->
 

@@ -340,9 +340,15 @@ function get_wp_version() {
 
 function k2_body_id() {
 	if (get_option('permalink_structure') != '' and is_page()) {
-		echo "id='" . get_query_var('name') . "'";
+		if (get_query_var('name') != '') {
+			$id_name = get_query_var('name');
+		}else{
+			$id_name = "home";
+		}
+		echo "id='" . $id_name . "'";
 	}
 }
+
 
 
 // Semantic class functions from Sandbox 0.9.7 (http://www.plaintxt.org/themes/sandbox/)
