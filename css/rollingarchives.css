@@ -16,6 +16,10 @@
 	position: relative;
 	}
 
+#rollnavigation a:active, #rollnavigation a:focus {
+	outline: none;
+	}
+
 #rollprevious,
 #rollnext,
 #rollload,
