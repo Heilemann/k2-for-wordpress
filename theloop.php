@@ -113,7 +113,7 @@
 						<?php /* Categories */ printf(__('in %s.','k2_domain'), k2_nice_category(', ', __(' and ','k2_domain')) ); ?>
 					</span>
 
-					<?php /* Comments */ comments_popup_link('0&nbsp;<span>'.__('Comments','k2_domain').'</span>', '1&nbsp;<span>'.__('Comment','k2_domain').'</span>', '%&nbsp;<span>'.__('Comments','k2_domain').'</span>', 'commentslink', '<span class="commentslink">'.__('Closed','k2_domain').'</span>'); ?>
+					<?php /* Comments */ comments_popup_link('0&nbsp;<span>'.__('Comments','k2_domain').'</span>', '1&nbsp;<span>'.__('Comment','k2_domain').'</span>', '%&nbsp;<span>'.__('Comments','k2_domain').'</span>', 'commentslink', '<span>'.__('Closed','k2_domain').'</span>'); ?>
 
 					<?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="entry-edit">','</span>'); ?>
 

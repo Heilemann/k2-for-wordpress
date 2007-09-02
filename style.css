@@ -379,7 +379,6 @@ body.page .entry-edit {
 	border: none;
 	padding: 2px;
 	padding-left: 23px;
-	margin-left: 10px;
 	background: url('images/pencil.png') left center no-repeat;
 	height: 16px;
 	}
@@ -415,6 +414,7 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 
 .entry-category {
 	text-transform: lowercase;
+	margin-right: 10px;
 	}
 
 .entry-meta a, .comment-meta a {
@@ -429,7 +429,7 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 .commentslink {
 	padding: 2px 0 2px 20px;
 	background: url('images/comment.png') left center no-repeat;
-	margin-left: 10px;
+	margin-right: 10px;
 	}
 
 .quoter_comment {
@@ -613,7 +613,7 @@ li.bypostauthor blockquote {
 	border: none;
 	}
 	
-#leavecomment, .comments #loading {
+#leavecomment, .comments #loading, #comments-closed-msg {
 	text-align: center;
 	margin: 30px 0 20px !important;
 	color: #ddd;
@@ -623,6 +623,10 @@ li.bypostauthor blockquote {
 
 .comments #loading {
 	margin-top: 20px !important;
+	}
+
+#comments-closed-msg {
+	margin-bottom: 40px !important;
 	}
 
 .comments #commenterror {
@@ -869,6 +873,16 @@ img.wp-smiley {
 
 .secondary ul, .secondary ol, .secondary div div {
 	margin: 5px 0 0;
+	padding-left: 0;
+	}
+
+.secondary ul ul, .secondary ol ol, .secondary div div {
+	margin: 0pt 0pt 0pt 10px;
+	padding-left: 0;
+	}
+       
+.secondary ul ul ul, .secondary ol ol ol, .secondary div div {
+	margin: 0pt 0pt 0pt 10px;
 	padding-left: 0;
 	}
 
