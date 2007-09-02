@@ -1,5 +1,4 @@
 <?php
-
 // The registered sidebars
 $k2sbm_registered_sidebars = array();
 
@@ -27,13 +26,9 @@ class K2SBM {
 		add_option('k2sbm_modules_active', array(), 'The active sidebar modules.');
 		add_option('k2sbm_modules_disabled', array(), 'The disabled sidebar modules.');
 		add_option('k2sbm_modules_next_id', 1, 'The ID for the next sidebar module.');
-
-		K2SBM::cleanup_deprecated();
 	}
 
-	function cleanup_deprecated() {
-		delete_option('k2sbm_stub_path');
-
+	function uninstall() {
 		// Remove all existing sbm-stub paths
 		$plugins = (array) get_option('active_plugins');
 		for ($i = 0; $i < count($plugins); $i++) {
@@ -42,12 +37,6 @@ class K2SBM {
 			}
 		}
 		update_option('active_plugins', $plugins);
-	}
-
-	function uninstall() {
-		delete_option('k2sbm_modules_active');
-		delete_option('k2sbm_modules_disabled');
-		delete_option('k2sbm_modules_next_id');
 	}
 
 	function init() {

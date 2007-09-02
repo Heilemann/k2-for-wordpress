@@ -3,6 +3,11 @@
 // Based on Hasse R. Hansen's K2 header plugin - http://www.ramlev.dk
 
 class K2Header {
+	function install() {
+		add_option('k2imagerandomfeature', '1', "Whether to use a random image in K2's header");
+		add_option('k2header_picture', '', "The image to use in K2's header");
+	}
+
 	function init() {
 		if ( function_exists('add_custom_image_header') and is_writable(K2HEADERSPATH) ) {
 			$styleinfo = get_style_info(get_option('k2scheme'));
@@ -169,33 +174,9 @@ class K2Header {
 		}
 		return $source;
 	}
-
-	function install() {
-		add_option('k2imagerandomfeature', '1', "Whether to use a random image in K2's header");
-		add_option('k2header_picture', '', "The image to use in K2's header");
-
-		K2Header::cleanup_deprecated();
-	}
-
-	function cleanup_deprecated() {
-		// Removes options that are no longer used.
-
-		delete_option('k2headerbackgroundcolor');
-		delete_option('k2headertextalignment');
-		delete_option('k2headertextfontsize');
-		delete_option('k2headertextcolor');
-		delete_option('k2headertextcolor_bright');
-		delete_option('k2headertextcolor_dark');
-	}
-
-	function uninstall() {
-		delete_option('k2imagerandomfeature');
-		delete_option('k2header_picture');
-	}
 }
 
 add_action('k2_init', array('K2Header', 'init'), 2);
 add_action('k2_install', array('K2Header', 'install'));
-add_action('k2_uninstall', array('K2Header', 'uninstall'));
 add_filter('wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'));
 ?>

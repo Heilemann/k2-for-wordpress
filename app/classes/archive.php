@@ -105,5 +105,6 @@ class K2Archive {
 	}
 }
 
-add_action( 'k2_install', array('K2Archive', 'install') );
+add_action('k2_install', array('K2Archive', 'install'));
+add_action('k2_uninstall', array('K2Archive', 'delete_archive'));
 ?>
