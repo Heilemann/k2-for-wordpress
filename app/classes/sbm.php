@@ -535,7 +535,7 @@ class K2SBM {
 			if ( $next_id < 1 ) $next_id = 1;
 
 			$module_id = 'module-' . $next_id;
-			update_option('k2sbm_modules_next_id', ++$next_id);
+			update_option('k2sbm_modules_next_id', (++$next_id));
 
 			// Create the new module
 			$new_module = new k2sbmModule($module_id, $name, $type, $base_module['options']);
