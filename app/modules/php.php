@@ -18,7 +18,7 @@ function php_sidebar_module_control() {
 	<?php
 }
 
-register_sidebar_module('Text, HTML & PHP', 'php_sidebar_module', 'sb-php');
-register_sidebar_module_control('Text, HTML & PHP', 'php_sidebar_module_control');
+register_sidebar_module('Text, HTML and PHP', 'php_sidebar_module', 'sb-php');
+register_sidebar_module_control('Text, HTML and PHP', 'php_sidebar_module_control');
 
 ?>
