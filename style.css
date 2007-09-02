@@ -177,8 +177,6 @@ ul.menu li.current_page_item a:hover {
 
 * html .admintab { padding: 5px 15px 6px }	/* IE hack */
 	
-a img,:link img,:visited img { border:none }
-
 /*- Sidebar Subpages Menu */
 
 .sb-pagemenu ul {
@@ -723,13 +721,6 @@ a {
 	clear: both;
 	margin: 0;
 	padding: 0;
-	}
-
-.entry-content img {
-	margin: 0 5px;
-	padding: 4px;
-	border: 1px solid #ccc;
-	max-width: 100%;
 	}
 
 #primary table img {
