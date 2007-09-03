@@ -17,7 +17,7 @@
 	header('Content-Type: text/javascript; charset: UTF-8');
 ?>
 
-$(document).ready(function() {
+jQuery(document).ready(function() {
 	jQuery.extend(k2CommentOptions, {
 		clearForm:		true,
 		resetForm:		true,
