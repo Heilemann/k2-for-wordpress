@@ -1,4 +1,4 @@
-#rollingarchives #dragHelper {
+#pagetrack #dragHelper {
 	overflow: visible !important;
 }
 
@@ -13,6 +13,7 @@
 	}
 
 #rollnavigation {
+	margin-left: 110px;
 	position: relative;
 	}
 
@@ -47,7 +48,7 @@
 
 #rollload {
 	top: 1px;
-	right: 242px;
+	right: 150px;
 	background: url('../images/spinner.gif') no-repeat center center;
 	width: 16px;
 	height: 16px;
@@ -105,25 +106,6 @@
 	text-align: right;
 	}
 
-#rollnotices {
-	padding: 7px;
-	text-align: center;
-	border-top: 1px solid #f3f3f3;
-	}
-
-#rollnotices a {
-	color: #227EE9;
-	}
-
-#rollnotices img {
-	float: right;
-	cursor: pointer;
-	height: 13px;
-	width: 13px;
-	margin-right: 5px;
-	background: url('../images/reset-fff.png') no-repeat center center;
-	}
-
 .emptypage #rollnavigation {
 	visibility: hidden;
 	}
@@ -131,6 +113,7 @@
 .firstpage #rollprevious {
 	visibility: visible;
 	}
+
 
 .firstpage #rollnext,
 .firstpage #rollhome {
@@ -152,15 +135,11 @@
 	visibility: hidden;
 	}
 
-#dynamictype .page-head {
-	display: none;
-	}
-
 #pagetrackwrap {
 	position: absolute;
 	top: 6px;
-	left: 140px;
-	width: 290px;
+	left: 130px;
+	width: 200px;
 	padding-right: 4px;
 	background: url('../images/sliderbgright.png') no-repeat right center;
 	}
@@ -190,12 +169,11 @@ div.trimmed .hentry.alt {
 	}
 
 #texttrimmer {
-	display: none;
 	position: relative;
 	width: 100px;
 	height: 15px;
-	top: 23px;
-	left: 365px;
+	top: 15px;
+	left: 0;
 	}
 
 .firstpage #pagetrackwrap {
@@ -206,22 +184,19 @@ div.trimmed .hentry.alt {
 	visibility: visible;
 	}
 
-.firstpage #texttrimmer {
-	visibility: hidden;
-	}
-
-.nthpage #texttrimmer {
-	visibility: visible;
-	}
-
 #trimmertrackwrap {
 	background: url('../images/sliderbgright.png') no-repeat right center;
 	height: 7px;
 	width: 50px;
+	top: 6px;
+	left: 25px;
+	padding-right: 4px;
+	position: absolute;
 	}
 
 #trimmertrack {
 	background: url('../images/sliderbgleft.png') no-repeat left center;
+	height: 7px;
 	}
 
 #trimmerhandle {

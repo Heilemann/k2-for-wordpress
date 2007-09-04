@@ -52,7 +52,7 @@
 
 		<?php /* LiveSearch */ if (get_option('k2livesearch') == 1) { ?>
 			jQuery(document).ready(function(){
-				jQuery('form#searchform').newLiveSearch(
+				k2Search.setup(
 					"<?php if (get_option('k2rollingarchives') == 1) { output_javascript_url('rollingarchive.php'); } else { output_javascript_url('theloop.php'); } ?>",
 					"<?php echo attribute_escape(__('Type and Wait to Search','k2_domain')); ?>"
 				);

@@ -46,7 +46,7 @@ class K2 {
 
 		wp_register_script('k2rollingarchives',
 			get_bloginfo('template_directory') . '/js/k2.rollingarchives.js.php',
-			array('jquery', 'interface', 'k2slider'), '224');
+			array('jquery', 'interface', 'k2trimmer'), '224');
 
 		wp_register_script('k2livesearch',
 			get_bloginfo('template_directory') . '/js/k2.livesearch.js.php',
@@ -56,17 +56,13 @@ class K2 {
 			get_bloginfo('template_directory') . '/js/k2.comments.js.php',
 			array('jquery', 'jquery-form'), '216');
 
-		/*wp_register_script('k2trimmer',
+		wp_register_script('k2trimmer',
 			get_bloginfo('template_directory') . '/js/k2.trimmer.js.php',
-			array('jquery', 'interface'), '247');*/
+			array('jquery', 'interface'), '247');
 
 		wp_register_script('k2sbm',
 	       get_bloginfo('template_directory') . '/js/k2.sbm.js.php',
 	       array('jquery', 'interface', 'jquery-form', 'jquery-dimensions' ), '');
-
-		wp_register_script('k2slider',
-			get_bloginfo('template_directory') . '/js/k2.slider.js.php',
-			array('jquery', 'interface'), '223');
 
 		wp_register_script('jquery-dimensions',
 	       get_bloginfo('template_directory') . '/js/jquery.dimensions.js.php',
@@ -74,6 +70,7 @@ class K2 {
 
 
 		// Register jQuery
+		wp_deregister_script('jquery');
 		wp_register_script('jquery',
 			get_bloginfo('template_directory').'/js/jquery.js.php',
 			false, '1.1.4');

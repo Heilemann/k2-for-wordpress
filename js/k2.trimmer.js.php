@@ -20,88 +20,73 @@
 /*	Thank you Drew McLellan for starting us off
 	with http://24ways.org/2006/tasty-text-trimmer	*/
 
-TextTrimmer = Class.create();
+var k2Trimmer = {
+	minValue: 0,
+	maxValue: 100,
+	chunks: false,
+	prevValue: 0,
 
-TextTrimmer.prototype = {
-    initialize: function(attachitem, targetitem, chunkClass, minValue, maxValue) {
-		k2Trimmer.attachitem = attachitem;
-		k2Trimmer.targetitem = targetitem;
-		k2Trimmer.chunkClass = chunkClass;
-		k2Trimmer.minValue = minValue;
-		k2Trimmer.maxValue = maxValue;
-
-		k2Trimmer.curValue = maxValue;
+	setup: function(value) {
 		k2Trimmer.chunks = false;
-		k2Trimmer.sliderhandle = 'trimmerhandle';
-		k2Trimmer.slidertrack = 'trimmertrack';
-		k2Trimmer.trimmore = 'trimmermore';
-		k2Trimmer.trimless = 'trimmerless';
 
-		k2Trimmer.prevState = null;
-
-		k2Trimmer.trimMoreListener = k2Trimmer.trimMoreAction.bindAsEventListener(k2Trimmer);
-		k2Trimmer.trimLessListener = k2Trimmer.trimLessAction.bindAsEventListener(k2Trimmer);
-
-		k2Trimmer.init = false;
-	},
-	
-	setupTrimmer: function(newvalue) {
-		k2Trimmer.curValue = newvalue;
-
-		if (k2Trimmer.curValue >= k2Trimmer.maxValue) {
+		if (value >= k2Trimmer.maxValue) {
 			k2Trimmer.curValue = k2Trimmer.maxValue;
-			$(k2Trimmer.targetitem).removeClassName("trimmed");
-		} else if (k2Trimmer.curValue < k2Trimmer.minValue) {
+		} else if (value < k2Trimmer.minValue) {
 			k2Trimmer.curValue = k2Trimmer.minValue;
+		} else {
+			k2Trimmer.curValue = value;
 		}
 
-		k2Trimmer.chunks = false;
+		var initSlider = true;
+		jQuery('#trimmertrack').Slider({
+			accept: '#trimmerhandle',
+			values: [[1000, 0]],
+			fractions: 5,
+			onSlide: function(xpct) {
+				if (initSlider) {
+					k2Trimmer.sliderOffset = this.dragCfg.gx;
+				} else {
+					k2Trimmer.doTrim(Math.round(xpct));
+				}
+			},
+			onChange: function(xpct) {
+				k2Trimmer.doTrim(Math.round(xpct));
+			}
+		});
+		initSlider = false;
 
-		var k2TrimmerTrimmer = k2Trimmer;
-		if (k2Trimmer.trimSlider instanceof Control.Slider) {
-			k2Trimmer.trimSlider.dispose();
-		}
+		jQuery('#trimmermore').click(function() {
+			jQuery('#trimmertrack').SliderSetValues([
+				[ k2Trimmer.sliderOffset, 0 ]
+			]);
 
-		k2Trimmer.trimSlider = new Control.Slider(k2TrimmerTrimmer.sliderhandle, k2TrimmerTrimmer.slidertrack, {
-			range: $R(k2TrimmerTrimmer.minValue, k2TrimmerTrimmer.maxValue),
-			sliderValue: k2TrimmerTrimmer.curValue,
-			onSlide: function(value) { k2TrimmerTrimmer.doTrim(value); },
-			onChange: function(value) { k2TrimmerTrimmer.doTrim(value); }
+			return false;
 		});
 
-		if (k2Trimmer.init) {
-			Event.stopObserving(k2Trimmer.trimmore, 'click', k2Trimmer.trimMoreListener);
-			Event.stopObserving(k2Trimmer.trimless, 'click', k2Trimmer.trimLessListener);
-		}
+		jQuery('#trimmerless').click(function() {
+			jQuery('#trimmertrack').SliderSetValues([
+				[ -k2Trimmer.sliderOffset, 0 ]
+			]);;
 
-		Event.observe(k2Trimmer.trimmore, 'click', k2Trimmer.trimMoreListener);
-		Event.observe(k2Trimmer.trimless, 'click', k2Trimmer.trimLessListener);
-
-		k2Trimmer.init = true;
-   	},
-
-	trimMoreAction: function() {
-		k2Trimmer.trimSlider.setValue(k2Trimmer.curValue + 20);
+			return false;
+		});
 	},
 
-	trimLessAction: function() {
-		k2Trimmer.trimSlider.setValue(k2Trimmer.curValue - 20);
-	},
-
-	trimAgain: function(value) {
+	trimAgain: function() {
 		k2Trimmer.loadChunks();
-		k2Trimmer.doTrim(value);
+		k2Trimmer.doTrim(k2Trimmer.curValue);
 	},
 
     loadChunks: function() {
-		var everything = $(k2Trimmer.targetitem).getElementsByClassName(k2Trimmer.chunkClass);
+		var everything = jQuery('#dynamic-content .entry-content');
 
 		k2Trimmer.chunks = [];
 
 		for (i=0; i<everything.length; i++) {
 			k2Trimmer.chunks.push({
 				ref: everything[i],
-				original: everything[i].innerHTML
+				html: jQuery(everything[i]).html(),
+				text: jQuery.trim(jQuery(everything[i]).text())
 			});
 		}
 	},
@@ -116,34 +101,21 @@ TextTrimmer.prototype = {
 
 		for (i=0; i<k2Trimmer.chunks.length; i++) {
 			if (interval == k2Trimmer.maxValue) {
-				k2Trimmer.chunks[i].ref.innerHTML = k2Trimmer.chunks[i].original;
+				jQuery(k2Trimmer.chunks[i].ref).html(k2Trimmer.chunks[i].html);
 			} else if (interval == k2Trimmer.minValue) {
-				k2Trimmer.chunks[i].ref.innerHTML = '';
+				jQuery(k2Trimmer.chunks[i].ref).html('');
 			} else {
-				var a = k2Trimmer.chunks[i].original.stripTags();
-				a = a.truncate(interval * 5, '');
-				k2Trimmer.chunks[i].ref.innerHTML = '<p>' + a + '&nbsp;[...]</p>';
+				var a = k2Trimmer.chunks[i].text.split(' ');
+				a = a.slice(0, Math.round(interval * a.length / 100));
+				jQuery(k2Trimmer.chunks[i].ref).html('<p>' + a.join(' ') + '&nbsp;[...]</p>');
 			}
 		}
 
 		/* Add 'trimmed' class to <BODY> while active */
 		if (k2Trimmer.curValue != k2Trimmer.maxValue) {
-			$(k2Trimmer.targetitem).addClassName("trimmed");
+			jQuery('#dynamic-content').addClass("trimmed");
 		} else {
-			$(k2Trimmer.targetitem).removeClassName("trimmed");
-		}
-	},
-
-	saveState: function() {
-		k2Trimmer.prevState = new Hash({
-			curValue: k2Trimmer.curValue
-		});
-	},
-
-	restoreState: function() {
-		if (k2Trimmer.prevState instanceof Hash) {
-			k2Trimmer.setupTrimmer(k2Trimmer.prevState.curValue);
-			k2Trimmer.prevState = null;
+			jQuery('#dynamic-content').removeClass("trimmed");
 		}
 	}
-}
+};

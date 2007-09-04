@@ -17,36 +17,22 @@
 	header('Content-Type: text/javascript; charset: UTF-8');
 ?>
 
-k2Search = {
-	active: false,
-	timer: false,
-	prevSearch: false,
-
-	build: function(url, searchprompt) {
+var k2Search = {
+	setup: function(url, searchprompt) {
 		k2Search.url = url;
 		k2Search.searchPrompt = searchprompt;
 
-		// Define our elements
-		k2Search.targetContent = jQuery('#dynamic-content');
-		k2Search.hideContent = jQuery('#current-content');
-		k2Search.searchSubmit = jQuery('form#searchform input[@type=submit]');
-
 		// Insert reset and loading elements
-		k2Search.searchSubmit.before('<span id="searchreset"></span><span id="searchload"></span>');
+		jQuery('#searchform input[@type=submit]').before('<span id="searchreset"></span><span id="searchload"></span>');
 
-		// Define our elements
-		k2Search.searchLoad = jQuery('form#searchform span#searchload');
-		k2Search.searchReset = jQuery('form#searchform span#searchreset');
-		k2Search.searchInput = jQuery('form#searchform input#s');
+		jQuery('input#s').addClass('livesearch').val(k2Search.searchPrompt);
 
-		k2Search.searchInput.addClass('livesearch').val(k2Search.searchPrompt);
-
-		k2Search.searchSubmit.hide();
-		k2Search.searchLoad.hide();
-		k2Search.searchReset.fadeTo('fast', 0.3);
+		jQuery('#searchform input[@type=submit]').hide();
+		jQuery('#searchload').hide();
+		jQuery('#searchreset').show().fadeTo('fast', 0.3);
 
 		// Bind events to the search input
-		k2Search.searchInput
+		jQuery('input#s')
 			.focus(function() {
 				if ( jQuery(this).val() == k2Search.searchPrompt )
 					jQuery(this).val('');
@@ -70,28 +56,28 @@ k2Search = {
 	},
 
 	doSearch: function() {
-		if (k2Search.searchInput.val() == k2Search.prevSearch) return;
+		if (jQuery('input#s').val() == k2Search.prevSearch) return;
 
-		k2Search.searchReset.fadeOut('fast');
-		k2Search.searchLoad.fadeIn('fast');
+		jQuery('#searchreset').fadeTo('fast', 0.3);
+		jQuery('#searchload').fadeIn('fast');
 
 		if ( ! k2Search.active ) {
 			k2Search.active = true;
 
 			if ( jQuery('div#rollingarchives').length ) {
-				jQuery('div#rollingarchives').saveRollingState();
+				k2Rolling.saveState();
 			}
 		}
 
-		k2Search.prevSearch = k2Search.searchInput.val();
-		jQuery.get(k2Search.url, k2Search.searchInput.serialize() + '&k2dynamic=init',
+		k2Search.prevSearch = jQuery('input#s').val();
+		jQuery.get(k2Search.url, jQuery('input#s').serialize() + '&k2dynamic=init',
 			function(data) {
-				k2Search.hideContent.hide();
-				k2Search.targetContent.show().html(data);
+				jQuery('#current-content').hide();
+				jQuery('#dynamic-content').show().html(data);
 
-				k2Search.searchLoad.fadeOut('fast');
+				jQuery('#searchload').fadeOut('fast');
 
-				k2Search.searchReset.click(k2Search.resetSearch).fadeTo('fast', 1.0).css('cursor', 'pointer');
+				jQuery('#searchreset').click(k2Search.resetSearch).fadeTo('fast', 1.0).css('cursor', 'pointer');
 			}
 		);
 	},
@@ -101,19 +87,15 @@ k2Search = {
 		k2Search.active = false;
 		k2Search.prevSearch = '';
 
-		k2Search.searchInput.val(k2Search.searchPrompt);
+		jQuery('input#s').val(k2Search.searchPrompt);
 
-		k2Search.searchReset.unbind('click').fadeTo('fast', 0.3).css('cursor', 'default');
+		jQuery('#searchreset').unbind('click').fadeTo('fast', 0.3).css('cursor', 'default');
 
-		if ( k2Search.hideContent.length ) {
-			k2Search.targetContent.hide().html('');
-			k2Search.hideContent.show();
+		if ( jQuery('#current-content').length ) {
+			jQuery('#dynamic-content').hide().html('');
+			jQuery('#current-content').show();
 		} else {
-			jQuery('div#rollingarchives').restoreRollingState();
+			k2Rolling.restoreState();
 		}
 	}
 };
-
-jQuery.fn.extend({
-	newLiveSearch: k2Search.build
-});

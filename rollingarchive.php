@@ -68,14 +68,18 @@
 <?php if ( !isset($_GET['k2dynamic']) or ($_GET['k2dynamic'] == 'init') ) { ?>
 <script type="text/javascript">
 // <![CDATA[
-	var k2RollingArchives = jQuery('div#rollingarchives').newRollingArchives(
-		"<?php output_javascript_url('theloop.php'); ?>",
-		"<?php echo attribute_escape(__('Page %1$d of %2$d',k2_domain)); ?>",
-		<?php echo $rolling_page; ?>,
-		<?php echo $wp_query->max_num_pages; ?>,
-		<?php output_javascript_hash($rolling_query); ?>,
-		<?php output_javascript_array($page_dates); ?>
-	);
+	jQuery(document).ready(function() {
+		k2Rolling.setup(
+			"<?php output_javascript_url('theloop.php'); ?>",
+			"<?php echo attribute_escape(__('Page %1$d of %2$d',k2_domain)); ?>",
+			<?php echo $rolling_page; ?>,
+			<?php echo $wp_query->max_num_pages; ?>,
+			<?php output_javascript_hash($rolling_query); ?>,
+			<?php output_javascript_array($page_dates); ?>
+		);
+
+		k2Trimmer.setup(100);
+	});
 // ]]>
 </script>
 <?php } } ?>

@@ -18,7 +18,7 @@
 ?>
 
 jQuery('#notices').ajaxError(function(request, settings) {
-   jQuery(this).append('<p class="alert">Error requesting page ' + settings.url + '</p>');
+	jQuery(this).show().append('<p class="alert">Error requesting page ' + settings.url + '</p>');
 });
 
 function OnLoadUtils() {
