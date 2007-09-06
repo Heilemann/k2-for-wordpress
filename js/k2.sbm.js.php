@@ -17,6 +17,8 @@
 	header('Content-Type: text/javascript; charset: UTF-8');
 ?>
 
+jQuery.noConflict();
+
 jQuery('document').ready(
 	function($) {
 		// Next available module ID
@@ -62,7 +64,7 @@ jQuery('document').ready(
 				// Submit new module info
 				$.ajax({
 					type: "POST",
-					processdata: false,
+					processData: false,
 					url: sbm_baseUrl + '?action=add',
 					data: "add_name=" + module + "&add_type=" + type + "&add_sidebar=" + sidebar,
 					error: function(){
@@ -72,7 +74,7 @@ jQuery('document').ready(
 						// Show an error message
 //						$('#msg').text('An error occurred while adding module. Please try again.');
 					},
-					success: function(){
+					success: function(request, status){
 						// Remove temp markers
 						$('.marker').remove();
 
@@ -196,7 +198,7 @@ jQuery('document').ready(
 
 
 		function destroySortables() {
-			$(sortableLists).SortableDestroy();
+			$('ul.sortable').SortableDestroy();
 		}
 
 		initSortables();
@@ -210,6 +212,7 @@ jQuery('document').ready(
 		function initOptionLinks() {
 			// Set up options buttons
 			$('a.optionslink').each(function() {
+				$(this).unbind();
 				$(this).click(function() {
 					curOptModule = $(this).parent().parent().attr('id');
 					curOptSidebar = $(curOptModule).parent().attr('id');
@@ -220,17 +223,20 @@ jQuery('document').ready(
 			});
 
 			// Set up options submit process 
+			$('#submit').unbind();
 			$('#submit').click(function() {
 				$(this).parents('form').trigger('submit');
 				return false;
 			});
 
+			$('#submitclose').unbind();
 			$('#submitclose').click(function() {
 				$(this).parents('form').trigger('submit');
 				closeOptions();
 				return false;
 			});
 
+			$('#module-options-form').unbind();
 			$('#module-options-form').submit(function() {
 				$.ajax({
 					type: "POST",
