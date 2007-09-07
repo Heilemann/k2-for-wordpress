@@ -13,7 +13,6 @@
 	}
 
 #rollnavigation {
-	margin-left: 110px;
 	position: relative;
 	}
 
@@ -138,7 +137,7 @@
 #pagetrackwrap {
 	position: absolute;
 	top: 6px;
-	left: 130px;
+	left: 125px;
 	width: 200px;
 	padding-right: 4px;
 	background: url('../images/sliderbgright.png') no-repeat right center;
@@ -168,12 +167,16 @@ div.trimmed .hentry.alt {
 	background: transparent;
 	}
 
+.firstpage #texttrimmer {
+	display: none;
+	}
+
 #texttrimmer {
-	position: relative;
+	position: absolute;
 	width: 100px;
 	height: 15px;
-	top: 15px;
-	left: 0;
+	top: 10px;
+	right: 60px;
 	}
 
 .firstpage #pagetrackwrap {
