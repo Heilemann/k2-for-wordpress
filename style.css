@@ -488,6 +488,11 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	margin: 5px 0;
 	}
 
+// Google Maps Support
+.entry-content .map div {
+	margin: 0;
+	}
+
 .single .k2-asides .entry-content p,
 .single .k2-asides .entry-content ul,
 .single .k2-asides .entry-content ol,
@@ -738,10 +743,6 @@ a {
 	clear: both;
 	margin: 0;
 	padding: 0;
-	}
-
-#primary table img {
-	max-width: none;
 	}
 
 .center {
