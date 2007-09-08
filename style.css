@@ -454,6 +454,9 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	display: block;
 	padding: 2px 0 2px 20px;
 	background: url('images/tag_blue.png') left center no-repeat;
+	}
+
+.entry-tags a {
 	text-transform: lowercase;
 	}
 
