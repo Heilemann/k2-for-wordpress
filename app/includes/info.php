@@ -370,6 +370,8 @@ function k2_body_class( $print = true ) {
 	is_paged()      ? $c[] = 'paged'      : null;
 	is_attachment() ? $c[] = 'attachment' : null;
 	is_404()        ? $c[] = 'four04'     : null; // CSS does not allow a digit as first character
+	is_tag()    	? $c[] = 'tag'        : null;
+	is_category()   ? $c[] = 'category'   : null;
 
 	// Special classes for BODY element when a single post
 	if ( is_single() ) {
