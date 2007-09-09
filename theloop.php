@@ -63,7 +63,7 @@
 			} elseif (is_paged() and (get_query_var('paged') > 1)) { 
 				 _e('Archive','k2_domain');
 			}
-			if ( get_query_var('paged') > 1 ) {
+			if ( (get_query_var('paged') > 1) and (get_option('k2rollingarchives') == 0) ) {
 				printf(__(' <span class="archivepages">Page %1$s of %2$s</span>','k2_domain'), get_query_var('paged'), $wp_query->max_num_pages);
 			}
 			?>
