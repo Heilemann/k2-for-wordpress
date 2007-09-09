@@ -26,7 +26,7 @@
 	$asides_id = get_option('k2asidescategory');
 
 	// Get the categories we might use for asides
-	$asides_cats = get_categories();
+	$asides_cats = get_categories('get=all');
 
 	// Update
 	$update = K2Header::update();
