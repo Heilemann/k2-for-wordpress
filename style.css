@@ -1,3 +1,5 @@
+/* @override http://localhost/wp-content/themes/kaytwo/style.css */
+
 /*
 Theme Name: K2
 Theme URI: http://getk2.com
@@ -1121,6 +1123,7 @@ div#latest-comments small {
 	}
 
 /* Noteworthy */
+
 .category-noteworthy h3.entry-title {
 	background: url('images/heart.png') no-repeat right center;
 	padding-right: 25px;
@@ -1128,6 +1131,24 @@ div#latest-comments small {
 }
 
 .noteworthyLink { margin-left: 5px }
+
+
+/* Tag Cloud Module */
+
+.sb-wptagcloud ul {
+	line-height: 2em;
+	text-align: justify;
+	}
+
+.sb-wptagcloud li {
+	display: inline;
+	}
+
+.sb-wptagcloud a {
+	padding: 0 2px;
+	white-space: nowrap;
+	text-transform: lowercase;
+	}
 
 /* Peace and forgiveness */
 /* Learn more about the other K2: http://en.wikipedia.org/wiki/K2 */
