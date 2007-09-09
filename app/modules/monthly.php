@@ -4,11 +4,11 @@ function months_sidebar_module($args) {
 	extract($args);
 
 	echo($before_module . $before_title . $title . $after_title);
-	?>
+?>
 	<ul>
 		<?php wp_get_archives('type=monthly'); ?>
 	</ul>
-	<?php
+<?php
 	echo($after_module);
 }
 

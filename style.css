@@ -1037,23 +1037,20 @@ div#latest-comments small {
 	FlickrRSS
 */
 
+.sb-flickr div {
+	margin-top: 10px !important;
+	margin-left: ;
+	}
+
 .sb-flickr div img {
-	border: 0px;
 	padding: 5px;
 }
 
 .sb-flickr div a {
-	margin-left:  10px;
 	}
 	
 .sb-flickr div a img {
-	border: 1px solid #ccc;
-	padding: 3px;
-	margin: 5px 3px 0;
-}
-
-.sb-flickr div a:hover img {
-	border: 1px solid #999;
+	margin: 0px 5px;
 }
 
 /*
