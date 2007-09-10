@@ -198,50 +198,58 @@ function output_javascript_url($file) {
 	echo $template_url .'/'. $file;
 }
 
-function output_javascript_array($array) {
+
+// Generate JavaScript array from an array
+function output_javascript_array($array, $print = true) {
 	$output = '[';
 
-	if ( is_array($array) ) {
-		$last_item = array_pop($array);
-		foreach ($array as $item) {
-			$output .= '"' . $item . '", ';
-		}
-		$output .= '"' . $last_item . '"';
+	if ( is_array($array) and !empty($array) ) {
+		array_walk($array, 'js_format_array');
+		$output .= implode(', ', $array);
 	}
 
 	$output .= ']';
 
-	echo $output;
+	return $print ? print($output) : $output;
 }
 
-function output_javascript_hash($array) {
+
+// Generate JavaScript hash from an associated array
+function output_javascript_hash($array, $print = true) {
 	$output = '{';
 
 	if ( is_array($array) and !empty($array) ) {
-		$keys = array_keys($array);
-		$values = array_values($array);
-		$n = count($array);
-
-		for ($i = 0; $i < $n; $i++) {
-			$output .= $keys[$i] . ': ';
-
-			if ( is_string($values[$i]) ) {
-				$output .= "'$values[$i]'";
-			} elseif ( empty($values[$i]) ) {
-				$output .= '0';
-			} else {
-				$output .= strval($values[$i]);
-			}
-
-			if ($i < $n - 1) {
-				$output .= ',';
-			}
-		}
+		array_walk($array, 'js_format_hash');
+		$output .= implode(', ', $array);
 	}
 
 	$output .= '}';
 
-	echo $output;
+	return $print ? print($output) : $output;
+}
+
+function js_format_array(&$item, $key) {
+	$item = js_value($item);
+}
+
+function js_format_hash(&$item, $key) {
+	$item = '"' . js_escape($key) . '": ' . js_value($item);
+}
+
+function js_value($value) {
+	if ( is_string($value) )
+		return '"' . js_escape($value) . '"';
+	
+	if ( is_bool($value) )
+      return $value ? 'true' : 'false';
+
+	if ( is_numeric($value) )
+		return $value;
+		
+	if ( empty($value) )
+		return '0';
+
+	return '""';
 }
 
 
