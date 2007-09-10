@@ -350,8 +350,7 @@ function k2_body_id() {
 }
 
 
-
-// Semantic class functions from Sandbox 0.9.7 (http://www.plaintxt.org/themes/sandbox/)
+// Semantic class functions from Sandbox 1.0 svn (http://www.plaintxt.org/themes/sandbox/)
 
 // Generates semantic classes for BODY element
 function k2_body_class( $print = true ) {
@@ -370,21 +369,43 @@ function k2_body_class( $print = true ) {
 	is_paged()      ? $c[] = 'paged'      : null;
 	is_attachment() ? $c[] = 'attachment' : null;
 	is_404()        ? $c[] = 'four04'     : null; // CSS does not allow a digit as first character
-	is_tag()    	? $c[] = 'tag'        : null;
+
+	if ( function_exists('is_tag') )
+		is_tag()    ? $c[] = 'tag'        : null;
+
 	is_category()   ? $c[] = 'category'   : null;
 
 	// Special classes for BODY element when a single post
 	if ( is_single() ) {
 		$postID = $wp_query->post->ID;
 		the_post();
+
+		// Adds 'single' class and class with the post ID
 		$c[] = 'single postid-' . $postID;
 
+		// Adds classes for the month, day, and hour when the post was published
 		if ( isset($wp_query->post->post_date) )
 			k2_date_classes(mysql2date('U', $wp_query->post->post_date), $c, 's-');
 
-		foreach ( (array) get_the_category() as $cat )
-			$c[] = 's-category-' . $cat->category_nicename;
+		// Adds category classes for each category on single posts
+		if ( $cats = get_the_category() )
+			foreach ( $cats as $cat )
+				$c[] = 's-category-' . $cat->category_nicename;
 
+		// Adds tag classes for each tags on single posts
+		if ( function_exists('get_the_tags') )
+			if ( $tags = get_the_tags() )
+				foreach ( $tags as $tag )
+					$c[] = 's-tag-' . $tag->slug;
+
+		// Adds MIME-specific classes for attachments
+		if ( is_attachment() ) {
+			$the_mime = get_post_mime_type();
+			$boring_stuff = array('application/', 'image/', 'text/', 'audio/', 'video/', 'music/');
+			$c[] = 'attachment-' . str_replace($boring_stuff, '', $the_mime);
+		}
+
+		// Adds author class for the post author
 		$c[] = 's-author-' . sanitize_title_with_dashes(strtolower(get_the_author()));
 		rewind_posts();
 	}
@@ -401,6 +422,13 @@ function k2_body_class( $print = true ) {
 		$cat = $wp_query->get_queried_object();
 		$c[] = 'category';
 		$c[] = 'category-' . $cat->category_nicename;
+	}
+
+	// Tag name classes for BODY on tag archives
+	else if ( function_exists('is_tag') and is_tag() ) {
+		$tag = $wp_query->get_queried_object();
+		$c[] = 'tag';
+		$c[] = 'tag-' . $tag->slug;
 	}
 
 	// Page author for BODY on 'pages'
@@ -425,6 +453,8 @@ function k2_body_class( $print = true ) {
 			$c[] = 'page-paged-'.$page.'';
 		} else if ( is_category() ) {
 			$c[] = 'category-paged-'.$page.'';
+		} else if ( function_exists('is_tag') and is_tag() ) {
+			$c[] = 'tag-paged-'.$page.'';
 		} else if ( is_date() ) {
 			$c[] = 'date-paged-'.$page.'';
 		} else if ( is_author() ) {
@@ -483,6 +513,11 @@ function k2_post_class( $post_count = 1, $post_asides = false, $print = true ) {
 	foreach ( (array) get_the_category() as $cat )
 		$c[] = 'category-' . $cat->category_nicename;
 
+	// Tags for the post queried
+	if ( function_exists('get_the_tags') )
+		foreach ( (array) get_the_tags() as $tag )
+			$c[] = 'tag-' . $tag->slug;
+
 	// For password-protected posts
 	if ( $post->post_password )
 		$c[] = 'protected';
@@ -525,7 +560,7 @@ function k2_comment_class( $comment_count = 1, $print = true ) {
 	if ( $comment->user_id > 0 ) {
 		$user = get_userdata($comment->user_id);
 
-		// For all registered users, 'byuser'; to specificy the registered user, 'comment-author-[display_name]'
+		// For all registered users, 'byuser'; to specify the registered user, 'comment-author-[display_name]'
 		$c[] = "byuser comment-author-" . sanitize_title_with_dashes(strtolower($user->display_name));
 		// For comment authors who are the author of the post
 		if ( $comment->user_id === $post->post_author )
