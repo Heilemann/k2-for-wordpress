@@ -21,7 +21,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
 
 <head profile="http://gmpg.org/xfn/11">
-	<title><?php if (is_page()) { the_title(); } ?> <?php if (function_exists('is_tag') and is_tag()) { ?>Tag Archive for &lsquo;<?php single_tag_title() ?>&rsquo;<?php } else if (is_archive()) { wp_title(''); ?> archive<?php } elseif (is_search()) { ?> Search for <?php echo get_query_var('s'); } if ( !(is_404()) and (is_search()) or (is_single()) or (is_page()) or (function_exists('is_tag') and is_tag()) or (is_archive()) ) { ?> at <?php } ?> <?php bloginfo('name'); ?></title>
+	<title><?php
+	
+	// Page or Single Post
+	if ( is_page() or is_single() ) {
+		the_title();
+
+	// Category Archive
+	} elseif ( is_category() ) {
+		printf( __('Catergory Archive for &lsquo;%s&rsquo;','k2_domain'), single_cat_title('', false) );
+
+	// Tag Archive
+	} elseif ( function_exists('is_tag') and is_tag() ) {
+		printf( __('Tag Archive for &lsquo;%s&rsquo;','k2_domain'), single_tag_title('', false) );
+
+	// General Archive
+	} elseif ( is_archive() ) {
+		printf( __('%s Archive','k2_domain'), wp_title('', false) );
+
+	// Search Results
+	} elseif ( is_search() ) {
+		printf( __('Search Results for &lsquo;%s&rsquo;','k2_domain'), get_query_var('s') );
+	}
+
+	// Insert separator for the titles above
+	if ( !is_home() and !is_404() ) {
+		_e(' at ','k2_domain');
+	}
+	
+	// Finally the blog name
+	bloginfo('name');
+
+	?></title>
 	<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 	<meta name="generator" content="WordPress <?php bloginfo('version'); ?>" />
 	<meta name="template" content="K2 <?php k2info('version'); ?>" />
