@@ -142,6 +142,11 @@ var k2Rolling = {
 					jQuery('#rollingcontent').html(data);
 
 					k2Trimmer.trimAgain();
+
+					// Lightbox v2.03.3 - Adds new images to lightbox
+					if ( myLightbox instanceof Lightbox && myLightbox.updateImageList ) {
+						myLightbox.updateImageList();
+					}
 				}
 			);
 		}
