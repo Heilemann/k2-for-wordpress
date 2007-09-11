@@ -17,6 +17,8 @@
 	header('Content-Type: text/javascript; charset: UTF-8');
 ?>
 
+jQuery.noConflict();
+
 jQuery('#notices').ajaxError(function(request, settings) {
 	jQuery(this).show().append('<p class="alert">Error requesting page ' + settings.url + '</p>');
 });

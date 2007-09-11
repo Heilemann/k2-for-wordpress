@@ -79,7 +79,6 @@
 
 	<script type="text/javascript">
 	//<![CDATA[
-		jQuery.noConflict();
 
 		<?php /* LiveSearch */ if (get_option('k2livesearch') == 1) { ?>
 			jQuery(document).ready(function(){
