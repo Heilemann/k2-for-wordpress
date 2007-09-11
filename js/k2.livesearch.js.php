@@ -78,6 +78,11 @@ var k2Search = {
 				jQuery('#searchload').fadeOut('fast');
 
 				jQuery('#searchreset').click(k2Search.resetSearch).fadeTo('fast', 1.0).css('cursor', 'pointer');
+
+				// Lightbox v2.03.3 - Adds new images to lightbox
+				if ( myLightbox instanceof Lightbox && myLightbox.updateImageList ) {
+					myLightbox.updateImageList();
+				}
 			}
 		);
 	},
