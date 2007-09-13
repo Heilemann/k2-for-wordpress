@@ -8,12 +8,12 @@ class K2 {
 		load_theme_textdomain('k2_domain');
 
 		// Define our folders for WordPress & WordpressMU
-		if ( false === strpos($wp_version, 'wordpress-mu') ) {
-			define('K2STYLESPATH', TEMPLATEPATH . '/styles/');
-			define('K2HEADERSPATH', TEMPLATEPATH . '/images/headers/');
-		} else {
+		if(K2_MU) {
 			define('K2STYLESPATH', ABSPATH . UPLOADS . 'k2support/styles/');
 			define('K2HEADERSPATH', ABSPATH . UPLOADS . 'k2support/headers/');
+		} else {
+			define('K2STYLESPATH', TEMPLATEPATH . '/styles/');
+			define('K2HEADERSPATH', TEMPLATEPATH . '/images/headers/');
 		}
 
 		$exclude = array('sbm-ajax.php');
@@ -51,13 +51,13 @@ class K2 {
 	}
 
 	function install($last_modified) {
-		global $current, $wp_version;
+		global $wp_version;
 
 		// Add / update the version number
 		if(get_option('k2version') === false) {
-			add_option('k2version', $current, 'This option stores K2\'s version number');
+			add_option('k2version', K2_CURRENT, 'This option stores K2\'s version number');
 		} else {
-			update_option('k2version', $current);
+			update_option('k2version', K2_CURRENT);
 		}
 
 		// Add / update the last modified timestamp
@@ -68,14 +68,14 @@ class K2 {
 		}
 
 		// Create support folders for WordPressMU
-		if ( false !== strpos($wp_version, 'wordpress-mu') ) {
-			if ( ! is_dir(ABSPATH . UPLOADS . 'k2support/') ) {
+		if(K2_MU) {
+			if(!is_dir(ABSPATH . UPLOADS . 'k2support/')) {
 				wp_mkdir_p(ABSPATH . UPLOADS . 'k2support/');
 			}
-			if ( ! is_dir(K2STYLESPATH) ) {
+			if(!is_dir(K2STYLESPATH)) {
 				wp_mkdir_p(K2STYLESPATH);
 			}
-			if ( ! is_dir(K2HEADERSPATH) ) {
+			if(!is_dir(K2HEADERSPATH)) {
 				wp_mkdir_p(K2HEADERSPATH);
 			}
 		}

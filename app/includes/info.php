@@ -5,12 +5,10 @@ function k2info($show='') {
 }
 
 function get_k2info($show='') {
-	global $current;
-
 	$output = '';
 	switch ($show) {
 		case 'version' :
-    		$output = 'Beta '. $current;
+    		$output = K2_CURRENT;
 			break;
 
 		case 'style' :

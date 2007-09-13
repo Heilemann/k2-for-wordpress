@@ -15,11 +15,15 @@ class K2Options {
 	}
 
 	function init() {
-		add_action('admin_menu', array('K2Options', 'add_menu'));
+		if(is_admin()) {
+			add_action('admin_menu', array('K2Options', 'add_menu'));
 
-		// Check for K2 uninstallation. Do here to avoid header output.
-		if($_GET['page'] == 'k2-options' and isset($_POST['uninstall'])) {
-			K2::uninstall();
+			// Check for K2 uninstallation. Do here to avoid header output.
+			if($_GET['page'] == 'k2-options' and isset($_POST['uninstall'])) {
+				K2::uninstall();
+			}
+		} else {
+
 		}
 	}
 
