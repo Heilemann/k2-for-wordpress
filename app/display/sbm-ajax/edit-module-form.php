@@ -19,18 +19,8 @@
 
 <?php
 	if(function_exists($base_module['control_callback'])) {
-		$k2sbm_current_module = $module;
-
 		// Call the control callback
 		call_user_func($base_module['control_callback']);
-
-		// Update options in any PHP < 5
-		if(version_compare(PHP_VERSION, '5.0') < 0) {
-			foreach($k2sbm_current_module->options as $key => $value) {
-				$module->update_option($key, $value);
-			}
-		}
-		$k2sbm_current_module = false;
 	}
 ?>
 

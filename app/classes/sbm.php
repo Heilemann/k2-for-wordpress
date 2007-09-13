@@ -831,9 +831,20 @@ class k2sbmModule {
 			}
 		}
 
+		$k2sbm_current_module = $this;
+
 		// Display the generic edit form
 		extract(array('module' => $this));
 		include(TEMPLATEPATH . '/app/display/sbm-ajax/edit-module-form.php');
+
+		// Update options in any PHP < 5
+		if(version_compare(PHP_VERSION, '5.0') < 0) {
+			foreach($k2sbm_current_module->options as $key => $value) {
+				$this->update_option($key, $value);
+			}
+		}
+
+		$k2sbm_current_module = false;
 
 		// Get the base module details
 		$base_module = $k2sbm_registered_modules[$this->type];
