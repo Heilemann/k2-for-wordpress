@@ -95,7 +95,6 @@
 		<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class($post_index++, in_category($k2asidescategory)); ?>">
 			<div class="entry-head">
 				<h3 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php the_title(); ?></a></h3>
-				<?php /* Support for Noteworthy plugin */ if (function_exists('nw_noteworthyLink')) { nw_noteworthyLink(get_the_ID()); } ?>
 
 				<div class="entry-meta">
 					<span class="chronodata">

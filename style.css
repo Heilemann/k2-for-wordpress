@@ -182,13 +182,6 @@ ul.menu li.current_page_item a:hover {
 	text-decoration: none;
 	}
 
-.admintab {
-	position: absolute;
-	right: 0px;
-	}
-
-* html .admintab { padding: 5px 15px 6px }	/* IE hack */
-	
 /*- Sidebar Subpages Menu */
 
 .sb-pagemenu ul {
