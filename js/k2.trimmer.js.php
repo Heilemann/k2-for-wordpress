@@ -37,36 +37,26 @@ var k2Trimmer = {
 			k2Trimmer.curValue = value;
 		}
 
-		var initSlider = true;
-		jQuery('#trimmertrack').Slider({
-			accept: '#trimmerhandle',
-			values: [[1000, 0]],
-			fractions: 5,
-			onSlide: function(xpct) {
-				if (initSlider) {
-					k2Trimmer.sliderOffset = this.dragCfg.gx;
-				} else {
-					k2Trimmer.doTrim(Math.round(xpct));
-				}
+		k2Trimmer.slider = new K2Slider('#trimmerhandle', '#trimmertrack', {
+			minimum: 0,
+			maximum: 10,
+			value: 10,
+			onSlide: function(x) {
+				k2Trimmer.doTrim(x * 10);
 			},
-			onChange: function(xpct) {
-				k2Trimmer.doTrim(Math.round(xpct));
+			onChange: function(x) {
+				k2Trimmer.doTrim(x * 10);
 			}
 		});
-		initSlider = false;
 
 		jQuery('#trimmermore').click(function() {
-			jQuery('#trimmertrack').SliderSetValues([
-				[ k2Trimmer.sliderOffset, 0 ]
-			]);
+			k2Trimmer.slider.setValueBy(1);
 
 			return false;
 		});
 
 		jQuery('#trimmerless').click(function() {
-			jQuery('#trimmertrack').SliderSetValues([
-				[ -k2Trimmer.sliderOffset, 0 ]
-			]);;
+			k2Trimmer.slider.setValueBy(-1);
 
 			return false;
 		});

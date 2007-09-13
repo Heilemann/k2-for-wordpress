@@ -64,21 +64,21 @@ class K2SBM {
 		K2SBM::pre_bootstrap();
 
 		// Check for specific actions that return a HTML response
-		if($_GET['action'] == 'control-show') {
+		if($_POST['action'] == 'control-show') {
 			if(isset($_POST['module_id'])) {
 				$all_modules = K2SBM::get_all_modules();
 				$all_modules[$_POST['module_id']]->displayControl();
 			} else {
 				echo(false);
 			}
-		} elseif($_GET['action'] == 'control-post-list-show') {
+		} elseif($_POST['action'] == 'control-post-list-show') {
 			if(isset($_POST['module_id'])) {
 				$all_modules = K2SBM::get_all_modules();
 				$all_modules[$_POST['module_id']]->displayPostList();
 			} else {
 				echo(false);
 			}
-		} elseif($_GET['action'] == 'control-page-list-show') {
+		} elseif($_POST['action'] == 'control-page-list-show') {
 			if(isset($_POST['module_id'])) {
 				$all_modules = K2SBM::get_all_modules();
 				$all_modules[$_POST['module_id']]->displayPageList();
@@ -96,7 +96,7 @@ class K2SBM {
 			echo('<response>');
 
 			// Check what the action is
-			switch($_GET['action']) {
+			switch($_POST['action']) {
 				// List of the modules in the sidebar
 				case 'list':
 					foreach($k2sbm_registered_sidebars as $sidebar) {

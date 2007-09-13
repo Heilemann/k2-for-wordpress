@@ -35,65 +35,37 @@ var k2Rolling = {
 
 			k2Rolling.setupSlider();
 			k2Rolling.setupEvents();
+			k2Rolling.updatePageText( k2Rolling.pageNumber );
 		} else {
 			jQuery('#rollingarchives').hide();
 		}
 	},
 
 	setupSlider: function() {
-		var initSlider = true;
-
-		jQuery('#pagetrack').Slider({
-			accept: jQuery('#pagehandle'),
-			values: [[1000, 0]],
-			fractions: k2Rolling.pageCount - 1,
-			onSlide: function(xpct, ypct, x, y) {
-				if (initSlider) {
-					k2Rolling.sliderOffset = this.dragCfg.gx;
-				}
-
-				if ( jQuery('#pagetrack #dragHelper').length ) {
-					jQuery('#pagetrack #dragHelper').append(jQuery('#rollhover'));
-					jQuery('#rollhover').show();
-				}
-
-				k2Rolling.updatePageText( k2Rolling.pageCount - Math.round(x/this.dragCfg.fracW) );
+		k2Rolling.pageSlider = new K2Slider('#pagehandle', '#pagetrack', {
+			minimum: 1,
+			maximum: k2Rolling.pageCount,
+			value: k2Rolling.pageCount - k2Rolling.pageNumber + 1,
+			onSlide: function(value) {
+				jQuery('#rollhover').show();
+				k2Rolling.updatePageText( k2Rolling.pageCount - value + 1);
 			},
-			onChange: function(xpct, ypct, x, y) {
-				if (!initSlider) {
-					jQuery('#pagehandle').append(jQuery('#rollhover'));
-					k2Rolling.gotoPage( k2Rolling.pageCount - Math.round(x/this.dragCfg.fracW) );
-				}
+			onChange: function(value) {
+				k2Rolling.updatePageText( k2Rolling.pageCount - value + 1);
+				k2Rolling.gotoPage( k2Rolling.pageCount - value + 1 );
 			}
 		});
-
-		// Reposition the slider
-		if (k2Rolling.pageNumber > 1) {
-			jQuery('#pagetrack').SliderSetValues([
-				[ 0 - (k2Rolling.sliderOffset * (k2Rolling.pageNumber - 1)), 0 ]
-			]);
-		}
-
-		initSlider = false;
 	},
 
 	setupEvents: function() {
 		jQuery('#rollnext').click(function() {
-			jQuery('#pagetrack').SliderSetValues([
-				[ k2Rolling.sliderOffset, 0 ]
-			]);
-
-			k2Rolling.gotoPage(k2Rolling.pageNumber - 1);
+			k2Rolling.pageSlider.setValueBy(1);
 
 			return false;
 		});
 
 		jQuery('#rollprevious').click(function() {
-			jQuery('#pagetrack').SliderSetValues([
-				[ -k2Rolling.sliderOffset, 0 ]
-			]);
-
-			k2Rolling.gotoPage(k2Rolling.pageNumber + 1);
+			k2Rolling.pageSlider.setValueBy(-1);
 
 			return false;
 		});

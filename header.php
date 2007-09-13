@@ -94,9 +94,7 @@
 		<?php } ?>
 
 		<?php if ((get_option('k2livecommenting') == 1) and ((is_page() or is_single()) and (!isset($_GET['jal_edit_comments'])) and ('open' == $post-> comment_status) or ('comment' == $post-> comment_type) )) { ?>
-			var k2CommentOptions = {
-				url: "<?php output_javascript_url('comments-ajax.php'); ?>"
-			};
+			K2.ajaxCommentsURL = "<?php output_javascript_url('comments-ajax.php'); ?>";
 		<?php } ?>
 
 	//]]>

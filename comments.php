@@ -135,7 +135,7 @@
 	<?php endif; ?>
 	
 	<?php /* Reply Form */ if ('open' == $post->comment_status) { ?>
-	<div class="comments">
+	<div id="commentformbox" class="comments">
 		<h4 id="respond" class="reply"><?php if (isset($_GET['jal_edit_comments'])) { _e('Edit Your Comment','k2_domain'); } else { _e('Leave a Reply','k2_domain'); } ?></h4>
 		
 		<?php if (get_option('comment_registration') and !$user_ID) { ?>
@@ -202,8 +202,8 @@
 			</form>
 
 		<?php } // If registration required and not logged in ?>
-		
-		<?php if ($shownavigation) { include (TEMPLATEPATH . '/navigation.php'); } ?>
 	
-	</div> <!-- END .comments #2 -->
+	</div> <!-- .commentformbox -->
 	<?php } // comment_status ?>
+
+	<?php if ($shownavigation) { include (TEMPLATEPATH . '/navigation.php'); } ?>

@@ -19,67 +19,67 @@
 
 jQuery.noConflict();
 
-jQuery('document').ready(
-	function($) {
+jQuery(document).ready(function()
+{
 		// Next available module ID
-		var lastModuleID = $('#next_id').text();
+		var lastModuleID = jQuery('#next_id').text();
 		
 		// Set class as 'current sidebar' hack
-		$('.sortable').children().attr('class', function () { return 'module ' + $(this).parent().attr('id') });
+		jQuery('.sortable').children().attr('class', function () { return 'module ' + jQuery(this).parent().attr('id') });
 
 		// Set up drop zones for adding available modules
-		$('.droppable').Droppable({
+		jQuery('.droppable').Droppable({
 			accept:			'availablemodule', 
 			activeclass:	'hovering', 
 			tolerance:		'pointer',
 			onHover:		function (drag) {
 				// Show the temp 'result' marker
-				$(drag)
+				jQuery(drag)
 					.clone()
 					.attr('class', 'module marker')
 					.css({ position: "static" })
-					.append('<span class="type">'+$(drag).children().text()+'</span><a href="#" class="optionslink"> </a>')
-					.appendTo($(this).children());
+					.append('<span class="type">'+jQuery(drag).children().text()+'</span><a href="#" class="optionslink"> </a>')
+					.appendTo(jQuery(this).children());
 			},
 			onOut: function (drag) {
 				// Remove temp 'result' markers
-				$(this).children().children('.marker').remove();
+				jQuery(this).children().children('.marker').remove();
 			},
 			onDrop:	function (drag) {
 				// Fetch the needed module info
-				var module = $(drag).children('span.name').text();
-				var type = $(drag).attr('id');
-				var sidebar = $(this).children('ul').attr('id');
+				var module = jQuery(drag).children('span.name').text();
+				var type = jQuery(drag).attr('id');
+				var sidebar = jQuery(this).children('ul').attr('id');
 
 				// Create new module
-				var newModule = $(drag).clone().empty()
-									.html('<div><span class="name">'+$(drag).children().text()+'</span><span class="type">'+$(drag).children().text()+'</span><a href="#" class="optionslink"> </a></div>')
+				var newModule = jQuery(drag).clone().empty()
+									.html('<div><span class="name">'+jQuery(drag).children().text()+'</span><span class="type">'+jQuery(drag).children().text()+'</span><a href="#" class="optionslink"> </a></div>')
 									.attr('id', 'module-' + (lastModuleID++))
 									.attr('class', 'module ' + sidebar)
 									.css({ position: "static" });
 
 				// Show spinner on marker module
-				$('.marker').addClass('spinner');
+				jQuery('.marker').addClass('spinner');
 
 				// Submit new module info
-				$.ajax({
+				jQuery.ajax({
 					type: "POST",
 					processData: false,
-					url: sbm_baseUrl + '?action=add',
-					data: "add_name=" + module + "&add_type=" + type + "&add_sidebar=" + sidebar,
+					url: sbm_baseUrl,
+					data: "action=add&add_name=" + module + "&add_type=" + type + "&add_sidebar=" + sidebar,
 					error: function(){
 						// Remove temp markers
-						$('.marker').remove();
+						jQuery('.marker').remove();
 
 						// Show an error message
-//						$('#msg').text('An error occurred while adding module. Please try again.');
+//						jQuery('#msg').text('An error occurred while adding module. Please try again.');
 					},
 					success: function(request, status){
 						// Remove temp markers
-						$('.marker').remove();
+						jQuery('.marker').remove();
 
 						// Clone dropped module to new home
-						$('#'+sidebar).append(newModule);
+						jQuery('#'+sidebar).append(newModule);
 
 						// Reinitialize the sortable lists
 						destroySortables();
@@ -92,63 +92,64 @@ jQuery('document').ready(
 
 
 		// Set up available modules as draggable
-		$('.availablemodule').Draggable({ ghosting:	true, revert: true });
+		jQuery('.availablemodule').Draggable({ ghosting:	true, revert: true });
 
 
 		// Config sortable lists
 		var sortableLists = '';
 		function initSortables() {
-			sortableLists = $('ul.sortable').Sortable({
+			sortableLists = jQuery('ul.sortable').Sortable({
 				accept: 		'module',
 				activeclass:	'hovering',
 				helperclass:	'sorthelper',
 				tolerance:		'pointer',
 				opacity:		0.5,
 				onHover:		function(drag) {
-					$('.sorthelper')
+					jQuery('.sorthelper')
 						.removeAttr('style')
-						.html( $(drag).html() );
+						.html( jQuery(drag).html() );
 				},
 				onChange:		function(serial) {
 					// If something is being trashed
-					var trashedModule = $.SortSerialize('trash').o.trash[0];
-					console.log($('#'+trashedModule+' .name').text());
+					var trashedModule = jQuery.SortSerialize('trash').o.trash[0];
+					console.log(jQuery('#'+trashedModule+' .name').text());
 
 					// Show feedback
 					if (trashedModule != undefined) {
-						$("#msg")
-							.text("'" + $('#'+trashedModule+' .name').text() + "' was trashed")
+						jQuery("#msg")
+							.text("'" + jQuery('#'+trashedModule+' .name').text() + "' was trashed")
 							.fadeIn(1000);
 
-						setTimeout( function() { $('#msg').fadeOut('3000') }, 4000);
+						setTimeout( function() { jQuery('#msg').fadeOut('3000') }, 4000);
 
 						// Get the trashed module's parent list
-						var trashedFromList = $('#'+trashedModule).attr('class').split(' ')[1];
+						var trashedFromList = jQuery('#'+trashedModule).attr('class').split(' ')[1];
 
 						// Fade trashed module
-						$('#trash').children()
+						jQuery('#trash').children()
 							.fadeOut('fast', function() {
-								$('#trash').empty();
+								jQuery('#trash').empty();
 							});
 
 						// Remove from database
-						$.post(sbm_baseUrl + "?action=remove", {
+						jQuery.post(sbm_baseUrl + "?action=remove", {
+							action: "remove",
 							module_id:		trashedModule,
 							sidebar_id:		trashedFromList
 						}, function() {
-							$("#loader").fadeOut(10000).empty();
+							jQuery("#loader").fadeOut(10000).empty();
 						});
 
 					// If the order has been changed
 					} else {
 						// Build New World Order
 						var orderData = '';
-						var lists = $('.reorderable');
+						var lists = jQuery('.reorderable');
 						for (var j = 0; j < lists.length; j++) {
-							var modules = $(lists[j]).children();
+							var modules = jQuery(lists[j]).children();
 
 							for (var i = 0; i < modules.length; i++) {
-								orderData += 'sidebar_ordering[' + $(lists[j]).attr('id') + '][' + i + ']=' + $(modules[i]).attr('id');
+								orderData += 'sidebar_ordering[' + jQuery(lists[j]).attr('id') + '][' + i + ']=' + jQuery(modules[i]).attr('id');
 
 								if (i < modules.length - 1) orderData += "&";
 							}
@@ -157,11 +158,11 @@ jQuery('document').ready(
 						}
 
 						// Submit New World Order to db
-						$.ajax({
+						jQuery.ajax({
 							type: "POST",
-							processdata: false,
-							url: sbm_baseUrl + '?action=reorder',
-							data: orderData
+							processData: false,
+							url: sbm_baseUrl,
+							data: 'action=reorder&' + orderData
 					 	});
 						
 					}
@@ -174,23 +175,23 @@ jQuery('document').ready(
 
 
 		function tabSystem() {
-			var tabContainer = $('.tabs');
+			var tabContainer = jQuery('.tabs');
 			
-			$(tabContainer)
+			jQuery(tabContainer)
 				.children()
 				.click(function() {
-					$(this).addClass('selected')
+					jQuery(this).addClass('selected')
 						.siblings().removeClass('selected');
 					
-					$('.tabcontent').hide();
+					jQuery('.tabcontent').hide();
 					
 					// Show the tabs' content
-					$('#' + $(this).attr('id') + '-content').show();
+					jQuery('#' + jQuery(this).attr('id') + '-content').show();
 
 					return false;
 				});
 
-			$('#closelink')
+			jQuery('#closelink')
 				.click(closeOptions);
 		}
 
@@ -198,7 +199,7 @@ jQuery('document').ready(
 
 
 		function destroySortables() {
-			$('ul.sortable').SortableDestroy();
+			jQuery('ul.sortable').SortableDestroy();
 		}
 
 		initSortables();
@@ -211,42 +212,42 @@ jQuery('document').ready(
 
 		function initOptionLinks() {
 			// Set up options buttons
-			$('a.optionslink').each(function() {
-				$(this).unbind();
-				$(this).click(function() {
-					curOptModule = $(this).parent().parent().attr('id');
-					curOptSidebar = $(curOptModule).parent().attr('id');
-					curOptName = $(this).siblings('.name').text();
+			jQuery('a.optionslink').each(function() {
+				jQuery(this).unbind();
+				jQuery(this).click(function() {
+					curOptModule = jQuery(this).parent().parent().attr('id');
+					curOptSidebar = jQuery(curOptModule).parent().attr('id');
+					curOptName = jQuery(this).siblings('.name').text();
 					openOptions(curOptModule);
 					return false;
 				});
 			});
 
 			// Set up options submit process 
-			$('#submit').unbind();
-			$('#submit').click(function() {
-				$(this).parents('form').trigger('submit');
+			jQuery('#submit').unbind();
+			jQuery('#submit').click(function() {
+				jQuery(this).parents('form').trigger('submit');
 				return false;
 			});
 
-			$('#submitclose').unbind();
-			$('#submitclose').click(function() {
-				$(this).parents('form').trigger('submit');
+			jQuery('#submitclose').unbind();
+			jQuery('#submitclose').click(function() {
+				jQuery(this).parents('form').trigger('submit');
 				closeOptions();
 				return false;
 			});
 
-			$('#module-options-form').unbind();
-			$('#module-options-form').submit(function() {
-				$.ajax({
+			jQuery('#module-options-form').unbind();
+			jQuery('#module-options-form').submit(function() {
+				jQuery.ajax({
 					type: "POST",
-					processdata: false,
-					url: sbm_baseUrl + '?action=update',
-					data: "sidebar_id=" + curOptSidebar + "&module_id=" + curOptModule + "&" + $('#module-options-form').formSerialize(),
+					processData: false,
+					url: sbm_baseUrl,
+					data: "action=update&sidebar_id=" + curOptSidebar + "&module_id=" + curOptModule + "&" + jQuery('#module-options-form').serialize(),
 					success: function() {
-						$('#'+curOptModule+' .name').text($('#module-name').val());
-						$('#msg').text("Options for '" + $("#"+curOptModule+" .name").text() + "' saved successfully").fadeIn('1000');
-						setTimeout( function() { $('#msg').fadeOut('3000'); }, 4000);
+						jQuery('#'+curOptModule+' .name').text(jQuery('#module-name').val());
+						jQuery('#msg').text("Options for '" + jQuery("#"+curOptModule+" .name").text() + "' saved successfully").fadeIn('1000');
+						setTimeout( function() { jQuery('#msg').fadeOut('3000'); }, 4000);
 						cropTitles();
 					}
 				});
@@ -260,9 +261,9 @@ jQuery('document').ready(
 		var secretFormula;
 		function calculateSecretFormula() {
 			// Calculate best width for lists
-			secretFormula = parseInt($('.wrap').width() / $('.container').length)
-				- ( parseInt($('.wrap').css('paddingRight')) + parseInt($('.wrap').css('paddingLeft')) )
-				- ( parseInt($('.container').css('borderRightWidth')) + parseInt($('.container').css('borderLeftWidth')) ) - 2;
+			secretFormula = parseInt(jQuery('.wrap').width() / jQuery('.container').length)
+				- ( parseInt(jQuery('.wrap').css('paddingRight')) + parseInt(jQuery('.wrap').css('paddingLeft')) )
+				- ( parseInt(jQuery('.container').css('borderRightWidth')) + parseInt(jQuery('.container').css('borderLeftWidth')) ) - 2;
 
 			// Ensure minimum and maximum sizes
 			if (secretFormula < 150 ) { secretFormula = 150 }
@@ -272,38 +273,38 @@ jQuery('document').ready(
 
 		function resizeLists() {
 			calculateSecretFormula();
-			$('.container').width(secretFormula);
+			jQuery('.container').width(secretFormula);
 			cropTitles();
 		}
 
 		function cropTitles() {
-			$('.croppedname').remove();
-			$('.sortable>.module>div>.name').each(function() {
-				var availableWidth = $(this).parents('li').width() - parseInt($(this).parents('li').css('paddingRight')) - parseInt($(this).parents('li').css('paddingRight')) - $(this).siblings('a.optionslink').width() - 10;
-				var nameWidth = $(this).width();
+			jQuery('.croppedname').remove();
+			jQuery('.sortable>.module>div>.name').each(function() {
+				var availableWidth = jQuery(this).parents('li').width() - parseInt(jQuery(this).parents('li').css('paddingRight')) - parseInt(jQuery(this).parents('li').css('paddingRight')) - jQuery(this).siblings('a.optionslink').width() - 10;
+				var nameWidth = jQuery(this).width();
 
 				// If name doesn't fit
 				if (nameWidth > availableWidth) {
 
 					// Prepare cropped name
-					$(this)
+					jQuery(this)
 						.hide()
 						.clone()
 						.removeClass('name')
 						.addClass('croppedname')
-						.insertAfter( $(this) )
+						.insertAfter( jQuery(this) )
 						.show()
 						.each(function() {
-							var crank = $(this).text();
+							var crank = jQuery(this).text();
 							var life = '';
 							
 							// Resize name to fit
 							while (life != 42) {
 								crank = crank.substring(0, crank.length-1);
-								$(this).html(crank+'&hellip;');
+								jQuery(this).html(crank+'&hellip;');
 
 								// Are we done yet?
-								if ($(this).width() < availableWidth) life = 42; 
+								if (jQuery(this).width() < availableWidth) life = 42; 
 							} // End While
 						}); // End close & prep
 
@@ -311,8 +312,8 @@ jQuery('document').ready(
 			});
 		} // End function
 		
-		$(window).resize(resizeLists);
-		$('.container').width(secretFormula);
+		jQuery(window).resize(resizeLists);
+		jQuery('.container').width(secretFormula);
 		cropTitles();
 
 		
@@ -321,21 +322,21 @@ jQuery('document').ready(
 		function openOptions(module) {
 			var moduleID = '#' + module;
 
-			var originalPosition = $(moduleID).offset({ margin:false, border:false });
-			var originalWidth = $(moduleID).width()-8;
-			var originalHeight = $(moduleID).height();
+			var originalPosition = jQuery(moduleID).offset({ margin:false, border:false });
+			var originalWidth = jQuery(moduleID).width()-8;
+			var originalHeight = jQuery(moduleID).height();
 			var optionsWidth = 400;
 			var optionsHeight = 350;
-			var optionsX = ($(window).width()) / 2 - ((optionsWidth)/2);
-			var optionsY = ($(window).height()) / 2 - (optionsHeight/2);
-			var originalName = $(moduleID).children('.name').text();
-			curOptModule = $(moduleID).attr('id');
-			curOptSidebar = $(moduleID).parent().attr('id');
+			var optionsX = (jQuery(window).width()) / 2 - ((optionsWidth)/2);
+			var optionsY = (jQuery(window).height()) / 2 - (optionsHeight/2);
+			var originalName = jQuery(moduleID).children('.name').text();
+			curOptModule = jQuery(moduleID).attr('id');
+			curOptSidebar = jQuery(moduleID).parent().attr('id');
 
 			// Dim screen
-			$('#overlay').css({ zIndex: '500' }).fadeTo('normal', 0.5);
+			jQuery('#overlay').css({ zIndex: '500' }).fadeTo('normal', 0.5);
 
-			$('#optionswindow')
+			jQuery('#optionswindow')
 				.addClass('optionsspinner')
 				.show()
 				.css({
@@ -350,43 +351,44 @@ jQuery('document').ready(
 				.css({ top: optionsY, left: optionsX, width: optionsWidth, height: optionsHeight, opacity: 1 });
 
 			// Get the options via AJAX
-			$.post(
-				sbm_baseUrl + "?action=control-show",
+			jQuery.post(
+				sbm_baseUrl,
 				{
-					module_id: $(moduleID).attr('id')
+					action: 'control-show',
+					module_id: jQuery(moduleID).attr('id')
 				},
 				function (data) {
-					$('#options').empty().append(data);
-					$('#module-name').focus();
-					$('#optionswindow').removeClass('optionsspinner');
+					jQuery('#options').empty().append(data);
+					jQuery('#module-name').focus();
+					jQuery('#optionswindow').removeClass('optionsspinner');
 				}
 			);
 		}
 
 		function closeOptions() {
 			// Reset the tab system
-			$('.tabs').children().removeClass('selected');
-			$('#optionstab').addClass('selected');
+			jQuery('.tabs').children().removeClass('selected');
+			jQuery('#optionstab').addClass('selected');
 			
-			$('#options').empty();
-			$('#optionswindow').hide();
+			jQuery('#options').empty();
+			jQuery('#optionswindow').hide();
 			// Dim overlay
-			$('#overlay').fadeTo('normal', 0, function() { $(this).css({ zIndex: '-100' }) });
+			jQuery('#overlay').fadeTo('normal', 0, function() { jQuery(this).css({ zIndex: '-100' }) });
 			return false;
 		}
 
 		// Ready overlay
-		$('#overlay').fadeTo('normal', 0);
+		jQuery('#overlay').fadeTo('normal', 0);
 
-		$('#msg').hide();
+		jQuery('#msg').hide();
 
 		// Remove any new messages on load
 /*		function messageHandler() {
-			var messageContainer = $('#msg');
-			if ($(messageContainer).text() == '') {
-				$(messageContainer).hide();
+			var messageContainer = jQuery('#msg');
+			if (jQuery(messageContainer).text() == '') {
+				jQuery(messageContainer).hide();
 			} else {
-				$(messageContainer).fadeOut(10000).text()
+				jQuery(messageContainer).fadeOut(10000).text()
 			}
 		}
 		messageHandler();*/
