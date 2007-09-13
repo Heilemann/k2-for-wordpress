@@ -29,14 +29,9 @@
 		if ( empty($rolling_page) ) {
 			$rolling_page = 1;
 		}
-
-		// Debugging
-		if ( isset($_GET['k2debug']) ) {
-			$rolling_query .= '&k2debug=1';
-		}
 ?>
 
-<div id="rollingarchives">
+<div id="rollingarchives" style="display:none;">
 	<div id="texttrimmer">
 		<div id="trimmertrackwrap"><div id="trimmertrack"><div id="trimmerhandle"></div></div></div>
 		
