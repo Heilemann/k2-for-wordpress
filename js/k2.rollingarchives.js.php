@@ -99,7 +99,7 @@ var k2Rolling = {
 					k2Trimmer.trimAgain();
 
 					// Lightbox v2.03.3 - Adds new images to lightbox
-					if ( myLightbox instanceof Lightbox && myLightbox.updateImageList ) {
+					if (typeof myLightbox != "undefined" && myLightbox instanceof Lightbox && myLightbox.updateImageList) {
 						myLightbox.updateImageList();
 					}
 				}
