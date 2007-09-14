@@ -7,7 +7,7 @@ function about_sidebar_module($args) {
 
 	$k2about = sbm_get_option('aboutblurp');
 
-	if ( !( (is_home() and !is_paged() and $k2about == '') or is_single() or is_page() 355.) ) {
+	if ( !( (is_home() and !is_paged() and $k2about == '') or is_single() or is_page() ) ) {
 		echo($before_module . $before_title . $title . $after_title);
 ?>
 		<?php /* Frontpage */ if (is_home() and !is_paged() and $k2about != '') { ?>
