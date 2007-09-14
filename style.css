@@ -1,8 +1,10 @@
+/* @override http://localhost/wp-content/themes/kaytwo/style.css */
+
 /*
-Theme Name: K2
+Theme Name: K2.0
 Theme URI: http://getk2.com
-Description: <a href="themes.php?page=k2-options">Configure your K2</a> or visit the <a href="http://getk2.com/forum">support forums</a>, <a href="http://k2.stikipad.com/">the wiki</a> or <a href="http://code.google.com/p/kaytwo/issues/list">the bug tracker</a>. <small>Developed by <a href="http://binarybonsai.com">Michael</a>, <a href="http://chrisjdavis.org">Chris</a>, <a href="http://zeo.unic.net.my">Zeo</a>, <a href="http://stevelam.org">Steve</a> and <a href="http://nybblelabs.org.uk">Ben</a>. Protected by <a href="http://www.opensource.org/licenses/gpl-license.php">GPL</a>.</small>
-Version: 1.0.0-RC 1
+Description: <strong><a href="themes.php?page=k2-options">Configure K2</a></strong> or visit the <a href="http://getk2.com/forum">support forums</a>, <a href="http://k2.stikipad.com/">the wiki</a> or <a href="http://code.google.com/p/kaytwo/issues/list">the bug tracker</a>. K2 was developed by <a href="http://binarybonsai.com">Michael</a>, <a href="http://chrisjdavis.org">Chris</a>, <a href="http://zeo.unic.net.my">Zeo</a>, <a href="http://stevelam.org">Steve</a> and <a href="http://nybblelabs.org.uk">Ben</a> and is released under <a href="http://www.opensource.org/licenses/gpl-license.php">GPL</a>.
+Version: Release Candidate 1
 Author: Various Artists
 Author URI: http://getk2.com/
 
@@ -886,12 +888,12 @@ img.wp-smiley {
 	}
 
 .secondary ul ul, .secondary ol ol, .secondary div div {
-	margin: 0pt 0pt 0pt 10px;
+	margin: 0;
 	padding-left: 0;
 	}
        
 .secondary ul ul ul, .secondary ol ol ol, .secondary div div {
-	margin: 0pt 0pt 0pt 10px;
+	margin: 0 0 0 10px;
 	padding-left: 0;
 	}
 
@@ -986,6 +988,25 @@ input[type=text], textarea {
 	}
 
 /* CSS Beyond this point is for various supported plugins and not the 'core' K2 template */
+
+
+/*-
+	Links Module
+*/
+
+.sb-links h2 {
+	display: none;
+	}
+
+.linkcat h2 {
+	display: inline;
+	}
+
+.linkcat ul {
+	margin-top: 7px !important;
+	}
+
+
 
 
 /*-
