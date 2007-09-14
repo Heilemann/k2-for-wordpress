@@ -194,6 +194,8 @@ jQuery(document).ready(function()
 		var curOptName = '';
 
 		function initOptionLinks() {
+			var closeVar = false;
+
 			// Set up options buttons
 			jQuery('a.optionslink').each(function() {
 				jQuery(this).unbind();
@@ -209,14 +211,15 @@ jQuery(document).ready(function()
 			// Set up options submit process 
 			jQuery('#submit').unbind();
 			jQuery('#submit').click(function() {
+				closeVar = false;
 				jQuery(this).parents('form').trigger('submit');
 				return false;
 			});
 
 			jQuery('#submitclose').unbind();
 			jQuery('#submitclose').click(function() {
+				closeVar = true;
 				jQuery(this).parents('form').trigger('submit');
-				closeOptions();
 				return false;
 			});
 
@@ -232,6 +235,9 @@ jQuery(document).ready(function()
 						jQuery('#msg').text("Options for '" + jQuery("#"+curOptModule+" .name").text() + "' saved successfully").fadeIn('1000');
 						setTimeout( function() { jQuery('#msg').fadeOut('3000'); }, 4000);
 						cropTitles();
+						console.log(closeOptions);
+						if (closeVar == true) { closeOptions() };
+						closeVar = false;
 					}
 				});
 
