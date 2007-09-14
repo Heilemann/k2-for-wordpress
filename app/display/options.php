@@ -48,6 +48,7 @@
 	$picture_files = K2Header::get_header_images();
 ?>
 
+
 <?php if(isset($_POST['submit'])) { ?>
 <div id="message2" class="updated fade">
 	<p><?php _e('K2 Options have been updated','k2_domain'); ?></p>
@@ -136,13 +137,13 @@
 		<div class="configstuff">
 			<h3><?php _e('Advanced Navigation','k2_domain'); ?></h3>
 
-			<p><input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2livesearch')); ?> /> <?php _e('Enable Advanced Navigation','k2_domain'); ?></p>
+			<p><input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2livesearch')); ?> /> <label for="k2-advnav"><?php _e('Enable Advanced Navigation','k2_domain'); ?></label></p>
 
 			<p><small><?php _e('K2\'s Advanced Navigation is in reality a couple of features which, when combined, work to make the task of searching through your blog faster and easier. This includes inline AJAX-powered livesearch as well as the ability to flip back and forth between archive pages, without ever reloading the page.','k2_domain'); ?></small></p>
 
 			<h3><?php _e('Archives Page','k2_domain'); ?></h3>
 
-			<p><input id="k2-archives" name="k2[archives]" type="checkbox" value="add_archive" <?php checked('add_archive', get_option('k2archives')); ?> /> <?php _e('Enable Archives Page','k2_domain'); ?></p>
+			<p><input id="k2-archives" name="k2[archives]" type="checkbox" value="add_archive" <?php checked('add_archive', get_option('k2archives')); ?> /> <label for="k2-archives"><?php _e('Enable Archives Page','k2_domain'); ?></label></p>
 
 			<p><small><?php _e('To further enhance your precious backlog of writings, you can enable an archives page, which can assist both your readers as well as yourself in digging up the past.','k2_domain'); ?>
 
@@ -154,7 +155,7 @@
 
 			<h3><?php _e('Live Commenting','k2_domain'); ?></h3>
 
-			<p><input id="k2-livecommenting" name="k2[livecommenting]" type="checkbox" value="1" <?php checked('1', get_option('k2livecommenting')); ?> /> <?php _e('Enable Live Commenting','k2_domain'); ?></p>
+			<p><input id="k2-livecommenting" name="k2[livecommenting]" type="checkbox" value="1" <?php checked('1', get_option('k2livecommenting')); ?> /> <label for="k2-livecommenting"><?php _e('Enable Live Commenting','k2_domain'); ?></label></p>
 				
 			<p><small><?php _e('Live comments use AJAX to submit comments to the server without reloading the page, making the experience more seamless for the user.','k2_domain'); ?></small></p>
 
@@ -225,7 +226,7 @@
 			</td><td>
 				<input type="file" id="image_upload" name="image_upload" />
 			</td><td>
-				<label for="upload-activate"><input id="upload-activate" name="upload_activate" type="checkbox" value="1" /><small><?php _e('Activate immediately','k2_domain'); ?></small></label>
+				<input id="upload-activate" name="upload_activate" type="checkbox" value="1" /><small><label for="upload-activate"><?php _e('Activate immediately','k2_domain'); ?></label></small>
 			</td></tr>
 				<?php } ?>
 
@@ -239,7 +240,7 @@
 					<?php } ?>
 				</select>
 			</td><td>	
-				<label for="k2-imagerandomfeature"><input id="k2-imagerandomfeature" name="k2[imagerandomfeature]" type="checkbox" value="1" <?php checked('1', get_option('k2imagerandomfeature')); ?> /><small><?php _e('Randomize Header Image','k2_domain'); ?></small></label>
+				<input id="k2-imagerandomfeature" name="k2[imagerandomfeature]" type="checkbox" value="1" <?php checked('1', get_option('k2imagerandomfeature')); ?> /><small><label for="k2-imagerandomfeature"><?php _e('Randomize Header Image','k2_domain'); ?></label></small>
 			</td></tr>
 			<?php } ?>
 			
@@ -258,11 +259,22 @@
 </p>
 
 		<div class="configstuff">
-				<h3><?php _e('Uninstall K2','k2_domain'); ?></h3>
+			<h3><?php _e('Uninstall K2','k2_domain'); ?></h3>
 
-				<p><small><?php _e('Pressing the uninstall button does not delete any files. It simply disables K2 as a theme, reverting to the default theme, and removes all the K2 settings from the database. Perfect for if you want to start afresh.','k2_domain'); ?></small></p>
+			<script type="text/javascript">
+			function confirmUninstall() {
+				if (confirm('<?php _e('This will delete all your K2 settings.','k2_domain'); ?>') == true) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+			</script>
 
-				<p style="text-align: center;"><input id="uninstall" name="uninstall" type="submit" value="<?php echo attribute_escape(__('Reset and Uninstall K2','k2_domain')); ?>" /></p>
+
+			<p><small><?php _e('Uninstalling reverts WordPress to the default theme and removes all K2 settings from the database. No files are deleted. Perfect for if you want to start afresh.','k2_domain'); ?></small></p>
+
+			<p style="text-align: center;"><input id="uninstall" name="uninstall" type="submit" onClick="return confirmUninstall()" value="<?php echo attribute_escape(__('Reset and Uninstall K2','k2_domain')); ?>" /></p>
 		</div>
 
 	</form>
