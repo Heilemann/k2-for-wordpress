@@ -1,3 +1,5 @@
+/* @override http://localhost/wp-content/themes/kaytwo/css/sbm.css */
+
 h2 {
 	border: 0;
 	font: 1.6em Helvetica, Arial, Verdana, Sans-Serif;
@@ -33,6 +35,19 @@ h2 {
 	background-color: #000000;
 	display:none;
 	opacity: 0
+	}
+
+h3 {
+	text-align:center;
+	margin-bottom: 0;
+	}
+
+.descriptive {
+	text-align:center;
+	color: #888;
+	font-size: 80%;
+	margin-bottom: 20px;
+	display: block;
 	}
 
 #trashcontainer {
@@ -89,16 +104,17 @@ span.id {
 
 .module .type, .sorthelper .type {
 	display: block;
-	font-size: .8em;
+	font-size: .75em;
 	line-height: 1.2em;
 	color: #999;
 	}
 
-.marker, .sorthelper {
+.marker, .sorthelper, .marker:hover, .sorthelper:hover {
 	color: #fff;
-	background: #999;
+	background: #999 !important;
 	padding: 4px;
 	margin: 5px 0;
+	cursor: wait;
 	}
 
 .marker .type, .sorthelper .type {
@@ -133,16 +149,20 @@ span.id {
 
 .optionslink {
 	border: 0;
-	background: url('../images/sbmmanager/optionsbutton.png') no-repeat center center;
+	background: url('../images/sbmmanager/optionsbutton.png') no-repeat center top;
 	display: block;
-	height: 20px;
-	width: 20px;
-	margin-top: -10px;
+	height: 17px;
+	width: 17px;
+	margin-top: -8px;
 	position: absolute;
 	top: 50%;
 	right: 3px;
 	cursor: pointer;
 	}	
+
+.optionslink:hover {
+	background: url('../images/sbmmanager/optionsbutton.png') no-repeat center bottom;
+	}
 
 #optionswindow {
 	position: fixed;
