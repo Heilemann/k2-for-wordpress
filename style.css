@@ -887,14 +887,12 @@ img.wp-smiley {
 	padding-left: 0;
 	}
 
-.secondary ul ul, .secondary ol ol, .secondary div div {
+.secondary ul ul, .secondary ol ol {
 	margin: 0;
-	padding-left: 0;
 	}
        
-.secondary ul ul ul, .secondary ol ol ol, .secondary div div {
+.secondary ul ul ul, .secondary ol ol ol {
 	margin: 0 0 0 10px;
-	padding-left: 0;
 	}
 
 .secondary ol {
