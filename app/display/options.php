@@ -159,19 +159,6 @@
 				
 			<p><small><?php _e('Live comments use AJAX to submit comments to the server without reloading the page, making the experience more seamless for the user.','k2_domain'); ?></small></p>
 
-			<?php if (function_exists('dynamic_sidebar')) { ?>
-			<h3><?php _e('Columns','k2_domain'); ?></h3>
-
-			<p><small><?php printf(__('This sets the number of columns that K2 will display. <strong>%s</strong> will place both sidebars below the main column.', 'k2_domain'), $column_options[1]); ?></small></p>
-
-			<p>
-				<select id="k2-columns" name="k2[columns]">
-				<?php foreach ($column_options as $option => $label) { ?>
-					<option value="<?php echo $option; ?>" <?php selected($column_number, $option); ?>><?php echo $label; ?></option>
-				<?php } ?>
-				</select>
-			</p>
-			<?php } ?>
 
 			<h3><?php _e('Asides','k2_domain'); ?></h3>
 
@@ -187,6 +174,7 @@
 				</select>
 			</p>
 
+
 			<?php if ($is_styles_dir) { ?>
 			<h3><?php _e('Style','k2_domain'); ?></h3>
 
@@ -201,6 +189,7 @@
 			</select>
 			</p>
 			<?php } ?>
+
 
 			<h3><?php _e('Header','k2_domain'); ?></h3>
 

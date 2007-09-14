@@ -75,7 +75,7 @@ function k2_style_info() {
 	$style_info = get_option('k2styleinfo');
 	
 	if ('' != $style_info) {
-		echo '<p>' . stripslashes($style_info) . '</p>';
+		echo stripslashes($style_info);
 	}
 }
 

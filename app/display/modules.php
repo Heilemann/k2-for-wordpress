@@ -1,20 +1,14 @@
-<?php // Print_R for HTML
-function print_r_html($data,$return_data=false)
-{
-    $data = print_r($data,true);
-    $data = str_replace( " ","&nbsp;", $data);
-    $data = str_replace( "\r\n","<br>\r\n", $data);
-    $data = str_replace( "\r","<br>\r", $data);
-    $data = str_replace( "\n","<br>\n", $data);
-
-    if (!$return_data)
-        echo $data;   
-    else
-        return $data;
-} ?>
-
 <?php
 	// Update
+	$update = K2Options::update();
+
+	$column_number = get_option('k2columns');
+	$column_options = array(
+		1 => __('One Column','k2_domain'),
+		__('Two Columns', 'k2_domain'),
+		__('Three Columns', 'k2_domain')
+	);
+
 	$modules = K2SBM::get_installed_modules();
 	$sidebars = K2SBM::get_sidebars();
 	$disabled = K2SBM::get_disabled();
@@ -60,6 +54,18 @@ function print_r_html($data,$return_data=false)
 <div id="parentwrapper">
 
 	<h2><?php _e('K2 Sidebar Modules', 'k2_domain') ?></h2>
+
+
+	<form id="columnsform" name="columnsform" action="<?php echo attribute_escape($update); ?>" method="post" enctype="multipart/form-data">
+
+		<select id="k2-columns" name="k2[columns]" onchange="this.form.submit();">
+		<?php foreach ($column_options as $option => $label) { ?>
+			<option value="<?php echo $option; ?>" <?php selected($column_number, $option); ?>><?php echo $label; ?></option>
+		<?php } ?>
+		</select>
+	</form>
+
+
 
 	<div id="next_id" style="display: none;"><?php echo $next_id; ?></div>
 
@@ -107,7 +113,7 @@ function print_r_html($data,$return_data=false)
 
 
 		<div id="disabledcontainer" class="container">
-			<h3><?php _e('Disabled Modules', 'k2_domain'); ?></h3>
+			<h3><?php _e('Disabled', 'k2_domain'); ?></h3>
 
 			<div class="droppable">
 				<ul id="disabled" class="sortable reorderable">
@@ -130,7 +136,7 @@ function print_r_html($data,$return_data=false)
 
 
 		<div id="trashcontainer" class="container">
-			<h3><?php _e('Trash Modules', 'k2_domain'); ?></h3>
+			<h3><?php _e('Trash', 'k2_domain'); ?></h3>
 
 			<ul id="trash" class="sortable">
 			</ul>

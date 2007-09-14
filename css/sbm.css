@@ -42,12 +42,16 @@ h3 {
 	margin-bottom: 0;
 	}
 
-.descriptive {
-	text-align:center;
-	color: #888;
-	font-size: 80%;
-	margin-bottom: 20px;
-	display: block;
+#columnsform {
+	right: 20px;
+	top: 15px;
+	position: absolute;
+	}
+
+#columnsform select {
+	background-color: none;
+	padding: 1px;
+	width: 170px;
 	}
 
 #trashcontainer {

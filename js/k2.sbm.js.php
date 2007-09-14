@@ -21,7 +21,7 @@ jQuery(document).ready(function()
 					.clone()
 					.attr('class', 'module marker')
 					.css({ position: "static" })
-					.append('<span class="type">'+jQuery(drag).children().text()+'</span><a href="#" class="optionslink"> </a>')
+					.append('<span class="type">'+jQuery(drag).children().text()+'</span>')
 					.appendTo(jQuery(this).children());
 			},
 			onOut: function (drag) {
