@@ -17,13 +17,13 @@ function about_sidebar_module($args) {
 		<p><?php printf(__('The %1$s archives for the %2$s category.','k2_domain'), '<a href="' . get_settings('siteurl') .'">' . get_bloginfo('name') . '</a>', single_cat_title('', false) ); ?></p>
 
 		<?php /* Day Archive */ } elseif (is_day()) { ?>
-		<p><?php printf(__('The %1$s archives for the day %2$s.','k2_domain'), '<a href="' . get_settings('siteurl') .'">' . get_bloginfo('name') . '</a>', get_the_time(__('l, F jS, Y','k2_domain'))); ?></p>
+		<p><?php printf(__('The %1$s archives for %2$s.','k2_domain'), '<a href="' . get_settings('siteurl') .'">' . get_bloginfo('name') . '</a>', get_the_time(__('l, F jS, Y','k2_domain'))); ?></p>
 
 		<?php /* Monthly Archive */ } elseif (is_month()) { ?>
-		<p><?php printf(__('The %1$s archives for the month %2$s.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>', get_the_time(__('F, Y','k2_domain'))); ?></p>
+		<p><?php printf(__('The %1$s archives for %2$s.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>', get_the_time(__('F, Y','k2_domain'))); ?></p>
 
 		<?php /* Yearly Archive */ } elseif (is_year()) { ?>
-		<p><?php printf(__('The %1$s archives for the year %2$s.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>', get_the_time('Y')); ?></p>
+		<p><?php printf(__('The %1$s archives for %2$s.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>', get_the_time('Y')); ?></p>
 
 		<?php /* Search */ } elseif (is_search()) { ?>
 		<p><?php printf(__('You searched the %1$s archives for \'<strong>%2$s</strong>\'.','k2_domain'),'<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>', wp_specialchars(stripslashes($s), true)); ?></p>

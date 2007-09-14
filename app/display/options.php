@@ -191,6 +191,7 @@
 			<?php } ?>
 
 
+
 			<h3><?php _e('Header','k2_domain'); ?></h3>
 
 			<p><small>
