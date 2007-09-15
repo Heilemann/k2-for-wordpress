@@ -161,10 +161,6 @@
 	clear: both;
 	}
 
-#page.nthpage #header, #page.lastpage #header {
-	height: 23px;
-	}
-
 div.trimmed .hentry {
 	background: #eee;
 	}
