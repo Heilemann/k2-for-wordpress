@@ -303,10 +303,9 @@ span.id {
 	}
 
 .toggle-item {
-	background: #eee;
-	border: 1px solid #ccc;
 	margin: 5px 0 5px 15px;
 	font-size: .8em;
+	background: #cdcdcd;
 	}
 
 .checkbox-list {
@@ -332,6 +331,35 @@ span.id {
 
 .checkbox-list label:hover {
 	background: #ddd;
+	}
+
+.tools {
+	position: relative;
+	height: 20px;
+	}
+
+.checkoruncheck {
+	display: inline;
+	position: absolute;
+	top: 3px;
+	left: 10px;
+	margin: 0;
+	}
+
+.showorhide {
+	position: absolute;
+	top: 3px;
+	right: 0;
+	margin: 0;
+	display: inline;
+	}
+
+.showorhide input {
+	margin: 0 !important;
+	}
+
+.showorhide label {
+	margin: 0 10px 0 2px !important;
 	}
 
 #output-css-file {

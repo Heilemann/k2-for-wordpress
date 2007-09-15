@@ -41,13 +41,13 @@
 
 	<input id="display-archives" name="display[archives]" type="checkbox"<?php if($module->display['archives']) { ?> checked="checked"<?php } ?> /> <label for="display-archives"><?php _e('Archives', 'k2_domain'); ?></label><br />
 
-	<input id="display-post" name="display[post]" type="checkbox"<?php if($module->display['post']) { ?> checked="checked"<?php } ?> /> <label for="display-post"><?php _e('Single posts', 'k2_domain'); ?></label> &raquo; <a id="toggle-specific-posts" href="#"><?php _e('Detailed options', 'k2_domain'); ?></a><br />
+	<input id="display-post" name="display[post]" type="checkbox"<?php if($module->display['post']) { ?> checked="checked"<?php } ?> /> <label for="display-post"><?php _e('Single posts', 'k2_domain'); ?></label> &raquo; <a id="toggle-specific-posts" href="#"><?php _e('Select Individual Posts', 'k2_domain'); ?></a><br />
 
 	<div id="specific-posts" class="toggle-item"></div>
 
 	<input id="display-search" name="display[search]" type="checkbox"<?php if($module->display['search']) { ?> checked="checked"<?php } ?> /> <label for="display-search"><?php _e('Search results', 'k2_domain'); ?></label><br />
 
-	<input id="display-pages" name="display[pages]" type="checkbox"<?php if($module->display['pages']) { ?> checked="checked"<?php } ?> /> <label for="display-pages"><?php _e('Static pages', 'k2_domain'); ?></label> &raquo; <a id="toggle-specific-pages" href="#"><?php _e('Detailed options', 'k2_domain'); ?></a><br />
+	<input id="display-pages" name="display[pages]" type="checkbox"<?php if($module->display['pages']) { ?> checked="checked"<?php } ?> /> <label for="display-pages"><?php _e('Static pages', 'k2_domain'); ?></label> &raquo; <a id="toggle-specific-pages" href="#"><?php _e('Select Individual Pages', 'k2_domain'); ?></a><br />
 
 	<div id="specific-pages" class="toggle-item"></div>
 

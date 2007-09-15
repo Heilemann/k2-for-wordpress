@@ -348,38 +348,50 @@ jQuery(document).ready(function()
 					jQuery('#options').empty().append(data);
 					jQuery('#module-name').focus();
 					jQuery('#optionswindow').removeClass('optionsspinner');
-					jQuery('#toggle-specific-posts').click(function() {
-						jQuery.post( sbm_baseUrl, {
-							action: 'control-post-list-show',
-							module_id: jQuery(moduleID).attr('id')
-						},
-						function (data) {
-							jQuery('#specific-posts').append(data)
-						})
-					});
-					jQuery('#toggle-specific-pages').click(function() {
-						jQuery.post( sbm_baseUrl, {
-							action: 'control-page-list-show',
-							module_id: jQuery(moduleID).attr('id')
-						},
-						function (data) {
-							jQuery('#specific-pages').append(data)
-						})
-					})
-					
+
+					// Mechanics for 'Detailed Options' for Individual Pages and Posts
+					jQuery('#specific-posts').hide()
+					jQuery('#specific-pages').hide()
+					jQuery('#toggle-specific-posts').add('#toggle-specific-pages').toggle(
+						function () {
+							var self = this;
+							jQuery(this).addClass("loading");
+
+							jQuery.post( sbm_baseUrl, {
+								action: 'control-post-list-show',
+								module_id: jQuery(moduleID).attr('id')
+							},
+							function (data) {
+								jQuery(self).removeClass("loading").addClass("selected")
+
+								if (jQuery(self).attr('id') == 'toggle-specific-posts') {
+									jQuery('#specific-pages').empty().hide()
+									jQuery('#specific-posts').empty().show().append(data)
+									jQuery('#check-post-ids').click(function() {
+										console.log(jQuery('#specific-posts').children('[checkbox]'))
+									})
+								} else if (jQuery(self).attr('id') == 'toggle-specific-pages') {
+									jQuery('#specific-posts').empty().hide()
+									jQuery('#specific-pages').empty().show().append(data)
+								}
+
+							})
+
+					 	},
+					  	function () {
+					    	jQuery(this).removeClass("selected").removeClass("loading");
+
+							if (jQuery(this).attr('id') == 'toggle-specific-posts') {
+								jQuery('#specific-posts').empty().hide()
+							} else if (jQuery(this).attr('id') == 'toggle-specific-pages') {
+								jQuery('#specific-pages').empty().hide()
+							}
+					  	}
+					);
 				}
 			);
+			
 		}
-/*
-		// Setup content loading URLs and options
-		var toggleDiv = $("specific-posts");
-		toggleDiv.contentURL = sbm_baseUrl + "?action=control-post-list-show";
-		toggleDiv.contentURLPostBody = "module_id=" + sbmManager.optionsForm.moduleId;
-
-		toggleDiv = $("specific-pages");
-		toggleDiv.contentURL = sbm_baseUrl + "?action=control-page-list-show";
-		toggleDiv.contentURLPostBody = "module_id=" + sbmManager.optionsForm.moduleId;
-*/
 
 		function closeOptions() {
 			// Reset the tab system
