@@ -340,9 +340,7 @@ jQuery(document).ready(function()
 				.css({ top: optionsY, left: optionsX, width: optionsWidth, height: optionsHeight, opacity: 1 });
 
 			// Get the options via AJAX
-			jQuery.post(
-				sbm_baseUrl,
-				{
+			jQuery.post( sbm_baseUrl, {
 					action: 'control-show',
 					module_id: jQuery(moduleID).attr('id')
 				},
@@ -350,9 +348,38 @@ jQuery(document).ready(function()
 					jQuery('#options').empty().append(data);
 					jQuery('#module-name').focus();
 					jQuery('#optionswindow').removeClass('optionsspinner');
+					jQuery('#toggle-specific-posts').click(function() {
+						jQuery.post( sbm_baseUrl, {
+							action: 'control-post-list-show',
+							module_id: jQuery(moduleID).attr('id')
+						},
+						function (data) {
+							jQuery('#specific-posts').append(data)
+						})
+					});
+					jQuery('#toggle-specific-pages').click(function() {
+						jQuery.post( sbm_baseUrl, {
+							action: 'control-page-list-show',
+							module_id: jQuery(moduleID).attr('id')
+						},
+						function (data) {
+							jQuery('#specific-pages').append(data)
+						})
+					})
+					
 				}
 			);
 		}
+/*
+		// Setup content loading URLs and options
+		var toggleDiv = $("specific-posts");
+		toggleDiv.contentURL = sbm_baseUrl + "?action=control-post-list-show";
+		toggleDiv.contentURLPostBody = "module_id=" + sbmManager.optionsForm.moduleId;
+
+		toggleDiv = $("specific-pages");
+		toggleDiv.contentURL = sbm_baseUrl + "?action=control-page-list-show";
+		toggleDiv.contentURLPostBody = "module_id=" + sbmManager.optionsForm.moduleId;
+*/
 
 		function closeOptions() {
 			// Reset the tab system

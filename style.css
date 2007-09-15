@@ -698,9 +698,13 @@ input[type=text]:focus, textarea:focus {
 #footer {
 	clear: both;
 	margin: 0 auto;
-	padding: 20px 0;
+	padding: 20px 0 40px;
 	text-align: center;
 	color: #777;
+	}
+
+#footer p {
+	line-height: 1.6em;
 	}
 
 #footer a {

@@ -106,6 +106,10 @@ span.id {
 	color: white;
 	}
 
+.sorthelper .optionslink {
+	display: none;
+	}
+
 .module .type, .sorthelper .type {
 	display: block;
 	font-size: .75em;
@@ -283,8 +287,55 @@ span.id {
 	font-size: 11px;
 }
 
+#displaytab-content legend {
+	color: #333;
+	font-size: 1.1em;
+	line-height: 1.6em;
+	}
+
+#displaytab-content input {
+	margin-left: 20px;
+	}
+
+#displaytab-content label {
+	line-height: 1.6em;
+	margin-left: 6px;
+	}
+
+.toggle-item {
+	background: #eee;
+	border: 1px solid #ccc;
+	margin: 5px 0 5px 15px;
+	font-size: .8em;
+	}
+
+.checkbox-list {
+	overflow: auto;
+	height: 100px;
+	list-style-type: none;
+	padding: 5px 0;
+	margin: 0;
+	background: #fafafa;
+	}
+
+.checkbox-list li {
+	margin: 0 0 0 40px;
+	}
+
+.checkbox-list input[type=checkbox] {
+	margin: 0 0 0 -20px !important;
+	}
+
+.checkbox-list label {
+	padding: 2px;
+	}
+
+.checkbox-list label:hover {
+	background: #ddd;
+	}
+
 #output-css-file {
-	width: 400px;
+	width: 390px;
 	}
 
 .selected {
