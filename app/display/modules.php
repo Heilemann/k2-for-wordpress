@@ -1,6 +1,8 @@
 <?php
-	// Update
-	$update = K2Options::update();
+	// Update Columns Number
+	if ( isset($_POST['columns_number']) ) {
+		update_option('k2columns',$_POST['columns_number']);
+	}
 
 	$column_number = get_option('k2columns');
 	$column_options = array(
@@ -56,9 +58,8 @@
 	<h2><?php _e('K2 Sidebar Modules', 'k2_domain') ?></h2>
 
 
-	<form id="columnsform" name="columnsform" action="<?php echo attribute_escape($update); ?>" method="post" enctype="multipart/form-data">
-
-		<select id="k2-columns" name="k2[columns]" onchange="this.form.submit();">
+	<form id="columnsform" name="columnsform" action="" method="post" enctype="multipart/form-data">
+		<select id="columns-number" name="columns_number" onchange="this.form.submit();">
 		<?php foreach ($column_options as $option => $label) { ?>
 			<option value="<?php echo $option; ?>" <?php selected($column_number, $option); ?>><?php echo $label; ?></option>
 		<?php } ?>
