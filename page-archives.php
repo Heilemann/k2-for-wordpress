@@ -9,8 +9,7 @@
 	$numcomms = $wpdb->get_var("SELECT COUNT(1) FROM $wpdb->comments WHERE comment_approved = '1'");
 	if (0 < $numcomms) $numcomms = number_format($numcomms);
 	
-	$numcats = $wpdb->get_var("SELECT COUNT(1) FROM $wpdb->categories");
-	if (0 < $numcats) $numcats = number_format($numcats);
+	$numcats = count(get_all_category_ids());
 ?>
 
 <?php get_header(); ?>
@@ -65,19 +64,14 @@
 					</noscript>
 					<?php } // End ELA Check ?>
 
-					<?php if (function_exists('UTW_ShowWeightedTagSetAlphabetical')) { ?>
-					<h3><?php _e('Tag Cloud','k2_domain'); ?></h3>
-					<p><?php printf(__('The following is a list of the tags used at %s, colored and \'weighed\' in relation to their relative usage.','k2_domain'), get_bloginfo('name')); ?></p>
-					<?php UTW_ShowWeightedTagSetAlphabetical("coloredsizedtagcloud"); ?>
-
-					<?php } elseif (function_exists('wp_tag_cloud')) { ?>
+					<?php if (function_exists('wp_tag_cloud') or function_exists('UTW_ShowWeightedTagSetAlphabetical')) { ?>
 					<h3><?php _e('Tag Cloud','k2_domain'); ?></h3>
 					<p><?php printf(__('The following is a list of the tags used at %s, colored and \'weighed\' in relation to their relative usage.','k2_domain'), get_bloginfo('name')); ?></p>
 
 					<div id="tag-cloud">
-					<?php wp_tag_cloud(); ?>
+					<?php if (function_exists('wp_tag_cloud')) wp_tag_cloud(); else UTW_ShowWeightedTagSetAlphabetical("coloredsizedtagcloud"); ?>
 					</div>
- 					<?php } // End Tag Check ?>
+					<?php } // End Tag Check ?>
 
 				</div> <!-- .entry-content -->
 			</div> <!-- #post-ID -->
