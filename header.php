@@ -59,7 +59,6 @@
  	<meta name="description" content="<?php bloginfo('description'); ?>" />
   
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
-	<link rel="stylesheet" type="text/css" media="print" href="<?php bloginfo('template_url'); ?>/css/print.css" />
 	<?php /* Rolling Archives */ if (get_option('k2rollingarchives') == 1) { ?>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/css/rollingarchives.css" />
 	<?php } ?>
