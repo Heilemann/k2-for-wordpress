@@ -4,9 +4,40 @@ jQuery.noConflict();
 
 if (typeof K2 == 'undefined') var K2 = {};
 
-jQuery('#notices').ajaxError(function(request, settings) {
-	jQuery(this).show().append('<p class="alert">Error requesting page ' + settings.url + '</p>');
-});
+K2.debug = false;
+
+K2.ajaxGet = function(url, data, complete_fn) {
+	jQuery.ajax({
+		url:		url,
+		data:		data,
+
+		error: function(request) {
+			jQuery('#notices')
+				.show()
+				.append('<p class="alert">Error ' + request.status + ': ' + request.statusText + '</p>');
+		},
+
+		success: function() {
+			jQuery('#notices').hide().html();
+		},
+
+		complete: function(request) {
+			if ( K2.debug ) {
+				console.log(request);
+			}
+
+			if ( complete_fn ) {
+				complete_fn( request.responseText );
+			}
+
+			// Lightbox v2.03.3 - Adds new images to lightbox
+			if (typeof myLightbox != "undefined" && myLightbox instanceof Lightbox && myLightbox.updateImageList) {
+				myLightbox.updateImageList();
+			}
+		}
+	});
+}
+
 
 function OnLoadUtils() {
 	jQuery('#comment-personaldetails').hide();

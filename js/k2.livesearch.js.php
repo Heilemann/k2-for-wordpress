@@ -59,7 +59,8 @@ var k2Search = {
 		}
 
 		k2Search.prevSearch = k2Search.input.val();
-		jQuery.get(k2Search.url, k2Search.input.serialize() + '&k2dynamic=init',
+
+		K2.ajaxGet(k2Search.url, k2Search.input.serialize() + '&k2dynamic=init',
 			function(data) {
 				jQuery('#current-content').hide();
 				jQuery('#dynamic-content').show().html(data);
@@ -67,11 +68,6 @@ var k2Search = {
 				k2Search.loading.fadeOut('fast');
 
 				k2Search.reset.click(k2Search.resetSearch).fadeTo('fast', 1.0).css('cursor', 'pointer');
-
-				// Lightbox v2.03.3 - Adds new images to lightbox
-				if (typeof myLightbox != "undefined" && myLightbox instanceof Lightbox && myLightbox.updateImageList) {
-					myLightbox.updateImageList();
-				}
 			}
 		);
 	},

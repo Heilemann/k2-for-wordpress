@@ -1,3 +1,5 @@
+<?php if ( ! isset($_GET['k2dynamic']) ) { ?>
+
 <?php get_header(); ?>
 
 <div class="content">
@@ -6,7 +8,7 @@
 		<div id="notices"></div>
 
 		<div id="current-content" class="hfeed">
-
+<?php } ?>
 			<div class="hentry four04">
 
 				<div class="page-head">
@@ -19,6 +21,7 @@
 
 			</div> <!-- .hentry .four04 -->
 
+<?php if ( ! isset($_GET['k2dynamic']) ) { ?>
 		</div> <!-- #current-content .hfeed -->
 
 		<div id="dynamic-content"></div>
@@ -32,3 +35,4 @@
 <?php get_footer(); ?>
 
 <!-- jegelskerRikke -->
+<?php } ?>

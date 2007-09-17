@@ -79,6 +79,9 @@
 
 	<script type="text/javascript">
 	//<![CDATA[
+		<?php /* Debugging */ if ( isset($_GET['k2debug']) ) { ?>
+			K2.debug = true;
+		<?php } ?>
 
 		<?php /* LiveSearch */ if (get_option('k2livesearch') == 1) { ?>
 			jQuery(document).ready(function(){

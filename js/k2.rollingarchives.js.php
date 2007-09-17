@@ -90,18 +90,14 @@ var k2Rolling = {
 
 			jQuery('#rollload').fadeIn('fast');
 			jQuery.extend(k2Rolling.query, { paged: k2Rolling.pageNumber, k2dynamic: 1 });
-			jQuery.get(k2Rolling.url, k2Rolling.query,
+
+			K2.ajaxGet(k2Rolling.url, k2Rolling.query,
 				function(data) {
 					jQuery('#rollhover').fadeOut('slow');
 					jQuery('#rollload').fadeOut('fast');
 					jQuery('#rollingcontent').html(data);
 
 					k2Trimmer.trimAgain();
-
-					// Lightbox v2.03.3 - Adds new images to lightbox
-					if (typeof myLightbox != "undefined" && myLightbox instanceof Lightbox && myLightbox.updateImageList) {
-						myLightbox.updateImageList();
-					}
 				}
 			);
 		}
@@ -116,9 +112,11 @@ var k2Rolling = {
 			var url = k2Rolling.url.replace('theloop', 'rollingarchive');
 			var query = jQuery.extend(k2Rolling.prevQuery, { k2dynamic: 'init' });
 
-			jQuery.get(url, query, function(data){
-				jQuery('#dynamic-content').html(data);
-			});
+			K2.ajaxGet(url, query,
+				function(data) {
+					jQuery('#dynamic-content').html(data);
+				}
+			);
 		}
 	}
 };
