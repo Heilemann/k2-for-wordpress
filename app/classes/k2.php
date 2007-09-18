@@ -7,7 +7,7 @@ class K2 {
 		// Load the localisation text
 		load_theme_textdomain('k2_domain');
 
-		$exclude = array('sbm-ajax.php');
+		$exclude = array('sbm-direct.php');
 
 		// Exclude SBM if there's already a sidebar manager
 		if ( function_exists('register_sidebar') ) {

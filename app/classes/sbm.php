@@ -274,7 +274,7 @@ class K2SBM {
 
 			<script type="text/javascript">
 				//<![CDATA[
-					jQuery(document).ready(function(){ sbm_load(<?php echo(get_option('k2sbm_modules_next_id')); ?>, "<?php output_javascript_url('app/includes/sbm-ajax.php'); ?>"); });
+					jQuery(document).ready(function(){ sbm_load(<?php echo(get_option('k2sbm_modules_next_id')); ?>, "<?php output_javascript_url('app/includes/sbm-direct.php'); ?>"); });
 				//]]>
 			</script>
 		<?php
