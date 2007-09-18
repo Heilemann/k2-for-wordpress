@@ -3,6 +3,11 @@
 	if (isset($_GET['k2dynamic'])) {
 		require (dirname(__FILE__).'/../../../wp-blog-header.php');
 
+		// Workaround for WP 404 bug.
+		if ( is_404() and !headers_sent() ) {
+			status_header(200);
+		}
+
 		$query = k2_parse_query($_GET);
 		query_posts($query);
 
