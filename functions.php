@@ -3,9 +3,6 @@
 // Current version of K2
 define('K2_CURRENT', 'svn');
 
-// K2 option prefix - for ease of modifications
-define('K2_OPTION_PREFIX', 'k2');
-
 // Is this MU or no?
 define('K2_MU', (strpos($wp_version, 'wordpress-mu') === true));
 

@@ -2,10 +2,12 @@
 
 jQuery.noConflict();
 
-jQuery(document).ready(function()
-{
+var sbm_baseUrl = "";
+
+function sbm_load(id, url) {
 		// Next available module ID
-		var lastModuleID = jQuery('#next_id').text();
+		var lastModuleID = id;
+		sbm_baseUrl = url;
 		
 		// Set class as 'current sidebar' hack
 		jQuery('.sortable').children().attr('class', function () { return 'module ' + jQuery(this).parent().attr('id') });
@@ -421,4 +423,3 @@ jQuery(document).ready(function()
 		}
 		messageHandler();*/
 	}
-)

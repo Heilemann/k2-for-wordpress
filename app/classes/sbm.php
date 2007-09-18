@@ -1,4 +1,7 @@
 <?php
+
+define('SBM_VERSION', '1.0.0');
+
 // The registered sidebars
 $k2sbm_registered_sidebars = array();
 
@@ -97,32 +100,6 @@ class K2SBM {
 
 			// Check what the action is
 			switch($_POST['action']) {
-				// List of the modules in the sidebar
-				case 'list':
-					foreach($k2sbm_registered_sidebars as $sidebar) {
-						$tmp_modules[] = $sidebar->modules;
-						print_r($sidebar);
-					}
-
-					$tmp_modules[] = $k2sbm_disabled_modules;
-
-					if($tmp_modules) {
-						// Output the modules
-						foreach($tmp_modules as $modules) {
-							echo('<modules>');
-
-							if($modules) {
-								foreach($modules as $module) {
-									echo('<module id="' . $module->id . '"><![CDATA[' . $module->name . ']]></module>'); 
-								}
-							}
-
-							echo('</modules>');
-						}
-					}
-
-					break;
-
 				// Add a module to the sidebar
 				case 'add':
 					// Check the title was correct
@@ -205,22 +182,35 @@ class K2SBM {
 		$page = add_theme_page(__('K2 Sidebar Manager','k2_domain'), __('K2 Sidebar Manager','k2_domain'), 'edit_themes', 'k2-sbm-manager', array('K2SBM', 'module_admin'));
 
 		add_action("admin_head-$page", array('K2SBM', 'module_admin_head'));
-		add_action("admin_print_scripts-$page", array('K2SBM', 'module_admin_scripts'));
+
+		if(!isset($_GET['subpage'])) {
+			add_action("admin_print_scripts-$page", array('K2SBM', 'module_admin_scripts'));
+		}
 	}
 
 	function module_admin() {
 		global $k2sbm_registered_sidebars, $k2sbm_registered_modules;
 
-		if(count($k2sbm_registered_sidebars) == 0) {
-		?>
-			<div class="wrap">You have no registered sidebars.</div>
-		<?php
-		} elseif(count($k2sbm_registered_modules) == 0) {
-		?>
-			<div class="wrap">You have no modules or Widgets installed &amp; activated.</div>
-		<?php
-		} else {
-			include(TEMPLATEPATH . '/app/display/modules.php');
+		switch($_GET['subpage']) {
+		case 'backup':
+			include(TEMPLATEPATH . '/app/display/sbm/backup.php');
+
+			break;
+
+		default:
+			if(count($k2sbm_registered_sidebars) == 0) {
+			?>
+				<div class="wrap">You have no registered sidebars.</div>
+			<?php
+			} elseif(count($k2sbm_registered_modules) == 0) {
+			?>
+				<div class="wrap">You have no modules or Widgets installed &amp; activated.</div>
+			<?php
+			} else {
+				include(TEMPLATEPATH . '/app/display/sbm/modules.php');
+			}
+
+			break;
 		}
 	}
 
@@ -229,14 +219,66 @@ class K2SBM {
 	}
 
 	function module_admin_head() {
-	?>
-		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/sbm.css" />
-		<script type="text/javascript">
-			//<![CDATA[
-				var sbm_baseUrl = "<?php output_javascript_url('app/includes/sbm-ajax.php'); ?>"
-			//]]>
-		</script>
-	<?php
+		?>
+		<style type="text/css">
+			#submenu .current {
+				background: #000000;
+				border-right: none;
+				border-top: none;
+				color: #ffffff;
+			}
+
+			#subsubmenu {
+				background: #000000;
+				border-bottom: none;
+				margin: 0;
+				padding: 3px 2em 0 4em;
+			}
+
+			#subsubmenu li {
+				display: inline;
+				line-height: 200%;
+				list-style: none;
+				text-align: center;
+			}
+
+			#subsubmenu .current {
+				background: #ffffff;
+				color: #000000;
+				font-weight: bold;
+				text-decoration: none;
+			}
+
+			#subsubmenu a {
+				border: none;
+				color: #ffffff;
+				font-size: 10px;
+				padding: .3em .4em .4em;
+			}
+
+			#subsubmenu a:hover {
+				background: #ddeaf4;
+				color: #393939;
+			}
+
+			#subsubmenu li {
+				line-height: 170%;
+				height: 25px;
+			}
+		</style>
+		<?php
+
+		if(!isset($_GET['subpage'])) {
+		?>
+			<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/sbm.css" />
+
+			<script type="text/javascript">
+				//<![CDATA[
+					jQuery(document).ready(function(){ sbm_load(<?php echo(get_option('k2sbm_modules_next_id')); ?>, "<?php output_javascript_url('app/includes/sbm-ajax.php'); ?>"); });
+				//]]>
+			</script>
+		<?php
+		}
 	}
 
 	function set_error_text($text) {
@@ -835,7 +877,7 @@ class k2sbmModule {
 
 		// Display the generic edit form
 		extract(array('module' => $this));
-		include(TEMPLATEPATH . '/app/display/sbm-ajax/edit-module-form.php');
+		include(TEMPLATEPATH . '/app/display/sbm/edit-module-form.php');
 
 		// Update options in any PHP < 5
 		if(version_compare(PHP_VERSION, '5.0') < 0) {
@@ -859,7 +901,7 @@ class k2sbmModule {
 	function displayPostList() {
 		// Display the generic post list
 		extract(array('module' => $this));
-		include(TEMPLATEPATH . '/app/display/sbm-ajax/edit-module-posts-form.php');
+		include(TEMPLATEPATH . '/app/display/sbm/edit-module-posts-form.php');
 	?>
 		
 	<?php
@@ -868,7 +910,7 @@ class k2sbmModule {
 	function displayPageList() {
 		// Display the generic post list
 		extract(array('module' => $this));
-		include(TEMPLATEPATH . '/app/display/sbm-ajax/edit-module-pages-form.php');
+		include(TEMPLATEPATH . '/app/display/sbm/edit-module-pages-form.php');
 	}
 
 	function canDisplay() {

@@ -14,8 +14,9 @@
 	$modules = K2SBM::get_installed_modules();
 	$sidebars = K2SBM::get_sidebars();
 	$disabled = K2SBM::get_disabled();
-	$next_id = get_option('k2sbm_modules_next_id');
 ?>
+
+<?php include('header.php'); ?>
 
 <div id="optionswindow">
 	<a href="#" id="closelink"></a>
@@ -65,10 +66,6 @@
 		<?php } ?>
 		</select>
 	</form>
-
-
-
-	<div id="next_id" style="display: none;"><?php echo $next_id; ?></div>
 
 	<div class="wrap">
 
