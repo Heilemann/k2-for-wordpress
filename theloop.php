@@ -4,12 +4,7 @@
 
 	// Get core WP functions when loaded dynamically
 	if (isset($_GET['k2dynamic'])) {
-		require (dirname(__FILE__).'/../../../wp-blog-header.php');
-
-		// Workaround for WP 404 bug.
-		if ( is_404() and !headers_sent() ) {
-			status_header(200);
-		}
+		require (dirname(__FILE__).'/../../../wp-config.php');
 
 		if ($_GET['k2dynamic'] != 'init') {
 			$query = k2_parse_query($_GET);
