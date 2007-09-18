@@ -4,7 +4,7 @@
 
 	// Get core WP functions when loaded dynamically
 	if (isset($_GET['k2dynamic'])) {
-		require (dirname(__FILE__).'/../../../wp-config.php');
+		require_once(dirname(__FILE__).'/../../../wp-config.php');
 
 		if ($_GET['k2dynamic'] != 'init') {
 			$query = k2_parse_query($_GET);

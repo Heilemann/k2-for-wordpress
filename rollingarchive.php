@@ -1,7 +1,7 @@
 <?php
 	// Get core WP functions if needed
 	if (isset($_GET['k2dynamic'])) {
-		require (dirname(__FILE__).'/../../../wp-config.php');
+		require_once(dirname(__FILE__).'/../../../wp-config.php');
 
 		$query = k2_parse_query($_GET);
 		query_posts($query);
