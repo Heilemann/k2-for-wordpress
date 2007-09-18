@@ -7,7 +7,7 @@
 // For details, see the script.aculo.us web site: http://script.aculo.us/
 
 function K2Slider(handle, track, options) {
-	var thisObj = this;
+	var self = this;
 
 	this.handle  = jQuery(handle);
     this.track   = jQuery(track);
@@ -28,37 +28,48 @@ function K2Slider(handle, track, options) {
     this.setValue(this.value);
    
     this.handle.mousedown(function(event) {
-		thisObj.active = true;
+		self.active = true;
 
-        var pointer	= thisObj.pointerX(event);
-		var offset	= thisObj.track.offset();
+        var pointer	= self.pointerX(event);
+		var offset	= self.track.offset();
 
-		thisObj.setValue(
-			thisObj.translateToValue(
-				pointer-offset.left-(thisObj.handleLength/2)
+		self.setValue(
+			self.translateToValue(
+				pointer-offset.left-(self.handleLength/2)
           	)
 		);
 
-		var offset = thisObj.handle.offset();
-		thisObj.offsetX = (pointer - offset.left);
+		var offset = self.handle.offset();
+		self.offsetX = (pointer - offset.left);
+	});
+
+	this.track.mousedown(function(event) {
+		var offset	= self.track.offset();
+        var pointer	= self.pointerX(event);
+
+		self.setValue(
+			self.translateToValue(
+				pointer-offset.left-(self.handleLength/2)
+          	)
+		);
 	});
 
 	jQuery(document).mouseup(function(event){
-		if (thisObj.active && thisObj.dragging) {
-			thisObj.active = false;
-			thisObj.dragging = false;
+		if (self.active && self.dragging) {
+			self.active = false;
+			self.dragging = false;
 
-			thisObj.updateFinished(thisObj);
+			self.updateFinished(self);
 		}
-		thisObj.active = false;
-		thisObj.dragging = false;
+		self.active = false;
+		self.dragging = false;
 	});
 
 	jQuery(document).mousemove(function(event){
-		if (thisObj.active) {
-			if (!thisObj.dragging) thisObj.dragging = true;
+		if (self.active) {
+			if (!self.dragging) self.dragging = true;
 
-			thisObj.draw(event);
+			self.draw(event);
 
 			// fix AppleWebKit rendering
 			if (navigator.appVersion.indexOf('AppleWebKit')>0) window.scrollBy(0,0);
@@ -110,11 +121,11 @@ K2Slider.prototype.draw = function(event) {
 		this.options.onSlide(this.value);
 };
 
-K2Slider.prototype.updateFinished = function(thisObj) {
-	if (thisObj.initialized && thisObj.options.onChange) 
-		thisObj.options.onChange(thisObj.value);
+K2Slider.prototype.updateFinished = function(self) {
+	if (self.initialized && self.options.onChange) 
+		self.options.onChange(self.value);
 
-	thisObj.event = null;
+	self.event = null;
 };
 
 K2Slider.prototype.pointerX = function(event) {
