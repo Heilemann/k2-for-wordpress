@@ -9,7 +9,7 @@ class K2Header {
 	}
 
 	function init() {
-		if ( function_exists('add_custom_image_header') and is_writable(K2HEADERSPATH) ) {
+		if ( function_exists('add_custom_image_header') and is_writable(K2_HEADERS_PATH) ) {
 			$styleinfo = get_style_info(get_option('k2scheme'));
 			$header_image = get_option('k2header_picture');
 
@@ -27,7 +27,7 @@ class K2Header {
 	function update() {
 		// Manage the uploaded picture
 		if (!empty($_FILES['image_upload']['name']) and !empty($_FILES['image_upload']['size'])) {
-			move_uploaded_file($_FILES['image_upload']['tmp_name'], K2HEADERSPATH . $_FILES['image_upload']['name']);
+			move_uploaded_file($_FILES['image_upload']['tmp_name'], K2_HEADERS_PATH . $_FILES['image_upload']['name']);
 
 			if (isset($_POST['upload_activate'])) {
 				update_option('k2header_picture', $_FILES['image_upload']['name']);
@@ -60,7 +60,7 @@ class K2Header {
 	}
 
 	function get_header_images() {
-		return K2::files_scan(K2HEADERSPATH, array('gif','jpeg','jpg','png'), 1);
+		return K2::files_scan(K2_HEADERS_PATH, array('gif','jpeg','jpg','png'), 1);
 	}
 
 	function random_picture() {
@@ -160,9 +160,9 @@ class K2Header {
 		if ( file_exists($source) and (strpos(basename($source),'midsize-') === false) ) {
 
 			if ($id) {
-				$dest = K2::copy_file($source, K2HEADERSPATH . basename($source));
+				$dest = K2::copy_file($source, K2_HEADERS_PATH . basename($source));
 			} else {
-				$dest = K2::move_file($source, K2HEADERSPATH . basename($source));
+				$dest = K2::move_file($source, K2_HEADERS_PATH . basename($source));
 			}
 
 			if (false !== $dest) {

@@ -13,21 +13,25 @@ function get_k2info($show='') {
 
 		case 'style' :
 			if ( get_option('k2scheme') != '' ) {
-				$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2STYLESPATH) . get_option('k2scheme');
+				$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2_STYLES_PATH) . get_option('k2scheme');
 			}
 			break;
 
+		case 'style_info' :
+			$output = stripslashes(get_option('k2styleinfo'));
+			break;
+
 		case 'styles_url' :
-			$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2STYLESPATH);
+			$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2_STYLES_PATH);
 			break;
 
 		case 'headers_url' :
-			$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2HEADERSPATH);
+			$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2_HEADERS_PATH);
 			break;
 
 		case 'current_style_dir' :
 			if ( get_option('k2scheme') != '' ) {
-				$output = K2STYLESPATH . dirname(get_option('k2scheme'));
+				$output = K2_STYLES_PATH . dirname(get_option('k2scheme'));
 			}
 			break;
 	}
@@ -71,61 +75,38 @@ function k2_parse_query($query) {
 	return $query;
 }
 
-function k2_style_info() {
-	$style_info = get_option('k2styleinfo');
+function update_style_info() {
+	$styleinfo = '';
+	$data = get_style_data( get_option('k2scheme') );
+
+	if ( !empty($data) and ($data['site'] != '') and ($data['style'] != '') and ($data['author'] != '') ) {
+		$styleinfo = $data['styleinfo'];
+
+		// No custom style info
+		if ( $styleinfo == '' ) {
+			$styleinfo = K2_STYLE_INFO_FORMAT;
+		}
+
+		if ( strpos($styleinfo, '%') !== false ) {
+			$styleinfo = str_replace("%author%", $data['author'], $styleinfo);
+			$styleinfo = str_replace("%site%", $data['site'], $styleinfo);
+			$styleinfo = str_replace("%style%", $data['style'], $styleinfo);
+			$styleinfo = str_replace("%stylelink%", $data['stylelink'], $styleinfo);
+			$styleinfo = str_replace("%version%", $data['version'], $styleinfo);
+			$styleinfo = str_replace("%comments%", $data['comments'], $styleinfo);
+		}
+	}
 	
-	if ('' != $style_info) {
-		echo stripslashes($style_info);
-	}
+	update_option('k2styleinfo', $styleinfo);	
 }
 
-function k2styleinfo_update() {
-	$style_info = '';
-	$data = get_style_info( get_option('k2scheme') );
-
-	if ('' != $data) {
-		$style_info = get_option('k2styleinfo_format');
-		$style_info = str_replace("%author%", $data['author'], $style_info);
-		$style_info = str_replace("%site%", $data['site'], $style_info);
-		$style_info = str_replace("%style%", $data['style'], $style_info);
-		$style_info = str_replace("%stylelink%", $data['stylelink'], $style_info);
-		$style_info = str_replace("%version%", $data['version'], $style_info);
-		$style_info = str_replace("%comments%", $data['comments'], $style_info);
-	}
-	
-	update_option('k2styleinfo', $style_info, '','');	
-}
-
-function k2styleinfo_demo() {
-	$style_info = get_option('k2styleinfo_format');
-	$data = get_scheme_info( get_option('k2scheme') );
-
-	if ('' != $data) {
-		$style_info = str_replace("%style%", $data['style'], $style_info);
-		$style_info = str_replace("%stylelink%", $data['stylelink'], $style_info);
-		$style_info = str_replace("%author%", $data['author'], $style_info);
-		$style_info = str_replace("%site%", $data['site'], $style_info);
-		$style_info = str_replace("%version%", $data['version'], $style_info);
-		$style_info = str_replace("%comments%", $data['comments'], $style_info);
-	} else {
-		$style_info = str_replace("%style%", __('Default'), $style_info);
-		$style_info = str_replace("%author%", 'Michael Heilemann', $style_info);
-		$style_info = str_replace("%site%", 'http://binarybonsai.com/', $style_info);
-		$style_info = str_replace("%version%", '1.0', $style_info);
-		$style_info = str_replace("%comments%", 'Loves you like a kitten.', $style_info);
-		$style_info = str_replace("%stylelink%", 'http://getk2.com/', $style_info);
-	}
-
-	echo stripslashes($style_info);
-}
-
-function get_style_info($style_file = '') {
+function get_style_data($style_file = '') {
 	// if no style selected, exit
 	if ( '' == $style_file ) {
 		return false;
 	}
 
-	$style_path = K2STYLESPATH . $style_file;
+	$style_path = K2_STYLES_PATH . $style_file;
 	if (!file_exists($style_path)) return false;
 	$style_data = implode( '', file( $style_path ) );
 
@@ -134,6 +115,7 @@ function get_style_info($style_file = '') {
 	preg_match("|Author Site\s*:(.*)|i", $style_data, $site);
 	preg_match("|Style Name\s*:(.*)|i", $style_data, $style);
 	preg_match("|Style URI\s*:(.*)|i", $style_data, $stylelink);
+	preg_match("|Style Info\s*:(.*)|i", $style_data, $styleinfo);
 	preg_match("|Version\s*:(.*)|i", $style_data, $version);
 	preg_match("|Comments\s*:(.*)|i", $style_data, $comments);
 	preg_match("|Header Text Color\s*:\s*#*([\dABCDEF]+)|i", $style_data, $header_text_color);
@@ -143,6 +125,7 @@ function get_style_info($style_file = '') {
 	return array(
 		'style' => trim($style[1]),
 		'stylelink' => trim($stylelink[1]),
+		'styleinfo' => trim($styleinfo[1]),
 		'author' => trim($author[1]),
 		'site' => trim($site[1]),
 		'version' => trim($version[1]),

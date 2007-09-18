@@ -7,7 +7,6 @@ class K2Options {
 		add_option('k2archives', '0', 'Set whether K2 has a Live Archive page');
 		add_option('k2scheme', '', 'Choose the Style you want K2 to use');
 		add_option('k2livecommenting', '1', "If you don't trust JavaScript, you can turn off Live Commenting. Otherwise it is suggested you leave it on");
-		add_option('k2styleinfo_format', '<a href="%stylelink%" title="%style% by %author%">%style% <!--%version%--></a>', 'Format for displaying the current selected style info.');
 		add_option('k2styleinfo', '', 'Formatted string for style info display.');
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
 		add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.');
@@ -71,11 +70,7 @@ class K2Options {
 				}
 				
 				if(isset($_POST['k2']['scheme'])) {
-					k2styleinfo_update();
-				}
-
-				if(isset($_POST['k2']['styleinfo_format'])) {
-					k2styleinfo_update();
+					update_style_info();
 				}
 			}
 

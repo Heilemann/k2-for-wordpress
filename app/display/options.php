@@ -9,7 +9,7 @@
 	$style_title = $style_name !== false ? $style_name : __('No Style','k2_domain');
 
 	// Check that the styles folder exists
-	$is_styles_dir = is_dir(K2STYLESPATH);
+	$is_styles_dir = is_dir(K2_STYLES_PATH);
 
 	// Get the scheme files
 	$style_files = K2::get_styles();
@@ -41,8 +41,8 @@
 	);
 
 	// Check that we can write to the headers folder and that it exists
-	$is_headers_writable = is_writable(K2HEADERSPATH);
-	$is_headers_dir = is_dir(K2HEADERSPATH);
+	$is_headers_writable = is_writable(K2_HEADERS_PATH);
+	$is_headers_dir = is_dir(K2_HEADERS_PATH);
 
 	// Get the header pictures
 	$picture_files = K2Header::get_header_images();
@@ -64,7 +64,7 @@
 <div class="wrap">
 	<?php if (!$is_styles_dir) { ?>
 		<div class="error"><small>
-		<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom styles is missing.</p><p>For you to be able to use custom styles, you need to add this directory.</p>','k2_domain'), K2STYLESPATH ); ?>
+		<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom styles is missing.</p><p>For you to be able to use custom styles, you need to add this directory.</p>','k2_domain'), K2_STYLES_PATH ); ?>
 		</small></div>
 	<?php } ?>
 
@@ -200,11 +200,11 @@
 
 			<?php if (!$is_headers_dir) { ?>
 				<div class="error">
-				<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom headers is missing.</p>','k2_domain'), K2HEADERSPATH ); ?>
+				<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom headers is missing.</p>','k2_domain'), K2_HEADERS_PATH ); ?>
 				</div>
 			<?php } elseif (!$is_headers_writable) { ?>
 				<div class="error">
-				<?php printf(__('<p>The directory <code>%s</code> should be writable (CHMOD 777) to upload custom headers through this interface. You can still manually upload images to the directory however.</p>','k2_domain'), K2HEADERSPATH ); ?>
+				<?php printf(__('<p>The directory <code>%s</code> should be writable (CHMOD 777) to upload custom headers through this interface. You can still manually upload images to the directory however.</p>','k2_domain'), K2_HEADERS_PATH ); ?>
 				</div>
 			<?php } ?>
 

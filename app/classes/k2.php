@@ -7,15 +7,6 @@ class K2 {
 		// Load the localisation text
 		load_theme_textdomain('k2_domain');
 
-		// Define our folders for WordPress & WordpressMU
-		if(K2_MU) {
-			define('K2STYLESPATH', ABSPATH . UPLOADS . 'k2support/styles/');
-			define('K2HEADERSPATH', ABSPATH . UPLOADS . 'k2support/headers/');
-		} else {
-			define('K2STYLESPATH', TEMPLATEPATH . '/styles/');
-			define('K2HEADERSPATH', TEMPLATEPATH . '/images/headers/');
-		}
-
 		$exclude = array('sbm-ajax.php');
 
 		// Exclude SBM if there's already a sidebar manager
@@ -72,11 +63,11 @@ class K2 {
 			if(!is_dir(ABSPATH . UPLOADS . 'k2support/')) {
 				wp_mkdir_p(ABSPATH . UPLOADS . 'k2support/');
 			}
-			if(!is_dir(K2STYLESPATH)) {
-				wp_mkdir_p(K2STYLESPATH);
+			if(!is_dir(K2_STYLES_PATH)) {
+				wp_mkdir_p(K2_STYLES_PATH);
 			}
-			if(!is_dir(K2HEADERSPATH)) {
-				wp_mkdir_p(K2HEADERSPATH);
+			if(!is_dir(K2_HEADERS_PATH)) {
+				wp_mkdir_p(K2_HEADERS_PATH);
 			}
 		}
 
@@ -152,7 +143,7 @@ class K2 {
 	}
 
 	function get_styles() {
-		return K2::files_scan(K2STYLESPATH, 'css', 2);
+		return K2::files_scan(K2_STYLES_PATH, 'css', 2);
 	}
 
 	function include_all($dir_path, $ignore = false) {

@@ -6,7 +6,7 @@
 
 <div id="footer">
 
-	<?php if (function_exists('k2_style_info') && get_option('k2styleinfo') != '') { ?><p class="footerstyledwith"><?php _e('Styled with ','k2_domain'); k2_style_info(); ?></p><?php } ?>
+	<?php $styleinfo = get_k2info('style_info'); if ($styleinfo != '') { ?><p class="footerstyledwith"><?php printf(__('Styled with %s','k2_domain'), $styleinfo); ?></p><?php } ?>
 
 	<p class="footerpoweredby"><?php printf( __('Powered by %1$s and %2$s','k2_domain'),
 		sprintf('<a href="http://wordpress.org/">%1$s <!--%2$s--></a>',
