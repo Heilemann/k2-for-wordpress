@@ -2,6 +2,9 @@
 	// Load localizatons
 	load_theme_textdomain('k2_domain');
 
+	// Load updated versions of bundled scripts
+	K2::load_updated_scripts();
+
 	// Load our scripts
 	wp_enqueue_script('k2functions');
 

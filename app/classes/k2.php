@@ -125,17 +125,20 @@ class K2 {
 
 		wp_register_script('k2sbm',
 	       get_bloginfo('template_directory') . '/js/k2.sbm.js.php',
-	       array('jquery', 'interface', 'jquery-dimensions' ), '');
+	       array('jquery', 'interface'), '');
 
 		wp_register_script('jquery-dimensions',
 	       get_bloginfo('template_directory') . '/js/jquery.dimensions.js.php',
 	       array('jquery', 'interface'), '');
+	}
 
+	// Load updated versions of those scripts bundled with WordPress
+	function load_updated_scripts() {
 		// Register jQuery
 		wp_deregister_script('jquery');
 		wp_register_script('jquery',
 			get_bloginfo('template_directory').'/js/jquery.js.php',
-			false, '1.2');
+			false, '1.2.1');
 
 		wp_register_script('interface',
 			get_bloginfo('template_directory').'/js/jquery.interface.js.php',
