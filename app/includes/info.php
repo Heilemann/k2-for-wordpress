@@ -79,7 +79,7 @@ function update_style_info() {
 	$styleinfo = '';
 	$data = get_style_data( get_option('k2scheme') );
 
-	if ( !empty($data) and ($data['site'] != '') and ($data['style'] != '') and ($data['author'] != '') ) {
+	if ( !empty($data) and ($data['style'] != '') and ($data['stylelink'] != '') and ($data['author'] != '') ) {
 		$styleinfo = $data['styleinfo'];
 
 		// No custom style info
