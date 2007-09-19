@@ -362,11 +362,6 @@ function k2_body_class( $print = true ) {
 	is_attachment() ? $c[] = 'attachment' : null;
 	is_404()        ? $c[] = 'four04'     : null; // CSS does not allow a digit as first character
 
-	if ( function_exists('is_tag') )
-		is_tag()    ? $c[] = 'tag'        : null;
-
-	is_category()   ? $c[] = 'category'   : null;
-
 	// Special classes for BODY element when a single post
 	if ( is_single() ) {
 		$postID = $wp_query->post->ID;
