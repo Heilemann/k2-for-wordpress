@@ -27,7 +27,7 @@ function latest_comments_sidebar_module($args) {
 		if($comments) { ?>
 		<ul>
 			<?php foreach($comments as $comment): ?>
-				<li><?php printf(__('%1$s %2$s <a href="%3$s#comment-%4$s">%5$s</a>', 'k2_domain'), get_comment_author_link(), __('on post', 'k2_domain'), get_permalink($comment->comment_post_ID), $comment->comment_ID, get_the_title($comment->comment_post_ID)); ?></li>
+				<li><?php printf(__('%1$s %2$s <a href="%3$s#comment-%4$s">%5$s</a>', 'k2_domain'), get_comment_author_link(), __('on the post', 'k2_domain'), get_permalink($comment->comment_post_ID), $comment->comment_ID, get_the_title($comment->comment_post_ID)); ?></li>
 			<?php endforeach; ?>
 		</ul>
 		<?php } else { ?>
