@@ -59,7 +59,7 @@ class K2SBM {
 	}
 
 	function direct_bootstrap() {
-		global $k2sbm_registered_modules, $k2sbm_registered_sidebars, $k2sbm_disabled_modules, $k2sbm_error_text;
+		global $k2sbm_registered_modules, $k2sbm_registered_sidebars, $k2sbm_active_modules, $k2sbm_disabled_modules, $k2sbm_error_text;
 
 		// You MUST be an admin to access this stuff
 		auth_redirect();
@@ -88,15 +88,14 @@ class K2SBM {
 			} else {
 				echo(false);
 			}
+		} elseif($_POST['action'] == 'backup') {
+			header('Content-Description: File Transfer');
+			header('Content-Disposition: attachment; filename=sbm-' . date('Y-m-d') . '.dat');
+			header('Content-Type: text/plain; charset=' . get_option('blog_charset'), true);
+			echo(serialize(array('sbm_version' => SBM_VERSION, 'active_modules' => $k2sbm_active_modules, 'disabled_modules' => $k2sbm_disabled_modules)));
 		} else {
 			// Set the output type
-			header('Content-type: text/xml; charset: UTF-8');
-
-			// XML prelude
-			echo('<?xml version="1.0" encoding="UTF-8"?>');
-
-			// Begin the response
-			echo('<response>');
+			header('Content-type: text/plain; charset: UTF-8');
 
 			// Check what the action is
 			switch($_POST['action']) {
@@ -147,15 +146,17 @@ class K2SBM {
 					break;
 			}
 
+			// Begin the JSON response
+			echo('{result: ');
+
 			if($k2sbm_error_text != null) {
-				echo('<error>' . $k2sbm_error_text . '</error>');
-				echo(false);
+				echo('false, error: "' . $k2sbm_error_text . '"');
 			} else {
-				echo(true);
+				echo('true');
 			}
 
 			// End the response
-			echo('</response>');
+			echo('}');
 
 			// Safeguard
 			wp_cache_flush();
@@ -189,10 +190,28 @@ class K2SBM {
 	}
 
 	function module_admin() {
-		global $k2sbm_registered_sidebars, $k2sbm_registered_modules;
+		global $k2sbm_registered_sidebars, $k2sbm_registered_modules, $k2sbm_active_modules, $k2sbm_disabled_modules;
 
 		switch($_GET['subpage']) {
 		case 'backup':
+			$restored = false;
+			$error = false;
+
+			if($_POST['action'] == 'restore' && $_FILES['backup']['error'] == 0) {
+				$data = (array)unserialize(file_get_contents($_FILES['backup']['tmp_name']));
+
+				if(isset($data['sbm_version']) && version_compare($data['sbm_version'], SBM_VERSION) <= 0) {
+					$k2sbm_active_modules = $data['active_modules'];
+					$k2sbm_disabled_modules = $data['disabled_modules'];
+
+					K2SBM::save_modules();
+					$restored = true;
+				} else {
+					$error = true;
+				}
+			}
+
+			extract(array('restored' => $restored, 'error' => $error));
 			include(TEMPLATEPATH . '/app/display/sbm/backup.php');
 
 			break;
