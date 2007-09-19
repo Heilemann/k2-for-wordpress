@@ -804,6 +804,14 @@ if(K2_USING_SBM) {
 
 					$id = $id . ($k2sbm_count_id[$id] > 1 ? '-' . $k2sbm_count_id[$id] : '');
 
+					if(strstr($id, '%') !== false) {
+						$id = str_replace('%', '-', $id);
+					}
+
+					if(preg_match('/[0-9\-]/', ($first_char = $id[0]))) {
+						$id = 'module' . ($first_char != '-' ? '-' : '') . $id;
+					}
+
 					// Call the display callback
 					$params[0] = array(
 						'before_module' => sprintf($sidebar->before_module, $id, $this->css_class($k2sbm_module_index++, $base_module['css_class'])),
