@@ -256,7 +256,7 @@ h2 { /* H2 is what kind of page you are on. Eg. 'Monthly Archive'. */
 	margin-top: 2px;
 	}
 
-.secondary h2 { /* Secondary H2 is sidebar headlines */
+.secondary h4 { /* Secondary H4 is sidebar headlines */
 	font-size: 1.5em !important;
 	font-weight: normal !important;
 	padding: 0 !important;
@@ -932,7 +932,7 @@ ol li {
 	position: relative;
 	}
 
-#search h2 {
+#search h4 {
 	display: none;
 	}
 
@@ -996,11 +996,11 @@ input[type=text], textarea {
 	Links Module
 */
 
-.sb-links h2 {
+.sb-links h4 {
 	display: none;
 	}
 
-.linkcat h2 {
+.linkcat h4 {
 	display: inline;
 	}
 

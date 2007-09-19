@@ -2,7 +2,7 @@
 <div id="sidebar-main" class="secondary">
 <?php /* Widgets/SBM Check */ if ( !(function_exists('dynamic_sidebar') and dynamic_sidebar(1)) ) { ?>
 
-	<div id="search"><h2><?php _e('Search','k2_domain'); ?></h2>
+	<div id="search"><h4><?php _e('Search','k2_domain'); ?></h4>
 		<?php include (TEMPLATEPATH . '/searchform.php'); ?>
 	</div>
 
@@ -23,7 +23,7 @@
 	?>
 
 	<div class="sb-pagemenu">
-		<h2><?php echo $parent_title; ?> <?php _e('Subpages','k2_domain'); ?></h2>
+		<h4><?php echo $parent_title; ?> <?php _e('Subpages','k2_domain'); ?></h4>
 		
 		<ul>
 			<?php echo $page_menu; ?>
@@ -45,7 +45,7 @@
 	<?php /* If there is a custom about message, use it on the frontpage. */ $k2about = get_option('k2aboutblurp'); if ((is_home() and $k2about != '') or !is_home() and !is_page() and !is_single() or is_paged()) { ?>
 		
 	<div class="sb-about">
-		<h2><?php _e('About','k2_domain'); ?></h2>
+		<h4><?php _e('About','k2_domain'); ?></h4>
 		
 		<?php /* Frontpage */ if (is_home() and !is_paged()) { ?>
 		<p><?php echo stripslashes($k2about); ?></p>
@@ -91,7 +91,7 @@
 
 	<?php /* Brian's Latest Comments */ if ((function_exists('blc_latest_comments')) and is_home()) { ?> 
 	<div class="sb-comments sb-comments-blc">
-		<h2><?php _e('Comments','k2_domain'); ?></h2>	
+		<h4><?php _e('Comments','k2_domain'); ?></h4>	
 		<span class="metalink"><a href="<?php bloginfo('comments_rss2_url'); ?>" title="<?php _e('RSS Feed for all Comments','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
 		<ul>
 			<?php blc_latest_comments('5','3','false'); ?>
@@ -101,7 +101,7 @@
 
 	<?php /* Latest Entries */ if ( (is_home()) or (is_search() or (is_404()) or ($notfound == '1')) or (function_exists('is_tag') and is_tag()) or ( (is_archive()) and (!is_author()) ) ) { ?>
 	<div class="sb-latest">
-		<h2><?php _e('Latest','k2_domain'); ?></h2>
+		<h4><?php _e('Latest','k2_domain'); ?></h4>
 		<span class="metalink"><a href="<?php bloginfo('rss2_url'); ?>" title="<?php _e('RSS Feed for Blog Entries','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
 
 		<ul>
@@ -113,7 +113,7 @@
 
 	<?php /* FlickrRSS Plugin */ if ((function_exists('get_flickrRSS')) and is_home() and !(is_paged())) { ?> 
 	<div class="sb-flickr">
-		<h2>Flickr</h2>
+		<h4>Flickr</h4>
 		<span class="metalink"><a href="http://flickr.com/services/feeds/photos_public.gne?id=<?php echo get_option('flickrRSS_flickrid'); ?>&amp;format=rss_200" title="<?php _e('RSS Feed for flickr','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
 
 		<div>
@@ -124,7 +124,7 @@
 
 
 	<?php /* if ((function_exists('feedlist')) and is_home() and !(is_paged()) ) { ?> 
-	<div class="sb-feedlist"><h2><?php _e('Feedlist','k2_domain'); ?></h2>
+	<div class="sb-feedlist"><h4><?php _e('Feedlist','k2_domain'); ?></h4>
 		<ul>
 			<?php feedList(array("rss_feed_url"=>"",
 				"num_items"=>10,
@@ -140,7 +140,7 @@
 	<?php /* Links */ if ( (is_home()) and !(is_page()) and !(is_single()) and !(is_search()) and !(is_archive()) and !(is_author()) and !(is_category()) and !(is_paged()) ) { $links_list_exist = @$wpdb->get_var("SELECT link_id FROM $wpdb->links LIMIT 1"); if($links_list_exist) { ?>
 	<div class="sb-links">
 		<ul>
-			<?php get_links_list(); ?>
+			<?php wp_list_bookmarks('title_before=<h4>&title_after=</h4>'); ?>
 		</ul>
 	</div>
 	<?php } } ?>
@@ -148,7 +148,7 @@
 
 	<?php /* Archives */ if ( (is_archive()) or (is_search()) or (is_paged()) or ($notfound == '1') or (function_exists('is_tag') and is_tag()) ) { ?>
 	<div class="sb-months">
-		<h2><?php _e('Archives','k2_domain'); ?></h2>
+		<h4><?php _e('Archives','k2_domain'); ?></h4>
 		
 		<ul>
 			<?php wp_get_archives('type=monthly'); ?>
@@ -156,7 +156,7 @@
 	</div>
 
 	<div class="sb-categories">
-		<h2><?php _e('Categories','k2_domain'); ?></h2>
+		<h4><?php _e('Categories','k2_domain'); ?></h4>
 		
 		<ul>
 			<?php
@@ -173,7 +173,7 @@
 
 	<?php /* Related Posts Plugin */ if ((function_exists('related_posts')) and is_single() and ($notfound != '1')) { ?> 
 	<div class="sb-related">
-		<h2><?php _e('Related Entries','k2_domain'); ?></h2>
+		<h4><?php _e('Related Entries','k2_domain'); ?></h4>
 		
 		<ul>
 			<?php related_posts(); ?>

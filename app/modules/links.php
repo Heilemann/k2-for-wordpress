@@ -6,7 +6,7 @@ function links_sidebar_module($args) {
 	echo($before_module . $before_title . $title . $after_title);
 	?>
 	<ul>
-		<?php get_links_list(); ?>
+		<?php wp_list_bookmarks('title_before=<h4>&title_after=</h4>'); ?>
 	</ul>
 	<?php
 	echo($after_module);
