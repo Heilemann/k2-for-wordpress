@@ -390,6 +390,11 @@ function sbm_load(id, url) {
 							}
 					  	}
 					);
+
+					// Dumbass caret fix. REMOVE ME FOR FF3.0
+					if(jQuery.browser.mozilla) {
+						jQuery('#options > *:has(input)').css('position', 'fixed').css('width', optionsWidth + 'px');
+					}
 				}
 			);
 			
