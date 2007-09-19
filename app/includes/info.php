@@ -293,18 +293,21 @@ function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' a
 }
 
 function k2asides_filter($query) {
-	$k2asidescategory = get_option('k2asidescategory');
+	global $k2sbm_current_module;
+
+	$asides = get_option('k2asidescategory');
 
 	// Only filter when it's in the homepage
-	if ( ($k2asidescategory != 0) and (
-		(function_exists('is_active_module') and is_active_module('asides_sidebar_module')) or
-		(function_exists('is_active_widget') and is_active_widget('k2_asides_widget'))
-		) and ($query->is_home) ) {
+	if ( ($asides != 0) and ($query->is_home) and (!$k2sbm_current_module) and
+		( (function_exists('is_active_module') and is_active_module('asides_sidebar_module')) or
+		  (function_exists('is_active_widget') and is_active_widget('k2_asides_widget')) ) ) {
+
 		$priorcat = $query->get('cat');
 		if ( !empty($priorcat) ) {
 			$priorcat .= ',';
 		}
-		$query->set('cat', $priorcat . '-' . $k2asidescategory);
+
+		$query->set('cat', $priorcat . '-' . $asides);
 	}
 
 	return $query;
