@@ -6,7 +6,33 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     exit;
 }
 
+$k2_db_check = true;
+
+function kill_data() {
+	return '';
+}
+
+function check_db() {
+	global $wpdb, $k2_db_check;
+
+	if($k2_db_check) {
+		// Check DB
+		if(!$wpdb->dbh) {
+			echo('Our database has issues. Try again later.');
+		} else {
+			echo('We\'re currently having site problems. Try again later.');
+		}
+
+		die();
+	}
+}
+
+ob_start('kill_data');
+register_shutdown_function('check_db');
 require_once(dirname(__FILE__)."/../../../wp-config.php");
+$k2_db_check = false;
+ob_end_clean();
+
 nocache_headers();
 
 function fail($s) {
