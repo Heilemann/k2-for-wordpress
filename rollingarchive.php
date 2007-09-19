@@ -60,6 +60,12 @@
 	</div> <!-- #rollnavigation -->
 </div> <!-- #rollingarchives -->
 
+<?php if(!isset($_GET['k2dynamic'])) { ?>
+<noscript>
+	<?php include('navigation.php'); ?>
+</noscript>
+<?php } ?>
+
 <?php if ( !isset($_GET['k2dynamic']) or ($_GET['k2dynamic'] == 'init') ) { ?>
 <script type="text/javascript">
 // <![CDATA[
