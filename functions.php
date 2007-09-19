@@ -15,6 +15,9 @@ if(K2_MU) {
 	define('K2_HEADERS_PATH', TEMPLATEPATH . '/images/headers/');
 }
 
+// Are we using SBM?
+define('K2_USING_SBM', !function_exists('register_sidebar'));
+
 // Default style info format
 define('K2_STYLE_INFO_FORMAT', '<a href="%stylelink%" title="%style% by %author%">%style% <!--%version%--></a>');
 

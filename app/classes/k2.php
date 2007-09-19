@@ -10,15 +10,15 @@ class K2 {
 		$exclude = array('sbm-direct.php');
 
 		// Exclude SBM if there's already a sidebar manager
-		if ( function_exists('register_sidebar') ) {
-			$exclude[] = 'sbm.php';
-		} else {
+		if(K2_USING_SBM) {
 			$exclude[] = 'widgets.php';
+		} else {
+			$exclude[] = 'sbm.php';
 		}
 
 		// Scan for includes and classes
 		K2::include_all(TEMPLATEPATH . '/app/includes/', $exclude);
-		K2::include_all(TEMPLATEPATH . '/app/classes/', $exclude);
+		K2::include_all(TEMPLATEPATH . '/app/classes/');
 
 		// Get the last modified time of the classes folder
 		$last_modified = filemtime(dirname(__FILE__));
