@@ -5,25 +5,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2006-04-13 21:06+0800\n"
-"PO-Revision-Date: 2007-06-10 17:24+0800\n"
+"PO-Revision-Date: 2007-09-20 03:04+0800\n"
 "Last-Translator: Safirul Alredha <zeo@unic.net.my>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: 404.php:11
+#: 404.php:15
 msgid "Error 404 - Not Found"
 msgstr ""
 
-#: 404.php:15
-#: theloop.php:147
+#: 404.php:19
+#: theloop.php:148
 msgid "Oh no! You're looking for something which just isn't here! Fear not however, errors are to be expected, and luckily there are tools on the sidebar for you to use in your search for what you need."
 msgstr ""
 
-#: attachment.php:33
-#: page-archives.php:27
-#: page-comments.php:15
+#: attachment.php:35
+#: page-archives.php:28
+#: page-comments.php:17
 #: page.php:11
 #: theloop.php:97
 #: app/modules/asides.php:23
@@ -31,60 +31,119 @@ msgstr ""
 msgid "Permanent Link to \"%s\""
 msgstr ""
 
-#: attachment.php:38
-#: theloop.php:103
+#: attachment.php:40
+#: theloop.php:102
 #, php-format
 msgid "Published %1$s %2$s"
 msgstr ""
 
-#: attachment.php:39
-#: theloop.php:104
+#: attachment.php:41
+#: theloop.php:103
 #, php-format
 msgid "by %s"
 msgstr ""
 
-#: attachment.php:39
-#: theloop.php:104
+#: attachment.php:41
+#: theloop.php:103
 #, php-format
 msgid "View all posts by %s"
 msgstr ""
 
-#: attachment.php:41
-#: theloop.php:106
+#: attachment.php:43
+#: theloop.php:105
 #, php-format
 msgid "%s ago"
 msgstr ""
 
-#: attachment.php:59
+#: attachment.php:61
 msgid "Sorry, no attachments matched your criteria."
 msgstr ""
 
-#: comments-ajax.php:22
-msgid "The post you are trying to comment on does not curently exist in the database."
+#: comments-ajax.php:50
+msgid "The post you are trying to comment on does not currently exist in the database."
 msgstr ""
 
-#: comments-ajax.php:25
+#: comments-ajax.php:53
 msgid "Sorry, comments are closed for this item."
 msgstr ""
 
-#: comments-ajax.php:41
+#: comments-ajax.php:56
+msgid "The post you are trying to comment on has not been published."
+msgstr ""
+
+#: comments-ajax.php:78
 msgid "Sorry, you must be logged in to post a comment."
 msgstr ""
 
-#: comments-ajax.php:48
+#: comments-ajax.php:85
 msgid "Error: please fill the required fields (name, email)."
 msgstr ""
 
-#: comments-ajax.php:50
+#: comments-ajax.php:87
 msgid "Error: please enter a valid email address."
 msgstr ""
 
-#: comments-ajax.php:54
+#: comments-ajax.php:91
 msgid "Error: please type a comment."
 msgstr ""
 
-#: comments-ajax.php:64
+#: comments-ajax.php:99
 msgid "Duplicate comment detected; it looks as though you've already said that!"
+msgstr ""
+
+#: comments-ajax.php:121
+#: comments.php:50
+msgid "What is this?"
+msgstr ""
+
+#: comments-ajax.php:121
+#: comments.php:50
+msgid "Gravatar Icon"
+msgstr ""
+
+#: comments-ajax.php:122
+#: comments-ajax.php:133
+#: comments.php:51
+#: comments.php:62
+#: comments.php:93
+#: comments.php:105
+msgid "Permanent Link to this Comment"
+msgstr ""
+
+#: comments-ajax.php:130
+#: comments.php:59
+#: comments.php:102
+#, php-format
+msgid "%s ago."
+msgstr ""
+
+#: comments-ajax.php:135
+#: comments.php:64
+#: comments.php:107
+#, php-format
+msgid "%1$s at %2$s"
+msgstr ""
+
+#: comments-ajax.php:136
+#: comments.php:65
+#: comments.php:108
+msgid "M jS, Y"
+msgstr ""
+
+#: comments-ajax.php:142
+#: comments.php:71
+#: comments.php:114
+#: page-archives.php:29
+#: page-comments.php:18
+#: page.php:12
+#: theloop.php:117
+#: app/modules/asides.php:23
+msgid "Edit"
+msgstr ""
+
+#: comments-ajax.php:149
+#: comments.php:78
+msgid "Your comment is awaiting moderation."
 msgstr ""
 
 #: comments.php:3
@@ -118,52 +177,6 @@ msgstr ""
 
 #: comments.php:21
 msgid "Trackback Address"
-msgstr ""
-
-#: comments.php:50
-msgid "What is this?"
-msgstr ""
-
-#: comments.php:50
-msgid "Gravatar Icon"
-msgstr ""
-
-#: comments.php:51
-#: comments.php:62
-#: comments.php:93
-#: comments.php:105
-msgid "Permanent Link to this Comment"
-msgstr ""
-
-#: comments.php:59
-#: comments.php:102
-#, php-format
-msgid "%s ago."
-msgstr ""
-
-#: comments.php:64
-#: comments.php:107
-#, php-format
-msgid "%1$s at %2$s"
-msgstr ""
-
-#: comments.php:65
-#: comments.php:108
-msgid "M jS, Y"
-msgstr ""
-
-#: comments.php:71
-#: comments.php:114
-#: page-archives.php:28
-#: page-comments.php:16
-#: page.php:12
-#: theloop.php:118
-#: app/modules/asides.php:23
-msgid "Edit"
-msgstr ""
-
-#: comments.php:78
-msgid "Your comment is awaiting moderation."
 msgstr ""
 
 #: comments.php:97
@@ -252,113 +265,151 @@ msgstr ""
 msgid "<strong>XHTML:</strong> You can use these tags %s:"
 msgstr ""
 
-#: comments.php:188
+#: comments.php:192
 msgid "Submit"
 msgstr ""
 
-#: footer.php:8
+#: footer.php:9
 #, php-format
-msgid "%1$s is powered by %2$s and %3$s"
-msgstr ""
-
-#: footer.php:10
-#, php-format
-msgid "<a href=\"%1$s\">RSS Entries</a> and <a href=\"%2$s\">RSS Comments</a>"
+msgid "Styled with %s"
 msgstr ""
 
 #: footer.php:11
 #, php-format
+msgid "Powered by %1$s and %2$s"
+msgstr ""
+
+#: footer.php:13
+msgid "WordPress"
+msgstr ""
+
+#: footer.php:17
+msgid "Loves you like a kitten."
+msgstr ""
+
+#: footer.php:22
+#, php-format
+msgid "<a href=\"%1$s\">Entries Feed</a> and <a href=\"%2$s\">Comments Feed</a>"
+msgstr ""
+
+#: footer.php:23
+#, php-format
 msgid "%d queries. %.4f seconds."
 msgstr ""
 
-#: header.php:65
+#: header.php:35
+#, php-format
+msgid "Catergory Archive for &lsquo;%s&rsquo;"
+msgstr ""
+
+#: header.php:39
+#, php-format
+msgid "Tag Archive for &lsquo;%s&rsquo;"
+msgstr ""
+
+#: header.php:43
+#, php-format
+msgid "%s Archive"
+msgstr ""
+
+#: header.php:47
+#, php-format
+msgid "Search Results for &lsquo;%s&rsquo;"
+msgstr ""
+
+#: header.php:52
+msgid " at "
+msgstr ""
+
+#: header.php:92
 msgid "Type and Wait to Search"
 msgstr ""
 
-#: header.php:66
-#: searchform.php:3
-msgid "go"
-msgstr ""
-
-#: header.php:72
-#, php-format
-msgid "Page %1$d of %2$d"
-msgstr ""
-
 #: navigation.php:20
-msgid "Previous Entries"
+msgid "Older Entries"
 msgstr ""
 
 #: navigation.php:21
-msgid "Next Entries"
+msgid "Newer Entries"
 msgstr ""
 
-#: page-archives.php:33
+#: page-archives.php:34
 #, php-format
 msgid "This is the frontpage of the %1$s archives. Currently the archives are spanning %2$s posts and %3$s comments, contained within the meager confines of %4$s categories. Through here, you will be able to move down into the archives by way of time or category. If you are looking for something specific, perhaps you should try the search on the sidebar."
 msgstr ""
 
-#: page-archives.php:37
+#: page-archives.php:38
 msgid "Live Archives"
 msgstr ""
 
-#: page-archives.php:38
+#: page-archives.php:39
 #, php-format
 msgid "This is a 'live archive', which allows you to 'dig' into the %s repository in a fast and efficient way without having to reload this page as you explore."
 msgstr ""
 
-#: page-archives.php:47
+#: page-archives.php:49
 msgid "Browse by Month"
 msgstr ""
 
-#: page-archives.php:54
+#: page-archives.php:56
 msgid "Browse by Category"
 msgstr ""
 
-#: page-archives.php:65
+#: page-archives.php:68
+#: app/modules/wptagcloud.php:26
 msgid "Tag Cloud"
 msgstr ""
 
-#: page-archives.php:66
+#: page-archives.php:69
 #, php-format
 msgid "The following is a list of the tags used at %s, colored and 'weighed' in relation to their relative usage."
 msgstr ""
 
-#: page-comments.php:22
+#: page-comments.php:24
 #: page.php:18
-#: theloop.php:129
+#: theloop.php:130
 msgid "Pages:"
 msgstr ""
 
-#: rollingarchive.php:43
+#: rollingarchive.php:38
 msgid "Less"
 msgstr ""
 
-#: rollingarchive.php:44
+#: rollingarchive.php:39
 msgid "More"
 msgstr ""
 
-#: rollingarchive.php:52
-#: rollingarchive.php:53
+#: rollingarchive.php:47
+#: rollingarchive.php:48
 msgid "Older"
 msgstr ""
 
-#: rollingarchive.php:55
-#: rollingarchive.php:56
+#: rollingarchive.php:50
+#: rollingarchive.php:51
 msgid "Home"
 msgstr ""
 
-#: rollingarchive.php:58
-#: rollingarchive.php:59
+#: rollingarchive.php:53
+#: rollingarchive.php:54
 msgid "Loading"
 msgstr ""
 
-#: rollingarchive.php:61
-#: rollingarchive.php:62
+#: rollingarchive.php:56
+#: rollingarchive.php:57
 msgid "Newer"
 msgstr ""
 
+#: rollingarchive.php:75
+#, php-format
+msgid "Page %1$d of %2$d"
+msgstr ""
+
+#: searchform.php:3
+msgid "go"
+msgstr ""
+
 #: sidebar.php:5
+#: app/modules/search.php:11
 msgid "Search"
 msgstr ""
 
@@ -383,71 +434,64 @@ msgid "About"
 msgstr ""
 
 #: sidebar.php:54
-#: app/modules/about.php:17
 #, php-format
 msgid "You are currently browsing the %1$s weblog archives for the %2$s category."
 msgstr ""
 
 #: sidebar.php:57
-#: app/modules/about.php:20
 #, php-format
 msgid "You are currently browsing the %1$s weblog archives for the day %2$s."
 msgstr ""
 
 #: sidebar.php:57
-#: app/modules/about.php:20
+#: app/modules/aboutcurrent.php:20
 msgid "l, F jS, Y"
 msgstr ""
 
 #: sidebar.php:60
-#: app/modules/about.php:23
 #, php-format
 msgid "You are currently browsing the %1$s weblog archives for the month %2$s."
 msgstr ""
 
 #: sidebar.php:60
 #: theloop.php:49
-#: app/includes/info.php:184
-#: app/modules/about.php:23
+#: app/includes/info.php:165
+#: app/modules/aboutcurrent.php:23
 msgid "F, Y"
 msgstr ""
 
 #: sidebar.php:63
-#: app/modules/about.php:26
 #, php-format
 msgid "You are currently browsing the %1$s weblog archives for the year %2$s."
 msgstr ""
 
 #: sidebar.php:66
-#: app/modules/about.php:29
 #, php-format
 msgid "You have searched the %1$s weblog archives for '<strong>%2$s</strong>'."
 msgstr ""
 
 #: sidebar.php:69
-#: app/modules/about.php:32
+#: app/modules/aboutcurrent.php:32
 #, php-format
 msgid "Archive for <strong>%s</strong>."
 msgstr ""
 
 #: sidebar.php:73
-#: app/modules/about.php:36
 #, php-format
 msgid "You are currently browsing the %1$s weblog archives for '%2$s' tag."
 msgstr ""
 
 #: sidebar.php:76
-#: app/modules/about.php:39
 #, php-format
 msgid "You are currently browsing the %s weblog archives."
 msgstr ""
 
 #: sidebar.php:79
-msgid "Next: "
+msgid "Next: %title"
 msgstr ""
 
 #: sidebar.php:80
-msgid "Previous: "
+msgid "Previous: %title"
 msgstr ""
 
 #: sidebar.php:85
@@ -455,12 +499,12 @@ msgid "Longer entries are truncated. Click the headline of an entry to read it i
 msgstr ""
 
 #: sidebar.php:94
-#: theloop.php:116
+#: theloop.php:115
 msgid "Comments"
 msgstr ""
 
 #: sidebar.php:95
-#: app/modules/recent_comments.php:11
+#: app/modules/latest_comments.php:10
 msgid "RSS Feed for all Comments"
 msgstr ""
 
@@ -480,7 +524,7 @@ msgstr ""
 
 #: sidebar.php:151
 #: app/classes/archive.php:20
-#: app/display/sbm-ajax/edit-module-form.php:33
+#: app/display/sbm/edit-module-form.php:42
 msgid "Archives"
 msgstr ""
 
@@ -536,38 +580,39 @@ msgstr ""
 msgid " <span class=\"archivepages\">Page %1$s of %2$s</span>"
 msgstr ""
 
-#: theloop.php:106
+#: theloop.php:105
 #, php-format
-msgid "at %s"
+msgid "on %s"
 msgstr ""
 
-#: theloop.php:113
+#: theloop.php:112
 #, php-format
 msgid "in %s."
 msgstr ""
 
-#: theloop.php:113
+#: theloop.php:112
 msgid " and "
 msgstr ""
 
-#: theloop.php:116
+#: theloop.php:115
 msgid "Comment"
 msgstr ""
 
-#: theloop.php:116
+#: theloop.php:115
 msgid "Closed"
 msgstr ""
 
-#: theloop.php:121
-msgid "Tags:"
+#: theloop.php:120
+#: theloop.php:122
+msgid "Tags: "
 msgstr ""
 
-#: theloop.php:127
+#: theloop.php:128
 #, php-format
 msgid "Continue reading '%s'"
 msgstr ""
 
-#: theloop.php:143
+#: theloop.php:144
 msgid "Not Found"
 msgstr ""
 
@@ -596,385 +641,438 @@ msgstr ""
 msgid "Folksonomy"
 msgstr ""
 
-#: app/classes/options.php:14
+#: app/classes/options.php:30
 msgid "K2 Options"
 msgstr ""
 
-#: app/classes/sbm.php:142
-#: app/classes/sbm.php:784
+#: app/classes/sbm.php:109
+#: app/classes/sbm.php:866
 msgid "You must specify a valid module name"
 msgstr ""
 
-#: app/classes/sbm.php:152
-#: app/classes/sbm.php:162
+#: app/classes/sbm.php:119
+#: app/classes/sbm.php:129
 msgid "Missing sidebar and module ids"
 msgstr ""
 
-#: app/classes/sbm.php:172
+#: app/classes/sbm.php:139
 msgid "Missing ordering data"
 msgstr ""
 
-#: app/classes/sbm.php:179
+#: app/classes/sbm.php:146
 msgid "Invalid call"
 msgstr ""
 
-#: app/classes/sbm.php:215
-#: app/display/modules.php:7
-msgid "K2 Sidebar Modules"
+#: app/classes/sbm.php:184
+msgid "K2 Sidebar Manager"
 msgstr ""
 
-#: app/classes/sbm.php:272
-#: app/classes/sbm.php:306
-#: app/classes/sbm.php:329
+#: app/classes/sbm.php:327
+#: app/classes/sbm.php:367
+#: app/classes/sbm.php:390
 #, php-format
 msgid "Sidebar %d"
 msgstr ""
 
-#: app/classes/sbm.php:310
+#: app/classes/sbm.php:371
 #, php-format
 msgid " %d"
 msgstr ""
 
-#: app/display/modules.php:11
-#: app/display/modules.php:16
-msgid "Add module"
-msgstr ""
-
-#: app/display/modules.php:12
-#: app/display/modules.php:52
-msgid "Module's options"
-msgstr ""
-
-#: app/display/modules.php:22
-#: app/display/sbm-ajax/edit-module-form.php:9
-msgid "Module's title:"
-msgstr ""
-
-#: app/display/modules.php:27
-msgid "Module's type"
-msgstr ""
-
-#: app/display/modules.php:36
-msgid "Add to"
-msgstr ""
-
-#: app/display/modules.php:41
-#: app/display/modules.php:85
-msgid "Disabled modules"
-msgstr ""
-
-#: app/display/modules.php:46
-msgid "Add &raquo;"
-msgstr ""
-
-#: app/display/modules.php:55
-msgid "Select a module to view it's options here"
-msgstr ""
-
-#: app/display/modules.php:62
-msgid "Remove &raquo;"
-msgstr ""
-
-#: app/display/modules.php:62
-msgid "Save &raquo;"
-msgstr ""
-
-#: app/display/modules.php:75
-msgid "(Inactive)"
-msgstr ""
-
-#: app/display/modules.php:98
-#, php-format
-msgid "Help to be had at the %1$s or in the %2$s."
-msgstr ""
-
-#: app/display/modules.php:98
-msgid "K2 Support Forums"
-msgstr ""
-
-#: app/display/modules.php:98
-msgid "K2 Documentation"
-msgstr ""
-
-#: app/display/options.php:16
-#: app/display/options.php:192
+#: app/display/options.php:9
+#: app/display/options.php:184
 msgid "No Style"
 msgstr ""
 
-#: app/display/options.php:29
-#: app/display/options.php:178
-msgid "No Asides"
+#: app/display/options.php:20
+msgid "Single Column"
 msgstr ""
 
-#: app/display/options.php:50
+#: app/display/options.php:21
+#: app/display/sbm/modules.php:10
+msgid "Two Columns"
+msgstr ""
+
+#: app/display/options.php:22
+#: app/display/sbm/modules.php:11
+msgid "Three Columns"
+msgstr ""
+
+#: app/display/options.php:38
+msgid "560 x 200 px"
+msgstr ""
+
+#: app/display/options.php:39
+msgid "780 x 200 px"
+msgstr ""
+
+#: app/display/options.php:40
+msgid "950 x 200 px"
+msgstr ""
+
+#: app/display/options.php:54
 msgid "K2 Options have been updated"
 msgstr ""
 
-#: app/display/options.php:56
+#: app/display/options.php:60
 msgid "The Extended Live Archives plugin has been setup for use with K2"
 msgstr ""
 
-#: app/display/options.php:63
+#: app/display/options.php:67
 #, php-format
 msgid "<p>The directory: <code>%s</code>, needed to store custom styles is missing.</p><p>For you to be able to use custom styles, you need to add this directory.</p>"
 msgstr ""
 
-#: app/display/options.php:74
-#: app/display/options.php:259
+#: app/display/options.php:78
+#: app/display/options.php:248
 msgid "Update Options &raquo;"
 msgstr ""
 
-#: app/display/options.php:134
+#: app/display/options.php:138
 msgid "Advanced Navigation"
 msgstr ""
 
-#: app/display/options.php:136
+#: app/display/options.php:140
 msgid "Enable Advanced Navigation"
 msgstr ""
 
-#: app/display/options.php:138
+#: app/display/options.php:142
 msgid "K2's Advanced Navigation is in reality a couple of features which, when combined, work to make the task of searching through your blog faster and easier. This includes inline AJAX-powered livesearch as well as the ability to flip back and forth between archive pages, without ever reloading the page."
 msgstr ""
 
-#: app/display/options.php:140
+#: app/display/options.php:144
 msgid "Archives Page"
 msgstr ""
 
-#: app/display/options.php:142
+#: app/display/options.php:146
 msgid "Enable Archives Page"
 msgstr ""
 
-#: app/display/options.php:144
+#: app/display/options.php:148
 msgid "To further enhance your precious backlog of writings, you can enable an archives page, which can assist both your readers as well as yourself in digging up the past."
 msgstr ""
 
-#: app/display/options.php:147
+#: app/display/options.php:151
 #, php-format
 msgid "We highly recommend that you install %s for maximum archival pleasure."
 msgstr ""
 
-#: app/display/options.php:147
+#: app/display/options.php:151
 msgid "Arnaud Froment's Extended Live Archives"
 msgstr ""
 
-#: app/display/options.php:149
+#: app/display/options.php:153
 msgid "Setup Extended Live Archives for K2"
 msgstr ""
 
-#: app/display/options.php:152
+#: app/display/options.php:156
 msgid "Live Commenting"
 msgstr ""
 
-#: app/display/options.php:154
+#: app/display/options.php:158
 msgid "Enable Live Commenting"
 msgstr ""
 
-#: app/display/options.php:156
+#: app/display/options.php:160
 msgid "Live comments use AJAX to submit comments to the server without reloading the page, making the experience more seamless for the user."
 msgstr ""
 
-#: app/display/options.php:159
-msgid "Sidebars"
-msgstr ""
-
-#: app/display/options.php:161
-msgid "This sets the number of sidebars that K2 will display. 'No Sidebars' will place a default sidebar below the main column."
-msgstr ""
-
-#: app/display/options.php:165
-msgid "No Sidebars"
-msgstr ""
-
-#: app/display/options.php:166
-msgid "One Sidebar"
-msgstr ""
-
-#: app/display/options.php:167
-msgid "Two Sidebars"
-msgstr ""
-
-#: app/display/options.php:172
+#: app/display/options.php:163
+#: app/modules/asides.php:41
 msgid "Asides"
 msgstr ""
 
-#: app/display/options.php:174
+#: app/display/options.php:165
 msgid "'Asides' is a category of entries, meant to be 'smaller' and perhaps of 'less importance', like for instance links with minor commentary. They are styles differently than other entries to separate them content-wise. Below you can select a category to be shown as Asides."
 msgstr ""
 
-#: app/display/options.php:187
+#: app/display/options.php:169
+msgid "No Asides"
+msgstr ""
+
+#: app/display/options.php:179
 msgid "Style"
 msgstr ""
 
-#: app/display/options.php:189
+#: app/display/options.php:181
 #, php-format
 msgid "K2 Styles are CSS files that allow you to visually customize your blog, without ever touching K2's core files. The structure of K2 has been designed specifically for this purpose, and offers some truly great styling opportunities. %s"
 msgstr ""
 
-#: app/display/options.php:189
+#: app/display/options.php:181
 msgid "Read more"
 msgstr ""
 
-#: app/display/options.php:201
+#: app/display/options.php:195
 msgid "Header"
 msgstr ""
 
-#: app/display/options.php:204
-msgid ""
-"Your header is the crown of your blog, with plenty of room to express yourself. Here you can decide on the ultimate question: Is it a a blog or a journal? But more importantly, you can upload images for use as header backgrounds. The default K2 header size for your current setup is \n"
-"\t\t\t\n"
-"\t\t\t560x200px\n"
-"\t\t\t780x200px\n"
-"\t\t\t950x200px\n"
-"\t\t\t\n"
-"\t\t\t"
+#: app/display/options.php:198
+#, php-format
+msgid "Your header is the crown of your blog, with plenty of room to express yourself. Here you can decide on the ultimate question: Is it a a blog or a journal? But more importantly, you can upload images for use as header backgrounds. The default K2 header size for your current setup is: <strong>%s</strong>."
 msgstr ""
 
-#: app/display/options.php:214
+#: app/display/options.php:203
 #, php-format
 msgid "<p>The directory: <code>%s</code>, needed to store custom headers is missing.</p>"
 msgstr ""
 
-#: app/display/options.php:218
+#: app/display/options.php:207
 #, php-format
 msgid "<p>The directory <code>%s</code> should be writable (CHMOD 777) to upload custom headers through this interface. You can still manually upload images to the directory however.</p>"
 msgstr ""
 
-#: app/display/options.php:226
+#: app/display/options.php:215
 msgid "Upload an Image"
 msgstr ""
 
-#: app/display/options.php:230
+#: app/display/options.php:219
 msgid "Activate immediately"
 msgstr ""
 
-#: app/display/options.php:235
+#: app/display/options.php:224
 msgid "Select an Image"
 msgstr ""
 
-#: app/display/options.php:238
+#: app/display/options.php:227
 msgid "No Picture"
 msgstr ""
 
-#: app/display/options.php:244
+#: app/display/options.php:233
 msgid "Randomize Header Image"
 msgstr ""
 
-#: app/display/options.php:249
+#: app/display/options.php:238
 msgid "Rename the 'Blog' tab"
 msgstr ""
 
-#: app/display/options.php:263
+#: app/display/options.php:252
 msgid "Uninstall K2"
 msgstr ""
 
+#: app/display/options.php:256
+msgid "This will delete all your K2 settings."
+msgstr ""
+
 #: app/display/options.php:265
-msgid "Pressing the uninstall button does not delete any files. It simply disables K2 as a theme, reverting to the default theme, and removes all the K2 settings from the database. Perfect for if you want to start afresh."
+msgid "Uninstalling reverts WordPress to the default theme and removes all K2 settings from the database. No files are deleted. Perfect for if you want to start afresh."
 msgstr ""
 
 #: app/display/options.php:267
 msgid "Reset and Uninstall K2"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-form.php:5
-msgid "Module's options updated"
+#: app/display/sbm/backup.php:23
+msgid "Your sidebar was restored"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-form.php:11
-msgid "Display module's title"
+#: app/display/sbm/backup.php:29
+msgid "Invalid SBM backup file"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-form.php:15
-msgid "Module's type:"
+#: app/display/sbm/backup.php:36
+msgid "Backup current sidebar:"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-form.php:20
-msgid "Advanced options"
+#: app/display/sbm/backup.php:37
+msgid "This will create a backup of your current sidebar configuration."
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-form.php:23
-msgid "Related CSS file"
+#: app/display/sbm/backup.php:37
+msgid "Keep in a safe place in case of disaster."
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-form.php:30
-msgid "Display on:"
+#: app/display/sbm/backup.php:38
+msgid "Create sidebar backup &raquo;"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-form.php:31
+#: app/display/sbm/backup.php:44
+msgid "Restore sidebar:"
+msgstr ""
+
+#: app/display/sbm/backup.php:45
+msgid "Did it fail? Never fear, restore is here!"
+msgstr ""
+
+#: app/display/sbm/backup.php:45
+msgid "I hope you kept that file safe..."
+msgstr ""
+
+#: app/display/sbm/backup.php:47
+msgid "Restore sidebar &raquo;"
+msgstr ""
+
+#: app/display/sbm/edit-module-form.php:8
+msgid "Type:"
+msgstr ""
+
+#: app/display/sbm/edit-module-form.php:13
+msgid "Title:"
+msgstr ""
+
+#: app/display/sbm/edit-module-form.php:17
+msgid "Display Title"
+msgstr ""
+
+#: app/display/sbm/edit-module-form.php:31
+msgid "Load the following CSS file with this module"
+msgstr ""
+
+#: app/display/sbm/edit-module-form.php:39
+msgid "Display Module On:"
+msgstr ""
+
+#: app/display/sbm/edit-module-form.php:40
 msgid "Homepage"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-form.php:35
+#: app/display/sbm/edit-module-form.php:44
 msgid "Single posts"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-form.php:35
-#: app/display/sbm-ajax/edit-module-form.php:41
-msgid "Detailed options"
+#: app/display/sbm/edit-module-form.php:44
+msgid "Select Individual Posts"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-form.php:39
+#: app/display/sbm/edit-module-form.php:48
 msgid "Search results"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-form.php:41
+#: app/display/sbm/edit-module-form.php:50
 msgid "Static pages"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-form.php:45
+#: app/display/sbm/edit-module-form.php:50
+msgid "Select Individual Pages"
+msgstr ""
+
+#: app/display/sbm/edit-module-form.php:54
 msgid "Error page"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-pages-form.php:14
-#: app/display/sbm-ajax/edit-module-posts-form.php:14
+#: app/display/sbm/edit-module-pages-form.php:15
+#: app/display/sbm/edit-module-posts-form.php:16
 msgid "Check all"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-pages-form.php:14
-#: app/display/sbm-ajax/edit-module-posts-form.php:14
+#: app/display/sbm/edit-module-pages-form.php:15
+#: app/display/sbm/edit-module-posts-form.php:16
 msgid "Uncheck all"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-pages-form.php:17
-#: app/display/sbm-ajax/edit-module-posts-form.php:17
+#: app/display/sbm/edit-module-pages-form.php:18
+#: app/display/sbm/edit-module-posts-form.php:19
 msgid "Show on checked"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-pages-form.php:18
-#: app/display/sbm-ajax/edit-module-posts-form.php:18
+#: app/display/sbm/edit-module-pages-form.php:19
+#: app/display/sbm/edit-module-posts-form.php:20
 msgid "Hide on checked"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-pages-form.php:21
+#: app/display/sbm/edit-module-pages-form.php:23
 msgid "No pages"
 msgstr ""
 
-#: app/display/sbm-ajax/edit-module-posts-form.php:21
+#: app/display/sbm/edit-module-posts-form.php:25
 msgid "No posts"
 msgstr ""
 
-#: app/includes/info.php:113
-msgid "Default"
+#: app/display/sbm/header.php:2
+msgid "Sidebar Arrangement"
 msgstr ""
 
-#: app/includes/info.php:287
+#: app/display/sbm/header.php:3
+msgid "Sidebar Backup"
+msgstr ""
+
+#: app/display/sbm/modules.php:9
+msgid "One Column"
+msgstr ""
+
+#: app/display/sbm/modules.php:51
+msgid "Save"
+msgstr ""
+
+#: app/display/sbm/modules.php:52
+msgid "Save &amp; Close"
+msgstr ""
+
+#: app/display/sbm/modules.php:59
+msgid "K2 Sidebar Modules"
+msgstr ""
+
+#: app/display/sbm/modules.php:73
+msgid "Available Modules"
+msgstr ""
+
+#: app/display/sbm/modules.php:114
+msgid "Disabled"
+msgstr ""
+
+#: app/display/sbm/modules.php:137
+msgid "Trash"
+msgstr ""
+
+#: app/display/sbm/modules.php:148
+#, php-format
+msgid "Help to be had at the %1$s or in the %2$s."
+msgstr ""
+
+#: app/display/sbm/modules.php:148
+msgid "K2 Support Forums"
+msgstr ""
+
+#: app/display/sbm/modules.php:148
+msgid "K2 Documentation"
+msgstr ""
+
+#: app/includes/info.php:273
 msgid "Uncategorized"
 msgstr ""
 
-#: app/includes/info.php:304
+#: app/includes/info.php:289
 #, php-format
 msgid "View all posts in %s"
 msgstr ""
 
-#: app/modules/about.php:53
+#: app/modules/aboutcurrent.php:17
+#, php-format
+msgid "The %1$s archives for the %2$s category."
+msgstr ""
+
+#: app/modules/aboutcurrent.php:20
+#: app/modules/aboutcurrent.php:23
+#: app/modules/aboutcurrent.php:26
+#, php-format
+msgid "The %1$s archives for %2$s."
+msgstr ""
+
+#: app/modules/aboutcurrent.php:29
+#, php-format
+msgid "You searched the %1$s archives for '<strong>%2$s</strong>'."
+msgstr ""
+
+#: app/modules/aboutcurrent.php:36
+#, php-format
+msgid "The %1$s archives for the '%2$s' tag."
+msgstr ""
+
+#: app/modules/aboutcurrent.php:39
+#, php-format
+msgid "The %s weblog archives."
+msgstr ""
+
+#: app/modules/aboutcurrent.php:53
 msgid "About Text:"
 msgstr ""
 
-#: app/modules/about.php:55
+#: app/modules/aboutcurrent.php:55
 msgid "Enter a blurp about yourself here, and it will show up on the frontpage. Deleting the content disables the about blurp."
 msgstr ""
 
-#: app/modules/about.php:60
-msgid "About module"
+#: app/modules/aboutcurrent.php:60
+msgid "About Current Page"
 msgstr ""
 
 #: app/modules/asides.php:13
@@ -986,33 +1084,54 @@ msgid "(more)"
 msgstr ""
 
 #: app/modules/asides.php:37
+#: app/modules/latest_comments.php:57
 #: app/modules/latest_posts.php:41
-#: app/modules/recent_comments.php:66
 msgid "Number of posts:"
 msgstr ""
 
-#: app/modules/asides.php:41
-msgid "Asides module"
-msgstr ""
-
 #: app/modules/calendar.php:11
-msgid "Calendar module"
+msgid "Calendar"
 msgstr ""
 
 #: app/modules/categories.php:21
-msgid "Category list module"
+msgid "Category List"
 msgstr ""
 
 #: app/modules/flickr.php:18
-msgid "Flickr module"
+msgid "Flickr"
 msgstr ""
 
-#: app/modules/html.php:17
-msgid "Module's HTML:"
+#: app/modules/latest_comments.php:30
+#, php-format
+msgid "%1$s %2$s <a href=\"%3$s#comment-%4$s\">%5$s</a>"
 msgstr ""
 
-#: app/modules/html.php:21
-msgid "HTML module"
+#: app/modules/latest_comments.php:30
+msgid "on the post"
+msgstr ""
+
+#: app/modules/latest_comments.php:34
+msgid "No comments"
+msgstr ""
+
+#: app/modules/latest_comments.php:60
+msgid "Number of comments:"
+msgstr ""
+
+#: app/modules/latest_comments.php:62
+msgid "Hide trackbacks/pingbacks:"
+msgstr ""
+
+#: app/modules/latest_comments.php:65
+msgid "Newest color:"
+msgstr ""
+
+#: app/modules/latest_comments.php:67
+msgid "Oldest color:"
+msgstr ""
+
+#: app/modules/latest_comments.php:71
+msgid "Latest Comments"
 msgstr ""
 
 #: app/modules/latest_posts.php:43
@@ -1020,11 +1139,11 @@ msgid "Exclude Asides from list:"
 msgstr ""
 
 #: app/modules/latest_posts.php:47
-msgid "Latest posts module"
+msgid "Latest Posts"
 msgstr ""
 
 #: app/modules/links.php:15
-msgid "Links module"
+msgid "Links"
 msgstr ""
 
 #: app/modules/meta.php:11
@@ -1048,11 +1167,11 @@ msgid "Powered by Wordpress, state-of-the-art semantic personal publishing platf
 msgstr ""
 
 #: app/modules/meta.php:20
-msgid "Meta module"
+msgid "Meta Information"
 msgstr ""
 
 #: app/modules/monthly.php:15
-msgid "Month list module"
+msgid "Monthly Archive"
 msgstr ""
 
 #: app/modules/navigation.php:52
@@ -1060,7 +1179,7 @@ msgid "Navigation heading:"
 msgstr ""
 
 #: app/modules/navigation.php:56
-msgid "Navigation module"
+msgid "Page Menu"
 msgstr ""
 
 #: app/modules/navigation.php:56
@@ -1068,49 +1187,16 @@ msgstr ""
 msgid "%s Subpages"
 msgstr ""
 
-#: app/modules/php.php:17
+#: app/modules/php.php:16
 msgid "Module's code:"
 msgstr ""
 
-#: app/modules/php.php:21
-msgid "PHP module"
-msgstr ""
-
-#: app/modules/recent_comments.php:35
-#, php-format
-msgid "%1$s %2$s <a href=\"%3$s#comment-%4$s\">%5$s</a>"
-msgstr ""
-
-#: app/modules/recent_comments.php:35
-msgid "on post"
-msgstr ""
-
-#: app/modules/recent_comments.php:41
-msgid "No comments"
-msgstr ""
-
-#: app/modules/recent_comments.php:70
-msgid "Number of comments:"
-msgstr ""
-
-#: app/modules/recent_comments.php:72
-msgid "Hide trackbacks/pingbacks:"
-msgstr ""
-
-#: app/modules/recent_comments.php:77
-msgid "Newest color:"
-msgstr ""
-
-#: app/modules/recent_comments.php:79
-msgid "Oldest color:"
-msgstr ""
-
-#: app/modules/recent_comments.php:84
-msgid "Recent comments module"
+#: app/modules/php.php:22
+msgid "Text, HTML and PHP"
 msgstr ""
 
 #: app/modules/related_posts.php:18
-msgid "Related posts module"
+msgid "Related Posts"
 msgstr ""
 
 #: app/modules/rss.php:24
@@ -1142,18 +1228,6 @@ msgid "Number of items:"
 msgstr ""
 
 #: app/modules/rss.php:84
-msgid "RSS module"
-msgstr ""
-
-#: app/modules/search.php:11
-msgid "Search module"
-msgstr ""
-
-#: app/modules/text.php:17
-msgid "Module's text content:"
-msgstr ""
-
-#: app/modules/text.php:21
-msgid "Text module"
+msgid "RSS"
 msgstr ""
 
