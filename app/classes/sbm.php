@@ -92,7 +92,7 @@ class K2SBM {
 			header('Content-Description: File Transfer');
 			header('Content-Disposition: attachment; filename=sbm-' . date('Y-m-d') . '.dat');
 			header('Content-Type: text/plain; charset=' . get_option('blog_charset'), true);
-			echo(serialize(array('sbm_version' => SBM_VERSION, 'active_modules' => $k2sbm_active_modules, 'disabled_modules' => $k2sbm_disabled_modules)));
+			echo(serialize(array('sbm_version' => SBM_VERSION, 'active_modules' => $k2sbm_active_modules, 'disabled_modules' => $k2sbm_disabled_modules, 'id' => get_option('k2sbm_modules_next_id'))));
 		} else {
 			// Set the output type
 			header('Content-type: text/plain; charset: UTF-8');
@@ -203,6 +203,7 @@ class K2SBM {
 				if(isset($data['sbm_version']) && version_compare($data['sbm_version'], SBM_VERSION) <= 0) {
 					$k2sbm_active_modules = $data['active_modules'];
 					$k2sbm_disabled_modules = $data['disabled_modules'];
+					update_option('k2sbm_modules_next_id', $data['id']);
 
 					K2SBM::save_modules();
 					$restored = true;
