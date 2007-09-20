@@ -21,7 +21,7 @@ define('K2_SIDEBAR_WIDGETS', 1);
 define('K2_SIDEBAR_HAND', 2);
 
 // Are we using SBM?
-define('K2_USING_SBM', !function_exists('register_sidebar'));
+define('K2_USING_SBM', !function_exists('register_sidebar') && get_option('k2sidebarmanager') == K2_SIDEBAR_SBM);
 
 // Default style info format
 define('K2_STYLE_INFO_FORMAT', '<a href="%stylelink%" title="%style% by %author%">%style% <!--%version%--></a>');

@@ -35,29 +35,34 @@ class K2SBM {
 	function uninstall() {
 		// Remove all existing sbm-stub paths
 		$plugins = (array) get_option('active_plugins');
+
 		for ($i = 0; $i < count($plugins); $i++) {
 			if (strpos($plugins[$i], 'sbm-stub.php') !== false) {
 				unset($plugins[$i]);
 			}
 		}
+
 		update_option('active_plugins', $plugins);
 	}
 
 	function activate() {
 		// Add the stub widget removal plugin
 		$plugins = (array)get_option('active_plugins');
-		//$plugins[] = './' . TEMPLATEPATH . '/app/includes/widgets-removal.php';
+		$plugins[] = '../themes/' . get_template() . '/app/includes/widgets-removal.php';
 		update_option('active_plugins', $plugins);
 	}
 
 	function deactivate() {
 		// Remove the stub widget removal plugin
 		$plugins = (array)get_option('active_plugins');
+		$plugin = '../themes/' . basename(dirname(dirname(dirname(__FILE__)))) . '/app/includes/widgets-removal.php';
+
 		for($i = 0; $i < count($plugins); $i++) {
-			if(strpos($plugins[$i], 'widgets-removal.php') !== false) {
+			if($plugins[$i] == $plugin) {
 				unset($plugins[$i]);
 			}
 		}
+
 		update_option('active_plugins', $plugins);
 	}
 
