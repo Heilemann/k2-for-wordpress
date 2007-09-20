@@ -39,6 +39,15 @@ class K2 {
 		if ( function_exists('register_sidebars') ) {
 			register_sidebars(2, array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>', 'before_title' => '<h4>', 'after_title' => '</h4>'));
 		}
+
+		// Check if there's a style, and if so if it has an attached PHP file
+		if(($scheme = get_option('k2scheme')) != '') {
+			$scheme_data = get_style_data($scheme);
+
+			if($scheme_data['php'] && file_exists($scheme_data['php'])) {
+				include_once($scheme_data['php']);
+			}
+		}
 	}
 
 	function install($last_modified) {

@@ -35,6 +35,9 @@ class K2Options {
 			if($_GET['page'] == 'k2-options' and isset($_POST['uninstall'])) {
 				K2::uninstall();
 			}
+
+			K2Options::update();
+			K2Header::update();
 		} else {
 
 		}
