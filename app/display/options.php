@@ -126,37 +126,64 @@
 		table tr td {
 			padding: 5px;
 		}
+
+		.sidebarradio {
+			text-align: center;
+			}
+		.sidebarradio span {
+			margin-right: 40px;
+			}
+
+		.sidebarradio span input {
+			margin-right: 5px;
+			}
+
+		.sidebarno {
+			margin-right: 0;
+			}
+		
 		</style>
 
 		<div class="configstuff">
 			<h3><?php _e('Advanced Navigation','k2_domain'); ?></h3>
 
-			<p><input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2livesearch')); ?> /> <label for="k2-advnav"><?php _e('Enable Advanced Navigation','k2_domain'); ?></label></p>
+			<p class="checkboxelement"><input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2livesearch')); ?> /> <label for="k2-advnav"><?php _e('Enable Advanced Navigation','k2_domain'); ?></label></p>
 
-			<p><small><?php _e('K2\'s Advanced Navigation is in reality a couple of features which, when combined, work to make the task of searching through your blog faster and easier. This includes inline AJAX-powered livesearch as well as the ability to flip back and forth between archive pages, without ever reloading the page.','k2_domain'); ?></small></p>
+			<p><small><?php _e('K2\'s Advanced Navigation is in reality a couple of features, which together work to make the task of searching through your blog faster and easier. This includes inline AJAX-powered livesearch as well as the ability to flip back and forth between archive pages, without reloading the current page.','k2_domain'); ?></small></p>
 
 			<h3><?php _e('Archives Page','k2_domain'); ?></h3>
 
-			<p><input id="k2-archives" name="k2[archives]" type="checkbox" value="add_archive" <?php checked('add_archive', get_option('k2archives')); ?> /> <label for="k2-archives"><?php _e('Enable Archives Page','k2_domain'); ?></label></p>
+			<p class="checkboxelement"><input id="k2-archives" name="k2[archives]" type="checkbox" value="add_archive" <?php checked('add_archive', get_option('k2archives')); ?> /> <label for="k2-archives"><?php _e('Enable Archives Page','k2_domain'); ?></label></p>
 
-			<p><small><?php _e('To further enhance your precious backlog of writings, you can enable an archives page, which can assist both your readers as well as yourself in digging up the past.','k2_domain'); ?>
+			<p><small><?php _e('To further enhance your precious backlog of writings, you can enable an archives page, which can assist both your readers as well as yourself in digging up the past.','k2_domain'); ?></small></p>
 
-			<?php if (!function_exists('af_ela_set_config')) { ?>
+			<?php /* if (!function_exists('af_ela_set_config')) { ?>
 				<?php printf(__('We highly recommend that you install %s for maximum archival pleasure.','k2_domain'), '<a href="http://www.sonsofskadi.net/index.php/extended-live-archive/">' . __('Arnaud Froment\'s Extended Live Archives','k2_domain') . '</a>'); ?></small></p>
 			<?php } else { ?>
 				</small></p><p class="configelap"><input id="configela" name="configela" type="submit" value="<?php echo attribute_escape(__('Setup Extended Live Archives for K2','k2_domain')); ?>" /></p>
-			<?php } ?>
+			<?php } */ ?>
 
 			<h3><?php _e('Live Commenting','k2_domain'); ?></h3>
 
-			<p><input id="k2-livecommenting" name="k2[livecommenting]" type="checkbox" value="1" <?php checked('1', get_option('k2livecommenting')); ?> /> <label for="k2-livecommenting"><?php _e('Enable Live Commenting','k2_domain'); ?></label></p>
+			<p class="checkboxelement"><input id="k2-livecommenting" name="k2[livecommenting]" type="checkbox" value="1" <?php checked('1', get_option('k2livecommenting')); ?> /> <label for="k2-livecommenting"><?php _e('Enable Live Commenting','k2_domain'); ?></label></p>
 				
 			<p><small><?php _e('Live comments use AJAX to submit comments to the server without reloading the page, making the experience more seamless for the user.','k2_domain'); ?></small></p>
 
 
+			<h3><?php _e('Sidebar Management','k2_domain'); ?></h3>
+
+			<p><small><?php _e('People have their own way of doing things, especially blog sidebars, and K2 is designed to accommodate your needs! Choose your preferred method of sidebar editing from the options below.','k2_domain'); ?></small></p>
+
+			<p class="sidebarradio">
+				<span class="sidebark2"><input id="k2-sidebarmanager-sbm" name="k2[sidebarmanager]" type="radio" value="<?php echo(K2_SIDEBAR_SBM); ?>" <?php checked(K2_SIDEBAR_SBM, get_option('k2sidebarmanager')); ?> /> <label for="k2-sidebarmanager-sbm"><?php _e('K2\'s Sidebar Manager','k2_domain'); ?></label></span>
+				<span class="sidebarwp"><input id="k2-sidebarmanager-widgets" name="k2[sidebarmanager]" type="radio" value="<?php echo(K2_SIDEBAR_WIDGETS); ?>" <?php checked(K2_SIDEBAR_WIDGETS, get_option('k2sidebarmanager')); ?> /> <label for="k2-sidebarmanager-widgets"><?php _e('Wordpress\' Widgets','k2_domain'); ?></label></span>
+				<span class="sidebarno"><input id="k2-sidebarmanager-hand" name="k2[sidebarmanager]" type="radio" value="<?php echo(K2_SIDEBAR_HAND); ?>" <?php checked(K2_SIDEBAR_HAND, get_option('k2sidebarmanager')); ?> /> <label for="k2-sidebarmanager-hand"><?php _e('Me + Text Editor','k2_domain'); ?></label></span>
+			</p>
+
+
 			<h3><?php _e('Asides','k2_domain'); ?></h3>
 
-			<p><small><?php _e('\'Asides\' is a category of entries, meant to be \'smaller\' and perhaps of \'less importance\', like for instance links with minor commentary. They are styles differently than other entries to separate them content-wise. Below you can select a category to be shown as Asides.','k2_domain'); ?></small></p>
+			<p><small><?php _e('\'Asides\' is a category of entries, meant to be \'smaller\' and perhaps of \'less importance\', like for instance links with minor commentary. They are styled differently than other entries to separate them content-wise. Below you can select a category to be shown as Asides.','k2_domain'); ?></small></p>
 
 			<p>
 				<select id="k2-asidescategory" name="k2[asidescategory]">
@@ -167,17 +194,6 @@
 					<?php } ?>
 				</select>
 			</p>
-
-			<h3><?php _e('Sidebar Management','k2_domain'); ?></h3>
-
-			<p><small><?php _e('People have their own way of doing things, especially blog sidebars, and K2 is designed to accommodate your needs! Choose your preferred method of sidebar editing from the options below.','k2_domain'); ?></small></p>
-
-			<p>
-				<input id="k2-sidebarmanager-sbm" name="k2[sidebarmanager]" type="radio" value="<?php echo(K2_SIDEBAR_SBM); ?>" <?php checked(K2_SIDEBAR_SBM, get_option('k2sidebarmanager')); ?> /> <label for="k2-sidebarmanager-sbm"><?php _e('Use K2\'s Sidebar Manager','k2_domain'); ?></label><br />
-				<input id="k2-sidebarmanager-widgets" name="k2[sidebarmanager]" type="radio" value="<?php echo(K2_SIDEBAR_WIDGETS); ?>" <?php checked(K2_SIDEBAR_WIDGETS, get_option('k2sidebarmanager')); ?> /> <label for="k2-sidebarmanager-widgets"><?php _e('Use Wordpress\' widgets','k2_domain'); ?></label><br />
-				<input id="k2-sidebarmanager-hand" name="k2[sidebarmanager]" type="radio" value="<?php echo(K2_SIDEBAR_HAND); ?>" <?php checked(K2_SIDEBAR_HAND, get_option('k2sidebarmanager')); ?> /> <label for="k2-sidebarmanager-hand"><?php _e('I\'m hardcore! Let me edit by hand.','k2_domain'); ?></label><br />
-			</p>
-
 
 			<?php if ($is_styles_dir) { ?>
 			<h3><?php _e('Style','k2_domain'); ?></h3>
@@ -248,9 +264,14 @@
 				
 		</div>
 
-<p class="submit">
-	<input type="submit" name="submit" value="<?php echo attribute_escape(__('Update Options &raquo;','k2_domain')); ?>" />
-</p>
+		<p class="submit">
+			<input type="submit" name="submit" value="<?php echo attribute_escape(__('Update Options &raquo;','k2_domain')); ?>" />
+		</p>
+
+</div>
+
+<div class="wrap">
+
 
 		<div class="configstuff">
 			<h3><?php _e('Uninstall K2','k2_domain'); ?></h3>
@@ -270,6 +291,8 @@
 
 			<p style="text-align: center;"><input id="uninstall" name="uninstall" type="submit" onClick="return confirmUninstall()" value="<?php echo attribute_escape(__('Reset and Uninstall K2','k2_domain')); ?>" /></p>
 		</div>
+
+</div>
 
 	</form>
 </div>
