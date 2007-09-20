@@ -33,18 +33,12 @@
 
 					<p><?php printf(__('This is the frontpage of the %1$s archives. Currently the archives are spanning %2$s posts and %3$s comments, contained within the meager confines of %4$s categories. Through here, you will be able to move down into the archives by way of time or category. If you are looking for something specific, perhaps you should try the search on the sidebar.','k2_domain'), get_bloginfo('name'), $numposts, $numcomms, $numcats); ?></p>
 
-					<?php if (function_exists('af_ela_super_archive')) { ?>
-
-					<h3><?php _e('Live Archives','k2_domain'); ?></h3>
-					<p><?php printf(__('This is a \'live archive\', which allows you to \'dig\' into the %s repository in a fast and efficient way without having to reload this page as you explore.','k2_domain'), get_bloginfo('name')); ?> </p>
-
-					<div id="livearchives">
-						<?php af_ela_super_archive('num_posts_by_cat=50&truncate_title_length=40&hide_pingbacks_and_trackbacks=1&num_entries=1&num_comments=1&number_text=<span>%</span>&comment_text=<span>%</span>&selected_text='.urlencode('')); ?>
-						<div class="clear"></div>
+					<?php if (function_exists('wp_tag_cloud')) { ?>
+					<h3><?php _e('Tag Cloud','k2_domain'); ?></h3>
+					<div id="tag-cloud">
+					<?php if (function_exists('wp_tag_cloud')) wp_tag_cloud(); ?>
 					</div>
-
-					<noscript>
-					<?php } ?>
+					<?php } // End Tag Check ?>
 
 					<h3><?php _e('Browse by Month','k2_domain'); ?></h3>
 					<ul class="archive-list">
@@ -59,19 +53,6 @@
 					</ul>
 
 					<br class="clear" />
-
-					<?php if (function_exists('af_ela_super_archive')) { ?>
-					</noscript>
-					<?php } // End ELA Check ?>
-
-					<?php if (function_exists('wp_tag_cloud') or function_exists('UTW_ShowWeightedTagSetAlphabetical')) { ?>
-					<h3><?php _e('Tag Cloud','k2_domain'); ?></h3>
-					<p><?php printf(__('The following is a list of the tags used at %s, colored and \'weighed\' in relation to their relative usage.','k2_domain'), get_bloginfo('name')); ?></p>
-
-					<div id="tag-cloud">
-					<?php if (function_exists('wp_tag_cloud')) wp_tag_cloud(); else UTW_ShowWeightedTagSetAlphabetical("coloredsizedtagcloud"); ?>
-					</div>
-					<?php } // End Tag Check ?>
 
 				</div> <!-- .entry-content -->
 			</div> <!-- #post-ID -->
