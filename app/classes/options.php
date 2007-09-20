@@ -36,10 +36,17 @@ class K2Options {
 				K2::uninstall();
 			}
 
+			// Need to check if this changes...
+			$sidebar_manager = get_option('k2sidebarmanager');
+
 			K2Options::update();
 			K2Header::update();
-		} else {
 
+			// Ewww...
+			if($sidebar_manager != get_option('k2sidebarmanager')) {
+				header('Location: themes.php?page=k2-options&updated');
+				exit;
+			}
 		}
 	}
 

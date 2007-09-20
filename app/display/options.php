@@ -43,7 +43,7 @@
 ?>
 
 
-<?php if(isset($_POST['submit'])) { ?>
+<?php if(isset($_POST['submit']) or isset($_GET['updated'])) { ?>
 <div id="message2" class="updated fade">
 	<p><?php _e('K2 Options have been updated','k2_domain'); ?></p>
 </div>

@@ -36,9 +36,9 @@ class K2SBM {
 		// Remove all existing sbm-stub paths
 		$plugins = (array) get_option('active_plugins');
 
-		for ($i = 0; $i < count($plugins); $i++) {
-			if (strpos($plugins[$i], 'sbm-stub.php') !== false) {
-				unset($plugins[$i]);
+		foreach($plugins as $key => $value) {
+			if (strpos($value, 'sbm-stub.php') !== false) {
+				unset($plugins[$key]);
 			}
 		}
 
@@ -57,9 +57,9 @@ class K2SBM {
 		$plugins = (array)get_option('active_plugins');
 		$plugin = '../themes/' . basename(dirname(dirname(dirname(__FILE__)))) . '/app/includes/widgets-removal.php';
 
-		for($i = 0; $i < count($plugins); $i++) {
-			if($plugins[$i] == $plugin) {
-				unset($plugins[$i]);
+		foreach($plugins as $key => $value) {
+			if($value == $plugin) {
+				unset($plugins[$key]);
 			}
 		}
 

@@ -33,6 +33,10 @@ class K2 {
 		if(!get_option('k2active')) {
 			update_option('k2active', true);
 			do_action('k2_activate');
+
+			// Ewww...
+			header('Location: themes.php?activated=true');
+			exit;
 		}
 		add_action('switch_theme', array('K2', 'theme_switch'));
 
