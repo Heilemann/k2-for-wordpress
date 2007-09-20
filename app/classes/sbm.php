@@ -259,8 +259,8 @@ class K2SBM {
 	}
 
 	function module_admin_scripts() {
-		// Load updated versions of bundled scripts
-		K2::load_updated_scripts();
+		// Register our scripts
+		K2::register_scripts();
 
 		// Add our script to the queue
 		wp_enqueue_script('k2sbm');

@@ -44,8 +44,6 @@ class K2 {
 		// Let's do them now
 		do_action('k2_init');
 
-		K2::register_scripts();
-
 		// Register our sidebar with SBM/Widgets
 		if ( function_exists('register_sidebars') ) {
 			register_sidebars(2, array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>', 'before_title' => '<h4>', 'after_title' => '</h4>'));
@@ -135,6 +133,19 @@ class K2 {
 	}
 
 	function register_scripts() {
+		// Unload the bundled jQuery
+		wp_deregister_script('jquery');
+		wp_deregister_script('interface');
+
+		// Register jQuery
+		wp_register_script('jquery',
+			get_bloginfo('template_directory').'/js/jquery.js.php',
+			false, '1.2.1');
+
+		wp_register_script('interface',
+			get_bloginfo('template_directory').'/js/jquery.interface.js.php',
+			array('jquery'), '1.2');
+
 		// Register our scripts with WordPress, version is Last Changed Revision
 		wp_register_script('k2functions',
 			get_bloginfo('template_directory') . '/js/k2.functions.js.php',
@@ -163,23 +174,6 @@ class K2 {
 		wp_register_script('k2sbm',
 			get_bloginfo('template_directory') . '/js/k2.sbm.js.php',
 			array('jquery', 'interface'), '');
-
-		wp_register_script('jquery-dimensions',
-			get_bloginfo('template_directory') . '/js/jquery.dimensions.js.php',
-			array('jquery', 'interface'), '');
-	}
-
-	// Load updated versions of those scripts bundled with WordPress
-	function load_updated_scripts() {
-		// Register jQuery
-		wp_deregister_script('jquery');
-		wp_register_script('jquery',
-			get_bloginfo('template_directory').'/js/jquery.js.php',
-			false, '1.2.1');
-
-		wp_register_script('interface',
-			get_bloginfo('template_directory').'/js/jquery.interface.js.php',
-			array('jquery'), '1.2');
 	}
 
 	function get_styles() {
