@@ -35,7 +35,7 @@
 		printf( __('Catergory Archive for &lsquo;%s&rsquo;','k2_domain'), single_cat_title('', false) );
 
 	// Tag Archive
-	} elseif ( function_exists('is_tag') and is_tag() ) {
+	} elseif ( function_exists('is_tag') and function_exists('single_tag_title') and is_tag() ) {
 		printf( __('Tag Archive for &lsquo;%s&rsquo;','k2_domain'), single_tag_title('', false) );
 
 	// General Archive
