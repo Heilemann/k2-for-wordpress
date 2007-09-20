@@ -43,6 +43,24 @@ class K2SBM {
 		update_option('active_plugins', $plugins);
 	}
 
+	function activate() {
+		// Add the stub widget removal plugin
+		$plugins = (array)get_option('active_plugins');
+		//$plugins[] = './' . TEMPLATEPATH . '/app/includes/widgets-removal.php';
+		update_option('active_plugins', $plugins);
+	}
+
+	function deactivate() {
+		// Remove the stub widget removal plugin
+		$plugins = (array)get_option('active_plugins');
+		for($i = 0; $i < count($plugins); $i++) {
+			if(strpos($plugins[$i], 'widgets-removal.php') !== false) {
+				unset($plugins[$i]);
+			}
+		}
+		update_option('active_plugins', $plugins);
+	}
+
 	function init() {
 		global $k2sbm_active_modules;
 
@@ -998,5 +1016,7 @@ if(K2_USING_SBM) {
 
 add_action('k2_install', array('K2SBM', 'install'));
 add_action('k2_uninstall', array('K2SBM', 'uninstall'));
+add_action('k2_activate', array('K2SBM', 'activate'));
+add_action('k2_deactivate', array('K2SBM', 'deactivate'));
 
 ?>

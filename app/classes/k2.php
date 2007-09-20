@@ -29,6 +29,13 @@ class K2 {
 			K2::install($last_modified);
 		}
 
+		// Check if the theme is being activated/deactivated
+		if(!get_option('k2active')) {
+			update_option('k2active', true);
+			do_action('k2_activate');
+		}
+		add_action('switch_theme', array('K2', 'theme_switch'));
+
 		// There may be some things we need to do before K2 is initialised
 		// Let's do them now
 		do_action('k2_init');
@@ -67,6 +74,12 @@ class K2 {
 			update_option('k2lastmodified', $last_modified);
 		}
 
+		if(get_option('k2active') === false) {
+			add_option('k2active', 0, 'This option stores if K2 has been activated');
+		} else {
+			update_option('k2active', 0);
+		}
+
 		// Create support folders for WordPressMU
 		if(K2_MU) {
 			if(!is_dir(ABSPATH . UPLOADS . 'k2support/')) {
@@ -87,24 +100,34 @@ class K2 {
 	function uninstall() {
 		global $wpdb;
 
-		// Call the uninstall handlers
-		do_action('k2_uninstall');
-
-		// Remove the K2 options from the database
-		// This should is a catch-all
-		$cleanup = $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'k2%'");
-
-		// Flush the dang cache
-		wp_cache_flush();
-
 		// Activate the default Wordpress theme so as not to re-install K2
 		update_option('template', 'default');
 		update_option('stylesheet', 'default');
 		do_action('switch_theme', 'Default');
 
+		// Call the uninstall handlers
+		do_action('k2_uninstall');
+
+		// Delete options
+		delete_option('k2active');
+		delete_option('k2lastmodified');
+		delete_option('k2version');
+
+		// Remove the K2 options from the database
+		// This is a catch-all
+		$cleanup = $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'k2%'");
+
+		// Flush the dang cache
+		wp_cache_flush();
+
 		// Go back to the themes page
 		header('Location: themes.php');
 		exit;
+	}
+
+	function theme_switch() {
+		update_option('k2active', 0);
+		do_action('k2_deactivate');
 	}
 
 	function register_scripts() {
@@ -134,12 +157,12 @@ class K2 {
 			array('jquery', 'k2slider'), '247');
 
 		wp_register_script('k2sbm',
-	       get_bloginfo('template_directory') . '/js/k2.sbm.js.php',
-	       array('jquery', 'interface'), '');
+			get_bloginfo('template_directory') . '/js/k2.sbm.js.php',
+			array('jquery', 'interface'), '');
 
 		wp_register_script('jquery-dimensions',
-	       get_bloginfo('template_directory') . '/js/jquery.dimensions.js.php',
-	       array('jquery', 'interface'), '');
+			get_bloginfo('template_directory') . '/js/jquery.dimensions.js.php',
+			array('jquery', 'interface'), '');
 	}
 
 	// Load updated versions of those scripts bundled with WordPress
