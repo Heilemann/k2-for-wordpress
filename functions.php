@@ -15,6 +15,11 @@ if(K2_MU) {
 	define('K2_HEADERS_PATH', TEMPLATEPATH . '/images/headers/');
 }
 
+// Sidebar manager options
+define('K2_SIDEBAR_SBM', 0);
+define('K2_SIDEBAR_WIDGETS', 1);
+define('K2_SIDEBAR_HAND', 2);
+
 // Are we using SBM?
 define('K2_USING_SBM', !function_exists('register_sidebar'));
 

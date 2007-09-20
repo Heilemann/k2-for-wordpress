@@ -8,6 +8,11 @@ class K2Header {
 		add_option('k2header_picture', '', "The image to use in K2's header");
 	}
 
+	function uninstall() {
+		delete_option('k2imagerandomfeature');
+		delete_option('k2header_picture');
+	}
+
 	function init() {
 		if ( function_exists('add_custom_image_header') and is_writable(K2_HEADERS_PATH) ) {
 			$styleinfo = get_style_data(get_option('k2scheme'));
@@ -178,5 +183,6 @@ class K2Header {
 
 add_action('k2_init', array('K2Header', 'init'), 2);
 add_action('k2_install', array('K2Header', 'install'));
+add_action('k2_uninstall', array('K2Header', 'uninstall'));
 add_filter('wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'));
 ?>

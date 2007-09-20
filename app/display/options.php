@@ -1,9 +1,6 @@
 <?php
 	global $wpdb;
 
-	// Update
-	$update = K2Options::update();
-
 	// Get the current K2 Style
 	$style_name = get_option('k2scheme');
 	$style_title = $style_name !== false ? $style_name : __('No Style','k2_domain');
@@ -27,9 +24,6 @@
 
 	// Get the categories we might use for asides
 	$asides_cats = get_categories('get=all');
-
-	// Update
-	$update = K2Header::update();
 
 	// Get the current K2 header picture
 	$header_picture = get_option('k2header_picture');
@@ -172,6 +166,16 @@
 					<option value="<?php echo attribute_escape($cat->cat_ID); ?>" <?php selected($asides_id, $cat->cat_ID); ?>><?php echo($cat->cat_name); ?></option>
 					<?php } ?>
 				</select>
+			</p>
+
+			<h3><?php _e('Sidebar Management','k2_domain'); ?></h3>
+
+			<p><small><?php _e('People have their own way of doing things, especially blog sidebars, and K2 is designed to accommodate your needs! Choose your preferred method of sidebar editing from the options below.','k2_domain'); ?></small></p>
+
+			<p>
+				<input id="k2-sidebarmanager-sbm" name="k2[sidebarmanager]" type="radio" value="<?php echo(K2_SIDEBAR_SBM); ?>" <?php checked(K2_SIDEBAR_SBM, get_option('k2sidebarmanager')); ?> /> <label for="k2-sidebarmanager-sbm"><?php _e('Use K2\'s Sidebar Manager','k2_domain'); ?></label><br />
+				<input id="k2-sidebarmanager-widgets" name="k2[sidebarmanager]" type="radio" value="<?php echo(K2_SIDEBAR_WIDGETS); ?>" <?php checked(K2_SIDEBAR_WIDGETS, get_option('k2sidebarmanager')); ?> /> <label for="k2-sidebarmanager-widgets"><?php _e('Use Wordpress\' widgets','k2_domain'); ?></label><br />
+				<input id="k2-sidebarmanager-hand" name="k2[sidebarmanager]" type="radio" value="<?php echo(K2_SIDEBAR_HAND); ?>" <?php checked(K2_SIDEBAR_HAND, get_option('k2sidebarmanager')); ?> /> <label for="k2-sidebarmanager-hand"><?php _e('I\'m hardcore! Let me edit by hand.','k2_domain'); ?></label><br />
 			</p>
 
 

@@ -7,7 +7,7 @@ class K2 {
 		// Load the localisation text
 		load_theme_textdomain('k2_domain');
 
-		$exclude = array('sbm-direct.php');
+		$exclude = array('sbm-direct.php', 'widgets-removal.php');
 
 		// Exclude SBM if there's already a sidebar manager
 		if(K2_USING_SBM) {
@@ -78,11 +78,12 @@ class K2 {
 	function uninstall() {
 		global $wpdb;
 
-		// Remove the K2 options from the database
-		$cleanup = $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'k2%'");
-
 		// Call the uninstall handlers
 		do_action('k2_uninstall');
+
+		// Remove the K2 options from the database
+		// This should is a catch-all
+		$cleanup = $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'k2%'");
 
 		// Flush the dang cache
 		wp_cache_flush();
