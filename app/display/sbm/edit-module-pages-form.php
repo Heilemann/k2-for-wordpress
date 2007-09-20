@@ -15,8 +15,8 @@
 		<p class="checkoruncheck"><a id="check-page-ids" href="#"><?php _e('Check all', 'k2_domain'); ?></a> | <a id="uncheck-page-ids" href="#"><?php _e('Uncheck all', 'k2_domain'); ?></a></p>
 
 		<p class="showorhide">
-			<input id="display-page-id-show-show" name="display[page_id][show]" type="radio" value="show"<?php if($module->display['page_id']['show'] == 'show') { ?> checked="checked"<?php } ?> /> <label for="display-page-id-show-show"><?php _e('Show on checked', 'k2_domain'); ?></label><br />
-			<input id="display-page-id-show-hide" name="display[page_id][show]" type="radio" value="hide"<?php if($module->display['page_id']['show'] == 'hide') { ?> checked="checked"<?php } ?> /> <label for="display-page-id-show-hide"><?php _e('Hide on checked', 'k2_domain'); ?></label>
+			<span class="soh-show"><input id="display-page-id-show-show" name="display[page_id][show]" type="radio" value="show"<?php if($module->display['page_id']['show'] == 'show') { ?> checked="checked"<?php } ?> /> <label for="display-page-id-show-show"><?php _e('Show on checked', 'k2_domain'); ?></label></span>
+			<span class="soh-hide"<input id="display-page-id-show-hide" name="display[page_id][show]" type="radio" value="hide"<?php if($module->display['page_id']['show'] == 'hide') { ?> checked="checked"<?php } ?> /> <label for="display-page-id-show-hide"><?php _e('Hide on checked', 'k2_domain'); ?></label></span>
 		</p>
 	</div>
 <?php else: ?>

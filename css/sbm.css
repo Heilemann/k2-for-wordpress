@@ -276,6 +276,7 @@ span.id {
 #optionstab, #advancedtab, #displaytab {
 	background: url('../images/sbmmanager/tabbg.png') no-repeat center bottom;
 	border: none;
+	outline: none;
 	padding: 18px 10px 3px;
 	color: #fff;
 	position: absolute;
@@ -285,14 +286,23 @@ span.id {
 	font-size: 11px;
 }
 
+#advancedtab {
+	display: none;
+	}
+
 #displaytab-content legend {
 	color: #333;
 	font-size: 1.1em;
 	line-height: 1.6em;
+	font-weight: normal !important;
+	}
+
+#displaytab-content div {
+	padding-bottom: 4px;
 	}
 
 #displaytab-content input {
-	margin-left: 20px;
+	margin-left: 10px;
 	}
 
 #displaytab-content label {
@@ -301,18 +311,17 @@ span.id {
 	}
 
 .toggle-item {
-	margin: 5px 0 5px 15px;
+	margin: 6px 0 5px 0;
 	font-size: .8em;
-	background: #cdcdcd;
 	}
 
 .checkbox-list {
 	overflow: auto;
-	height: 100px;
+	height: 115px;
 	list-style-type: none;
 	padding: 5px 0;
 	margin: 0;
-	background: #fafafa;
+	background: #e5e5e5;
 	}
 
 .checkbox-list li {
@@ -320,7 +329,7 @@ span.id {
 	}
 
 .checkbox-list input[type=checkbox] {
-	margin: 0 0 0 -20px !important;
+	margin: 3px 0 0 -20px !important;
 	}
 
 .checkbox-list label {
@@ -334,6 +343,7 @@ span.id {
 .tools {
 	position: relative;
 	height: 20px;
+	display: none;
 	}
 
 .checkoruncheck {
@@ -346,7 +356,7 @@ span.id {
 
 .showorhide {
 	position: absolute;
-	top: 3px;
+	top: 6px;
 	right: 0;
 	margin: 0;
 	display: inline;
@@ -378,7 +388,7 @@ span.id {
 	}
 
 #displaytab {
-	left: 215px;
+	left: 110px;
 	}
 
 #optionswindow {
@@ -406,6 +416,14 @@ span.id {
 
 #options textarea {
 	width: 392px;
+	}
+
+#about-module-blurp {
+	height: 160px;
+	}
+
+#php-module-code {
+	height: 190px;
 	}
 
 #options #type-container {

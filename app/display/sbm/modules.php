@@ -19,7 +19,7 @@
 <?php include('header.php'); ?>
 
 <div id="optionswindow">
-	<a href="#" id="closelink"></a>
+	<a href="#" id="closelink" title="Close"></a>
 
 	<div class="opttl"> </div>
 	<div class="optt"> </div>
@@ -34,9 +34,9 @@
 
 	<div class="tabbg">
 	<div class="tabs">
-		<a href="#" id="optionstab" class="selected">Options</a>
+		<a href="#" id="optionstab" class="selected" title="<?php _e('Options for this module type'); ?>">Options</a>
 		<a href="#" id="advancedtab">Advanced</a>
-		<a href="#" id="displaytab">Display</a>
+		<a href="#" id="displaytab" title="<?php _e('Where to display this module'); ?>">Display</a>
 	</div>
 	</div>
 
@@ -45,7 +45,7 @@
 		<div id="options">
 		</div>
 
-		<p class="optionkeys">'Enter' saves, 'Escape' closes.</p>
+		<!--<p class="optionkeys"><?php _e('\'Enter\' saves, \'Escape\' closes.'); ?></p>-->
 
 		<p class="submitbuttons">
 			<input type="submit" id="submit" value="<?php echo attribute_escape(__('Save', 'k2_domain')); ?>" />

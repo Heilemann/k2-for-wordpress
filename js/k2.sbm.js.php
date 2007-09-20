@@ -77,7 +77,7 @@ function sbm_load(id, url) {
 
 
 		// Set up available modules as draggable
-		jQuery('.availablemodule').Draggable({ ghosting:	true, revert: true });
+		jQuery('.availablemodule').Draggable({ ghosting: true, revert: true });
 
 
 		// Config sortable lists
@@ -351,45 +351,24 @@ function sbm_load(id, url) {
 					jQuery('#module-name').focus();
 					jQuery('#optionswindow').removeClass('optionsspinner');
 
-					// Mechanics for 'Detailed Options' for Individual Pages and Posts
-					jQuery('#specific-posts').hide()
-					jQuery('#specific-pages').hide()
-					jQuery('#toggle-specific-posts').add('#toggle-specific-pages').toggle(
-						function () {
-							var self = this;
-							jQuery(this).addClass("loading");
+					// Fetch static page list
+					jQuery.post( sbm_baseUrl, {
+						action: 'control-page-list-show',
+						module_id: jQuery(moduleID).attr('id')
+					},
+					function (data) {
+						jQuery('#specific-pages').empty().append(data)
 
-							jQuery.post( sbm_baseUrl, {
-								action: 'control-post-list-show',
-								module_id: jQuery(moduleID).attr('id')
-							},
-							function (data) {
-								jQuery(self).removeClass("loading").addClass("selected")
-
-								if (jQuery(self).attr('id') == 'toggle-specific-posts') {
-									jQuery('#specific-pages').empty().hide()
-									jQuery('#specific-posts').empty().show().append(data)
-									jQuery('#check-post-ids').click(function() {
-										console.log(jQuery('#specific-posts').children('[checkbox]'))
-									})
-								} else if (jQuery(self).attr('id') == 'toggle-specific-pages') {
-									jQuery('#specific-posts').empty().hide()
-									jQuery('#specific-pages').empty().show().append(data)
-								}
-
-							})
-
-					 	},
-					  	function () {
-					    	jQuery(this).removeClass("selected").removeClass("loading");
-
-							if (jQuery(this).attr('id') == 'toggle-specific-posts') {
-								jQuery('#specific-posts').empty().hide()
-							} else if (jQuery(this).attr('id') == 'toggle-specific-pages') {
-								jQuery('#specific-pages').empty().hide()
+						// Setup auto 'select all/select none'
+						jQuery('#display-pages').click(function() {
+							if (jQuery(this).attr('checked')) {
+								jQuery('.checkbox-list > li > input').attr('checked', 'checked')
+							} else {
+								jQuery('.checkbox-list > li > input').attr('checked', '')
 							}
-					  	}
-					);
+						})
+					})
+
 
 					// Dumbass caret fix. REMOVE ME FOR FF3.0
 					if(jQuery.browser.mozilla) {
