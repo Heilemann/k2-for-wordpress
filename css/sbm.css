@@ -1,11 +1,15 @@
+/* @override http://localhost/wp-content/themes/kaytwo/css/sbm.css */
+
 h2 {
 	border: 0;
-	font: 1.6em Helvetica, Arial, Verdana, Sans-Serif;
+	font: 20px Arial, Verdana, Sans-Serif;
 	color: #777;
 	margin: 16px 20px 12px;
 	width: 220px;
 	float: left;
 	background: none;
+	position: absolute;
+	top: 2px;
 	}
 
 .wrap {
@@ -35,9 +39,24 @@ h2 {
 	opacity: 0
 	}
 
+.sbmheader {
+	height: 55px;
+	}
+
 h3 {
 	text-align:center;
 	margin-bottom: 0;
+	}
+
+.backuprestore {
+	position: absolute;
+	top: 20px;
+	left: 230px;
+	color: #bbb
+	}
+
+.backuprestore a {
+	border: none
 	}
 
 #columnsform {

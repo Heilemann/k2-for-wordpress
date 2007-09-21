@@ -216,8 +216,6 @@ class K2SBM {
 	function module_admin() {
 		global $k2sbm_registered_sidebars, $k2sbm_registered_modules, $k2sbm_active_modules, $k2sbm_disabled_modules;
 
-		switch($_GET['subpage']) {
-		case 'backup':
 			$restored = false;
 			$error = false;
 
@@ -237,11 +235,7 @@ class K2SBM {
 			}
 
 			extract(array('restored' => $restored, 'error' => $error));
-			include(TEMPLATEPATH . '/app/display/sbm/backup.php');
 
-			break;
-
-		default:
 			if(count($k2sbm_registered_sidebars) == 0) {
 			?>
 				<div class="wrap">You have no registered sidebars.</div>
@@ -254,8 +248,6 @@ class K2SBM {
 				include(TEMPLATEPATH . '/app/display/sbm/modules.php');
 			}
 
-			break;
-		}
 	}
 
 	function module_admin_scripts() {
@@ -269,7 +261,7 @@ class K2SBM {
 	function module_admin_head() {
 		?>
 		<style type="text/css">
-			#submenu .current {
+		/*	#submenu .current {
 				background: #000000;
 				border-right: none;
 				border-top: none;
@@ -312,7 +304,7 @@ class K2SBM {
 			#subsubmenu li {
 				line-height: 170%;
 				height: 25px;
-			}
+			} */
 		</style>
 		<?php
 

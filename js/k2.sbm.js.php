@@ -391,6 +391,22 @@ function sbm_load(id, url) {
 			return false;
 		}
 
+
+
+		jQuery('#backupsbm').click(function() {
+//			jQuery('#backupsbmwindow').slideDown()
+			jQuery('#backupform').submit();
+			return false;
+		})
+
+		jQuery('#restoresbm').click(function() {
+			jQuery('#backupsbmwindow').slideToggle()
+			return false;
+		})
+
+
+
+
 		// Ready overlay
 		jQuery('#overlay').fadeTo('normal', 0);
 

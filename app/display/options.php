@@ -172,6 +172,7 @@
 
 			<h3><?php _e('Sidebar Management','k2_domain'); ?></h3>
 
+
 			<p><small><?php _e('People have their own way of doing things, especially blog sidebars, and K2 is designed to accommodate your needs! Choose your preferred method of sidebar editing from the options below.','k2_domain'); ?></small></p>
 
 			<p class="sidebarradio">
