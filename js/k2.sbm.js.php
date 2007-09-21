@@ -279,9 +279,9 @@ function sbm_load(id, url) {
 
 
 		function calculateSecretHeightFormula() {
-			var largestHeight = '';
+			var largestHeight = '450';
 			// Calculate best height for columns
-			jQuery('#availablemodules, #sidebar-1, #sidebar-2, #trash')
+			jQuery('#availablemodules, #sidebar-1, #sidebar-2, #disabled, #trash')
 				.each(function() {
 					console.log(jQuery(this).height())
 					if ( jQuery(this).height() > largestHeight )
