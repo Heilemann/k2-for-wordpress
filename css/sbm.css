@@ -8,10 +8,6 @@
 	display: block;
 	}
 
-#sidebarscontainer ul {
-	height: 450px;
-	}
-
 h2 {
 	border: 0;
 	font: 20px Arial, Verdana, Sans-Serif;
@@ -135,7 +131,6 @@ span.id {
 	z-index: 500;
 	border: 0;
 	}
-
 
 .module div {
 	position: relative;

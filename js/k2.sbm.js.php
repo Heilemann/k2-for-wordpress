@@ -44,7 +44,7 @@ function sbm_load(id, url) {
 									.css({ position: "static" });
 
 				// Resize columns heights
-				calculatesecretHeightFormula();
+				calculateSecretHeightFormula();
 
 				// Show spinner on marker module
 				jQuery('.marker').addClass('spinner');
@@ -128,7 +128,7 @@ function sbm_load(id, url) {
 							.fadeOut('fast', function() {
 								jQuery('#trash').empty();
 							});
-						calculatesecretHeightFormula();
+						calculateSecretHeightFormula();
 
 						// Remove from database
 						jQuery.post(sbm_baseUrl + "?action=remove", {
@@ -278,11 +278,12 @@ function sbm_load(id, url) {
 		calculateSecretWidthFormula();
 
 
-		function calculatesecretHeightFormula() {
+		function calculateSecretHeightFormula() {
+			var largestHeight = '';
 			// Calculate best height for columns
-			var largestHeight = 450;
-			jQuery('#availablemodules, .sortable, #trash')
+			jQuery('#availablemodules, #sidebar-1, #sidebar-2, #trash')
 				.each(function() {
+					console.log(jQuery(this).height())
 					if ( jQuery(this).height() > largestHeight )
 						largestHeight = jQuery(this).height();
 				})
@@ -290,11 +291,11 @@ function sbm_load(id, url) {
 
 			jQuery('.wrap').height(largestHeight+100)
 		}
-		calculatesecretHeightFormula();
+		calculateSecretHeightFormula();
 
 
 		function resizeLists() {
-			calculatesecretWidthFormula();
+			calculateSecretWidthFormula();
 			jQuery('.container').width(secretWidthFormula);
 			cropTitles();
 		}
