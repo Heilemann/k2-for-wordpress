@@ -182,6 +182,19 @@
 			</p>
 
 
+			<h3><?php _e('Columns','k2_domain'); ?></h3>
+
+			<p><small><?php printf(__('This sets the number of columns that K2 will display. <strong>%s</strong> will place both sidebars below the main column.', 'k2_domain'), $column_options[1]); ?></small></p>
+
+			<p>
+				<select id="k2-columns" name="k2[columns]">
+				<?php foreach ($column_options as $option => $label) { ?>
+					<option value="<?php echo $option; ?>" <?php selected($column_number, $option); ?>><?php echo $label; ?></option>
+				<?php } ?>
+				</select>
+			</p>
+
+
 			<h3><?php _e('Asides','k2_domain'); ?></h3>
 
 			<p><small><?php _e('\'Asides\' is a category of entries, meant to be \'smaller\' and perhaps of \'less importance\', like for instance links with minor commentary. They are styled differently than other entries to separate them content-wise. Below you can select a category to be shown as Asides.','k2_domain'); ?></small></p>
@@ -279,7 +292,7 @@
 
 			<script type="text/javascript">
 			function confirmUninstall() {
-				if (confirm('<?php _e('This will delete all your K2 settings.','k2_domain'); ?>') == true) {
+				if (confirm("<?php _e('This will delete all your K2 settings.','k2_domain'); ?>") == true) {
 					return true;
 				} else {
 					return false;

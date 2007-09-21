@@ -42,15 +42,12 @@
 		</div>
 	<?php } ?>
 
-	<?php /* If there is a custom about message, use it on the frontpage. */ $k2about = get_option('k2aboutblurp'); if ((is_home() and $k2about != '') or !is_home() and !is_page() and !is_single() or is_paged()) { ?>
+	<?php if (!is_home() and !is_page() and !is_single() or is_paged()) { ?>
 		
 	<div class="sb-about">
 		<h4><?php _e('About','k2_domain'); ?></h4>
 		
-		<?php /* Frontpage */ if (is_home() and !is_paged()) { ?>
-		<p><?php echo stripslashes($k2about); ?></p>
-		
-		<?php /* Category Archive */ } elseif (is_category()) { ?>
+		<?php /* Category Archive */ if (is_category()) { ?>
 		<p><?php printf(__('You are currently browsing the %1$s weblog archives for the %2$s category.','k2_domain'), '<a href="' . get_settings('siteurl') .'">' . get_bloginfo('name') . '</a>', single_cat_title('', false) ) ?></p>
 
 		<?php /* Day Archive */ } elseif (is_day()) { ?>
@@ -75,17 +72,8 @@
 		<?php /* Paged Archive */ } elseif (is_paged()) { ?>
 		<p><?php printf(__('You are currently browsing the %s weblog archives.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>') ?></p>
 
-		<?php /* Permalink */ } elseif (is_single()) { ?>
-		<p><?php next_post_link('%link', __('Next: %title', 'k2_domain')) ?><br/>
-		<?php previous_post_link('%link', __('Previous: %title', 'k2_domain')) ?></p>
-
-		<?php } ?>
-
-		<?php if (!is_home() and !is_paged() and !is_single() and !in_category($k2asidescategory) or is_day() or is_month() or is_year() or is_author() or is_search() or (function_exists('is_tag') and is_tag())) { ?>
-			<p><?php _e('Longer entries are truncated. Click the headline of an entry to read it in its entirety.','k2_domain'); ?></p>
 		<?php } ?>
 	</div>
-			
 	<?php } ?>
 
 
@@ -99,7 +87,7 @@
 	</div>
 	<?php } ?>
 
-	<?php /* Latest Entries */ if ( (is_home()) or (is_search() or (is_404()) or ($notfound == '1')) or (function_exists('is_tag') and is_tag()) or ( (is_archive()) and (!is_author()) ) ) { ?>
+	<?php /* Latest Entries */ if ( (is_home()) or (is_search() or (is_404()) or (defined('K2_NOT_FOUND'))) or (function_exists('is_tag') and is_tag()) or ( (is_archive()) and (!is_author()) ) ) { ?>
 	<div class="sb-latest">
 		<h4><?php _e('Latest','k2_domain'); ?></h4>
 		<span class="metalink"><a href="<?php bloginfo('rss2_url'); ?>" title="<?php _e('RSS Feed for Blog Entries','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
@@ -111,9 +99,26 @@
 	<?php } ?>
 
 
+	<?php /* Related Posts Plugin */ if ( (function_exists('related_posts')) and is_single() and !defined('K2_NOT_FOUND') ) { ?> 
+	<div class="sb-related">
+		<h4><?php _e('Related Entries','k2_domain'); ?></h4>
+		
+		<ul>
+			<?php related_posts(); ?>
+		</ul>
+	</div>
+	<?php } ?>
+
+<?php } /* End Widgets/SBM check */ ?>
+</div> <!-- #sidebar-main -->
+
+<hr />
+<div id="sidebar-alt" class="secondary">
+<?php /* Widgets/SBM Check */ if ( !(function_exists('dynamic_sidebar') and dynamic_sidebar(2)) ) { ?>
+
 	<?php /* FlickrRSS Plugin */ if ((function_exists('get_flickrRSS')) and is_home() and !(is_paged())) { ?> 
 	<div class="sb-flickr">
-		<h4>Flickr</h4>
+		<h4><?php _e('Flickr','k2_domain'); ?></h4>
 		<span class="metalink"><a href="http://flickr.com/services/feeds/photos_public.gne?id=<?php echo get_option('flickrRSS_flickrid'); ?>&amp;format=rss_200" title="<?php _e('RSS Feed for flickr','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
 
 		<div>
@@ -146,7 +151,7 @@
 	<?php } } ?>
 
 
-	<?php /* Archives */ if ( (is_archive()) or (is_search()) or (is_paged()) or ($notfound == '1') or (function_exists('is_tag') and is_tag()) ) { ?>
+	<?php /* Archives */ if ( is_archive() or is_search() or is_paged() or is_category() or (function_exists('is_tag') and is_tag()) or defined('K2_NOT_FOUND') ) { ?>
 	<div class="sb-months">
 		<h4><?php _e('Archives','k2_domain'); ?></h4>
 		
@@ -159,34 +164,10 @@
 		<h4><?php _e('Categories','k2_domain'); ?></h4>
 		
 		<ul>
-			<?php
-			if (function_exists('wp_list_categories')) {
-				wp_list_categories('title_li=&show_count=1&hierarchical=0');
-			} else {
-				list_cats(0, '', 'name', 'asc', '', 1, 0, 1, 1, 1, 1, 0,'','','','','');
-			}
-			?>
+			<?php wp_list_categories('title_li=&show_count=1&hierarchical=0'); ?>
 		</ul>
 	</div>
 	<?php } ?>
-
-
-	<?php /* Related Posts Plugin */ if ((function_exists('related_posts')) and is_single() and ($notfound != '1')) { ?> 
-	<div class="sb-related">
-		<h4><?php _e('Related Entries','k2_domain'); ?></h4>
-		
-		<ul>
-			<?php related_posts(); ?>
-		</ul>
-	</div>
-	<?php } ?>
-
-<?php } /* End Widgets/SBM check */ ?>
-</div> <!-- #sidebar-main -->
-
-<hr />
-<div id="sidebar-alt" class="secondary">
-<?php /* Widgets/SBM Check */ if ( !(function_exists('dynamic_sidebar') and dynamic_sidebar(2)) ) { ?>
 
 <?php } ?>
 </div> <!-- #sidebar-alt -->

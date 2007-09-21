@@ -454,21 +454,17 @@ function k2_body_class( $print = true ) {
 	}
 
 	// Sidebar layout settings
-	if (function_exists('dynamic_sidebar')) {
-		switch (get_option('k2columns')) {
-			case '1':
-				$c[] = 'columns-one';
-				break;
-			default:
-			case '2':
-				$c[] = 'columns-two';
-				break;
-			case '3':
-				$c[] = 'columns-three';
-				break;
-		}
-	} else {
-		$c[] = 'columns-two';
+	switch (get_option('k2columns')) {
+		case '1':
+			$c[] = 'columns-one';
+			break;
+		default:
+		case '2':
+			$c[] = 'columns-two';
+			break;
+		case '3':
+			$c[] = 'columns-three';
+			break;
 	}
 
 	// Language settings
