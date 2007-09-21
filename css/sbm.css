@@ -1,4 +1,16 @@
-/* @override http://localhost/wp-content/themes/kaytwo/css/sbm.css */
+/* @override 
+	http://localhost/wp-content/themes/kaytwo/css/sbm.css
+	http://getk2.com/wp-content/themes/k2/css/sbm.css
+*/
+
+.clear {
+	clear: both;	
+	display: block;
+	}
+
+#sidebarscontainer ul {
+	height: 450px;
+	}
 
 h2 {
 	border: 0;
@@ -23,7 +35,7 @@ h2 {
 .container {
 	width: 230px;
 	float: left;
-	padding: 0 10px;
+	padding: 0 10px 60px;
 	border-right: 1px solid #ddd;
 }
 
@@ -45,7 +57,9 @@ h2 {
 
 h3 {
 	text-align:center;
-	margin-bottom: 0;
+	margin-bottom: 25px;
+	color: #777;
+	font-weight: normal;
 	}
 
 .backuprestore {
@@ -73,7 +87,20 @@ h3 {
 
 #trashcontainer {
 	border: none;
+	position: absolute;
+	background: #eee;
+	left: 13px;
+	z-index: -1;
 }
+
+#trashcontainer.readyforanim {
+	left: -250px;
+	z-index: 100;
+	}
+
+#disabledcontainer {
+	border: none;
+	}
 
 .wrap ul {
 	padding: 0;
@@ -87,6 +114,8 @@ h3 {
 
 #dragHelper {
 	-webkit-box-shadow: #333 0px 1px 5px;
+	z-index: 1000000;
+	cursor: move;
 }
 
 span.id {
@@ -107,6 +136,7 @@ span.id {
 	border: 0;
 	}
 
+
 .module div {
 	position: relative;
 	}
@@ -121,6 +151,10 @@ span.id {
 
 #disabled .module span {
 	color: white;
+	}
+
+#disabled .module span.type {
+	color: #ddd;
 	}
 
 .sorthelper .optionslink {
@@ -151,7 +185,8 @@ span.id {
 	}
 
 .hovering {
-	background: #ddd !important;
+	background: #e2e2e2 !important;
+	z-index: 1000;
 }
 
 .marker .type {
@@ -166,6 +201,15 @@ span.id {
 #trash {
 	}
 
+.availablemodule:hover,
+.module:hover {
+	background: black !important;
+	}
+
+#disabledcontainer .module:hover {
+	background: #888 !important;
+	}
+	
 .openoptions {
 	background: red;
 	padding: 1px 3px;
@@ -480,6 +524,7 @@ span.id {
 
 #parentwrapper {
 	position: relative;
+	width: 100%;
 	}
 
 #msg {
@@ -508,4 +553,10 @@ form#dofollow {
 
 form#dofollow select {
 	width: 150px;
+	}
+
+.helptext {
+	font-size: .75em;
+	line-height: 3em;
+	color: #999;
 	}

@@ -71,11 +71,13 @@ class K2Options {
 					update_option('k2rollingarchives', '0');
 				}
 
-				// Archives Page
-				if(isset($_POST['k2']['archives'])) {
-					update_option('k2archives', '1');
-					K2Archive::create_archive();
-				} else {
+			   // Archives Page
+			   if(isset($_POST['k2']['archives'])) {
+			   	if( get_option('k2archives') != 'add_archive') {
+			   		update_option('k2archives', '1');
+			  		K2Archive::create_archive();
+			   	}
+			   } else {
 					// thanks to Michael Hampton, http://www.ioerror.us/ for the assist
 					update_option('k2archives', '0');
 					K2Archive::delete_archive();

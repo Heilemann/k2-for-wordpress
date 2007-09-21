@@ -43,6 +43,9 @@ function sbm_load(id, url) {
 									.attr('class', 'module ' + sidebar)
 									.css({ position: "static" });
 
+				// Resize columns heights
+				calculatesecretHeightFormula();
+
 				// Show spinner on marker module
 				jQuery('.marker').addClass('spinner');
 
@@ -83,12 +86,23 @@ function sbm_load(id, url) {
 		// Config sortable lists
 		var sortableLists = '';
 		function initSortables() {
+			jQuery('.container').height(jQuery('#availablemodulescontainer').height())
+
 			sortableLists = jQuery('ul.sortable').Sortable({
 				accept: 		'module',
 				activeclass:	'hovering',
 				helperclass:	'sorthelper',
 				tolerance:		'pointer',
 				opacity:		0.5,
+				onStart: 		function() {
+					jQuery('#trashcontainer').hide().css({ zIndex: '1000' }).fadeIn(200);
+				},
+				onStop: function() {
+					jQuery('#trashcontainer').animate({ left: '-250px' }, 200, function() {
+ 							jQuery(this)
+							.css({ zIndex: '-1', left: '13px' })
+					});
+				}, 
 				onHover:		function(drag) {
 					jQuery('.sorthelper')
 						.removeAttr('style')
@@ -97,7 +111,6 @@ function sbm_load(id, url) {
 				onChange:		function(serial) {
 					// If something is being trashed
 					var trashedModule = jQuery.SortSerialize('trash').o.trash[0];
-					console.log(jQuery('#'+trashedModule+' .name').text());
 
 					// Show feedback
 					if (trashedModule != undefined) {
@@ -115,6 +128,7 @@ function sbm_load(id, url) {
 							.fadeOut('fast', function() {
 								jQuery('#trash').empty();
 							});
+						calculatesecretHeightFormula();
 
 						// Remove from database
 						jQuery.post(sbm_baseUrl + "?action=remove", {
@@ -249,22 +263,39 @@ function sbm_load(id, url) {
 
 
 		// Auto-resize lists on window resize
-		var secretFormula;
-		function calculateSecretFormula() {
-			// Calculate best width for lists
-			secretFormula = parseInt(jQuery('.wrap').width() / jQuery('.container').length)
+		var secretWidthFormula;
+
+		function calculateSecretWidthFormula() {
+			// Calculate best width for columns
+			secretWidthFormula = parseInt(jQuery('.wrap').width() / (jQuery('.container').length -1))
 				- ( parseInt(jQuery('.wrap').css('paddingRight')) + parseInt(jQuery('.wrap').css('paddingLeft')) )
 				- ( parseInt(jQuery('.container').css('borderRightWidth')) + parseInt(jQuery('.container').css('borderLeftWidth')) ) - 2;
 
 			// Ensure minimum and maximum sizes
-			if (secretFormula < 150 ) { secretFormula = 150 }
-			else if (secretFormula > 270 ) { secretFormula = 270 }
+			if (secretWidthFormula < 150 ) { secretWidthFormula = 150 }
+			else if (secretWidthFormula > 270 ) { secretWidthFormula = 270 }
 		}
-		calculateSecretFormula();
+		calculateSecretWidthFormula();
+
+
+		function calculatesecretHeightFormula() {
+			// Calculate best height for columns
+			var largestHeight = 450;
+			jQuery('#availablemodules, .sortable, #trash')
+				.each(function() {
+					if ( jQuery(this).height() > largestHeight )
+						largestHeight = jQuery(this).height();
+				})
+				.height(largestHeight)
+
+			jQuery('.wrap').height(largestHeight+100)
+		}
+		calculatesecretHeightFormula();
+
 
 		function resizeLists() {
-			calculateSecretFormula();
-			jQuery('.container').width(secretFormula);
+			calculatesecretWidthFormula();
+			jQuery('.container').width(secretWidthFormula);
 			cropTitles();
 		}
 
@@ -304,7 +335,7 @@ function sbm_load(id, url) {
 		} // End function
 		
 		jQuery(window).resize(resizeLists);
-		jQuery('.container').width(secretFormula);
+		jQuery('.container').width(secretWidthFormula);
 		cropTitles();
 
 		
@@ -394,7 +425,6 @@ function sbm_load(id, url) {
 
 
 		jQuery('#backupsbm').click(function() {
-//			jQuery('#backupsbmwindow').slideDown()
 			jQuery('#backupform').submit();
 			return false;
 		})
