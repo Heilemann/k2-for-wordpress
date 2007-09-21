@@ -109,13 +109,6 @@
 	</div>
 	<?php } ?>
 
-<?php } /* End Widgets/SBM check */ ?>
-</div> <!-- #sidebar-main -->
-
-<hr />
-<div id="sidebar-alt" class="secondary">
-<?php /* Widgets/SBM Check */ if ( !(function_exists('dynamic_sidebar') and dynamic_sidebar(2)) ) { ?>
-
 	<?php /* FlickrRSS Plugin */ if ((function_exists('get_flickrRSS')) and is_home() and !(is_paged())) { ?> 
 	<div class="sb-flickr">
 		<h4><?php _e('Flickr','k2_domain'); ?></h4>
@@ -154,7 +147,7 @@
 	<?php /* Archives */ if ( is_archive() or is_search() or is_paged() or is_category() or (function_exists('is_tag') and is_tag()) or defined('K2_NOT_FOUND') ) { ?>
 	<div class="sb-months">
 		<h4><?php _e('Archives','k2_domain'); ?></h4>
-		
+	
 		<ul>
 			<?php wp_get_archives('type=monthly'); ?>
 		</ul>
@@ -162,12 +155,19 @@
 
 	<div class="sb-categories">
 		<h4><?php _e('Categories','k2_domain'); ?></h4>
-		
+	
 		<ul>
 			<?php wp_list_categories('title_li=&show_count=1&hierarchical=0'); ?>
 		</ul>
 	</div>
 	<?php } ?>
+
+<?php } /* End Widgets/SBM check */ ?>
+</div> <!-- #sidebar-main -->
+
+<hr />
+<div id="sidebar-alt" class="secondary">
+<?php /* Widgets/SBM Check */ if ( !(function_exists('dynamic_sidebar') and dynamic_sidebar(2)) ) { ?>
 
 <?php } ?>
 </div> <!-- #sidebar-alt -->
