@@ -57,10 +57,10 @@
 <div id="parentwrapper">
 
 	<div class="sbmheader">
-		<h2><?php _e('K2 Sidebar Modules', 'k2_domain') ?></h2>
+		<h2><?php _e('K2 Sidebar Manager', 'k2_domain') ?></h2>
 
 		<span class="backuprestore">
-			<a href="" id="backupsbm">Backup</a> /
+			<a href="" id="backupsbm">Backup</a>
 			<a href="" id="restoresbm">Restore</a>
 		</span>
 	
@@ -73,7 +73,7 @@
 		</form>
 	</div>
 
-	<div class="wrap" id="backupsbmwindow" style="display: none; margin-bottom: 20px">
+	<div id="backupsbmwindow" style="display: none;">
 
 		<?php if($restored) { ?>
 		<div id="message2" class="updated fade">
@@ -100,7 +100,7 @@
 				<!--<h3><?php _e('Restore sidebar:', 'k2_domain'); ?></h3>-->
 				<!--<p><small><?php _e('Did it fail? Never fear, restore is here!', 'k2_domain'); ?><br /><?php _e('I hope you kept that file safe...', 'k2_domain'); ?></small></p>-->
 				<p style="text-align: center;"><input type="file" name="backup" />
-				<input type="submit" value="<?php _e('Restore sidebar &raquo;', 'k2_domain'); ?>" /></p>
+				<input type="submit" value="<?php _e('Restore', 'k2_domain'); ?>" /></p>
 
 				<input type="hidden" name="action" value="restore" />
 			</form>
@@ -109,14 +109,18 @@
 
 
 	<div class="wrap">
+		
+		<div class="initloading"><?php _e('Loading'); ?></div>
 
 		<div id="availablemodulescontainer" class="container">
 			<h3><?php _e('Available Modules', 'k2_domain') ?></h3>
 
 			<ul id="availablemodules">
 				<?php foreach($modules as $id => $module) { ?>
-					<li id="<?php echo attribute_escape($id); ?>" class="availablemodule">
-						<span class="name"><?php echo(attribute_escape($module['name'])); ?></span>
+					<li id="<?php echo attribute_escape($id); ?>" class="module availablemodule">
+						<span class="modulewrapper">
+							<span class="name"><?php echo(attribute_escape($module['name'])); ?></span>
+						</span>
 					</li>
 				<?php } ?>
 			</ul>
@@ -134,11 +138,11 @@
 					<?php foreach ($sidebar->modules as $id => $module) { ?>
 
 						<li id="<?php print attribute_escape($module->id); ?>" class="module">
-							<div>
+							<span class="modulewrapper">
 								<span class="name"><?php print $module->name; ?></span>
 								<span class="type"><?php echo($modules[$module->type]['name']); ?></span>
 								<a href="#" class="optionslink"> </a>
-							</div>
+							</span>
 						</li>
 
 					<?php } ?>
@@ -159,11 +163,11 @@
 					<?php foreach ($disabled as $id => $module) { ?>
 
 						<li id="<?php print attribute_escape($module->id); ?>" class="module">
-							<div>
+							<span class="modulewrapper">
 								<span class="name"><?php print $module->name; ?></span>
 								<span class="type"><?php echo($modules[$module->type]['name']); ?></span>
 								<a href="#" class="optionslink"> </a>
-							</div>
+							</span>
 						</li>
 
 					<?php } ?>
@@ -182,10 +186,9 @@
 		<div class="clear">&nbsp;</div>
 
 	</div>
-</div>
 
-<div>
 	<p style="text-align: center;" class="helptext"><?php printf(__('Help to be had at the %1$s or in the %2$s.','k2_domain'), '<a href="http://getk2.com/forum/" title="' .__('K2 Support Forums','k2_domain') . '">' .__('K2 Support Forums','k2_domain') . '</a>', '<a href="http://k2.stikipad.com/" title="' .__('K2 Documentation','k2_domain') . '">' .__('K2 Documentation','k2_domain') . '</a>' ) ?></p>
 </div>
+
 
 <div id="overlay"></div>

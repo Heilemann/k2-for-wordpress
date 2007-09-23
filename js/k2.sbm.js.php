@@ -19,35 +19,35 @@ function sbm_load(id, url) {
 			tolerance:		'pointer',
 			onHover:		function (drag) {
 				// Show the temp 'result' marker
+				var module = jQuery(drag).children().children().children('span.name').text();
+
 				jQuery(drag)
 					.clone()
+					.html('<span class="modulewrapper"><span class="name">'+module+'</span><span class="handle"></span><span class="type">'+module+'</span><a href="#" class="optionslink"> </a></span>')
 					.attr('class', 'module marker')
 					.css({ position: "static" })
-					.append('<span class="type">'+jQuery(drag).children().text()+'</span>')
-					.appendTo(jQuery(this).children());
+					.appendTo(jQuery(this).children())
 			},
-			onOut: function (drag) {
+			onOut: 			function (drag) {
 				// Remove temp 'result' markers
 				jQuery(this).children().children('.marker').remove();
 			},
-			onDrop:	function (drag) {
+			onDrop:			function (drag) {
 				// Fetch the needed module info
-				var module = jQuery(drag).children('span.name').text();
+				var module = jQuery(drag).children().children('span.name').text();
 				var type = jQuery(drag).attr('id');
 				var sidebar = jQuery(this).children('ul').attr('id');
 
 				// Create new module
-				var newModule = jQuery(drag).clone().empty()
-									.html('<div><span class="name">'+jQuery(drag).children().text()+'</span><span class="type">'+jQuery(drag).children().text()+'</span><a href="#" class="optionslink"> </a></div>')
+				var newModule = jQuery(drag)
+									.clone()
+									.html('<span class="modulewrapper"><span class="name">'+module+'</span><span class="handle"></span><span class="type">'+module+'</span><a href="#" class="optionslink"> </a></span>')
 									.attr('id', 'module-' + (lastModuleID++))
 									.attr('class', 'module ' + sidebar)
-									.css({ position: "static" });
-
-				// Resize columns heights
-				calculateSecretHeightFormula();
+									.css({ position: "static" })
 
 				// Show spinner on marker module
-				jQuery('.marker').addClass('spinner');
+//				jQuery('.marker').addClass('spinner')
 
 				// Submit new module info
 				jQuery.ajax({
@@ -57,21 +57,20 @@ function sbm_load(id, url) {
 					data: "action=add&add_name=" + module + "&add_type=" + type + "&add_sidebar=" + sidebar,
 					error: function(){
 						// Remove temp markers
-						jQuery('.marker').remove();
+						jQuery('.marker').remove()
 
 						// Show an error message
 //						jQuery('#msg').text('An error occurred while adding module. Please try again.');
 					},
 					success: function(request, status){
 						// Remove temp markers
-						jQuery('.marker').remove();
+						jQuery('.marker').remove()
 
 						// Clone dropped module to new home
-						jQuery('#'+sidebar).append(newModule);
+						jQuery('#'+sidebar).append(newModule)
 
 						// Reinitialize the sortable lists
-						destroySortables();
-						initSortables();
+						resizeLists();
 					}
 				});
 
@@ -82,7 +81,6 @@ function sbm_load(id, url) {
 		// Set up available modules as draggable
 		jQuery('.availablemodule').Draggable({ ghosting: true, revert: true });
 
-
 		// Config sortable lists
 		var sortableLists = '';
 		function initSortables() {
@@ -91,24 +89,27 @@ function sbm_load(id, url) {
 			sortableLists = jQuery('ul.sortable').Sortable({
 				accept: 		'module',
 				activeclass:	'hovering',
-				helperclass:	'sorthelper',
+				helperclass:	'module marker',
 				tolerance:		'pointer',
-				opacity:		0.5,
+				opacity:		0.3,
 				onStart: 		function() {
-					jQuery('#trashcontainer').hide().css({ zIndex: '1000' }).fadeIn(200);
+					// Need to re-position #trash for the sortable to work properly
+					jQuery('#trashcontainer').hide().css({ zIndex: 1000 }).fadeIn(200);
 				},
-				onStop: function() {
-					jQuery('#trashcontainer').animate({ left: '-250px' }, 200, function() {
- 							jQuery(this)
-							.css({ zIndex: '-1', left: '13px' })
-					});
+				onStop: 		function() {
+					// And re-position again.
+					jQuery('#trashcontainer').animate({ left: -250 }, 300, function() {
+ 						jQuery(this).css({ zIndex: -1, left: 0 })
+					})
 				}, 
-				onHover:		function(drag) {
-					jQuery('.sorthelper')
-						.removeAttr('style')
-						.html( jQuery(drag).html() );
+				onHover: 		function(drag) {
+					jQuery('#sortHelper').html( jQuery(drag).html() )
 				},
-				onChange:		function(serial) {
+				onChange: 		function(serial) {
+					if (jQuery('#trashcontainer').css('zIndex') == 1000)
+						jQuery('#trashcontainer').animate({ left: -250 }, 300, function() { jQuery(this).css({ zIndex: -1, left: 0 }) })
+//					resizeLists();
+
 					// If something is being trashed
 					var trashedModule = jQuery.SortSerialize('trash').o.trash[0];
 
@@ -128,7 +129,6 @@ function sbm_load(id, url) {
 							.fadeOut('fast', function() {
 								jQuery('#trash').empty();
 							});
-						calculateSecretHeightFormula();
 
 						// Remove from database
 						jQuery.post(sbm_baseUrl + "?action=remove", {
@@ -194,14 +194,6 @@ function sbm_load(id, url) {
 				.click(closeOptions);
 		}
 
-		tabSystem();
-
-
-		function destroySortables() {
-			jQuery('ul.sortable').SortableDestroy();
-		}
-
-		initSortables();
 
 
 		// Options Stuff
@@ -220,7 +212,6 @@ function sbm_load(id, url) {
 					curOptSidebar = jQuery(curOptModule).parent().attr('id');
 					curOptName = jQuery(this).siblings('.name').text();
 					openOptions(curOptModule);
-					return false;
 				});
 			});
 
@@ -228,6 +219,9 @@ function sbm_load(id, url) {
 			jQuery('#submit').unbind();
 			jQuery('#submit').click(function() {
 				closeVar = false;
+				
+				jQuery('#module-name').val( trim(jQuery('#module-name').val()) );
+
 				jQuery(this).parents('form').trigger('submit');
 				return false;
 			});
@@ -235,6 +229,9 @@ function sbm_load(id, url) {
 			jQuery('#submitclose').unbind();
 			jQuery('#submitclose').click(function() {
 				closeVar = true;
+
+				jQuery('#module-name').val( trim(jQuery('#module-name').val()) );
+
 				jQuery(this).parents('form').trigger('submit');
 				return false;
 			});
@@ -251,7 +248,6 @@ function sbm_load(id, url) {
 						jQuery('#msg').text("Options for '" + jQuery("#"+curOptModule+" .name").text() + "' saved successfully").fadeIn('1000');
 						setTimeout( function() { jQuery('#msg').fadeOut('3000'); }, 4000);
 						cropTitles();
-						console.log(closeOptions);
 						if (closeVar == true) { closeOptions() };
 						closeVar = false;
 					}
@@ -263,9 +259,10 @@ function sbm_load(id, url) {
 
 
 		// Auto-resize lists on window resize
-		var secretWidthFormula;
+		var secretWidthFormula = 200;
 
-		function calculateSecretWidthFormula() {
+		function resizeLists() {
+//			jQuery('ul.sortable').SortableDestroy()
 			// Calculate best width for columns
 			secretWidthFormula = parseInt(jQuery('.wrap').width() / (jQuery('.container').length -1))
 				- ( parseInt(jQuery('.wrap').css('paddingRight')) + parseInt(jQuery('.wrap').css('paddingLeft')) )
@@ -274,36 +271,42 @@ function sbm_load(id, url) {
 			// Ensure minimum and maximum sizes
 			if (secretWidthFormula < 150 ) { secretWidthFormula = 150 }
 			else if (secretWidthFormula > 270 ) { secretWidthFormula = 270 }
-		}
-		calculateSecretWidthFormula();
 
+			jQuery('.container').width(secretWidthFormula)
+			jQuery('#trashcontainer').width(secretWidthFormula+15)
+			jQuery('#sidebar-1container').css({ left: secretWidthFormula 		+ 35 })
+			jQuery('#sidebar-2container').css({ left: secretWidthFormula * 2 	+ 55 })
+			jQuery('#disabledcontainer').css({ left: secretWidthFormula * 3 	+ 80 })
+			jQuery('.modulewrapper').width(secretWidthFormula-10)
+			cropTitles();
+			initSortables();
+		}
 
 		function calculateSecretHeightFormula() {
-			var largestHeight = '450';
+			var largestHeight = 450;
 			// Calculate best height for columns
 			jQuery('#availablemodules, #sidebar-1, #sidebar-2, #disabled, #trash')
 				.each(function() {
-					console.log(jQuery(this).height())
-					if ( jQuery(this).height() > largestHeight )
-						largestHeight = jQuery(this).height();
+					if ( parseInt(jQuery(this).height()) > largestHeight )
+						largestHeight = parseInt(jQuery(this).height());
 				})
 				.height(largestHeight)
 
 			jQuery('.wrap').height(largestHeight+100)
-		}
-		calculateSecretHeightFormula();
+			jQuery('.container').height(largestHeight+38)
 
-
-		function resizeLists() {
-			calculateSecretWidthFormula();
-			jQuery('.container').width(secretWidthFormula);
-			cropTitles();
+			// Hack: Clean up the mess, until we fix it :)
+			jQuery('.wrap li').each(function() {
+				if (jQuery(this).attr('id') == undefined)
+					jQuery(this).remove()
+			})
 		}
 
 		function cropTitles() {
 			jQuery('.croppedname').remove();
-			jQuery('.sortable>.module>div>.name').each(function() {
-				var availableWidth = jQuery(this).parents('li').width() - parseInt(jQuery(this).parents('li').css('paddingRight')) - parseInt(jQuery(this).parents('li').css('paddingRight')) - jQuery(this).siblings('a.optionslink').width() - 10;
+			jQuery('.sortable .name').each(function() {
+
+				var availableWidth = jQuery(this).parents('li').width() - parseInt(jQuery(this).parents('li').css('paddingRight')) - parseInt(jQuery(this).parents('li').css('paddingRight')) - jQuery(this).siblings('a.optionslink').width() - 20;
 				var nameWidth = jQuery(this).width();
 
 				// If name doesn't fit
@@ -318,13 +321,13 @@ function sbm_load(id, url) {
 						.insertAfter( jQuery(this) )
 						.show()
 						.each(function() {
-							var crank = jQuery(this).text();
+							var moduletitle = jQuery(this).text();
 							var life = '';
 							
 							// Resize name to fit
 							while (life != 42) {
-								crank = crank.substring(0, crank.length-1);
-								jQuery(this).html(crank+'&hellip;');
+								moduletitle = trim(moduletitle.substring(0, moduletitle.length-1));
+								jQuery(this).html(moduletitle+'&hellip;');
 
 								// Are we done yet?
 								if (jQuery(this).width() < availableWidth) life = 42; 
@@ -334,12 +337,26 @@ function sbm_load(id, url) {
 				} // End if
 			});
 		} // End function
+
+		function trim(s) {
+			s = s.replace(/(^\s*)|(\s*$)/gi,"");
+			s = s.replace(/[ ]{2,}/gi," ");
+			s = s.replace(/\n /,"\n");
+			return s;
+		}
 		
 		jQuery(window).resize(resizeLists);
-		jQuery('.container').width(secretWidthFormula);
-		cropTitles();
-
 		
+		jQuery(document).ready(function() {
+			calculateSecretHeightFormula();
+			resizeLists();
+			tabSystem();
+			jQuery('.initloading').fadeOut().remove()
+			jQuery('.container').animate({ opacity: 1 })
+			jQuery('#overlay').fadeTo('normal', 0)
+			jQuery('.wrap').append('<div id="darken"></div>')
+			jQuery('#darken').css({ zIndex: 2, left: 1180 })
+		});
 
 		// Options UI
 		function openOptions(module) {
@@ -357,21 +374,17 @@ function sbm_load(id, url) {
 			curOptSidebar = jQuery(moduleID).parent().attr('id');
 
 			// Dim screen
-			jQuery('#overlay').css({ zIndex: '500' }).fadeTo('normal', 0.5);
+			jQuery('#overlay')
+				.css({ zIndex: 500, opacity: .5 })
+				.click(function() {
+					// Note to self: Consider checking whether the forms have been changed, and as if the user wants to save, or close and have an undo.
+					closeOptions();
+				})
 
 			jQuery('#optionswindow')
 				.addClass('optionsspinner')
 				.show()
-				.css({
-					position: 'fixed',
-					top: originalPosition.top,
-					left: originalPosition.left,
-					width: originalWidth,
-					height: originalHeight,
-					zIndex: '1000',
-					opacity: '0'
-				})
-				.css({ top: optionsY, left: optionsX, width: optionsWidth, height: optionsHeight, opacity: 1 });
+				.css({ top: optionsY, left: optionsX, width: optionsWidth, height: optionsHeight })
 
 			// Get the options via AJAX
 			jQuery.post( sbm_baseUrl, {
@@ -419,7 +432,7 @@ function sbm_load(id, url) {
 			jQuery('#options').empty();
 			jQuery('#optionswindow').hide();
 			// Dim overlay
-			jQuery('#overlay').fadeTo('normal', 0, function() { jQuery(this).css({ zIndex: '-100' }) });
+			jQuery('#overlay').css({ opacity: 0, zIndex: -100 }) //fadeTo('normal', 0, function() { jQuery(this).css({ zIndex: '-100' }) });
 			return false;
 		}
 
@@ -431,26 +444,13 @@ function sbm_load(id, url) {
 		})
 
 		jQuery('#restoresbm').click(function() {
-			jQuery('#backupsbmwindow').slideToggle()
+			jQuery('#backupsbmwindow').css({ top: 20, opacity: 0, zIndex: 700 }).animate({ top: 38, opacity: 1 })
+			jQuery('#overlay').css({ zIndex: 600 }).fadeTo('normal', .5).click(function() {
+				jQuery('#backupsbmwindow').animate({ top: 20, opacity: 0, zIndex: -1 })
+				jQuery(this).fadeTo('normal', 0, function() {
+					jQuery(this).css({ zIndex: -1})
+				})
+			})
 			return false;
 		})
-
-
-
-
-		// Ready overlay
-		jQuery('#overlay').fadeTo('normal', 0);
-
-		jQuery('#msg').hide();
-
-		// Remove any new messages on load
-/*		function messageHandler() {
-			var messageContainer = jQuery('#msg');
-			if (jQuery(messageContainer).text() == '') {
-				jQuery(messageContainer).hide();
-			} else {
-				jQuery(messageContainer).fadeOut(10000).text()
-			}
-		}
-		messageHandler();*/
 	}
