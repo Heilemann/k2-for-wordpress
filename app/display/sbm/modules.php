@@ -115,6 +115,7 @@
 		<div id="availablemodulescontainer" class="container">
 			<h3><?php _e('Available Modules', 'k2_domain') ?></h3>
 
+			<div>
 			<ul id="availablemodules">
 				<?php foreach($modules as $id => $module) { ?>
 					<li id="<?php echo attribute_escape($id); ?>" class="module availablemodule">
@@ -124,10 +125,10 @@
 					</li>
 				<?php } ?>
 			</ul>
+			</div>
 		</div>
 
 
-		<div id="sidebarscontainer">
 		<?php foreach ($sidebars as $id => $sidebar) { ?>
 		<div id="<?php echo($id); ?>container" class="container">
 			<h3><?php echo($sidebar->name); ?></h3>
@@ -150,7 +151,6 @@
 			</div>
 		</div>
 		<?php } ?>
-		</div>
 
 
 

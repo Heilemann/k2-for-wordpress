@@ -46,9 +46,6 @@ function sbm_load(id, url) {
 									.attr('class', 'module ' + sidebar)
 									.css({ position: "static" })
 
-				// Show spinner on marker module
-//				jQuery('.marker').addClass('spinner')
-
 				// Submit new module info
 				jQuery.ajax({
 					type: "POST",
@@ -108,7 +105,8 @@ function sbm_load(id, url) {
 				onChange: 		function(serial) {
 					if (jQuery('#trashcontainer').css('zIndex') == 1000)
 						jQuery('#trashcontainer').animate({ left: -250 }, 300, function() { jQuery(this).css({ zIndex: -1, left: 0 }) })
-//					resizeLists();
+
+					resizeLists();
 
 					// If something is being trashed
 					var trashedModule = jQuery.SortSerialize('trash').o.trash[0];
@@ -279,21 +277,41 @@ function sbm_load(id, url) {
 			jQuery('#disabledcontainer').css({ left: secretWidthFormula * 3 	+ 80 })
 			jQuery('.modulewrapper').width(secretWidthFormula-10)
 			cropTitles();
+			calculateSecretHeightFormula();
 			initSortables();
 		}
 
 		function calculateSecretHeightFormula() {
-			var largestHeight = 450;
-			// Calculate best height for columns
-			jQuery('#availablemodules, #sidebar-1, #sidebar-2, #disabled, #trash')
-				.each(function() {
-					if ( parseInt(jQuery(this).height()) > largestHeight )
-						largestHeight = parseInt(jQuery(this).height());
-				})
-				.height(largestHeight)
+			// Get the current specified minimum height
+			var highest = parseInt(jQuery('.wrap').css('minHeight'));
+			var highestContainer = '';
 
-			jQuery('.wrap').height(largestHeight+100)
-			jQuery('.container').height(largestHeight+38)
+			// Calculate best height for columns
+			jQuery('#availablemodulescontainer, #sidebar-1container, #sidebar-2container, #disabledcontainer, #trashcontainer')
+				.each(function() {
+					var moduleHeight = '';
+
+					if (jQuery(this).attr('id') != 'availablemodulescontainer') {
+						moduleHeight = 37;
+					} else {
+						moduleHeight = 30;						
+					}
+
+					var currentContainer = parseInt((jQuery(this).children('div').children('ul').children('li').length * moduleHeight + moduleHeight ));
+					var currentHeader = parseInt(jQuery(this).children('h3').height() *2);
+					var currentColumn = currentContainer + currentHeader;
+
+					if ( currentColumn > highest ) {
+						highest = currentColumn;
+						highestContainer = currentContainer;
+					}
+				})
+
+			console.log(highestContainer);
+			jQuery('.wrap').height(highest)
+			jQuery('.container').height(highest)
+			jQuery('.container ul').height(highestContainer)
+			jQuery('#trashcontainer').height(highest+10)
 
 			// Hack: Clean up the mess, until we fix it :)
 			jQuery('.wrap li').each(function() {

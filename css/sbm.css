@@ -9,7 +9,6 @@
 	}
 
 h2 {
-	border: 0;
 	font: 20px Arial, Verdana, Sans-Serif;
 	color: #777;
 	margin: 16px 20px 12px;
@@ -35,7 +34,7 @@ h2 {
 	padding-bottom: 1px;
 	background: #eee url('../images/sbmmanager/sbmbg.png') repeat-x;
 	min-width: 800px;
-	min-height: 400px;
+	min-height: 520px;
 	margin: 0;
 	border: 0;
 	border-bottom: 1px solid #ddd;
@@ -75,9 +74,9 @@ h2 {
 
 h3 {
 	font-size: 1.4em;
+	line-height: 40px;
 	font-weight: normal;
 	text-align:center;
-	margin: 25px auto 20px;
 	color: #333;
 	}
 
@@ -175,7 +174,7 @@ h3 {
 
 .container {
 	opacity: 0;
-	padding: 0 10px 60px;
+	padding: 0 10px;
 	z-index: 5;
 }
 
@@ -195,7 +194,7 @@ h3 {
 	left: 0;
 	background: url('../images/sbmmanager/trashbg.png') right repeat-y;
 	z-index: -1;
-	padding: 0 25px 60px 0;
+	padding: 0 25px 0 0;
 }
 
 #trashcontainer .sortable {
