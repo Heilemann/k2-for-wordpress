@@ -135,14 +135,18 @@ h3 {
 #backupsbmwindow input[type=file] {
 	position: absolute;
 	left: 15px;
+	top: 20px;
 	color: #ddd;
 	border: none;
 	background: none;
+	font-size: 11px;
 	}
 
-#backupsbmwindow input[type=submit] {
+#backupsbmwindow button {
+	font-size: 11px;
 	position: absolute;
 	right: 17px;
+	top:21px;
 	}
 
 #columnsform {
@@ -652,3 +656,4 @@ form#dofollow select {
 #error {
 	display: none;
 	}
+	

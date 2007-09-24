@@ -100,7 +100,7 @@
 				<!--<h3><?php _e('Restore sidebar:', 'k2_domain'); ?></h3>-->
 				<!--<p><small><?php _e('Did it fail? Never fear, restore is here!', 'k2_domain'); ?><br /><?php _e('I hope you kept that file safe...', 'k2_domain'); ?></small></p>-->
 				<p style="text-align: center;"><input type="file" name="backup" />
-				<input type="submit" value="<?php _e('Restore', 'k2_domain'); ?>" /></p>
+				<button><?php _e('Restore', 'k2_domain'); ?></button</p>
 
 				<input type="hidden" name="action" value="restore" />
 			</form>
