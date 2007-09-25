@@ -307,7 +307,6 @@ function sbm_load(id, url) {
 					}
 				})
 
-			console.log(highestContainer);
 			jQuery('.wrap').height(highest)
 			jQuery('.container').height(highest)
 			jQuery('.container ul').height(highestContainer)
