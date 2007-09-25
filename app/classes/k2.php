@@ -146,6 +146,10 @@ class K2 {
 			get_bloginfo('template_directory').'/js/jquery.interface.js.php',
 			array('jquery'), '1.2');
 
+		wp_register_script('jquery.dimensions',
+			get_bloginfo('template_directory').'/js/jquery.dimensions.js.php',
+			array('jquery'), '3238');
+
 		// Register our scripts with WordPress, version is Last Changed Revision
 		wp_register_script('k2functions',
 			get_bloginfo('template_directory') . '/js/k2.functions.js.php',
@@ -173,7 +177,7 @@ class K2 {
 
 		wp_register_script('k2sbm',
 			get_bloginfo('template_directory') . '/js/k2.sbm.js.php',
-			array('jquery', 'interface'), '');
+			array('jquery', 'interface', 'jquery.dimensions'), '');
 	}
 
 	function get_styles() {
