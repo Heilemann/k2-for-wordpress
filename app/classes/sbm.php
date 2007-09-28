@@ -207,10 +207,7 @@ class K2SBM {
 		$page = add_theme_page(__('K2 Sidebar Manager','k2_domain'), __('K2 Sidebar Manager','k2_domain'), 'edit_themes', 'k2-sbm-manager', array('K2SBM', 'module_admin'));
 
 		add_action("admin_head-$page", array('K2SBM', 'module_admin_head'));
-
-		if(!isset($_GET['subpage'])) {
-			add_action("admin_print_scripts-$page", array('K2SBM', 'module_admin_scripts'));
-		}
+		add_action("admin_print_scripts-$page", array('K2SBM', 'module_admin_scripts'));
 	}
 
 	function module_admin() {
@@ -260,56 +257,6 @@ class K2SBM {
 
 	function module_admin_head() {
 		?>
-		<style type="text/css">
-		/*	#submenu .current {
-				background: #000000;
-				border-right: none;
-				border-top: none;
-				color: #ffffff;
-			}
-
-			#subsubmenu {
-				background: #000000;
-				border-bottom: none;
-				margin: 0;
-				padding: 3px 2em 0 4em;
-			}
-
-			#subsubmenu li {
-				display: inline;
-				line-height: 200%;
-				list-style: none;
-				text-align: center;
-			}
-
-			#subsubmenu .current {
-				background: #ffffff;
-				color: #000000;
-				font-weight: bold;
-				text-decoration: none;
-			}
-
-			#subsubmenu a {
-				border: none;
-				color: #ffffff;
-				font-size: 10px;
-				padding: .3em .4em .4em;
-			}
-
-			#subsubmenu a:hover {
-				background: #ddeaf4;
-				color: #393939;
-			}
-
-			#subsubmenu li {
-				line-height: 170%;
-				height: 25px;
-			} */
-		</style>
-		<?php
-
-		if(!isset($_GET['subpage'])) {
-		?>
 			<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/sbm.css" />
 
 			<script type="text/javascript">
@@ -318,7 +265,6 @@ class K2SBM {
 				//]]>
 			</script>
 		<?php
-		}
 	}
 
 	function set_error_text($text) {

@@ -262,9 +262,9 @@ function sbm_load(id, url) {
 		function resizeLists() {
 //			jQuery('ul.sortable').SortableDestroy()
 			// Calculate best width for columns
-			secretWidthFormula = parseInt(jQuery('.wrap').width() / (jQuery('.container').length -1))
+			secretWidthFormula = parseInt(jQuery('.wrap').width()) / (jQuery('.container').size() - 1)
 				- ( parseInt(jQuery('.wrap').css('paddingRight')) + parseInt(jQuery('.wrap').css('paddingLeft')) )
-				- ( parseInt(jQuery('.container').css('borderRightWidth')) + parseInt(jQuery('.container').css('borderLeftWidth')) ) - 2;
+				- ( (!isNaN(value = parseInt(jQuery('.container').css('borderRightWidth'))) ? value : 1) + (!isNaN(value = parseInt(jQuery('.container').css('borderLeftWidth'))) ? value : 1) ) - 2;
 
 			// Ensure minimum and maximum sizes
 			if (secretWidthFormula < 150 ) { secretWidthFormula = 150 }
