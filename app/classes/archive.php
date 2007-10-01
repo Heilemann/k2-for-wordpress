@@ -18,7 +18,7 @@ class K2Archive {
 		$archives_page['post_content'] = __('Do not edit this page', 'k2_domain');
 		$archives_page['post_excerpt'] = __('Do not edit this page', 'k2_domain');
 		$archives_page['post_title'] = __('Archives', 'k2_domain');
-		$archives_page['post_name'] = 'archives';
+			$archives_page['post_name'] = 'archivepage';
 
 		if (get_wp_version() < 2.1) {
 			// WP 2.0
