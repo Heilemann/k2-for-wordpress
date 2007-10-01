@@ -55,8 +55,12 @@
 				printf(__('Search Results for \'%s\'','k2_domain'), attribute_escape(stripslashes(get_query_var('s'))));
 
 			} elseif (function_exists('is_tag') and is_tag()) {
-				printf(__('Tag Archive for \'%s\'','k2_domain'), single_tag_title('',$display=false));
-
+				if (function_exists single_tag_title()) {
+					printf(__('Tag Archive for \'%s\'','k2_domain'), single_tag_title('',$display=false));
+				} else {
+					printf(__('Tag Archive for \'%s\'','k2_domain'), get_query_var('tag') );
+				}
+				
 			} elseif (is_author()) {
 				printf(__('Author Archive for %s','k2_domain'), get_author_name(get_query_var('author')));
 
