@@ -21,22 +21,24 @@ var k2Search = {
 
 		// Bind events to the search input
 		k2Search.input.focus(function() {
-				if(k2Search.input.val() == k2Search.searchPrompt) {
+				if (k2Search.input.val() == k2Search.searchPrompt) {
 					k2Search.input.val('');
 				}
 			})
 			.blur(function() {
-				if(k2Search.input.val() == '') {
+				if (k2Search.input.val() == '') {
 					k2Search.input.val(k2Search.searchPrompt);
 				}
 			})
 			.keyup(function(event) {
 				var code = event.keyCode;
 
-				if(code == 27 || ((code == 46 || code == 8) && k2Search.input.val() == '')) {
-					k2Search.resetSearch();
-				} else if(code != 13) {
-					if(k2Search.timer) {
+				if (k2Search.input.val() == '') {
+					return false;
+				} else if (code == 27) {
+					k2Search.input.val('');
+				} else if (code != 13) {
+					if (k2Search.timer) {
 						clearTimeout(k2Search.timer);
 					}
 					k2Search.timer = setTimeout(k2Search.doSearch, 500);
@@ -45,15 +47,15 @@ var k2Search = {
 	},
 
 	doSearch: function() {
-		if(k2Search.input.val() == k2Search.prevSearch) return;
+		if (k2Search.input.val() == k2Search.prevSearch) return;
 
 		k2Search.reset.fadeTo('fast', 0.3);
 		k2Search.loading.fadeIn('fast');
 
-		if(!k2Search.active) {
+		if (!k2Search.active) {
 			k2Search.active = true;
 
-			if(jQuery('div#rollingarchives').length) {
+			if (jQuery('div#rollingarchives').length) {
 				k2Rolling.saveState();
 			}
 		}
