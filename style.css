@@ -484,7 +484,7 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	margin: 5px 0;
 	}
 
-// Google Maps Support
+/* Google Maps Support */
 .entry-content .map div {
 	margin: 0;
 	}
@@ -1051,7 +1051,6 @@ div#latest-comments small {
 
 .sb-flickr div {
 	margin-top: 10px !important;
-	margin-left: ;
 	}
 
 .sb-flickr div img {
