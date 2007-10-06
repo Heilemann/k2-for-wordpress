@@ -123,7 +123,7 @@
 					<?php /* Tags */ if (is_single() and function_exists('UTW_ShowTagsForCurrentPost')) { ?>
 						<span class="entry-tags"><?php _e('Tags: ','k2_domain'); ?><?php UTW_ShowTagsForCurrentPost("commalist"); ?>.</span>
 					<?php } elseif (is_single() and function_exists('the_tags')) { ?>
-						<span class="entry-tags"><?php the_tags(__('Tags: ','k2_domain')); ?>.</span>
+						<span class="entry-tags"><?php the_tags(__('Tags: ','k2_domain'), ', ', '.'); ?></span>
 					<?php } ?>
 				</div> <!-- .entry-meta -->
 			</div> <!-- .entry-head -->
