@@ -17,7 +17,7 @@ CSS Documentation: http://k2.stikipad.com/docs/show/CSS+Overview
 
 html { /* Force Vertical Scrollbar */
 	/* IE */
-	overflow-y: scroll; 
+	overflow-y: scroll;
 	/* Moz */
 	height: 100%;
 	margin-bottom: 0.1em;
@@ -1077,15 +1077,22 @@ div#latest-comments small {
 */
 
 #wp-calendar {
+	margin-top: 10px;
 	width: 100%;
 	}
 
 #wp-calendar td {
+	color: #ccc;
+	}
+
+#wp-calendar td, #wp-calendar th {
 	text-align: center;
+	padding: 2px;
 	}
 
 #wp-calendar caption {
-	font-size: 1.2em;
+	font-size: 1.5em;
+	font-weight: bold;
 	padding: 5px;
 	}
 
