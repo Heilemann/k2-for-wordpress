@@ -385,7 +385,8 @@ function sbm_load(id, url) {
 			var optionsWidth = 400;
 			var optionsHeight = 350;
 			var optionsX = (jQuery(window).width()) / 2 - ((optionsWidth)/2);
-			var optionsY = (jQuery(window).height()) / 2 - (optionsHeight/2);
+//			var optionsY = (jQuery(window).height()) / 2 - (optionsHeight/2);
+			var optionsY = 100;
 			var originalName = jQuery(moduleID).children('.name').text();
 			curOptModule = jQuery(moduleID).attr('id');
 			curOptSidebar = jQuery(moduleID).parent().attr('id');
