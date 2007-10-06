@@ -892,13 +892,14 @@ img.wp-smiley {
 	padding-left: 0;
 	}
 
-.secondary ul ul, .secondary ol ol {
-	margin: 0;
-	}
-       
-.secondary ul ul ul, .secondary ol ol ol {
+.secondary ul ul, .secondary ol ol, secondary div div {
 	margin: 0 0 0 10px;
 	}
+       
+.secondary ul ul ul, .secondary ol ol ol, secondary div div div {
+	margin: 0 0 0 20px;
+	}
+
 
 .secondary ol {
 	margin-left: 15px;
@@ -927,6 +928,10 @@ ol li {
 	}
 
 /*- Search Form and Livesearch */
+
+#search {
+	margin-top: 10px;
+	}
 
 #searchform {
 	display: block;

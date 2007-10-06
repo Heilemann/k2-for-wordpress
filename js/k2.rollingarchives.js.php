@@ -43,15 +43,15 @@ var k2Rolling = {
 	setupEvents: function() {
 		jQuery('#rollnext').click(function() {
 			k2Rolling.pageSlider.setValueBy(1);
-
 			return false;
 		});
 
 		jQuery('#rollprevious').click(function() {
 			k2Rolling.pageSlider.setValueBy(-1);
-
 			return false;
 		});
+
+		jQuery(window).scroll(function() { smartPosition() });
 	},
 
 	updatePageText: function(page) {
@@ -120,3 +120,32 @@ var k2Rolling = {
 		}
 	}
 };
+
+
+function smartPosition() {
+	var obj = document.getElementById('dynamic-content');
+	var curtop = 0;
+	if (obj.offsetParent)
+		while(1) {
+			curtop += obj.offsetTop;
+			if (!obj.offsetParent)
+				break;
+			obj = obj.offsetParent;
+		}
+	else if (obj.y)
+	    curtop += obj.y;
+
+
+	// Detect if content is being scroll offscreen.
+	if ( (document.documentElement.scrollTop || document.body.scrollTop) >= curtop) {
+		jQuery('body').addClass('fixraposition');
+	} else {
+		jQuery('body').removeClass('fixraposition');
+	}
+}
+
+jQuery(document)
+	.ready(function() { smartPosition(); })
+
+jQuery(window)
+	.scroll(function() { smartPosition(); })

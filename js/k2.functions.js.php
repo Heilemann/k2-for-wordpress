@@ -92,6 +92,32 @@ function deleteCookie(name, path, domain) {
   }
 };
 
+
+// Smart positioning of the Rolling Archives when scrolling
+function smartPosition() {
+	var obj = document.getElementById('dynamic-content');
+	var curtop = 0;
+	if (obj.offsetParent)
+		while(1) {
+			curtop += obj.offsetTop;
+			if (!obj.offsetParent)
+				break;
+			obj = obj.offsetParent;
+		}
+	else if (obj.y)
+	    curtop += obj.y;
+
+
+	// Detect if content is being scroll offscreen.
+	if ( (document.documentElement.scrollTop || document.body.scrollTop) >= curtop) {
+		jQuery('body').addClass('fixraposition');
+	} else {
+		jQuery('body').removeClass('fixraposition');
+	}
+};
+
+jQuery(document).ready(function() { smartPosition(); })
+
 /*
 	Base, version 1.0.2
 	Copyright 2006, Dean Edwards

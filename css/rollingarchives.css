@@ -1,3 +1,5 @@
+/* @override http://localhost/wp-content/themes/kaytwo/css/rollingarchives.css */
+
 #pagetrack #dragHelper {
 	overflow: visible !important;
 }
@@ -235,4 +237,18 @@ div.trimmed .hentry.alt {
 #trimmerless {
 	left: 0;
 	background: url('../images/trim_less.png');
+	}
+
+body.fixraposition .nthpage #rollingarchives {
+	position: fixed;
+	top: 0px;
+	background: #fff;
+	border-bottom: 1px solid #eee;
+	height: 10px;
+	width: 500px;
+	z-index: 10;
+	}
+
+body.fixraposition .nthpage #dynamic-content {
+	padding-top: 33px;
 	}

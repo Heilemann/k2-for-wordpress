@@ -335,7 +335,8 @@ h3 {
 	top: -10000px;
 	background: #ddd;
 	padding: 10px;
-	-webkit-box-shadow: #111 0px 1px 40px;
+	font-size: .9em;
+	color: #aaa;
 	}
 
 .opttl, .optt, .opttr, .optl, .optr, .optbl, .optb, .optbr {
@@ -550,11 +551,6 @@ h3 {
 #displaytab {
 	left: 110px;
 	}
-
-#optionswindow {
-	font-size: .9em;
-	color: #aaa;
-}
 
 #options label {
 	color: #333;
