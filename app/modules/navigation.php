@@ -18,9 +18,8 @@ function nav_sidebar_module($args) {
 
 		$page_menu = wp_list_pages('echo=0&sort_column=menu_order&title_li=&child_of='. $parent_id);
 		if ($page_menu) {
-			echo($before_module);
+			echo($before_module . $before_title . $title . $after_title);
 			?>
-				<h2><?php printf(sbm_get_option('custom_title'), $parent_title); ?></h2>
 
 				<ul>
 					<?php echo $page_menu; ?>
