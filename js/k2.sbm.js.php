@@ -81,8 +81,6 @@ function sbm_load(id, url) {
 		// Config sortable lists
 		var sortableLists = '';
 		function initSortables() {
-			jQuery('.container').height(jQuery('#availablemodulescontainer').height())
-
 			sortableLists = jQuery('ul.sortable').Sortable({
 				accept: 		'module',
 				activeclass:	'hovering',
