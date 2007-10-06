@@ -93,6 +93,22 @@ function deleteCookie(name, path, domain) {
 };
 
 
+
+// Via http://humanized.com/js/TransparentMessage.js
+function getScrollHeight(){
+  /* Returns the y scroll height in all browsers. */
+  var y;
+  // all except Explorer
+  if (self.pageYOffset)
+    y = self.pageYOffset;
+  else if (document.documentElement && document.documentElement.scrollTop)   
+    y = document.documentElement.scrollTop;
+  else if (document.body) // all other Explorers
+    y = document.body.scrollTop;
+  return parseInt(y);
+}
+
+
 // Smart positioning of the Rolling Archives when scrolling
 function smartPosition() {
 	var obj = document.getElementById('dynamic-content');
@@ -109,14 +125,16 @@ function smartPosition() {
 
 
 	// Detect if content is being scroll offscreen.
-	if ( (document.documentElement.scrollTop || document.body.scrollTop) >= curtop) {
+	if (getScrollHeight >= curtop) {
 		jQuery('body').addClass('fixraposition');
 	} else {
 		jQuery('body').removeClass('fixraposition');
 	}
 };
 
-jQuery(document).ready(function() { smartPosition(); })
+jQuery(document).ready(function() {
+	smartPosition();
+	})
 
 /*
 	Base, version 1.0.2
