@@ -64,20 +64,20 @@ var k2Rolling = {
 	validatePage: function(newpage) {
 		if (k2Rolling.pageCount > 1) {
 			if (newpage >= k2Rolling.pageCount) {
-				jQuery('#rollingarchives').add('#page').removeClass().addClass('lastpage');
+				jQuery('#dynamic-content').removeClass().addClass('lastpage');
 				return k2Rolling.pageCount;
 
 			} else if (newpage <= 1) {
-				jQuery('#rollingarchives').add('#page').removeClass().addClass('firstpage');
+				jQuery('#dynamic-content').removeClass().addClass('firstpage');
 				return 1;
 
 			} else {
-				jQuery('#rollingarchives').add('#page').removeClass().addClass('nthpage');
+				jQuery('#dynamic-content').removeClass().addClass('nthpage');
 				return newpage;
 			}
 		}
 
-		jQuery('#rollingarchives').add('#page').removeClass().addClass('emptypage');
+		jQuery('#dynamic-content').removeClass().addClass('emptypage');
 
 		return 0;
 	},
