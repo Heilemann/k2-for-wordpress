@@ -471,4 +471,3 @@ function sbm_load(id, url) {
 			return false;
 		})
 	};
-	alert('test');
