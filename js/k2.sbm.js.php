@@ -89,7 +89,7 @@ function sbm_load(id, url) {
 				opacity:		0.3,
 				onStart: 		function() {
 					// Need to re-position #trash for the sortable to work properly
-					jQuery('#trashcontainer').hide().css({ zIndex: 1000 }).fadeIn(100);
+					jQuery('#trashcontainer').hide().css({ zIndex: 1000 }).fadeIn();
 				},
 				onStop: 		function() {
 					// And re-position again.
@@ -284,7 +284,7 @@ function sbm_load(id, url) {
 		function calculateSecretHeightFormula() {
 			// Get the current specified minimum height
 			var highest = parseInt(jQuery('.wrap').css('minHeight'));
-			var highestContainer = '';
+			var highestContainer = 430;
 
 			// Calculate best height for columns
 			jQuery('#availablemodulescontainer, #sidebar-1container, #sidebar-2container, #disabledcontainer')
@@ -294,7 +294,7 @@ function sbm_load(id, url) {
 					if (jQuery(this).attr('id') != 'availablemodulescontainer') {
 						moduleHeight = 37;
 					} else {
-						moduleHeight = 30;						
+						moduleHeight = 27;
 					}
 
 					var currentContainer = parseInt((jQuery(this).children('div').children('ul').children('li').length * moduleHeight + moduleHeight ));
@@ -307,7 +307,7 @@ function sbm_load(id, url) {
 					}
 				})
 
-			jQuery('.wrap').animate({ height: highest })
+			jQuery('.wrap').animate(highest)
 			jQuery('.container').height(highest)
 			jQuery('.container ul').height(highestContainer)
 			jQuery('#trashcontainer').height(highest+13)
@@ -365,7 +365,6 @@ function sbm_load(id, url) {
 		jQuery(window).resize(resizeLists);
 		
 		jQuery(document).ready(function() {
-			calculateSecretHeightFormula();
 			resizeLists();
 			tabSystem();
 			jQuery('.initloading').fadeOut().remove()
