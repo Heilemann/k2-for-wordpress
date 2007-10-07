@@ -90,6 +90,13 @@ class K2Options {
 					update_option('k2livecommenting', '0');
 				}
 
+				// Advanced Navigation
+				if(isset($_POST['k2']['sidebarmanager'])) {
+					update_option('sidebarmanager', '0');
+				} else {
+					update_option('k2sidebarmanager', '1');
+				}
+
 				// Set all the options
 				foreach($_POST['k2'] as $option => $value) {
 					update_option('k2' . $option, $value);

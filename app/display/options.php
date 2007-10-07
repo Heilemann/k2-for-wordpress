@@ -145,11 +145,27 @@
 		</style>
 
 		<div class="configstuff">
+			<h3><?php _e('Sidebar Management','k2_domain'); ?></h3>
+
+			<p class="checkboxelement"><input id="k2-sidebarmanager" name="k2[sidebarmanager]" type="checkbox" value="0" <?php checked('0', get_option('k2sidebarmanager')); ?> /> <label for="k2-sidebarmanager"><?php _e('Enable K2\'s Sidebar Manager','k2_domain'); ?></label></p>
+
+			<p><small><?php printf(__('K2 has its own sidebar management system. If you chose not to use it, K2 will use WordPress\'s widget system. Below you can set the number of columns K2 will display. <strong>%s</strong> will place both sidebars below the main column.', 'k2_domain'), $column_options[1]); ?></small></p>
+
+			<p>
+				<select id="k2-columns" name="k2[columns]">
+				<?php foreach ($column_options as $option => $label) { ?>
+					<option value="<?php echo $option; ?>" <?php selected($column_number, $option); ?>><?php echo $label; ?></option>
+				<?php } ?>
+				</select>
+			</p>
+
+
 			<h3><?php _e('Advanced Navigation','k2_domain'); ?></h3>
 
 			<p class="checkboxelement"><input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2livesearch')); ?> /> <label for="k2-advnav"><?php _e('Enable Advanced Navigation','k2_domain'); ?></label></p>
 
 			<p><small><?php _e('K2\'s Advanced Navigation is in reality a couple of features, which together work to make the task of searching through your blog faster and easier. This includes inline AJAX-powered livesearch as well as the ability to flip back and forth between archive pages, without reloading the current page.','k2_domain'); ?></small></p>
+
 
 			<h3><?php _e('Archives Page','k2_domain'); ?></h3>
 
@@ -163,36 +179,12 @@
 				</small></p><p class="configelap"><input id="configela" name="configela" type="submit" value="<?php echo attribute_escape(__('Configure Extended Live Archives for K2','k2_domain')); ?>" /></p>
 			<?php } ?>
 
+
 			<h3><?php _e('Live Commenting','k2_domain'); ?></h3>
 
 			<p class="checkboxelement"><input id="k2-livecommenting" name="k2[livecommenting]" type="checkbox" value="1" <?php checked('1', get_option('k2livecommenting')); ?> /> <label for="k2-livecommenting"><?php _e('Enable Live Commenting','k2_domain'); ?></label></p>
 				
 			<p><small><?php _e('Live comments use AJAX to submit comments to the server without reloading the page, making the experience more seamless for the user.','k2_domain'); ?></small></p>
-
-
-			<h3><?php _e('Sidebar Management','k2_domain'); ?></h3>
-
-
-			<p><small><?php _e('People have their own way of doing things, especially blog sidebars, and K2 is designed to accommodate your needs! Choose your preferred method of sidebar editing from the options below.','k2_domain'); ?></small></p>
-
-			<p class="sidebarradio">
-				<span class="sidebark2"><input id="k2-sidebarmanager-sbm" name="k2[sidebarmanager]" type="radio" value="<?php echo(K2_SIDEBAR_SBM); ?>" <?php checked(K2_SIDEBAR_SBM, get_option('k2sidebarmanager')); ?> /> <label for="k2-sidebarmanager-sbm"><?php _e('K2\'s Sidebar Manager','k2_domain'); ?></label></span>
-				<span class="sidebarwp"><input id="k2-sidebarmanager-widgets" name="k2[sidebarmanager]" type="radio" value="<?php echo(K2_SIDEBAR_WIDGETS); ?>" <?php checked(K2_SIDEBAR_WIDGETS, get_option('k2sidebarmanager')); ?> /> <label for="k2-sidebarmanager-widgets"><?php _e('Wordpress\' Widgets','k2_domain'); ?></label></span>
-				<span class="sidebarno"><input id="k2-sidebarmanager-hand" name="k2[sidebarmanager]" type="radio" value="<?php echo(K2_SIDEBAR_HAND); ?>" <?php checked(K2_SIDEBAR_HAND, get_option('k2sidebarmanager')); ?> /> <label for="k2-sidebarmanager-hand"><?php _e('Me + Text Editor','k2_domain'); ?></label></span>
-			</p>
-
-
-			<h3><?php _e('Columns','k2_domain'); ?></h3>
-
-			<p><small><?php printf(__('This sets the number of columns that K2 will display. <strong>%s</strong> will place both sidebars below the main column.', 'k2_domain'), $column_options[1]); ?></small></p>
-
-			<p>
-				<select id="k2-columns" name="k2[columns]">
-				<?php foreach ($column_options as $option => $label) { ?>
-					<option value="<?php echo $option; ?>" <?php selected($column_number, $option); ?>><?php echo $label; ?></option>
-				<?php } ?>
-				</select>
-			</p>
 
 
 			<h3><?php _e('Asides','k2_domain'); ?></h3>
