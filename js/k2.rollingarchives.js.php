@@ -50,8 +50,6 @@ var k2Rolling = {
 			k2Rolling.pageSlider.setValueBy(-1);
 			return false;
 		});
-
-		jQuery(window).scroll(function() { smartPosition() });
 	},
 
 	updatePageText: function(page) {
@@ -89,25 +87,23 @@ var k2Rolling = {
 			k2Rolling.pageNumber = page;
 
 			jQuery('#rollload').fadeIn('fast');
+			jQuery('html,body').animate({ scrollTop: jQuery('#dynamic-content').offset().top -1 }, 1000);
 			jQuery.extend(k2Rolling.query, { paged: k2Rolling.pageNumber, k2dynamic: 1 });
 
 			K2.ajaxGet(k2Rolling.url, k2Rolling.query,
 				function(data) {
-					jQuery('html,body').animate({scrollTop: jQuery('#dynamic-content').offset().top -1 }, 1000, 'easeOutSine');
 
 					jQuery('#rollhover').fadeOut('slow');
 					jQuery('#rollload').fadeOut('fast');
 					jQuery('#rollingcontent').html(data);
-					
 					
 					k2Trimmer.trimAgain();
 				}
 			);
 		}
 
-		if (page == 1) {
+		if (page == 1)
 			k2Trimmer.slider.setValue(100);
-		}
 	},
 
 	saveState: function() {
@@ -128,23 +124,9 @@ var k2Rolling = {
 	}
 };
 
-
 function smartPosition() {
-	var obj = document.getElementById('dynamic-content');
-	var curtop = 0;
-	if (obj.offsetParent)
-		while(1) {
-			curtop += obj.offsetTop;
-			if (!obj.offsetParent)
-				break;
-			obj = obj.offsetParent;
-		}
-	else if (obj.y)
-	    curtop += obj.y;
-
-
 	// Detect if content is being scroll offscreen.
-	if ( (document.documentElement.scrollTop || document.body.scrollTop) >= curtop) {
+	if ( (document.documentElement.scrollTop || document.body.scrollTop) >= jQuery('#dynamic-content').offset().top) {
 		jQuery('body').addClass('fixraposition');
 	} else {
 		jQuery('body').removeClass('fixraposition');

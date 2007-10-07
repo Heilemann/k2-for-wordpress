@@ -39,6 +39,7 @@ K2.ajaxGet = function(url, data, complete_fn) {
 }
 
 
+
 function OnLoadUtils() {
 	jQuery('#comment-personaldetails').hide();
 	jQuery('#showinfo').show();
@@ -91,21 +92,6 @@ function deleteCookie(name, path, domain) {
     "; expires=Thu, 01-Jan-70 00:00:01 GMT";
   }
 };
-
-// Smart positioning of the Rolling Archives when scrolling
-function smartPosition() {
-	// Detect if content is being scroll offscreen.
-	if (jQuery(document).offset().top >= jQuery('#dynamic-content').offset().top) {
-		jQuery('body').addClass('fixraposition');
-	} else {
-		jQuery('body').removeClass('fixraposition');
-	}
-};
-
-jQuery(document).ready(function() {
-	smartPosition();
-	})
-
 
 
 /*
@@ -214,31 +200,3 @@ Base.implement = function(_interface) {
 	if (_interface instanceof Function) _interface = _interface.prototype;
 	this.prototype.extend(_interface);
 };
-
-/*
- * jQuery EasIng v1.1.2 - http://gsgd.co.uk/sandbox/jquery.easIng.php
- *
- * Uses the built In easIng capabilities added In jQuery 1.1
- * to offer multiple easIng options
- *
- * Copyright (c) 2007 George Smith
- * Licensed under the MIT License:
- *   http://www.opensource.org/licenses/mit-license.php
- */
-
-// t: current time, b: begInnIng value, c: change In value, d: duration
-
-// Ripped out the Sine parts only.
-jQuery.extend( jQuery.easing,
-{
-	easeInSine: function (x, t, b, c, d) {
-		return -c * Math.cos(t/d * (Math.PI/2)) + c + b;
-	},
-	easeOutSine: function (x, t, b, c, d) {
-		return c * Math.sin(t/d * (Math.PI/2)) + b;
-	},
-	easeInOutSine: function (x, t, b, c, d) {
-		return -c/2 * (Math.cos(Math.PI*t/d) - 1) + b;
-	},
-});
-
