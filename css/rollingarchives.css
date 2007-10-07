@@ -48,12 +48,12 @@
 	}
 
 #rollload {
-	top: 1px;
-	right: 50%;
 	background: url('../images/spinner.gif') no-repeat center center;
+	top: 1px;
+	left: 50%;
+	margin-left: -8px;
 	width: 16px;
 	height: 16px;
-	margin-left: -8px;
 	}
 
 #rollload span,
@@ -85,17 +85,20 @@
 #rollhover,
 #rolldates {
 	width: 100px;
+	margin-left: 5px;
 }
 
+#rollhover {
+	top: 11px;
+	}
+	
 #rolldates {
 	position: absolute;
 	color: #999;
 	text-align: center;
 	font-size: .9em;
-	}
-
-#rolldates {
 	top: 22px;
+	margin: 0;
 	}
 
 #rollprevious {
@@ -140,20 +143,21 @@
 #pagetrackwrap {
 	position: absolute;
 	top: 6px;
-	left: 135px;
-	width: 230px;
-	padding-right: 4px;
+	left: 130px;
+	width: 240px;
+	padding-right: 9px;
 	background: url('../images/sliderbgright.png') no-repeat right center;
 	}
 
 #pagetrack {
 	height: 7px;
-	background: url('../images/sliderbgleft.png') no-repeat left center;
+	background: url('../images/sliderbgleft.png') no-repeat 5px center;
 	}
 
 #pagehandle {
-	width: 7px;
-	height: 7px;
+	top: -5px;
+	width: 17px;
+	height: 17px;
 	background: url('../images/sliderhandle.png') no-repeat center center;
 	cursor: col-resize;
 	}
