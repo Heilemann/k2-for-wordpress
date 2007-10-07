@@ -38,8 +38,21 @@ var k2Trimmer = {
 			return false;
 		});
 
+
 		jQuery('#trimmerless').click(function() {
 			k2Trimmer.slider.setValueBy(-1);
+
+			return false;
+		});
+
+		jQuery('#trimmertrim').click(function() {
+			k2Trimmer.slider.setValue(0);
+
+			return false;
+		});
+
+		jQuery('#trimmeruntrim').click(function() {
+			k2Trimmer.slider.setValue(100);
 
 			return false;
 		});

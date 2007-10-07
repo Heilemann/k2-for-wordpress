@@ -197,6 +197,7 @@ div.trimmed .hentry.alt {
 	top: 6px;
 	padding-right: 4px;
 	position: absolute;
+	display: none;
 	}
 
 #trimmertrack {
@@ -238,6 +239,31 @@ div.trimmed .hentry.alt {
 #trimmerless {
 	left: 0;
 	background: url('../images/trim_less.png');
+	}
+
+#trimmertrim:hover, #trimmeruntrim:hover {
+	text-decoration: underline;
+	}
+
+#trimmertrim, #trimmeruntrim {
+	cursor: pointer;
+	position: absolute;
+	top: 3px;
+	width: 50px;
+	text-align: center;
+	color: #999;
+	}
+
+.trimmed #trimmertrim {
+	display: none;
+	}
+
+#trimmeruntrim {
+	display: none;
+	}
+
+.trimmed #trimmeruntrim {
+	display: block;
 	}
 
 body.fixraposition .nthpage #rollingarchives {

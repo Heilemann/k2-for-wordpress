@@ -93,13 +93,20 @@ var k2Rolling = {
 
 			K2.ajaxGet(k2Rolling.url, k2Rolling.query,
 				function(data) {
+					jQuery('html,body').animate({scrollTop: jQuery('#dynamic-content').offset().top -1 }, 1000, 'easeOutSine');
+
 					jQuery('#rollhover').fadeOut('slow');
 					jQuery('#rollload').fadeOut('fast');
 					jQuery('#rollingcontent').html(data);
-
+					
+					
 					k2Trimmer.trimAgain();
 				}
 			);
+		}
+
+		if (page == 1) {
+			k2Trimmer.slider.setValue(100);
 		}
 	},
 
