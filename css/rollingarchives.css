@@ -1,13 +1,13 @@
-/* @override http://localhost/wp-content/themes/kaytwo/css/rollingarchives.css */
-
 #pagetrack #dragHelper {
 	overflow: visible !important;
 }
 
 #rollingarchives {
-	position: relative;
-	padding: 10px 0 20px;
+	position: absolute;
+	padding: 20px 0;
 	display: block;
+	width: 500px;
+	top: 0;
 	}
 
 #rollingarchives a:hover {
@@ -151,7 +151,7 @@
 
 #pagetrack {
 	height: 7px;
-	background: url('../images/sliderbgleft.png') no-repeat 5px center;
+	background: url('../images/sliderbgleft.png') no-repeat left center;
 	}
 
 #pagehandle {
@@ -252,7 +252,7 @@ div.trimmed .hentry.alt {
 #trimmertrim, #trimmeruntrim {
 	cursor: pointer;
 	position: absolute;
-	top: 3px;
+	top: 13px;
 	width: 50px;
 	text-align: center;
 	color: #999;
@@ -275,11 +275,20 @@ body.fixraposition #rollingarchives {
 	top: 0px;
 	background: #fff;
 	border-bottom: 1px solid #eee;
-	height: 10px;
 	width: 500px;
 	z-index: 10;
+	padding-top: 10px;
+	padding-bottom: 30px;
+	}
+
+body.fixraposition #trimmertrim, body.fixraposition #trimmeruntrim {
+	top: 3px;
+	}
+
+#dynamic-content {
+	padding-top: 40px;
 	}
 
 body.fixraposition #dynamic-content {
-	padding-top: 33px;
+	padding-top: 40px;
 	}
