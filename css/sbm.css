@@ -1,6 +1,5 @@
 /* @override 
 	http://localhost/wp-content/themes/kaytwo/css/sbm.css
-	http://getk2.com/wp-content/themes/k2/css/sbm.css
 */
 
 .clear {
@@ -202,7 +201,7 @@ h3 {
 }
 
 #trashcontainer .sortable {
-	margin-left: 10px;
+	margin-left: 20px;
 	}
 
 .spinner, spinner:hover {
@@ -221,15 +220,20 @@ h3 {
 	position: static;
 	background: url('../images/sbmmanager/modulebg.png') right center no-repeat;
 	margin: 3px 0 3px 5px;
-	}
-
-.module:before {
-	content: url('../images/sbmmanager/modulebg-left.png');
-	margin-left: -5px;
+	opacity: .95;
 	}
 
 #disabled .module {
-	opacity: .55;
+	opacity: .75;
+	}
+
+.module:hover, #disabled .module:hover {
+	opacity: 1;
+	}
+	
+.module:before {
+	content: url('../images/sbmmanager/modulebg-left.png');
+	margin-left: -5px;
 	}
 
 .module span {
@@ -241,6 +245,10 @@ h3 {
 .modulewrapper {
 	height: inherit;
 	left: 15px;
+	}
+
+#trash #sortHelper .modulewrapper {
+	left: 25px;
 	}
 
 .name, .croppedname {
@@ -277,7 +285,7 @@ h3 {
 	height: 25px;
 	background: url('../images/sbmmanager/amodulebg.png') right center no-repeat;
 	position: relative;
-	opacity: .55;
+	opacity: .6;
 	}
 
 .availablemodule:before {
@@ -293,7 +301,7 @@ h3 {
 
 .marker {
 	height: 35px;
-	opacity: .55;
+	opacity: .6 !important;
 	}
 
 .marker .handle, .marker .optionslink {

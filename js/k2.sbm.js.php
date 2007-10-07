@@ -19,13 +19,13 @@ function sbm_load(id, url) {
 			tolerance:		'pointer',
 			onHover:		function (drag) {
 				// Show the temp 'result' marker
-				var module = jQuery(drag).children().children().children('span.name').text();
+				var module = jQuery(drag).children().children('span.name').text();
 
 				jQuery(drag)
 					.clone()
-					.html('<span class="modulewrapper"><span class="name">'+module+'</span><span class="handle"></span><span class="type">'+module+'</span><a href="#" class="optionslink"> </a></span>')
 					.attr('class', 'module marker')
 					.css({ position: "static" })
+					.html('<span class="modulewrapper"><span class="name">'+module+'</span><span class="handle"></span><span class="type">'+module+'</span><a href="#" class="optionslink"> </a></span>')
 					.appendTo(jQuery(this).children())
 			},
 			onOut: 			function (drag) {
@@ -89,7 +89,7 @@ function sbm_load(id, url) {
 				opacity:		0.3,
 				onStart: 		function() {
 					// Need to re-position #trash for the sortable to work properly
-					jQuery('#trashcontainer').hide().css({ zIndex: 1000 }).fadeIn(200);
+					jQuery('#trashcontainer').hide().css({ zIndex: 1000 }).fadeIn(100);
 				},
 				onStop: 		function() {
 					// And re-position again.
@@ -102,7 +102,9 @@ function sbm_load(id, url) {
 				},
 				onChange: 		function(serial) {
 					if (jQuery('#trashcontainer').css('zIndex') == 1000)
-						jQuery('#trashcontainer').animate({ left: -250 }, 300, function() { jQuery(this).css({ zIndex: -1, left: 0 }) })
+						jQuery('#trashcontainer').animate({ left: -250 }, 300, function() {
+							jQuery(this).css({ zIndex: -1, left: 0 })
+						})
 
 					resizeLists();
 
@@ -269,7 +271,7 @@ function sbm_load(id, url) {
 			else if (secretWidthFormula > 270 ) { secretWidthFormula = 270 }
 
 			jQuery('.container').width(secretWidthFormula)
-			jQuery('#trashcontainer').width(secretWidthFormula+15)
+			jQuery('#trashcontainer').width(secretWidthFormula+20)
 			jQuery('#sidebar-1container').css({ left: secretWidthFormula 		+ 35 })
 			jQuery('#sidebar-2container').css({ left: secretWidthFormula * 2 	+ 55 })
 			jQuery('#disabledcontainer').css({ left: secretWidthFormula * 3 	+ 80 })
@@ -285,7 +287,7 @@ function sbm_load(id, url) {
 			var highestContainer = '';
 
 			// Calculate best height for columns
-			jQuery('#availablemodulescontainer, #sidebar-1container, #sidebar-2container, #disabledcontainer, #trashcontainer')
+			jQuery('#availablemodulescontainer, #sidebar-1container, #sidebar-2container, #disabledcontainer')
 				.each(function() {
 					var moduleHeight = '';
 
@@ -305,10 +307,10 @@ function sbm_load(id, url) {
 					}
 				})
 
-			jQuery('.wrap').height(highest)
+			jQuery('.wrap').animate({ height: highest })
 			jQuery('.container').height(highest)
 			jQuery('.container ul').height(highestContainer)
-			jQuery('#trashcontainer').height(highest+10)
+			jQuery('#trashcontainer').height(highest+13)
 
 			// Hack: Clean up the mess, until we fix it :)
 			jQuery('.wrap li').each(function() {

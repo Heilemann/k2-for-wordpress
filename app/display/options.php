@@ -157,11 +157,11 @@
 
 			<p><small><?php _e('To further enhance your precious backlog of writings, you can enable an archives page, which can assist both your readers as well as yourself in digging up the past.','k2_domain'); ?></small></p>
 
-			<?php /* if (!function_exists('af_ela_set_config')) { ?>
-				<?php printf(__('We highly recommend that you install %s for maximum archival pleasure.','k2_domain'), '<a href="http://www.sonsofskadi.net/index.php/extended-live-archive/">' . __('Arnaud Froment\'s Extended Live Archives','k2_domain') . '</a>'); ?></small></p>
+			<?php if (!function_exists('af_ela_set_config') && ($wp_version > 2.2)) { ?>
+				<?php printf(__('We recommend you install %s for maximum archival pleasure.','k2_domain'), '<a href="http://www.sonsofskadi.net/index.php/extended-live-archive/">' . __('Arnaud Froment\'s Extended Live Archives','k2_domain') . '</a>'); ?></small></p>
 			<?php } else { ?>
-				</small></p><p class="configelap"><input id="configela" name="configela" type="submit" value="<?php echo attribute_escape(__('Setup Extended Live Archives for K2','k2_domain')); ?>" /></p>
-			<?php } */ ?>
+				</small></p><p class="configelap"><input id="configela" name="configela" type="submit" value="<?php echo attribute_escape(__('Configure Extended Live Archives for K2','k2_domain')); ?>" /></p>
+			<?php } ?>
 
 			<h3><?php _e('Live Commenting','k2_domain'); ?></h3>
 
