@@ -163,7 +163,7 @@
 	}
 
 div.trimmed .hentry {
-	background: #eee;
+	background: #f5f5f5;
 	}
 
 div.trimmed .hentry.alt {
@@ -266,7 +266,7 @@ div.trimmed .hentry.alt {
 	display: block;
 	}
 
-body.fixraposition .nthpage #rollingarchives {
+body.fixraposition #rollingarchives {
 	position: fixed;
 	top: 0px;
 	background: #fff;
@@ -276,6 +276,6 @@ body.fixraposition .nthpage #rollingarchives {
 	z-index: 10;
 	}
 
-body.fixraposition .nthpage #dynamic-content {
+body.fixraposition #dynamic-content {
 	padding-top: 33px;
 	}
