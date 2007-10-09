@@ -67,9 +67,30 @@ class K2SBM {
 	}
 
 	function init() {
-		global $k2sbm_active_modules;
+		global $k2sbm_active_modules, $k2sbm_disabled_modules, $k2sbm_restore, $k2sbm_restore_error;
 
-		add_action('admin_menu', array('K2SBM', 'add_menus'));
+		if(is_admin()) {
+			add_action('admin_menu', array('K2SBM', 'add_menus'));
+
+			$k2sbm_restore = false;
+			$k2sbm_restore_error = false;
+
+			if($_POST['action'] == 'restore' && $_FILES['backup']['error'] == 0) {
+				$data = (array)unserialize(file_get_contents($_FILES['backup']['tmp_name']));
+
+				if(isset($data['sbm_version']) && version_compare($data['sbm_version'], SBM_VERSION) <= 0) {
+					$k2sbm_active_modules = $data['active_modules'];
+					$k2sbm_disabled_modules = $data['disabled_modules'];
+					update_option('k2sbm_modules_next_id', $data['id']);
+
+					K2SBM::save_modules();
+
+					$k2sbm_restore = true;
+				} else {
+					$k2sbm_restore_error = true;
+				}
+			}
+		}
 
 		K2SBM::pre_bootstrap();
 
@@ -193,7 +214,6 @@ class K2SBM {
 
 		// Scan for in-built modules
 		K2SBM::module_scan();
-
 	}
 
 	function post_bootstrap() {
@@ -211,39 +231,21 @@ class K2SBM {
 	}
 
 	function module_admin() {
-		global $k2sbm_registered_sidebars, $k2sbm_registered_modules, $k2sbm_active_modules, $k2sbm_disabled_modules;
+		global $k2sbm_registered_sidebars, $k2sbm_registered_modules, $k2sbm_active_modules, $k2sbm_disabled_modules, $k2sbm_restore, $k2sbm_restore_error;
 
-			$restored = false;
-			$error = false;
+		extract(array('restored' => $k2sbm_restore, 'error' => $k2sbm_restore_error));
 
-			if($_POST['action'] == 'restore' && $_FILES['backup']['error'] == 0) {
-				$data = (array)unserialize(file_get_contents($_FILES['backup']['tmp_name']));
-
-				if(isset($data['sbm_version']) && version_compare($data['sbm_version'], SBM_VERSION) <= 0) {
-					$k2sbm_active_modules = $data['active_modules'];
-					$k2sbm_disabled_modules = $data['disabled_modules'];
-					update_option('k2sbm_modules_next_id', $data['id']);
-
-					K2SBM::save_modules();
-					$restored = true;
-				} else {
-					$error = true;
-				}
-			}
-
-			extract(array('restored' => $restored, 'error' => $error));
-
-			if(count($k2sbm_registered_sidebars) == 0) {
-			?>
-				<div class="wrap">You have no registered sidebars.</div>
-			<?php
-			} elseif(count($k2sbm_registered_modules) == 0) {
-			?>
-				<div class="wrap">You have no modules or Widgets installed &amp; activated.</div>
-			<?php
-			} else {
-				include(TEMPLATEPATH . '/app/display/sbm/modules.php');
-			}
+		if(count($k2sbm_registered_sidebars) == 0) {
+		?>
+			<div class="wrap">You have no registered sidebars.</div>
+		<?php
+		} elseif(count($k2sbm_registered_modules) == 0) {
+		?>
+			<div class="wrap">You have no modules or Widgets installed &amp; activated.</div>
+		<?php
+		} else {
+			include(TEMPLATEPATH . '/app/display/sbm/modules.php');
+		}
 
 	}
 
