@@ -306,7 +306,7 @@ function sbm_load(id, url) {
 						highestContainer = currentContainer;
 					}
 				})
-			console.log(highest);
+
 			jQuery('.wrap').animate({ height: highest })
 			jQuery('.container').height(highest)
 			jQuery('.container ul').height(highestContainer)
