@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2006-04-13 21:06+0800\n"
-"PO-Revision-Date: 2007-10-02 11:36+0800\n"
+"PO-Revision-Date: 2007-10-09 15:03+0800\n"
 "Last-Translator: Safirul Alredha <zeo@unic.net.my>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -337,16 +337,25 @@ msgstr ""
 msgid "This is the frontpage of the %1$s archives. Currently the archives are spanning %2$s posts and %3$s comments, contained within the meager confines of %4$s categories. Through here, you will be able to move down into the archives by way of time or category. If you are looking for something specific, perhaps you should try the search on the sidebar."
 msgstr ""
 
-#: page-archives.php:37
+#: page-archives.php:38
+msgid "Live Archives"
+msgstr ""
+
+#: page-archives.php:39
+#, php-format
+msgid "This is a 'live archive', which allows you to 'dig' into the %s repository in a fast and efficient way without having to reload this page as you explore."
+msgstr ""
+
+#: page-archives.php:49
 #: app/modules/wptagcloud.php:26
 msgid "Tag Cloud"
 msgstr ""
 
-#: page-archives.php:43
+#: page-archives.php:55
 msgid "Browse by Month"
 msgstr ""
 
-#: page-archives.php:50
+#: page-archives.php:62
 msgid "Browse by Category"
 msgstr ""
 
@@ -364,28 +373,36 @@ msgstr ""
 msgid "More"
 msgstr ""
 
-#: rollingarchive.php:47
-#: rollingarchive.php:48
+#: rollingarchive.php:40
+msgid "Trim"
+msgstr ""
+
+#: rollingarchive.php:41
+msgid "Untrim"
+msgstr ""
+
+#: rollingarchive.php:49
+#: rollingarchive.php:50
 msgid "Older"
 msgstr ""
 
-#: rollingarchive.php:50
-#: rollingarchive.php:51
+#: rollingarchive.php:52
+#: rollingarchive.php:53
 msgid "Home"
 msgstr ""
 
-#: rollingarchive.php:53
-#: rollingarchive.php:54
-#: app/display/sbm/modules.php:113
+#: rollingarchive.php:55
+#: rollingarchive.php:56
+#: app/display/sbm/modules.php:110
 msgid "Loading"
 msgstr ""
 
-#: rollingarchive.php:56
-#: rollingarchive.php:57
+#: rollingarchive.php:58
+#: rollingarchive.php:59
 msgid "Newer"
 msgstr ""
 
-#: rollingarchive.php:75
+#: rollingarchive.php:77
 #, php-format
 msgid "Page %1$d of %2$d"
 msgstr ""
@@ -404,13 +421,13 @@ msgid "Subpages"
 msgstr ""
 
 #: sidebar.php:33
-#: app/modules/navigation.php:30
+#: app/modules/navigation.php:29
 #, php-format
 msgid "Back to %s"
 msgstr ""
 
 #: sidebar.php:41
-#: app/modules/navigation.php:40
+#: app/modules/navigation.php:39
 #, php-format
 msgid "Back to '%s'"
 msgstr ""
@@ -665,7 +682,7 @@ msgid " %d"
 msgstr ""
 
 #: app/display/options.php:6
-#: app/display/options.php:218
+#: app/display/options.php:210
 msgid "No Style"
 msgstr ""
 
@@ -709,157 +726,154 @@ msgid "<p>The directory: <code>%s</code>, needed to store custom styles is missi
 msgstr ""
 
 #: app/display/options.php:72
-#: app/display/options.php:282
+#: app/display/options.php:274
 msgid "Update Options &raquo;"
 msgstr ""
 
 #: app/display/options.php:148
-msgid "Advanced Navigation"
-msgstr ""
-
-#: app/display/options.php:150
-msgid "Enable Advanced Navigation"
-msgstr ""
-
-#: app/display/options.php:152
-msgid "K2's Advanced Navigation is in reality a couple of features, which together work to make the task of searching through your blog faster and easier. This includes inline AJAX-powered livesearch as well as the ability to flip back and forth between archive pages, without reloading the current page."
-msgstr ""
-
-#: app/display/options.php:154
-msgid "Archives Page"
-msgstr ""
-
-#: app/display/options.php:156
-msgid "Enable Archives Page"
-msgstr ""
-
-#: app/display/options.php:158
-msgid "To further enhance your precious backlog of writings, you can enable an archives page, which can assist both your readers as well as yourself in digging up the past."
-msgstr ""
-
-#: app/display/options.php:166
-msgid "Live Commenting"
-msgstr ""
-
-#: app/display/options.php:168
-msgid "Enable Live Commenting"
-msgstr ""
-
-#: app/display/options.php:170
-msgid "Live comments use AJAX to submit comments to the server without reloading the page, making the experience more seamless for the user."
-msgstr ""
-
-#: app/display/options.php:173
 msgid "Sidebar Management"
 msgstr ""
 
-#: app/display/options.php:176
-msgid "People have their own way of doing things, especially blog sidebars, and K2 is designed to accommodate your needs! Choose your preferred method of sidebar editing from the options below."
+#: app/display/options.php:150
+msgid "Enable K2's Sidebar Manager"
+msgstr ""
+
+#: app/display/options.php:152
+#, php-format
+msgid "K2 has its own sidebar management system. If you chose not to use it, K2 will use WordPress's widget system. Below you can set the number of columns K2 will display. <strong>%s</strong> will place both sidebars below the main column."
+msgstr ""
+
+#: app/display/options.php:163
+msgid "Advanced Navigation"
+msgstr ""
+
+#: app/display/options.php:165
+msgid "Enable Advanced Navigation"
+msgstr ""
+
+#: app/display/options.php:167
+msgid "K2's Advanced Navigation is in reality a couple of features, which together work to make the task of searching through your blog faster and easier. This includes inline AJAX-powered livesearch as well as the ability to flip back and forth between archive pages, without reloading the current page."
+msgstr ""
+
+#: app/display/options.php:170
+msgid "Archives Page"
+msgstr ""
+
+#: app/display/options.php:172
+msgid "Enable Archives Page"
+msgstr ""
+
+#: app/display/options.php:174
+msgid "To further enhance your precious backlog of writings, you can enable an archives page, which can assist both your readers as well as yourself in digging up the past."
+msgstr ""
+
+#: app/display/options.php:177
+#, php-format
+msgid "We recommend you install %s for maximum archival pleasure."
+msgstr ""
+
+#: app/display/options.php:177
+msgid "Arnaud Froment's Extended Live Archives"
 msgstr ""
 
 #: app/display/options.php:179
-msgid "K2's Sidebar Manager"
+msgid "Configure Extended Live Archives for K2"
 msgstr ""
 
-#: app/display/options.php:180
-msgid "Wordpress' Widgets"
-msgstr ""
-
-#: app/display/options.php:181
-msgid "Me + Text Editor"
+#: app/display/options.php:183
+msgid "Live Commenting"
 msgstr ""
 
 #: app/display/options.php:185
-msgid "Columns"
+msgid "Enable Live Commenting"
 msgstr ""
 
 #: app/display/options.php:187
-#, php-format
-msgid "This sets the number of columns that K2 will display. <strong>%s</strong> will place both sidebars below the main column."
+msgid "Live comments use AJAX to submit comments to the server without reloading the page, making the experience more seamless for the user."
 msgstr ""
 
-#: app/display/options.php:198
+#: app/display/options.php:190
 #: app/modules/asides.php:41
 msgid "Asides"
 msgstr ""
 
-#: app/display/options.php:200
+#: app/display/options.php:192
 msgid "'Asides' is a category of entries, meant to be 'smaller' and perhaps of 'less importance', like for instance links with minor commentary. They are styled differently than other entries to separate them content-wise. Below you can select a category to be shown as Asides."
 msgstr ""
 
-#: app/display/options.php:204
+#: app/display/options.php:196
 msgid "No Asides"
 msgstr ""
 
-#: app/display/options.php:213
+#: app/display/options.php:205
 msgid "Style"
 msgstr ""
 
-#: app/display/options.php:215
+#: app/display/options.php:207
 #, php-format
 msgid "K2 Styles are CSS files that allow you to visually customize your blog, without ever touching K2's core files. The structure of K2 has been designed specifically for this purpose, and offers some truly great styling opportunities. %s"
 msgstr ""
 
-#: app/display/options.php:215
+#: app/display/options.php:207
 msgid "Read more"
 msgstr ""
 
-#: app/display/options.php:229
+#: app/display/options.php:221
 msgid "Header"
 msgstr ""
 
-#: app/display/options.php:232
+#: app/display/options.php:224
 #, php-format
 msgid "Your header is the crown of your blog, with plenty of room to express yourself. Here you can decide on the ultimate question: Is it a a blog or a journal? But more importantly, you can upload images for use as header backgrounds. The default K2 header size for your current setup is: <strong>%s</strong>."
 msgstr ""
 
-#: app/display/options.php:237
+#: app/display/options.php:229
 #, php-format
 msgid "<p>The directory: <code>%s</code>, needed to store custom headers is missing.</p>"
 msgstr ""
 
-#: app/display/options.php:241
+#: app/display/options.php:233
 #, php-format
 msgid "<p>The directory <code>%s</code> should be writable (CHMOD 777) to upload custom headers through this interface. You can still manually upload images to the directory however.</p>"
 msgstr ""
 
-#: app/display/options.php:249
+#: app/display/options.php:241
 msgid "Upload an Image"
 msgstr ""
 
-#: app/display/options.php:253
+#: app/display/options.php:245
 msgid "Activate immediately"
 msgstr ""
 
-#: app/display/options.php:258
+#: app/display/options.php:250
 msgid "Select an Image"
 msgstr ""
 
-#: app/display/options.php:261
+#: app/display/options.php:253
 msgid "No Picture"
 msgstr ""
 
-#: app/display/options.php:267
+#: app/display/options.php:259
 msgid "Randomize Header Image"
 msgstr ""
 
-#: app/display/options.php:272
+#: app/display/options.php:264
 msgid "Rename the 'Blog' tab"
 msgstr ""
 
-#: app/display/options.php:291
+#: app/display/options.php:283
 msgid "Uninstall K2"
 msgstr ""
 
-#: app/display/options.php:295
+#: app/display/options.php:287
 msgid "This will delete all your K2 settings."
 msgstr ""
 
-#: app/display/options.php:304
+#: app/display/options.php:296
 msgid "Uninstalling reverts WordPress to the default theme and removes all K2 settings from the database. No files are deleted. Perfect for if you want to start afresh."
 msgstr ""
 
-#: app/display/options.php:306
+#: app/display/options.php:298
 msgid "Reset and Uninstall K2"
 msgstr ""
 
@@ -879,32 +893,27 @@ msgid "Backup current sidebar:"
 msgstr ""
 
 #: app/display/sbm/backup.php:37
-#: app/display/sbm/modules.php:93
 msgid "This will create a backup of your current sidebar configuration."
 msgstr ""
 
 #: app/display/sbm/backup.php:37
-#: app/display/sbm/modules.php:93
 msgid "Keep in a safe place in case of disaster."
 msgstr ""
 
 #: app/display/sbm/backup.php:38
-#: app/display/sbm/modules.php:94
+#: app/display/sbm/modules.php:93
 msgid "Create sidebar backup &raquo;"
 msgstr ""
 
 #: app/display/sbm/backup.php:44
-#: app/display/sbm/modules.php:100
 msgid "Restore sidebar:"
 msgstr ""
 
 #: app/display/sbm/backup.php:45
-#: app/display/sbm/modules.php:101
 msgid "Did it fail? Never fear, restore is here!"
 msgstr ""
 
 #: app/display/sbm/backup.php:45
-#: app/display/sbm/modules.php:101
 msgid "I hope you kept that file safe..."
 msgstr ""
 
@@ -1020,32 +1029,32 @@ msgstr ""
 msgid "Save &amp; Close"
 msgstr ""
 
-#: app/display/sbm/modules.php:103
+#: app/display/sbm/modules.php:100
 msgid "Restore"
 msgstr ""
 
-#: app/display/sbm/modules.php:116
+#: app/display/sbm/modules.php:113
 msgid "Available Modules"
 msgstr ""
 
-#: app/display/sbm/modules.php:158
+#: app/display/sbm/modules.php:155
 msgid "Disabled"
 msgstr ""
 
-#: app/display/sbm/modules.php:180
+#: app/display/sbm/modules.php:177
 msgid "Trash"
 msgstr ""
 
-#: app/display/sbm/modules.php:190
+#: app/display/sbm/modules.php:187
 #, php-format
 msgid "Help to be had at the %1$s or in the %2$s."
 msgstr ""
 
-#: app/display/sbm/modules.php:190
+#: app/display/sbm/modules.php:187
 msgid "K2 Support Forums"
 msgstr ""
 
-#: app/display/sbm/modules.php:190
+#: app/display/sbm/modules.php:187
 msgid "K2 Documentation"
 msgstr ""
 
@@ -1192,15 +1201,15 @@ msgstr ""
 msgid "Monthly Archive"
 msgstr ""
 
-#: app/modules/navigation.php:52
+#: app/modules/navigation.php:51
 msgid "Navigation heading:"
 msgstr ""
 
-#: app/modules/navigation.php:56
+#: app/modules/navigation.php:55
 msgid "Page Menu"
 msgstr ""
 
-#: app/modules/navigation.php:56
+#: app/modules/navigation.php:55
 #, php-format
 msgid "%s Subpages"
 msgstr ""
