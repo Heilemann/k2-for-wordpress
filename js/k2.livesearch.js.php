@@ -13,8 +13,8 @@ var k2Search = {
 		k2Search.reset = jQuery('#searchreset');
 		k2Search.loading = jQuery('#searchload');
 
-		k2Search.input.addClass('livesearch').val(k2Search.searchPrompt);
-
+		k2Search.input.addClass('livesearch').val(k2Search.searchPrompt)
+		
 		submitButton.hide();
 		k2Search.loading.hide();
 		k2Search.reset.show().fadeTo('fast', 0.3);

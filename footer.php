@@ -9,11 +9,11 @@
 	<?php $styleinfo = get_k2info('style_info'); if ($styleinfo != '') { ?><p class="footerstyledwith"><?php printf(__('Styled with %s','k2_domain'), $styleinfo); ?></p><?php } ?>
 
 	<p class="footerpoweredby"><?php printf( __('Powered by %1$s and %2$s','k2_domain'),
-		sprintf('<a href="http://wordpress.org/">%1$s <!--%2$s--></a>',
+		sprintf('<a href="http://wordpress.org/">%1$s<!-- %2$s--></a>',
 			__('WordPress','k2_domain'),
 			get_bloginfo('version')
 		),
-		sprintf('<a href="http://getk2.com/" title="%1$s">K2<!--%2$s--></a>',
+		sprintf('<a href="http://getk2.com/" title="%1$s">K2<!-- %2$s--></a>',
 			__('Loves you like a kitten.','k2_domain'),
 			get_k2info('version')
 		)

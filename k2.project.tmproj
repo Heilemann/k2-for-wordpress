@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>style.css</string>
+	<string>js/k2.livesearch.js.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -15,8 +15,6 @@
 			<string>!(/\.(?!htaccess)[^/]*|\.(tmproj|o|pyc)|/Icon\r)$</string>
 			<key>regexFolderFilter</key>
 			<string>!.*/(\.[^/]*|CVS|\{arch\}|blib|.*~\.nib|.*\.(framework|app|pbproj|pbxproj|xcode(proj)?|bundle))$</string>
-			<key>selected</key>
-			<true/>
 			<key>sourceDirectory</key>
 			<string></string>
 		</dict>
@@ -83,6 +81,20 @@
 			<key>firstVisibleLine</key>
 			<integer>287</integer>
 		</dict>
+		<key>js/k2.livesearch.js.php</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>21</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
 		<key>js/k2.rollingarchives.js.php</key>
 		<dict>
 			<key>caret</key>
@@ -102,14 +114,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>5</integer>
+				<integer>46</integer>
 				<key>line</key>
-				<integer>439</integer>
+				<integer>309</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>418</integer>
+			<integer>278</integer>
 		</dict>
 		<key>page-comments.php</key>
 		<dict>
@@ -161,6 +173,7 @@
 		<string>style.css</string>
 		<string>styles/adjustments/adjustments.css</string>
 		<string>js/k2.rollingarchives.js.php</string>
+		<string>js/k2.livesearch.js.php</string>
 		<string>js/k2.comments.js.php</string>
 		<string>js/k2.functions.js.php</string>
 	</array>
