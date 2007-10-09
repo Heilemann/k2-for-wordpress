@@ -424,9 +424,13 @@ function sbm_load(id, url) {
 						// Setup auto 'select all/select none'
 						jQuery('#display-pages').click(function() {
 							if (jQuery(this).attr('checked')) {
-								jQuery('.checkbox-list > li > input').attr('checked', 'checked')
+								jQuery('.checkbox-list > li > input')
+									.attr('checked', 'checked')
+									.attr('disabled', '')
 							} else {
-								jQuery('.checkbox-list > li > input').attr('checked', '')
+								jQuery('.checkbox-list > li > input')
+									.attr('checked', '')
+									.attr('disabled', 'disabled')
 							}
 						})
 					})
