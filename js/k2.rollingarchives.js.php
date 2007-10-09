@@ -131,10 +131,6 @@ function smartPosition() {
 	} else {
 		jQuery('body').removeClass('fixraposition');
 	}
-}
+};
 
-jQuery(document)
-	.ready(function() { smartPosition(); })
-
-jQuery(window)
-	.scroll(function() { smartPosition(); })
+jQuery(document).scroll(smartPosition);
