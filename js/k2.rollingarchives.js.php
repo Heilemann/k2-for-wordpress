@@ -124,6 +124,8 @@ var k2Rolling = {
 	}
 };
 
+
+
 function smartPosition() {
 	// Detect if content is being scroll offscreen.
 	if ( (document.documentElement.scrollTop || document.body.scrollTop) >= jQuery('#dynamic-content').offset().top) {

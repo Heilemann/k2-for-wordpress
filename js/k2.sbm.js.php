@@ -170,18 +170,126 @@ function sbm_load(id, url) {
 			initOptionLinks();
 		};
 
+// Aesthetic Systems
+		function resizeLists() {
+			// Calculate best width for columns
+			secretWidthFormula = parseInt(jQuery('.wrap').width()) / (jQuery('.container').size() - 1)
+				- ( parseInt(jQuery('.wrap').css('paddingRight')) + parseInt(jQuery('.wrap').css('paddingLeft')) )
+				- ( (!isNaN(value = parseInt(jQuery('.container').css('borderRightWidth'))) ? value : 1) + (!isNaN(value = parseInt(jQuery('.container').css('borderLeftWidth'))) ? value : 1) ) - 2;
+
+			// Ensure minimum and maximum sizes
+			if (secretWidthFormula < 150 ) { secretWidthFormula = 150 }
+			else if (secretWidthFormula > 270 ) { secretWidthFormula = 270 }
+
+			// Resize and reinit everything.
+			jQuery('.container').width(secretWidthFormula)
+			jQuery('#trashcontainer').width(secretWidthFormula+20)
+			jQuery('#sidebar-1container').css({ left: secretWidthFormula 		+ 35 })
+			jQuery('#sidebar-2container').css({ left: secretWidthFormula * 2 	+ 55 })
+			jQuery('#disabledcontainer').css({ left: secretWidthFormula * 3 	+ 80 })
+			jQuery('.modulewrapper').width(secretWidthFormula-10)
+			cropTitles();
+			calculateSecretHeightFormula();
+			initSortables();
+		}
+
+		function calculateSecretHeightFormula() {
+			// Get the current specified minimum height
+			var highest = parseInt(jQuery('.wrap').css('minHeight'));
+			var highestContainer = 430;
+
+			// Calculate best height for columns
+			jQuery('#availablemodulescontainer, #sidebar-1container, #sidebar-2container, #disabledcontainer').each(function() {
+				var moduleHeight = '';
+
+				if (jQuery(this).attr('id') == 'availablemodulescontainer') {
+					moduleHeight = 27;
+				} else {
+					moduleHeight = 37;
+				}
+
+				var currentContainer = parseInt((jQuery(this).children('div').children('ul').children('li').length * moduleHeight + moduleHeight ));
+				var currentHeader = parseInt(jQuery(this).children('h3').height() *2);
+				var currentColumn = currentContainer + currentHeader;
+
+				if ( currentColumn > highest ) {
+					highest = currentColumn;
+					highestContainer = currentContainer;
+				}
+			})
+
+			jQuery('.wrap').animate({ height: highest })
+			jQuery('.container').height(highest)
+			jQuery('.container ul').height(highestContainer)
+			jQuery('#trashcontainer').height(highest+13)
+
+			// Hack: Clean up the mess, until we fix it :)
+			jQuery('.wrap li').each(function() {
+				if (jQuery(this).attr('id') == undefined)
+					jQuery(this).remove()
+			})
+		}
+
+		function cropTitles() {
+			// Figure out how much space is available for the cropped name
+			var boink = jQuery('.sortable .name').parents('li:first');
+			var availableWidth = jQuery(boink).width() - parseInt(jQuery(boink).css('paddingRight')) - parseInt(jQuery(boink).css('paddingRight')) - jQuery(boink + ' a.optionslink').width() - 30;
+
+			jQuery('.croppedname').remove() // Remove old cropped names
+
+			jQuery('.sortable .name').each(function() { // Crop each name if necessary
+
+				// If name doesn't fit
+				if (jQuery(this).width() > availableWidth) {
+
+					// Prepare cropped name
+					jQuery(this)
+						.hide()
+						.clone()
+						.attr('class', 'croppedname')
+						.insertAfter( jQuery(this) )
+						.show()
+						.each(function() {
+							var moduletitle = jQuery(this).text();
+							var life = '';
+							
+							// Resize name to fit
+							do {
+								moduletitle = trim(moduletitle.substring(0, moduletitle.length-1));
+								jQuery(this).html(moduletitle+'&hellip;')
+
+								if (jQuery(this).width() < availableWidth) life = 42; // If the shoe fits...
+							} while (life != 42);
+						});
+
+				} // End if
+			});
+		} // End cropTitles
+
+		function trim(s) {
+			s = s.replace(/(^\s*)|(\s*$)/gi,"");
+			s = s.replace(/[ ]{2,}/gi," ");
+			s = s.replace(/\n /,"\n");
+			return s;
+		}
+
+
+// Options GUI
+		var curOptModule = '';
+		var curOptSidebar = '';
+		var curOptName = '';
 
 		function tabSystem() {
 			var tabContainer = jQuery('.tabs');
-			
+
 			jQuery(tabContainer)
 				.children()
 				.click(function() {
 					jQuery(this).addClass('selected')
 						.siblings().removeClass('selected');
-					
+
 					jQuery('.tabcontent').hide();
-					
+
 					// Show the tabs' content
 					jQuery('#' + jQuery(this).attr('id') + '-content').show();
 
@@ -191,13 +299,6 @@ function sbm_load(id, url) {
 			jQuery('#closelink')
 				.click(closeOptions);
 		}
-
-
-
-		// Options Stuff
-		var curOptModule = '';
-		var curOptSidebar = '';
-		var curOptName = '';
 
 		function initOptionLinks() {
 			var closeVar = false;
@@ -217,7 +318,7 @@ function sbm_load(id, url) {
 			jQuery('#submit').unbind();
 			jQuery('#submit').click(function() {
 				closeVar = false;
-				
+
 				jQuery('#module-name').val( trim(jQuery('#module-name').val()) );
 
 				jQuery(this).parents('form').trigger('submit');
@@ -243,8 +344,8 @@ function sbm_load(id, url) {
 					data: "action=update&sidebar_id=" + curOptSidebar + "&module_id=" + curOptModule + "&" + jQuery('#module-options-form').serialize(),
 					success: function() {
 						jQuery('#'+curOptModule+' .name').text(jQuery('#module-name').val());
-						jQuery('#msg').text("Options for '" + jQuery("#"+curOptModule+" .name").text() + "' saved successfully").fadeIn('1000');
-						setTimeout( function() { jQuery('#msg').fadeOut('3000'); }, 4000);
+//						jQuery('#msg').text("Options for '" + jQuery("#"+curOptModule+" .name").text() + "' saved successfully").fadeIn('1000');
+//						setTimeout( function() { jQuery('#msg').fadeOut('3000'); }, 4000);
 						cropTitles();
 						if (closeVar == true) { closeOptions() };
 						closeVar = false;
@@ -255,126 +356,6 @@ function sbm_load(id, url) {
 	        });
 		}
 
-
-		// Auto-resize lists on window resize
-		var secretWidthFormula = 200;
-
-		function resizeLists() {
-//			jQuery('ul.sortable').SortableDestroy()
-			// Calculate best width for columns
-			secretWidthFormula = parseInt(jQuery('.wrap').width()) / (jQuery('.container').size() - 1)
-				- ( parseInt(jQuery('.wrap').css('paddingRight')) + parseInt(jQuery('.wrap').css('paddingLeft')) )
-				- ( (!isNaN(value = parseInt(jQuery('.container').css('borderRightWidth'))) ? value : 1) + (!isNaN(value = parseInt(jQuery('.container').css('borderLeftWidth'))) ? value : 1) ) - 2;
-
-			// Ensure minimum and maximum sizes
-			if (secretWidthFormula < 150 ) { secretWidthFormula = 150 }
-			else if (secretWidthFormula > 270 ) { secretWidthFormula = 270 }
-
-			jQuery('.container').width(secretWidthFormula)
-			jQuery('#trashcontainer').width(secretWidthFormula+20)
-			jQuery('#sidebar-1container').css({ left: secretWidthFormula 		+ 35 })
-			jQuery('#sidebar-2container').css({ left: secretWidthFormula * 2 	+ 55 })
-			jQuery('#disabledcontainer').css({ left: secretWidthFormula * 3 	+ 80 })
-			jQuery('.modulewrapper').width(secretWidthFormula-10)
-			cropTitles();
-			calculateSecretHeightFormula();
-			initSortables();
-		}
-
-		function calculateSecretHeightFormula() {
-			// Get the current specified minimum height
-			var highest = parseInt(jQuery('.wrap').css('minHeight'));
-			var highestContainer = 430;
-
-			// Calculate best height for columns
-			jQuery('#availablemodulescontainer, #sidebar-1container, #sidebar-2container, #disabledcontainer')
-				.each(function() {
-					var moduleHeight = '';
-
-					if (jQuery(this).attr('id') != 'availablemodulescontainer') {
-						moduleHeight = 37;
-					} else {
-						moduleHeight = 27;
-					}
-
-					var currentContainer = parseInt((jQuery(this).children('div').children('ul').children('li').length * moduleHeight + moduleHeight ));
-					var currentHeader = parseInt(jQuery(this).children('h3').height() *2);
-					var currentColumn = currentContainer + currentHeader;
-
-					if ( currentColumn > highest ) {
-						highest = currentColumn;
-						highestContainer = currentContainer;
-					}
-				})
-
-			jQuery('.wrap').animate({ height: highest })
-			jQuery('.container').height(highest)
-			jQuery('.container ul').height(highestContainer)
-			jQuery('#trashcontainer').height(highest+13)
-
-			// Hack: Clean up the mess, until we fix it :)
-			jQuery('.wrap li').each(function() {
-				if (jQuery(this).attr('id') == undefined)
-					jQuery(this).remove()
-			})
-		}
-
-		function cropTitles() {
-			jQuery('.croppedname').remove();
-			jQuery('.sortable .name').each(function() {
-
-				var availableWidth = jQuery(this).parents('li').width() - parseInt(jQuery(this).parents('li').css('paddingRight')) - parseInt(jQuery(this).parents('li').css('paddingRight')) - jQuery(this).siblings('a.optionslink').width() - 20;
-				var nameWidth = jQuery(this).width();
-
-				// If name doesn't fit
-				if (nameWidth > availableWidth) {
-
-					// Prepare cropped name
-					jQuery(this)
-						.hide()
-						.clone()
-						.removeClass('name')
-						.addClass('croppedname')
-						.insertAfter( jQuery(this) )
-						.show()
-						.each(function() {
-							var moduletitle = jQuery(this).text();
-							var life = '';
-							
-							// Resize name to fit
-							while (life != 42) {
-								moduletitle = trim(moduletitle.substring(0, moduletitle.length-1));
-								jQuery(this).html(moduletitle+'&hellip;');
-
-								// Are we done yet?
-								if (jQuery(this).width() < availableWidth) life = 42; 
-							} // End While
-						}); // End close & prep
-
-				} // End if
-			});
-		} // End function
-
-		function trim(s) {
-			s = s.replace(/(^\s*)|(\s*$)/gi,"");
-			s = s.replace(/[ ]{2,}/gi," ");
-			s = s.replace(/\n /,"\n");
-			return s;
-		}
-		
-		jQuery(window).resize(resizeLists);
-		
-		jQuery(document).ready(function() {
-			resizeLists();
-			tabSystem();
-			jQuery('.initloading').fadeOut().remove()
-			jQuery('.container').animate({ opacity: 1 })
-			jQuery('#overlay').fadeTo('normal', 0)
-			jQuery('.wrap').append('<div id="darken"></div>')
-			jQuery('#darken').css({ zIndex: 2, left: 1180 })
-		});
-
-		// Options UI
 		function openOptions(module) {
 			var moduleID = '#' + module;
 
@@ -459,19 +440,37 @@ function sbm_load(id, url) {
 
 
 
-		jQuery('#backupsbm').click(function() {
-			jQuery('#backupform').submit();
-			return false;
-		})
+		// Spool the FTL drive
+		jQuery(document)
+			.resize(resizeLists)
+			.ready(function() {
+				resizeLists();
 
-		jQuery('#restoresbm').click(function() {
-			jQuery('#backupsbmwindow').css({ top: 20, opacity: 0, zIndex: 700 }).animate({ top: 38, opacity: 1 }, 1000, 'easeOutSine')
-			jQuery('#overlay').css({ zIndex: 600 }).fadeTo('normal', .5).click(function() {
-				jQuery('#backupsbmwindow').animate({ top: 20, opacity: 0, zIndex: -1 }, 1000, 'easeOutSine')
-				jQuery(this).fadeTo('normal', 0, function() {
-					jQuery(this).css({ zIndex: -1})
+				tabSystem();
+				jQuery('#overlay').fadeTo('normal', 0)
+//				jQuery('.wrap').append('<div id="darken"></div>')
+//				jQuery('#darken').css({ zIndex: 2, left: 1180 })
+
+
+				// Backup/Restore system
+				jQuery('#backupsbm').click(function() {
+					jQuery('#backupform').submit();
+					return false;
 				})
+
+				jQuery('#restoresbm').click(function() {
+					jQuery('#backupsbmwindow').css({ top: 20, opacity: 0, zIndex: 700 }).animate({ top: 38, opacity: 1 }, 1000, 'easeOutSine')
+					jQuery('#overlay').css({ zIndex: 600 }).fadeTo('normal', .5).click(function() {
+						jQuery('#backupsbmwindow').animate({ top: 20, opacity: 0, zIndex: -1 }, 1000, 'easeOutSine')
+						jQuery(this).fadeTo('normal', 0, function() {
+							jQuery(this).css({ zIndex: -1})
+						})
+					})
+					return false;
+				})
+
+				// Fire it up
+				jQuery('.initloading').fadeOut().remove()
+				jQuery('.container').animate({ opacity: 1})
 			})
-			return false;
-		})
 	};

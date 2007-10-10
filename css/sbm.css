@@ -1,3 +1,5 @@
+/* @override http://localhost/wp-content/themes/kaytwo/css/sbm.css */
+
 .clear {
 	clear: both;	
 	display: block;
@@ -31,7 +33,7 @@ h2 {
 	min-width: 800px;
 	min-height: 520px;
 	margin: 0;
-	border: 0;
+	border: none;
 	border-bottom: 1px solid #ddd;
 }
 
@@ -42,7 +44,7 @@ h2 {
 	z-index: -2;
 	width: 100%;
 	height: 100%;
-	background-color: #000000;
+	background-color: #fff;
 	display:none;
 	opacity: 0;
 	}
@@ -216,17 +218,12 @@ h3 {
 	position: static;
 	background: url('../images/sbmmanager/modulebg.png') right center no-repeat;
 	margin: 3px 0 3px 5px;
-	opacity: .95;
 	}
 
 #disabled .module {
 	opacity: .75;
 	}
 
-.module:hover, #disabled .module:hover {
-	opacity: 1;
-	}
-	
 .module:before {
 	content: url('../images/sbmmanager/modulebg-left.png');
 	margin-left: -5px;
@@ -284,6 +281,10 @@ h3 {
 	opacity: .6;
 	}
 
+.availablemodule:hover {
+	opacity: .7;
+	}
+
 .availablemodule:before {
 	content: url('../images/sbmmanager/amodulebg-left.png');
 	margin-left: -5px;
@@ -314,6 +315,10 @@ h3 {
 
 #dragHelper {
 	z-index: 10000;
+	}
+
+#dragHelper .optionslink {
+	display: none;
 	}
 
 .selecthelper {
