@@ -66,7 +66,7 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/css/rollingarchives.css" />
 	<?php } ?>
 	<?php /* Custom Style */ if (get_option('k2scheme') != '') { ?>
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php k2info('style'); ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php k2info('style'); ?>" />
 	<?php } ?>
 
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="<?php bloginfo('rss2_url'); ?>" />
