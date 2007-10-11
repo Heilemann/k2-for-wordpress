@@ -89,7 +89,7 @@ function sbm_load(id, url) {
 				opacity:		0.3,
 				onStart: 		function() {
 					// Need to re-position #trash for the sortable to work properly
-					jQuery('#trashcontainer').hide().css({ zIndex: 1000, opacity: 1 }).fadeIn()
+					jQuery('#trashcontainer').css({ zIndex: 1000, opacity: 1 })
 				},
 				onStop: 		function() {
 					// And re-position again.
@@ -461,12 +461,13 @@ function sbm_load(id, url) {
 				})
 
 				jQuery('#restoresbm').click(function() {
-					jQuery('#backupsbmwindow').css({ top: 20, opacity: 0, zIndex: 700 }).animate({ top: 38, opacity: 1 }, 1000, 'easeOutSine')
-					jQuery('#overlay').css({ zIndex: 600 }).fadeTo('normal', .5).click(function() {
-						jQuery('#backupsbmwindow').animate({ top: 20, opacity: 0, zIndex: -1 }, 1000, 'easeOutSine')
-						jQuery(this).fadeTo('normal', 0, function() {
-							jQuery(this).css({ zIndex: -1})
+					jQuery('#backupsbmwindow').css({ top: 20, opacity: 0, zIndex: 700 }).animate({ top: 38, opacity: 1 }, 600, 'easeOutSine')
+					jQuery('#overlay').css({ zIndex: 600, opacity: .5 }).click(function() {
+						jQuery('#backupsbmwindow').animate({ top: 20, opacity: 0 }, 600, 'easeOutSine', function() {
+							jQuery(this).css({ zIndex: -100 })
+							jQuery('#overlay').css({ opacity: 0, zIndex: -100 })
 						})
+						
 					})
 					return false;
 				})
