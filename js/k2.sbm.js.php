@@ -89,12 +89,12 @@ function sbm_load(id, url) {
 				opacity:		0.3,
 				onStart: 		function() {
 					// Need to re-position #trash for the sortable to work properly
-					jQuery('#trashcontainer').hide().css({ zIndex: 1000 }).fadeIn();
+					jQuery('#trashcontainer').hide().css({ zIndex: 1000, opacity: 1 }).fadeIn()
 				},
 				onStop: 		function() {
 					// And re-position again.
 					jQuery('#trashcontainer').animate({ left: -250 }, 300, function() {
- 						jQuery(this).css({ zIndex: -1, left: 0 })
+ 						jQuery(this).css({ zIndex: -1, left: 0, opacity: 0 })
 					})
 				}, 
 				onHover: 		function(drag) {
@@ -103,7 +103,7 @@ function sbm_load(id, url) {
 				onChange: 		function(serial) {
 					if (jQuery('#trashcontainer').css('zIndex') == 1000)
 						jQuery('#trashcontainer').animate({ left: -250 }, 300, function() {
-							jQuery(this).css({ zIndex: -1, left: 0 })
+							jQuery(this).css({ zIndex: -1, left: 0, opacity: 0 })
 						})
 
 					resizeLists();
@@ -187,8 +187,8 @@ function sbm_load(id, url) {
 			jQuery('#sidebar-1container').css({ left: secretWidthFormula 		+ 35 })
 			jQuery('#sidebar-2container').css({ left: secretWidthFormula * 2 	+ 55 })
 			jQuery('#disabledcontainer').css({ left: secretWidthFormula * 3 	+ 80 })
-			jQuery('.modulewrapper').width(secretWidthFormula-10)
-			cropTitles();
+			jQuery('.modulewrapper').width(secretWidthFormula-40)
+			//cropTitles();
 			calculateSecretHeightFormula();
 			initSortables();
 		}
@@ -264,7 +264,7 @@ function sbm_load(id, url) {
 
 				} // End if
 			});
-		} // End cropTitles
+		}
 
 		function trim(s) {
 			s = s.replace(/(^\s*)|(\s*$)/gi,"");
@@ -346,7 +346,7 @@ function sbm_load(id, url) {
 						jQuery('#'+curOptModule+' .name').text(jQuery('#module-name').val());
 //						jQuery('#msg').text("Options for '" + jQuery("#"+curOptModule+" .name").text() + "' saved successfully").fadeIn('1000');
 //						setTimeout( function() { jQuery('#msg').fadeOut('3000'); }, 4000);
-						cropTitles();
+						//cropTitles();
 						if (closeVar == true) { closeOptions() };
 						closeVar = false;
 					}
@@ -440,10 +440,12 @@ function sbm_load(id, url) {
 
 
 
+
+		
 		// Spool the FTL drive
 		jQuery(document)
-			.resize(resizeLists)
 			.ready(function() {
+
 				resizeLists();
 
 				tabSystem();
@@ -470,7 +472,10 @@ function sbm_load(id, url) {
 				})
 
 				// Fire it up
-				jQuery('.initloading').fadeOut().remove()
-				jQuery('.container').animate({ opacity: 1})
+				jQuery('.initloading').hide().remove()
+				jQuery('.container').css({ opacity: 1 })
 			})
-	};
+
+		jQuery(window).resize(resizeLists)
+
+		};

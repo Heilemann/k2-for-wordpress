@@ -1,5 +1,7 @@
 /* @override http://localhost/wp-content/themes/kaytwo/css/sbm.css */
 
+/* CSS for the Sidebar Manager page */
+
 .clear {
 	clear: both;	
 	display: block;
@@ -67,7 +69,8 @@ h2 {
 
 .wrap ul {
 	padding: 0;
-}
+	margin: 0;
+	}
 
 h3 {
 	font-size: 1.4em;
@@ -160,6 +163,9 @@ h3 {
 	width: 170px;
 	}
 
+	
+/* Inside the column area */
+	
 .initloading {
 	position: absolute;
 	top: 40%;
@@ -176,8 +182,9 @@ h3 {
 .container {
 	opacity: 0;
 	padding: 0 10px;
+	margin: 0;
 	z-index: 5;
-}
+	}
 
 #availablemodulescontainer, #sidebar-1container, #sidebar-2container {
 	border-right: 1px solid #d8d8d8;
@@ -188,6 +195,10 @@ h3 {
 	top: 1px;
 	}
 
+#availablemodulescontainer {
+	left: 14px;
+	}
+	
 #trashcontainer {
 	position: absolute;
 	background: #eee;
@@ -196,6 +207,7 @@ h3 {
 	background: url('../images/sbmmanager/trashbg.png') right repeat-y;
 	z-index: -1;
 	padding: 0 25px 0 0;
+	display: none;
 }
 
 #trashcontainer .sortable {
@@ -210,7 +222,6 @@ h3 {
 /* Modules Styling */
 
 .module {
-	font: 12px/0 Helvetica, Arial;
 	list-style-type: none;
 	color: #eee;
 	cursor: move;
@@ -232,36 +243,46 @@ h3 {
 .module span {
 	position: absolute;
 	white-space: pre;
-	line-height: 0;
 	}
 
 .modulewrapper {
-	height: inherit;
+	height: 35px;
 	left: 15px;
 	}
 
+#availablemodules .modulewrapper {
+	height: 25px;
+	}
+	
 #trash #sortHelper .modulewrapper {
 	left: 25px;
 	}
 
+.module span.name {
+	top: 6px;
+	font: 12px Helvetica, Arial;
+	line-height: 15px;
+	overflow: hidden;
+	width: 100%;
+	}
+
 .name, .croppedname {
-	top: 13px;
 	left: 1px;
 	}
 
 .type {
-	top: 25px;
+	top: 21px;
 	left: 1px;
-	font-size: .75em;
+	font: 9px Helvetica, Arial;
+	line-height: 8px;
 	color: #999;
 	}
 
 .optionslink {
 	position: absolute;
-	top: 50%;
-	right: 5px;
+	top: 9px;
+	right: -25px;
 	height: 17px;
-	margin-top: -8px;
 	width: 17px;
 	background: url('../images/sbmmanager/optionsbutton.png') center top no-repeat;
 	cursor: pointer;
@@ -327,7 +348,6 @@ h3 {
 	}
 
 .openoptions {
-	background: red;
 	padding: 1px 3px;
 	margin: 0 0 0 auto;
 	}
@@ -485,6 +505,12 @@ h3 {
 	font-size: .8em;
 	}
 
+input[type=checkbox] {
+	background: none;
+	border: none;
+	padding: 0;
+	}
+	
 .checkbox-list {
 	overflow: auto;
 	height: 115px;

@@ -285,10 +285,10 @@ body.fixraposition #trimmertrim, body.fixraposition #trimmeruntrim {
 	top: 3px;
 	}
 
-#dynamic-content {
-	padding-top: 40px;
+#dynamic-content { /* Make room for the rolling archives */
+	padding-top: 30px;
 	}
 
-body.fixraposition #dynamic-content {
-	padding-top: 40px;
+body.onepageonly #dynamic-content { /* For the rare case of having only one page of content on the frontpage */
+	padding-top: 0;
 	}

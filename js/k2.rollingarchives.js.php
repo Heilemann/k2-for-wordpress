@@ -10,6 +10,10 @@ var k2Rolling = {
 		k2Rolling.query = query;
 		k2Rolling.pageDates = pagedates;
 
+		// In the rare case of only one page of entries
+		if ( k2Rolling.pageCount == 1 )
+			jQuery('body').addClass('onepageonly')
+		
 		if ( k2Rolling.validatePage(pagenumber) ) {
 			jQuery('#rollingarchives').show();
 
@@ -87,12 +91,12 @@ var k2Rolling = {
 			k2Rolling.pageNumber = page;
 
 			jQuery('#rollload').fadeIn('fast');
-			jQuery('html,body').animate({ scrollTop: jQuery('#dynamic-content').offset().top -1 }, 1000);
 			jQuery.extend(k2Rolling.query, { paged: k2Rolling.pageNumber, k2dynamic: 1 });
 
 			K2.ajaxGet(k2Rolling.url, k2Rolling.query,
 				function(data) {
 
+					jQuery('html,body').animate({ scrollTop: jQuery('#dynamic-content').offset().top -1 }, 1000);
 					jQuery('#rollhover').fadeOut('slow');
 					jQuery('#rollload').fadeOut('fast');
 					jQuery('#rollingcontent').html(data);

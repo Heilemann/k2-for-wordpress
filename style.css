@@ -113,7 +113,7 @@ body.lang-zh {
 .columns-two #sidebar-main,
 .columns-three #sidebar-main {
 	width: 200px;
-	padding: 10px 10px 0;
+	padding: 0px 10px 20px;
 	}
 
 .columns-two #sidebar-alt {
@@ -928,16 +928,17 @@ ol li {
 /*- Search Form and Livesearch */
 
 #search {
-	margin-top: 10px;
+	margin-top: 20px;
+	}
+
+#search h4 {
+	display: none;
 	}
 
 #searchform {
 	display: block;
 	position: relative;
-	}
-
-#search h4 {
-	display: none;
+	height: 20px;
 	}
 
 input[type=text], textarea {
@@ -952,15 +953,16 @@ input[type=text], textarea {
 	}
 
 #s.livesearch {
+	position: absolute;
+	top: 0;
 	width: 88%;
 	}
 
 #searchreset {
 	position: absolute;
 	right: 0px;
-	top: 3px;
-	height: 13px;
-	width: 13px;
+	height: 19px;
+	width: 16px;
 	background: url('images/reset-fff.png') center center no-repeat;
 	}
 
