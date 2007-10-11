@@ -90,7 +90,7 @@ class K2Header {
 		<style type="text/css">
 		<?php if (!empty($picture)) { ?>
 		#header {
-			background: url("<?php echo get_k2info('headers_url') . $picture; ?>");
+			background-image: url("<?php echo get_k2info('headers_url') . $picture; ?>");
 		}
 		<?php } ?>
 		<?php if (function_exists('add_custom_image_header')) { ?>
