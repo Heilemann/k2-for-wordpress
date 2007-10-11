@@ -96,7 +96,12 @@ var k2Rolling = {
 			K2.ajaxGet(k2Rolling.url, k2Rolling.query,
 				function(data) {
 
-					jQuery('html,body').animate({ scrollTop: jQuery('#dynamic-content').offset().top -1 }, 1000);
+					if (k2Rolling.pageNumber == 1) {
+						jQuery('html,body').animate({ scrollTop: jQuery('body').offset().top -1 }, 1000);
+					} else {
+						jQuery('html,body').animate({ scrollTop: jQuery('#dynamic-content').offset().top -1 }, 1000);
+					}
+					
 					jQuery('#rollhover').fadeOut('slow');
 					jQuery('#rollload').fadeOut('fast');
 					jQuery('#rollingcontent').html(data);
