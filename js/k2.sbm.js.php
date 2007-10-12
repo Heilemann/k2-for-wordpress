@@ -153,7 +153,7 @@ function sbm_load(id, url) {
 							processData: false,
 							url: sbm_baseUrl,
 							data: 'action=reorder&' + orderData,
-							success: resizeLists()
+							success: resizeLists
 					 	});
 						
 					}
@@ -171,7 +171,6 @@ function sbm_load(id, url) {
 		}
 
 		function calculateSecretHeightFormula() {
-			console.log('test');
 			// Get the current specified minimum height
 			var highest = parseInt(jQuery('.wrap').css('minHeight'));
 			var highestContainer = 430;
@@ -196,7 +195,7 @@ function sbm_load(id, url) {
 				}
 			})
 
-			jQuery('.wrap').animate({ height: highest })
+			jQuery('.wrap').animate({ height: highest }, 200)
 			jQuery('.container').height(highest)
 			jQuery('.container ul').height(highestContainer)
 			jQuery('#trashcontainer').height(highest+13)
@@ -341,7 +340,7 @@ function sbm_load(id, url) {
 			var originalWidth = jQuery(moduleID).width()-8;
 			var originalHeight = jQuery(moduleID).height();
 			var optionsWidth = 400;
-			var optionsHeight = 350;
+			var optionsHeight = 250;
 			var optionsX = (jQuery(window).width()) / 2 - ((optionsWidth)/2);
 //			var optionsY = (jQuery(window).height()) / 2 - (optionsHeight/2);
 			var optionsY = 100;
@@ -368,9 +367,9 @@ function sbm_load(id, url) {
 					module_id: jQuery(moduleID).attr('id')
 				},
 				function (data) {
-					jQuery('#options').empty().append(data);
-					jQuery('#module-name').focus();
-					jQuery('#optionswindow').removeClass('optionsspinner');
+					jQuery('#options').empty().append(data)
+					jQuery('#module-name').focus()
+					jQuery('#optionswindow').removeClass('optionsspinner')
 
 					// Fetch static page list
 					jQuery.post( sbm_baseUrl, {
@@ -394,11 +393,10 @@ function sbm_load(id, url) {
 						})
 					})
 
-
 					// Dumbass caret fix. REMOVE ME FOR FF3.0
-					if(jQuery.browser.mozilla) {
-						jQuery('#options > *:has(input)').css('position', 'fixed').css('width', optionsWidth + 'px');
-					}
+// Disabled, as it breaks the 'oveflow: auto'
+//					if (jQuery.browser.mozilla)
+//						jQuery('#options > *:has(input)').css('position', 'fixed').css('width', optionsWidth + 'px')
 				}
 			);
 			
@@ -406,24 +404,20 @@ function sbm_load(id, url) {
 
 		function closeOptions() {
 			// Reset the tab system
-			jQuery('.tabs').children().removeClass('selected');
-			jQuery('#optionstab').addClass('selected');
-			
-			jQuery('#options').empty();
-			jQuery('#optionswindow').hide();
+			jQuery('.tabs').children().removeClass('selected')
+			jQuery('#optionstab').addClass('selected')
+			jQuery('#options').empty()
+			jQuery('#optionswindow').hide()
+
 			// Dim overlay
-			jQuery('#overlay').css({ opacity: 0, zIndex: -100 }) //fadeTo('normal', 0, function() { jQuery(this).css({ zIndex: '-100' }) });
+			jQuery('#overlay').css({ opacity: 0, zIndex: -100 })
 			return false;
 		}
-
-
-
 
 		
 		// Spool the FTL drive
 		jQuery(document)
 			.ready(function() {
-
 				resizeLists();
 
 				tabSystem();

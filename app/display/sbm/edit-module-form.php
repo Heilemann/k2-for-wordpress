@@ -14,7 +14,7 @@
 		<input id="module-name" name="module_name" type="text" value="<?php echo attribute_escape($module->name); ?>" />
 
 		<input id="output-show-title" name="output[show_title]" type="checkbox"<?php if($module->output['show_title']) { ?> checked="checked"<?php } ?> />
-		<label for="output-show-title" class="showtitlelabel"><?php _e('Display Title', 'k2_domain'); ?></label>
+		<label for="output-show-title" class="showtitlelabel"><?php _e('Display', 'k2_domain'); ?></label>
 	</p>
 
 <?php

@@ -31,9 +31,9 @@
 <div id="optionswindow">
 	<a href="#" id="closelink" title="Close"></a>
 
-	<div class="opttl"> </div>
-	<div class="optt"> </div>
-	<div class="opttr"> </div>
+	<div class="opttl">&nbsp;</div>
+	<div class="optt">&nbsp;</div>
+	<div class="opttr">&nbsp;</div>
 
 	<div class="optl"> </div>
 	<div class="optr"> </div>
@@ -50,18 +50,22 @@
 	</div>
 	</div>
 
-	<form id="module-options-form">
+	<div class="optcontents">
 
-		<div id="options">
-		</div>
+		<form id="module-options-form">
 
-		<!--<p class="optionkeys"><?php _e('\'Enter\' saves, \'Escape\' closes.'); ?></p>-->
+			<div id="options">
+			</div>
 
-		<p class="submitbuttons">
-			<input type="submit" id="submit" value="<?php echo attribute_escape(__('Save', 'k2_domain')); ?>" />
-			<input type="submit" id="submitclose" value="<?php echo attribute_escape(__('Save &amp; Close', 'k2_domain')); ?>" />
-		</p>
-	</form>
+			<!--<p class="optionkeys"><?php _e('\'Enter\' saves, \'Escape\' closes.'); ?></p>-->
+
+		</form>
+	</div>
+
+	<p class="submitbuttons">
+		<input type="submit" id="submit" value="<?php echo attribute_escape(__('Save', 'k2_domain')); ?>" />
+		<input type="submit" id="submitclose" value="<?php echo attribute_escape(__('Save &amp; Close', 'k2_domain')); ?>" />
+	</p>
 </div>
 
 <div id="parentwrapper">
