@@ -166,11 +166,6 @@ function sbm_load(id, url) {
 
 // Aesthetic Systems
 		function resizeLists() {
-			calculateSecretHeightFormula();
-			initSortables();
-		}
-
-		function calculateSecretHeightFormula() {
 			// Get the current specified minimum height
 			var highest = parseInt(jQuery('.wrap').css('minHeight'));
 			var highestContainer = 430;
@@ -191,20 +186,20 @@ function sbm_load(id, url) {
 
 				if ( currentColumn > highest ) {
 					highest = currentColumn;
-					highestContainer = currentContainer;
 				}
 			})
 
 			jQuery('.wrap').animate({ height: highest }, 200)
 			jQuery('.container').height(highest)
-			jQuery('.container ul').height(highestContainer)
-			jQuery('#trashcontainer').height(highest+13)
 
 			// Hack: Clean up the mess, until we fix it :)
-			jQuery('.wrap li').each(function() {
+/*			jQuery('.wrap li').each(function() {
 				if (jQuery(this).attr('id') == undefined)
 					jQuery(this).remove()
 			})
+*/
+			// Spool the FTL drive
+			initSortables();
 		}
 
 		function cropTitles() {
@@ -244,9 +239,9 @@ function sbm_load(id, url) {
 		}
 
 		function trim(s) {
-			s = s.replace(/(^\s*)|(\s*$)/gi,"");
-			s = s.replace(/[ ]{2,}/gi," ");
-			s = s.replace(/\n /,"\n");
+			s = s.replace(/(^\s*)|(\s*$)/gi,"")
+			s = s.replace(/[ ]{2,}/gi," ")
+			s = s.replace(/\n /,"\n")
 			return s;
 		}
 
@@ -257,24 +252,23 @@ function sbm_load(id, url) {
 		var curOptName = '';
 
 		function tabSystem() {
-			var tabContainer = jQuery('.tabs');
+			var tabContainer = jQuery('.tabs')
 
 			jQuery(tabContainer)
 				.children()
 				.click(function() {
 					jQuery(this).addClass('selected')
-						.siblings().removeClass('selected');
+						.siblings().removeClass('selected')
 
-					jQuery('.tabcontent').hide();
+					jQuery('.tabcontent').hide()
 
 					// Show the tabs' content
-					jQuery('#' + jQuery(this).attr('id') + '-content').show();
+					jQuery('#' + jQuery(this).attr('id') + '-content').show()
 
 					return false;
-				});
+				})
 
-			jQuery('#closelink')
-				.click(closeOptions);
+			jQuery('#closelink').click(closeOptions)
 		}
 
 		function initOptionLinks() {
@@ -284,11 +278,11 @@ function sbm_load(id, url) {
 			jQuery('a.optionslink').each(function() {
 				jQuery(this).unbind();
 				jQuery(this).click(function() {
-					curOptModule = jQuery(this).parent().parent().attr('id');
-					curOptSidebar = jQuery(curOptModule).parent().attr('id');
-					curOptName = jQuery(this).siblings('.name').text();
-					openOptions(curOptModule);
-				});
+					curOptModule = jQuery(this).parent().parent().attr('id')
+					curOptSidebar = jQuery(curOptModule).parent().attr('id')
+					curOptName = jQuery(this).siblings('.name').text()
+					openOptions(curOptModule)
+				})
 			});
 
 			// Set up options submit process 
@@ -296,9 +290,9 @@ function sbm_load(id, url) {
 			jQuery('#submit').click(function() {
 				closeVar = false;
 
-				jQuery('#module-name').val( trim(jQuery('#module-name').val()) );
+				jQuery('#module-name').val( trim(jQuery('#module-name').val()) )
 
-				jQuery('#module-options-form').trigger('submit');
+				jQuery('#module-options-form').trigger('submit')
 				return false;
 			});
 
@@ -306,13 +300,13 @@ function sbm_load(id, url) {
 			jQuery('#submitclose').click(function() {
 				closeVar = true;
 
-				jQuery('#module-name').val( trim(jQuery('#module-name').val()) );
+				jQuery('#module-name').val( trim(jQuery('#module-name').val()) )
 
-				jQuery('#module-options-form').trigger('submit');
+				jQuery('#module-options-form').trigger('submit')
 				return false;
 			});
 
-			jQuery('#module-options-form').unbind();
+			jQuery('#module-options-form').unbind()
 			jQuery('#module-options-form').submit(function() {
 				jQuery.ajax({
 					type: "POST",
