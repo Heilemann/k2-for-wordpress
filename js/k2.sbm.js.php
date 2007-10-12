@@ -81,6 +81,8 @@ function sbm_load(id, url) {
 		// Config sortable lists
 		var sortableLists = '';
 		function initSortables() {
+			//jQuery('ul.sortable').destroySortable()
+			
 			sortableLists = jQuery('ul.sortable').Sortable({
 				accept: 		'module',
 				activeclass:	'hovering',
@@ -189,11 +191,7 @@ function sbm_load(id, url) {
 			jQuery('#disabledcontainer').css({ left: secretWidthFormula * 3 	+ 80 })
 			jQuery('.modulewrapper').width(secretWidthFormula-40)
 			//cropTitles();
-			calculateSecretHeightFormula();
-			initSortables();
-		}
 
-		function calculateSecretHeightFormula() {
 			// Get the current specified minimum height
 			var highest = parseInt(jQuery('.wrap').css('minHeight'));
 			var highestContainer = 430;
@@ -228,9 +226,11 @@ function sbm_load(id, url) {
 				if (jQuery(this).attr('id') == undefined)
 					jQuery(this).remove()
 			})
+
+			initSortables();
 		}
 
-		function cropTitles() {
+/*		function cropTitles() {
 			// Figure out how much space is available for the cropped name
 			var boink = jQuery('.sortable .name').parents('li:first');
 			var availableWidth = jQuery(boink).width() - parseInt(jQuery(boink).css('paddingRight')) - parseInt(jQuery(boink).css('paddingRight')) - jQuery(boink + ' a.optionslink').width() - 30;
@@ -265,7 +265,7 @@ function sbm_load(id, url) {
 				} // End if
 			});
 		}
-
+*/
 		function trim(s) {
 			s = s.replace(/(^\s*)|(\s*$)/gi,"");
 			s = s.replace(/[ ]{2,}/gi," ");

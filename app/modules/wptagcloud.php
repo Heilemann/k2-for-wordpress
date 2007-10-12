@@ -8,7 +8,6 @@ function wptagcloud_sidebar_module($args) {
 	echo($before_module . $before_title . $title . $after_title);
 
 	if ( function_exists('UTW_ShowWeightedTagSetAlphabetical') ) {
-		echo('test1234');
 		UTW_ShowWeightedTagSetAlphabetical("coloredsizedtagcloud");
 	} else if ( function_exists('wp_tag_cloud') ) {
 		wp_tag_cloud('format=list');
@@ -24,6 +23,8 @@ function wptagcloud_sidebar_module_control() {
 }
 
 register_sidebar_module('Tag Cloud', 'wptagcloud_sidebar_module', 'sb-wptagcloud', array('wptagcloud' => ''));
+register_sidebar_module('Tag Cloud', 'wptagcloud_sidebar_module', 'sb-wptagcloud', array('smallest' => 8, 'largest' => 22, 'unit' => 'pt', 'number' => 45, 'format' => 'list', 'orderby' => 'name', 'order' => 'ASC'));
+
 register_sidebar_module_control('Tag Cloud', 'wptagcloud_sidebar_module_control');
 
 }

@@ -247,6 +247,7 @@ h3 {
 
 .modulewrapper {
 	height: 35px;
+	line-height: 5px; /* Ehm, some sort of hack... */
 	left: 15px;
 	}
 
