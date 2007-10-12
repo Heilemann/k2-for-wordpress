@@ -298,7 +298,7 @@ function sbm_load(id, url) {
 
 				jQuery('#module-name').val( trim(jQuery('#module-name').val()) );
 
-				jQuery(this).parents('form').trigger('submit');
+				jQuery('#module-options-form').trigger('submit');
 				return false;
 			});
 
@@ -308,7 +308,7 @@ function sbm_load(id, url) {
 
 				jQuery('#module-name').val( trim(jQuery('#module-name').val()) );
 
-				jQuery(this).parents('form').trigger('submit');
+				jQuery('#module-options-form').trigger('submit');
 				return false;
 			});
 
