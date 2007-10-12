@@ -33,16 +33,6 @@ class K2SBM {
 	}
 
 	function uninstall() {
-		// Remove all existing sbm-stub paths
-		$plugins = (array) get_option('active_plugins');
-
-		foreach($plugins as $key => $value) {
-			if (strpos($value, 'sbm-stub.php') !== false) {
-				unset($plugins[$key]);
-			}
-		}
-
-		update_option('active_plugins', $plugins);
 	}
 
 	function activate() {
@@ -220,6 +210,7 @@ class K2SBM {
 		// Allow the Widgets and SBM defined in plugins & themes to be loaded
 		do_action('sbm_init');
 		do_action('widgets_init');
+		do_action('plugins_loaded');
 	}
 
 	function add_menus() {
