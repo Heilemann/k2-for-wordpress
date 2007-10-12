@@ -16,8 +16,6 @@
 	$disabled = K2SBM::get_disabled();
 ?>
 
-<?php include('header.php'); ?>
-
 <?php if($restored) { ?>
 <div id="message2" class="updated fade">
 	<p><?php _e('Your sidebar was restored', 'k2_domain'); ?></p>
@@ -110,6 +108,10 @@
 
 	<div class="wrap">
 		
+		<div class="containerwrap">
+
+		<div class="darkenleft">&nbsp;</div>
+		
 		<div class="initloading"><?php _e('Loading'); ?></div>
 
 		<div id="availablemodulescontainer" class="container">
@@ -119,9 +121,9 @@
 			<ul id="availablemodules">
 				<?php foreach($modules as $id => $module) { ?>
 					<li id="<?php echo attribute_escape($id); ?>" class="module availablemodule">
-						<span class="modulewrapper">
-							<span class="name"><?php echo(attribute_escape($module['name'])); ?></span>
-						</span>
+						<div class="slidingdoor">
+								<span class="name"><?php echo(attribute_escape($module['name'])); ?></span>
+						</div>
 					</li>
 				<?php } ?>
 			</ul>
@@ -129,28 +131,30 @@
 		</div>
 
 
-		<?php foreach ($sidebars as $id => $sidebar) { ?>
-		<div id="<?php echo($id); ?>container" class="container">
+		<?php $sidebarid = 'sidebar-1'; foreach ($sidebars as $id => $sidebar) { ?>
+		<div id="<?php echo($sidebarid); ?>container" class="container">
 			<h3><?php echo($sidebar->name); ?></h3>
 
 			<div class="droppable">
-				<ul id="<?php echo($id); ?>" class="sortable reorderable">
+				<ul id="<?php echo($sidebarid); ?>" class="sortable reorderable">
 
 					<?php foreach ($sidebar->modules as $id => $module) { ?>
 
 						<li id="<?php print attribute_escape($module->id); ?>" class="module">
-							<span class="modulewrapper">
-								<span class="name"><?php print $module->name; ?></span>
-								<span class="type"><?php echo($modules[$module->type]['name']); ?></span>
+							<div class="slidingdoor">
+								<span class="modulewrapper">
+									<span class="name"><?php print $module->name; ?></span>
+									<span class="type"><?php echo($modules[$module->type]['name']); ?></span>
+								</span>
 								<a href="#" class="optionslink"> </a>
-							</span>
+							</div>
 						</li>
 
 					<?php } ?>
 				</ul>
 			</div>
 		</div>
-		<?php } ?>
+		<?php $sidebarid = 'sidebar-2'; } ?>
 
 
 
@@ -163,11 +167,13 @@
 					<?php foreach ($disabled as $id => $module) { ?>
 
 						<li id="<?php print attribute_escape($module->id); ?>" class="module">
-							<span class="modulewrapper">
-								<span class="name"><?php print $module->name; ?></span>
-								<span class="type"><?php echo($modules[$module->type]['name']); ?></span>
+							<div class="slidingdoor">
+								<span class="modulewrapper">
+									<span class="name"><?php print $module->name; ?></span>
+									<span class="type"><?php echo($modules[$module->type]['name']); ?></span>
+								</span>
 								<a href="#" class="optionslink"> </a>
-							</span>
+							</div>
 						</li>
 
 					<?php } ?>
@@ -183,7 +189,8 @@
 			</ul>
 		</div>
 
-		<div class="clear">&nbsp;</div>
+		<div class="darkenright"></div>
+		</div>
 
 	</div>
 

@@ -25,7 +25,7 @@ function sbm_load(id, url) {
 					.clone()
 					.attr('class', 'module marker')
 					.css({ position: "static" })
-					.html('<span class="modulewrapper"><span class="name">'+module+'</span><span class="handle"></span><span class="type">'+module+'</span><a href="#" class="optionslink"> </a></span>')
+					.html('<div class="slidingdoor"><span class="modulewrapper"><span class="name">'+module+'</span><span class="handle"></span><span class="type">'+module+'</span></span><a href="#" class="optionslink"> </a></div>')
 					.appendTo(jQuery(this).children())
 			},
 			onOut: 			function (drag) {
@@ -41,7 +41,7 @@ function sbm_load(id, url) {
 				// Create new module
 				var newModule = jQuery(drag)
 									.clone()
-									.html('<span class="modulewrapper"><span class="name">'+module+'</span><span class="handle"></span><span class="type">'+module+'</span><a href="#" class="optionslink"> </a></span>')
+									.html('<div class="slidingdoor"><span class="modulewrapper"><span class="name">'+module+'</span><span class="handle"></span><span class="type">'+module+'</span></span><a href="#" class="optionslink"> </a></div>')
 									.attr('id', 'module-' + (lastModuleID++))
 									.attr('class', 'module ' + sidebar)
 									.css({ position: "static" })
@@ -81,34 +81,25 @@ function sbm_load(id, url) {
 		// Config sortable lists
 		var sortableLists = '';
 		function initSortables() {
-			//jQuery('ul.sortable').destroySortable()
-			
 			sortableLists = jQuery('ul.sortable').Sortable({
 				accept: 		'module',
 				activeclass:	'hovering',
 				helperclass:	'module marker',
 				tolerance:		'pointer',
 				opacity:		0.3,
-				onStart: 		function() {
+				onStart: function() {
 					// Need to re-position #trash for the sortable to work properly
-					jQuery('#trashcontainer').css({ zIndex: 1000, opacity: 1 })
+					jQuery('#trashcontainer').show().css({ zIndex: 1000 })
 				},
-				onStop: 		function() {
+				onStop: function() {
 					// And re-position again.
-					jQuery('#trashcontainer').animate({ left: -250 }, 300, function() {
- 						jQuery(this).css({ zIndex: -1, left: 0, opacity: 0 })
-					})
+					jQuery('#trashcontainer').hide().css({ zIndex: -100 })
 				}, 
-				onHover: 		function(drag) {
+				onHover: function(drag) {
 					jQuery('#sortHelper').html( jQuery(drag).html() )
 				},
-				onChange: 		function(serial) {
-					if (jQuery('#trashcontainer').css('zIndex') == 1000)
-						jQuery('#trashcontainer').animate({ left: -250 }, 300, function() {
-							jQuery(this).css({ zIndex: -1, left: 0, opacity: 0 })
-						})
-
-					resizeLists();
+				onChange: function(serial) {
+					jQuery('#trashcontainer').hide().css({ zIndex: -100 })
 
 					// If something is being trashed
 					var trashedModule = jQuery.SortSerialize('trash').o.trash[0];
@@ -161,7 +152,8 @@ function sbm_load(id, url) {
 							type: "POST",
 							processData: false,
 							url: sbm_baseUrl,
-							data: 'action=reorder&' + orderData
+							data: 'action=reorder&' + orderData,
+							success: resizeLists()
 					 	});
 						
 					}
@@ -174,24 +166,12 @@ function sbm_load(id, url) {
 
 // Aesthetic Systems
 		function resizeLists() {
-			// Calculate best width for columns
-			secretWidthFormula = parseInt(jQuery('.wrap').width()) / (jQuery('.container').size() - 1)
-				- ( parseInt(jQuery('.wrap').css('paddingRight')) + parseInt(jQuery('.wrap').css('paddingLeft')) )
-				- ( (!isNaN(value = parseInt(jQuery('.container').css('borderRightWidth'))) ? value : 1) + (!isNaN(value = parseInt(jQuery('.container').css('borderLeftWidth'))) ? value : 1) ) - 2;
+			calculateSecretHeightFormula();
+			initSortables();
+		}
 
-			// Ensure minimum and maximum sizes
-			if (secretWidthFormula < 150 ) { secretWidthFormula = 150 }
-			else if (secretWidthFormula > 270 ) { secretWidthFormula = 270 }
-
-			// Resize and reinit everything.
-			jQuery('.container').width(secretWidthFormula)
-			jQuery('#trashcontainer').width(secretWidthFormula+20)
-			jQuery('#sidebar-1container').css({ left: secretWidthFormula 		+ 35 })
-			jQuery('#sidebar-2container').css({ left: secretWidthFormula * 2 	+ 55 })
-			jQuery('#disabledcontainer').css({ left: secretWidthFormula * 3 	+ 80 })
-			jQuery('.modulewrapper').width(secretWidthFormula-40)
-			//cropTitles();
-
+		function calculateSecretHeightFormula() {
+			console.log('test');
 			// Get the current specified minimum height
 			var highest = parseInt(jQuery('.wrap').css('minHeight'));
 			var highestContainer = 430;
@@ -226,11 +206,9 @@ function sbm_load(id, url) {
 				if (jQuery(this).attr('id') == undefined)
 					jQuery(this).remove()
 			})
-
-			initSortables();
 		}
 
-/*		function cropTitles() {
+		function cropTitles() {
 			// Figure out how much space is available for the cropped name
 			var boink = jQuery('.sortable .name').parents('li:first');
 			var availableWidth = jQuery(boink).width() - parseInt(jQuery(boink).css('paddingRight')) - parseInt(jQuery(boink).css('paddingRight')) - jQuery(boink + ' a.optionslink').width() - 30;
@@ -265,7 +243,7 @@ function sbm_load(id, url) {
 				} // End if
 			});
 		}
-*/
+
 		function trim(s) {
 			s = s.replace(/(^\s*)|(\s*$)/gi,"");
 			s = s.replace(/[ ]{2,}/gi," ");
@@ -450,9 +428,6 @@ function sbm_load(id, url) {
 
 				tabSystem();
 				jQuery('#overlay').fadeTo('normal', 0)
-//				jQuery('.wrap').append('<div id="darken"></div>')
-//				jQuery('#darken').css({ zIndex: 2, left: 1180 })
-
 
 				// Backup/Restore system
 				jQuery('#backupsbm').click(function() {
