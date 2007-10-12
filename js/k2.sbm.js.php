@@ -99,27 +99,17 @@ function sbm_load(id, url) {
 					jQuery('#sortHelper').html( jQuery(drag).html() )
 				},
 				onChange: function(serial) {
-					jQuery('#trashcontainer').hide().css({ zIndex: -100 })
+					// Hide trash
+					jQuery('#trashcontainer')
+						.hide().css({ zIndex: -100 })
+						.children().empty()
+
+					resizeLists();
 
 					// If something is being trashed
 					var trashedModule = jQuery.SortSerialize('trash').o.trash[0];
 
-					// Show feedback
 					if (trashedModule != undefined) {
-						jQuery("#msg")
-							.text("'" + jQuery('#'+trashedModule+' .name').text() + "' was trashed")
-							.fadeIn(1000);
-
-						setTimeout( function() { jQuery('#msg').fadeOut('3000') }, 4000);
-
-						// Get the trashed module's parent list
-						var trashedFromList = jQuery('#'+trashedModule).attr('class').split(' ')[1];
-
-						// Fade trashed module
-						jQuery('#trash').children()
-							.fadeOut('fast', function() {
-								jQuery('#trash').empty();
-							});
 
 						// Remove from database
 						jQuery.post(sbm_baseUrl + "?action=remove", {
@@ -130,9 +120,9 @@ function sbm_load(id, url) {
 							jQuery("#loader").fadeOut(10000).empty();
 						});
 
-					// If the order has been changed
+					// If the order has changed
 					} else {
-						// Build New World Order
+						// Construct New World Order
 						var orderData = '';
 						var lists = jQuery('.reorderable');
 						for (var j = 0; j < lists.length; j++) {
@@ -147,13 +137,12 @@ function sbm_load(id, url) {
 							if (j < lists.length - 1) orderData += "&";
 						}
 
-						// Submit New World Order to db
+						// Submit NWO to db
 						jQuery.ajax({
 							type: "POST",
 							processData: false,
 							url: sbm_baseUrl,
-							data: 'action=reorder&' + orderData,
-							success: resizeLists
+							data: 'action=reorder&' + orderData
 					 	});
 						
 					}
@@ -166,22 +155,19 @@ function sbm_load(id, url) {
 
 // Aesthetic Systems
 		function resizeLists() {
+			console.log('Fire');
 			// Get the current specified minimum height
 			var highest = parseInt(jQuery('.wrap').css('minHeight'));
-			var highestContainer = 430;
 
 			// Calculate best height for columns
 			jQuery('#availablemodulescontainer, #sidebar-1container, #sidebar-2container, #disabledcontainer').each(function() {
-				var moduleHeight = '';
+				var moduleHeight = 37;
 
-				if (jQuery(this).attr('id') == 'availablemodulescontainer') {
+				if (jQuery(this).attr('id') == 'availablemodulescontainer')
 					moduleHeight = 27;
-				} else {
-					moduleHeight = 37;
-				}
 
 				var currentContainer = parseInt((jQuery(this).children('div').children('ul').children('li').length * moduleHeight + moduleHeight ));
-				var currentHeader = parseInt(jQuery(this).children('h3').height() *2);
+				var currentHeader = parseInt(jQuery(this).children('h3').height() * 2);
 				var currentColumn = currentContainer + currentHeader;
 
 				if ( currentColumn > highest ) {
@@ -192,12 +178,12 @@ function sbm_load(id, url) {
 			jQuery('.wrap').animate({ height: highest }, 200)
 			jQuery('.container').height(highest)
 
-			// Hack: Clean up the mess, until we fix it :)
-/*			jQuery('.wrap li').each(function() {
+			// Hack: Clean up the mess, until we fix it :) - Michael
+			jQuery('.wrap li').each(function() {
 				if (jQuery(this).attr('id') == undefined)
 					jQuery(this).remove()
 			})
-*/
+
 			// Spool the FTL drive
 			initSortables();
 		}
@@ -315,10 +301,10 @@ function sbm_load(id, url) {
 					data: "action=update&sidebar_id=" + curOptSidebar + "&module_id=" + curOptModule + "&" + jQuery('#module-options-form').serialize(),
 					success: function() {
 						jQuery('#'+curOptModule+' .name').text(jQuery('#module-name').val());
-//						jQuery('#msg').text("Options for '" + jQuery("#"+curOptModule+" .name").text() + "' saved successfully").fadeIn('1000');
-//						setTimeout( function() { jQuery('#msg').fadeOut('3000'); }, 4000);
-						//cropTitles();
-						if (closeVar == true) { closeOptions() };
+
+						if (closeVar == true)
+							closeOptions();
+
 						closeVar = false;
 					}
 				});
