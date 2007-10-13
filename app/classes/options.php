@@ -1,6 +1,17 @@
 <?php
 
+/**
+ * K2 Options
+ *
+ * @package k2options
+ */
+
 class K2Options {
+
+	/**
+	 * Adds default options to database
+	 */
+	
 	function install() {
 		add_option('k2asidescategory', '0', 'A category which will be treated differently from other categories');
 		add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on"); // (live & classic)
@@ -14,6 +25,11 @@ class K2Options {
 		add_option('k2columns', '2', 'Number of columns to display.');
 	}
 
+
+	/**
+	 * Deletes options from database
+	 */
+	
 	function uninstall() {
 		delete_option('k2asidescategory');
 		delete_option('k2livesearch');
@@ -27,6 +43,11 @@ class K2Options {
 		delete_option('k2columns');
 	}
 
+
+	/**
+	 * Initialization
+	 */
+	
 	function init() {
 		if(is_admin()) {
 			add_action('admin_menu', array('K2Options', 'add_menu'));
@@ -50,14 +71,56 @@ class K2Options {
 		}
 	}
 
+	
+	/**
+	 * Adds K2 Options to Presentation menu, adds actions for head and scripts
+	 *
+	 * @return void
+	 * @author Steve
+	 */
+
 	function add_menu() {
-		add_theme_page(__('K2 Options','k2_domain'), __('K2 Options','k2_domain'), 'edit_themes', 'k2-options', array('K2Options', 'admin'));
+		$page = add_theme_page(__('K2 Options','k2_domain'), __('K2 Options','k2_domain'), 'edit_themes', 'k2-options', array('K2Options', 'admin'));
+
+		add_action("admin_head-$page", array('K2Options', 'admin_head'));
+		add_action("admin_print_scripts-$page", array('K2Options', 'admin_print_scripts'));
 	}
 
+
+	/**
+	 * Displays K2 Options page
+	 */
+	
 	function admin() {
 		include(TEMPLATEPATH . '/app/display/options.php');
 	}
 
+
+	/**
+	 * Displays content in HEAD tag. Called by action: admin_head
+	 */
+	
+	function admin_head() { ?>
+
+		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/options.css" />
+
+<?php }
+
+
+	/**
+	 * Enqueues scripts. Called by action: admin_print_scripts
+	 */
+	
+	function admin_print_scripts() {
+		// Add our script to the queue
+		wp_enqueue_script('k2functions');
+	}
+
+
+	/**
+	 * Updates options
+	 */
+	
 	function update() {
 		if(!empty($_POST)) {
 			if(isset($_POST['k2'])) {
@@ -113,6 +176,7 @@ class K2Options {
 		}
 	}
 }
+
 
 add_action('k2_install', array('K2Options', 'install'));
 add_action('k2_uninstall', array('K2Options', 'uninstall'));

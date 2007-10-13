@@ -1,6 +1,19 @@
 <?php
+/**
+ * K2 - Main class
+ *
+ * @package K2
+ */
 
 class K2 {
+
+	/**
+	 * Class constructor
+	 * Provides Action: k2_init, k2_activate
+	 *
+	 * @global string $wp_version
+	 */
+
 	function init() {
 		global $wp_version;
 
@@ -46,6 +59,9 @@ class K2 {
 		// Let's do them now
 		do_action('k2_init');
 
+		// Register our scripts with script loader
+		K2::register_scripts();
+
 		// Register our sidebar with SBM/Widgets
 		if ( function_exists('register_sidebars') ) {
 			register_sidebars(2, array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>', 'before_title' => '<h4>', 'after_title' => '</h4>'));
@@ -60,6 +76,15 @@ class K2 {
 			}
 		}
 	}
+
+
+	/**
+	 * Called when K2 is installed or upgraded
+	 * Provides Action: k2_install
+	 *
+	 * @param integer $last_modified 
+	 * @global string $wp_version
+	 */
 
 	function install($last_modified) {
 		global $wp_version;
@@ -101,6 +126,14 @@ class K2 {
 		do_action('k2_install');
 	}
 
+
+	/**
+	 * Activates Default theme and removes K2 options
+	 * Provides Action: k2_uninstall
+	 *
+	 * @global mixed $wpdb
+	 */
+
 	function uninstall() {
 		global $wpdb;
 
@@ -129,15 +162,28 @@ class K2 {
 		exit;
 	}
 
+
+	/**
+	 * Called when user switches out of K2 (action: switch_theme)
+	 * Provides Action: k2_deactivate
+	 */
+
 	function theme_switch() {
 		update_option('k2active', 0);
 		do_action('k2_deactivate');
 	}
 
+
+	/**
+	 * Register K2 scripts to script loader
+	 */
+
 	function register_scripts() {
-		// Unload the bundled jQuery
-		wp_deregister_script('jquery');
-		wp_deregister_script('interface');
+		if ( !is_admin() or (is_admin() and ($_GET['page'] == 'k2-options' or $_GET['page'] == 'k2-sbm-manager')) ) {
+			// Unload the bundled jQuery
+			wp_deregister_script('jquery');
+			wp_deregister_script('interface');
+		}
 
 		// Register jQuery
 		wp_register_script('jquery',
@@ -152,40 +198,55 @@ class K2 {
 			get_bloginfo('template_directory').'/js/jquery.dimensions.js.php',
 			array('jquery'), '3238');
 
-		// Register our scripts with WordPress, version is Last Changed Revision
+		// Register our scripts with WordPress
 		wp_register_script('k2functions',
 			get_bloginfo('template_directory') . '/js/k2.functions.js.php',
-			array('jquery'), '223');
+			array('jquery'), '1.0');
 
 		wp_register_script('k2rollingarchives',
 			get_bloginfo('template_directory') . '/js/k2.rollingarchives.js.php',
-			array('jquery', 'k2slider', 'k2trimmer'), '224');
+			array('jquery', 'k2slider', 'k2trimmer'), '1.0');
 
 		wp_register_script('k2livesearch',
 			get_bloginfo('template_directory') . '/js/k2.livesearch.js.php',
-			array('jquery'), '262');
+			array('jquery'), '1.0');
 
 		wp_register_script('k2slider',
 			get_bloginfo('template_directory') . '/js/k2.slider.js.php',
-			array('jquery'), '262');
+			array('jquery'), '1.0');
 
 		wp_register_script('k2comments',
 			get_bloginfo('template_directory') . '/js/k2.comments.js.php',
-			array('jquery'), '216');
+			array('jquery'), '1.0');
 
 		wp_register_script('k2trimmer',
 			get_bloginfo('template_directory') . '/js/k2.trimmer.js.php',
-			array('jquery', 'k2slider'), '247');
+			array('jquery', 'k2slider'), '1.0');
 
 		wp_register_script('k2sbm',
 			get_bloginfo('template_directory') . '/js/k2.sbm.js.php',
-			array('jquery', 'interface', 'jquery.dimensions'), '');
+			array('jquery', 'interface', 'jquery.dimensions'), '1.0');
 	}
 
+
+	/**
+	 * Searches through 'styles' directory for css files
+	 *
+	 * @return array paths to style files
+	 */
+	
 	function get_styles() {
 		return K2::files_scan(K2_STYLES_PATH, 'css', 2);
 	}
 
+
+	/**
+	 * Helper function to load all php files in given directory using require_once
+	 *
+	 * @param string $dir_path directory to scan
+	 * @param array $ignore list of files to ignore
+	 */
+	
 	function include_all($dir_path, $ignore = false) {
 		// Open the directory
 		$dir = @dir($dir_path) or die('Could not open required directory ' . $dir_path);
@@ -202,6 +263,17 @@ class K2 {
 		$dir->close();
 	}
 
+
+	/**
+	 * Helper function to search for files based on given criteria
+	 *
+	 * @param string $path directory to search
+	 * @param array $ext file extensions
+	 * @param integer $depth depth of search
+	 * @param boolean $relative use relative path
+	 * @return array paths of files found
+	 */
+	
 	function files_scan($path, $ext = false, $depth = 1, $relative = true) {
 		$files = array();
 
@@ -211,6 +283,19 @@ class K2 {
 		return $files;
 	}
 
+
+	/**
+	 * Recursive function for files_scan
+	 *
+	 * @param string $base_path 
+	 * @param string $path 
+	 * @param string $ext 
+	 * @param string $depth 
+	 * @param string $relative 
+	 * @param string $files 
+	 * @return array paths of files found
+	 */
+	
 	function _files_scan($base_path, $path, $ext, $depth, $relative, &$files) {
 		if (!empty($ext)) {
 			if (!is_array($ext)) {
@@ -242,6 +327,16 @@ class K2 {
 		}
 	}
 
+
+	/**
+	 * Move an existing file to a new path
+	 *
+	 * @param string $source original path
+	 * @param string $dest new path
+	 * @param boolean $overwrite if destination exists, overwrite
+	 * @return string new path to file
+	 */
+	
 	function move_file($source, $dest, $overwrite = false) {
 		return K2::_copy_or_move_file($source, $dest, $overwrite, true);
 	}
