@@ -15,7 +15,7 @@ class K2Header {
 
 	function init() {
 		if ( function_exists('add_custom_image_header') and is_writable(K2_HEADERS_PATH) ) {
-			$styleinfo = get_style_data(get_option('k2scheme'));
+			$styleinfo = get_option('k2styleinfo');
 			$header_image = get_option('k2header_picture');
 
 			define('HEADER_IMAGE_HEIGHT', empty($styleinfo['header_height'])? 200 : $styleinfo['header_height']);

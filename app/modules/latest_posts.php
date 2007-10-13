@@ -1,8 +1,6 @@
 <?php
 
 function latest_posts_sidebar_module($args) {
-	global $post;
-
 	extract($args);
 
 	$query = 'showposts='.sbm_get_option('num_posts');
@@ -15,15 +13,10 @@ function latest_posts_sidebar_module($args) {
 	echo($before_module . $before_title . $title . $after_title);
 	?>
 	<span class="metalink"><a href="<?php bloginfo('rss2_url'); ?>" title="<?php _e('RSS Feed for Blog Entries','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
-
 		<ul>
-		<?php
-			$latest = new WP_Query($query);
-			foreach ($latest->posts as $post) {
-				setup_postdata($post);
-		?>
+		<?php $latest = new WP_Query($query); while ($latest->have_posts()): $latest->the_post(); ?>
 			<li><a href="<?php the_permalink(); ?>" title="<?php echo wp_specialchars(strip_tags(the_title('', '', false)), 1); ?>"><?php the_title(); ?></a></li>
-		<?php } /* end latest loop */ ?>
+		<?php endwhile; ?>
 		</ul>
 	<?php
 	echo($after_module);

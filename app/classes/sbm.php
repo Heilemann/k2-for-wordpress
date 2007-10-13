@@ -56,6 +56,10 @@ class K2SBM {
 		update_option('active_plugins', $plugins);
 	}
 
+	function reactivate_widgets_removal() {
+		update_option('k2active', false);
+	}
+
 	function init() {
 		global $k2sbm_active_modules, $k2sbm_disabled_modules, $k2sbm_restore, $k2sbm_restore_error;
 
@@ -952,4 +956,5 @@ add_action('k2_uninstall', array('K2SBM', 'uninstall'));
 add_action('k2_activate', array('K2SBM', 'activate'));
 add_action('k2_deactivate', array('K2SBM', 'deactivate'));
 
+add_action('deactivate_../themes/' . get_template() . '/app/includes/widgets-removal.php', array('K2SBM','reactivate_widgets_removal'));
 ?>

@@ -17,8 +17,9 @@ function get_k2info($show='') {
 			}
 			break;
 
-		case 'style_info' :
-			$output = stripslashes(get_option('k2styleinfo'));
+		case 'style_footer' :
+			$styleinfo = get_option('k2styleinfo');
+			$output = stripslashes($styleinfo['footer']);
 			break;
 
 		case 'styles_url' :
@@ -37,6 +38,7 @@ function get_k2info($show='') {
 	}
 	return $output;
 }
+
 
 function k2_parse_query($query) {
 	if ( is_array($query) and !empty($query) ) {
@@ -76,28 +78,27 @@ function k2_parse_query($query) {
 }
 
 function update_style_info() {
-	$styleinfo = '';
 	$data = get_style_data( get_option('k2scheme') );
 
-	if ( !empty($data) and ($data['style'] != '') and ($data['stylelink'] != '') and ($data['author'] != '') ) {
-		$styleinfo = $data['styleinfo'];
-
+	if ( !empty($data) and ($data['stylename'] != '') and ($data['stylelink'] != '') and ($data['author'] != '') ) {
 		// No custom style info
-		if ( $styleinfo == '' ) {
-			$styleinfo = K2_STYLE_INFO_FORMAT;
+		if ( $data['footer'] == '' ) {
+			$data['footer'] = K2_STYLE_FOOTER;
 		}
 
-		if ( strpos($styleinfo, '%') !== false ) {
-			$styleinfo = str_replace("%author%", $data['author'], $styleinfo);
-			$styleinfo = str_replace("%site%", $data['site'], $styleinfo);
-			$styleinfo = str_replace("%style%", $data['style'], $styleinfo);
-			$styleinfo = str_replace("%stylelink%", $data['stylelink'], $styleinfo);
-			$styleinfo = str_replace("%version%", $data['version'], $styleinfo);
-			$styleinfo = str_replace("%comments%", $data['comments'], $styleinfo);
+		if ( strpos($data['footer'], '%') !== false ) {
+			$data['footer'] = str_replace("%author%", $data['author'], $data['footer']);
+			$data['footer'] = str_replace("%site%", $data['site'], $data['footer']);
+			$data['footer'] = str_replace("%style%", $data['stylename'], $data['footer']);
+			$data['footer'] = str_replace("%stylelink%", $data['stylelink'], $data['footer']);
+			$data['footer'] = str_replace("%version%", $data['version'], $data['footer']);
+			$data['footer'] = str_replace("%comments%", $data['comments'], $data['footer']);
 		}
 	}
-	
-	update_option('k2styleinfo', $styleinfo);	
+
+	update_option('k2styleinfo', $data);	
+
+	return $data;
 }
 
 function get_style_data($style_file = '') {
@@ -113,9 +114,9 @@ function get_style_data($style_file = '') {
 	// parse the data
 	preg_match("|Author Name\s*:(.*)|i", $style_data, $author);
 	preg_match("|Author Site\s*:(.*)|i", $style_data, $site);
-	preg_match("|Style Name\s*:(.*)|i", $style_data, $style);
+	preg_match("|Style Name\s*:(.*)|i", $style_data, $stylename);
 	preg_match("|Style URI\s*:(.*)|i", $style_data, $stylelink);
-	preg_match("|Style Info\s*:(.*)|i", $style_data, $styleinfo);
+	preg_match("|Style Footer\s*:(.*)|i", $style_data, $footer);
 	preg_match("|Version\s*:(.*)|i", $style_data, $version);
 	preg_match("|Comments\s*:(.*)|i", $style_data, $comments);
 	preg_match("|Header Text Color\s*:\s*#*([\dABCDEF]+)|i", $style_data, $header_text_color);
@@ -124,11 +125,12 @@ function get_style_data($style_file = '') {
 	preg_match("|PHP File\s*:(.*)|i", $style_data, $php_file);
 
 	return array(
-		'style' => trim($style[1]),
-		'stylelink' => trim($stylelink[1]),
-		'styleinfo' => trim($styleinfo[1]),
+		'modified' => filemtime($style_path),
 		'author' => trim($author[1]),
 		'site' => trim($site[1]),
+		'stylename' => trim($stylename[1]),
+		'stylelink' => trim($stylelink[1]),
+		'footer' => trim($footer[1]),
 		'version' => trim($version[1]),
 		'comments' => trim($comments[1]),
 		'header_text_color' => trim($header_text_color[1]),

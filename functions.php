@@ -15,16 +15,14 @@ if(K2_MU) {
 	define('K2_HEADERS_PATH', TEMPLATEPATH . '/images/headers/');
 }
 
-// Sidebar manager options
-define('K2_SIDEBAR_SBM', 0);
-define('K2_SIDEBAR_WIDGETS', 1);
-define('K2_SIDEBAR_HAND', 2);
-
 // Are we using SBM?
-define('K2_USING_SBM', !function_exists('register_sidebar') && get_option('k2sidebarmanager') == K2_SIDEBAR_SBM);
+define('K2_USING_SBM', !function_exists('register_sidebar') && get_option('k2sidebarmanager') == '1');
 
 // Default style info format
-define('K2_STYLE_INFO_FORMAT', '<a href="%stylelink%" title="%style% by %author%">%style%<!-- %version%--></a>');
+define('K2_STYLE_FOOTER', '<a href="%stylelink%" title="%style% by %author%">%style%<!-- %version%--></a>');
+
+// Number of sidebars to use
+define('K2_SIDEBARS', 2);
 
 /* Blast you red baron! Initialise the k2 system */
 require(TEMPLATEPATH . '/app/classes/k2.php');

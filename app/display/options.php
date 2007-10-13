@@ -74,12 +74,12 @@
 			<div class="container">
 				<h3><label for="k2-sidebarmanager"><?php _e('Sidebar Management','k2_domain'); ?></label></h3>
 
-				<p class="checkboxelement"><input id="k2-sidebarmanager" name="k2[sidebarmanager]" type="checkbox" value="0" <?php checked('0', get_option('k2sidebarmanager')); ?> />
+				<p class="checkboxelement"><input id="k2-sidebarmanager" name="k2[sidebarmanager]" type="checkbox" value="1" <?php checked('1', get_option('k2sidebarmanager')); ?> />
 				<!--<label for="k2-sidebarmanager"><?php _e('Enable K2\'s Sidebar Manager','k2_domain'); ?></label>--></p>
 
 				<p><small><?php printf(__('K2 has its own sidebar management system. If you chose not to use it, K2 will use WordPress\'s widget system. Below you can set the number of columns K2 will display. <strong>%s</strong> will place both sidebars below the main column.', 'k2_domain'), $column_options[1]); ?></small></p>
 
-				<?php if (get_option('k2sidebarmanager') != 0) { /* Only show column option here if SBM isn't active */ ?>
+				<?php if (get_option('k2sidebarmanager') != '1') { /* Only show column option here if SBM isn't active */ ?>
 				<p>
 					<select id="k2-columns" name="k2[columns]">
 					<?php foreach ($column_options as $option => $label) { ?>

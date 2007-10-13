@@ -43,7 +43,7 @@ class K2 {
 		}
 
 		// Check if the theme is being activated/deactivated
-		if(!get_option('k2active')) {
+		if ( !get_option('k2active') ) {
 			update_option('k2active', true);
 			do_action('k2_activate');
 
@@ -64,15 +64,21 @@ class K2 {
 
 		// Register our sidebar with SBM/Widgets
 		if ( function_exists('register_sidebars') ) {
-			register_sidebars(2, array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>', 'before_title' => '<h4>', 'after_title' => '</h4>'));
+			register_sidebars(K2_SIDEBARS, array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>', 'before_title' => '<h4>', 'after_title' => '</h4>'));
 		}
 
-		// Check if there's a style, and if so if it has an attached PHP file
-		if(($scheme = get_option('k2scheme')) != '') {
-			$scheme_data = get_style_data($scheme);
+		// Check if there's a style
+		if ( ($style = get_option('k2scheme')) != '' ) {
+			$styleinfo = get_option('k2styleinfo');
 
-			if($scheme_data['php'] && file_exists($scheme_data['php'])) {
-				include_once($scheme_data['php']);
+			// Update the style info if style has been modified
+			if ( filemtime(K2_STYLES_PATH . $style) != $styleinfo['modified'] ) {
+				$styleinfo = update_style_info();
+			}
+
+			// Load attached php file
+			if ( $styleinfo['php'] && file_exists($styleinfo['php']) ) {
+				include_once($styleinfo['php']);
 			}
 		}
 	}

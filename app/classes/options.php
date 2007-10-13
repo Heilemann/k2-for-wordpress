@@ -16,10 +16,10 @@ class K2Options {
 		add_option('k2asidescategory', '0', 'A category which will be treated differently from other categories');
 		add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on"); // (live & classic)
 		add_option('k2archives', '0', 'Set whether K2 has a Live Archive page');
-		add_option('k2sidebarmanager', '0', 'Choose the Style you want K2 to use');
+		add_option('k2sidebarmanager', '1', 'Set whether to use K2 Sidebar Manager');
 		add_option('k2scheme', '', 'Choose the Style you want K2 to use');
 		add_option('k2livecommenting', '1', "If you don't trust JavaScript, you can turn off Live Commenting. Otherwise it is suggested you leave it on");
-		add_option('k2styleinfo', '', 'Formatted string for style info display.');
+		add_option('k2styleinfo', '', 'Metadata of current style.');
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
 		add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.');
 		add_option('k2columns', '2', 'Number of columns to display.');
@@ -153,11 +153,11 @@ class K2Options {
 					update_option('k2livecommenting', '0');
 				}
 
-				// Advanced Navigation
+				// K2 Sidebar Manager
 				if(isset($_POST['k2']['sidebarmanager'])) {
-					update_option('sidebarmanager', '0');
-				} else {
 					update_option('k2sidebarmanager', '1');
+				} else {
+					update_option('k2sidebarmanager', '0');
 				}
 
 				// Set all the options
