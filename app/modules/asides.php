@@ -1,8 +1,6 @@
 <?php
 
 function asides_sidebar_module($args) {
-	global $post;
-
 	extract($args);
 
 	$k2asidescategory = get_option('k2asidescategory');
@@ -16,13 +14,13 @@ function asides_sidebar_module($args) {
 				$asides_count = 1;
 				$asides = new WP_Query('cat=' . $k2asidescategory . '&showposts=' . sbm_get_option('num_posts'));
 
-				foreach ($asides->posts as $post) {
-					setup_postdata($post);
+				while ( $asides->have_posts() ):
+					$asides->the_post();
 			?>
 			<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class($asides_count++, true); ?>">
 				<span>&raquo;&nbsp;</span><?php the_content(__('(more)','k2_domain')); ?>&nbsp;<span class="metalink"><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php comments_number('(0)','(1)','(%)'); ?></a></span><?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="entry-edit">','</span>'); ?>
 			</div>
-			<?php } /* end asides loop */ ?>
+			<?php endwhile; ?>
 		</div>
 <?php
 		echo $after_module;
