@@ -31,41 +31,61 @@
 <div id="optionswindow">
 	<a href="#" id="closelink" title="Close"></a>
 
-	<div class="opttl">&nbsp;</div>
-	<div class="optt">&nbsp;</div>
-	<div class="opttr">&nbsp;</div>
+	<table>
+	<tr>
+		<td class="opttl">&nbsp;</td>
+		<td class="optt">&nbsp;</td>
+		<td class="opttr">&nbsp;</td>
+	</tr>
 
-	<div class="optl"> </div>
-	<div class="optr"> </div>
-
-	<div class="optbl"> </div>
-	<div class="optb"> </div>
-	<div class="optbr"> </div>
-
-	<div class="tabbg">
-	<div class="tabs">
-		<a href="#" id="optionstab" class="selected" title="<?php _e('Options for this module type'); ?>">Options</a>
-		<a href="#" id="advancedtab">Advanced</a>
-		<a href="#" id="displaytab" title="<?php _e('Where to display this module'); ?>">Display</a>
-	</div>
-	</div>
-
-	<div class="optcontents">
-
-		<form id="module-options-form">
-
-			<div id="options">
+	<tr>
+		<td class="optl" rowspan="3">&nbsp;</td>
+		<td class="opttabs">
+	
+	
+			<div class="tabbg">
+			<div class="tabs">
+				<a href="#" id="optionstab" class="selected" title="<?php _e('Options for this module type'); ?>">Options</a>
+				<a href="#" id="advancedtab">Advanced</a>
+				<a href="#" id="displaytab" title="<?php _e('Where to display this module'); ?>">Display</a>
+			</div>
 			</div>
 
-			<!--<p class="optionkeys"><?php _e('\'Enter\' saves, \'Escape\' closes.'); ?></p>-->
 
-		</form>
-	</div>
+		</td><td class="optr" rowspan="3">&nbsp;</td>
+	</tr>
 
-	<p class="submitbuttons">
-		<input type="submit" id="submit" value="<?php echo attribute_escape(__('Save', 'k2_domain')); ?>" />
-		<input type="submit" id="submitclose" value="<?php echo attribute_escape(__('Save &amp; Close', 'k2_domain')); ?>" />
-	</p>
+	<tr>
+		<td class="optcontents">
+
+
+			<form id="module-options-form">
+
+				<div id="options">
+				</div>
+
+				<!--<p class="optionkeys"><?php _e('\'Enter\' saves, \'Escape\' closes.'); ?></p>-->
+
+			</form>
+
+	</tr><tr>
+		</td><td class="optbuttons">
+
+
+			<p class="submitbuttons">
+				<input type="submit" id="submit" value="<?php echo attribute_escape(__('Save', 'k2_domain')); ?>" />
+				<input type="submit" id="submitclose" value="<?php echo attribute_escape(__('Save &amp; Close', 'k2_domain')); ?>" />
+			</p>
+
+		</td>
+	</tr>
+
+	<tr>
+		<td class="optbl">&nbsp;</td>
+		<td class="optb">&nbsp;</td>
+		<td class="optbr">&nbsp;</td>
+	</tr>
+	</table>
 </div>
 
 <div id="parentwrapper">

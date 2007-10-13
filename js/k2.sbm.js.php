@@ -155,7 +155,6 @@ function sbm_load(id, url) {
 
 // Aesthetic Systems
 		function resizeLists() {
-			console.log('Fire');
 			// Get the current specified minimum height
 			var highest = parseInt(jQuery('.wrap').css('minHeight'));
 
@@ -319,8 +318,8 @@ function sbm_load(id, url) {
 			var originalPosition = jQuery(moduleID).offset({ margin:false, border:false });
 			var originalWidth = jQuery(moduleID).width()-8;
 			var originalHeight = jQuery(moduleID).height();
-			var optionsWidth = 400;
-			var optionsHeight = 250;
+			var optionsWidth = 460;
+			var optionsHeight = 200;
 			var optionsX = (jQuery(window).width()) / 2 - ((optionsWidth)/2);
 //			var optionsY = (jQuery(window).height()) / 2 - (optionsHeight/2);
 			var optionsY = 100;
@@ -330,7 +329,8 @@ function sbm_load(id, url) {
 
 			// Dim screen
 			jQuery('#overlay')
-				.css({ zIndex: 500, opacity: .5 })
+				.show()
+				.css({ opacity: .5 })
 				.click(function() {
 					// Note to self: Consider checking whether the forms have been changed, and as if the user wants to save, or close and have an undo.
 					closeOptions();
@@ -339,15 +339,15 @@ function sbm_load(id, url) {
 			jQuery('#optionswindow')
 				.addClass('optionsspinner')
 				.show()
-				.css({ top: optionsY, left: optionsX, width: optionsWidth, height: optionsHeight })
+				.fadeIn('slow')
 
 			// Get the options via AJAX
 			jQuery.post( sbm_baseUrl, {
 					action: 'control-show',
-					module_id: jQuery(moduleID).attr('id')
+					module_id: jQuery(moduleID).attr('id'),
 				},
 				function (data) {
-					jQuery('#options').empty().append(data)
+					jQuery('#options').hide().empty().append(data).fadeIn('fast')
 					jQuery('#module-name').focus()
 					jQuery('#optionswindow').removeClass('optionsspinner')
 
@@ -386,11 +386,14 @@ function sbm_load(id, url) {
 			// Reset the tab system
 			jQuery('.tabs').children().removeClass('selected')
 			jQuery('#optionstab').addClass('selected')
-			jQuery('#options').empty()
-			jQuery('#optionswindow').hide()
+
+			jQuery('#optionswindow').fadeOut('fast', function() {
+				jQuery(this).hide()
+				jQuery('#options').empty()
+			})
 
 			// Dim overlay
-			jQuery('#overlay').css({ opacity: 0, zIndex: -100 })
+			jQuery('#overlay').hide().css({ opacity: 0 })
 			return false;
 		}
 
@@ -401,7 +404,8 @@ function sbm_load(id, url) {
 				resizeLists();
 
 				tabSystem();
-				jQuery('#overlay').fadeTo('normal', 0)
+
+				jQuery('#optionswindow').css({ zIndex: 1000, visibility: 'visible' }).hide()
 
 				// Backup/Restore system
 				jQuery('#backupsbm').click(function() {
@@ -411,10 +415,10 @@ function sbm_load(id, url) {
 
 				jQuery('#restoresbm').click(function() {
 					jQuery('#backupsbmwindow').css({ top: 20, opacity: 0, zIndex: 700 }).animate({ top: 38, opacity: 1 }, 600, 'easeOutSine')
-					jQuery('#overlay').css({ zIndex: 600, opacity: .5 }).click(function() {
+					jQuery('#overlay').show().css({ opacity: .5 }).click(function() {
 						jQuery('#backupsbmwindow').animate({ top: 20, opacity: 0 }, 600, 'easeOutSine', function() {
 							jQuery(this).css({ zIndex: -100 })
-							jQuery('#overlay').css({ opacity: 0, zIndex: -100 })
+							jQuery('#overlay').hide().css({ opacity: 0 })
 						})
 						
 					})
