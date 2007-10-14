@@ -60,7 +60,7 @@
   
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
 	<?php /* Rolling Archives */ if (get_option('k2rollingarchives') == 1) { ?>
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/css/rollingarchives.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/css/rollingarchives.css.php" />
 	<?php } ?>
 	<?php /* Custom Style */ if (get_option('k2scheme') != '') { ?>
 	<link rel="stylesheet" type="text/css" href="<?php k2info('style'); ?>" />

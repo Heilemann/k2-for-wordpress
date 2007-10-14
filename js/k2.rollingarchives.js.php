@@ -135,13 +135,5 @@ var k2Rolling = {
 
 
 
-function smartPosition() {
-	// Detect if content is being scroll offscreen.
-	if ( (document.documentElement.scrollTop || document.body.scrollTop) >= jQuery('#dynamic-content').offset().top) {
-		jQuery('body').addClass('fixraposition');
-	} else {
-		jQuery('body').removeClass('fixraposition');
-	}
-};
 
-jQuery(document).scroll(smartPosition);
+jQuery(document).scroll(function() { smartPosition('#dynamic-content') });

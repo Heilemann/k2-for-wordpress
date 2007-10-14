@@ -1,120 +1,156 @@
-.wrap {
-	font: 14px Helvetica, Arial, Sans-Serif;
+.k2wrap {
+	font-family: Helvetica, Arial, Sans-Serif;
 	border: none;
 	border-bottom: 1px solid #eee;
 	background: transparent;
-	padding-top: 10px;
-}
-
-#footer {
-	display: none;
-}
-
-.wrap.uninstall {
-	border: none;
-	margin-top: 40px;
-}
-
-.sbmheader {
-	position: relative;
-	height: 50px;
-}
-
-h2 {
-	position: absolute;
-	top: 13px;
-	left: 10px;
-	font: 20px Helvetica, Arial, Sans-Serif;
-	color: #777;
-	background: none;
-}
-
-
-h3 {
-	font: normal 1.5em Helvetica, Arial, Sans-Serif;
-	margin: 50px 0 0;
-	color: #222;
-	display: inline;
-}
-
-small {
-	color: #666;
-}
-
-.error {
-	color #666;
-	font-size: .8em;
-}
+	padding: 10px;
+	margin: 0;
+	}
 
 .configstuff {
+	position: relative;
+	font-size: 1.3em;
 	max-width: 600px;
 	min-width: 300px;
 	margin: 0 auto;
-	font-size: 1.1em;
+	padding-top: 40px; /* For floating .savebutton */
+	}
+
+.savebutton {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	max-width: 600px;
+	min-width: 300px;
+	padding: 10px 0;
+	z-index: 100;
+	background: #f9fcfe;
+	}
+
+.savebutton button {
+	float: right;
+	width: 100px;
+	}
+
+body.smartposition .savebutton {
+	border-bottom: 1px solid #ddd;
+	position: fixed;
+	top: 0;
+	}
+
+.container {
+	margin: 10px 0 20px;
 	position: relative;
-}
+	padding-top: 20px;
+	}
 
-.configstuff #k2-blogornoblog, .configstuff select  {
-	width: 40%;
-}
+h3 {
+	font: normal 1.3em Helvetica, Arial, Sans-Serif;
+	color: #333;
+	padding-right: 25px;
+	border-right: 1px solid #eee;
+	width: 205px;
+	margin: 0;
+	overflow: hidden;
+	white-space: pre;
+	}
 
-.configstuff p select {
-	margin-left: 30%;
-}
+.k2wrap p.description {
+	margin-top: 3px;
+	color: #888;
+	font-size: .75em;
+	}
+
+.error {
+	color #666; font-size: .8em;
+	}
+
+.configstuff #k2-blogornoblog, .configstuff select {
+	width: 50%;
+	}
+
+.configstuff #k2-asidescategory, .configstuff #k2-scheme, .checkboxelement {
+	position: absolute;
+	left: 250px;
+	}
+
+.checkboxelement {
+	top: 27px;
+	margin: 0;
+	}
+	
+.configstuff #k2-asidescategory, .configstuff #k2-scheme {
+	top: 22px;
+	width: 330px;
+	}
+
+#k2-header-picture, #k2-blogornoblog {
+	width: 200px !important;
+	}
+
+.configstuff select {
+	font-family: Helvetica, Arial, Sans-Serif;
+	color: #222;
+	}
+
+.configstuff input {
+	font-family: Helvetica, Arial, Sans-Serif;
+	color: #222;
+	}
 
 .configstuff input[type=file] {
 	width: 220px;
 	background: none;
 	border: none;
 	padding: 0;
-}
-
-.configstuff input[type=checkbox] {
-	margin-right: 8px;
-}
+	}
 
 .configelap {
 	text-align: center;
-}
+	}
 
 table {
 	margin: 0 auto;
 	padding: 0;
 	border-spacing: 0;
-}
+	}
 
 table tr td {
 	padding: 5px;
-}
+	}
 
 .sidebarradio {
 	text-align: center;
-}
+	}
+
 .sidebarradio span {
 	margin-right: 40px;
-}
+	}
 
 .sidebarradio span input {
 	margin-right: 5px;
-}
+	}
 
 .sidebarno {
 	margin-right: 0;
-}
+	}
 
-.checkboxelement {
-	position: relative;
-	top: -3px;
-	margin: 0 0 0 15px;
-	font-size: 11px;
-	line-height: 18px;
-	color: #666;
-	display: inline;
-}
 
-.checkboxelement label {
-}
+.k2wrap.uninstall {
+	border: none;
+	margin-top: 2px;
+	padding: 30px 20px 50px;
+	background: #eee url('../images/sbmmanager/sbmbg.png') top repeat-x;
+	}
 
-.container {
-	margin: 40px 0;
-}
+.k2wrap.uninstall input {
+	background: #222;
+	color: white;
+	border: none;
+	padding: 5px 30px;
+	}
+
+#footer {
+	display: none;
+	}
+

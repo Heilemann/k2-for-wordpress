@@ -94,6 +94,19 @@ function deleteCookie(name, path, domain) {
 };
 
 
+/* Fix the position of an element when it is about to be scrolled off-screen */
+function smartPosition(obj) {
+	// Detect if content is being scroll offscreen.
+	if ( (document.documentElement.scrollTop || document.body.scrollTop) >= jQuery(obj).offset().top) {
+		jQuery('body').addClass('smartposition');
+	} else {
+		jQuery('body').removeClass('smartposition');
+	}
+};
+
+
+
+
 /*
 	Base, version 1.0.2
 	Copyright 2006, Dean Edwards

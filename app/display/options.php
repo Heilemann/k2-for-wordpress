@@ -29,9 +29,9 @@
 	$header_picture = get_option('k2header_picture');
 
 	$header_sizes = array(
-		1 => __('560 x 200 px','k2_domain'),
-		__('780 x 200 px','k2_domain'),
-		__('950 x 200 px','k2_domain')
+		1 => __('560 &#215; 200px','k2_domain'),
+		__('780 &#215; 200px','k2_domain'),
+		__('950 &#215; 200px','k2_domain')
 	);
 
 	// Check that we can write to the headers folder and that it exists
@@ -41,6 +41,10 @@
 	// Get the header pictures
 	$picture_files = K2Header::get_header_images();
 ?>
+
+<script>
+	jQuery(document).scroll(function() { smartPosition('.configstuff') });
+</script>
 
 
 <?php if(isset($_POST['submit']) or isset($_GET['updated'])) { ?>
@@ -55,8 +59,7 @@
 </div>
 <?php } ?>
 
-
-<div class="wrap">
+<div class="k2wrap">
 	<?php if (!$is_styles_dir) { ?>
 		<div class="error"><small>
 		<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom styles is missing.</p><p>For you to be able to use custom styles, you need to add this directory.</p>','k2_domain'), K2_STYLES_PATH ); ?>
@@ -70,6 +73,11 @@
 		<input type="hidden" name="page_options" value="'dofollow_timeout'" />
 
 		<div class="configstuff">
+
+			<div class="savebutton">
+				<button><?php echo attribute_escape(__('Save','k2_domain')); ?></button>
+			</div>
+
 		
 			<div class="container">
 				<h3><label for="k2-sidebarmanager"><?php _e('Sidebar Management','k2_domain'); ?></label></h3>
@@ -77,9 +85,9 @@
 				<p class="checkboxelement"><input id="k2-sidebarmanager" name="k2[sidebarmanager]" type="checkbox" value="1" <?php checked('1', get_option('k2sidebarmanager')); ?> />
 				<!--<label for="k2-sidebarmanager"><?php _e('Enable K2\'s Sidebar Manager','k2_domain'); ?></label>--></p>
 
-				<p><small><?php printf(__('K2 has its own sidebar management system. If you chose not to use it, K2 will use WordPress\'s widget system. Below you can set the number of columns K2 will display. <strong>%s</strong> will place both sidebars below the main column.', 'k2_domain'), $column_options[1]); ?></small></p>
+				<p class="description"><?php printf(__('K2 has a neat sidebar system. If disabled, K2 reverts to WordPress widgets.', 'k2_domain'), $column_options[1]); ?></p>
 
-				<?php if (get_option('k2sidebarmanager') != '1') { /* Only show column option here if SBM isn't active */ ?>
+				<?php if (get_option('k2sidebarmanager') == 0) { /* Only show column dropdown if SBM is disabled */ ?>
 				<p>
 					<select id="k2-columns" name="k2[columns]">
 					<?php foreach ($column_options as $option => $label) { ?>
@@ -97,7 +105,7 @@
 				<p class="checkboxelement"><input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2livesearch')); ?> />
 				<!--<label for="k2-advnav"><?php _e('Enable Advanced Navigation','k2_domain'); ?></label>--></p>
 
-				<p><small><?php _e('K2\'s Advanced Navigation is in reality a couple of features, which together work to make the task of searching through your blog faster and easier. This includes inline AJAX-powered livesearch as well as the ability to flip back and forth between archive pages, without reloading the current page.','k2_domain'); ?></small></p>
+				<p class="description"><?php _e('Seamlessly search and navigate old posts.','k2_domain'); ?></p>
 			</div>
 
 
@@ -107,12 +115,12 @@
 				<p class="checkboxelement"><input id="k2-archives" name="k2[archives]" type="checkbox" value="add_archive" <?php checked('add_archive', get_option('k2archives')); ?> />
 				<!--<label for="k2-archives"><?php _e('Enable Archives Page','k2_domain'); ?></label>--></p>
 
-				<p><small><?php _e('To further enhance your precious backlog of writings, you can enable an archives page, which can assist both your readers as well as yourself in digging up the past.','k2_domain'); ?></small></p>
+				<p class="description"><?php _e('Installs a pre-made archives page.','k2_domain'); ?></p>
 
 				<?php if (!function_exists('af_ela_set_config') && ($wp_version > 2.2)) { ?>
-					<?php printf(__('We recommend you install %s for maximum archival pleasure.','k2_domain'), '<a href="http://www.sonsofskadi.net/index.php/extended-live-archive/">' . __('Arnaud Froment\'s Extended Live Archives','k2_domain') . '</a>'); ?></small></p>
+					<?php printf(__('We recommend you install %s for maximum archival pleasure.','k2_domain'), '<a href="http://www.sonsofskadi.net/index.php/extended-live-archive/">' . __('Arnaud Froment\'s Extended Live Archives','k2_domain') . '</a>'); ?></p>
 				<?php } else if (function_exists('af_ela_set_config')) { ?>
-					</small></p><p class="configelap"><input id="configela" name="configela" type="submit" value="<?php echo attribute_escape(__('Configure Extended Live Archives for K2','k2_domain')); ?>" /></p>
+					</p><p class="configelap"><input id="configela" name="configela" type="submit" value="<?php echo attribute_escape(__('Configure Extended Live Archives for K2','k2_domain')); ?>" /></p>
 				<?php } ?>
 			</div>
 
@@ -123,24 +131,23 @@
 				<p class="checkboxelement"><input id="k2-livecommenting" name="k2[livecommenting]" type="checkbox" value="1" <?php checked('1', get_option('k2livecommenting')); ?> />
 				<!--<label for="k2-livecommenting"><?php _e('Enable Live Commenting','k2_domain'); ?></label>--></p>
 				
-				<p><small><?php _e('Live comments use AJAX to submit comments to the server without reloading the page, making the experience more seamless for the user.','k2_domain'); ?></small></p>
+				<p class="description"><?php _e('Submit comments without reloading the page.','k2_domain'); ?></p>
 			</div>
 
 
 			<div class="container">
 				<h3><?php _e('Asides','k2_domain'); ?></h3>
 
-				<p><small><?php _e('\'Asides\' is a category of entries, meant to be \'smaller\' and perhaps of \'less importance\', like for instance links with minor commentary. They are styled differently than other entries to separate them content-wise. Below you can select a category to be shown as Asides.','k2_domain'); ?></small></p>
+				<select id="k2-asidescategory" name="k2[asidescategory]">
+					<option value="0" <?php selected($asides_id, '0'); ?>><?php _e('None','k2_domain'); ?></option>
 
-				<p>
-					<select id="k2-asidescategory" name="k2[asidescategory]">
-						<option value="0" <?php selected($asides_id, '0'); ?>><?php _e('No Asides','k2_domain'); ?></option>
+					<?php foreach ($asides_cats as $cat) { ?>
+					<option value="<?php echo attribute_escape($cat->cat_ID); ?>" <?php selected($asides_id, $cat->cat_ID); ?>><?php echo($cat->cat_name); ?></option>
+					<?php } ?>
+				</select>
 
-						<?php foreach ($asides_cats as $cat) { ?>
-						<option value="<?php echo attribute_escape($cat->cat_ID); ?>" <?php selected($asides_id, $cat->cat_ID); ?>><?php echo($cat->cat_name); ?></option>
-						<?php } ?>
-					</select>
-				</p>
+				<p class="description"><?php _e('Aside posts are styled differently and can be placed on the sidebar.','k2_domain'); ?></p>
+
 			</div>
 
 
@@ -148,26 +155,23 @@
 			<div class="container">
 				<h3><?php _e('Style','k2_domain'); ?></h3>
 
-				<p><small><?php printf(__('K2 Styles are CSS files that allow you to visually customize your blog, without ever touching K2\'s core files. The structure of K2 has been designed specifically for this purpose, and offers some truly great styling opportunities. %s','k2_domain'), '<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS">' . __('Read&nbsp;more','k2_domain') . '</a>.'  ); ?></small></p>
-
-				<p><select id="k2-scheme" name="k2[scheme]">
-					<option value="" <?php selected($style_name, ''); ?>><?php _e('No Style','k2_domain'); ?></option>
+				<select id="k2-scheme" name="k2[scheme]">
+					<option value="" <?php selected($style_name, ''); ?>><?php _e('None','k2_domain'); ?></option>
 
 					<?php foreach($style_files as $style_file) { ?>
 					<option value="<?php echo attribute_escape($style_file); ?>" <?php selected($style_name, $style_file); ?>><?php echo($style_file); ?></option>
 					<?php } ?>
 				</select>
-				</p>
+
+				<p class="description"><?php printf(__('K2 is highly customizable, using only CSS. Never touch a core files again. %s','k2_domain'), '<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS">' . __('Read&nbsp;more','k2_domain') . '</a>.'  ); ?></p>
 			</div>
 			<?php } ?>
 
 
-			<div class="container">
+			<div class="container headercontainer">
 				<h3><?php _e('Header','k2_domain'); ?></h3>
 
-				<p><small>
-				<?php printf(__('Your header is the crown of your blog, with plenty of room to express yourself. Here you can decide on the ultimate question: Is it a a blog or a journal? But more importantly, you can upload images for use as header backgrounds. The default K2 header size for your current setup is: <strong>%s</strong>.','k2_domain'), $header_sizes[$column_number] ); ?>
-				</small></p>
+				<p class="description"><?php printf(__('The header size for a default %s setup is <strong>%s</strong>.','k2_domain'), $column_options[$column_number], $header_sizes[$column_number] ); ?></p>
 
 				<?php if (!$is_headers_dir) { ?>
 					<div class="error">
@@ -201,7 +205,7 @@
 						<?php } ?>
 					</select>
 				</td><td>	
-					<input id="k2-imagerandomfeature" name="k2[imagerandomfeature]" type="checkbox" value="1" <?php checked('1', get_option('k2imagerandomfeature')); ?> /><small><label for="k2-imagerandomfeature"><?php _e('Randomize Header Image','k2_domain'); ?></label></small>
+					<input id="k2-imagerandomfeature" name="k2[imagerandomfeature]" type="checkbox" value="1" <?php checked('1', get_option('k2imagerandomfeature')); ?> /><small><label for="k2-imagerandomfeature"><?php _e('Randomize Image','k2_domain'); ?></label></small>
 				</td></tr>
 				<?php } ?>
 			
@@ -213,15 +217,11 @@
 				</table>
 			</div>
 				
-			<p class="submit">
-				<input type="submit" name="submit" value="<?php echo attribute_escape(__('Update Options &raquo;','k2_domain')); ?>" />
-			</p>
-
 		</div>
 
 </div>
 
-<div class="wrap uninstall">
+<div class="k2wrap uninstall">
 
 
 		<div class="configstuff">
@@ -229,7 +229,7 @@
 
 			<script type="text/javascript">
 			function confirmUninstall() {
-				if (confirm("<?php _e('This will delete all your K2 settings.','k2_domain'); ?>") == true) {
+				if (confirm("<?php _e('Delete your K2 settings?','k2_domain'); ?>") == true) {
 					return true;
 				} else {
 					return false;
@@ -238,8 +238,7 @@
 			</script>
 
 
-			<p><small><?php _e('Uninstalling reverts WordPress to the default theme and removes all K2 settings from the database. No files are deleted. Perfect for if you want to start afresh.','k2_domain'); ?></small></p>
-
+			<p class="description"><?php _e('Remove all K2 settings and revert WordPress to its default theme. No files are deleted.','k2_domain'); ?></p>
 			<p style="text-align: center;"><input id="uninstall" name="uninstall" type="submit" onClick="return confirmUninstall()" value="<?php echo attribute_escape(__('Reset and Uninstall K2','k2_domain')); ?>" /></p>
 		</div>
 

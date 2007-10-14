@@ -701,15 +701,15 @@ msgid "Three Columns"
 msgstr ""
 
 #: app/display/options.php:32
-msgid "560 x 200 px"
+msgid "560 &#215; 200 px"
 msgstr ""
 
 #: app/display/options.php:33
-msgid "780 x 200 px"
+msgid "780 &#215; 200 px"
 msgstr ""
 
 #: app/display/options.php:34
-msgid "950 x 200 px"
+msgid "950 &#215; 200 px"
 msgstr ""
 
 #: app/display/options.php:48
