@@ -330,8 +330,8 @@ function sbm_load(id, url) {
 			// Dim screen
 			jQuery('#overlay')
 				.show()
-				.css({ opacity: .5 })
-				.click(function() {
+				.css({ opacity: '.5' })
+				.click( function() {
 					// Note to self: Consider checking whether the forms have been changed, and as if the user wants to save, or close and have an undo.
 					closeOptions();
 				})
@@ -344,12 +344,13 @@ function sbm_load(id, url) {
 			// Get the options via AJAX
 			jQuery.post( sbm_baseUrl, {
 					action: 'control-show',
-					module_id: jQuery(moduleID).attr('id'),
+					module_id: jQuery(moduleID).attr('id')
 				},
 				function (data) {
-					jQuery('#options').hide().empty().append(data).fadeIn('fast')
-					jQuery('#module-name').focus()
-					jQuery('#optionswindow').removeClass('optionsspinner')
+					jQuery('#options').hide().empty().append(data).fadeIn('fast', function() {
+						jQuery('#module-name').focus()
+						jQuery('#optionswindow').removeClass('optionsspinner')
+					})
 
 					// Fetch static page list
 					jQuery.post( sbm_baseUrl, {
@@ -371,15 +372,14 @@ function sbm_load(id, url) {
 									.attr('disabled', 'disabled')
 							}
 						})
-					})
+					}) // End jQuery.post
+				})
+		
 
 					// Dumbass caret fix. REMOVE ME FOR FF3.0
-// Disabled, as it breaks the 'oveflow: auto'
-//					if (jQuery.browser.mozilla)
-//						jQuery('#options > *:has(input)').css('position', 'fixed').css('width', optionsWidth + 'px')
-				}
-			);
-			
+					// Disabled, as it breaks the 'oveflow: auto'
+					/*if (jQuery.browser.mozilla)
+						jQuery('#options > *:has(input)').css('position', 'fixed').css('width', optionsWidth + 'px')*/
 		}
 
 		function closeOptions() {
@@ -432,4 +432,4 @@ function sbm_load(id, url) {
 
 		jQuery(window).resize(resizeLists)
 
-		};
+	};
