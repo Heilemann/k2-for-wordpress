@@ -1,3 +1,7 @@
+<?php require('header.php'); ?>
+
+/* This file contains the CSS for the 'Advanced Navigation' features, including livesearch and rolling archives */
+
 #pagetrack #dragHelper {
 	overflow: visible !important;
 }
@@ -270,7 +274,7 @@ div.trimmed .hentry.alt {
 	display: block;
 	}
 
-body.fixraposition #rollingarchives {
+body.smartposition #rollingarchives {
 	position: fixed;
 	top: 0px;
 	background: #fff;
@@ -281,7 +285,7 @@ body.fixraposition #rollingarchives {
 	padding-bottom: 30px;
 	}
 
-body.fixraposition #trimmertrim, body.fixraposition #trimmeruntrim {
+body.smartposition #trimmertrim, body.smartposition #trimmeruntrim {
 	top: 3px;
 	}
 
