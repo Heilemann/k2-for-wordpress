@@ -80,7 +80,7 @@
 
 		
 			<div class="container">
-				<h3><label for="k2-sidebarmanager"><?php _e('Sidebar Management','k2_domain'); ?></label></h3>
+				<h3><label for="k2-sidebarmanager"><?php _e('Sidebar Manager','k2_domain'); ?></label></h3>
 
 				<p class="checkboxelement"><input id="k2-sidebarmanager" name="k2[sidebarmanager]" type="checkbox" value="1" <?php checked('1', get_option('k2sidebarmanager')); ?> />
 				<!--<label for="k2-sidebarmanager"><?php _e('Enable K2\'s Sidebar Manager','k2_domain'); ?></label>--></p>
@@ -139,7 +139,7 @@
 				<h3><?php _e('Asides','k2_domain'); ?></h3>
 
 				<select id="k2-asidescategory" name="k2[asidescategory]">
-					<option value="0" <?php selected($asides_id, '0'); ?>><?php _e('None','k2_domain'); ?></option>
+					<option value="0" <?php selected($asides_id, '0'); ?>><?php _e('Off','k2_domain'); ?></option>
 
 					<?php foreach ($asides_cats as $cat) { ?>
 					<option value="<?php echo attribute_escape($cat->cat_ID); ?>" <?php selected($asides_id, $cat->cat_ID); ?>><?php echo($cat->cat_name); ?></option>
@@ -156,14 +156,14 @@
 				<h3><?php _e('Style','k2_domain'); ?></h3>
 
 				<select id="k2-scheme" name="k2[scheme]">
-					<option value="" <?php selected($style_name, ''); ?>><?php _e('None','k2_domain'); ?></option>
+					<option value="" <?php selected($style_name, ''); ?>><?php _e('Off','k2_domain'); ?></option>
 
 					<?php foreach($style_files as $style_file) { ?>
 					<option value="<?php echo attribute_escape($style_file); ?>" <?php selected($style_name, $style_file); ?>><?php echo($style_file); ?></option>
 					<?php } ?>
 				</select>
 
-				<p class="description"><?php printf(__('K2 is highly customizable, using only CSS. Never touch a core files again. %s','k2_domain'), '<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS">' . __('Read&nbsp;more','k2_domain') . '</a>.'  ); ?></p>
+				<p class="description"><?php printf(__('Stop editing core files, K2 is highly customizable using only CSS. %s','k2_domain'), '<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS">' . __('Read&nbsp;more','k2_domain') . '</a>.'  ); ?></p>
 			</div>
 			<?php } ?>
 
@@ -183,38 +183,41 @@
 					</div>
 				<?php } ?>
 
-				<table>
-				<?php if ($is_headers_dir) { ?>
-					<?php if ($is_headers_writable) { ?>
-				<tr><td>
-					<small><?php _e('Upload an Image','k2_domain'); ?></small>
-				</td><td>
-					<input type="file" id="image_upload" name="image_upload" />
-				</td><td>
-					<input id="upload-activate" name="upload_activate" type="checkbox" value="1" /><small><label for="upload-activate"><?php _e('Activate immediately','k2_domain'); ?></label></small>
-				</td></tr>
+				<div class="headerwrap">
+					<?php if ($is_headers_dir) { ?>
+						<?php if ($is_headers_writable) { ?>
+							<div>
+								<span class="span1"><p><?php _e('Upload an Image','k2_domain'); ?></p></span>
+
+								<span class="span2"><input type="file" id="image_upload" name="image_upload" /></span>
+
+								<span class="span3"><input id="upload-activate" name="upload_activate" type="checkbox" value="1" /><label for="upload-activate"><?php _e('Activate immediately','k2_domain'); ?></span>
+							</div>
+						<?php } ?>
+
+						<div>
+							<span class="span1"><p><?php _e('Select an Image','k2_domain'); ?></p></span>
+
+							<span class="span2">
+								<select id="k2-header-picture" name="k2[header_picture]">
+									<option value="" <?php selected($header_picture, ''); ?>><?php _e('Off','k2_domain'); ?></option>
+									<?php foreach($picture_files as $picture_file) { ?>
+									<option value="<?php echo attribute_escape($picture_file); ?>" <?php selected($header_picture, $picture_file); ?>><?php echo($picture_file); ?></option>
+									<?php } ?>
+								</select>
+							</span>
+
+							<span class="span3"><input id="k2-imagerandomfeature" name="k2[imagerandomfeature]" type="checkbox" value="1" <?php checked('1', get_option('k2imagerandomfeature')); ?> /><label for="k2-imagerandomfeature"><?php _e('Random','k2_domain'); ?></label></span>
+						</div>
 					<?php } ?>
 
-				<tr><td style="width: 160px">
-					<small><?php _e('Select an Image','k2_domain'); ?></small>
-				</td><td>	
-					<select id="k2-header-picture" name="k2[header_picture]">
-						<option value="" <?php selected($header_picture, ''); ?>><?php _e('No Picture','k2_domain'); ?></option>
-						<?php foreach($picture_files as $picture_file) { ?>
-						<option value="<?php echo attribute_escape($picture_file); ?>" <?php selected($header_picture, $picture_file); ?>><?php echo($picture_file); ?></option>
-						<?php } ?>
-					</select>
-				</td><td>	
-					<input id="k2-imagerandomfeature" name="k2[imagerandomfeature]" type="checkbox" value="1" <?php checked('1', get_option('k2imagerandomfeature')); ?> /><small><label for="k2-imagerandomfeature"><?php _e('Randomize Image','k2_domain'); ?></label></small>
-				</td></tr>
-				<?php } ?>
-			
-				<tr><td style="width: 160px">
-					<small><?php _e('Rename the \'Blog\' tab','k2_domain'); ?></small>
-				</td><td>
-					<input id="k2-blogornoblog" name="k2[blogornoblog]" value="<?php echo attribute_escape(get_option('k2blogornoblog')); ?>" />
-				</td></tr>
-				</table>
+					<div>
+						<span class="span1"><p><?php _e('Rename the \'Blog\' tab','k2_domain'); ?></p></span>
+
+						<span class="span2"><input id="k2-blogornoblog" name="k2[blogornoblog]" value="<?php echo attribute_escape(get_option('k2blogornoblog')); ?>" /></span>
+					</div>
+				</div>
+
 			</div>
 				
 		</div>
