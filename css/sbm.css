@@ -13,6 +13,7 @@
 	}
 
 h2 {
+	display: none;
 	position: absolute;
 	top: 13px;
 	left: 10px;
@@ -72,7 +73,7 @@ h3 {
 .backuprestore {
 	position: absolute;
 	top: 21px;
-	left: 225px;
+	left: 25px;
 	text-transform: lowercase;
 	font-size: 10px;
 	line-height: 19px;
@@ -183,21 +184,12 @@ h3 {
 	margin-right: -1px;
 	}
 
-.darkenleft, .darkenright {
+.darkenright {
 	position: absolute;
 	height: 100%;
 	background: #999;
 	opacity: .2;
 	filter: alpha(opacity = 20);
-	}
-
-.darkenleft {
-	left: 0;
-	width: 10px;
-	border-right: 1px solid black;
-	}
-
-.darkenright {
 	left: 1090px;
 	width: 100%;
 	border-left: 1px solid black;

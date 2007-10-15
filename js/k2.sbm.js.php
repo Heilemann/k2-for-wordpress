@@ -57,7 +57,7 @@ function sbm_load(id, url) {
 						jQuery('.marker').remove()
 
 						// Show an error message
-//						jQuery('#msg').text('An error occurred while adding module. Please try again.');
+						humanMsg.displayMsg('<strong class="humanMsg-hide humanMsg-error">Error:</strong> <strong>'+module+'</strong> was <strong>not</strong> added.');
 					},
 					success: function(request, status){
 						// Remove temp markers
@@ -65,6 +65,9 @@ function sbm_load(id, url) {
 
 						// Clone dropped module to new home
 						jQuery('#'+sidebar).append(newModule)
+
+						// Tell the user what happened
+						humanMsg.displayMsg('<strong>'+ module +'</strong> added to <strong>'+ jQuery('#'+sidebar).parent().siblings('h3').text() +'</strong>');
 
 						// Reinitialize the sortable lists
 						resizeLists();
@@ -100,29 +103,33 @@ function sbm_load(id, url) {
 				},
 				onChange: function(serial) {
 					// Hide trash
-					jQuery('#trashcontainer')
-						.hide().css({ zIndex: -100 })
-						.children().empty()
-
-					resizeLists();
+					jQuery('#trashcontainer').hide().css({ zIndex: -100 })
 
 					// If something is being trashed
 					var trashedModule = jQuery.SortSerialize('trash').o.trash[0];
 
 					if (trashedModule != undefined) {
 
-						// Remove from database
+						// Get list of origin and module name
+						var trashedFromList = jQuery('#'+trashedModule).removeClass('module').attr('class');
+						var trashedModuleName = jQuery('#'+ trashedModule+' .name').text();
+
+						// Empty the trash list
+						jQuery('#trashcontainer').children().empty()
+
+						// Delete from database
 						jQuery.post(sbm_baseUrl + "?action=remove", {
 							action: "remove",
 							module_id:		trashedModule,
 							sidebar_id:		trashedFromList
 						}, function() {
-							jQuery("#loader").fadeOut(10000).empty();
+							// Tell the user what we did
+							humanMsg.displayMsg('<strong>'+ trashedModuleName +'</strong> was trashed');
 						});
 
 					// If the order has changed
 					} else {
-						// Construct New World Order
+						// Construct the 'orderdata' to reorder the lists
 						var orderData = '';
 						var lists = jQuery('.reorderable');
 						for (var j = 0; j < lists.length; j++) {
@@ -135,18 +142,23 @@ function sbm_load(id, url) {
 							}
 
 							if (j < lists.length - 1) orderData += "&";
-						}
+						} // end for
 
-						// Submit NWO to db
+						// Submit new order to db
 						jQuery.ajax({
 							type: "POST",
 							processData: false,
 							url: sbm_baseUrl,
-							data: 'action=reorder&' + orderData
-					 	});
-						
-					}
-				}
+							data: 'action=reorder&' + orderData,
+							success: function() {
+								humanMsg.displayMsg('Module order <strong>saved</strong>');
+							}
+						});
+					} // End if/else
+
+					resizeLists();
+
+				} // End onChange
 			});
 
 			// Initialize the option links for each module
@@ -299,8 +311,14 @@ function sbm_load(id, url) {
 					url: sbm_baseUrl,
 					data: "action=update&sidebar_id=" + curOptSidebar + "&module_id=" + curOptModule + "&" + jQuery('#module-options-form').serialize(),
 					success: function() {
+
+						// Inform the user the operation was successful
+						humanMsg.displayMsg('<strong>'+ jQuery('#module-name').val() +'</strong> options saved');
+
+						// Change the module's name
 						jQuery('#'+curOptModule+' .name').text(jQuery('#module-name').val());
 
+						// Close. Maybe.
 						if (closeVar == true)
 							closeOptions();
 
