@@ -119,26 +119,21 @@ function sbm_load(id, url) {
 
 						updateUndoLink();
 
-						// Get the origin sidebar ID of the trashed module
-						var trashedClasses = jQuery(trashedModule).attr('class').split(' ');
-						for (i = 0; i < trashedClasses.length; i++) if (trashedClasses[i] == 'sidebar-1' || 'sidebar-2' || 'disabled') var origin = trashedClasses[i];
-
 						// Get module name
 						var trashedModuleName = jQuery(trashedModule).children().children().children('.name').text();
 
-
 /*						// Empty the trash list
 						jQuery('#trashcontainer').children().empty()
-
+*/
 						// Delete from database
 						jQuery.post(sbm_baseUrl + "?action=remove", {
 							action:		"remove",
-							module_id:	trashedModule
+							module_id:	jQuery(trashedModule).attr('id')
 						}, function() {
 							// Tell the user what we did
 							humanMsg.displayMsg('<strong>'+ trashedModuleName +'</strong> was trashed');
 						});
-*/
+
 					trashedModule = '';
 
 					// If the order has changed
