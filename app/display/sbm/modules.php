@@ -16,13 +16,13 @@
 	$disabled = K2SBM::get_disabled();
 ?>
 
-<?php if($restored) { ?>
+<?php if ($restored) { ?>
 <div id="message2" class="updated fade">
 	<p><?php _e('Your sidebar was restored', 'k2_domain'); ?></p>
 </div>
 <?php } ?>
 
-<?php if($error) { ?>
+<?php if ($error) { ?>
 <div id="sbm-warning" class="updated fade-ff0000">
 	<p><?php _e('Invalid SBM backup file', 'k2_domain'); ?></p>
 </div>
@@ -97,7 +97,11 @@
 			<a href="" id="backupsbm">Backup</a>
 			<a href="" id="restoresbm">Restore</a>
 		</span>
-	
+
+		<span class="undocontainer" id="undocont">
+			<a href="#" id="undo">Undo <span id="levels"></span></a>
+		</span>
+
 		<form id="columnsform" name="columnsform" action="" method="post" enctype="multipart/form-data">
 			<select id="columns-number" name="columns_number" onchange="this.form.submit();">
 			<?php foreach ($column_options as $option => $label) { ?>
@@ -134,8 +138,6 @@
 		
 		<div class="containerwrap">
 
-		<div class="darkenleft">&nbsp;</div>
-		
 		<div class="initloading"><?php _e('Loading'); ?></div>
 
 		<div id="availablemodulescontainer" class="container">

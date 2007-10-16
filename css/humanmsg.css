@@ -9,7 +9,7 @@ html, body {
 }
 
 .humanMsg {
-	font: normal 20px Helvetica, Arial, Sans-Serif;
+	font: normal 20px/50px Helvetica, Arial, Sans-Serif;
 	letter-spacing: -1px;
 	position: fixed;
 	top: 130px;
@@ -34,8 +34,7 @@ html, body {
 	display: inline; 
 	}
 
-/* Don't show links and 'hidden' objects in the message */
-.humanMsg a, .humanMsg .humanMsg-hide {
+.humanMsg a {
 	display: none;
 	}
 	
@@ -52,13 +51,13 @@ html, body {
 	}
 
 #humanMsgLog p {
-	line-height: 20px;
 	position: relative;
 	left: 50%;
 	width: 200px;
 	margin: 0;
 	margin-left: -100px;
 	padding: 0 10px;
+	line-height: 20px;
 	background: #333;
 	text-align: center;
 	white-space: pre;
@@ -92,15 +91,11 @@ html, body {
 	white-space: pre;
 	}
 
-#humanMsgLog ul li:hover {
-	background: #f2f2f2;
-	}
-
 #humanMsgLog ul li:first-child {
 	margin-top: 1px;
 	}
 	
-#humanMsgLog ul li .humanMsg-error {
+#humanMsgLog ul li .error {
 	color: orangered;
 	}
 

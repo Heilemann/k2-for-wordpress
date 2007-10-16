@@ -161,10 +161,10 @@ class K2SBM {
 
 				// Remove a module from the sidebar
 				case 'remove':
-					if(isset($_POST['sidebar_id']) and isset($_POST['module_id'])) {
-						K2SBM::remove_module($_POST['sidebar_id'], $_POST['module_id']);
+					if(isset($_POST['module_id'])) {
+						K2SBM::remove_module($_POST['module_id']);
 					} else {
-						K2SBM::set_error_text(__('Missing sidebar and module ids', 'k2_domain'));
+						K2SBM::set_error_text(__('No module ID given', 'k2_domain'));
 					}
 
 					break;
@@ -589,20 +589,25 @@ class K2SBM {
 		ob_end_clean();
 	}
 
-	function remove_module($sidebar_id, $module_id) {
+	function remove_module($module_id) {
 		global $k2sbm_disabled_modules, $k2sbm_active_modules;
 
-		if($sidebar_id == 'disabled') {
-			foreach($k2sbm_disabled_modules as $key => $module) {
-				if($module->id == $module_id) {
-					unset($k2sbm_disabled_modules[$key]);
-				}
+		// Note by Michael: Hardcoded sidebars to make things easier for myself. Slap my wrist if this becomes problem.
+		foreach($k2sbm_disabled_modules as $key => $module) {
+			if($module->id == $module_id) {
+				unset($k2sbm_disabled_modules[$key]);
 			}
-		} else {
-			foreach($k2sbm_active_modules[$sidebar_id] as $key => $module) {
-				if($module->id == $module_id) {
-					unset($k2sbm_active_modules[$sidebar_id][$key]);
-				}
+		}
+
+		foreach($k2sbm_active_modules['sidebar-1'] as $key => $module) {
+			if($module->id == $module_id) {
+				unset($k2sbm_active_modules['sidebar-1'][$key]);
+			}
+		}
+
+		foreach($k2sbm_active_modules['sidebar-2'] as $key => $module) {
+			if($module->id == $module_id) {
+				unset($k2sbm_active_modules['sidebar-2'][$key]);
 			}
 		}
 
@@ -806,7 +811,7 @@ if(K2_USING_SBM) {
 				}
 			} else {
 				// Remove this module - it dosn't exist properly
-				K2SBM::remove_module($sidebar->id, $this->id);
+				K2SBM::remove_module($this->id);
 			}
 
 			return false;

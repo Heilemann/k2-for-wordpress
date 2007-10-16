@@ -10,32 +10,26 @@ var humanMsg = {
 		humanMsg.msgID = 'humanMsg';
 		humanMsg.logID = 'humanMsgLog';
 
-		// appendTo is the element the msg is appended to
-		if (appendTo == undefined)
-			appendTo = 'body';
+		// Opacity of the message
+		humanMsg.msgOpacity = parseFloat(msgOpacity) || .8;
 
 		// The text on the Log tab
-		if (logName == undefined)
-			logName = 'Message Log';
+		if (!logName) logName = 'Message Log';
 
-		// Opacity of the message
-		humanMsg.msgOpacity = .8;
-
-		if (msgOpacity != undefined) 
-			humanMsg.msgOpacity = parseFloat(msgOpacity);
+		// appendTo is what we attach the message HTML to
+		if (!appendTo) appendTo = 'body';
 
 		// Inject the message structure
 		jQuery(appendTo).append('<div id="'+humanMsg.msgID+'" class="humanMsg"><div class="round"></div><p></p><div class="round"></div></div> <div id="'+humanMsg.logID+'"><p>'+logName+'</p><ul></ul></div>')
 		
+		// Click the log tab opens the log
 		jQuery('#'+humanMsg.logID+' p').click(
-			function() { jQuery(this).siblings('ul').slideToggle() }
+			function() { jQuery(this).siblings('ul').slideToggle('fast') }
 		)
 	},
 
 	displayMsg: function(msg) {
-		if (msg == '')
-			return false;
-
+		// Kill the auto-fadeout timer
 		clearTimeout(humanMsg.t2);
 
 		// Inject message
@@ -47,12 +41,12 @@ var humanMsg = {
 				.show().children('ul').prepend('<li>'+msg+'</li>')	// Prepend message to log
 				.children('li:first').slideDown(200)				// Slide it down
 		
+			
 			if ( jQuery('#'+humanMsg.logID+' ul').css('display') == 'none') {
 				jQuery('#'+humanMsg.logID+' p').animate({ bottom: 40 }, 200, 'linear', function() {
-					jQuery(this).animate({ bottom: 0 }, 200, 'easeOutBounce', function() { jQuery(this).css({ bottom: 0 }) })
+					jQuery(this).animate({ bottom: 0 }, 300, 'easeOutBounce', function() { jQuery(this).css({ bottom: 0 }) })
 				})
 			}
-			
 		})
 
 		// Watch for mouse & keyboard in .5s

@@ -5,6 +5,9 @@ jQuery.noConflict();
 var sbm_baseUrl = "";
 
 function sbm_load(id, url) {
+		// Ready the undo system
+		doInit(url);
+
 		// Next available module ID
 		var lastModuleID = id;
 		sbm_baseUrl = url;
@@ -103,29 +106,40 @@ function sbm_load(id, url) {
 				},
 				onChange: function(serial) {
 					// Hide trash
-					jQuery('#trashcontainer').hide().css({ zIndex: -100 })
+//					jQuery('#trashcontainer').hide().css({ zIndex: -100 })
 
 					// If something is being trashed
-					var trashedModule = jQuery.SortSerialize('trash').o.trash[0];
+					var trashedModule = jQuery('#trash li:visible');
 
-					if (trashedModule != undefined) {
+					if (trashedModule.length != 0) {
+						jQuery(trashedModule).hide()
 
-						// Get list of origin and module name
-						var trashedFromList = jQuery('#'+trashedModule).removeClass('module').attr('class');
-						var trashedModuleName = jQuery('#'+ trashedModule+' .name').text();
+						// Add the to-do item to the event queue.
+						EVENT_QUEUE.push( jQuery(trashedModule).attr('id') )
 
-						// Empty the trash list
+						updateUndoLink();
+
+						// Get the origin sidebar ID of the trashed module
+						var trashedClasses = jQuery(trashedModule).attr('class').split(' ');
+						for (i = 0; i < trashedClasses.length; i++) if (trashedClasses[i] == 'sidebar-1' || 'sidebar-2' || 'disabled') var origin = trashedClasses[i];
+
+						// Get module name
+						var trashedModuleName = jQuery(trashedModule).children().children().children('.name').text();
+
+
+/*						// Empty the trash list
 						jQuery('#trashcontainer').children().empty()
 
 						// Delete from database
 						jQuery.post(sbm_baseUrl + "?action=remove", {
-							action: "remove",
-							module_id:		trashedModule,
-							sidebar_id:		trashedFromList
+							action:		"remove",
+							module_id:	trashedModule
 						}, function() {
 							// Tell the user what we did
 							humanMsg.displayMsg('<strong>'+ trashedModuleName +'</strong> was trashed');
 						});
+*/
+					trashedModule = '';
 
 					// If the order has changed
 					} else {
