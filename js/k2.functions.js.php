@@ -105,13 +105,39 @@ function smartPosition(obj) {
 };
 
 
+
+/*
+	Get the window's width and height
+	credit: http://www.howtocreate.co.uk/tutorials/javascript/browserwindow
+*/
+function getWindowSize() {
+	var myWidth = 0, myHeight = 0;
+
+	if( typeof( window.innerWidth ) == 'number' ) {
+		//Non-IE
+		myWidth = window.innerWidth;
+		myHeight = window.innerHeight;
+	} else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+		//IE 6+ in 'standards compliant mode'
+		myWidth = document.documentElement.clientWidth;
+		myHeight = document.documentElement.clientHeight;
+	} else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+		//IE 4 compatible
+		myWidth = document.body.clientWidth;
+		myHeight = document.body.clientHeight;
+	}
+
+	return { width: myWidth, height: myHeight };
+}
+
+
 // Set the number of columns based on window size and maximum set by K2 Options
 function dynamicColumns() {
-	var width = jQuery(window).width();
+	var window_width = getWindowSize().width;
 
-	if (K2.columns >= 3 && width >= 950) {
+	if (K2.columns >= 3 && window_width >= 950) {
 		jQuery('body').removeClass('columns-one columns-two').addClass('columns-three');
-	} else if (K2.columns >= 2 && width >= 780) {
+	} else if (K2.columns >= 2 && window_width >= 780) {
 		jQuery('body').removeClass('columns-one columns-three').addClass('columns-two');
 	} else {
 		jQuery('body').removeClass('columns-two columns-three').addClass('columns-one');
