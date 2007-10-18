@@ -3,8 +3,7 @@
 	if (isset($_GET['k2dynamic'])) {
 		require_once(dirname(__FILE__).'/../../../wp-config.php');
 
-		$query = k2_parse_query($_GET);
-		query_posts($query);
+		query_posts($_GET);
 
 		$_GET['k2dynamic'] = 'init';
 	}
@@ -12,12 +11,8 @@
 	// Load Rolling Archives?
 	if ( get_option('k2rollingarchives') == 1 ) { 
 
-		// Parse the query
-		//if ( is_array($wp_query->query) ) {
-			//$rolling_query = http_build_query($wp_query->query);
-		//} else {
-			$rolling_query = $wp_query->query;
-		//}
+		// Get the query
+		$rolling_query = $wp_query->query;
 
 		// Get list of page dates
 		if ( !is_page() and !is_single() ) {
@@ -26,7 +21,7 @@
 
 		// Get the current page
 		$rolling_page = get_query_var('paged');
-		if ( empty($rolling_page) ) {
+		if ( $rolling_page < 1 ) {
 			$rolling_page = 1;
 		}
 ?>
@@ -62,7 +57,7 @@
 	</div> <!-- #rollnavigation -->
 </div> <!-- #rollingarchives -->
 
-<?php if(!isset($_GET['k2dynamic'])) { ?>
+<?php if ( !isset($_GET['k2dynamic']) ) { ?>
 <noscript>
 	<?php include('navigation.php'); ?>
 </noscript>
@@ -72,16 +67,12 @@
 <script type="text/javascript">
 // <![CDATA[
 	jQuery(document).ready(function() {
-		k2Rolling.setup(
-			"<?php output_javascript_url('theloop.php'); ?>",
-			"<?php echo attribute_escape(__('Page %1$d of %2$d',k2_domain)); ?>",
+		K2.RollingArchives.setState(
 			<?php echo $rolling_page; ?>,
 			<?php echo $wp_query->max_num_pages; ?>,
 			<?php output_javascript_hash($rolling_query); ?>,
 			<?php output_javascript_array($page_dates); ?>
 		);
-
-		k2Trimmer.setup(100);
 	});
 // ]]>
 </script>

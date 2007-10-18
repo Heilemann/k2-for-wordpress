@@ -1,138 +1,141 @@
 <?php require('header.php'); ?>
 
-var k2Rolling = {
-	setup: function(url, pagetext, pagenumber, pagecount, query, pagedates) {
-		k2Rolling.url = url;
-		k2Rolling.pageText = pagetext;
+function RollingArchives(url, pagetext) {
+	this.url = url;
+	this.pageText = pagetext;
+	this.trimmer = new TextTrimmer(100);
+};
 
-		k2Rolling.pageCount = pagecount;
-		k2Rolling.pageNumber = pagenumber;
-		k2Rolling.query = query;
-		k2Rolling.pageDates = pagedates;
+RollingArchives.prototype.setState = function(pagenumber, pagecount, query, pagedates) {
+	var self = this;
 
-		// In the rare case of only one page of entries
-		if ( k2Rolling.pageCount == 1 )
-			jQuery('body').addClass('onepageonly')
-		
-		if ( k2Rolling.validatePage(pagenumber) ) {
-			jQuery('#rollingarchives').show();
+	this.pageNumber = pagenumber;
+	this.pageCount = pagecount;
+	this.query = query;
+	this.pageDates = pagedates;
 
-			jQuery('#rollload').hide();
-			jQuery('#rollhover').hide();
+	if ( this.validatePage(pagenumber) ) {
+		jQuery('#rollingarchives').show();
 
-			k2Rolling.setupSlider();
-			k2Rolling.setupEvents();
-			k2Rolling.updatePageText( k2Rolling.pageNumber );
-		} else {
-			jQuery('#rollingarchives').hide();
-		}
-	},
+		jQuery('#rollload').hide();
+		jQuery('#rollhover').hide();
 
-	setupSlider: function() {
-		k2Rolling.pageSlider = new K2Slider('#pagehandle', '#pagetrack', {
+		// Setup the page slider
+		this.pageSlider = new K2Slider('#pagehandle', '#pagetrack', {
 			minimum: 1,
-			maximum: k2Rolling.pageCount,
-			value: k2Rolling.pageCount - k2Rolling.pageNumber + 1,
+			maximum: self.pageCount,
+			value: self.pageCount - self.pageNumber + 1,
 			onSlide: function(value) {
 				jQuery('#rollhover').show();
-				k2Rolling.updatePageText( k2Rolling.pageCount - value + 1);
+				self.updatePageText( self.pageCount - value + 1);
 			},
 			onChange: function(value) {
-				k2Rolling.updatePageText( k2Rolling.pageCount - value + 1);
-				k2Rolling.gotoPage( k2Rolling.pageCount - value + 1 );
+				self.updatePageText( self.pageCount - value + 1);
+				self.gotoPage( self.pageCount - value + 1 );
 			}
 		});
-	},
 
-	setupEvents: function() {
+		// Add click events
 		jQuery('#rollnext').click(function() {
-			k2Rolling.pageSlider.setValueBy(1);
+			self.pageSlider.setValueBy(1);
 			return false;
 		});
-
 		jQuery('#rollprevious').click(function() {
-			k2Rolling.pageSlider.setValueBy(-1);
+			self.pageSlider.setValueBy(-1);
 			return false;
 		});
-	},
 
-	updatePageText: function(page) {
-		jQuery('#rollpages').html(
-			(k2Rolling.pageText.replace('%1$d', page)).replace('%2$d', k2Rolling.pageCount)
-		);
-		jQuery('#rolldates').html(k2Rolling.pageDates[page - 1]);
-	},
-
-	validatePage: function(newpage) {
-		if (k2Rolling.pageCount > 1) {
-			if (newpage >= k2Rolling.pageCount) {
-				jQuery('#dynamic-content').removeClass().addClass('lastpage');
-				return k2Rolling.pageCount;
-
-			} else if (newpage <= 1) {
-				jQuery('#dynamic-content').removeClass().addClass('firstpage');
-				return 1;
-
-			} else {
-				jQuery('#dynamic-content').removeClass().addClass('nthpage');
-				return newpage;
-			}
-		}
-
-		jQuery('#dynamic-content').removeClass().addClass('emptypage');
-
-		return 0;
-	},
-
-	gotoPage: function(newpage) {
-		var page = k2Rolling.validatePage(newpage);
-
-		if ( (page != k2Rolling.pageNumber) && (page > 0) ) {
-			k2Rolling.pageNumber = page;
-
-			jQuery('#rollload').fadeIn('fast');
-			jQuery.extend(k2Rolling.query, { paged: k2Rolling.pageNumber, k2dynamic: 1 });
-
-			K2.ajaxGet(k2Rolling.url, k2Rolling.query,
-				function(data) {
-
-					if (k2Rolling.pageNumber == 1) {
-						jQuery('html,body').animate({ scrollTop: jQuery('body').offset().top -1 }, 1000);
-					} else {
-						jQuery('html,body').animate({ scrollTop: jQuery('#dynamic-content').offset().top -1 }, 1000);
-					}
-					
-					jQuery('#rollhover').fadeOut('slow');
-					jQuery('#rollload').fadeOut('fast');
-					jQuery('#rollingcontent').html(data);
-					
-					k2Trimmer.trimAgain();
-				}
-			);
-		}
-
-		if (page == 1)
-			k2Trimmer.slider.setValue(100);
-	},
-
-	saveState: function() {
-		k2Rolling.prevQuery = k2Rolling.query;
-	},
-
-	restoreState: function() {
-		if (k2Rolling.prevQuery != null) {
-			var url = k2Rolling.url.replace('theloop', 'rollingarchive');
-			var query = jQuery.extend(k2Rolling.prevQuery, { k2dynamic: 'init' });
-
-			K2.ajaxGet(url, query,
-				function(data) {
-					jQuery('#dynamic-content').html(data);
-				}
-			);
-		}
+		this.updatePageText( this.pageNumber );
+	} else {
+		jQuery('#rollingarchives').hide();
 	}
 };
 
+
+RollingArchives.prototype.saveState = function() {
+	this.prevQuery = this.query;
+};
+
+
+RollingArchives.prototype.restoreState = function() {
+	if (this.prevQuery != null) {
+		var url = this.url.replace('theloop', 'rollingarchive');
+		var query = jQuery.extend(this.prevQuery, { k2dynamic: 'init' });
+
+		K2.ajaxGet(url, query,
+			function(data) {
+				jQuery('#dynamic-content').html(data);
+			}
+		);
+	}
+};
+
+
+RollingArchives.prototype.updatePageText = function(page) {
+	jQuery('#rollpages').html(
+		(this.pageText.replace('%1$d', page)).replace('%2$d', this.pageCount)
+	);
+	jQuery('#rolldates').html(this.pageDates[page - 1]);
+};
+
+
+RollingArchives.prototype.validatePage = function(newpage) {
+	if (this.pageCount > 1) {
+		if (newpage >= this.pageCount) {
+			jQuery('#dynamic-content').removeClass('onepageonly firstpage nthpage').addClass('lastpage');
+			return this.pageCount;
+
+		} else if (newpage <= 1) {
+			jQuery('#dynamic-content').removeClass('onepageonly nthpage lastpage').addClass('firstpage');
+			return 1;
+
+		} else {
+			jQuery('#dynamic-content').removeClass('onepageonly firstpage lastpage').addClass('nthpage');
+			return newpage;
+		}
+	}
+
+	jQuery('#dynamic-content').removeClass('firstpage nthpage lastpage').addClass('onepageonly');
+
+	return 0;
+};
+
+
+RollingArchives.prototype.gotoPage = function(newpage) {
+	var self = this;
+	var page = this.validatePage(newpage);
+
+	if ( (page != this.pageNumber) && (page > 0) ) {
+		this.pageNumber = page;
+
+		jQuery('#rollload').fadeIn('fast');
+		jQuery.extend(this.query, { paged: this.pageNumber, k2dynamic: 1 });
+
+		K2.ajaxGet(this.url, this.query,
+			function(data) {
+
+				if (self.pageNumber == 1) {
+					jQuery('html,body').animate({
+						scrollTop: jQuery('body').offset().top - 1
+					}, 1000);
+				} else {
+					jQuery('html,body').animate({
+						scrollTop: jQuery('#dynamic-content').offset().top - 1
+					}, 1000);
+				}
+				
+				jQuery('#rollhover').fadeOut('slow');
+				jQuery('#rollload').fadeOut('fast');
+				jQuery('#rollingcontent').html(data);
+				
+				self.trimmer.trimAgain();
+			}
+		);
+	}
+
+	if (page == 1)
+		this.trimmer.slider.setValue(100);
+};
 
 
 
