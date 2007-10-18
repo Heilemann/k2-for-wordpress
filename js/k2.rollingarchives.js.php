@@ -138,5 +138,4 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 };
 
 
-
-jQuery(document).scroll(function() { smartPosition('#dynamic-content') });
+jQuery(window).scroll(function() { smartPosition('#dynamic-content') });
