@@ -5,9 +5,6 @@ jQuery.noConflict();
 var sbm_baseUrl = "";
 
 function sbm_load(id, url) {
-		// Ready the undo system
-		doInit(url);
-
 		// Next available module ID
 		var lastModuleID = id;
 		sbm_baseUrl = url;
@@ -28,7 +25,8 @@ function sbm_load(id, url) {
 					.clone()
 					.attr('class', 'module marker')
 					.css({ position: "static" })
-					.html('<div class="slidingdoor"><span class="modulewrapper"><span class="name">'+module+'</span><span class="handle"></span><span class="type">'+module+'</span></span><a href="#" class="optionslink"> </a></div>')
+					.html('<div class="slidingdoor"><span class="modulewrapper"></span></div>')
+//					.html('<div class="slidingdoor"><span class="modulewrapper"><span class="name">'+module+'</span><span class="handle"></span><span class="type">'+module+'</span></span><a href="#" class="optionslink"> </a><a href="#" class="deletelink"> </a></div>')
 					.appendTo(jQuery(this).children())
 			},
 			onOut: 			function (drag) {
@@ -44,7 +42,7 @@ function sbm_load(id, url) {
 				// Create new module
 				var newModule = jQuery(drag)
 									.clone()
-									.html('<div class="slidingdoor"><span class="modulewrapper"><span class="name">'+module+'</span><span class="handle"></span><span class="type">'+module+'</span></span><a href="#" class="optionslink"> </a></div>')
+									.html('<div class="slidingdoor"><span class="modulewrapper"><span class="name">'+module+'</span><span class="handle"></span><span class="type">'+module+'</span></span><a href="#" class="optionslink"> </a><a href="#" class="deletelink"> </a></div>')
 									.attr('id', 'module-' + (lastModuleID++))
 									.attr('class', 'module ' + sidebar)
 									.css({ position: "static" })
@@ -92,14 +90,14 @@ function sbm_load(id, url) {
 				activeclass:	'hovering',
 				helperclass:	'module marker',
 				tolerance:		'pointer',
-				opacity:		0.3,
+				opacity:		0.9,
 				onStart: function() {
 					// Need to re-position #trash for the sortable to work properly
-					jQuery('#trashcontainer').show().css({ zIndex: 1000 })
+					// jQuery('#trashcontainer').show().css({ zIndex: 1000 })
 				},
 				onStop: function() {
 					// And re-position again.
-					jQuery('#trashcontainer').hide().css({ zIndex: -100 })
+//					jQuery('#trashcontainer').hide().css({ zIndex: -100 })
 				}, 
 				onHover: function(drag) {
 					jQuery('#sortHelper').html( jQuery(drag).html() )
@@ -109,9 +107,9 @@ function sbm_load(id, url) {
 //					jQuery('#trashcontainer').hide().css({ zIndex: -100 })
 
 					// If something is being trashed
-					var trashedModule = jQuery('#trash li:visible');
+//					var trashedModule = jQuery('#trash li:visible');
 
-					if (trashedModule.length != 0) {
+/*					if (trashedModule.length != 0) {
 						jQuery(trashedModule).hide()
 
 						// Add the to-do item to the event queue.
@@ -122,23 +120,11 @@ function sbm_load(id, url) {
 						// Get module name
 						var trashedModuleName = jQuery(trashedModule).children().children().children('.name').text();
 
-/*						// Empty the trash list
-						jQuery('#trashcontainer').children().empty()
-*/
-						// Delete from database
-						jQuery.post(sbm_baseUrl + "?action=remove", {
-							action:		"remove",
-							module_id:	jQuery(trashedModule).attr('id')
-						}, function() {
-							// Tell the user what we did
-							humanMsg.displayMsg('<strong>'+ trashedModuleName +'</strong> was trashed');
-						});
-
 					trashedModule = '';
 
 					// If the order has changed
 					} else {
-						// Construct the 'orderdata' to reorder the lists
+*/						// Construct the 'orderdata' to reorder the lists
 						var orderData = '';
 						var lists = jQuery('.reorderable');
 						for (var j = 0; j < lists.length; j++) {
@@ -161,9 +147,13 @@ function sbm_load(id, url) {
 							data: 'action=reorder&' + orderData,
 							success: function() {
 								humanMsg.displayMsg('Module order <strong>saved</strong>');
+							},
+							error: function(error) {
+								humanMsg.displayMsg(error);
 							}
+							
 						});
-					} // End if/else
+//					} // End if/else
 
 					resizeLists();
 
@@ -174,7 +164,7 @@ function sbm_load(id, url) {
 			initOptionLinks();
 		};
 
-// Aesthetic Systems
+		// Aesthetic Systems
 		function resizeLists() {
 			// Get the current specified minimum height
 			var highest = parseInt(jQuery('.wrap').css('minHeight'));
@@ -282,15 +272,46 @@ function sbm_load(id, url) {
 
 			// Set up options buttons
 			jQuery('a.optionslink').each(function() {
-				jQuery(this).unbind();
-				jQuery(this).click(function() {
+				jQuery(this).unbind().click(function() {
 					curOptModule = jQuery(this).parent().parent().attr('id')
 					curOptSidebar = jQuery(curOptModule).parent().attr('id')
 					curOptName = jQuery(this).siblings('.name').text()
 					openOptions(curOptModule)
+					return false;
 				})
 			});
 
+			jQuery('a.deletelink').each(function() {
+				jQuery(this).unbind().click(function() {
+					// Prevent double-clicking
+					jQuery(this).unbind()
+
+					// Get the module ID and its parent sidebar ID
+					var moduleID = jQuery(this).parent().parent().attr('id')
+					var sidebarID = jQuery('#'+moduleID).parent().attr('id')
+
+					// Hide the module
+					jQuery('#'+moduleID).slideUp('normal', function() {
+						jQuery(this).css({ display: 'list-item' }).addClass('trashed')
+					})
+
+					// Add module to undo stack
+					humanUndo.addTrash(moduleID)
+					
+					initOptionLinks()
+
+					return false;
+				})
+			})
+
+			// Setup undo button
+			jQuery("#undo").unbind().click( function() {
+				jQuery('#'+humanUndo.trashList.pop()).removeClass('trashed').slideDown('normal', 'easeOutQuad')
+				initOptionLinks()
+				humanUndo.updateUndoLink()
+				return false;
+			})
+		
 			// Set up options submit process 
 			jQuery('#submit').unbind();
 			jQuery('#submit').click(function() {
@@ -426,36 +447,37 @@ function sbm_load(id, url) {
 
 		
 		// Spool the FTL drive
-		jQuery(document)
-			.ready(function() {
-				resizeLists();
+		jQuery(window).load(function() {
+			tabSystem();
+			humanUndo.setup(sbm_baseUrl)
+			jQuery(window).unload( humanUndo.emptyTrash )
 
-				tabSystem();
+			jQuery('#optionswindow').css({ zIndex: 1000, visibility: 'visible' }).hide()
 
-				jQuery('#optionswindow').css({ zIndex: 1000, visibility: 'visible' }).hide()
-
-				// Backup/Restore system
-				jQuery('#backupsbm').click(function() {
-					jQuery('#backupform').submit();
-					return false;
-				})
-
-				jQuery('#restoresbm').click(function() {
-					jQuery('#backupsbmwindow').css({ top: 20, opacity: 0, zIndex: 700 }).animate({ top: 38, opacity: 1 }, 600, 'easeOutSine')
-					jQuery('#overlay').show().css({ opacity: .5 }).click(function() {
-						jQuery('#backupsbmwindow').animate({ top: 20, opacity: 0 }, 600, 'easeOutSine', function() {
-							jQuery(this).css({ zIndex: -100 })
-							jQuery('#overlay').hide().css({ opacity: 0 })
-						})
-						
-					})
-					return false;
-				})
-
-				// Fire it up
-				jQuery('.initloading').hide().remove()
-				jQuery('.container').css({ opacity: 1 })
+			// Backup/Restore system
+			jQuery('#backupsbm').click(function() {
+				jQuery('#backupform').submit();
+				return false;
 			})
+
+			jQuery('#restoresbm').click(function() {
+				jQuery('#backupsbmwindow').css({ top: 20, opacity: 0, zIndex: 700 }).animate({ top: 38, opacity: 1 }, 600, 'easeOutSine')
+				jQuery('#overlay').show().css({ opacity: .5 }).click(function() {
+					jQuery('#backupsbmwindow').animate({ top: 20, opacity: 0 }, 600, 'easeOutSine', function() {
+						jQuery(this).css({ zIndex: -100 })
+						jQuery('#overlay').hide().css({ opacity: 0 })
+					})
+					
+				})
+				return false;
+			})
+
+			// Fire it up
+			jQuery('.initloading').hide().remove()
+			resizeLists();
+			jQuery('.container').css({ opacity: 1 })
+			jQuery('.darkenright').css({ opacity: .1 })
+		})
 
 		jQuery(window).resize(resizeLists)
 

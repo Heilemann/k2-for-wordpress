@@ -72,7 +72,7 @@ h3 {
 
 .backuprestore {
 	position: absolute;
-	top: 21px;
+	top: 18px;
 	left: 25px;
 	text-transform: lowercase;
 	font-size: 10px;
@@ -140,14 +140,43 @@ h3 {
 	top:21px;
 	}
 
-.undocontainer {
+#undo {
 	position: absolute;
-	top: 20px;
+	top: 18px;
 	left: 200px;
+	width: 120px;
+	font-size: 10px;
+	line-height: 19px;
+	text-transform: lowercase;
+	color: white;
+	text-align: center;
+	background: url('../images/sbmmanager/undo.png') left top no-repeat;
+	display: none;
+	outline: none;
 	}
 
-#undo {
-	display: none;
+#undo span {
+	position: absolute;
+	top: 2px;
+	right: 1px;
+	width: 16px;
+	line-height: 16px;
+	font-size: 9px;
+	background: url('../images/sbmmanager/buttoncircle.png') no-repeat;
+	}
+
+#do {
+	outline: none;
+	position: absolute;
+	top: 18px;
+	left: 350px;
+	width: 120px;
+	font-size: 10px;
+	line-height: 19px;
+	text-transform: lowercase;
+	color: white;
+	text-align: center;
+	background: url('../images/sbmmanager/undo.png') left top no-repeat;
 	}
 
 #columnsform {
@@ -198,8 +227,8 @@ h3 {
 	position: absolute;
 	height: 100%;
 	background: #999;
-	opacity: .2;
-	filter: alpha(opacity = 20);
+	opacity: 0;
+	filter: alpha(opacity = 0);
 	left: 1090px;
 	width: 100%;
 	border-left: 1px solid black;
@@ -228,14 +257,14 @@ h3 {
 	color: #eee;
 	cursor: move;
 	height: 35px; 
-	background: url('../images/sbmmanager/modulebg-left.png') left center no-repeat;
-	margin: 3px 0;
+	background: url('../images/sbmmanager/modulebg-left.png') left top no-repeat;
+	margin: 0 0 3px;
 	}
 
 .slidingdoor {
 	position: relative;
 	height: inherit;
-	background: url('../images/sbmmanager/modulebg.png') right center no-repeat;
+	background: url('../images/sbmmanager/modulebg.png') right top no-repeat;
 	margin-left: 5px;
 	}
 
@@ -296,6 +325,37 @@ h3 {
 	background: url('../images/sbmmanager/optionsbutton.png') no-repeat center bottom;
 	}
 
+.deletelink {
+	position: absolute;
+	top: 9px;
+	right: 35px;
+	height: 17px;
+	width: 17px;
+	background: url('../images/sbmmanager/deletebutton.png') center top no-repeat;
+	cursor: pointer;
+	opacity: .5;
+	filter: alpha(opacity = 50);
+	}	
+
+.deletelink:hover {
+	background: url('../images/sbmmanager/deletebutton.png') no-repeat center bottom;
+	opacity: .9;
+	filter: alpha(opacity = 90);
+	}
+
+
+/* Modules scheduled for deletion */
+.trashed {
+	display: list-item;
+	height: 0;
+	overflow: hidden;
+	margin: 0;
+	}
+
+.trashed a {
+	display: none;
+	}
+
 
 /* Available Modules */
 
@@ -320,11 +380,11 @@ h3 {
 
 .marker {
 	height: 35px;
-	opacity: .6 !important;
-	filter: alpha(opacity = 60) !important;
+	opacity: .15 !important;
+	filter: alpha(opacity = 15) !important;
 	}
 
-.marker .handle, .marker .optionslink {
+.marker div * {
 	display: none;
 	}
 
@@ -340,8 +400,8 @@ h3 {
 	z-index: 10000;
 	}
 
-#dragHelper .optionslink {
-	display: none;
+#dragHelper a {
+	border: none;
 	}
 
 .selecthelper {

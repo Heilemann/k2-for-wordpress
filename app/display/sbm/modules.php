@@ -98,9 +98,9 @@
 			<a href="" id="restoresbm">Restore</a>
 		</span>
 
-		<span class="undocontainer" id="undocont">
-			<a href="#" id="undo">Undo <span id="levels"></span></a>
-		</span>
+		<a href="#" id="undo"><?php _e('Undo', 'k2_domain') ?> <span id="levels"></span></a>
+
+		<a href="#" id="do"><?php _e('Empty Trash', 'k2_domain') ?></a>
 
 		<form id="columnsform" name="columnsform" action="" method="post" enctype="multipart/form-data">
 			<select id="columns-number" name="columns_number" onchange="this.form.submit();">
@@ -172,7 +172,8 @@
 									<span class="name"><?php print $module->name; ?></span>
 									<span class="type"><?php echo($modules[$module->type]['name']); ?></span>
 								</span>
-								<a href="#" class="optionslink"> </a>
+								<a href="#" class="optionslink" alt="<?php _e('Module Options', 'k2_domain') ?>"> </a>
+								<a href="#" class="deletelink" alt="<?php _e('Delete Module', 'k2_domain') ?><"> </a>
 							</div>
 						</li>
 
@@ -198,7 +199,8 @@
 									<span class="name"><?php print $module->name; ?></span>
 									<span class="type"><?php echo($modules[$module->type]['name']); ?></span>
 								</span>
-								<a href="#" class="optionslink"> </a>
+								<a href="#" class="optionslink" alt="<?php _e('Module Options', 'k2_domain') ?>"> </a>
+								<a href="#" class="deletelink" alt="<?php _e('Delete Module', 'k2_domain') ?><"> </a>
 							</div>
 						</li>
 
