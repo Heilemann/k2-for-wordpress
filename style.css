@@ -305,7 +305,11 @@ body.page .entry-content h4 {
 	padding: 0;
 	position: relative;
 	}
-	
+
+.skiplink {
+	display: none;
+	}
+
 #primary .metalink a, #primary .metalink a:visited, /* The Metalink class takes care of the comments, edit, rss and trackback links next to the titles */
 .secondary .metalink a, .secondary .metalink a:visited,
 .secondary span a, .secondary span a:visited {
@@ -417,6 +421,25 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	color: #bbb;
 	}
 
+.meta-start {
+	padding: 2px 0 2px 20px ;
+	background: url('images/time.png') left top no-repeat;
+}
+
+.entry-date abbr {
+	border: 0;
+	color: #777;
+	}
+
+.entry-author {
+	display: none;
+	}
+
+.entry-author address {
+	display: inline;
+	font-style: normal;
+	}
+
 .entry-category {
 	text-transform: lowercase;
 	margin-right: 10px;
@@ -424,11 +447,6 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 
 .entry-meta a, .comment-meta a {
 	color: #777;
-	}
-
-.chronodata {
-	padding: 2px 0 2px 20px ;
-	background: url('images/time.png') left center no-repeat;
 	}
 
 .commentslink {
@@ -792,8 +810,6 @@ small, strike {
 code {
 	font: 1.1em 'Courier New', Courier, Monospace;
 	}
-
-.chronodata abbr { border: 0; }
 
 blockquote {
 	margin: 20px 0;

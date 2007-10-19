@@ -4,6 +4,7 @@
 	
 	<div id="primary">
 		<div id="notices"></div>
+		<a name="startcontent" id="startcontent"></a>
 
 		<?php if (get_option('k2rollingarchives') == 1) { ?>
 		<div id="dynamic-content">

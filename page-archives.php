@@ -17,6 +17,7 @@
 <div class="content">
 	<div id="primary">
 		<div id="notices"></div>
+		<a name="startcontent" id="startcontent"></a>
 
 		<div id="current-content" class="hfeed">
 

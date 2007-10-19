@@ -121,11 +121,13 @@
 
 <body class="<?php k2_body_class(); ?>" <?php k2_body_id(); ?>>
 
+<a class="skiplink" href="#startcontent" accesskey="2"><?php _e('Skip to content','k2_domain'); ?></a>
+
 <div id="page">
 
 	<div id="header">
 
-		<h1><a href="<?php echo get_settings('home'); ?>/"><?php bloginfo('name'); ?></a></h1>
+		<h1><a href="<?php echo get_settings('home'); ?>/" accesskey="1"><?php bloginfo('name'); ?></a></h1>
 		<p class="description"><?php bloginfo('description'); ?></p>
 
 		<ul class="menu">

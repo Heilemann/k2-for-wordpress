@@ -7,8 +7,7 @@
 		require_once(dirname(__FILE__).'/../../../wp-config.php');
 
 		if ($_GET['k2dynamic'] != 'init') {
-			$query = k2_parse_query($_GET);
-			query_posts($query);
+			query_posts($_GET);
 		}
 
 		// Debugging
@@ -101,20 +100,18 @@
 				<h3 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php the_title(); ?></a></h3>
 
 				<div class="entry-meta">
-					<span class="chronodata">
-						<?php /* Date & Author */
-							printf(	__('Published %1$s %2$s','k2_domain'),
-								( $multiple_users ? sprintf(__('by %s','k2_domain'), '<span class="vcard author"><a href="' . get_author_posts_url(get_the_author_ID()) .'" class="url fn" title="'. sprintf(__('View all posts by %s','k2_domain'), attribute_escape(get_the_author())) .'">' . get_the_author() . '</a></span>') : ('') ), 
-								'<abbr class="published" title="'. get_the_time('Y-m-d\TH:i:sO') . '">' .
-								( function_exists('time_since') ? sprintf(__('%s ago','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")), time())) : ' ' . sprintf(__('on %s','k2_domain'), get_the_time($dateformat)) ) 								
-								. '</abbr>'
+					<?php
+						printf(	__('<span class="meta-start">Published</span> <span class="entry-author"><span class="meta-prep">by </span>%1$s</span> <span class="entry-date">%2$s</span> <span class="entry-categories"><span class="meta-prep">in </span>%3$s</span><span class="meta-end">.</span>','k2_domain'),
+								'<address class="vcard author"><a href="' . get_author_posts_url(get_the_author_ID()) .'" class="url fn" title="'. sprintf(__('View all posts by %s','k2_domain'), attribute_escape(get_the_author())) .'">' . get_the_author() . '</a></address>',
+								( function_exists('time_since') ?
+									sprintf(__('%s ago','k2_domain'),
+										'<abbr class="published" title="' . get_the_time('Y-m-d\TH:i:sO') . '">' . time_since(abs(strtotime($post->post_date_gmt . " GMT")), time()) . '</addr>') :
+									sprintf(__('<span class="meta-prep">on </span>%s','k2_domain'),
+										'<abbr class="published" title="' . get_the_time('Y-m-d\TH:i:sO') . '">'. get_the_time($dateformat) . '</addr>')
+								),
+								k2_nice_category(', ', __(' and ','k2_domain'))
 							); 
- 						?>
-					</span>
-
-					<span class="entry-category">
-						<?php /* Categories */ printf(__('in %s.','k2_domain'), k2_nice_category(', ', __(' and ','k2_domain')) ); ?>
-					</span>
+					?>
 
 					<?php /* Comments */ comments_popup_link('0&nbsp;<span>'.__('Comments','k2_domain').'</span>', '1&nbsp;<span>'.__('Comment','k2_domain').'</span>', '%&nbsp;<span>'.__('Comments','k2_domain').'</span>', 'commentslink', '<span>'.__('Closed','k2_domain').'</span>'); ?>
 
