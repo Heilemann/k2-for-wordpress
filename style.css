@@ -384,10 +384,10 @@ body.page .entry-content h4 {
 	margin-left: 10px;
 	}
 
-body.page .entry-edit {
+.page-head .entry-edit {
 	position: absolute;
 	right: 0;
-	margin-top: -15px;
+	margin-top: -20px;
 	}
 
 .entry-edit a {
