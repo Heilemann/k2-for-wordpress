@@ -355,6 +355,7 @@ body.page .entry-content h4 {
 	background: url('images/feed.png') right center no-repeat;
 	height: 16px;
 	position: absolute;
+	top: 0;
 	right: 0;
 	color: #777;
 	}
