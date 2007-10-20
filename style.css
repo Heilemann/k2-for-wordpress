@@ -250,10 +250,11 @@ h2 { /* H2 is what kind of page you are on. Eg. 'Monthly Archive'. */
 	}
 
 .secondary h4 { /* Secondary H4 is sidebar headlines */
-	font-size: 1.5em !important;
-	font-weight: normal !important;
-	padding: 0 !important;
-	display: inline;
+	font-size: 1.5em;
+	font-weight: normal;
+	padding: 0;
+	display: block;
+	margin-bottom: 5px;
 	}
 
 #primary h3, #primary h4, .single #primary .k2-asides h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
