@@ -3,7 +3,7 @@
 function RollingArchives(url, pagetext) {
 	this.url = url;
 	this.pageText = pagetext;
-	this.trimmer = new TextTrimmer(100);
+	this.active = false;
 };
 
 RollingArchives.prototype.setState = function(pagenumber, pagecount, query, pagedates) {
@@ -46,6 +46,9 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 		});
 
 		this.updatePageText( this.pageNumber );
+
+		this.trimmer = new TextTrimmer(100);
+		this.active = true;
 	} else {
 		jQuery('#rollingarchives').hide();
 	}
@@ -138,4 +141,8 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 };
 
 
-jQuery(window).scroll(function() { smartPosition('#dynamic-content') });
+jQuery(window).scroll(function(){
+	if (typeof K2.RollingArchives != 'undefined' && K2.RollingArchives.active) {
+		smartPosition('#dynamic-content');
+	}
+});

@@ -12,7 +12,7 @@ function latest_posts_sidebar_module($args) {
 
 	echo($before_module . $before_title . $title . $after_title);
 	?>
-	<span class="metalink"><a href="<?php bloginfo('rss2_url'); ?>" title="<?php _e('RSS Feed for Blog Entries','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a></span>
+	<a href="<?php bloginfo('rss2_url'); ?>" title="<?php _e('RSS Feed for Blog Entries','k2_domain'); ?>" class="feedlink"><span><?php _e('RSS','k2_domain'); ?></span></a>
 		<ul>
 		<?php $latest = new WP_Query($query); while ($latest->have_posts()): $latest->the_post(); ?>
 			<li><a href="<?php the_permalink(); ?>" title="<?php echo wp_specialchars(strip_tags(the_title('', '', false)), 1); ?>"><?php the_title(); ?></a></li>

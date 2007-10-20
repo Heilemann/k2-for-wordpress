@@ -34,7 +34,7 @@ function rss_sidebar_module($args) {
 			$rss->items = array_slice($rss->items, 0, $num_items);
 		?>
 
-		<span class="metalink"><a href="<?php echo(sbm_get_option('feed')); ?>" title="<?php _e('RSS Feed','k2_domain'); ?>" class="feedlink"><img src="<?php echo($icon); ?>" alt="RSS" /></a></span>
+		<a href="<?php echo(sbm_get_option('feed')); ?>" title="<?php _e('RSS Feed','k2_domain'); ?>" class="feedlink"><span><?php _e('RSS','k2_domain'); ?></span></a>
 
 		<ul>
 			<?php
