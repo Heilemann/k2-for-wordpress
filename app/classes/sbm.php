@@ -949,7 +949,7 @@ if(K2_USING_SBM) {
 		}
 	}
 
-	add_action('k2_init', array('K2SBM', 'init'), 5);
+	add_action('k2_init', array('K2SBM', 'init'));
 }
 
 add_action('k2_install', array('K2SBM', 'install'));

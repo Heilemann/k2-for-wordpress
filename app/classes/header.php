@@ -181,7 +181,7 @@ class K2Header {
 	}
 }
 
-add_action('k2_init', array('K2Header', 'init'));
+add_action('k2_init', array('K2Header', 'init'), 11);
 add_action('k2_install', array('K2Header', 'install'));
 add_action('k2_uninstall', array('K2Header', 'uninstall'));
 add_filter('wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'));
