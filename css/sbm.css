@@ -88,6 +88,7 @@ h3 {
 	position: absolute;
 	width: 67px;
 	text-align: center;
+	height: 19px;
 	}
 
 #backupsbm {
@@ -145,6 +146,7 @@ h3 {
 	top: 18px;
 	left: 200px;
 	width: 120px;
+	height: 19px;
 	font-size: 10px;
 	line-height: 19px;
 	text-transform: lowercase;
@@ -167,12 +169,13 @@ h3 {
 
 #do {
 	outline: none;
+	height: 19px;
 	position: absolute;
 	top: 18px;
-	left: 350px;
-	width: 120px;
 	font-size: 10px;
 	line-height: 19px;
+	left: 350px;
+	width: 120px;
 	text-transform: lowercase;
 	color: white;
 	text-align: center;
@@ -244,7 +247,7 @@ h3 {
 	display: none;
 }
 
-.spinner, spinner:hover {
+.spinner, .spinner:hover {
 	background: white url('../images/spinner.gif') no-repeat center center;
 	}
 
@@ -263,7 +266,7 @@ h3 {
 
 .slidingdoor {
 	position: relative;
-	height: inherit;
+	height: 35px; 
 	background: url('../images/sbmmanager/modulebg.png') right top no-repeat;
 	margin-left: 5px;
 	}
@@ -280,10 +283,11 @@ h3 {
 
 .modulewrapper {
 /*	display: block; ? */
-	height: inherit;
+	height: 35px; 
 	width: 80%;
 	}
-	
+
+#availablemodules .slidingdoor,
 #availablemodules .modulewrapper {
 	height: 25px;
 	}
