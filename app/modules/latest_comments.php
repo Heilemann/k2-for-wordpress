@@ -7,7 +7,7 @@ function latest_comments_sidebar_module($args) {
 	echo($before_module . $before_title . $title . $after_title);
 
 	?>
-	<a href="<?php bloginfo('comments_rss2_url'); ?>" title="<?php _e('RSS Feed for all Comments','k2_domain'); ?>" class="feedlink"><img src="<?php bloginfo('template_directory'); ?>/images/feed.png" alt="RSS" /></a>
+	<a href="<?php bloginfo('comments_rss2_url'); ?>" title="<?php _e('RSS Feed for all Comments','k2_domain'); ?>" class="feedlink"><span><?php _e('RSS','k2_domain'); ?></span></a>
 
 	<?php if(function_exists('blc_latest_comments')) { ?>
 		<ul>
