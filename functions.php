@@ -4,7 +4,7 @@
 define('K2_CURRENT', 'svn');
 
 // Is this MU or no?
-define('K2_MU', (strpos($wp_version, 'wordpress-mu') === true));
+define('K2_MU', (strpos($wp_version, 'wordpress-mu') !== false));
 
 // Define our folders for WordPress & WordpressMU
 if(K2_MU) {
