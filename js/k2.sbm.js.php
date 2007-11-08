@@ -317,6 +317,11 @@ function sbm_load(id, url) {
 				closeVar = false;
 
 				jQuery('#module-name').val( trim(jQuery('#module-name').val()) )
+				
+				if (jQuery('#page-ids').children('li').children('input:checked').length == 0) {
+					jQuery('#display-pages').attr('checked', '')
+					jQuery('#page-ids').children('li').children('input').attr('disabled', 'disabled')
+				}
 
 				jQuery('#module-options-form').trigger('submit')
 				return false;
@@ -327,6 +332,9 @@ function sbm_load(id, url) {
 				closeVar = true;
 
 				jQuery('#module-name').val( trim(jQuery('#module-name').val()) )
+
+				if (jQuery('#page-ids').children('li').children('input:checked').length == 0)
+					jQuery('#display-pages').attr('checked', '')
 
 				jQuery('#module-options-form').trigger('submit')
 				return false;
@@ -408,7 +416,7 @@ function sbm_load(id, url) {
 						jQuery('#specific-pages').empty().append(data)
 						
 						// Check all page checkboxes if needed
-						if ((jQuery('#display-pages').attr('checked')) == true && (jQuery('#page-ids').children('li').children('input:checked').length == 0))
+						if ((jQuery('#display-pages').attr('checked') == true) && (jQuery('#page-ids').children('li').children('input:checked').length == 0))
 							jQuery('#page-ids').children('li').children('input').attr('checked', 'checked')
 
 
