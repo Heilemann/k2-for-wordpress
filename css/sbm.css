@@ -371,7 +371,7 @@ h3 {
 	}
 
 .availablemodule .slidingdoor {
-	background: url('../images/sbmmanager/amodulebg.png') right center no-repeat;
+	background: url('../images/sbmmanager/amodulebg.png') right top no-repeat;
 	}
 
 .availablemodule:hover {
