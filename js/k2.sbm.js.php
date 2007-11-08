@@ -406,6 +406,11 @@ function sbm_load(id, url) {
 					},
 					function (data) {
 						jQuery('#specific-pages').empty().append(data)
+						
+						// Check all page checkboxes if needed
+						if ((jQuery('#display-pages').attr('checked')) == true && (jQuery('#page-ids').children('li').children('input:checked').length == 0))
+							jQuery('#page-ids').children('li').children('input').attr('checked', 'checked')
+
 
 						// Setup auto 'select all/select none'
 						jQuery('#display-pages').click(function() {
