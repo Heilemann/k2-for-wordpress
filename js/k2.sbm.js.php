@@ -26,7 +26,6 @@ function sbm_load(id, url) {
 					.attr('class', 'module marker')
 					.css({ position: "static" })
 					.html('<div class="slidingdoor"><span class="modulewrapper"></span></div>')
-//					.html('<div class="slidingdoor"><span class="modulewrapper"><span class="name">'+module+'</span><span class="handle"></span><span class="type">'+module+'</span></span><a href="#" class="optionslink"> </a><a href="#" class="deletelink"> </a></div>')
 					.appendTo(jQuery(this).children())
 			},
 			onOut: 			function (drag) {
@@ -283,7 +282,7 @@ function sbm_load(id, url) {
 
 			jQuery('a.deletelink').each(function() {
 				jQuery(this).unbind().click(function() {
-					// Prevent double-clicking
+					// Prevent the user from double-clicking the link
 					jQuery(this).unbind()
 
 					// Get the module ID and its parent sidebar ID
@@ -292,7 +291,7 @@ function sbm_load(id, url) {
 
 					// Hide the module
 					jQuery('#'+moduleID).slideUp('normal', function() {
-						jQuery(this).css({ display: 'list-item' }).addClass('trashed')
+						jQuery(this).css({ display: 'list-item', overflow: 'hidden' }).addClass('trashed')
 					})
 
 					// Add module to undo stack
