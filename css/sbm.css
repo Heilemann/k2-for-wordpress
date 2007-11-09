@@ -350,7 +350,6 @@ h3 {
 
 /* Modules scheduled for deletion */
 .trashed {
-	display: list-item;
 	height: 0;
 	overflow: hidden;
 	margin: 0;

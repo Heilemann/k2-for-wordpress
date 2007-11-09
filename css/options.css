@@ -18,8 +18,7 @@
 .configstuff {
 	position: relative;
 	font-size: 1.3em;
-	max-width: 600px;
-	min-width: 300px;
+	width: 600px;
 	margin: 0 auto;
 	padding-top: 40px; /* For floating .savebutton */
 	}
@@ -27,9 +26,8 @@
 .savebutton {
 	position: absolute;
 	top: 0;
-	width: 100%;
-	max-width: 600px;
-	min-width: 300px;
+	width: 600px;
+	margin: 0 auto;
 	padding: 10px 0;
 	z-index: 100;
 	background: #f9fcfe;
