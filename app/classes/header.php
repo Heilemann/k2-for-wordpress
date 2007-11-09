@@ -4,7 +4,7 @@
 
 class K2Header {
 	function install() {
-		add_option('k2imagerandomfeature', '1', "Whether to use a random image in K2's header");
+		add_option('k2imagerandomfeature', '0', "Whether to use a random image in K2's header");
 		add_option('k2header_picture', '', "The image to use in K2's header");
 	}
 
