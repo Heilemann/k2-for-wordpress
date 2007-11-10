@@ -94,13 +94,11 @@
 		<h2><?php _e('K2 Sidebar Manager', 'k2_domain') ?></h2>
 
 		<span class="backuprestore">
-			<a href="" id="backupsbm">Backup</a>
 			<a href="" id="restoresbm">Restore</a>
+			<a href="" id="backupsbm">Backup</a>
 		</span>
 
 		<a href="#" id="undo"><?php _e('Undo', 'k2_domain') ?> <span id="levels"></span></a>
-
-<!--		<a href="#" id="do"><?php _e('Empty Trash', 'k2_domain') ?></a>-->
 
 		<form id="columnsform" name="columnsform" action="" method="post" enctype="multipart/form-data">
 			<select id="columns-number" name="columns_number" onchange="this.form.submit();">

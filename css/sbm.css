@@ -13,7 +13,6 @@
 	}
 
 h2 {
-	display: none;
 	position: absolute;
 	top: 13px;
 	left: 10px;
@@ -72,8 +71,8 @@ h3 {
 
 .backuprestore {
 	position: absolute;
-	top: 18px;
-	left: 25px;
+	top: 20px;
+	left: 230px;
 	text-transform: lowercase;
 	font-size: 10px;
 	line-height: 19px;
@@ -92,23 +91,35 @@ h3 {
 	}
 
 #backupsbm {
+	right: 0;
+	width: 66px;
+	padding-right: 3px;
+	background: url('../images/sbmmanager/backuprestore.png') right top no-repeat;
+	}
+
+#backupsbm:hover {
+	background-position: right bottom;
+	}
+
+body.nomodules #backupsbm, body.nomodules #backupsbm:hover {
+	background-position: right top;
+	cursor: default;
+	opacity: 0;
+	}
+
+#restoresbm {
 	padding-left: 3px;
 	background: url('../images/sbmmanager/backuprestore.png') left top no-repeat;
 	}
 
-#backupsbm:hover {
+#restoresbm:hover {
 	background-position: left bottom;
 	}
 
-#restoresbm {
-	right: 0;
-	padding-right: 3px;
-	width: 66px;
-	background: url('../images/sbmmanager/backuprestore.png') right top no-repeat;
-	}
-
-#restoresbm:hover {
-	background-position: right bottom;
+body.nomodules #restoresbm {
+	background: url('../images/sbmmanager/undo.png') left top no-repeat;
+	padding: 0;
+	width: 70px;
 	}
 
 #backupsbmwindow {
@@ -143,9 +154,9 @@ h3 {
 
 #undo {
 	position: absolute;
-	top: 18px;
-	left: 200px;
-	width: 120px;
+	top: 20px;
+	left: 385px;
+	width: 70px;
 	height: 19px;
 	font-size: 10px;
 	line-height: 19px;
@@ -157,6 +168,10 @@ h3 {
 	outline: none;
 	}
 
+#undo:hover {
+	background-position: left bottom;
+	}
+
 #undo span {
 	position: absolute;
 	top: 2px;
@@ -165,6 +180,10 @@ h3 {
 	line-height: 16px;
 	font-size: 9px;
 	background: url('../images/sbmmanager/buttoncircle.png') no-repeat;
+	}
+
+body.nomodules #undo {
+	left: 310px;
 	}
 
 #do {
@@ -725,18 +744,8 @@ input[type=checkbox] {
 
 /* Misc. */
 
-#msg { /* Not being used currently */
-	position: absolute;
-	top: 13px;
-	left: 50%;
-	margin: 0 0 0 -200px;
-	text-align: center;
-	width: 400px;
-	padding: 5px 10px;
-	background-color: #D3E66C;
-	border: 1px solid #B1C05A;
-	color: #292929;
-	font-size: 12x;
+.humanMsg {
+	top: 165px !important;
 	}
 
 .loader {

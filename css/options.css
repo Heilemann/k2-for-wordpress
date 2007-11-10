@@ -1,5 +1,3 @@
-/* @override http://localhost/wp-content/themes/kaytwo/css/options.css */
-
 .k2wrap {
 	font-family: Helvetica, Arial, Sans-Serif;
 	border: none;
@@ -46,22 +44,19 @@ body.smartposition .savebutton {
 	}
 
 .container {
-	margin: 10px 0 20px;
+	margin: 30px 0 20px;
 	position: relative;
-	padding-top: 20px;
 	}
 
 h3 {
-	font: 1em Helvetica, Arial, Sans-Serif;
+	font: 1.3em/1.2em Helvetica, Arial, Sans-Serif;
 	color: #333;
-	padding-right: 25px;
 	border-right: 2px solid #eee;
-	width: 155px;
+	width: 225px;
 	margin: 0;
 	overflow: hidden;
 	white-space: pre;
 	}
-
 .k2wrap p.description {
 	margin-top: 5px;
 	color: #888;
@@ -78,26 +73,29 @@ h3 {
 
 .configstuff #k2-asidescategory, .configstuff #k2-scheme, .checkboxelement {
 	position: absolute;
-	left: 200px;
+	left: 240px;
 	}
 
 .checkboxelement {
-	top: 23px;
+	top: 6px;
 	margin: 0;
 	}
 	
 .configstuff #k2-asidescategory, .configstuff #k2-scheme {
-	top: 20px;
+	top: 4px;
 	width: 240px;
-	padding: 0px;
 	margin: 0;
-	font-size: 12px;
-	line-height: 16px;
 	}
 
 .configstuff select, .configstuff input {
 	font-family: Helvetica, Arial, Sans-Serif;
 	color: #222;
+	font-size: 12px;
+	padding: 2px;
+	}
+
+.configstuff option {
+	padding: 0px;
 	}
 
 .configelap {

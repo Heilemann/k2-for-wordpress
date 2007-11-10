@@ -163,7 +163,7 @@
 					<?php } ?>
 				</select>
 
-				<p class="description"><?php printf(__('Stop editing core files, K2 is highly customizable using only CSS. %s','k2_domain'), '<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS">' . __('Read&nbsp;more','k2_domain') . '</a>.'  ); ?></p>
+				<p class="description"><?php printf(__('No need to edit core files, K2 is highly customizable using only CSS. %s','k2_domain'), '<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS">' . __('Read&nbsp;more','k2_domain') . '</a>.'  ); ?></p>
 			</div>
 			<?php } ?>
 

@@ -46,6 +46,9 @@ function sbm_load(id, url) {
 									.attr('class', 'module ' + sidebar)
 									.css({ position: "static" })
 
+				// Activate Backup Button if needed
+				checkBackupLinks()
+
 				// Submit new module info
 				jQuery.ajax({
 					type: "POST",
@@ -292,6 +295,9 @@ function sbm_load(id, url) {
 					// Hide the module
 					jQuery('#'+moduleID).slideUp('normal', function() {
 						jQuery(this).css({ display: 'list-item', overflow: 'hidden' }).addClass('trashed')
+
+						// Are there modules left?
+						checkBackupLinks()
 					})
 
 					// Add module to undo stack
@@ -456,22 +462,23 @@ function sbm_load(id, url) {
 			jQuery('#overlay').hide().css({ opacity: 0 })
 			return false;
 		}
-
 		
-		// Spool the FTL drive
-		jQuery(window).load(function() {
-			tabSystem();
-			humanUndo.setup(sbm_baseUrl)
-			jQuery(window).unload( humanUndo.emptyTrash )
+		
+		function checkBackupLinks() {
+			// Are the modules to backup?
+			if (jQuery('.sortable').children('li:not(.trashed)').length == 0) {
+				jQuery('#backupsbm').unbind()
+				jQuery('body').addClass('nomodules')
+			} else {
+				jQuery('#backupsbm').click(function() {
+					jQuery('#backupform').submit();
+					return false;
+				})
+				
+				jQuery('body').removeClass('nomodules')
+			}
 
-			jQuery('#optionswindow').css({ zIndex: 1000, visibility: 'visible' }).hide()
-
-			// Backup/Restore system
-			jQuery('#backupsbm').click(function() {
-				jQuery('#backupform').submit();
-				return false;
-			})
-
+			// Restore button behavior
 			jQuery('#restoresbm').click(function() {
 				jQuery('#backupsbmwindow').css({ top: 20, opacity: 0, zIndex: 700 }).animate({ top: 38, opacity: 1 }, 600, 'easeOutSine')
 				jQuery('#overlay').show().css({ opacity: .5 }).click(function() {
@@ -483,8 +490,21 @@ function sbm_load(id, url) {
 				})
 				return false;
 			})
+		}
 
-			// Fire it up
+		
+		// Spool the FTL drive
+		jQuery(window).load(function() {
+			tabSystem();
+			humanUndo.setup(sbm_baseUrl)
+			jQuery(window).unload( humanUndo.emptyTrash )
+
+			jQuery('#optionswindow').css({ zIndex: 1000, visibility: 'visible' }).hide()
+
+			// Bring Backup/Restore system online
+			checkBackupLinks()
+
+			// Ignition Sequence
 			jQuery('.initloading').hide().remove()
 			resizeLists();
 			jQuery('.container').css({ opacity: 1 })
