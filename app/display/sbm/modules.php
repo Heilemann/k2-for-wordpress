@@ -6,7 +6,7 @@
 
 	$column_number = get_option('k2columns');
 	$column_options = array(
-		1 => __('One Column','k2_domain'),
+		1 => __('One Column', 'k2_domain'),
 		__('Two Columns', 'k2_domain'),
 		__('Three Columns', 'k2_domain')
 	);
@@ -29,7 +29,7 @@
 <?php } ?>
 
 <div id="optionswindow">
-	<a href="#" id="closelink" title="Close"></a>
+	<a href="#" id="closelink" title="<?php _e('Close', 'k2_domain'); ?>"></a>
 
 	<table>
 	<tr>
@@ -45,9 +45,9 @@
 	
 			<div class="tabbg">
 			<div class="tabs">
-				<a href="#" id="optionstab" class="selected" title="<?php _e('Options for this module type'); ?>">Options</a>
-				<a href="#" id="advancedtab">Advanced</a>
-				<a href="#" id="displaytab" title="<?php _e('Where to display this module'); ?>">Display</a>
+				<a href="#" id="optionstab" class="selected" title="<?php _e('Options for this module type', 'k2_domain'); ?>"><?php _e('Options', 'k2_domain'); ?></a>
+				<a href="#" id="advancedtab"><?php _e('Advanced', 'k2_domain'); ?></a>
+				<a href="#" id="displaytab" title="<?php _e('Where to display this module', 'k2_domain'); ?>"><?php _e('Display', 'k2_domain'); ?></a>
 			</div>
 			</div>
 
@@ -64,7 +64,7 @@
 				<div id="options">
 				</div>
 
-				<!--<p class="optionkeys"><?php _e('\'Enter\' saves, \'Escape\' closes.'); ?></p>-->
+				<!--<p class="optionkeys"><?php _e('\'Enter\' saves, \'Escape\' closes.', 'k2_domain'); ?></p>-->
 
 			</form>
 
@@ -94,8 +94,8 @@
 		<h2><?php _e('K2 Sidebar Manager', 'k2_domain') ?></h2>
 
 		<span class="backuprestore">
-			<a href="" id="restoresbm">Restore</a>
-			<a href="" id="backupsbm">Backup</a>
+			<a href="" id="restoresbm"><?php _e('Restore', 'k2_domain') ?></a>
+			<a href="" id="backupsbm"><?php _e('Backup', 'k2_domain') ?></a>
 		</span>
 
 		<a href="#" id="undo"><?php _e('Undo', 'k2_domain') ?> <span id="levels"></span></a>
@@ -136,7 +136,7 @@
 		
 		<div class="containerwrap">
 
-		<div class="initloading"><?php _e('Loading'); ?></div>
+		<div class="initloading"><?php _e('Loading', 'k2_domain'); ?></div>
 
 		<div id="availablemodulescontainer" class="container">
 			<h3><?php _e('Available Modules', 'k2_domain') ?></h3>
