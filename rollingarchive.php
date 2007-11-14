@@ -12,7 +12,16 @@
 	if ( get_option('k2rollingarchives') == 1 ) { 
 
 		// Get the query
-		$rolling_query = $wp_query->query;
+		if ( is_array($wp_query->query) ) {
+			$rolling_query = $wp_query->query;
+		} else if ( is_string($wp_query->query) ) {
+			parse_str($wp_query->query, $rolling_query);
+		}
+
+		// Debugging
+		if ( isset($_GET['k2debug']) ) {
+			$rolling_query['k2debug'] = '1';
+		}
 
 		// Get list of page dates
 		if ( !is_page() and !is_single() ) {

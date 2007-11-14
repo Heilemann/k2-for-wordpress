@@ -9,19 +9,18 @@
 		if ($_GET['k2dynamic'] != 'init') {
 			query_posts($_GET);
 		}
-
-		// Debugging
-		if ( isset($_GET['k2debug']) ) {
-			echo '<div class="alert">';
-			echo '<b>Query:</b><br />'; var_dump($wp_query->query); echo '<br />';
-			echo '<b>Request:</b><br />'; var_dump($wp_query->request); echo '<br />';
-			echo '</div>';
-		}
 	?>
 
 <div id="dynamictype" class="<?php k2_body_class(); ?>">
 
 <?php }
+
+	// Debugging
+	if ( isset($_GET['k2debug']) ) {
+		echo '<div class="alert">';
+		echo '<b>Query:</b><br />'; var_dump($wp_query->query);
+		echo '</div>';
+	}
 
 	// Get the asides category
 	$k2asidescategory = get_option('k2asidescategory');
