@@ -1,6 +1,9 @@
 <?php
+	// Browser check. props phpBB
+	$browser = (!empty($_SERVER['HTTP_USER_AGENT'])) ? strtolower(htmlspecialchars((string) $_SERVER['HTTP_USER_AGENT'])) : '';
+
 	// check to see if the user has enabled gzip compression in the WordPress admin panel
-	if(ob_get_length() === FALSE and !ini_get('zlib.output_compression') and ini_get('output_handler') != 'ob_gzhandler' and ini_get('output_handler') != 'mb_output_handler') {
+	if ( ($browser and strpos($browser, 'msie 6.0') === false) and extension_loaded('zlib') and !ini_get('zlib.output_compression') and ini_get('output_handler') != 'ob_gzhandler' and ((version_compare(phpversion(), '5.0', '>=') and ob_get_length() == false) or ob_get_length() === false) ) {
 		ob_start('ob_gzhandler');
 	}
 

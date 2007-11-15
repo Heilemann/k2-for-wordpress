@@ -1,10 +1,6 @@
-<?php require('header.php'); ?>
+<?php require('gzip-header-css.php'); ?>
 
 /* This file contains the CSS for the 'Advanced Navigation' features, including livesearch and rolling archives */
-
-#pagetrack #dragHelper {
-	overflow: visible !important;
-}
 
 #rollingarchives {
 	position: absolute;
