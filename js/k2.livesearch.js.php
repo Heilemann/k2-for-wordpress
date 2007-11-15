@@ -1,4 +1,4 @@
-<?php require('header.php'); ?>
+<?php require('gzip-header-js.php'); ?>
 
 function LiveSearch(url, searchprompt) {
 	var self = this;

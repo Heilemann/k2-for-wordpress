@@ -1,4 +1,4 @@
-<?php require('header.php'); ?>
+<?php require('gzip-header-js.php'); ?>
 /*
  * jQuery EasIng v1.1.2 - http://gsgd.co.uk/sandbox/jquery.easIng.php
  *

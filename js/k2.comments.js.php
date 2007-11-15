@@ -1,4 +1,4 @@
-<?php require('header.php'); ?>
+<?php require('gzip-header-js.php'); ?>
 
 jQuery(document).ready(function() {
 	if ( jQuery('#commentform').length ) {

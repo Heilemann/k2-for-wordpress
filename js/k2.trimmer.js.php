@@ -1,4 +1,4 @@
-<?php require('header.php'); ?>
+<?php require('gzip-header-js.php'); ?>
 
 /*	Thank you Drew McLellan for starting us off
 	with http://24ways.org/2006/tasty-text-trimmer	*/

@@ -1,4 +1,4 @@
-<?php require('header.php'); ?>
+<?php require('gzip-header-js.php'); ?>
 /**
  * Interface Elements for jQuery
  * 
