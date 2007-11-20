@@ -49,7 +49,7 @@
 						<?php if (function_exists('wp_tag_cloud')) { ?>
 							<h3><?php _e('Tag Cloud','k2_domain'); ?></h3>
 							<div id="tag-cloud">
-							<?php wp_tag_cloud(); ?>
+							<?php wp_tag_cloud('number=0'); ?>
 							</div>
 						<?php } ?>
 
