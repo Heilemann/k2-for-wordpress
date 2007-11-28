@@ -80,6 +80,14 @@
 	//<![CDATA[
 		K2.columns = <?php echo get_option('k2columns') ?>;
 
+		K2.layoutWidths = <?php /* Style Layout Widths */
+			$styleinfo = get_option('k2styleinfo');
+			if ( empty($styleinfo['layout_widths']) )
+				echo '[560, 780, 950]';
+			else
+				output_javascript_array($styleinfo['layout_widths']);
+		?>;
+
 		if (K2.columns > 1) {
 			jQuery(document).ready(dynamicColumns);
 			jQuery(window).resize(dynamicColumns);

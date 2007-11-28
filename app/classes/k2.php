@@ -69,16 +69,21 @@ class K2 {
 
 		// Check if there's a style
 		if ( ($style = get_option('k2scheme')) != '' ) {
-			$styleinfo = get_option('k2styleinfo');
+			if ( !file_exists(K2_STYLES_PATH . $style) ) {
+				update_option('k2scheme', '');
+				update_option('k2styleinfo', array());
+			} else {
+				$styleinfo = get_option('k2styleinfo');
 
-			// Update the style info if style has been modified
-			if ( filemtime(K2_STYLES_PATH . $style) != $styleinfo['modified'] ) {
-				$styleinfo = update_style_info();
-			}
+				// Update the style info if style has been modified
+				if ( empty($styleinfo['modified']) or filemtime(K2_STYLES_PATH . $style) != $styleinfo['modified'] ) {
+					$styleinfo = update_style_info();
+				}
 
-			// Load attached php file
-			if ( $styleinfo['php'] && file_exists($styleinfo['php']) ) {
-				include_once($styleinfo['php']);
+				// Load attached php file
+				if ( !empty($styleinfo['php']) and file_exists($styleinfo['php']) ) {
+					include_once($styleinfo['php']);
+				}
 			}
 		}
 	}

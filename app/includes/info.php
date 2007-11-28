@@ -35,6 +35,12 @@ function get_k2info($show='') {
 				$output = K2_STYLES_PATH . dirname(get_option('k2scheme'));
 			}
 			break;
+
+		case 'current_style_url' :
+			if ( get_option('k2scheme') != '' ) {
+				$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2_STYLES_PATH) . get_option('k2scheme');
+			}
+			break;
 	}
 	return $output;
 }
@@ -104,11 +110,11 @@ function update_style_info() {
 function get_style_data($style_file = '') {
 	// if no style selected, exit
 	if ( '' == $style_file ) {
-		return false;
+		return array();
 	}
 
 	$style_path = K2_STYLES_PATH . $style_file;
-	if (!file_exists($style_path)) return false;
+	if (!file_exists($style_path)) return array();
 	$style_data = implode( '', file( $style_path ) );
 
 	// parse the data
@@ -123,6 +129,14 @@ function get_style_data($style_file = '') {
 	preg_match("|Header Width\s*:\s*(\d+)|i", $style_data, $header_width);
 	preg_match("|Header Height\s*:\s*(\d+)|i", $style_data, $header_height);
 	preg_match("|PHP File\s*:(.*)|i", $style_data, $php_file);
+	preg_match("|Layout Widths\s*:\s*(\d+)\s*(px)?\s*,\s*(\d+)\s*(px)?\s*,\s*(\d+)|i", $style_data, $widths);
+
+	$layout_widths = array();
+	if ( !empty($widths) ) {
+		$layout_widths[1] = $widths[1];
+		$layout_widths[2] = $widths[3];
+		$layout_widths[3] = $widths[5];
+	}
 
 	return array(
 		'modified' => filemtime($style_path),
@@ -136,7 +150,8 @@ function get_style_data($style_file = '') {
 		'header_text_color' => trim($header_text_color[1]),
 		'header_width' => trim($header_width[1]),
 		'header_height' => trim($header_height[1]),
-		'php' => ($filename = trim($php_file[1])) != '' ? dirname($style_path) . '/' . $filename : false
+		'php' => ($filename = trim($php_file[1])) != '' ? dirname($style_path) . '/' . $filename : false,
+		'layout_widths' => $layout_widths
 	);
 }
 
@@ -501,9 +516,15 @@ function k2_post_class( $post_count = 1, $post_asides = false, $print = true ) {
 		$c[] = 'category-' . $cat->category_nicename;
 
 	// Tags for the post queried
-	if ( function_exists('get_the_tags') )
-		foreach ( (array) get_the_tags() as $tag )
-			$c[] = 'tag-' . $tag->slug;
+	if ( function_exists('get_the_tags') ) {
+		$tags = get_the_tags();
+
+		if ( !empty($tags) ) {
+			foreach ( $tags as $tag ) {
+				$c[] = 'tag-' . $tag->slug;
+			}
+		}
+	}
 
 	// For password-protected posts
 	if ( $post->post_password )

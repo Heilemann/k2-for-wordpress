@@ -135,9 +135,9 @@ function getWindowSize() {
 function dynamicColumns() {
 	var window_width = getWindowSize().width;
 
-	if (K2.columns >= 3 && window_width >= 950) {
+	if (K2.columns >= 3 && window_width >= K2.layoutWidths[2]) {
 		jQuery('body').removeClass('columns-one columns-two').addClass('columns-three');
-	} else if (K2.columns >= 2 && window_width >= 780) {
+	} else if (K2.columns >= 2 && window_width >= K2.layoutWidths[1]) {
 		jQuery('body').removeClass('columns-one columns-three').addClass('columns-two');
 	} else {
 		jQuery('body').removeClass('columns-two columns-three').addClass('columns-one');
