@@ -7,6 +7,10 @@
 		require_once(dirname(__FILE__).'/../../../wp-config.php');
 
 		if ($_GET['k2dynamic'] != 'init') {
+			// Send the header
+			header('Content-Type: ' . get_bloginfo('html_type') . '; charset=' . get_bloginfo('charset'));
+
+			// Initialize the Loop
 			query_posts($_GET);
 		}
 	?>
