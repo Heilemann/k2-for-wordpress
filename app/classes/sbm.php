@@ -280,13 +280,14 @@ class K2SBM {
 		}
 
 		// Check the default arguments are there
+		$args['id'] = isset($args['id']) ? $args['id'] : sprintf('sidebar-%d', count($k2sbm_registered_sidebars) + 1);
 		$args['name'] = isset($args['name']) ? $args['name'] : sprintf(__('Sidebar %d', 'k2_domain'), count($k2sbm_registered_sidebars) + 1);
 		$args['before_widget'] = isset($args['before_widget']) ? $args['before_widget'] : '<li id="%1$s" class="widget %2$s">';
 		$args['after_widget'] = isset($args['after_widget']) ? $args['after_widget'] : "</li>\n";
 		$args['before_title'] = isset($args['before_title']) ? $args['before_title'] : '<h2 class="widgettitle">';
 		$args['after_title'] = isset($args['after_title']) ? $args['after_title'] : "</h2>\n";
 
-		$sidebar = new k2sbmSidebar($args['name'], $args['before_widget'], $args['after_widget'], $args['before_title'], $args['after_title']);
+		$sidebar = new k2sbmSidebar($args['id'], $args['name'], $args['before_widget'], $args['after_widget'], $args['before_title'], $args['after_title']);
 
 		// Add the sidebar to the list
 		$k2sbm_registered_sidebars[$sidebar->id] = $sidebar;
@@ -319,16 +320,23 @@ class K2SBM {
 			parse_str($args, $args);
 		}
 
-		// Check for a name
-		$arg_name = isset($args['name']) ? $args['name'] : __('Sidebar %d', 'k2_domain');
+		if ( isset($args['name']) ) {
+			$arg_name = $args['name'];
 
-		// Check there is a count in the name
-		if(!strstr($arg_name, '%d')) {
-			$arg_name += __(' %d', 'k2_domain');
+			// Check there is a count in the name
+			if ( strpos($arg_name, '%d') === false ) {
+				$arg_name += ' %d';
+			}
+
+			$arg_id = K2SBM::name_to_id($arg_name);
+		} else {
+			$arg_name = __('Sidebar %d', 'k2_domain');
+			$arg_id = 'sidebar-%d';
 		}
 
 		// Register the sidebars
 		for($i = 0; $i < $count; $i++) {
+			$args['id'] = sprintf($arg_id, $i + 1);
 			$args['name'] = sprintf($arg_name, $i + 1);
 
 			K2SBM::register_sidebar($args);
@@ -342,12 +350,11 @@ class K2SBM {
 
 		if(count($k2sbm_registered_sidebars) > 0) {
 			// Check if this is an integer ID of a sidebar
-			if(is_int($name)) {
-				$name = sprintf(__('Sidebar %d', 'k2_domain'), $name);
+			if ( is_int($name) ) {
+				$id = 'sidebar-' . $name;
+			} else {
+				$id = K2SBM::name_to_id($name);
 			}
-
-			// Get the sidebar
-			$id = K2SBM::name_to_id($name);
 
 			if(isset($k2sbm_registered_sidebars[$id])) {
 				$return = $k2sbm_registered_sidebars[$id]->display();
@@ -379,15 +386,7 @@ class K2SBM {
 	function register_sidebar_module($name, $callback, $css_class = '', $options = array()) {
 		global $k2sbm_registered_modules;
 
-		// Another odd bit of WPW code
-		// Better include it for the sake of Widget developers
-		if(is_array($name)) {
-			$id = K2SBM::name_to_id(sprintf($name[0], $name[2]));
-			$name = sprintf(__($name[0], $name[1], 'k2_domain'), $name[2]);
-		} else {
-			$id = K2SBM::name_to_id($name);
-			$name = __($name, 'k2_domain');
-		}
+		$id = K2SBM::name_to_id($name);
 
 		$css_class = (string)$css_class == '' ? (string)$callback : $css_class;
 
@@ -440,15 +439,7 @@ class K2SBM {
 	function register_sidebar_module_control($name, $callback) {
 		global $k2sbm_registered_modules;
 
-		// Another odd bit of WPW code
-		// Better include it for the sake of Widget developers
-		if(is_array($name)) {
-			$id = K2SBM::name_to_id(sprintf($name[0], $name[2]));
-			$name = sprintf(__($name[0], $name[1], 'k2_domain'), $name[2]);
-		} else {
-			$id = K2SBM::name_to_id($name);
-			$name = __($name, 'k2_domain');
-		}
+		$id = K2SBM::name_to_id($name);
 
 		// Add the module control to the array
 		if($k2sbm_registered_modules[$id]) {
@@ -675,11 +666,11 @@ if(K2_USING_SBM) {
 
 		var $modules;
 
-		function k2sbmSidebar($name, $before_module, $after_module, $before_title, $after_title) {
+		function k2sbmSidebar($id, $name, $before_module, $after_module, $before_title, $after_title) {
 			global $k2sbm_active_modules;
 
 			// Set the generic data from the parameters
-			$this->id = K2SBM::name_to_id($name);
+			$this->id = $id;
 			$this->name = $name;
 			$this->before_module = $before_module;
 			$this->after_module = $after_module;

@@ -63,6 +63,14 @@ function unregister_sidebar_module_control($name) {
 
 
 function register_sidebar_widget($name, $callback, $classname = '') {
+	// Compat
+	if ( is_array($name) ) {
+		if ( count($name) == 3 )
+			$name = sprintf($name[0], $name[2]);
+		else
+			$name = $name[0];
+	}
+
 	K2SBM::register_sidebar_module($name, $callback, $classname);
 }
 
@@ -75,6 +83,14 @@ function is_active_widget($callback) {
 }
 
 function register_widget_control($name, $callback, $width = false, $height = false) {
+	// Compat
+	if ( is_array($name) ) {
+		if ( count($name) == 3 )
+			$name = sprintf($name[0], $name[2]);
+		else
+			$name = $name[0];
+	}
+
 	// Chop off W & H, not needed
 	K2SBM::register_sidebar_module_control($name, $callback);
 }
