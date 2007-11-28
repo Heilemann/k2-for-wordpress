@@ -83,7 +83,7 @@
 		K2.layoutWidths = <?php /* Style Layout Widths */
 			$styleinfo = get_option('k2styleinfo');
 			if ( empty($styleinfo['layout_widths']) )
-				echo '[560, 780, 950]';
+				echo '[580, 800, 970]';
 			else
 				output_javascript_array($styleinfo['layout_widths']);
 		?>;
