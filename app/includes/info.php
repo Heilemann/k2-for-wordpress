@@ -38,7 +38,7 @@ function get_k2info($show='') {
 
 		case 'current_style_url' :
 			if ( get_option('k2scheme') != '' ) {
-				$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2_STYLES_PATH) . get_option('k2scheme');
+				$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2_STYLES_PATH) . dirname(get_option('k2scheme'));
 			}
 			break;
 	}
