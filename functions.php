@@ -4,10 +4,10 @@
 define('K2_CURRENT', 'svn');
 
 // Is this MU or no?
-define('K2_MU', (strpos($wp_version, 'wordpress-mu') !== false));
+define('K2_MU', (isset($wpmu_version) or (strpos($wp_version, 'wordpress-mu') !== false)));
 
 // Define our folders for WordPress & WordpressMU
-if(K2_MU) {
+if ( K2_MU ) {
 	define('K2_STYLES_PATH', ABSPATH . UPLOADS . 'k2support/styles/');
 	define('K2_HEADERS_PATH', ABSPATH . UPLOADS . 'k2support/headers/');
 } else {
