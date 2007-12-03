@@ -58,7 +58,7 @@
 
 			} elseif (function_exists('is_tag') and is_tag()) {
 				if (function_exists('single_tag_title')) {
-					printf(__('Tag Archive for \'%s\'','k2_domain'), single_tag_title('',$display=false));
+					printf(__('Tag Archive for \'%s\'','k2_domain'), single_tag_title('', false));
 				} else {
 					printf(__('Tag Archive for \'%s\'','k2_domain'), get_query_var('tag') );
 				}
@@ -82,14 +82,6 @@
 <?php
 	/* Check if there are posts */
 	if ( have_posts() ) {
-		/* It saves time to only perform the following if there are posts to show */
-
-		/* Count if there are 2+ users */
-		$count_users = $wpdb->get_var("SELECT COUNT(1) FROM $wpdb->usermeta WHERE meta_key = '" . $table_prefix . "user_level' AND meta_value > 1 LIMIT 2");
-
-		/* If there are 2+ users, this is a multiple-user blog */
-		$multiple_users = ($count_users > 1);
-
 		/* Post index for semantic classes */
 		$post_index = 1;
 ?>
