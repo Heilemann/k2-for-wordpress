@@ -772,7 +772,7 @@ if(K2_USING_SBM) {
 					// Allow the user to hide the title, simplest method is to unset the title elements
 					if($this->output['show_title']) {
 						$params[0]['before_title'] = $sidebar->before_title;
-						$params[0]['title'] = $this->name;
+						$params[0]['title'] = apply_filters('the_title', $this->name);
 						$params[0]['after_title'] = $sidebar->after_title;
 					} else {
 						$params[0]['before_title'] = '';

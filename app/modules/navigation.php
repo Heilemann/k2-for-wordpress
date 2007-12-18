@@ -26,7 +26,7 @@ function nav_sidebar_module($args) {
 				</ul>
 
 				<?php if ($parent_id != $post->ID) { ?>
-				<a href="<?php echo get_permalink($parent_id); ?>"><?php printf(__('Back to %s','k2_domain'), $parent_title ) ?></a>
+				<a href="<?php echo get_permalink($parent_id); ?>"><?php printf(__('Back to %s','k2_domain'), apply_filters('the_title', $parent_title) ); ?></a>
 				<?php } ?>
 			<?php
 			echo($after_module);

@@ -23,14 +23,14 @@
 	?>
 
 	<div class="sb-pagemenu">
-		<h4><?php echo $parent_title; ?> <?php _e('Subpages','k2_domain'); ?></h4>
+		<h4><?php echo apply_filters('the_title', $parent_title); ?> <?php _e('Subpages','k2_domain'); ?></h4>
 		
 		<ul>
 			<?php echo $page_menu; ?>
 		</ul>
 			
 		<?php if ($parent_id != $post->ID) { ?>
-			<a href="<?php echo get_permalink($parent_id); ?>"><?php printf(__('Back to %s','k2_domain'), $parent_title ) ?></a>
+			<a href="<?php echo get_permalink($parent_id); ?>"><?php printf(__('Back to %s','k2_domain'), apply_filters('the_title',$parent_title) ); ?></a>
 		<?php } ?>
 	</div>
 	<?php } } ?>
