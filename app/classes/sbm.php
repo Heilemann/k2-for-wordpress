@@ -40,6 +40,9 @@ class K2SBM {
 		$plugins = (array)get_option('active_plugins');
 		$plugins[] = '../themes/' . get_template() . '/app/includes/widgets-removal.php';
 		update_option('active_plugins', $plugins);
+
+		// load third-party widgets
+		do_action('plugins_loaded');
 	}
 
 	function deactivate() {
@@ -214,7 +217,6 @@ class K2SBM {
 		// Allow the Widgets and SBM defined in plugins & themes to be loaded
 		do_action('sbm_init');
 		do_action('widgets_init');
-		do_action('plugins_loaded');
 	}
 
 	function add_menus() {
