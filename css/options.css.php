@@ -1,3 +1,7 @@
+<?php require('gzip-header-css.php'); ?>
+
+/* This file contains the CSS for the 'K2 Options' admin panel */
+
 .k2wrap {
 	font-family: Helvetica, Arial, Sans-Serif;
 	border: none;
@@ -30,9 +34,12 @@
 	background: #f9fcfe;
 	}
 
-.savebutton button {
+#save {
 	float: right;
-	width: 100px;
+	background: #222;
+	color: white;
+	border: none;
+	padding: 5px 30px;
 	}
 
 body.smartposition .savebutton {
@@ -64,7 +71,7 @@ h3 {
 	}
 
 .error {
-	color #666; font-size: .8em;
+	color: #666; font-size: .8em;
 	}
 
 .configstuff #k2-blogornoblog, .configstuff select {

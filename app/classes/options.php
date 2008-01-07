@@ -74,9 +74,6 @@ class K2Options {
 	
 	/**
 	 * Adds K2 Options to Presentation menu, adds actions for head and scripts
-	 *
-	 * @return void
-	 * @author Steve
 	 */
 
 	function add_menu() {
@@ -102,7 +99,7 @@ class K2Options {
 	
 	function admin_head() { ?>
 
-		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/options.css" />
+		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/options.css.php" />
 
 <?php }
 

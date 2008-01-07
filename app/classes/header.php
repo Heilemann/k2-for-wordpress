@@ -18,8 +18,8 @@ class K2Header {
 			$styleinfo = get_option('k2styleinfo');
 			$header_image = get_option('k2header_picture');
 
-			define('HEADER_IMAGE_HEIGHT', empty($styleinfo['header_height'])? 200 : $styleinfo['header_height']);
-			define('HEADER_IMAGE_WIDTH', empty($styleinfo['header_width'])? 950 : $styleinfo['header_width']);
+			define('HEADER_IMAGE_HEIGHT', empty($styleinfo['header_height'])? K2_HEADER_HEIGHT : $styleinfo['header_height']);
+			define('HEADER_IMAGE_WIDTH', empty($styleinfo['header_width'])? K2_HEADER_WIDTH : $styleinfo['header_width']);
 			define('HEADER_TEXTCOLOR', empty($styleinfo['header_text_color'])? 'ffffff' : $styleinfo['header_text_color']);
 			define('HEADER_IMAGE', empty($header_image)? '%s/images/transparent.gif' : get_k2info('headers_url') . $header_image);
 

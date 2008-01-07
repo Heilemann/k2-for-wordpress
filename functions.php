@@ -24,6 +24,10 @@ define('K2_STYLE_FOOTER', '<a href="%stylelink%" title="%style% by %author%">%st
 // Number of sidebars to use
 define('K2_SIDEBARS', 2);
 
+// Default Header Sizes
+define('K2_HEADER_WIDTH', 950);
+define('K2_HEADER_HEIGHT', 200);
+
 /* Blast you red baron! Initialise the k2 system */
 require(TEMPLATEPATH . '/app/classes/k2.php');
 K2::init();

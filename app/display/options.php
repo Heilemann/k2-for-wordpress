@@ -1,9 +1,14 @@
 <?php
+
 	global $wpdb;
 
 	// Get the current K2 Style
 	$style_name = get_option('k2scheme');
 	$style_title = $style_name !== false ? $style_name : __('No Style', 'k2_domain');
+	$style_info = get_option('k2styleinfo');
+
+	// Check that the K2 folder has no spaces
+	$dir_has_spaces = (strpos(TEMPLATEPATH, ' ') !== false);
 
 	// Check that the styles folder exists
 	$is_styles_dir = is_dir(K2_STYLES_PATH);
@@ -27,12 +32,6 @@
 
 	// Get the current K2 header picture
 	$header_picture = get_option('k2header_picture');
-
-	$header_sizes = array(
-		1 => __('560 &#215; 200px', 'k2_domain'),
-		__('780 &#215; 200px', 'k2_domain'),
-		__('950 &#215; 200px', 'k2_domain')
-	);
 
 	// Check that we can write to the headers folder and that it exists
 	$is_headers_writable = is_writable(K2_HEADERS_PATH);
@@ -66,19 +65,22 @@
 		</small></div>
 	<?php } ?>
 
+	<?php if ($dir_has_spaces) { ?>
+		<div class="error"><small>
+		<?php printf( __('<p>The K2 directory: <code>%s</code>, contains spaces. For K2 to function properly, you will need to remove the spaces from the directory name.</p>', 'k2_domain'), TEMPLATEPATH ); ?>
+		</small></div>
+	<?php } ?>
 
 
-	<form name="dofollow" action="" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="action" value="<?php echo attribute_escape($update); ?>" />
-		<input type="hidden" name="page_options" value="'dofollow_timeout'" />
+	<form name="dofollow" action="<?php echo attribute_escape($_SERVER['REQUEST_URI']); ?>" method="post" enctype="multipart/form-data">
+		<?php wp_nonce_field('k2options'); ?>
 
 		<div class="configstuff">
 
 			<div class="savebutton">
-				<button><?php echo attribute_escape(__('Save', 'k2_domain')); ?></button>
-			</div>
+				<input type="submit" id="save" name="save" value="<?php echo attribute_escape(__('Save', 'k2_domain')); ?>" />
+			</div><!-- .savebutton -->
 
-		
 			<div class="container">
 				<h3><label for="k2-sidebarmanager"><?php _e('Sidebar Manager', 'k2_domain'); ?></label></h3>
 
@@ -96,7 +98,7 @@
 					</select>
 				</p>
 				<?php } ?>
-			</div>
+			</div><!-- .container -->
 
 
 			<div class="container">
@@ -106,7 +108,7 @@
 				<!--<label for="k2-advnav"><?php _e('Enable Advanced Navigation','k2_domain'); ?></label>--></p>
 
 				<p class="description"><?php _e('Seamlessly search and navigate old posts.','k2_domain'); ?></p>
-			</div>
+			</div><!-- .container -->
 
 
 			<div class="container">
@@ -122,7 +124,7 @@
 				<?php } else if (function_exists('af_ela_set_config')) { ?>
 					</p><p class="configelap"><input id="configela" name="configela" type="submit" value="<?php echo attribute_escape(__('Configure Extended Live Archives for K2', 'k2_domain')); ?>" /></p>
 				<?php } ?>
-			</div>
+			</div><!-- .container -->
 
 
 			<div class="container">
@@ -132,7 +134,7 @@
 				<!--<label for="k2-livecommenting"><?php _e('Enable Live Commenting', 'k2_domain'); ?></label>--></p>
 				
 				<p class="description"><?php _e('Submit comments without reloading the page.', 'k2_domain'); ?></p>
-			</div>
+			</div><!-- .container -->
 
 
 			<div class="container">
@@ -148,7 +150,7 @@
 
 				<p class="description"><?php _e('Aside posts are styled differently and can be placed on the sidebar.', 'k2_domain'); ?></p>
 
-			</div>
+			</div><!-- .container -->
 
 
 			<?php if ($is_styles_dir) { ?>
@@ -164,14 +166,19 @@
 				</select>
 
 				<p class="description"><?php printf(__('No need to edit core files, K2 is highly customizable using only CSS. %s', 'k2_domain'), '<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS">' . __('Read&nbsp;more', 'k2_domain') . '</a>.'  ); ?></p>
-			</div>
+			</div><!-- .container -->
 			<?php } ?>
 
 
 			<div class="container headercontainer">
 				<h3><?php _e('Header', 'k2_domain'); ?></h3>
 
-				<p class="description"><?php printf(__('The header size for a default %s setup is <strong>%s</strong>.', 'k2_domain'), $column_options[$column_number], $header_sizes[$column_number] ); ?></p>
+				<p class="description"><?php
+					printf(
+						__('The current header size is <strong>%1$s px by %2$s px</strong>.', 'k2_domain'),
+						empty($styleinfo['header_width'])? K2_HEADER_WIDTH : $styleinfo['header_width'],
+						empty($styleinfo['header_height'])? K2_HEADER_HEIGHT : $styleinfo['header_height']
+					); ?></p>
 
 				<?php if (!$is_headers_dir) { ?>
 					<div class="error">
@@ -218,9 +225,9 @@
 					</div>
 				</div>
 
-			</div>
+			</div><!-- .container .headercontainer -->
 				
-		</div>
+		</div><!-- .configstuff -->
 
 </div>
 

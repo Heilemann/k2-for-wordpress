@@ -1,3 +1,5 @@
+<?php require('gzip-header-css.php'); ?>
+
 /* @override http://localhost/wp-content/themes/kaytwo/css/sbm.css */
 
 /* CSS for the Sidebar Manager page */
