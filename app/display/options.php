@@ -176,8 +176,8 @@
 				<p class="description"><?php
 					printf(
 						__('The current header size is <strong>%1$s px by %2$s px</strong>.', 'k2_domain'),
-						empty($styleinfo['header_width'])? K2_HEADER_WIDTH : $styleinfo['header_width'],
-						empty($styleinfo['header_height'])? K2_HEADER_HEIGHT : $styleinfo['header_height']
+						empty($style_info['header_width'])? K2_HEADER_WIDTH : $style_info['header_width'],
+						empty($style_info['header_height'])? K2_HEADER_HEIGHT : $style_info['header_height']
 					); ?></p>
 
 				<?php if (!$is_headers_dir) { ?>
