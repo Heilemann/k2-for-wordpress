@@ -1,5 +1,5 @@
 <hr />
-<div id="sidebar-main" class="secondary">
+<div id="sidebar-1" class="secondary">
 <?php /* Widgets/SBM Check */ if ( !(function_exists('dynamic_sidebar') and dynamic_sidebar(1)) ) { ?>
 
 	<div id="search"><h4><?php _e('Search','k2_domain'); ?></h4>
@@ -163,13 +163,13 @@
 	<?php } ?>
 
 <?php } /* End Widgets/SBM check */ ?>
-</div> <!-- #sidebar-main -->
+</div> <!-- #sidebar-1 -->
 
+<?php if ( function_exists('dynamic_sidebar') ): for ( $i = 2; $i <= K2_SIDEBARS; $i++ ): ?>
 <hr />
-<div id="sidebar-alt" class="secondary">
-<?php /* Widgets/SBM Check */ if ( !(function_exists('dynamic_sidebar') and dynamic_sidebar(2)) ) { ?>
-
-<?php } ?>
-</div> <!-- #sidebar-alt -->
+<div id="sidebar-<?php echo $i; ?>" class="secondary">
+<?php dynamic_sidebar($i); ?>
+</div> <!-- #sidebar-<?php echo $i; ?> -->
+<?php endfor; endif; ?>
 
 <div class="clear"></div>

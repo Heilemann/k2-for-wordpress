@@ -168,11 +168,14 @@ function sbm_load(id, url) {
 
 		// Aesthetic Systems
 		function resizeLists() {
+			var cols = jQuery('.container:visible').length;
+			jQuery('.container:visible').width( Math.floor(100 / cols) + '%' );
+
 			// Get the current specified minimum height
 			var highest = parseInt(jQuery('.wrap').css('minHeight'));
 
 			// Calculate best height for columns
-			jQuery('#availablemodulescontainer, #sidebar-1container, #sidebar-2container, #disabledcontainer').each(function() {
+			jQuery('.container:visible').each(function() {
 				var moduleHeight = 37;
 
 				if (jQuery(this).attr('id') == 'availablemodulescontainer')
@@ -188,7 +191,7 @@ function sbm_load(id, url) {
 			})
 
 			jQuery('.wrap').animate({ height: highest }, 200)
-			jQuery('.container').height(highest)
+			jQuery('.container:visible').height(highest)
 
 			// Hack: Clean up the mess, until we fix it :) - Michael
 			jQuery('.wrap li').each(function() {

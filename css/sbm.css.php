@@ -1,7 +1,5 @@
 <?php require('gzip-header-css.php'); ?>
 
-/* @override http://localhost/wp-content/themes/kaytwo/css/sbm.css */
-
 /* CSS for the Sidebar Manager page */
 
 #parentwrapper {
@@ -233,18 +231,22 @@ body.nomodules #undo {
 	letter-spacing: 1px;
 	}
 
+.containerwrap {
+	width: 100%;
+	clear: both;
+	}
+
 .container {
 	opacity: 0;
 	filter: alpha(opacity = 0);
-	width: 25%;
-	max-width: 270px;
-	min-width: 170px;
 	float: left;
-	}
-	
-#availablemodulescontainer, #sidebar-1container, #sidebar-2container {
 	border-right: 1px solid #d8d8d8;
 	margin-right: -1px;
+	}
+	
+#disabledcontainer {
+	border-right: none;
+	margin-right: 0px;
 	}
 
 .darkenright {
@@ -767,3 +769,4 @@ input[type=checkbox] {
 #footer {
 	display: none; /* WP footer is cramping our style... */
 	}
+	

@@ -69,6 +69,7 @@ body.lang-zh {
 	position: relative;
 	height: 200px;
 	background: #3371A3;
+	background-position: top right;
 	}
 
 .content {
@@ -90,29 +91,17 @@ body.lang-zh {
 	padding: 10px;
 	}
 
-.columns-one #sidebar-main,
-.columns-one #sidebar-alt {
-	width: 240px;
-	}
-
 .columns-one .secondary {
+	width: 240px;
 	border-top: 1px solid #eee;
 	}
 
-.columns-two #sidebar-main,
-.columns-three #sidebar-main {
-	width: 200px;
-	}
-
-.columns-two #sidebar-alt {
-	width: 200px;
-	}
-
-.columns-three #sidebar-alt {
+.columns-three #sidebar-2 {
 	width: 150px;
 	}
 
 .secondary {
+	width: 200px;
 	float: left;
 	font-size: 1em;
 	line-height: 1.5em;

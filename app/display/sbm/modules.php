@@ -86,7 +86,7 @@
 		<td class="optbr">&nbsp;</td>
 	</tr>
 	</table>
-</div>
+</div><!-- #optionswindow -->
 
 <div id="parentwrapper">
 
@@ -107,7 +107,7 @@
 			<?php } ?>
 			</select>
 		</form>
-	</div>
+	</div><!-- .sbmheader -->
 
 	<div id="backupsbmwindow" style="display: none;">
 
@@ -129,40 +129,39 @@
 				<input type="hidden" name="action" value="restore" />
 			</form>
 		</div>
-	</div>
+	</div><!-- #backupsbmwindow -->
 
 
 	<div class="wrap">
 		
 		<div class="containerwrap">
 
-		<div class="initloading"><?php _e('Loading', 'k2_domain'); ?></div>
+			<div class="initloading"><?php _e('Loading', 'k2_domain'); ?></div>
 
-		<div id="availablemodulescontainer" class="container">
-			<h3><?php _e('Available Modules', 'k2_domain') ?></h3>
+			<div id="availablemodulescontainer" class="container">
+				<h3><?php _e('Available Modules', 'k2_domain') ?></h3>
 
-			<div>
-			<ul id="availablemodules">
+				<div>
+				<ul id="availablemodules">
 				<?php foreach($modules as $id => $module) { ?>
 					<li id="<?php echo attribute_escape($id); ?>" class="module availablemodule">
 						<div class="slidingdoor">
-								<span class="name"><?php echo(attribute_escape($module['name'])); ?></span>
+							<span class="name"><?php echo(attribute_escape($module['name'])); ?></span>
 						</div>
 					</li>
 				<?php } ?>
-			</ul>
-			</div>
-		</div>
+				</ul>
+				</div>
+			</div><!-- #availablemodulescontainer -->
 
 
-		<?php $sidebarid = 'sidebar-1'; foreach ($sidebars as $id => $sidebar) { ?>
-		<div id="<?php echo($sidebarid); ?>container" class="container">
-			<h3><?php echo($sidebar->name); ?></h3>
+		<?php foreach ($sidebars as $sidebar) { ?>
+			<div id="<?php echo($sidebar->id); ?>-container" class="container">
+				<h3><?php echo($sidebar->name); ?></h3>
 
-			<div class="droppable">
-				<ul id="<?php echo($sidebarid); ?>" class="sortable reorderable">
-
-					<?php foreach ($sidebar->modules as $id => $module) { ?>
+				<div class="droppable">
+					<ul id="<?php echo($sidebar->id); ?>" class="sortable reorderable">
+					<?php foreach ($sidebar->modules as $module) { ?>
 
 						<li id="<?php print attribute_escape($module->id); ?>" class="module">
 							<div class="slidingdoor">
@@ -176,52 +175,52 @@
 						</li>
 
 					<?php } ?>
+					</ul>
+				</div>
+			</div><!-- .container -->
+		<?php } ?>
+
+
+			<div id="disabledcontainer" class="container">
+				<h3><?php _e('Disabled', 'k2_domain'); ?></h3>
+
+				<div class="droppable">
+					<ul id="disabled" class="sortable reorderable">
+
+						<?php foreach ($disabled as $module) { ?>
+
+							<li id="<?php print attribute_escape($module->id); ?>" class="module">
+								<div class="slidingdoor">
+									<span class="modulewrapper">
+										<span class="name"><?php print $module->name; ?></span>
+										<span class="type"><?php echo($modules[$module->type]['name']); ?></span>
+									</span>
+									<a href="#" class="optionslink" alt="<?php _e('Module Options', 'k2_domain') ?>"> </a>
+									<a href="#" class="deletelink" alt="<?php _e('Delete Module', 'k2_domain') ?><"> </a>
+								</div>
+							</li>
+
+						<?php } ?>
+
+					</ul>
+				</div>
+			</div><!-- #disabledcontainer -->
+
+
+			<div id="trashcontainer" class="container">
+				<h3><?php _e('Trash', 'k2_domain'); ?></h3>
+
+				<ul id="trash" class="sortable">
 				</ul>
-			</div>
-		</div>
-		<?php $sidebarid = 'sidebar-2'; } ?>
+			</div><!-- #trashcontainer -->
 
+		</div><!-- .containerwrap -->
 
-
-		<div id="disabledcontainer" class="container">
-			<h3><?php _e('Disabled', 'k2_domain'); ?></h3>
-
-			<div class="droppable">
-				<ul id="disabled" class="sortable reorderable">
-
-					<?php foreach ($disabled as $id => $module) { ?>
-
-						<li id="<?php print attribute_escape($module->id); ?>" class="module">
-							<div class="slidingdoor">
-								<span class="modulewrapper">
-									<span class="name"><?php print $module->name; ?></span>
-									<span class="type"><?php echo($modules[$module->type]['name']); ?></span>
-								</span>
-								<a href="#" class="optionslink" alt="<?php _e('Module Options', 'k2_domain') ?>"> </a>
-								<a href="#" class="deletelink" alt="<?php _e('Delete Module', 'k2_domain') ?><"> </a>
-							</div>
-						</li>
-
-					<?php } ?>
-
-				</ul>
-			</div>
-		</div>
-
-		<div id="trashcontainer" class="container">
-			<h3><?php _e('Trash', 'k2_domain'); ?></h3>
-
-			<ul id="trash" class="sortable">
-			</ul>
-		</div>
-
-		<div class="darkenright"></div>
-		</div>
-
-	</div>
+	</div><!-- .wrap -->
 
 	<p style="text-align: center;" class="helptext"><?php printf(__('Help to be had at the %1$s or in the %2$s.','k2_domain'), '<a href="http://getk2.com/forum/" title="' .__('K2 Support Forums','k2_domain') . '">' .__('K2 Support Forums','k2_domain') . '</a>', '<a href="http://k2.stikipad.com/" title="' .__('K2 Documentation','k2_domain') . '">' .__('K2 Documentation','k2_domain') . '</a>' ) ?></p>
-</div>
+
+</div><!-- #parentwrapper -->
 
 
 <div id="overlay"></div>
