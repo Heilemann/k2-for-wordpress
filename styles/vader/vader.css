@@ -8,14 +8,15 @@
 	You select schemes from the K2 Options page in the
 	'Presentation' section of your WordPress administration.
 	
-	Author Name	: 	Michael Heilemann
-	Author Site	: 	http://binarybonsai.com
-	Style Name	: 	Vader2
-	Style URI	:	http://getk2.com
-	Version		: 	1.0
-	Comments	: 	I made Vader as a tribute to Star Wars for use on my own blog.
-				  	The header image was painted by my friend Rasmus (http://no-go-dk)
-					License: http://creativecommons.org/licenses/by-nc-sa/2.5/
+	Author Name		: 	Michael Heilemann
+	Author Site		: 	http://binarybonsai.com
+	Style Name		: 	Vader2
+	Style URI		:	http://getk2.com
+	Version			:	1.0
+	Header Height	:	260
+	Comments		:	I made Vader as a tribute to Star Wars for use on my own blog.
+						The header image was painted by my friend Rasmus (http://no-go-dk)
+						License: http://creativecommons.org/licenses/by-nc-sa/2.5/
 */
 
 body {
@@ -26,8 +27,7 @@ body {
 
 #header {
 	background: black url('mustafar.jpg') center center no-repeat;
-	width: 100%;
-	height: 224px;
+	height: 260px;
 	}
 
 h1 {
@@ -45,9 +45,6 @@ h1 {
 	}
 
 #page {
-	padding: 0;
-	width: 796px;
-	_width: 756px;
 	border: none;
 	}
 
@@ -160,24 +157,27 @@ a, a:visited, .sidebar a:visited {
 	}
 
 /* Rolling Archives Slider */
-#current-content #pagetrack,
-#dynamic-content #nested_pagetrack {
-	margin: 0 auto;
-	width: 218px;
+#dynamic-content #pagetrack {
 	height: 18px;
 	background: url('sliderbgleft.png') no-repeat center left;
-}
+	}
 
-#current-content #pagetrackend,
-#dynamic-content #nested_pagetrackend {
+#dynamic-content #pagetrackwrap {
 	height: 18px;
+	padding-right: 4px;
+	top: 0px;
 	background: url('sliderbgright.png') no-repeat center right;
 	}
 
-#current-content #pagehandle,
-#dynamic-content #nested_pagehandle {
+#dynamic-content #pagehandle {
 	width: 18px;
 	height: 18px;
+	top: 0px;
 	background: url('sliderhandle.png') no-repeat center center;
 	cursor: e-resize;
-}
+	}
+
+body.smartposition #rollingarchives {
+	background-color: black;
+	border-bottom: 1px solid #444;
+	}
