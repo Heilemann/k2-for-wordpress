@@ -4,14 +4,6 @@
 
 /*- Page Structure */
 
-html { /* Force Vertical Scrollbar */
-	/* IE */
-	overflow-y: scroll; 
-	/* Moz */
-	height: 100%;
-	margin-bottom: 0.1em;
-}
-
 * {
 	padding: 0;
 	margin: 0;
