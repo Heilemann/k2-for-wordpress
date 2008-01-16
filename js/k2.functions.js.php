@@ -105,35 +105,9 @@ function smartPosition(obj) {
 };
 
 
-
-/*
-	Get the window's width and height
-	credit: http://www.howtocreate.co.uk/tutorials/javascript/browserwindow
-*/
-function getWindowSize() {
-	var myWidth = 0, myHeight = 0;
-
-	if( typeof( window.innerWidth ) == 'number' ) {
-		//Non-IE
-		myWidth = window.innerWidth;
-		myHeight = window.innerHeight;
-	} else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
-		//IE 6+ in 'standards compliant mode'
-		myWidth = document.documentElement.clientWidth;
-		myHeight = document.documentElement.clientHeight;
-	} else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
-		//IE 4 compatible
-		myWidth = document.body.clientWidth;
-		myHeight = document.body.clientHeight;
-	}
-
-	return { width: myWidth, height: myHeight };
-}
-
-
 // Set the number of columns based on window size and maximum set by K2 Options
 function dynamicColumns() {
-	var window_width = getWindowSize().width;
+	var window_width = jQuery(window).width();
 
 	if (K2.columns >= 3 && window_width >= K2.layoutWidths[2]) {
 		jQuery('body').removeClass('columns-one columns-two').addClass('columns-three');
