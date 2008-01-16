@@ -2,10 +2,14 @@
 
 function asides_sidebar_module($args) {
 	extract($args);
+	global $post;
 
 	$k2asidescategory = get_option('k2asidescategory');
 
 	if ( $k2asidescategory != '0') {
+		// backup current post
+		$post_backup = $post;
+
 		echo $before_module . $before_title . $title . $after_title;
 ?>
 		<a href="<?php bloginfo('url'); ?>/?feed=rss&amp;cat=<?php echo $k2asidescategory; ?>" title="<?php _e('RSS Feed for Asides','k2_domain'); ?>" class="feedlink"><span><?php _e('RSS','k2_domain'); ?></span></a>
@@ -24,6 +28,9 @@ function asides_sidebar_module($args) {
 		</div>
 <?php
 		echo $after_module;
+
+		// restore current post
+		$post = $post_backup;
 	} /* end asides check */
 }
 

@@ -2,6 +2,7 @@
 
 function latest_posts_sidebar_module($args) {
 	extract($args);
+	global $post;
 
 	$query = 'showposts='.sbm_get_option('num_posts');
 
@@ -9,6 +10,9 @@ function latest_posts_sidebar_module($args) {
 	if ( ($k2asidescategory != '0') and (sbm_get_option('hide_asides')) ) {
 		$query .= '&cat=-' . $k2asidescategory;
 	}
+
+	// backup current post
+	$post_backup = $post;
 
 	echo($before_module . $before_title . $title . $after_title);
 	?>
@@ -20,6 +24,9 @@ function latest_posts_sidebar_module($args) {
 		</ul>
 	<?php
 	echo($after_module);
+
+	// restore current post
+	$post = $post_backup;
 }
 
 function latest_posts_sidebar_module_control() {
