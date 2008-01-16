@@ -150,6 +150,7 @@
 	}
 
 #pagetrack {
+	width: 240px;
 	height: 7px;
 	background: url('../images/sliderbgleft.png') no-repeat left center;
 	}
@@ -206,6 +207,7 @@ div.trimmed .hentry.alt {
 
 #trimmertrack {
 	background: url('../images/sliderbgleft.png') no-repeat left center;
+	width: 50px;
 	height: 7px;
 	}
 
