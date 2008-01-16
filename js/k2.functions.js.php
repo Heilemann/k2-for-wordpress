@@ -22,6 +22,10 @@ K2.ajaxGet = function(url, data, complete_fn) {
 		},
 
 		complete: function(request) {
+
+			// Disable obtrusive document.write
+			document.write = function(str) {};
+
 			if ( K2.debug ) {
 				console.log(request);
 			}
