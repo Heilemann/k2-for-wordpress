@@ -1,4 +1,7 @@
 <?php
+	// Prevent users from directly loading this theme file
+	defined( 'K2_CURRENT' ) or die ( 'Error: This file can not be loaded directly.' );
+
 	// Load localizatons
 	load_theme_textdomain('k2_domain');
 
@@ -41,7 +44,7 @@
 
 	// Search Results
 	} elseif ( is_search() ) {
-		printf( __('Search Results for &lsquo;%s&rsquo;','k2_domain'), get_query_var('s') );
+		printf( __('Search Results for &lsquo;%s&rsquo;','k2_domain'), attribute_escape(get_search_query()) );
 	}
 
 	// Insert separator for the titles above
@@ -127,7 +130,7 @@
 	<?php wp_get_archives('type=monthly&format=link'); ?>
 </head>
 
-<body class="<?php k2_body_class(); ?>" <?php k2_body_id(); ?>>
+<body class="<?php echo attribute_escape(k2_body_class(false)); ?>" <?php k2_body_id(); ?>>
 
 <a class="skiplink" href="#startcontent" accesskey="2"><?php _e('Skip to content','k2_domain'); ?></a>
 

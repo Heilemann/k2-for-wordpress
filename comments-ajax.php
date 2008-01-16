@@ -117,7 +117,7 @@ $comment->comment_type = 'comment';
 $comment_index = $_POST['comment_count'] + 1;
 ?>
 
-<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class($comment_index); ?>">
+<li id="comment-<?php comment_ID(); ?>" class="<?php echo attribute_escape(k2_comment_class($comment_index, false)); ?>">
 
 	<?php
 		if ( function_exists('gravatar') ) {

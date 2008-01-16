@@ -46,7 +46,7 @@
 
 			<?php foreach ($comment_list as $comment_index => $comment) { ?>
 
-			<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class($comment_index); ?>">
+			<li id="comment-<?php comment_ID(); ?>" class="<?php echo attribute_escape(k2_comment_class($comment_index, false)); ?>">
 
 				<?php
 					if ( function_exists('gravatar') ) {
@@ -95,9 +95,9 @@
 
 			<?php foreach ($ping_list as $ping_index => $comment) { ?>
 
-			<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class($ping_index); ?>">
+			<li id="comment-<?php comment_ID(); ?>" class="<?php echo attribute_escape(k2_comment_class($ping_index, false)); ?>">
 				<?php if (function_exists('comment_favicon')) { ?><span class="favatar"><?php comment_favicon(); ?></span><?php } ?>
-				<a href="#comment-<?php comment_ID() ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>" class="counter"><?php echo $ping_index; ?></a>
+				<a href="#comment-<?php comment_ID(); ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>" class="counter"><?php echo $ping_index; ?></a>
 				<span class="commentauthor"><?php comment_author_link(); ?></span>
 				<div class="comment-meta">				
 				<?php
@@ -175,13 +175,13 @@
 			
 			<?php if (!$user_ID) { ?>
 				<div id="comment-personaldetails">
-					<p><input type="text" name="author" id="author" value="<?php echo $comment_author; ?>" size="22" tabindex="1" />
+					<p><input type="text" name="author" id="author" value="<?php echo attribute_escape($comment_author); ?>" size="22" tabindex="1" />
 					<label for="author"><strong><?php _e('Name','k2_domain'); ?></strong> <?php if ($req) _e('(required)','k2_domain') ?></label></p>
 					
-					<p><input type="text" name="email" id="email" value="<?php echo $comment_author_email; ?>" size="22" tabindex="2" />
+					<p><input type="text" name="email" id="email" value="<?php echo attribute_escape($comment_author_email); ?>" size="22" tabindex="2" />
 					<label for="email"><strong><?php _e('Mail','k2_domain'); ?></strong> (<?php _e('will not be published','k2_domain'); ?>) <?php if ($req) _e('(required)', 'k2_domain') ?></label></p>
 					
-					<p><input type="text" name="url" id="url" value="<?php echo $comment_author_url; ?>" size="22" tabindex="3" />
+					<p><input type="text" name="url" id="url" value="<?php echo attribute_escape($comment_author_url); ?>" size="22" tabindex="3" />
 					<label for="url"><strong><?php _e('Website','k2_domain'); ?></strong></label></p>			
 				</div>
 			<?php } ?>

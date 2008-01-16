@@ -171,7 +171,7 @@ function get_k2_ping_type($trackbacktxt = 'Trackback', $pingbacktxt = 'Pingback'
 function get_rolling_page_dates($query) {
 	global $wpdb;
 
-	$per_page = get_query_var('posts_per_page');
+	$per_page = intval(get_query_var('posts_per_page'));
 	$num_pages = $query->max_num_pages;
 
 	$search = '/FROM\s+?(.*)\s+?LIMIT/siU';
@@ -352,7 +352,7 @@ function get_wp_version() {
 function k2_body_id() {
 	if (get_option('permalink_structure') != '' and is_page()) {
 		if (get_query_var('name') != '') {
-			$id_name = get_query_var('name');
+			$id_name = sanitize_title_with_dashes(get_query_var('name'));
 		}else{
 			$id_name = "home";
 		}
@@ -446,12 +446,9 @@ function k2_body_class( $print = true ) {
 		rewind_posts();
 	}
 
-	// For when a visitor is logged in while browsing
-	if ( $current_user->ID )
-		$c[] = 'loggedin';
-
 	// Paged classes; for 'page X' classes of index, single, etc.
-	if ( ( ( $page = $wp_query->get("paged") ) || ( $page = $wp_query->get("page") ) ) && $page > 1 ) {
+	$page = intval( $wp_query->get('paged') );
+	if ( is_paged() && $page > 1 ) {
 		$c[] = 'paged-'.$page.'';
 		if ( is_single() ) {
 			$c[] = 'single-paged-'.$page.'';
@@ -469,6 +466,10 @@ function k2_body_class( $print = true ) {
 			$c[] = 'search-paged-'.$page.'';
 		}
 	}
+
+	// For when a visitor is logged in while browsing
+	if ( $current_user->ID )
+		$c[] = 'loggedin';
 
 	// Sidebar layout settings
 	switch (get_option('k2columns')) {
@@ -495,7 +496,7 @@ function k2_body_class( $print = true ) {
 	$c[] = 'lang-' . $locale;
 
 	// Separates classes with a single space, collates classes for BODY
-	$c = join(' ', apply_filters('body_class',  $c));
+	$c = join(' ', apply_filters('body_class', $c));
 
 	// And tada!
 	return $print ? print($c) : $c;

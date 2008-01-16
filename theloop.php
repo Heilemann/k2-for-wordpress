@@ -15,7 +15,7 @@
 		}
 	?>
 
-<div id="dynamictype" class="<?php k2_body_class(); ?>">
+<div id="dynamictype" class="<?php echo attribute_escape(k2_body_class(false)); ?>">
 
 <?php }
 
@@ -54,23 +54,23 @@
 				printf(__('Archive for %s','k2_domain'), get_the_time(__('Y','k2_domain')));
 
 			} elseif (is_search()) {
-				printf(__('Search Results for \'%s\'','k2_domain'), attribute_escape(stripslashes(get_query_var('s'))));
+				printf( __('Search Results for \'%s\'','k2_domain'), attribute_escape(get_search_query()) );
 
 			} elseif (function_exists('is_tag') and is_tag()) {
 				if (function_exists('single_tag_title')) {
 					printf(__('Tag Archive for \'%s\'','k2_domain'), single_tag_title('', false));
 				} else {
-					printf(__('Tag Archive for \'%s\'','k2_domain'), get_query_var('tag') );
+					printf(__('Tag Archive for \'%s\'','k2_domain'), attribute_escape(get_query_var('tag')) );
 				}
 				
 			} elseif (is_author()) {
 				printf(__('Author Archive for %s','k2_domain'), get_author_name(get_query_var('author')));
 
-			} elseif (is_paged() and (get_query_var('paged') > 1)) { 
+			} elseif (is_paged() and ( intval(get_query_var('paged')) > 1)) { 
 				 _e('Archive','k2_domain');
 			}
-			if ( (get_query_var('paged') > 1) and (get_option('k2rollingarchives') == 0) ) {
-				printf(__(' <span class="archivepages">Page %1$s of %2$s</span>','k2_domain'), get_query_var('paged'), $wp_query->max_num_pages);
+			if ( (intval( get_query_var('paged') ) > 1) and (get_option('k2rollingarchives') == 0) ) {
+				printf(__(' <span class="archivepages">Page %1$s of %2$s</span>','k2_domain'), intval( get_query_var('paged')), $wp_query->max_num_pages);
 			}
 			?>
 
@@ -90,7 +90,7 @@
 
 		<?php /* Permalink nav has to be inside loop */ if (is_single()) include (TEMPLATEPATH . '/navigation.php'); ?>
 
-		<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class($post_index++, in_category($k2asidescategory)); ?>">
+		<div id="post-<?php the_ID(); ?>" class="<?php echo attribute_escape(k2_post_class($post_index++, in_category($k2asidescategory), false)); ?>">
 			<div class="entry-head">
 				<h3 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php the_title(); ?></a></h3>
 

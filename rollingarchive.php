@@ -33,7 +33,7 @@
 		}
 
 		// Get the current page
-		$rolling_page = get_query_var('paged');
+		$rolling_page = intval( get_query_var('paged') );
 		if ( $rolling_page < 1 ) {
 			$rolling_page = 1;
 		}
