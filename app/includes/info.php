@@ -1,4 +1,6 @@
 <?php
+// Prevent users from directly loading this file
+defined( 'K2_CURRENT' ) or die ( 'Error: This file can not be loaded directly.' );
 
 function k2info($show='') {
 	echo get_k2info($show);
@@ -339,13 +341,14 @@ add_filter('pre_get_posts', 'k2asides_filter');
 function get_wp_version() {
 	global $wp_version;
 
-	preg_match("/\d\.\d/i", $wp_version, $match);
+	$version = floatval($wp_version);
 
-	// wpmu - increment version by 1.0 to match wp
-	if (strpos($wp_version, 'wordpress-mu') !== false) {
-		$match[0] = $match[0] + 1.0;
+	// Old versions of WordPress-mu
+	if ( strpos($wp_version, 'wordpress-mu') !== false ) {
+		$version = $version + 1.0;
 	}
-	return $match[0];
+
+	return $version;
 }
 
 

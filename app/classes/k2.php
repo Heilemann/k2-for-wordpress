@@ -1,4 +1,7 @@
 <?php
+// Prevent users from directly loading this class file
+defined( 'K2_CURRENT' ) or die ( 'Error: This file can not be loaded directly.' );
+
 /**
  * K2 - Main class
  *
@@ -20,18 +23,16 @@ class K2 {
 		// Load the localisation text
 		load_theme_textdomain('k2_domain');
 
-		$exclude = array('sbm-direct.php', 'widgets-removal.php');
+		// Load required class and include files
+		require_once(TEMPLATEPATH . '/app/classes/archive.php');
+		require_once(TEMPLATEPATH . '/app/classes/header.php');
+		require_once(TEMPLATEPATH . '/app/classes/options.php');
+		require_once(TEMPLATEPATH . '/app/classes/sbm.php');
+		require_once(TEMPLATEPATH . '/app/includes/info.php');
 
-		// Exclude SBM if there's already a sidebar manager
-		if(K2_USING_SBM) {
-			$exclude[] = 'widgets.php';
-		} else {
-			$exclude[] = 'sbm.php';
+		if (K2_USING_SBM) {
+			require_once(TEMPLATEPATH . '/app/includes/sbm.php');
 		}
-
-		// Scan for includes and classes
-		K2::include_all(TEMPLATEPATH . '/app/includes/', $exclude);
-		K2::include_all(TEMPLATEPATH . '/app/classes/');
 
 		// Get the last modified time of the classes folder
 		$last_modified = filemtime(dirname(__FILE__));
@@ -190,7 +191,7 @@ class K2 {
 	 */
 
 	function register_scripts() {
-		if ( !is_admin() or (is_admin() and ($_GET['page'] == 'k2-options' or $_GET['page'] == 'k2-sbm-manager')) ) {
+		if ( get_wp_version() < 2.4 and ( !is_admin() or (is_admin() and ($_GET['page'] == 'k2-options' or $_GET['page'] == 'k2-sbm-manager')) ) ) {
 			// Unload the bundled jQuery
 			wp_deregister_script('jquery');
 			wp_deregister_script('interface');
@@ -199,7 +200,7 @@ class K2 {
 		// Register jQuery
 		wp_register_script('jquery',
 			get_bloginfo('template_directory').'/js/jquery.js.php',
-			false, '1.2.1');
+			false, '1.2.2');
 
 		wp_register_script('interface',
 			get_bloginfo('template_directory').'/js/jquery.interface.js.php',
