@@ -511,14 +511,13 @@ body.nomodules #undo {
 
 .optcontents {
 	position: relative;
-	overflow: hidden;
 	background: #ddd;
 	}
 
 #options {
-	width: 400px;
-	height: 270px;
-	overflow: auto;
+	width: 420px;
+	height: 300px;
+	overflow: hidden;
 	}
 
 .optbuttons {
@@ -700,7 +699,7 @@ input[type=checkbox] {
 }
 
 #options textarea {
-	width: 392px;
+	width: 410px;
 	}
 
 #about-module-blurp {
