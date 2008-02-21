@@ -4,7 +4,7 @@
 
 	// Get core WP functions when loaded dynamically
 	if (isset($_GET['k2dynamic'])) {
-		require_once(dirname(__FILE__).'/../../../wp-config.php');
+		require_once( preg_replace( '/wp-content.*/', '', dirname(__FILE__) ) . 'wp-config.php' );
 
 		if ($_GET['k2dynamic'] != 'init') {
 			// Send the header
@@ -18,7 +18,6 @@
 <div id="dynamictype" class="<?php echo attribute_escape(k2_body_class(false)); ?>">
 
 <?php }
-
 	// Debugging
 	if ( isset($_GET['k2debug']) ) {
 		echo '<div class="alert">';

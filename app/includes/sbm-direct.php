@@ -1,5 +1,5 @@
 <?php
-	require_once('../../../../../wp-config.php');
+	require_once( preg_replace( '/wp-content.*/', '', dirname(__FILE__) ) . 'wp-config.php' );
 	//require_once(ABSPATH . 'wp-admin/admin-functions.php');
 	//require_once(ABSPATH . 'wp-admin/admin-db.php');
 
