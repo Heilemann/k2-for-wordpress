@@ -7,7 +7,7 @@
 		header('Content-Type: ' . get_bloginfo('html_type') . '; charset=' . get_bloginfo('charset'));
 
 		// Initialize the Loop
-		query_posts($_GET);
+		query_posts( k2_parse_query($_GET) );
 
 		$_GET['k2dynamic'] = 'init';
 	}

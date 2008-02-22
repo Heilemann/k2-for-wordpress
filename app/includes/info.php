@@ -52,27 +52,59 @@ function k2_parse_query($query) {
 	if ( is_array($query) and !empty($query) ) {
 		$valid_keys = array(
 			'error'
-			, 'm'
+			, 's'
+			, 'exact'
+			, 'search_terms'
+			, 'sentence'
+
+			, 'subpost'
+			, 'subpost_id'
+			, 'attachment'
+			, 'attachment_id'
+
+			, 'p'
+			, 'name'
+			, 'static'
+			, 'pagename'
+			, 'page_id'
+
+			, 'author'
+			, 'author_name'
+			, 'feed'
+			, 'tb'
+			, 'paged'
+			, 'comments_popup'
+			, 'preview'
+			, 'withcomments'
+			, 'withoutcomments'
+			, 'post_status'
+			, 'post_type'
+
 			, 'hour'
-			, 'second'
 			, 'minute'
-			, 'hour'
+			, 'second'
 			, 'day'
 			, 'monthnum'
 			, 'year'
 			, 'w'
-			, 's'
+			, 'm'
+
+			, 'cat'
 			, 'category_name'
-			, 'author_name'
-			, 'paged'
-			, 'showposts'
-			, 'posts_per_page'
-			, 'posts_per_archive_page'
-			, 'nopaging'
-			, 'order'
-			, 'orderby'
-			, 'offset'
+			, 'category__in'
+			, 'category__not_in'
+			, 'category__and'
+
 			, 'tag'
+			, 'tag_id'
+			, 'tag__in'
+			, 'tag__not_in'
+			, 'tag__and'
+			, 'tag_slug__in'
+			, 'tag_slug__and'
+
+			, 'k2dynamic'
+			, 'k2debug'
 		);
 
 		foreach ($query as $key => $value) {
@@ -80,6 +112,57 @@ function k2_parse_query($query) {
 				unset($query[$key]);
 			}
 		}
+
+		// Parse the advance search operators
+		if ( !empty($query['s']) ) {
+
+			//preg_match_all('/"(.*?)"/', $query['s'], $_quotes);
+			//$search_terms = explode(' ', preg_replace( '/".*?"/', '', $query['s'] ));
+
+			$search_terms = explode(' ', $query['s']);
+
+			foreach ($search_terms as $key => $term) {
+
+				// operators:
+				if ( strpos($term, ':') !== false ) {
+					$operation = explode(':', $term, 2);
+
+					switch( $operation[0] ) {
+
+						/*case 'cat':
+						case 'category':
+							if ( isset($query['cat']) ) {
+								$query['cat'] = $query['cat'] . ',' . get_cat_ID($operation[1]);
+							} else {
+								$query['cat'] = get_cat_ID($operation[1]);
+							}
+							break;
+						*/
+
+						case 'tag':
+							if ( isset($query['tag']) ) {
+								$query['tag'] .= ',' . $operation[1];
+							} else {
+								$query['tag'] = $operation[1];
+							}
+							break;
+
+						case 'month':
+							$query['monthnum'] = $operation[1];
+							break;
+
+						case 'author':
+							$query['author_name'] = $operation[1];
+							break;
+					}
+
+					unset($search_terms[$key]);
+				}
+			}
+
+			$query['s'] = implode($search_terms);
+		}
+
 	}
 
 	return $query;
