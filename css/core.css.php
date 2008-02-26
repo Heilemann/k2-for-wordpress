@@ -1049,7 +1049,7 @@ div#latest-comments small {
 	display: block;
 	margin: 0;
 	font-weight: normal;
-	line-height: 1em;
+	line-height: 1.5em;
 	}
 
 
