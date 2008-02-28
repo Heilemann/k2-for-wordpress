@@ -563,7 +563,7 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	border: none;
 	}
 
-#commentlist li img.gravatar {
+#commentlist li .gravatar {
 	float: right;
 	margin: -5px 0 0;
 	}
