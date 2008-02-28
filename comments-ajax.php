@@ -29,7 +29,7 @@ function check_db() {
 
 ob_start('kill_data');
 register_shutdown_function('check_db');
-require_once( preg_replace( '/wp-content.*/', '', dirname(__FILE__) ) . 'wp-config.php' );
+require_once( preg_replace( '/wp-content.*/', '', $_SERVER['SCRIPT_FILENAME'] ) . 'wp-config.php' );
 $k2_db_check = false;
 ob_end_clean();
 

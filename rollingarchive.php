@@ -1,7 +1,7 @@
 <?php
 	// Get core WP functions if needed
 	if (isset($_GET['k2dynamic'])) {
-		require_once( preg_replace( '/wp-content.*/', '', dirname(__FILE__) ) . 'wp-config.php' );
+		require_once( preg_replace( '/wp-content.*/', '', $_SERVER['SCRIPT_FILENAME'] ) . 'wp-config.php' );
 
 		// Send the header
 		header('Content-Type: ' . get_bloginfo('html_type') . '; charset=' . get_bloginfo('charset'));

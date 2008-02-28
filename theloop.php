@@ -4,14 +4,14 @@
 
 	// Get core WP functions when loaded dynamically
 	if (isset($_GET['k2dynamic'])) {
-		require_once( preg_replace( '/wp-content.*/', '', dirname(__FILE__) ) . 'wp-config.php' );
+		require_once( preg_replace( '/wp-content.*/', '', $_SERVER['SCRIPT_FILENAME'] ) . 'wp-config.php' );
 
 		if ($_GET['k2dynamic'] != 'init') {
 			// Send the header
 			header('Content-Type: ' . get_bloginfo('html_type') . '; charset=' . get_bloginfo('charset'));
 
 			// Initialize the Loop
-			query_posts($_GET);
+			query_posts( k2_parse_query($_GET) );
 		}
 	?>
 
