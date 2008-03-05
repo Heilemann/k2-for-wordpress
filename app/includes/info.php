@@ -473,7 +473,7 @@ function k2_body_class( $print = true ) {
 		the_post();
 
 		// Adds 'single' class and class with the post ID
-		$c[] = 'single postid-' . $postID;
+		$c[] = 'single postid-' . $postID . ' s-slug-' . $wp_query->post->post_name;
 
 		// Adds classes for the month, day, and hour when the post was published
 		if ( isset($wp_query->post->post_date) )
@@ -529,6 +529,8 @@ function k2_body_class( $print = true ) {
 		the_post();
 		$c[] = 'page pageid-' . $pageID;
 		$c[] = 'page-author-' . sanitize_title_with_dashes(strtolower(get_the_author()));
+		$c[] = 'page-slug-'.$wp_query->post->post_name;
+
 		rewind_posts();
 	}
 
