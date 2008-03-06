@@ -66,7 +66,7 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/css/rollingarchives.css.php" />
 	<?php } ?>
 
-	<?php if ( get_stylesheet() ): /* WP Theme Stylesheet */ ?>
+	<?php if ( get_stylesheet() != get_template() ): /* WP Theme Stylesheet */ ?>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo get_stylesheet_uri(); ?>" />
 	<?php elseif ( get_option('k2scheme') != '' ): /* K2 Styles */ ?>
 	<link rel="stylesheet" type="text/css" href="<?php k2info('style'); ?>" />
