@@ -61,13 +61,16 @@
 	<meta name="template" content="K2 <?php k2info('version'); ?>" />
  	<meta name="description" content="<?php bloginfo('description'); ?>" />
   
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo get_template_directory_uri(); ?>/style.css" />
 	<?php /* Rolling Archives */ if (get_option('k2rollingarchives') == 1) { ?>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/css/rollingarchives.css.php" />
 	<?php } ?>
-	<?php /* Custom Style */ if (get_option('k2scheme') != '') { ?>
+
+	<?php if ( get_stylesheet() ): /* WP Theme Stylesheet */ ?>
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo get_stylesheet_uri(); ?>" />
+	<?php elseif ( get_option('k2scheme') != '' ): /* K2 Styles */ ?>
 	<link rel="stylesheet" type="text/css" href="<?php k2info('style'); ?>" />
-	<?php } ?>
+	<?php endif; ?>
 
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="<?php bloginfo('rss2_url'); ?>" />
 	<link rel="alternate" type="text/xml" title="RSS .92" href="<?php bloginfo('rss_url'); ?>" />
