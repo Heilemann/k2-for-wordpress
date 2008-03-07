@@ -66,7 +66,7 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/css/rollingarchives.css.php" />
 	<?php } ?>
 
-	<?php if ( get_stylesheet() != get_template() ): /* WP Theme Stylesheet */ ?>
+	<?php if ( ! K2_USING_STYLES ): /* WP Theme Stylesheet */ ?>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo get_stylesheet_uri(); ?>" />
 	<?php elseif ( get_option('k2scheme') != '' ): /* K2 Styles */ ?>
 	<link rel="stylesheet" type="text/css" href="<?php k2info('style'); ?>" />
@@ -87,11 +87,15 @@
 		K2.columns = <?php echo get_option('k2columns') ?>;
 
 		K2.layoutWidths = <?php /* Style Layout Widths */
-			$styleinfo = get_option('k2styleinfo');
-			if ( empty($styleinfo['layout_widths']) )
+			if ( ! K2_USING_STYLES ) {
 				echo '[580, 800, 970]';
-			else
-				output_javascript_array($styleinfo['layout_widths']);
+			} else {
+				$styleinfo = get_option('k2styleinfo');
+				if ( empty($styleinfo['layout_widths']) )
+					echo '[580, 800, 970]';
+				else
+					output_javascript_array($styleinfo['layout_widths']);
+			}
 		?>;
 
 		if (K2.columns > 1) {

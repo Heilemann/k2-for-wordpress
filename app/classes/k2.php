@@ -68,23 +68,30 @@ class K2 {
 			register_sidebars(K2_SIDEBARS, array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>', 'before_title' => '<h4>', 'after_title' => '</h4>'));
 		}
 
-		// Check if there's a style
-		if ( ($style = get_option('k2scheme')) != '' ) {
-			if ( !file_exists(K2_STYLES_PATH . $style) ) {
-				update_option('k2scheme', '');
-				update_option('k2styleinfo', array());
-			} else {
-				$styleinfo = get_option('k2styleinfo');
+		if ( K2_USING_STYLES ) {
+			// Check if there's a style
+			if ( ($style = get_option('k2scheme')) != '' ) {
+				if ( !file_exists(K2_STYLES_PATH . $style) ) {
+					update_option('k2scheme', '');
+					update_option('k2styleinfo', array());
+				} else {
+					$styleinfo = get_option('k2styleinfo');
 
-				// Update the style info if style has been modified
-				if ( empty($styleinfo['modified']) or filemtime(K2_STYLES_PATH . $style) != $styleinfo['modified'] ) {
-					$styleinfo = update_style_info();
-				}
+					// Update the style info if style has been modified
+					if ( empty($styleinfo['modified']) or filemtime(K2_STYLES_PATH . $style) != $styleinfo['modified'] ) {
+						$styleinfo = update_style_info();
+					}
 
-				// Load attached php file
-				if ( !empty($styleinfo['php']) and file_exists($styleinfo['php']) ) {
-					include_once($styleinfo['php']);
+					// Load style's functions.php
+					if ( get_option('k2loadstylephp') and file_exists(get_k2info('current_style_dir') . 'functions.php') ) {
+						include_once(get_k2info('current_style_dir') . 'functions.php');
+					}
 				}
+			}
+		} else {
+			// Load stylesheet's functions.php
+			if ( get_option('k2loadstylephp') and file_exists(get_stylesheet_directory() . 'functions.php') ) {
+				include_once(get_stylesheet_directory() . 'functions.php');
 			}
 		}
 	}

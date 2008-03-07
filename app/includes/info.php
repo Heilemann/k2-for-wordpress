@@ -213,7 +213,6 @@ function get_style_data($style_file = '') {
 	preg_match("|Header Text Color\s*:\s*#*([\dABCDEF]+)|i", $style_data, $header_text_color);
 	preg_match("|Header Width\s*:\s*(\d+)|i", $style_data, $header_width);
 	preg_match("|Header Height\s*:\s*(\d+)|i", $style_data, $header_height);
-	preg_match("|PHP File\s*:(.*)|i", $style_data, $php_file);
 	preg_match("|Layout Widths\s*:\s*(\d+)\s*(px)?\s*,\s*(\d+)\s*(px)?\s*,\s*(\d+)|i", $style_data, $widths);
 
 	$layout_widths = array();
@@ -235,7 +234,6 @@ function get_style_data($style_file = '') {
 		'header_text_color' => trim($header_text_color[1]),
 		'header_width' => trim($header_width[1]),
 		'header_height' => trim($header_height[1]),
-		'php' => ($filename = trim($php_file[1])) != '' ? dirname($style_path) . '/' . $filename : false,
 		'layout_widths' => $layout_widths
 	);
 }

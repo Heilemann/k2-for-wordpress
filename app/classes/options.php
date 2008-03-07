@@ -23,6 +23,7 @@ class K2Options {
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
 		add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.');
 		add_option('k2columns', '2', 'Number of columns to display.');
+		add_option('k2loadstylephp', '0', 'Enable this to load a style\'s bundled functions.php');
 	}
 
 
@@ -41,6 +42,7 @@ class K2Options {
 		delete_option('k2rollingarchives');
 		delete_option('k2blogornoblog');
 		delete_option('k2columns');
+		delete_option('k2loadstylephp');
 	}
 
 

@@ -6,7 +6,7 @@ define('K2_CURRENT', 'svn');
 // Is this MU or no?
 define('K2_MU', (isset($wpmu_version) or (strpos($wp_version, 'wordpress-mu') !== false)));
 
-// Define our folders for WordPress & WordpressMU
+// Define our folders for Wordpress/WordpressMU
 if ( K2_MU ) {
 	define('K2_STYLES_PATH', ABSPATH . UPLOADS . 'k2support/styles/');
 	define('K2_HEADERS_PATH', ABSPATH . UPLOADS . 'k2support/headers/');
@@ -17,6 +17,9 @@ if ( K2_MU ) {
 
 // Are we using SBM?
 define('K2_USING_SBM', !function_exists('register_sidebar') && get_option('k2sidebarmanager') == '1');
+
+// Are we using K2 Styles?
+define('K2_USING_STYLES', get_stylesheet() == get_template());
 
 // Default style info format
 define('K2_STYLE_FOOTER', '<a href="%stylelink%" title="%style% by %author%">%style%<!-- %version%--></a>');

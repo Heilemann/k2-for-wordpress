@@ -2,19 +2,21 @@
 
 	global $wpdb;
 
-	// Get the current K2 Style
-	$style_name = get_option('k2scheme');
-	$style_title = $style_name !== false ? $style_name : __('No Style', 'k2_domain');
-	$style_info = get_option('k2styleinfo');
+	if ( K2_USING_STYLES ) {
+		// Get the current K2 Style
+		$style_name = get_option('k2scheme');
+		$style_title = $style_name !== false ? $style_name : __('No Style', 'k2_domain');
+		$style_info = get_option('k2styleinfo');
+
+		// Check that the styles folder exists
+		$is_styles_dir = is_dir(K2_STYLES_PATH);
+
+		// Get the scheme files
+		$style_files = K2::get_styles();
+	}
 
 	// Check that the K2 folder has no spaces
 	$dir_has_spaces = (strpos(TEMPLATEPATH, ' ') !== false);
-
-	// Check that the styles folder exists
-	$is_styles_dir = is_dir(K2_STYLES_PATH);
-
-	// Get the scheme files
-	$style_files = K2::get_styles();
 
 	// Get the sidebar
 	$column_number = get_option('k2columns');
@@ -30,15 +32,11 @@
 	// Get the categories we might use for asides
 	$asides_cats = get_categories('get=all');
 
-	// Get the current K2 header picture
-	$header_picture = get_option('k2header_picture');
-
-	// Check that we can write to the headers folder and that it exists
-	$is_headers_writable = is_writable(K2_HEADERS_PATH);
-	$is_headers_dir = is_dir(K2_HEADERS_PATH);
+	// Get the current header picture
+	$current_header_image = get_theme_mod('header_image');
 
 	// Get the header pictures
-	$picture_files = K2Header::get_header_images();
+	$header_images = K2Header::get_header_images();
 ?>
 
 <script>
@@ -59,7 +57,7 @@
 <?php } ?>
 
 <div class="k2wrap">
-	<?php if (!$is_styles_dir) { ?>
+	<?php if ( K2_USING_STYLES and !$is_styles_dir ) { ?>
 		<div class="error"><small>
 		<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom styles is missing.</p><p>For you to be able to use custom styles, you need to add this directory.</p>', 'k2_domain'), K2_STYLES_PATH ); ?>
 		</small></div>
@@ -153,7 +151,7 @@
 			</div><!-- .container -->
 
 
-			<?php if ($is_styles_dir) { ?>
+			<?php if (K2_USING_STYLES and $is_styles_dir) { ?>
 			<div class="container">
 				<h3><?php _e('Style', 'k2_domain'); ?></h3>
 
@@ -175,48 +173,26 @@
 
 				<p class="description"><?php
 					printf(
-						__('The current header size is <strong>%1$s px by %2$s px</strong>.', 'k2_domain'),
+						__('The current header size is <strong>%1$s px by %2$s px</strong>. Use %3$s to customize the header.', 'k2_domain'),
 						empty($style_info['header_width'])? K2_HEADER_WIDTH : $style_info['header_width'],
-						empty($style_info['header_height'])? K2_HEADER_HEIGHT : $style_info['header_height']
+						empty($style_info['header_height'])? K2_HEADER_HEIGHT : $style_info['header_height'],
+						'<a href="themes.php?page=custom-header">' . __('Custom Image Header', 'k2_domain') . '</a>'
 					); ?></p>
 
-				<?php if (!$is_headers_dir) { ?>
-					<div class="error">
-					<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom headers is missing.</p>', 'k2_domain'), K2_HEADERS_PATH ); ?>
-					</div>
-				<?php } elseif (!$is_headers_writable) { ?>
-					<div class="error">
-					<?php printf(__('<p>The directory <code>%s</code> should be writable (CHMOD 777) to upload custom headers through this interface. You can still manually upload images to the directory however.</p>', 'k2_domain'), K2_HEADERS_PATH ); ?>
-					</div>
-				<?php } ?>
-
 				<div class="headerwrap">
-					<?php if ($is_headers_dir) { ?>
-						<?php if ($is_headers_writable) { ?>
-							<div>
-								<span class="span1"><p><?php _e('Upload an Image', 'k2_domain'); ?></p></span>
+					<div>
+						<span class="span1"><p><?php _e('Select an Image', 'k2_domain'); ?></p></span>
 
-								<span class="span2"><input type="file" id="image_upload" name="image_upload" /></span>
-
-								<span class="span3"><input id="upload-activate" name="upload_activate" type="checkbox" value="1" /><label for="upload-activate"><?php _e('Activate immediately', 'k2_domain'); ?></span>
-							</div>
-						<?php } ?>
-
-						<div>
-							<span class="span1"><p><?php _e('Select an Image', 'k2_domain'); ?></p></span>
-
-							<span class="span2">
-								<select id="k2-header-picture" name="k2[header_picture]">
-									<option value="" <?php selected($header_picture, ''); ?>><?php _e('Off', 'k2_domain'); ?></option>
-									<?php foreach($picture_files as $picture_file) { ?>
-									<option value="<?php echo attribute_escape($picture_file); ?>" <?php selected($header_picture, $picture_file); ?>><?php echo($picture_file); ?></option>
-									<?php } ?>
-								</select>
-							</span>
-
-							<span class="span3"><input id="k2-imagerandomfeature" name="k2[imagerandomfeature]" type="checkbox" value="1" <?php checked('1', get_option('k2imagerandomfeature')); ?> /><label for="k2-imagerandomfeature"><?php _e('Random', 'k2_domain'); ?></label></span>
-						</div>
-					<?php } ?>
+						<span class="span2">
+							<select id="k2-header-picture" name="k2[header_picture]">
+								<option value="" <?php selected($current_header_image, ''); ?>><?php _e('Off', 'k2_domain'); ?></option>
+								<option value="random" <?php selected($current_header_image, 'random'); ?>><?php _e('Random', 'k2_domain'); ?></option>
+								<?php foreach($header_images as $picture_file): ?>
+								<option value="<?php echo attribute_escape($picture_file); ?>" <?php selected($current_header_image, $picture_file); ?>><?php echo basename($picture_file); ?></option>
+								<?php endforeach; ?>
+							</select>
+						</span>
+					</div>
 
 					<div>
 						<span class="span1"><p><?php _e('Rename the \'Blog\' tab', 'k2_domain'); ?></p></span>
