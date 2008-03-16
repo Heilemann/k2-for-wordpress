@@ -3,7 +3,6 @@
 /* CSS for the Sidebar Manager page */
 
 #parentwrapper {
-	font-family: Helvetica, Arial, Sans-Serif;
 	position: relative;
 	width: 100%;
 	}
@@ -52,7 +51,7 @@ h2 {
 	height: 55px;
 	}
 
-.droppable, #availablemodulescontainer ul {
+.droppable ul, #availablemodulescontainer ul {
 	margin: 0 8px 0 9px;
 	}
 
@@ -387,18 +386,21 @@ body.nomodules #undo {
 
 .availablemodule {
 	height: 25px;
-	background: url('../images/sbmmanager/amodulebg-left.png') left center no-repeat;
-	opacity: .6;
-	filter: alpha(opacity = 60);
+	background: url('../images/sbmmanager/amodulebg-left.png') no-repeat;
+	background-position: 0% 0px;
 	}
 
 .availablemodule .slidingdoor {
-	background: url('../images/sbmmanager/amodulebg.png') right top no-repeat;
+	background: url('../images/sbmmanager/amodulebg.png') no-repeat;
+	background-position: 100% 0px;
 	}
 
-.availablemodule:hover {
-	opacity: .7;
-	filter: alpha(opacity = 70);
+.availablemodule:hover, .availablemodule:hover .slidingdoor {
+	background-position: 0% -50px;
+	}
+
+.availablemodule:hover .slidingdoor {
+	background-position: 100% -50px;
 	}
 
 
@@ -518,6 +520,7 @@ body.nomodules #undo {
 	width: 420px;
 	height: 300px;
 	overflow: hidden;
+	background: #ddd;
 	}
 
 .optbuttons {
