@@ -504,6 +504,24 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	margin-top: 3px;
 	}
 
+
+.attachment img,
+.attachment-thumbnail,
+.entry-content .gallery img {
+	padding: 3px;
+	border: 1px solid #ccc;
+	}
+
+.attachment img:hover,
+.attachment-thumbnail:hover,
+.entry-content .gallery img:hover {
+	padding: 2px;
+	border: 2px solid #27d;
+	}
+
+
+/*- Comments */
+
 .commentsrsslink {
 	background: url('../images/feed.png') left top no-repeat;
 	padding: 2px 0 2px 20px;
@@ -818,12 +836,14 @@ hr {
 	margin: 10px 0;
 	}
 
+.navigation .nav-previous,
 .navigation .left {
 	float: left;
 	width: 50%;
 	text-align: left;
 	}
 
+.navigation .nav-next,
 .navigation .right {
 	float: right;
 	width: 50%;
