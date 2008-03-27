@@ -229,25 +229,25 @@ h2 { /* H2 is what kind of page you are on. Eg. 'Monthly Archive'. */
 	margin-bottom: 5px;
 	}
 
-#primary h3, #primary h4, .single #primary .k2-asides h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
+h3, h4, .single .k2-asides h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
 	font-size: 2.4em;
 	font-weight: normal;
 	letter-spacing: -1px;
 	}
 
-#primary .entry-content h3 {
+.entry-content h3 {
 	font-size: 1.8em;
 	font-weight: normal;
 	margin-top: 25px;
 	}
 
-#primary .entry-content h4 {
+.entry-content h4 {
 	font-size: 1.5em;
 	font-weight: normal;
 	margin-top: 25px;
 	}
 
-#primary .k2-asides h3 {
+.k2-asides h3 {
 	font-size: 1.6em;
 	font-weight: normal;
 	}
@@ -517,6 +517,17 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 .entry-content .gallery img:hover {
 	padding: 2px;
 	border: 2px solid #27d;
+	}
+
+.additional-info h4 {
+	margin: 1em 0;
+	}
+
+.image-meta span {
+	font-weight: bold;
+	display: block;
+	float: left;
+	width: 100px;
 	}
 
 
@@ -892,10 +903,12 @@ img.wp-smiley {
 	background-color: #EDEDED;
 	}
 
+.image-meta,
 .entry-content ol, .entry-content ul {
 	padding: 0 0 0 35px;
 	}
 
+.image-meta li,
 .entry-content ol li, .entry-content ul li {
 	margin: 0 0 3px;
 	padding: 0;

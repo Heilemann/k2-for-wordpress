@@ -14,24 +14,6 @@
 					<h3 class="entry-title"><a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><?php echo get_the_title($post->post_parent); ?></a> &raquo; <a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), attribute_escape(get_the_title()) ); ?>'><?php the_title(); ?></a></h3>
 
 					<div class="entry-meta">
-						<?php
-							printf(	__('<span class="meta-start">Published</span> %1$s %2$s<span class="meta-end">.</span>','k2_domain'),
-
-								'<div class="entry-author">' .
-								sprintf(  __('<span class="meta-prep">by</span> %s','k2_domain'),
-									'<address class="vcard author"><a href="' . get_author_posts_url(get_the_author_ID()) .'" class="url fn" title="'. sprintf(__('View all posts by %s','k2_domain'), attribute_escape(get_the_author())) .'">' . get_the_author() . '</a></address>'
-								) . '</div>',
-
-								'<div class="entry-date">' .
-								( function_exists('time_since') ?
-										sprintf(__('%s ago','k2_domain'),
-											'<abbr class="published" title="' . get_the_time('Y-m-d\TH:i:sO') . '">' . time_since(abs(strtotime($post->post_date_gmt . " GMT")), time()) . '</abbr>') :
-										sprintf(__('<span class="meta-prep">on</span> %s','k2_domain'),
-											'<abbr class="published" title="' . get_the_time('Y-m-d\TH:i:sO') . '">'. get_the_time( get_option('date_format') ) . '</abbr>')
-								) . '</div>'
-							);
-						?>
-
 						<div class="entry-comments">
 							<a class="commentslink" href="#comments">
 								<?php /* Comments */ comments_number('0&nbsp;<span>'.__('Comments','k2_domain').'</span>', '1&nbsp;<span>'.__('Comment','k2_domain').'</span>', '%&nbsp;<span>'.__('Comments','k2_domain').'</span>'); ?>
@@ -43,14 +25,41 @@
 				</div> <!-- .entry-head -->
 
 				<div class="entry-content">
-					<div class="attachment">
+					<div class="image-attachment">
 						<a href="<?php echo wp_get_attachment_url($post->ID); ?>"><?php echo wp_get_attachment_image( $post->ID, 'medium' ); ?></a>
 					</div>
-	                <div class="caption"><?php if ( !empty($post->post_excerpt) ) the_excerpt(); // this is the "caption" ?></div>
 
-					<?php the_content(sprintf(__('Continue reading \'%s\'', 'k2_domain'), the_title('', '', false))); ?>
+	                <div class="image-caption"><?php the_excerpt(); ?></div>
 
+					<div class="image-description">
+						<?php the_content(sprintf(__('Continue reading \'%s\'', 'k2_domain'), the_title('', '', false))); ?>
+					</div>
 				</div> <!-- .entry-content -->
+
+				<div class="additional-info">
+					<h4>Additional Info</h4>
+					<ul class="image-meta">
+						<li class="dimensions">
+							<span><?php _e('Dimensions:','k2_domain'); ?></span>
+							<?php list($width, $height) = getimagesize( get_attached_file($post->ID) ); printf( _c('%1$s px &times; %2$s px|1: width, 2: height','k2_domain'), $width, $height ); ?>
+						</li>
+						<li class="file-size">
+							<span><?php _e('File Size:','k2_domain'); ?></span>
+							<?php echo size_format( filesize( get_attached_file($post->ID) ) ); ?>
+						</li>
+						<li class="uploaded">
+							<span><?php _e('Uploaded on:','k2_domain'); ?></span>
+							<?php if ( function_exists('time_since') ):
+									printf( __('%s ago','k2_domain'),
+										'<abbr class="published" title="' . get_the_time('Y-m-d\TH:i:sO') . '">' . time_since(abs(strtotime($post->post_date_gmt . " GMT")), time()) . '</abbr>');
+								else: ?>
+								<abbr class="published" title="<?php get_the_time('Y-m-d\TH:i:sO'); ?>"><?php the_time( get_option('date_format') ); ?></abbr>
+							<?php endif; ?>
+						</li>
+
+						<?php /* K2 Hook */ do_action('k2_image_meta', $post->ID); ?>
+					</ul>
+				</div>
 
 			</div> <!-- #post-ID -->
 
