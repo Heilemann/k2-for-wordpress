@@ -3,91 +3,102 @@
 	// It is a very delicate piece of machinery. Be gentle!
 
 	// Get core WP functions when loaded dynamically
-	if (isset($_GET['k2dynamic'])) {
+	if ( isset($_GET['k2dynamic']) ):
+
+		// Check for CGI Mode
+		if ( 'cgi' == substr( php_sapi_name(), 0, 3 ) )
+			$_SERVER['SCRIPT_FILENAME'] = $_SERVER['DOCUMENT_ROOT'] . $_SERVER['SCRIPT_URL'];
+
 		require_once( preg_replace( '/wp-content.*/', '', $_SERVER['SCRIPT_FILENAME'] ) . 'wp-config.php' );
 
-		if ($_GET['k2dynamic'] != 'init') {
+		if ( $_GET['k2dynamic'] != 'init' ):
 			// Send the header
 			header('Content-Type: ' . get_bloginfo('html_type') . '; charset=' . get_bloginfo('charset'));
 
+			// Plugin support
+			do_action('template_redirect');
+
+			// K2 Hook
+			do_action('k2_dynamic_content');
+
 			// Initialize the Loop
 			query_posts( k2_parse_query($_GET) );
-		}
+
+		endif;
 	?>
 
-<div id="dynamictype" class="<?php echo attribute_escape(k2_body_class(false)); ?>">
+<div id="dynamictype" class="<?php k2_body_class(); ?>">
 
-<?php }
+<?php endif;
+
 	// Debugging
-	if ( isset($_GET['k2debug']) ) {
+	if ( isset($_GET['k2debug']) ):
 		echo '<div class="alert">';
 		echo '<b>Query:</b><br />'; var_dump($wp_query->query);
 		echo '</div>';
-	}
+	endif;
 
 	// Get the asides category
 	$k2asidescategory = get_option('k2asidescategory');
-
-	// Get date & time formats
-	$dateformat = get_option('date_format');
-	$timeformat = get_option('time_format');
+	$k2rollingarchives = get_option('k2rollingarchives');
 ?>
 
-	<?php /* Headlines for archives */ if ((!is_single() and !is_home()) or is_paged()) { ?>
+	<?php /* Top Paged Navigation */ if ( ( '0' == $k2rollingarchives ) and !is_single() ): k2_navigation('nav-above'); endif; ?> 
+
+	<?php /* Headlines for archives */ if ( ( ! is_single() and ! is_home() ) or is_paged() ): ?>
 		<div class="page-head"><h2>
 		<?php // Figure out what kind of page is being shown
-			if (is_category()) {
-				if (get_query_var('cat') != $k2asidescategory) {
-					printf(__('Archive for the \'%s\' Category','k2_domain'), single_cat_title('', false));
-				} else {
+			if ( is_category() ):
+				if ( get_query_var('cat') != $k2asidescategory ):
+					printf( __('Archive for the \'%s\' Category','k2_domain'), single_cat_title('', false) );
+				else:
 					echo single_cat_title();
-				}
+				endif;
 
-			} elseif (is_day()) {
-				printf(__('Archive for %s','k2_domain'), get_the_time(__('F jS, Y','k2_domain')));
+			elseif ( is_day() ):
+				printf( __('Archive for %s','k2_domain'), get_the_time( __('F jS, Y','k2_domain') ) );
 
-			} elseif (is_month()) {
-				printf(__('Archive for %s','k2_domain'), get_the_time(__('F, Y','k2_domain')));
+			elseif ( is_month() ):
+				printf( __('Archive for %s','k2_domain'), get_the_time( __('F, Y','k2_domain') ) );
 
-			} elseif (is_year()) {
-				printf(__('Archive for %s','k2_domain'), get_the_time(__('Y','k2_domain')));
+			elseif ( is_year() ):
+				printf( __('Archive for %s','k2_domain'), get_the_time( __('Y','k2_domain') ) );
 
-			} elseif (is_search()) {
-				printf( __('Search Results for \'%s\'','k2_domain'), attribute_escape(get_search_query()) );
+			elseif ( is_search() ):
+				printf( __('Search Results for \'%s\'','k2_domain'), attribute_escape( get_search_query() ) );
 
-			} elseif (function_exists('is_tag') and is_tag()) {
-				if (function_exists('single_tag_title')) {
-					printf(__('Tag Archive for \'%s\'','k2_domain'), single_tag_title('', false));
-				} else {
-					printf(__('Tag Archive for \'%s\'','k2_domain'), attribute_escape(get_query_var('tag')) );
-				}
+			elseif ( function_exists('is_tag') and is_tag() ):
+				if ( function_exists('single_tag_title') ):
+					printf( __('Tag Archive for \'%s\'','k2_domain'), single_tag_title('', false) );
+				else:
+					printf( __('Tag Archive for \'%s\'','k2_domain'), attribute_escape( get_query_var('tag') ) );
+				endif;
 				
-			} elseif (is_author()) {
-				printf(__('Author Archive for %s','k2_domain'), get_author_name(get_query_var('author')));
+			elseif ( is_author() ):
+				printf( __('Author Archive for %s','k2_domain'), get_author_name( get_query_var('author') ) );
 
-			} elseif (is_paged() and ( intval(get_query_var('paged')) > 1)) { 
+			elseif ( is_paged() and ( intval(get_query_var('paged')) > 1) ):
 				 _e('Archive','k2_domain');
-			}
-			if ( (intval( get_query_var('paged') ) > 1) and (get_option('k2rollingarchives') == 0) ) {
-				printf(__(' <span class="archivepages">Page %1$s of %2$s</span>','k2_domain'), intval( get_query_var('paged')), $wp_query->max_num_pages);
-			}
+			endif;
+
+			if ( ( intval( get_query_var('paged') ) > 1 ) and ( '0' == $k2rollingarchives ) ):
+				printf( '<span class="archivepages">' . __('Page %1$s of %2$s', 'k2_domain') . '</span>', intval( get_query_var('paged')), $wp_query->max_num_pages);
+			endif;
 			?>
 
 		</h2></div>
-	<?php } ?>
-
-	<?php if ((get_option('k2rollingarchives') == 0) and !is_single() and is_paged()) include (TEMPLATEPATH . '/navigation.php'); ?> 
+	<?php endif; ?>
 
 <?php
 	/* Check if there are posts */
-	if ( have_posts() ) {
+	if ( have_posts() ):
 		/* Post index for semantic classes */
 		$post_index = 1;
 ?>
 
-	<?php /* Start the loop */ while ( have_posts() ) { the_post();	?>
+	<?php /* Start the loop */ while ( have_posts() ): the_post(); ?>
 
-		<?php /* Permalink nav has to be inside loop */ if (is_single()) include (TEMPLATEPATH . '/navigation.php'); ?>
+		<?php /* Top Navigation */ if ( is_single() ): k2_navigation('nav-above'); endif; ?>
 
 		<div id="post-<?php the_ID(); ?>" class="<?php echo attribute_escape(k2_post_class($post_index++, in_category($k2asidescategory), false)); ?>">
 			<div class="entry-head">
@@ -107,7 +118,7 @@
 									sprintf(__('%s ago','k2_domain'),
 										'<abbr class="published" title="' . get_the_time('Y-m-d\TH:i:sO') . '">' . time_since(abs(strtotime($post->post_date_gmt . " GMT")), time()) . '</abbr>') :
 									sprintf(__('<span class="meta-prep">on</span> %s','k2_domain'),
-										'<abbr class="published" title="' . get_the_time('Y-m-d\TH:i:sO') . '">'. get_the_time($dateformat) . '</abbr>')
+										'<abbr class="published" title="' . get_the_time('Y-m-d\TH:i:sO') . '">'. get_the_time( get_option('date_format') ) . '</abbr>')
 							) . '</div>',
 
 							'<div class="entry-categories">' .
@@ -137,11 +148,15 @@
 
 		</div> <!-- #post-ID -->
 
-	<?php } /* End The Loop */ ?>
+	<?php endwhile; /* End The Loop */ ?>
 	
-	<?php /* Insert Paged Navigation */ if (!is_single() and get_option('k2rollingarchives') != 1) { include (TEMPLATEPATH.'/navigation.php'); } ?>
+	<?php /* Bottom Paged Navigation */ if ( ( '0' == $k2rollingarchives ) and !is_single() ): ?>
+	<noscript>
+		<?php k2_navigation('nav-below'); ?>
+	</noscript>
+	<?php endif; ?> 
 
-<?php /* If there is nothing to loop */  } else { define('K2_NOT_FOUND', true); ?>
+<?php /* If there is nothing to loop */ else: define('K2_NOT_FOUND', true); ?>
 
 	<div class="hentry four04">
 
@@ -155,8 +170,8 @@
 
 	</div> <!-- .hentry .four04 -->
 
-<?php } /* End Loop Init  */
+<?php endif; /* End Loop Init  */ ?>
 
-	if (isset($_GET['k2dynamic'])) { ?> </div> <?php }
-
-?>
+<?php if ( isset( $_GET['k2dynamic'] ) ): ?>
+</div><!-- #dynamictype -->
+<?php endif; ?>

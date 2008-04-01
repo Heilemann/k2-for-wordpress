@@ -2,21 +2,21 @@
 // Prevent users from directly loading this file
 defined( 'K2_CURRENT' ) or die ( 'Error: This file can not be loaded directly.' );
 
-function k2info($show='') {
+function k2info( $show = '' ) {
 	echo get_k2info($show);
 }
 
-function get_k2info($show='') {
+function get_k2info( $show = '' ) {
 	$output = '';
-	switch ($show) {
+
+	switch ( $show ) {
 		case 'version' :
     		$output = K2_CURRENT;
 			break;
 
 		case 'style' :
-			if ( get_option('k2scheme') != '' ) {
-				$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2_STYLES_PATH) . get_option('k2scheme');
-			}
+			if ( get_option('k2style') != '' )
+				$output = get_bloginfo('wpurl') . '/' . str_replace( ABSPATH, '', get_option('k2style') );
 			break;
 
 		case 'style_footer' :
@@ -33,15 +33,13 @@ function get_k2info($show='') {
 			break;
 
 		case 'current_style_dir' :
-			if ( get_option('k2scheme') != '' ) {
-				$output = K2_STYLES_PATH . dirname(get_option('k2scheme'));
-			}
+			if ( get_option('k2style') != '' )
+				$output = dirname( get_option('k2style') );
 			break;
 
 		case 'current_style_url' :
-			if ( get_option('k2scheme') != '' ) {
-				$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2_STYLES_PATH) . dirname(get_option('k2scheme'));
-			}
+			if ( get_option('k2style') != '' )
+				$output = get_bloginfo('wpurl') .'/'.dirname( str_replace( ABSPATH, '', get_option('k2style') ) );
 			break;
 	}
 	return $output;
@@ -169,7 +167,7 @@ function k2_parse_query($query) {
 }
 
 function update_style_info() {
-	$data = get_style_data( get_option('k2scheme') );
+	$data = get_style_data( get_option('k2style') );
 
 	if ( !empty($data) and ($data['stylename'] != '') and ($data['stylelink'] != '') and ($data['author'] != '') ) {
 		// No custom style info
@@ -192,28 +190,29 @@ function update_style_info() {
 	return $data;
 }
 
-function get_style_data($style_file = '') {
+function get_style_data( $style_file = '' ) {
 	// if no style selected, exit
-	if ( '' == $style_file ) {
-		return array();
-	}
+	if ( '' == $style_file )
+		return false;
 
-	$style_path = K2_STYLES_PATH . $style_file;
-	if (!file_exists($style_path)) return array();
-	$style_data = implode( '', file( $style_path ) );
+	if ( ! file_exists($style_file) )
+		return false;
+
+	$style_data = implode( '', file($style_file) );
+	$style_data = str_replace( '\r', '\n', $style_data );
 
 	// parse the data
-	preg_match("|Author Name\s*:(.*)|i", $style_data, $author);
-	preg_match("|Author Site\s*:(.*)|i", $style_data, $site);
-	preg_match("|Style Name\s*:(.*)|i", $style_data, $stylename);
-	preg_match("|Style URI\s*:(.*)|i", $style_data, $stylelink);
-	preg_match("|Style Footer\s*:(.*)|i", $style_data, $footer);
-	preg_match("|Version\s*:(.*)|i", $style_data, $version);
-	preg_match("|Comments\s*:(.*)|i", $style_data, $comments);
-	preg_match("|Header Text Color\s*:\s*#*([\dABCDEF]+)|i", $style_data, $header_text_color);
-	preg_match("|Header Width\s*:\s*(\d+)|i", $style_data, $header_width);
-	preg_match("|Header Height\s*:\s*(\d+)|i", $style_data, $header_height);
-	preg_match("|Layout Widths\s*:\s*(\d+)\s*(px)?\s*,\s*(\d+)\s*(px)?\s*,\s*(\d+)|i", $style_data, $widths);
+	preg_match("|Author Name\s*:(.*)$|mi", $style_data, $author);
+	preg_match("|Author Site\s*:(.*)$|mi", $style_data, $site);
+	preg_match("|Style Name\s*:(.*)$|mi", $style_data, $stylename);
+	preg_match("|Style URI\s*:(.*)$|mi", $style_data, $stylelink);
+	preg_match("|Style Footer\s*:(.*)$|mi", $style_data, $footer);
+	preg_match("|Version\s*:(.*)$|mi", $style_data, $version);
+	preg_match("|Comments\s*:(.*)$|mi", $style_data, $comments);
+	preg_match("|Header Text Color\s*:\s*#*([\dABCDEF]+)$|mi", $style_data, $header_text_color);
+	preg_match("|Header Width\s*:\s*(\d+)$|mi", $style_data, $header_width);
+	preg_match("|Header Height\s*:\s*(\d+)$|mi", $style_data, $header_height);
+	preg_match("|Layout Widths\s*:\s*(\d+)\s*(px)?\s*,\s*(\d+)\s*(px)?\s*,\s*(\d+)$|mi", $style_data, $widths);
 
 	$layout_widths = array();
 	if ( !empty($widths) ) {
@@ -223,11 +222,12 @@ function get_style_data($style_file = '') {
 	}
 
 	return array(
-		'modified' => filemtime($style_path),
+		'path' => str_replace(ABSPATH, '', $style_file),
+		'modified' => filemtime($style_file),
 		'author' => trim($author[1]),
-		'site' => trim($site[1]),
+		'site' => clean_url( trim($site[1]) ),
 		'stylename' => trim($stylename[1]),
-		'stylelink' => trim($stylelink[1]),
+		'stylelink' => clean_url( trim($stylelink[1]) ),
 		'footer' => trim($footer[1]),
 		'version' => trim($version[1]),
 		'comments' => trim($comments[1]),
@@ -433,19 +433,7 @@ function get_wp_version() {
 }
 
 
-function k2_body_id() {
-	if (get_option('permalink_structure') != '' and is_page()) {
-		if (get_query_var('name') != '') {
-			$id_name = sanitize_title_with_dashes(get_query_var('name'));
-		}else{
-			$id_name = "home";
-		}
-		echo "id='" . $id_name . "'";
-	}
-}
-
-
-// Semantic class functions from Sandbox 1.0 svn (http://www.plaintxt.org/themes/sandbox/)
+// Semantic class functions from Sandbox 1.5 (http://www.plaintxt.org/themes/sandbox/)
 
 // Generates semantic classes for BODY element
 function k2_body_class( $print = true ) {
@@ -457,13 +445,20 @@ function k2_body_class( $print = true ) {
 	k2_date_classes(time(), $c);
 
 	// Generic semantic classes for what type of content is displayed
-	is_home()       ? $c[] = 'home'       : null;
-	is_archive()    ? $c[] = 'archive'    : null;
-	is_date()       ? $c[] = 'date'       : null;
-	is_search()     ? $c[] = 'search'     : null;
-	is_paged()      ? $c[] = 'paged'      : null;
-	is_attachment() ? $c[] = 'attachment' : null;
-	is_404()        ? $c[] = 'four04'     : null; // CSS does not allow a digit as first character
+
+	if ( function_exists('is_front_page') ) {
+		is_front_page()  ? $c[] = 'home'       : null;
+		is_home()        ? $c[] = 'blog'       : null;
+	} else {
+		is_home()        ? $c[] = 'home'       : null;
+	}
+
+	is_archive()         ? $c[] = 'archive'    : null;
+	is_date()            ? $c[] = 'date'       : null;
+	is_search()          ? $c[] = 'search'     : null;
+	is_paged()           ? $c[] = 'paged'      : null;
+	is_attachment()      ? $c[] = 'attachment' : null;
+	is_404()             ? $c[] = 'four04'     : null; // CSS does not allow a digit as first character
 
 	// Special classes for BODY element when a single post
 	if ( is_single() ) {
@@ -524,10 +519,20 @@ function k2_body_class( $print = true ) {
 	// Page author for BODY on 'pages'
 	else if ( is_page() ) {
 		$pageID = $wp_query->post->ID;
+		$page_children = wp_list_pages("child_of=$pageID&echo=0");
 		the_post();
 		$c[] = 'page pageid-' . $pageID;
 		$c[] = 'page-author-' . sanitize_title_with_dashes(strtolower(get_the_author()));
 		$c[] = 'page-slug-'.$wp_query->post->post_name;
+
+		// Checks to see if the page has children and/or is a child page; props to Adam
+		if ( $page_children != '' ) {
+			$c[] = 'page-parent';
+		}
+
+		if ( $wp_query->post->post_parent ) {
+			$c[] = 'page-child parent-pageid-' . $wp_query->post->post_parent;
+		}
 
 		rewind_posts();
 	}
@@ -582,7 +587,7 @@ function k2_body_class( $print = true ) {
 	$c[] = 'lang-' . $locale;
 
 	// Separates classes with a single space, collates classes for BODY
-	$c = join(' ', apply_filters('body_class', $c));
+	$c = join( ' ', attribute_escape( apply_filters('body_class', $c) ) );
 
 	// And tada!
 	return $print ? print($c) : $c;
@@ -631,7 +636,7 @@ function k2_post_class( $post_count = 1, $post_asides = false, $print = true ) {
 	}
 
 	// Separates classes with a single space, collates classes for post DIV
-	$c = join(' ', apply_filters('post_class', $c));
+	$c = join( ' ', attribute_escape( apply_filters('post_class', $c) ) );
 
 	// And tada!
 	return $print ? print($c) : $c;
@@ -645,10 +650,10 @@ function k2_comment_class( $comment_count = 1, $print = true ) {
 	$c = array($comment->comment_type);
 
 	// Counts trackbacks (t[n]) or comments (c[n])
-	if ($comment->comment_type == 'trackback') {
-		$c[] = "t$comment_count";
-	} else {
+	if ($comment->comment_type == 'comment') {
 		$c[] = "c$comment_count";
+	} else {
+		$c[] = "t$comment_count";
 	}
 
 	// If the comment author has an id (registered), then print the display name
@@ -669,7 +674,7 @@ function k2_comment_class( $comment_count = 1, $print = true ) {
 	}
 
 	// Separates classes with a single space, collates classes for comment LI
-	$c = join(' ', apply_filters('comment_class', $c));
+	$c = join( ' ', attribute_escape( apply_filters('comment_class', $c) ) );
 
 	// Tada again!
 	return $print ? print($c) : $c;

@@ -169,17 +169,17 @@ function sbm_load(id, url) {
 		// Aesthetic Systems
 		function resizeLists() {
 			var cols = jQuery('.container:visible').length;
-			jQuery('.container:visible').width( Math.floor(100 / cols) + '%' );
+			jQuery('.container:visible').width( (Math.floor(100 / cols) - 1) + '%' );
 
 			// Get the current specified minimum height
 			var highest = parseInt(jQuery('.wrap').css('minHeight'));
 
 			// Calculate best height for columns
 			jQuery('.container:visible').each(function() {
-				var moduleHeight = 37;
+				var moduleHeight = 40;
 
 				if (jQuery(this).attr('id') == 'availablemodulescontainer')
-					moduleHeight = 27;
+					moduleHeight = 30;
 
 				var currentContainer = parseInt((jQuery(this).children('div').children('ul').children('li').length * moduleHeight + moduleHeight ));
 				var currentHeader = parseInt(jQuery(this).children('h3').height() * 2);
@@ -402,8 +402,9 @@ function sbm_load(id, url) {
 
 			jQuery('#optionswindow')
 				.addClass('optionsspinner')
-				.show()
-				.fadeIn('slow')
+				.show('slow', function(){
+					jQuery('#closelink').show();
+				});
 
 			// Get the options via AJAX
 			jQuery.post( sbm_baseUrl, {
@@ -456,10 +457,10 @@ function sbm_load(id, url) {
 			jQuery('.tabs').children().removeClass('selected')
 			jQuery('#optionstab').addClass('selected')
 
-			jQuery('#optionswindow').fadeOut('fast', function() {
-				jQuery(this).hide()
-				jQuery('#options').empty()
-			})
+			jQuery('#closelink').hide();
+			jQuery('#optionswindow').hide('slow', function() {
+				jQuery('#options').empty();
+			});
 
 			// Dim overlay
 			jQuery('#overlay').hide().css({ opacity: 0 })
@@ -502,16 +503,13 @@ function sbm_load(id, url) {
 			humanUndo.setup(sbm_baseUrl)
 			jQuery(window).unload( humanUndo.emptyTrash )
 
-			jQuery('#optionswindow').css({ zIndex: 1000, visibility: 'visible' }).hide()
-
 			// Bring Backup/Restore system online
 			checkBackupLinks()
 
 			// Ignition Sequence
-			jQuery('.initloading').hide().remove()
+			jQuery('.initloading').hide().remove();
+			jQuery('#optionswindow').css({ visibility: 'visible', display: 'none' });
 			resizeLists();
-			jQuery('.container').css({ opacity: 1 })
-			jQuery('.darkenright').css({ opacity: .1 })
 		})
 
 		jQuery(window).resize(resizeLists)

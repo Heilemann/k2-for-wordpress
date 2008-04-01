@@ -73,7 +73,10 @@
 				<div class="clear"></div>
 			</div>
 
-			<?php comments_template(); ?>
+			<div class="entry-comments comments">
+				<?php comments_template(); ?>
+			</div> <!-- .entry-comments -->
+
 		<?php endwhile; else: ?>
 
 			<div class="hentry four04">

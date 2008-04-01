@@ -1,25 +1,20 @@
 <?php
 // Prevent users from directly loading this class file
-defined( 'K2_CURRENT' ) or die ( 'Error: This file can not be loaded directly.' );
+defined('K2_CURRENT') or die ('Error: This file can not be loaded directly.');
 
 /**
  * K2 - Main class
  *
  * @package K2
  */
-
 class K2 {
 
 	/**
-	 * Class constructor
-	 * Provides Action: k2_init, k2_activate
+	 * init() - Class constructor
 	 *
-	 * @global string $wp_version
+	 * @uses do_action() Provides 'k2_init' action
 	 */
-
 	function init() {
-		global $wp_version;
-
 		// Load the localisation text
 		load_theme_textdomain('k2_domain');
 
@@ -27,34 +22,19 @@ class K2 {
 		require_once(TEMPLATEPATH . '/app/classes/archive.php');
 		require_once(TEMPLATEPATH . '/app/classes/header.php');
 		require_once(TEMPLATEPATH . '/app/classes/options.php');
-		require_once(TEMPLATEPATH . '/app/classes/sbm.php');
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
+		require_once(TEMPLATEPATH . '/app/includes/display.php');
 
-		if (K2_USING_SBM) {
-			require_once(TEMPLATEPATH . '/app/includes/sbm.php');
+		// Check installed version, upgrade if needed
+		$k2version = get_option('k2version');
+		if ( $k2version === false ) {
+			K2::install();
+		} elseif ( version_compare($k2version, K2_CURRENT, '<') ) {
+			K2::upgrade($k2version);
 		}
 
-		// Get the last modified time of the classes folder
-		$last_modified = filemtime(dirname(__FILE__));
-		$last_modified_check = get_option('k2lastmodified');
-
-		// As only classes can add/remove options it's now time to install if there has been any changes
-		if($last_modified_check === false || $last_modified_check < $last_modified) {
-			K2::install($last_modified);
-		}
-
-		// Check if the theme is being activated/deactivated
-		if ( !get_option('k2active') ) {
-			update_option('k2active', true);
-			do_action('k2_activate');
-
-			// Ewww...
-			if(is_admin()) {
-				header('Location: themes.php?activated=true');
-				exit;
-			}
-		}
-		add_action('switch_theme', array('K2', 'theme_switch'));
+		// Set K2 to active
+		update_option('k2active', true);
 
 		// There may be some things we need to do before K2 is initialised
 		// Let's do them now
@@ -65,133 +45,171 @@ class K2 {
 
 		// Register our sidebar with SBM/Widgets
 		if ( function_exists('register_sidebars') ) {
-			register_sidebars(K2_SIDEBARS, array('before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>', 'before_title' => '<h4>', 'after_title' => '</h4>'));
+			register_sidebars( K2_SIDEBARS, array(
+				'before_widget' => '<div id="%1$s" class="widget %2$s">',
+				'after_widget' => '</div>',
+				'before_title' => '<h4>',
+				'after_title' => '</h4>'
+			) );
 		}
 
 		if ( K2_USING_STYLES ) {
 			// Check if there's a style
-			if ( ($style = get_option('k2scheme')) != '' ) {
-				if ( !file_exists(K2_STYLES_PATH . $style) ) {
-					update_option('k2scheme', '');
+			if ( ($style = get_option('k2style')) != '' ) {
+				if ( ! file_exists($style) ) {
+					update_option('k2style', '');
 					update_option('k2styleinfo', array());
 				} else {
 					$styleinfo = get_option('k2styleinfo');
 
 					// Update the style info if style has been modified
-					if ( empty($styleinfo['modified']) or filemtime(K2_STYLES_PATH . $style) != $styleinfo['modified'] ) {
+					if ( empty($styleinfo['modified']) or (filemtime($style) != $styleinfo['modified']) ) {
 						$styleinfo = update_style_info();
 					}
 
 					// Load style's functions.php
-					if ( get_option('k2loadstylephp') and file_exists(get_k2info('current_style_dir') . 'functions.php') ) {
-						include_once(get_k2info('current_style_dir') . 'functions.php');
+					if ( file_exists(get_k2info('current_style_dir') . '/functions.php') ) {
+						include_once(get_k2info('current_style_dir') . '/functions.php');
 					}
 				}
 			}
 		} else {
 			// Load stylesheet's functions.php
-			if ( get_option('k2loadstylephp') and file_exists(get_stylesheet_directory() . 'functions.php') ) {
-				include_once(get_stylesheet_directory() . 'functions.php');
+			if ( file_exists(get_stylesheet_directory() . '/functions.php') ) {
+				include_once(get_stylesheet_directory() . '/functions.php');
 			}
 		}
 	}
 
 
 	/**
-	 * Called when K2 is installed or upgraded
-	 * Provides Action: k2_install
+	 * install() - Starts the installation process and creates supporting folders for WordPress mu.
 	 *
-	 * @param integer $last_modified 
-	 * @global string $wp_version
+	 * @uses do_action() Provides 'k2_install' action
 	 */
-
-	function install($last_modified) {
-		global $wp_version;
-
-		// Add / update the version number
-		if(get_option('k2version') === false) {
-			add_option('k2version', K2_CURRENT, 'This option stores K2\'s version number');
-		} else {
-			update_option('k2version', K2_CURRENT);
-		}
-
-		// Add / update the last modified timestamp
-		if(get_option('k2lastmodified') === false) {
-			add_option('k2lastmodified', $last_modified, 'This option stores K2\'s last application modification. Used for version checking');
-		} else {
-			update_option('k2lastmodified', $last_modified);
-		}
-
-		if(get_option('k2active') === false) {
-			add_option('k2active', 0, 'This option stores if K2 has been activated');
-		} else {
-			update_option('k2active', 0);
-		}
-
-		// Create support folders for WordPressMU
-		if(K2_MU) {
-			if(!is_dir(ABSPATH . UPLOADS . 'k2support/')) {
-				wp_mkdir_p(ABSPATH . UPLOADS . 'k2support/');
-			}
-			if(!is_dir(K2_STYLES_PATH)) {
-				wp_mkdir_p(K2_STYLES_PATH);
-			}
-			if(!is_dir(K2_HEADERS_PATH)) {
-				wp_mkdir_p(K2_HEADERS_PATH);
-			}
-		}
+	function install() {
+		// Add the version number
+		add_option('k2version', K2_CURRENT, 'This option stores K2\'s version number');
 
 		// Call the install handlers
 		do_action('k2_install');
+
+		// Create support folders for WordPressMU
+		if ( K2_MU ) {
+			if ( ! is_dir(ABSPATH . UPLOADS . 'k2support/') ) {
+				wp_mkdir_p(ABSPATH . UPLOADS . 'k2support/');
+			}
+
+			if ( ! is_dir(K2_STYLES_PATH) ) {
+				wp_mkdir_p(K2_STYLES_PATH);
+			}
+		}
 	}
 
 
 	/**
-	 * Activates Default theme and removes K2 options
-	 * Provides Action: k2_uninstall
+	 * upgrade() - Starts the upgrade process
 	 *
+	 * @uses do_action() Provides 'k2_upgrade' action
+	 * @param string $previous Previous version K2
+	 */
+	function upgrade($previous) {
+
+		// Call the upgrade handlers
+		do_action('k2_upgrade', $previous);
+
+		if ( version_compare( $previous, '1.0-RC5', '<' ) ) {
+			get_option('k2scheme');
+
+			// Remove previous SBM hackery
+			$found = false;
+			$plugins = (array) get_option('active_plugins');
+
+			foreach ($plugins as $key => $plugin) {
+				if ( (strpos( $plugin, 'sbm-stub.php' ) !== false) or (strpos( $plugin, 'widgets-removal.php' ) !== false ) ) {
+					unset( $plugins[$key] );
+					$found = true;
+				}
+			}
+
+			if ( $found )
+				update_option('active_plugins', $plugins);
+		}
+
+		// Update the version
+		update_option('k2version', K2_CURRENT);
+	}
+
+
+	/**
+	 * uninstall() - Activates Default theme and removes K2 options
+	 *
+	 * @uses do_action() Provides 'k2_uninstall' action
 	 * @global mixed $wpdb
 	 */
-
 	function uninstall() {
 		global $wpdb;
-
-		// Activate the default Wordpress theme so as not to re-install K2
-		update_option('template', 'default');
-		update_option('stylesheet', 'default');
-		do_action('switch_theme', 'Default');
 
 		// Call the uninstall handlers
 		do_action('k2_uninstall');
 
 		// Delete options
-		delete_option('k2active');
-		delete_option('k2lastmodified');
 		delete_option('k2version');
+		delete_option('k2active');
 
-		// Remove the K2 options from the database
-		// This is a catch-all
+		// Remove the K2 options from the database. This is a catch-all
 		$cleanup = $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'k2%'");
 
 		// Flush the dang cache
 		wp_cache_flush();
 
-		// Go back to the themes page
-		header('Location: themes.php');
+		// Switch to the default theme
+		update_option('template', 'default');
+		update_option('stylesheet', 'default');
+		delete_option('current_theme');
+		$theme = get_current_theme();
+		do_action('switch_theme', $theme);
+
+		wp_redirect('themes.php?activated=true');
 		exit;
 	}
 
 
 	/**
-	 * Called when user switches out of K2 (action: switch_theme)
-	 * Provides Action: k2_deactivate
+	 * install_sbm_loader() - Inserts the SBM Loader into active_plugins
 	 */
-
-	function theme_switch() {
-		update_option('k2active', 0);
-		do_action('k2_deactivate');
+	function install_sbm_loader() {
+		$plugins = (array) get_option('active_plugins');
+		$plugins[] = '../themes/' . get_template() . '/app/includes/k2-sbm-loader.php';
+		update_option('active_plugins', $plugins);
 	}
 
+	/**
+	 * remove_sbm_loader() - Removes the SBM Loader from active_plugins
+	 */
+	function remove_sbm_loader() {
+		$found = false;
+		$plugins = (array) get_option('active_plugins');
+
+		foreach ($plugins as $key => $plugin) {
+			if ( strpos( $plugin, 'k2-sbm-loader.php' ) !== false ) {
+				unset( $plugins[$key] );
+				$found = true;
+			}
+		}
+
+		if ( $found )
+			update_option('active_plugins', $plugins);
+	}
+
+	/**
+	 * theme_switch() - Called when user switches out of K2
+	 */
+	function theme_switch() {
+		K2::remove_sbm_loader();
+
+		update_option('k2active', false);
+	}
 
 	/**
 	 * Register K2 scripts to script loader
@@ -207,56 +225,57 @@ class K2 {
 		// Register jQuery
 		wp_register_script('jquery',
 			get_bloginfo('template_directory').'/js/jquery.js.php',
-			false, '1.2.2');
+			false, '1.2.3');
 
+		// Register jQuery Plugins
 		wp_register_script('interface',
 			get_bloginfo('template_directory').'/js/jquery.interface.js.php',
 			array('jquery'), '1.2');
 
 		wp_register_script('jquery.dimensions',
 			get_bloginfo('template_directory').'/js/jquery.dimensions.js.php',
-			array('jquery'), '3238');
+			array('jquery'), '1.2');
+
+		wp_register_script('jquery.easing',
+			get_bloginfo('template_directory') . '/js/jquery.easing.js.php',
+			array('jquery'), '1.1.2');
 
 		// Register our scripts with WordPress
 		wp_register_script('k2functions',
 			get_bloginfo('template_directory') . '/js/k2.functions.js.php',
-			array('jquery'), '1.0');
+			array('jquery'), '1.0-RC5');
 
 		wp_register_script('humanmsg',
 			get_bloginfo('template_directory') . '/js/jquery.humanmsg.js.php',
-			array('jquery', 'easing'), '1.0');
-
-		wp_register_script('easing',
-			get_bloginfo('template_directory') . '/js/jquery.easing.js.php',
-			array('jquery'), '1.2');
+			array('jquery', 'jquery.easing'), '1.0-RC5');
 
 		wp_register_script('humanundo',
 			get_bloginfo('template_directory') . '/js/jquery.humanundo.js.php',
-			array('jquery'), '1.0');
+			array('jquery'), '1.0-RC5');
 
 		wp_register_script('k2rollingarchives',
 			get_bloginfo('template_directory') . '/js/k2.rollingarchives.js.php',
-			array('jquery', 'k2slider', 'k2trimmer'), '1.0');
+			array('jquery', 'k2slider', 'k2trimmer'), '1.0-RC5');
 
 		wp_register_script('k2livesearch',
 			get_bloginfo('template_directory') . '/js/k2.livesearch.js.php',
-			array('jquery'), '1.0');
+			array('jquery'), '1.0-RC5');
 
 		wp_register_script('k2slider',
 			get_bloginfo('template_directory') . '/js/k2.slider.js.php',
-			array('jquery'), '1.0');
+			array('jquery'), '1.0-RC5');
 
 		wp_register_script('k2comments',
 			get_bloginfo('template_directory') . '/js/k2.comments.js.php',
-			array('jquery'), '1.0');
+			array('jquery'), '1.0-RC5');
 
 		wp_register_script('k2trimmer',
 			get_bloginfo('template_directory') . '/js/k2.trimmer.js.php',
-			array('jquery', 'k2slider'), '1.0');
+			array('jquery', 'k2slider'), '1.0-RC5');
 
 		wp_register_script('k2sbm',
 			get_bloginfo('template_directory') . '/js/k2.sbm.js.php',
-			array('jquery', 'interface', 'jquery.dimensions', 'humanmsg', 'humanundo'), '1.0');
+			array('jquery', 'interface', 'jquery.dimensions', 'humanmsg', 'humanundo'), '1.0-RC5');
 	}
 
 
@@ -267,7 +286,30 @@ class K2 {
 	 */
 	
 	function get_styles() {
-		return K2::files_scan(K2_STYLES_PATH, 'css', 2);
+		global $k2_styles;
+
+		if ( isset($k2_styles) )
+			return $k2_styles;
+
+		$k2_styles = array();
+
+		$style_files = K2::files_scan(K2_STYLES_PATH, 'css', 2, false);
+
+		if ( K2_MU )
+			$style_files = array_merge( $style_files, K2::files_scan(K2_MU_SITE_STYLES_PATH, 'css', 2, false) );
+
+		sort($style_files);
+
+		foreach ( (array) $style_files as $style_file ) {
+			if ( is_readable($style_file) ) {
+				$style_data = get_style_data($style_file);
+
+				if ( ! empty($style_data) )
+					$k2_styles[] = $style_data;
+			}
+		}
+
+		return $k2_styles;
 	}
 
 
@@ -286,7 +328,7 @@ class K2 {
 		while(($file = $dir->read()) !== false) {
 			// Check the file is a file, and is a PHP file
 			if(is_file($dir_path . $file) and (!$ignore or !in_array($file, $ignore)) and preg_match('/\.php$/i', $file)) {
-				require_once($dir_path . $file);
+				include_once($dir_path . $file);
 			}
 		}
 
@@ -422,5 +464,57 @@ class K2 {
 
 		return $path . sanitize_title_with_dashes($filename . $number) . $ext;
 	}
+
+
+	/*
+		Ronald Huereca
+		http://weblogtoolscollection.com/archives/2008/03/08/managing-trackbacks-and-pingbacks-in-your-wordpress-theme/
+	*/
+
+	// Updates the comment number for posts with trackbacks
+	function filter_post_comments($posts) {
+		foreach ($posts as $key => $p) {
+			if ($p->comment_count <= 0) {
+				return $posts;
+			}
+
+			$comments = get_approved_comments( (int) $p->ID );
+			$comments = array_filter( $comments, array('K2', 'strip_trackback') );
+			$posts[$key]->comment_count = count( $comments );
+		}
+
+		return $posts;
+	}
+	// Updates the count for comments and trackbacks
+	function filter_comments_array($comms) {
+		global $comments, $trackbacks;
+
+		$comments = array_filter( $comms, array('K2', 'strip_trackback') );
+		$trackbacks = array_filter( $comms, array('K2', 'strip_comment') );
+
+		return $comments;
+	}
+
+	// Strips out trackbacks/pingbacks
+	function strip_trackback($var) {
+		return ($var->comment_type != 'trackback' and $var->comment_type != 'pingback');
+	}
+
+	// Strips out comments
+	function strip_comment($var) {
+		return ($var->comment_type == 'trackback' or $var->comment_type == 'pingback');
+	}
 }
+
+
+add_filter('comments_array', array('K2', 'filter_comments_array') , 0);
+add_filter('the_posts', array('K2', 'filter_post_comments') , 0);
+
+add_action( 'theme_switch', array('K2', 'theme_switch'), 0 );
+
+
+if ( get_option('k2sidebarmanager') == '1' ) {
+	add_action('deactivate_../themes/' . get_template() . '/app/includes/k2-sbm-loader.php', array('K2','install_sbm_loader'));
+}
+
 ?>

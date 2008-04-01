@@ -114,44 +114,39 @@ if ( !$user->ID ) {
 @header('Content-type: ' . get_option('html_type') . '; charset=' . get_option('blog_charset'));
 
 $comment->comment_type = 'comment';
-$comment_index = $_POST['comment_count'] + 1;
+$index = $_POST['comment_count'];
 ?>
 
-<li id="comment-<?php comment_ID(); ?>" class="<?php echo attribute_escape(k2_comment_class($comment_index, false)); ?>">
+<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class( ++$index ); ?>">
 
-	<?php
-		if ( function_exists('gravatar') ) {
-			if ( function_exists('gravatar_image_link') ) { /* Gravatars 2 */
-				gravatar_image_link();
-			} else { ?><a href="http://www.gravatar.com/" title="<?php _e('What is this?','k2_domain'); ?>"><img src="<?php gravatar("X", 32,  get_bloginfo('template_url')."/images/defaultgravatar.jpg"); ?>" class="gravatar" alt="<?php _e('Gravatar Icon','k2_domain'); ?>" /></a>
-	<?php } } ?>
+<?php if ( function_exists('get_avatar') and get_option('show_avatars') ): ?>
+	<span class="gravatar">
+		<?php echo get_avatar( $comment, 32, get_bloginfo('template_url') . '/images/defaultgravatar.jpg' ); ?>
+	</span>
+<?php elseif ( function_exists('gravatar_image_link') ): gravatar_image_link(); ?>
+<?php elseif ( function_exists('gravatar') ): ?>
+	<a href="http://www.gravatar.com/" title="<?php _e('What is this?','k2_domain'); ?>">
+		<img src="<?php gravatar('X', 32, get_bloginfo('template_url') . '/images/defaultgravatar.jpg' ); ?>" class="gravatar" alt="<?php _e('Gravatar Icon','k2_domain'); ?>" />
+	</a>
+<?php endif; ?>
 
-	<a href="#comment-<?php comment_ID(); ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $comment_index; ?></a>
+	<a href="#comment-<?php comment_ID(); ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $index; ?></a>
 	<span class="commentauthor"><?php comment_author_link(); ?></span>
 
 	<div class="comment-meta">
-	<?php
-		printf('<a href="#comment-%1$s" title="%2$s">%3$s</a>', 
-			get_comment_ID(),
-			(function_exists('time_since')?
-				sprintf(__('%s ago.','k2_domain'),
-					time_since(abs(strtotime($comment->comment_date_gmt . " GMT")), time())
-				):
-				__('Permanent Link to this Comment','k2_domain')
-			),
-			sprintf(__('%1$s at %2$s','k2_domain'),
-				get_comment_date(__('M jS, Y','k2_domain')),
-				get_comment_time()
-			)
-		);
-	?>
-	<?php if (function_exists('quoter_comment')) { quoter_comment(); } ?>
-	<?php if (function_exists('jal_edit_comment_link')) { jal_edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>'); } else { edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">', '</span>'); } ?>
-	</div>
+		<a href="#comment-<?php comment_ID(); ?>" title="<?php if (function_exists('time_since')): sprintf(__('%s ago.','k2_domain'), time_since(abs(strtotime($comment->comment_date_gmt . " GMT")), time())); else: _e('Permanent Link to this Comment','k2_domain'); endif; ?>"><?php printf( __('%1$s at %2$s','k2_domain'), get_comment_date(), get_comment_time() ); ?></a>
+
+	<?php if ( function_exists('quoter_comment') ): quoter_comment(); endif; ?>
+	<?php if ( function_exists('jal_edit_comment_link') ): jal_edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>'); else: edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">', '</span>'); endif; ?>
+	</div><!-- .comment-meta -->
 
 	<div class="comment-content">
 		<?php comment_text(); ?> 
-	</div>
+	</div><!-- .comment-content -->
 
-	<?php if ('0' == $comment->comment_approved) { ?><p class="alert"><strong><?php _e('Your comment is awaiting moderation.','k2_domain'); ?></strong></p><?php } ?>
+	<?php if ( ! $comment->comment_approved ): ?>
+		<p class="comment-moderation alert">
+			<strong><?php _e('Your comment is awaiting moderation.','k2_domain'); ?></strong>
+		</p>
+	<?php endif; ?>
 </li>

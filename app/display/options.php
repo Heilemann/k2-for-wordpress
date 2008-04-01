@@ -1,11 +1,7 @@
 <?php
-
-	global $wpdb;
-
 	if ( K2_USING_STYLES ) {
 		// Get the current K2 Style
-		$style_name = get_option('k2scheme');
-		$style_title = $style_name !== false ? $style_name : __('No Style', 'k2_domain');
+		$current_style = get_option('k2style');
 		$style_info = get_option('k2styleinfo');
 
 		// Check that the styles folder exists
@@ -44,7 +40,7 @@
 </script>
 
 
-<?php if(isset($_POST['submit']) or isset($_GET['updated'])) { ?>
+<?php if ( isset($_GET['updated']) ) { ?>
 <div id="message2" class="updated fade">
 	<p><?php _e('K2 Options have been updated', 'k2_domain'); ?></p>
 </div>
@@ -57,21 +53,22 @@
 <?php } ?>
 
 <div class="k2wrap">
-	<?php if ( K2_USING_STYLES and !$is_styles_dir ) { ?>
+	<?php if ( K2_USING_STYLES and !$is_styles_dir ): ?>
 		<div class="error"><small>
 		<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom styles is missing.</p><p>For you to be able to use custom styles, you need to add this directory.</p>', 'k2_domain'), K2_STYLES_PATH ); ?>
 		</small></div>
-	<?php } ?>
+	<?php endif; ?>
 
-	<?php if ($dir_has_spaces) { ?>
+	<?php if ($dir_has_spaces): ?>
 		<div class="error"><small>
 		<?php printf( __('<p>The K2 directory: <code>%s</code>, contains spaces. For K2 to function properly, you will need to remove the spaces from the directory name.</p>', 'k2_domain'), TEMPLATEPATH ); ?>
 		</small></div>
-	<?php } ?>
+	<?php endif; ?>
 
 
-	<form name="dofollow" action="<?php echo attribute_escape($_SERVER['REQUEST_URI']); ?>" method="post" enctype="multipart/form-data">
+	<form action="<?php echo attribute_escape($_SERVER['REQUEST_URI']); ?>" method="post">
 		<?php wp_nonce_field('k2options'); ?>
+		<input type="hidden" name="action" value="save" />
 
 		<div class="configstuff">
 
@@ -85,17 +82,17 @@
 				<p class="checkboxelement"><input id="k2-sidebarmanager" name="k2[sidebarmanager]" type="checkbox" value="1" <?php checked('1', get_option('k2sidebarmanager')); ?> />
 				<!--<label for="k2-sidebarmanager"><?php _e('Enable K2\'s Sidebar Manager', 'k2_domain'); ?></label>--></p>
 
-				<p class="description"><?php printf(__('K2 has a neat sidebar system. If disabled, K2 reverts to WordPress widgets.', 'k2_domain'), $column_options[1]); ?></p>
+				<p class="description"><?php _e('K2 has a neat sidebar system. If disabled, K2 reverts to WordPress widgets.', 'k2_domain'); ?></p>
 
-				<?php if (get_option('k2sidebarmanager') == 0) { /* Only show column dropdown if SBM is disabled */ ?>
+				<?php if ( '0' == get_option('k2sidebarmanager') ): /* Only show column dropdown if SBM is disabled */ ?>
 				<p>
 					<select id="k2-columns" name="k2[columns]">
-					<?php foreach ($column_options as $option => $label) { ?>
+					<?php foreach ( $column_options as $option => $label ): ?>
 						<option value="<?php echo $option; ?>" <?php selected($column_number, $option); ?>><?php echo $label; ?></option>
-					<?php } ?>
+					<?php endforeach; ?>
 					</select>
 				</p>
-				<?php } ?>
+				<?php endif; ?>
 			</div><!-- .container -->
 
 
@@ -112,16 +109,16 @@
 			<div class="container">
 				<h3><label for="k2-archives"><?php _e('Archives Page', 'k2_domain'); ?></label></h3>
 
-				<p class="checkboxelement"><input id="k2-archives" name="k2[archives]" type="checkbox" value="add_archive" <?php checked('add_archive', get_option('k2archives')); ?> />
+				<p class="checkboxelement"><input id="k2-archives" name="k2[archives]" type="checkbox" value="add_archive" <?php checked('1', get_option('k2archives')); ?> />
 				<!--<label for="k2-archives"><?php _e('Enable Archives Page', 'k2_domain'); ?></label>--></p>
 
 				<p class="description"><?php _e('Installs a pre-made archives page.', 'k2_domain'); ?></p>
 
-				<?php if (!function_exists('af_ela_set_config') && ($wp_version > 2.2)) { ?>
+				<?php if ( !function_exists('af_ela_set_config') and ($wp_version > 2.2) ): ?>
 					<?php printf(__('We recommend you install %s for maximum archival pleasure.','k2_domain'), '<a href="http://www.sonsofskadi.net/index.php/extended-live-archive/">' . __('Arnaud Froment\'s Extended Live Archives', 'k2_domain') . '</a>'); ?></p>
-				<?php } else if (function_exists('af_ela_set_config')) { ?>
+				<?php elseif ( function_exists('af_ela_set_config') ): ?>
 					</p><p class="configelap"><input id="configela" name="configela" type="submit" value="<?php echo attribute_escape(__('Configure Extended Live Archives for K2', 'k2_domain')); ?>" /></p>
-				<?php } ?>
+				<?php endif; ?>
 			</div><!-- .container -->
 
 
@@ -141,9 +138,9 @@
 				<select id="k2-asidescategory" name="k2[asidescategory]">
 					<option value="0" <?php selected($asides_id, '0'); ?>><?php _e('Off', 'k2_domain'); ?></option>
 
-					<?php foreach ($asides_cats as $cat) { ?>
+					<?php foreach ( $asides_cats as $cat ): ?>
 					<option value="<?php echo attribute_escape($cat->cat_ID); ?>" <?php selected($asides_id, $cat->cat_ID); ?>><?php echo($cat->cat_name); ?></option>
-					<?php } ?>
+					<?php endforeach; ?>
 				</select>
 
 				<p class="description"><?php _e('Aside posts are styled differently and can be placed on the sidebar.', 'k2_domain'); ?></p>
@@ -151,21 +148,22 @@
 			</div><!-- .container -->
 
 
-			<?php if (K2_USING_STYLES and $is_styles_dir) { ?>
+			<?php if ( K2_USING_STYLES and $is_styles_dir ): ?>
 			<div class="container">
 				<h3><?php _e('Style', 'k2_domain'); ?></h3>
 
-				<select id="k2-scheme" name="k2[scheme]">
-					<option value="" <?php selected($style_name, ''); ?>><?php _e('Off', 'k2_domain'); ?></option>
+				<select id="k2-style" name="k2[style]">
+					<option value="" <?php selected($current_style, ''); ?>><?php _e('Off', 'k2_domain'); ?></option>
 
-					<?php foreach($style_files as $style_file) { ?>
-					<option value="<?php echo attribute_escape($style_file); ?>" <?php selected($style_name, $style_file); ?>><?php echo($style_file); ?></option>
-					<?php } ?>
+					<?php foreach($style_files as $style): ?>
+					<option value="<?php echo attribute_escape($style['path']); ?>" <?php selected($current_style, $style['path']); ?>>
+					<?php if ( '' == $style['stylename'] ): echo basename($style['path']); else: echo $style['stylename']; endif; if ( '' != $style['version'] ): echo ' (' . $style['version'] . ')'; endif; ?></option>
+					<?php endforeach; ?>
 				</select>
 
 				<p class="description"><?php printf(__('No need to edit core files, K2 is highly customizable using only CSS. %s', 'k2_domain'), '<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS">' . __('Read&nbsp;more', 'k2_domain') . '</a>.'  ); ?></p>
 			</div><!-- .container -->
-			<?php } ?>
+			<?php endif; ?>
 
 
 			<div class="container headercontainer">
@@ -203,6 +201,8 @@
 
 			</div><!-- .container .headercontainer -->
 				
+
+			<?php /* K2 Hook */ do_action('k2_display_options'); ?>
 		</div><!-- .configstuff -->
 
 </div>

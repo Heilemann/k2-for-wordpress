@@ -1,42 +1,54 @@
 <?php
 	// Get core WP functions if needed
-	if (isset($_GET['k2dynamic'])) {
+	if ( isset($_GET['k2dynamic']) ):
+
+		// Check for CGI Mode
+		if ( 'cgi' == substr( php_sapi_name(), 0, 3 ) ):
+			$_SERVER['SCRIPT_FILENAME'] = $_SERVER['DOCUMENT_ROOT'].$_SERVER['SCRIPT_URL'];
+		endif;
+
 		require_once( preg_replace( '/wp-content.*/', '', $_SERVER['SCRIPT_FILENAME'] ) . 'wp-config.php' );
 
 		// Send the header
 		header('Content-Type: ' . get_bloginfo('html_type') . '; charset=' . get_bloginfo('charset'));
 
+		// Plugin support
+		do_action('template_redirect');
+
+		// K2 Hook
+		do_action('k2_dynamic_content');
+
 		// Initialize the Loop
 		query_posts( k2_parse_query($_GET) );
 
 		$_GET['k2dynamic'] = 'init';
-	}
+	endif;
 
 	// Load Rolling Archives?
-	if ( get_option('k2rollingarchives') == 1 ) { 
+	if ( '1' == get_option('k2rollingarchives') ): 
 
 		// Get the query
-		if ( is_array($wp_query->query) ) {
+		if ( is_array($wp_query->query) ):
 			$rolling_query = $wp_query->query;
-		} else if ( is_string($wp_query->query) ) {
+		elseif ( is_string($wp_query->query) ):
 			parse_str($wp_query->query, $rolling_query);
-		}
+		endif;
 
 		// Debugging
-		if ( isset($_GET['k2debug']) ) {
+		if ( isset($_GET['k2debug']) ):
 			$rolling_query['k2debug'] = '1';
-		}
+		endif;
 
 		// Get list of page dates
-		if ( !is_page() and !is_single() ) {
+		if ( !is_page() and !is_single() ):
 			$page_dates = get_rolling_page_dates($wp_query);
-		}
+		endif;
 
 		// Get the current page
 		$rolling_page = intval( get_query_var('paged') );
-		if ( $rolling_page < 1 ) {
+		if ( $rolling_page < 1 ):
 			$rolling_page = 1;
-		}
+		endif;
 ?>
 
 <div id="rollingarchives" style="display:none;">
@@ -70,13 +82,13 @@
 	</div> <!-- #rollnavigation -->
 </div> <!-- #rollingarchives -->
 
-<?php if ( !isset($_GET['k2dynamic']) ) { ?>
+<?php if ( !isset($_GET['k2dynamic']) ): ?>
 <noscript>
-	<?php include('navigation.php'); ?>
+	<?php k2_navigation('nav-above'); ?> 
 </noscript>
-<?php } ?>
+<?php endif; ?>
 
-<?php if ( !isset($_GET['k2dynamic']) or ($_GET['k2dynamic'] == 'init') ) { ?>
+<?php if ( !isset($_GET['k2dynamic']) or ('init' == $_GET['k2dynamic']) ): ?>
 <script type="text/javascript">
 // <![CDATA[
 	jQuery(document).ready(function() {
@@ -89,8 +101,8 @@
 	});
 // ]]>
 </script>
-<?php } } ?>
+<?php endif; endif; ?>
 
 <div id="rollingcontent" class="hfeed">
-	<?php include (TEMPLATEPATH . '/theloop.php'); ?>
+	<?php include(TEMPLATEPATH . '/theloop.php'); ?>
 </div><!-- #rollingcontent .hfeed -->

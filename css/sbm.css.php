@@ -26,12 +26,13 @@ h2 {
 	background: #eee url('../images/sbmmanager/sbmbg.png') repeat-x;
 	min-width: 700px;
 	min-height: 520px;
+	max-width: 100%;
 	height: 430px;
 	margin: 0;
 	border: none;
 	border-bottom: 1px solid #ddd;
-	overflow: hidden;
 	z-index: 10;
+	overflow: hidden;
 }
 
 #overlay {
@@ -42,8 +43,8 @@ h2 {
 	width: 100%;
 	height: 100%;
 	background-color: black;
-	opacity: 0;
-	filter: alpha(opacity = 0);
+	/*opacity: 0;
+	filter: alpha(opacity = 0);*/
 	display:none;
 	}
 
@@ -130,8 +131,8 @@ body.nomodules #restoresbm {
 	display: block;
 	width: 340px;
 	height: 50px;
-	opacity: 0;
-	filter: alpha(opacity = 0);
+	/*opacity: 0;
+	filter: alpha(opacity = 0);*/
 	}
 
 #backupsbmwindow input[type=file] {
@@ -236,8 +237,8 @@ body.nomodules #undo {
 	}
 
 .container {
-	opacity: 0;
-	filter: alpha(opacity = 0);
+	/*opacity: 0;
+	filter: alpha(opacity = 0);*/
 	float: left;
 	border-right: 1px solid #d8d8d8;
 	margin-right: -1px;
@@ -252,8 +253,8 @@ body.nomodules #undo {
 	position: absolute;
 	height: 100%;
 	background: #999;
-	opacity: 0;
-	filter: alpha(opacity = 0);
+	/*opacity: 0;
+	filter: alpha(opacity = 0);*/
 	left: 1090px;
 	width: 100%;
 	border-left: 1px solid black;
@@ -294,8 +295,8 @@ body.nomodules #undo {
 	}
 
 #disabled .module {
-	opacity: .75;
-	filter: alpha(opacity = 75);
+	/*opacity: .75;
+	filter: alpha(opacity = 75);*/
 	}
 
 .module span {
@@ -359,14 +360,14 @@ body.nomodules #undo {
 	width: 17px;
 	background: url('../images/sbmmanager/deletebutton.png') center top no-repeat;
 	cursor: pointer;
-	opacity: .5;
-	filter: alpha(opacity = 50);
+	/*opacity: .5;
+	filter: alpha(opacity = 50);*/
 	}	
 
 .deletelink:hover {
 	background: url('../images/sbmmanager/deletebutton.png') no-repeat center bottom;
-	opacity: .9;
-	filter: alpha(opacity = 90);
+	/*opacity: .9;
+	filter: alpha(opacity = 90);*/
 	}
 
 
@@ -408,8 +409,8 @@ body.nomodules #undo {
 
 .marker {
 	height: 35px;
-	opacity: .15 !important;
-	filter: alpha(opacity = 15) !important;
+	/*opacity: .15 !important;
+	filter: alpha(opacity = 15) !important;*/
 	}
 
 .marker div * {
@@ -449,11 +450,11 @@ body.nomodules #undo {
 	position: fixed;
 	top: 100px;
 	left: 50%;
-	margin-left: -200px;
+	margin-left: -250px;
 	font-size: .9em;
 	color: #aaa;
-	z-index: -1000;
-	visibility: hidden; /* Make sure image are cached to avoid popping */
+	width: 500px;
+	z-index: 1000;
 	}
 
 #optionswindow table {
@@ -486,9 +487,6 @@ body.nomodules #undo {
 
 .optl {
 	background: url('../images/sbmmanager/optl.png') right repeat-y;
-	top: 30px;
-	left: 0px;
-	height: 200px;
 	}
 
 .optr {
@@ -517,14 +515,13 @@ body.nomodules #undo {
 	}
 
 #options {
-	width: 420px;
-	height: 300px;
-	overflow: hidden;
+	width: 440px;
+	height: 360px;
 	background: #ddd;
 	}
 
 .optbuttons {
-	height: 30px;
+	text-align: right;
 	}
 
 .optionsspinner {
@@ -545,10 +542,11 @@ body.nomodules #undo {
 	border: none;
 	position: absolute;
 	top: 10px;
-	right: 7px;
+	right: 10px;
 	height: 30px;
 	width: 30px;
 	background: url('../images/sbmmanager/widget_close.png') no-repeat center center;
+	display: none;
 }
 
 .tabbg {
@@ -768,7 +766,14 @@ input[type=checkbox] {
 	display: none;
 	}
 	
+#wpcontent {
+	padding-bottom: 0;
+	}
+
 #footer {
 	display: none; /* WP footer is cramping our style... */
 	}
 	
+#specific-pages {
+	overflow: scroll;
+}

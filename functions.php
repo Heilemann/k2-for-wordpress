@@ -1,16 +1,19 @@
 <?php 
 
 // Current version of K2
-define('K2_CURRENT', 'svn');
+define('K2_CURRENT', '1.0-RC5');
 
 // Is this MU or no?
 define('K2_MU', (isset($wpmu_version) or (strpos($wp_version, 'wordpress-mu') !== false)));
 
-// Define our folders for Wordpress/WordpressMU
 if ( K2_MU ) {
+	// Define additional folders for Wordpress mu
 	define('K2_STYLES_PATH', ABSPATH . UPLOADS . 'k2support/styles/');
 	define('K2_HEADERS_PATH', ABSPATH . UPLOADS . 'k2support/headers/');
+	define('K2_MU_SITE_STYLES_PATH', TEMPLATEPATH . '/styles/');
+	define('K2_MU_SITE_HEADERS_PATH', TEMPLATEPATH . '/images/headers/');
 } else {
+	// Define our folders for Wordpress
 	define('K2_STYLES_PATH', TEMPLATEPATH . '/styles/');
 	define('K2_HEADERS_PATH', TEMPLATEPATH . '/images/headers/');
 }
@@ -22,7 +25,7 @@ define('K2_USING_SBM', !function_exists('register_sidebar') && get_option('k2sid
 define('K2_USING_STYLES', get_stylesheet() == get_template());
 
 // Default style info format
-define('K2_STYLE_FOOTER', '<a href="%stylelink%" title="%style% by %author%">%style%<!-- %version%--></a>');
+define('K2_STYLE_FOOTER', __('Styled with <a href="%stylelink%" title="%style% by %author%">%style%</a>','k2_domain'));
 
 // Number of sidebars to use
 define('K2_SIDEBARS', 2);

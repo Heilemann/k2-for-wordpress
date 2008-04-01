@@ -6,21 +6,21 @@
 		<div id="notices"></div>
 		<a name="startcontent" id="startcontent"></a>
 
-		<?php if (get_option('k2rollingarchives') == 1) { ?>
+		<?php if ( '1' == get_option('k2rollingarchives') ): ?>
 		<div id="dynamic-content">
 
-			<?php include (TEMPLATEPATH . '/rollingarchive.php'); ?>
+			<?php include(TEMPLATEPATH . '/rollingarchive.php'); ?>
 
 		</div> <!-- #dynamic-content -->
-		<?php } else { ?>
+		<?php else: ?>
 		<div id="current-content" class="hfeed">
 
-			<?php include (TEMPLATEPATH . '/theloop.php'); ?>
+			<?php include(TEMPLATEPATH . '/theloop.php'); ?>
 
 		</div> <!-- #current-content -->
 
 		<div id="dynamic-content"></div>
-		<?php } ?>
+		<?php endif; ?>
 	</div> <!-- #primary -->
 
 	<?php get_sidebar(); ?>

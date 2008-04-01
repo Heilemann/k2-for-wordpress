@@ -195,6 +195,10 @@ h3 {
 	padding: 5px 30px;
 	}
 
+#wpcontent {
+	padding-bottom: 0;
+	}
+
 #footer {
 	display: none;
 	}

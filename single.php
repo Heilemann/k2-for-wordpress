@@ -9,8 +9,14 @@
 		<div id="current-content" class="hfeed">
 
 			<?php include (TEMPLATEPATH . '/theloop.php'); ?>
-  			<?php if (!defined('K2_NOT_FOUND')) { comments_template(); } ?>  
 
+			<div class="entry-comments comments">
+				<?php comments_template(); ?>
+			</div> <!-- .entry-comments -->
+
+			<noscript>
+				<?php k2_navigation('nav-below'); ?>
+			</noscript>
 		</div> <!-- #current-content -->
 
 		<div id="dynamic-content"></div>

@@ -18,23 +18,6 @@ class K2Header {
 		remove_theme_mods();
 	}
 
-	function update() {
-		if (!empty($_POST['k2'])) {
-
-			// Header Image
-			if ( isset($_POST['k2']['header_picture']) ) {
-				// Update Custom Image Header
-				if ( 'random' == $_POST['k2']['header_picture'] ) {
-					set_theme_mod('header_image', 'random');
-				} elseif ( '' == $_POST['k2']['header_picture'] ) {
-					remove_theme_mod('header_image');
-				} else {
-					set_theme_mod('header_image', str_replace(ABSPATH, get_option('siteurl') . '/', $_POST['k2']['header_picture']));
-				}
-			}
-		}
-	}
-
 	function get_header_images() {
 		global $wpdb;
 
