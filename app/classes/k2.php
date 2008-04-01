@@ -55,7 +55,8 @@ class K2 {
 
 		if ( K2_USING_STYLES ) {
 			// Check if there's a style
-			if ( ($style = get_option('k2style')) != '' ) {
+			$style = ABSPATH . get_option('k2style');
+			if ( $style != ABSPATH ) {
 				if ( ! file_exists($style) ) {
 					update_option('k2style', '');
 					update_option('k2styleinfo', array());

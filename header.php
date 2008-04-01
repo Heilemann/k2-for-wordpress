@@ -66,7 +66,7 @@
 	<?php if ( ! K2_USING_STYLES ): /* WP Theme Stylesheet */ ?>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo get_stylesheet_uri(); ?>" />
 	<?php elseif ( get_option('k2style') != '' ): /* K2 Styles */ ?>
-	<link rel="stylesheet" type="text/css" href="<?php k2info('style_url'); ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php k2info('style'); ?>" />
 	<?php endif; ?>
 
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="<?php bloginfo('rss2_url'); ?>" />
