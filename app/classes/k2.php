@@ -119,7 +119,13 @@ class K2 {
 		do_action('k2_upgrade', $previous);
 
 		if ( version_compare( $previous, '1.0-RC5', '<' ) ) {
-			get_option('k2scheme');
+			$style = get_option('k2scheme');
+			if ( $style != '' ) {
+				if ( file_exists(K2_STYLES_PATH . $style) ) {
+					update_option('k2style', K2_STYLES_PATH . $style);
+					update_style_info();
+				}
+			}
 
 			// Remove previous SBM hackery
 			$found = false;
