@@ -117,10 +117,10 @@ class K2Options {
 			// Sidebar Manager
 			if ( isset($_POST['k2']['sidebarmanager']) ) {
 				update_option('k2sidebarmanager', '1');
-				K2::install_sbm();
+				K2::install_sbm_loader();
 			} else {
 				update_option('k2sidebarmanager', '0');
-				K2::remove_sbm();
+				K2::remove_sbm_loader();
 			}
 
 			// Columns
