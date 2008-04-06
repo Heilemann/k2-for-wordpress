@@ -162,13 +162,35 @@
 			<?php elseif ( '' != $comment_author ): ?>
 
 				<p class="comment-welcomeback"><?php printf(__('Welcome back <strong>%s</strong>','k2_domain'), $comment_author); ?>
-				<span id="showinfo">(<a href="javascript:ShowUtils();"><?php _e('Change','k2_domain'); ?></a>)</span>
-				<span id="hideinfo">(<a href="javascript:HideUtils();"><?php _e('Close','k2_domain'); ?></a>)</span></p>
+				
+				<a href="javascript:toggleCommentAuthorInfo();" id="toggle-comment-author-info">
+					<?php _e('(Change)','k2_domain'); ?>
+				</a>
 
+				<script type="text/javascript" charset="utf-8">
+				//<![CDATA[
+					var changeMsg = "<?php echo  js_escape( __('(Change)','k2_domain') ); ?>";
+					var closeMsg = "<?php echo js_escape( __('(Close)','k2_domain') ); ?>";
+					
+					function toggleCommentAuthorInfo() {
+						jQuery('#comment-author-info').slideToggle('slow', function(){
+							if ( jQuery('#comment-author-info').css('display') == 'none' ) {
+								jQuery('#toggle-comment-author-info').text(changeMsg);
+							} else {
+								jQuery('#toggle-comment-author-info').text(closeMsg);
+							}
+						});
+					}
+
+					jQuery(document).ready(function(){
+						jQuery('#comment-author-info').hide();
+					});
+				//]]>
+				</script>
 			<?php endif; ?>
 			
 			<?php if ( ! $user_ID ): ?>
-				<div id="comment-personaldetails">
+				<div id="comment-author-info">
 					<p>
 						<input type="text" name="author" id="author" value="<?php echo attribute_escape($comment_author); ?>" size="22" tabindex="1" />
 						<label for="author">
