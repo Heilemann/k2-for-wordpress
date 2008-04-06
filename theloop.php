@@ -23,7 +23,6 @@
 
 			// Initialize the Loop
 			query_posts( k2_parse_query($_GET) );
-
 		endif;
 	?>
 
@@ -45,9 +44,21 @@
 
 	<?php /* Top Paged Navigation */ if ( ( '0' == $k2rollingarchives ) and !is_single() ): k2_navigation('nav-above'); endif; ?> 
 
+<?php
+	/* Check if there are posts */
+	if ( have_posts() ):
+		/* Post index for semantic classes */
+		$post_index = 1;
+?>
+
 	<?php /* Headlines for archives */ if ( ( ! is_single() and ! is_home() ) or is_paged() ): ?>
-		<div class="page-head"><h2>
-		<?php // Figure out what kind of page is being shown
+		<div class="page-head">
+			<h2><?php
+
+			// Load the post for date archive titles
+			if ( is_date() ): the_post(); endif;
+
+			// Figure out what kind of page is being shown
 			if ( is_category() ):
 				if ( get_query_var('cat') != $k2asidescategory ):
 					printf( __('Archive for the \'%s\' Category','k2_domain'), single_cat_title('', false) );
@@ -56,13 +67,13 @@
 				endif;
 
 			elseif ( is_day() ):
-				printf( __('Archive for %s','k2_domain'), get_the_time( __('F jS, Y','k2_domain') ) );
+				printf( __('Daily Archive for %s','k2_domain'), get_the_time( __('F jS, Y','k2_domain') ) );
 
 			elseif ( is_month() ):
-				printf( __('Archive for %s','k2_domain'), get_the_time( __('F, Y','k2_domain') ) );
+				printf( __('Monthly Archive for %s','k2_domain'), get_the_time( __('F, Y','k2_domain') ) );
 
 			elseif ( is_year() ):
-				printf( __('Archive for %s','k2_domain'), get_the_time( __('Y','k2_domain') ) );
+				printf( __('Yearly Archive for %s','k2_domain'), get_the_time( __('Y','k2_domain') ) );
 
 			elseif ( is_search() ):
 				printf( __('Search Results for \'%s\'','k2_domain'), attribute_escape( get_search_query() ) );
@@ -73,7 +84,7 @@
 				else:
 					printf( __('Tag Archive for \'%s\'','k2_domain'), attribute_escape( get_query_var('tag') ) );
 				endif;
-				
+			
 			elseif ( is_author() ):
 				printf( __('Author Archive for %s','k2_domain'), get_author_name( get_query_var('author') ) );
 
@@ -84,17 +95,13 @@
 			if ( ( intval( get_query_var('paged') ) > 1 ) and ( '0' == $k2rollingarchives ) ):
 				printf( '<span class="archivepages">' . __('Page %1$s of %2$s', 'k2_domain') . '</span>', intval( get_query_var('paged')), $wp_query->max_num_pages);
 			endif;
-			?>
 
-		</h2></div>
+			// Reset the post for date archive titles
+			if ( is_date() ): rewind_posts(); endif;
+
+			?></h2>
+		</div>
 	<?php endif; ?>
-
-<?php
-	/* Check if there are posts */
-	if ( have_posts() ):
-		/* Post index for semantic classes */
-		$post_index = 1;
-?>
 
 	<?php /* Start the loop */ while ( have_posts() ): the_post(); ?>
 
