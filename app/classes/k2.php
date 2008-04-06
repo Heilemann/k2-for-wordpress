@@ -34,7 +34,18 @@ class K2 {
 		}
 
 		// Set K2 to active
-		update_option('k2active', true);
+		if ( '0' == get_option('k2active') ) {
+			update_option('k2active', '1');
+
+			if ( '1' == get_option('k2sidebarmanager') ) {
+				K2::install_sbm_loader();
+
+				if ( is_admin() ) {
+					wp_redirect('themes.php?activated=true');
+					exit;
+				}
+			}
+		}
 
 		// There may be some things we need to do before K2 is initialised
 		// Let's do them now
@@ -210,12 +221,12 @@ class K2 {
 	}
 
 	/**
-	 * theme_switch() - Called when user switches out of K2
+	 * switch_theme() - Called when user switches out of K2
 	 */
-	function theme_switch() {
+	function switch_theme() {
 		K2::remove_sbm_loader();
 
-		update_option('k2active', false);
+		update_option('k2active', '0');
 	}
 
 	/**
@@ -492,6 +503,7 @@ class K2 {
 
 		return $posts;
 	}
+
 	// Updates the count for comments and trackbacks
 	function filter_comments_array($comms) {
 		global $comments, $trackbacks;
@@ -514,11 +526,10 @@ class K2 {
 }
 
 
+// Actions and Filters
+add_action( 'switch_theme', array('K2', 'switch_theme'), 0 );
 add_filter('comments_array', array('K2', 'filter_comments_array') , 0);
 add_filter('the_posts', array('K2', 'filter_post_comments') , 0);
-
-add_action( 'theme_switch', array('K2', 'theme_switch'), 0 );
-
 
 if ( get_option('k2sidebarmanager') == '1' ) {
 	add_action('deactivate_../themes/' . get_template() . '/app/includes/k2-sbm-loader.php', array('K2','install_sbm_loader'));
