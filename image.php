@@ -24,6 +24,7 @@
 					</div> <!-- .entry-meta -->
 				</div> <!-- .entry-head -->
 
+			<?php if ( get_wp_version() > 2.4 ): // WP 2.5+ ?>
 				<div class="entry-content">
 					<div class="image-attachment">
 						<a href="<?php echo wp_get_attachment_url($post->ID); ?>"><?php echo wp_get_attachment_image( $post->ID, 'medium' ); ?></a>
@@ -60,9 +61,25 @@
 						<?php /* K2 Hook */ do_action('k2_image_meta', $post->ID); ?>
 					</ul>
 				</div>
+			<?php else: // WP < 2.5 ?>
+				<div class="entry-content">
+					<div class="image-attachment">
+						<?php $attachment_link = get_the_attachment_link($post->ID, true, array(450, 800)); // This also populates the iconsize for the next line ?>
+						<?php $_post = &get_post($post->ID); $classname = ($_post->iconsize[0] <= 128 ? 'small' : '') . 'attachment'; // This lets us style narrow icons specially ?>
+						<p class="<?php echo $classname; ?>"><?php echo $attachment_link; ?><br /><?php echo basename($post->guid); ?></p>
+					</div>
+
+	                <div class="image-caption"><?php the_excerpt(); ?></div>
+
+					<div class="image-description">
+						<?php the_content(sprintf(__('Continue reading \'%s\'', 'k2_domain'), the_title('', '', false))); ?>
+					</div>
+				</div> <!-- .entry-content -->
+			<?php endif; ?>
 
 			</div> <!-- #post-ID -->
 
+			<?php if ( get_wp_version() > 2.4 ): ?>
 			<div id="gallery-nav" class="navigation">
 				<div class="nav-previous">
 					<?php previous_image_link('%link', '<span class="meta-nav">&laquo;</span> %title'); ?>
@@ -72,6 +89,7 @@
 				</div>
 				<div class="clear"></div>
 			</div>
+			<?php endif; ?>
 
 			<div class="entry-comments comments">
 				<?php comments_template(); ?>
