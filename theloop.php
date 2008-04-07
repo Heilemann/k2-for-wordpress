@@ -6,10 +6,11 @@
 	if ( isset($_GET['k2dynamic']) ):
 
 		// Check for CGI Mode
-		if ( 'cgi' == substr( php_sapi_name(), 0, 3 ) )
-			$_SERVER['SCRIPT_FILENAME'] = $_SERVER['DOCUMENT_ROOT'] . $_SERVER['SCRIPT_URL'];
-
-		require_once( preg_replace( '/wp-content.*/', '', $_SERVER['SCRIPT_FILENAME'] ) . 'wp-config.php' );
+		if ( 'cgi' == substr( php_sapi_name(), 0, 3 ) ):
+			require_once( preg_replace( '/wp-content.*/', '', __FILE__ ) . 'wp-config.php' );
+		else:
+			require_once( preg_replace( '/wp-content.*/', '', $_SERVER['SCRIPT_FILENAME'] ) . 'wp-config.php' );
+		endif;
 
 		if ( $_GET['k2dynamic'] != 'init' ):
 			// Send the header

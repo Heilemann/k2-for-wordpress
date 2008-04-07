@@ -29,7 +29,14 @@ function check_db() {
 
 ob_start('kill_data');
 register_shutdown_function('check_db');
-require_once( preg_replace( '/wp-content.*/', '', $_SERVER['SCRIPT_FILENAME'] ) . 'wp-config.php' );
+
+// Check for CGI Mode
+if ( 'cgi' == substr( php_sapi_name(), 0, 3 ) ):
+	require_once( preg_replace( '/wp-content.*/', '', __FILE__ ) . 'wp-config.php' );
+else:
+	require_once( preg_replace( '/wp-content.*/', '', $_SERVER['SCRIPT_FILENAME'] ) . 'wp-config.php' );
+endif;
+
 $k2_db_check = false;
 ob_end_clean();
 
