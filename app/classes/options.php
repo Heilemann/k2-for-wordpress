@@ -55,11 +55,12 @@ class K2Options {
 			add_action('admin_menu', array('K2Options', 'add_menu'));
 
 			// Check for K2 uninstallation. Do here to avoid header output.
-			if($_GET['page'] == 'k2-options' and isset($_POST['uninstall'])) {
+			if ( isset($_GET['page']) and ('k2-options' == $_GET['page']) and isset($_POST['uninstall']) )
 				K2::uninstall();
-			}
 
-			K2Options::update();
+			// Check for Form submit
+			if ( isset($_GET['page']) and ('k2-options' == $_GET['page']) and isset($_REQUEST['action']) and ('save' == $_REQUEST['action']) and isset($_POST['k2']) )
+				K2Options::update();
 		}
 	}
 
@@ -111,85 +112,83 @@ class K2Options {
 	 */
 	
 	function update() {
-		if ( isset( $_REQUEST['action'] ) and 'save' == $_REQUEST['action'] ) {
-			check_admin_referer('k2options');
+		check_admin_referer('k2-update-options');
 
-			// Sidebar Manager
-			if ( isset($_POST['k2']['sidebarmanager']) ) {
-				update_option('k2sidebarmanager', '1');
-				K2::install_sbm_loader();
-			} else {
-				update_option('k2sidebarmanager', '0');
-				K2::remove_sbm_loader();
-			}
-
-			// Columns
-			if ( isset($_POST['k2']['columns']) ) {
-				update_option('k2columns', (int) $_POST['k2']['columns']);
-			}
-
-
-			// Advanced Navigation
-			if ( isset($_POST['k2']['advnav']) ) {
-				update_option('k2livesearch', '1');
-				update_option('k2rollingarchives', '1');
-			} else {
-				update_option('k2livesearch', '0');
-				update_option('k2rollingarchives', '0');
-			}
-
-			// Archives Page (thanks to Michael Hampton, http://www.ioerror.us/ for the assist)
-			if ( isset($_POST['k2']['archives']) ) {
-				update_option('k2archives', '1');
-				K2Archive::create_archive();
-			} else {
-				update_option('k2archives', '0');
-				K2Archive::delete_archive();
-			}
-
-			// Live Commenting
-			if ( isset($_POST['k2']['livecommenting']) ) {
-				update_option('k2livecommenting', '1');
-			} else {
-				update_option('k2livecommenting', '0');
-			}
-
-			// Asides
-			if ( isset($_POST['k2']['asidescategory']) ) {
-				update_option('k2asidescategory', (int) $_POST['k2']['asidescategory']);
-			}
-
-			// Style
-			if ( isset($_POST['k2']['style']) ) {
-				update_option('k2style', $_POST['k2']['style']);
-				update_style_info();
-			} else {
-				update_option('k2style', '');
-				update_option('k2styleinfo', array());
-			}
-
-			// Header Image
-			if ( isset($_POST['k2']['header_picture']) ) {
-				// Update Custom Image Header
-				if ( 'random' == $_POST['k2']['header_picture'] ) {
-					set_theme_mod('header_image', 'random');
-				} elseif ( '' == $_POST['k2']['header_picture'] ) {
-					remove_theme_mod('header_image');
-				} else {
-					set_theme_mod('header_image', str_replace(ABSPATH, get_option('siteurl') . '/', $_POST['k2']['header_picture']));
-				}
-			}
-
-			if ( isset($_POST['k2']['blogornoblog']) ) {
-				
-			}
-
-			// K2 Hook
-			do_action('k2_update_options');
-
-			wp_redirect('themes.php?page=k2-options&updated=true');
-			exit;
+		// Sidebar Manager
+		if ( isset($_POST['k2']['sidebarmanager']) ) {
+			update_option('k2sidebarmanager', '1');
+			K2::install_sbm_loader();
+		} else {
+			update_option('k2sidebarmanager', '0');
+			K2::remove_sbm_loader();
 		}
+
+		// Columns
+		if ( isset($_POST['k2']['columns']) ) {
+			update_option('k2columns', (int) $_POST['k2']['columns']);
+		}
+
+
+		// Advanced Navigation
+		if ( isset($_POST['k2']['advnav']) ) {
+			update_option('k2livesearch', '1');
+			update_option('k2rollingarchives', '1');
+		} else {
+			update_option('k2livesearch', '0');
+			update_option('k2rollingarchives', '0');
+		}
+
+		// Archives Page (thanks to Michael Hampton, http://www.ioerror.us/ for the assist)
+		if ( isset($_POST['k2']['archives']) ) {
+			update_option('k2archives', '1');
+			K2Archive::create_archive();
+		} else {
+			update_option('k2archives', '0');
+			K2Archive::delete_archive();
+		}
+
+		// Live Commenting
+		if ( isset($_POST['k2']['livecommenting']) ) {
+			update_option('k2livecommenting', '1');
+		} else {
+			update_option('k2livecommenting', '0');
+		}
+
+		// Asides
+		if ( isset($_POST['k2']['asidescategory']) ) {
+			update_option('k2asidescategory', (int) $_POST['k2']['asidescategory']);
+		}
+
+		// Style
+		if ( isset($_POST['k2']['style']) ) {
+			update_option('k2style', $_POST['k2']['style']);
+			update_style_info();
+		} else {
+			update_option('k2style', '');
+			update_option('k2styleinfo', array());
+		}
+
+		// Header Image
+		if ( isset($_POST['k2']['header_picture']) ) {
+			// Update Custom Image Header
+			if ( 'random' == $_POST['k2']['header_picture'] ) {
+				set_theme_mod('header_image', 'random');
+			} elseif ( '' == $_POST['k2']['header_picture'] ) {
+				remove_theme_mod('header_image');
+			} else {
+				set_theme_mod('header_image', str_replace(ABSPATH, get_option('siteurl') . '/', $_POST['k2']['header_picture']));
+			}
+		}
+
+		if ( isset($_POST['k2']['blogornoblog']) ) {
+			
+		}
+
+		// K2 Hook
+		do_action('k2_update_options');
+
+		wp_redirect('themes.php?page=k2-options&updated=true');
+		exit;
 	}
 }
 
