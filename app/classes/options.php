@@ -128,25 +128,14 @@ class K2Options {
 			update_option('k2columns', (int) $_POST['k2']['columns']);
 		}
 
-		// Dynamic Columns
-		if ( isset($_POST['k2']['dynamiccolumns']) ) {
-			update_option('k2dynamiccolumns', '1');
-		} else {
-			update_option('k2dynamiccolumns', '0');
-		}
 
-		// Rolling Archives
-		if ( isset($_POST['k2']['rollingarchives']) ) {
+		// Advanced Navigation
+		if ( isset($_POST['k2']['advnav']) ) {
+			update_option('k2livesearch', '1');
 			update_option('k2rollingarchives', '1');
 		} else {
-			update_option('k2rollingarchives', '0');
-		}
-
-		// Live Search
-		if ( isset($_POST['k2']['livesearch']) ) {
-			update_option('k2livesearch', '1');
-		} else {
 			update_option('k2livesearch', '0');
+			update_option('k2rollingarchives', '0');
 		}
 
 		// Archives Page (thanks to Michael Hampton, http://www.ioerror.us/ for the assist)
@@ -191,7 +180,6 @@ class K2Options {
 			}
 		}
 
-		// Blog Tab
 		if ( isset($_POST['k2']['blogornoblog']) ) {
 			
 		}
