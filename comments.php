@@ -217,10 +217,15 @@
 				<!--<p><?php printf(__('<strong>XHTML:</strong> You can use these tags: %s','k2_domain'), allowed_tags()) ?></p>-->
 		
 				<p>
-					<textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4">
-						<?php if ( function_exists('jal_edit_comment_link') ): jal_comment_content($jal_comment); endif; ?>
-						<?php if ( function_exists('quoter_comment_server') ): quoter_comment_server(); endif; ?>
-					</textarea>
+					<textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"><?php
+						if ( function_exists('jal_edit_comment_link') ):
+							jal_comment_content($jal_comment);
+						endif;
+
+						if ( function_exists('quoter_comment_server') ):
+							quoter_comment_server();
+						endif;
+					?></textarea>
 					<span id="commenterror"></span>
 				</p>
 		
