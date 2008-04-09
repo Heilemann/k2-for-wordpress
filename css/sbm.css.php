@@ -496,7 +496,7 @@ body.nomodules #undo {
 	}
 
 .optb {
-	background: url('../images/sbmmanager/optb-nq8.png') top repeat-x;
+	background: url('../images/sbmmanager/optb.png') top repeat-x;
 	}
 
 .optbr {
