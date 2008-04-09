@@ -42,9 +42,7 @@ h2 {
 	z-index: 600;
 	width: 100%;
 	height: 100%;
-	background-color: black;
-	/*opacity: 0;
-	filter: alpha(opacity = 0);*/
+	background: black;
 	display:none;
 	}
 
@@ -498,7 +496,7 @@ body.nomodules #undo {
 	}
 
 .optb {
-	background: url('../images/sbmmanager/optb.png') top repeat-x;
+	background: url('../images/sbmmanager/optb-nq8.png') top repeat-x;
 	}
 
 .optbr {
@@ -508,6 +506,17 @@ body.nomodules #undo {
 .opttabs, .optcontents, .optbuttons {
 	background: #ddd;
 	}
+
+.tabs a {
+	text-decoration: none;
+	font-weight: bold;
+	}
+
+#optionswindow fieldset {
+	border: none;
+	margin: 0;
+	padding: 0;
+}
 
 .optcontents {
 	position: relative;
@@ -606,12 +615,20 @@ input[type=checkbox] {
 	padding: 0;
 	}
 	
+#specific-pages {
+	height: 150px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	padding: 5px;
+	border: 1px solid #999;
+	background: #e8e8e8;
+	}
+
 .checkbox-list {
 	overflow: auto;
 	list-style-type: none;
 	padding: 3px 0;
 	margin: 0;
-	background: #e5e5e5;
 	}
 
 .checkbox-list li {
@@ -774,6 +791,3 @@ input[type=checkbox] {
 	display: none; /* WP footer is cramping our style... */
 	}
 	
-#specific-pages {
-	overflow: scroll;
-}
