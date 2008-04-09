@@ -179,18 +179,21 @@ ul.menu li a {
 	font-size: 1em;
 	color: white;
 	margin: 0;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
 	}
 
 ul.menu li a:hover {
 	background: #333;
 	color: #eee;
 	text-decoration: none;
-	padding-bottom: 5px;
 	}
 
 ul.menu li.current_page_item a,
 ul.menu li.current_page_item a:hover {
-	color: #333 !important;
+	color: #333;
 	background: white;
 	text-decoration: none;
 	}
