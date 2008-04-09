@@ -2,16 +2,13 @@
 
 /* This file contains the CSS for the 'K2 Options' admin panel */
 
-.k2wrap {
-	font-family: Helvetica, Arial, Sans-Serif;
+.wrap {
+	font-family: Helvetica, Verdana, 'Lucida Grande', Arial, sans-serif;
 	border: none;
-	border-bottom: 1px solid #eee;
-	background: transparent;
-	padding: 10px;
-	margin: 0;
+	margin: 0px auto;
 	}
 
-.k2wrap a {
+.wrap a {
 	color: #0A5199;
 	border: none;
 	white-space: pre;
@@ -19,19 +16,17 @@
 
 .configstuff {
 	position: relative;
-	font-size: 1.3em;
 	width: 600px;
-	margin: 0 auto;
+	margin: 0px auto;
 	padding-top: 40px; /* For floating .savebutton */
 	}
 
 .savebutton {
 	position: absolute;
-	top: 0;
+	top: 0px;
 	width: 600px;
-	margin: 0 auto;
-	padding: 10px 0;
-	background: #f9fcfe;
+	margin: 0px auto;
+	padding: 10px 0px;
 	}
 
 #save {
@@ -40,166 +35,109 @@
 	color: white;
 	border: none;
 	padding: 5px 30px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 	}
 
 body.smartposition .savebutton {
 	border-bottom: 1px solid #ddd;
 	position: fixed;
-	top: 0;
-	opacity: .9;
+	top: 0px;
+	background: #f9fcfe;
 	z-index: 100;
 	}
 
 .container {
-	margin: 30px 0 20px;
+	margin: 30px 0px 20px;
 	position: relative;
 	}
 
 h3 {
-	font: 1.3em/1.2em Helvetica, Arial, Sans-Serif;
+	font: 1.6em/1.4 Helvetica, Arial, sans-serif;
 	color: #333;
-	border-right: 2px solid #eee;
 	width: 225px;
-	margin: 0;
+	margin: 0px;
 	overflow: hidden;
 	white-space: pre;
 	}
-.k2wrap p.description {
+
+.configstuff .description {
 	margin-top: 5px;
-	color: #888;
-	font-size: .75em;
+	color: #999;
 	}
 
 .error {
-	color: #666; font-size: .8em;
+	color: #666;
 	}
 
-.configstuff #k2-blogornoblog, .configstuff select {
-	width: 50%;
+.form-list dt {
+	font-size: 1.1em;
+	color: #666;
+	width: 225px;
+	margin-bottom: 0px 0px 6px;
+	overflow: hidden;
+	text-align: right;
+	float: left;
+	padding: 4px 0;
 	}
 
-.configstuff #k2-asidescategory, .configstuff #k2-scheme, .checkboxelement {
+.form-list dd {
+	margin-left: 240px;
+}
+
+.form-list dd.description {
+	margin-left: 0px;
+	}
+
+.main-option {
 	position: absolute;
 	left: 240px;
+	top: 0px;
+	margin: 0px;
 	}
 
-.checkboxelement {
-	top: 6px;
-	margin: 0;
+.main-option input[type=checkbox] {
+	margin-top: 5px;
 	}
-	
-.configstuff #k2-asidescategory, .configstuff #k2-scheme {
-	top: 4px;
+
+.secondary-option {
+	margin-left: 240px;
+	}
+
+.configstuff input[type=text],
+.configstuff select {
+	color: #333;
 	width: 240px;
-	margin: 0;
-	}
-
-.configstuff select, .configstuff input {
-	font-family: Helvetica, Arial, Sans-Serif;
-	color: #222;
-	font-size: 12px;
-	padding: 2px;
+	border: 1px solid #ccc;
 	}
 
 .configstuff option {
 	padding: 0px;
 	}
 
-.configelap {
-	text-align: center;
-	}
-
-.headerwrap {
-	color: #888;
-	font-size: 11px;
-	}
-
-.headerwrap div {
-	clear: both;
-	margin: 5px 0 10px;
-	position: relative;
-	height: 20px;
-	}
-
-.headerwrap p, .headerwrap span {
-	float: left;
-	margin: 0;
-	}
-
-.headerwrap span.span1 {
-	width: 150px;
-	}
-
-.headerwrap span.span2 {
-	width: 270px;
-	}
-
-.headerwrap span.span3 {
-	padding-top: 3px;
-	}
-
-.headerwrap p {
-	padding-left: 10px;
-	line-height: 22px;
-	}
-
-.headerwrap label {
-	font-size: 11px;
-	margin-left: 5px;
-	}
-
-.headerwrap .span2 input, .headerwrap .span2 select {
-	width: 240px;
-	font-size: 12px;
-	}
-
-.headerwrap input[type=file] {
-	border: none;
-	padding: 0;
-	}
-
-.headerwrap #k2-blogornoblog {
-	width: 232px;
-	margin: 0;
-	padding: 2px 4px;
-	}
-
-.sidebarradio {
-	text-align: center;
-	}
-
-.sidebarradio span {
-	margin-right: 40px;
-	}
-
-.sidebarradio span input {
-	margin-right: 5px;
-	}
-
-.sidebarno {
-	margin-right: 0;
-	}
-
-
-.k2wrap.uninstall {
+.uninstall {
 	border: none;
 	margin-top: 2px;
 	padding: 30px 20px 50px;
 	background: #eee url('../images/sbmmanager/sbmbg.png') top repeat-x;
 	}
 
-.k2wrap.uninstall input {
-	background: #222;
-	color: white;
-	border: none;
-	padding: 5px 30px;
+.uninstall input {
+	padding: 3px 5px;
+	}
+
+.uninstall .configstuff {
+	padding-top: 0px;
 	}
 
 #wpcontent {
-	padding-bottom: 0;
+	padding-bottom: 0px;
 	}
 
 #footer {
 	display: none;
 	}
 
+.center {
+	text-align: center;
+	}

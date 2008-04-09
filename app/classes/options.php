@@ -54,13 +54,27 @@ class K2Options {
 		if ( is_admin() ) {
 			add_action('admin_menu', array('K2Options', 'add_menu'));
 
-			// Check for K2 uninstallation. Do here to avoid header output.
-			if ( isset($_GET['page']) and ('k2-options' == $_GET['page']) and isset($_POST['uninstall']) )
-				K2::uninstall();
+			// Inside K2 Options page
+			if ( isset($_GET['page']) and ('k2-options' == $_GET['page']) ) {
 
-			// Check for Form submit
-			if ( isset($_GET['page']) and ('k2-options' == $_GET['page']) and isset($_REQUEST['action']) and ('save' == $_REQUEST['action']) and isset($_POST['k2']) )
-				K2Options::update();
+				// Reset and Deactivate K2
+				if ( isset($_REQUEST['uninstall']) ) {
+					check_admin_referer('k2options');
+					K2::uninstall();
+				}
+
+				// Setup ELA
+				if ( isset($_REQUEST['configela']) ) {
+					check_admin_referer('k2options');
+					K2Archive::setup_archive();
+				}
+
+				// Save Settings
+				if ( isset($_REQUEST['save']) and isset($_REQUEST['k2']) ) {
+					check_admin_referer('k2options');
+					K2Options::update();
+				}
+			}
 		}
 	}
 
@@ -112,8 +126,6 @@ class K2Options {
 	 */
 	
 	function update() {
-		check_admin_referer('k2options');
-
 		// Sidebar Manager
 		if ( isset($_POST['k2']['sidebarmanager']) ) {
 			update_option('k2sidebarmanager', '1');
@@ -180,8 +192,9 @@ class K2Options {
 			}
 		}
 
+		// Blog tab
 		if ( isset($_POST['k2']['blogornoblog']) ) {
-			
+			update_option( 'k2blogornoblog', strip_tags( stripslashes($_POST['k2']['blogornoblog']) ) );
 		}
 
 		// K2 Hook
