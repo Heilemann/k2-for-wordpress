@@ -720,7 +720,7 @@ class k2sbmModule {
 		$base_module = $k2sbm_registered_modules[$this->type];
 
 		// Check that the function exists & that this module is to be displayed
-		if(function_exists($base_module['callback'])) {
+		if(is_callable($base_module['callback'])) {
 			if($this->canDisplay()) {
 				$k2sbm_current_module = $this;
 				$id = K2SBM::name_to_id($this->name);
@@ -844,7 +844,7 @@ class k2sbmModule {
 		// Get the base module details
 		$base_module = $k2sbm_registered_modules[$this->type];
 
-		if(function_exists($base_module['control_callback'])) {
+		if(is_callable($base_module['control_callback'])) {
 			return true;
 		} else {
 			return false;

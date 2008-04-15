@@ -18,7 +18,7 @@
 	</p>
 
 <?php
-	if(function_exists($base_module['control_callback'])) {
+	if(is_callable($base_module['control_callback'])) {
 		// Call the control callback
 		call_user_func($base_module['control_callback']);
 	}
