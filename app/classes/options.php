@@ -17,13 +17,16 @@ class K2Options {
 		add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on"); // (live & classic)
 		add_option('k2archives', '0', 'Set whether K2 has a Live Archive page');
 		add_option('k2sidebarmanager', '0', 'Set whether to use K2 Sidebar Manager');
-		add_option('k2style', '', 'Choose the Style you want K2 to use');
 		add_option('k2livecommenting', '1', "If you don't trust JavaScript, you can turn off Live Commenting. Otherwise it is suggested you leave it on");
 		add_option('k2styleinfo', '', 'Metadata of current style.');
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
 		add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.');
 		add_option('k2columns', '2', 'Number of columns to display.');
+
+		// Added 1.0-RC5
+		add_option('k2style', '', 'Choose the Style you want K2 to use');
 		add_option('k2dynamiccolumns', '1', 'Enable this to dynamically change the number of columns.');
+		add_option('k2headerimage', '', 'Current Header Image');
 	}
 
 
@@ -43,8 +46,31 @@ class K2Options {
 		delete_option('k2blogornoblog');
 		delete_option('k2columns');
 		delete_option('k2dynamiccolumns');
+		delete_option('k2headerimage');
 	}
 
+
+	/**
+	 * Handles upgrades from previous versions
+	 */
+
+	function upgrade($previous) {
+		if ( version_compare( $previous, '1.0-RC5', '<' ) ) {
+			// Add new options
+			add_option('k2style', '', 'Choose the Style you want K2 to use');
+			add_option('k2dynamiccolumns', '1', 'Enable this to dynamically change the number of columns.');
+			add_option('k2headerimage', '', 'Current Header Image');
+
+			// Convert existing options
+			$style = get_option('k2scheme');
+			if ( $style != '' ) {
+				if ( file_exists(K2_STYLES_PATH . $style) ) {
+					update_option('k2style', K2_STYLES_PATH . $style);
+					update_style_info();
+				}
+			}
+		}
+	}
 
 	/**
 	 * Initialization
@@ -140,6 +166,12 @@ class K2Options {
 			update_option('k2columns', (int) $_POST['k2']['columns']);
 		}
 
+		// Dynamic Columns
+		if ( isset($_POST['k2']['dynamiccolumns']) ) {
+			update_option('k2dynamiccolumns', '1');
+		} else {
+			update_option('k2dynamiccolumns', '0');
+		}
 
 		// Advanced Navigation
 		if ( isset($_POST['k2']['advnav']) ) {
@@ -181,14 +213,14 @@ class K2Options {
 		}
 
 		// Header Image
-		if ( isset($_POST['k2']['header_picture']) ) {
+		if ( isset($_POST['k2']['headerimage']) ) {
+			update_option('k2headerimage', $_POST['k2']['headerimage']);
+
 			// Update Custom Image Header
-			if ( 'random' == $_POST['k2']['header_picture'] ) {
-				set_theme_mod('header_image', 'random');
-			} elseif ( '' == $_POST['k2']['header_picture'] ) {
+			if ( ('' == $_POST['k2']['headerimage']) or ('random' == $_POST['k2']['headerimage']) ) {
 				remove_theme_mod('header_image');
 			} else {
-				set_theme_mod('header_image', str_replace(ABSPATH, get_option('siteurl') . '/', $_POST['k2']['header_picture']));
+				set_theme_mod('header_image', get_option('siteurl') . '/' . $_POST['k2']['headerimage']);
 			}
 		}
 
@@ -207,7 +239,6 @@ class K2Options {
 
 
 add_action('k2_install', array('K2Options', 'install'));
+add_action('k2_upgrade', array('K2Options', 'upgrade'));
 add_action('k2_uninstall', array('K2Options', 'uninstall'));
 add_action('k2_init', array('K2Options', 'init'), 1);
-
-?>

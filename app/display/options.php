@@ -4,6 +4,11 @@
 		$current_style = get_option('k2style');
 		$style_info = get_option('k2styleinfo');
 
+		// Update the style info if style has been modified
+		if ( empty($style_info['modified']) or (filemtime(ABSPATH . $current_style) != $style_info['modified']) ) {
+			$style_info = update_style_info();
+		}
+
 		// Check that the styles folder exists
 		$is_styles_dir = is_dir(K2_STYLES_PATH);
 
@@ -29,17 +34,16 @@
 	$asides_cats = get_categories('get=all');
 
 	// Get the current header picture
-	$current_header_image = get_theme_mod('header_image');
+	$current_header_image = get_option('k2headerimage');
 
 	// Get the header pictures
 	$header_images = K2Header::get_header_images();
+
 ?>
 
 <script type="text/javascript" charset="utf-8">
 //<![CDATA[
-	jQuery(document).scroll(function(){
-		smartPosition('.configstuff');
-	});
+	smartPosition('.configstuff');
 //]]>
 </script>
 
@@ -202,7 +206,7 @@
 						<label for="k2-header-image"><?php _e('Select an Image:', 'k2_domain'); ?></label>
 					</dt>
 					<dd class="secondary-option">
-						<select id="k2-header-image" name="k2[header_picture]">
+						<select id="k2-header-image" name="k2[headerimage]">
 							<option value="" <?php selected($current_header_image, ''); ?>><?php _e('Off', 'k2_domain'); ?></option>
 							<option value="random" <?php selected($current_header_image, 'random'); ?>><?php _e('Random', 'k2_domain'); ?></option>
 							<?php foreach($header_images as $image): ?>

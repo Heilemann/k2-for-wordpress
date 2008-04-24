@@ -21,11 +21,11 @@ class K2Header {
 	function get_header_images() {
 		global $wpdb;
 
-		$images = K2::files_scan(K2_HEADERS_PATH, array('gif','jpeg','jpg','png'), 1, false);
+		$images = K2::files_scan(K2_HEADERS_PATH, array('gif','jpeg','jpg','png'), 1, 2);
 
 		$attachment_ids = (array) $wpdb->get_var("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = 'k2-header-image'");
 		foreach ($attachment_ids as $id) {
-			$images[] = get_attached_file($id);
+			$images[] = str_replace(ABSPATH, '', get_attached_file($id) );
 		}
 
 		return $images;
@@ -44,18 +44,20 @@ class K2Header {
 	}
 
 	function output_header_css() {
-		if ( 'random' == get_theme_mod('header_image') ) {
+		$header_image = get_option('k2headerimage');
+
+		if ( 'random' == $header_image ) {
 			$picture = K2Header::random_picture();
 		} else {
-			$picture = get_theme_mod('header_image');
+			$picture = $header_image;
 		}
 		?>
 		<style type="text/css">
-		<?php if (!empty($picture)): ?>
+		<?php if ( $picture != '' ): ?>
 		#header {
-			background-image: url("<?php echo str_replace(ABSPATH, get_option('siteurl') . '/', $picture); ?>");
+			background-image: url("<?php echo get_option('siteurl') . '/' . $picture; ?>");
 		}
-		<?php endif ?>
+		<?php endif; ?>
 
 		<?php if ( 'blank' == get_header_textcolor() ): ?>
 		#header h1, #header .description {
@@ -108,7 +110,7 @@ class K2Header {
 		}
 		<?php } else { ?>
 		#headimg h1 a, #headimg #desc {
-			color: #<?php echo HEADER_TEXTCOLOR ?>;
+			color: #<?php header_textcolor(); ?>;
 		}
 		<?php } ?>
 		</style>
@@ -174,7 +176,11 @@ class K2Header {
 				// Allows K2 to find the attachment
 				add_post_meta( $id, 'k2-header-image', 'cropped' );
 			}
+
+			// Update K2 Options
+			update_option( 'k2headerimage', str_replace(ABSPATH, '', $source) );
 		}
+
 		return $source;
 	}
 }

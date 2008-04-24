@@ -18,7 +18,7 @@ class K2 {
 		// Load the localisation text
 		load_theme_textdomain('k2_domain');
 
-		// Load required class and include files
+		// Load required classes and includes
 		require_once(TEMPLATEPATH . '/app/classes/archive.php');
 		require_once(TEMPLATEPATH . '/app/classes/header.php');
 		require_once(TEMPLATEPATH . '/app/classes/options.php');
@@ -27,11 +27,11 @@ class K2 {
 
 		// Check installed version, upgrade if needed
 		$k2version = get_option('k2version');
-		if ( $k2version === false ) {
+
+		if ( $k2version === false )
 			K2::install();
-		} elseif ( version_compare($k2version, K2_CURRENT, '<') ) {
+		elseif ( version_compare($k2version, K2_CURRENT, '<') )
 			K2::upgrade($k2version);
-		}
 
 		// Set K2 to active
 		if ( '0' == get_option('k2active') ) {
@@ -47,10 +47,6 @@ class K2 {
 			}
 		}
 
-		// There may be some things we need to do before K2 is initialised
-		// Let's do them now
-		do_action('k2_init');
-
 		// Register our scripts with script loader
 		K2::register_scripts();
 
@@ -64,33 +60,24 @@ class K2 {
 			) );
 		}
 
-		if ( K2_USING_STYLES ) {
-			// Check if there's a style
-			$style = ABSPATH . get_option('k2style');
-			if ( $style != ABSPATH ) {
-				if ( ! file_exists($style) ) {
-					update_option('k2style', '');
-					update_option('k2styleinfo', array());
-				} else {
-					$styleinfo = get_option('k2styleinfo');
+		$style = get_option('k2style');
+		if ( K2_USING_STYLES and ('' != $style) ) {
+			// insert full path
+			$style = ABSPATH . $style;
 
-					// Update the style info if style has been modified
-					if ( empty($styleinfo['modified']) or (filemtime($style) != $styleinfo['modified']) ) {
-						$styleinfo = update_style_info();
-					}
-
-					// Load style's functions.php
-					if ( file_exists(get_k2info('current_style_dir') . '/functions.php') ) {
-						include_once(get_k2info('current_style_dir') . '/functions.php');
-					}
-				}
-			}
-		} else {
-			// Load stylesheet's functions.php
-			if ( file_exists(get_stylesheet_directory() . '/functions.php') ) {
-				include_once(get_stylesheet_directory() . '/functions.php');
+			// if style is not readable, clear style options
+			// otherwise load style's functions.php if it is readable
+			if ( !is_readable($style) ) {
+				update_option('k2style', '');
+				update_option('k2styleinfo', array());
+			} elseif ( is_readable( dirname($style) . '/functions.php' ) ) {
+				include_once( dirname($style) . '/functions.php' );
 			}
 		}
+
+		// There may be some things we need to do before K2 is initialised
+		// Let's do them now
+		do_action('k2_init');
 	}
 
 
@@ -112,8 +99,8 @@ class K2 {
 				wp_mkdir_p(ABSPATH . UPLOADS . 'k2support/');
 			}
 
-			if ( ! is_dir(K2_STYLES_PATH) ) {
-				wp_mkdir_p(K2_STYLES_PATH);
+			if ( ! is_dir(K2_MU_STYLES_PATH) ) {
+				wp_mkdir_p(K2_MU_STYLES_PATH);
 			}
 		}
 	}
@@ -126,18 +113,10 @@ class K2 {
 	 * @param string $previous Previous version K2
 	 */
 	function upgrade($previous) {
-
 		// Call the upgrade handlers
 		do_action('k2_upgrade', $previous);
 
 		if ( version_compare( $previous, '1.0-RC5', '<' ) ) {
-			$style = get_option('k2scheme');
-			if ( $style != '' ) {
-				if ( file_exists(K2_STYLES_PATH . $style) ) {
-					update_option('k2style', K2_STYLES_PATH . $style);
-					update_style_info();
-				}
-			}
 
 			// Remove previous SBM hackery
 			$found = false;
@@ -311,20 +290,18 @@ class K2 {
 
 		$k2_styles = array();
 
-		$style_files = K2::files_scan(K2_STYLES_PATH, 'css', 2, false);
+		$style_files = K2::files_scan(K2_STYLES_PATH, 'css', 2, 2);
 
 		if ( K2_MU )
-			$style_files = array_merge( $style_files, K2::files_scan(K2_MU_SITE_STYLES_PATH, 'css', 2, false) );
+			$style_files = array_merge( $style_files, K2::files_scan(K2_MU_STYLES_PATH, 'css', 2, 2) );
 
 		sort($style_files);
 
 		foreach ( (array) $style_files as $style_file ) {
-			if ( is_readable($style_file) ) {
-				$style_data = get_style_data($style_file);
+			$style_data = get_style_data($style_file);
 
-				if ( ! empty($style_data) )
-					$k2_styles[] = $style_data;
-			}
+			if ( ! empty($style_data) )
+				$k2_styles[] = $style_data;
 		}
 
 		return $k2_styles;
@@ -361,7 +338,7 @@ class K2 {
 	 * @param string $path directory to search
 	 * @param array $ext file extensions
 	 * @param integer $depth depth of search
-	 * @param boolean $relative use relative path
+	 * @param mixed $relative true: use relative path or 2: relative to ABSPATH
 	 * @return array paths of files found
 	 */
 	
@@ -382,7 +359,7 @@ class K2 {
 	 * @param string $path 
 	 * @param string $ext 
 	 * @param string $depth 
-	 * @param string $relative 
+	 * @param mixed $relative 
 	 * @param string $files 
 	 * @return array paths of files found
 	 */
@@ -409,7 +386,13 @@ class K2 {
 
 				// If this is a matching file then add it to the list
 				} elseif(is_file($file_full_path) and (empty($ext) or preg_match('/\.(' . $ext_match . ')$/i', $file))) {
-					$files[] = $relative ? $file_path : $file_full_path;
+					if ( $relative === true ) {
+						$files[] = $file_path;
+					} else if ( $relative === 2 ) {
+						$files[] = str_replace(ABSPATH, '', $file_full_path);
+					} else {
+						$files[] = $file_full_path;
+					}
 				}
 			}
 

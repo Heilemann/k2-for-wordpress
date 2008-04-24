@@ -16,7 +16,7 @@ function get_k2info( $show = '' ) {
 
 		case 'style' :
 			if ( get_option('k2style') != '' )
-				$output = get_bloginfo('wpurl') . '/' . str_replace( ABSPATH, '', get_option('k2style') );
+				$output = get_bloginfo('wpurl') . '/' . get_option('k2style');
 			break;
 
 		case 'style_footer' :
@@ -25,21 +25,21 @@ function get_k2info( $show = '' ) {
 			break;
 
 		case 'styles_url' :
-			$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2_STYLES_PATH);
+			$output = get_bloginfo('wpurl') . '/' . str_replace(ABSPATH, '', K2_STYLES_PATH);
 			break;
 
 		case 'headers_url' :
-			$output = get_bloginfo('wpurl') .'/'. str_replace(ABSPATH, '', K2_HEADERS_PATH);
+			$output = get_bloginfo('wpurl') . '/' . str_replace(ABSPATH, '', K2_HEADERS_PATH);
 			break;
 
 		case 'current_style_dir' :
 			if ( get_option('k2style') != '' )
-				$output = dirname( get_option('k2style') );
+				$output = ABSPATH . dirname( get_option('k2style') );
 			break;
 
 		case 'current_style_url' :
 			if ( get_option('k2style') != '' )
-				$output = get_bloginfo('wpurl') .'/'.dirname( str_replace( ABSPATH, '', get_option('k2style') ) );
+				$output = get_bloginfo('wpurl') . '/' . dirname( get_option('k2style') );
 			break;
 	}
 	return $output;
@@ -195,7 +195,9 @@ function get_style_data( $style_file = '' ) {
 	if ( '' == $style_file )
 		return false;
 
-	if ( ! file_exists($style_file) )
+	$style_file = ABSPATH . $style_file;
+
+	if ( !is_readable($style_file) )
 		return false;
 
 	$style_data = implode( '', file($style_file) );

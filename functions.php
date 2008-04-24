@@ -6,20 +6,15 @@ define('K2_CURRENT', '1.0-RC5');
 // Is this MU or no?
 define('K2_MU', (isset($wpmu_version) or (strpos($wp_version, 'wordpress-mu') !== false)));
 
-if ( K2_MU ) {
-	// Define additional folders for Wordpress mu
-	define('K2_STYLES_PATH', ABSPATH . UPLOADS . 'k2support/styles/');
-	define('K2_HEADERS_PATH', ABSPATH . UPLOADS . 'k2support/headers/');
-	define('K2_MU_SITE_STYLES_PATH', TEMPLATEPATH . '/styles/');
-	define('K2_MU_SITE_HEADERS_PATH', TEMPLATEPATH . '/images/headers/');
-} else {
-	// Define our folders for Wordpress
-	define('K2_STYLES_PATH', TEMPLATEPATH . '/styles/');
-	define('K2_HEADERS_PATH', TEMPLATEPATH . '/images/headers/');
-}
+// Define our folders for Wordpress
+define('K2_STYLES_PATH', TEMPLATEPATH . '/styles/');
+define('K2_HEADERS_PATH', TEMPLATEPATH . '/images/headers/');
 
-// Are we using SBM?
-define('K2_USING_SBM', !function_exists('register_sidebar') && get_option('k2sidebarmanager') == '1');
+// Define additional folders for Wordpress mu
+if ( K2_MU ) {
+	define('K2_MU_STYLES_PATH', ABSPATH . UPLOADS . 'k2support/styles/');
+	define('K2_MU_HEADERS_PATH', ABSPATH . UPLOADS . 'k2support/headers/');
+}
 
 // Are we using K2 Styles?
 define('K2_USING_STYLES', get_stylesheet() == get_template());
@@ -35,7 +30,6 @@ define('K2_HEADER_WIDTH', 950);
 define('K2_HEADER_HEIGHT', 200);
 
 /* Blast you red baron! Initialise the k2 system */
-require(TEMPLATEPATH . '/app/classes/k2.php');
+require_once(TEMPLATEPATH . '/app/classes/k2.php');
 K2::init();
-
 ?>

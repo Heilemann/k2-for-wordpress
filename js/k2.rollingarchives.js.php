@@ -141,8 +141,6 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 };
 
 
-jQuery(window).scroll(function(){
-	if (typeof K2.RollingArchives != 'undefined' && K2.RollingArchives.active) {
-		smartPosition('#dynamic-content');
-	}
-});
+if (typeof K2.RollingArchives != 'undefined' && K2.RollingArchives.active) {
+	smartPosition('#dynamic-content');
+}

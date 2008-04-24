@@ -124,17 +124,13 @@ body.lang-zh {
 	display: inline;
 	}
 
-.columns-three #primary {
-	padding: 10px;
-	}
-
 .columns-one .secondary {
 	width: 240px;
 	border-top: 1px solid #eee;
 	}
 
-.columns-three #sidebar-2 {
-	width: 150px;
+.columns-three .secondary {
+	width: 175px;
 	}
 
 .secondary {
@@ -226,22 +222,19 @@ h1 {
 	font-size: 3em;
 	}
 
-#header h1 {
+h1.blog-title {
 	font-weight: bold;
 	letter-spacing: -1px;
 	padding: 75px 40px 0;
 	}
 
-#header h1,
-#header h1 a,
-#header h1 a:hover,
-#header h1 a:visited,
+h1.blog-title a,
 #header .description {
 	text-decoration: none;
 	color: white;
 	}
 
-h1 a:hover {
+h1.blog-title a:hover {
 	text-decoration: underline;
 	}
 
@@ -749,7 +742,7 @@ li.bypostauthor blockquote {
 	}
 
 .comments input[type=text], .comments textarea {
-	font: 1.2em 'Courier New', Courier, Monospace;
+	font: 12px Monaco, 'Courier New', Courier, monospace;
 	padding: 3px;
 	color: #777;
 	}
@@ -803,6 +796,10 @@ input[type=text]:focus, textarea:focus {
 	display: none;
 	padding-left: 0.3em;
 	}
+
+.footerstats {
+	display: none;
+}
 
 /*- Links */
 
@@ -1048,6 +1045,10 @@ input[type=text], textarea {
 	position: absolute;
 	top: 0;
 	width: 88%;
+	}
+
+.columns-three #s.livesearch {
+	width: 145px;
 	}
 
 #searchreset {

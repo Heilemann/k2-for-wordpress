@@ -100,12 +100,18 @@ function deleteCookie(name, path, domain) {
 
 /* Fix the position of an element when it is about to be scrolled off-screen */
 function smartPosition(obj) {
-	// Detect if content is being scroll offscreen.
-	if ( (document.documentElement.scrollTop || document.body.scrollTop) >= jQuery(obj).offset().top) {
-		jQuery('body').addClass('smartposition');
-	} else {
-		jQuery('body').removeClass('smartposition');
+	if ( jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 7 ) {
+		return;
 	}
+	
+	jQuery(window).scroll(function() {
+		// Detect if content is being scroll offscreen.
+		if ( (document.documentElement.scrollTop || document.body.scrollTop) >= jQuery(obj).offset().top) {
+			jQuery('body').addClass('smartposition');
+		} else {
+			jQuery('body').removeClass('smartposition');
+		}
+	});
 };
 
 

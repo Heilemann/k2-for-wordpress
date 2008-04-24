@@ -1,10 +1,11 @@
-	<div class="clear"></div>
+	<?php /* K2 Hook */ do_action('template_after_content'); ?>
 
+	<div class="clear"></div>
 </div> <!-- Close Page -->
 
-<?php /* K2 Hook */ do_action('template_after_content'); ?>
-
 <hr />
+
+<?php /* K2 Hook */ do_action('template_before_footer'); ?>
 
 <div id="footer">
 	<?php /* K2 Hook */ do_action('template_footer'); ?>
@@ -33,7 +34,9 @@
 		?>
 	</p>
 
-	<!-- <?php printf(__('%d queries. %.4f seconds.','k2_domain'), $wpdb->num_queries , timer_stop()) ?> -->
+	<p class="footerstats">
+		<?php printf( __('%d queries. %.4f seconds.','k2_domain'), $wpdb->num_queries , timer_stop() ); ?>
+	</p>
 </div>
 
 <?php wp_footer(); ?>

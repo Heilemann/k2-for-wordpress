@@ -135,9 +135,7 @@
 		<?php endif; ?>
 
 		<?php if ( is_single() or ( !is_page() and ( '0' == get_option('k2rollingarchives') ) ) ): ?>
-		jQuery(window).scroll(function(){
 			smartPosition('#current-content');
-		});
 		<?php endif; ?>
 
 	//]]>
@@ -148,16 +146,21 @@
 
 <body class="<?php k2_body_class(); ?>">
 
+<?php /* K2 Hook */ do_action('template_body_top'); ?>
+
 <a class="skiplink" href="#startcontent" accesskey="2"><?php _e('Skip to content','k2_domain'); ?></a>
 
 <div id="page">
 
+	<?php /* K2 Hook */ do_action('template_before_header'); ?>
+
 	<div id="header">
 
-		<h1><a href="<?php echo get_settings('home'); ?>/" accesskey="1"><?php bloginfo('name'); ?></a></h1>
+		<h1 class="blog-title"><a href="<?php echo get_settings('home'); ?>/" accesskey="1"><?php bloginfo('name'); ?></a></h1>
 		<p class="description"><?php bloginfo('description'); ?></p>
 
 		<?php /* K2 Hook */ do_action('template_header'); ?>
+
 	</div> <!-- #header -->
 
 	<hr />
