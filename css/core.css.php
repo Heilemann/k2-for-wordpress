@@ -83,7 +83,7 @@ body.lang-zh {
 	background: white;
 	text-align: left;
 	margin: 0 auto;
-	padding: 20px 0 10px;
+	padding-top: 20px;
 	position: relative;
 	border: 1px solid #ddd;
 	border-top: none;
@@ -110,7 +110,7 @@ body.lang-zh {
 	}
 
 .content {
-	padding: 0 20px;
+	padding: 0 20px 10px;
 	}
 
 #primary {
@@ -142,6 +142,10 @@ body.lang-zh {
 	position: relative;
 	padding: 0 10px;
 	overflow: hidden;
+	}
+
+#sidebar-2 {
+	clear: right;
 	}
 
 .comments {
