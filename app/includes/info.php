@@ -396,29 +396,58 @@ function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' a
 	return apply_filters('the_category', $thelist, $normal_separator);
 }
 
-function k2asides_filter($query) {
+function k2_post_groupby($groupby) {
+	// Only filter when asides_module is active
+	if ( is_home() and function_exists('is_active_module') and is_active_module('asides_sidebar_module') ) {
+		return '';
+	}
+
+	return $groupby;
+}
+
+add_filter('posts_groupby', 'k2_post_groupby');
+
+function k2_asides_filter($query) {
 	global $k2sbm_current_module;
 
 	$asides = get_option('k2asidescategory');
 
 	// Only filter when it's in the homepage
-	if ( ($asides != 0) and ($query->is_home) and (!$k2sbm_current_module) and
-		( (function_exists('is_active_module') and is_active_module('asides_sidebar_module')) or
-		  (function_exists('is_active_widget') and is_active_widget('k2_asides_widget')) ) ) {
+	if ( ($asides != 0) and ($query->is_home) and (!$k2sbm_current_module) and function_exists('is_active_module') and is_active_module('asides_sidebar_module') ) {
 
-		$priorcat = $query->get('cat');
-		if ( !empty($priorcat) ) {
-			$priorcat .= ',';
+		if ( get_wp_version() > 2.2 ) {
+			
+			$exclude_cats = $query->get('category__not_in');
+			$include_cats = $query->get('category__in');
+
+			// Remove asides from list of categories to include
+			if ( !empty($include_cats) and in_array($asides, $include_cats) ) {
+				$query->set( 'category__in', array_diff( $include_cats, array($asides) ) );
+			}
+
+			// Insert asides into list of categories to exclude
+			if ( empty($exclude_cats) ) {
+				$query->set( 'category__not_in', array($asides) );
+			} else if ( !in_array( $asides, $exclude_cats ) ) {
+				$query->set( 'category__not_in', array_merge( $exclude_cats, array($asides) ) );
+			}
+
+		} else {
+
+			$priorcat = $query->get('cat');
+			if ( !empty($priorcat) ) {
+				$priorcat .= ',';
+			}
+
+			$query->set('cat', $priorcat . '-' . $asides);
 		}
-
-		$query->set('cat', $priorcat . '-' . $asides);
 	}
 
 	return $query;
 }
 
 // Filter to remove asides from the loop
-add_filter('pre_get_posts', 'k2asides_filter');
+add_filter('pre_get_posts', 'k2_asides_filter');
 
 
 function get_wp_version() {
@@ -435,7 +464,7 @@ function get_wp_version() {
 }
 
 
-// Semantic class functions from Sandbox 1.5 (http://www.plaintxt.org/themes/sandbox/)
+// Semantic class functions from Sandbox (http://www.plaintxt.org/themes/sandbox/)
 
 // Generates semantic classes for BODY element
 function k2_body_class( $print = true ) {
@@ -573,6 +602,7 @@ function k2_body_class( $print = true ) {
 		case '2':
 			$c[] = 'columns-two';
 			break;
+		case 'dynamic':
 		case '3':
 			$c[] = 'columns-three';
 			break;
