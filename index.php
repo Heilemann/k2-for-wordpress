@@ -2,6 +2,7 @@
 
 <div class="content">
 	
+<div id="primary-wrapper">
 	<div id="primary">
 		<div id="notices"></div>
 		<a name="startcontent" id="startcontent"></a>
@@ -22,6 +23,7 @@
 		<div id="dynamic-content"></div>
 		<?php endif; ?>
 	</div> <!-- #primary -->
+</div> <!-- #primary-wrapper -->
 
 	<?php get_sidebar(); ?>
 	

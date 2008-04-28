@@ -113,6 +113,20 @@ body.lang-zh {
 	padding: 0 20px 10px;
 	}
 
+body.columns-two #primary-wrapper {
+	float: left;
+	margin-right: -220px;
+	width: 100%;
+	}
+
+body.columns-two #primary {
+	margin-right: 220px;
+	}
+
+body.columns-two .secondary {
+	float: right;
+	}
+
 #primary {
 	position: relative;
 	float: left;
