@@ -98,6 +98,8 @@
 			<?php output_javascript_hash($rolling_query); ?>,
 			<?php output_javascript_array($page_dates); ?>
 		);
+
+		smartPosition('#dynamic-content');
 	});
 // ]]>
 </script>

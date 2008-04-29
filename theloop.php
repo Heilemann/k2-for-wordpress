@@ -158,11 +158,7 @@
 
 	<?php endwhile; /* End The Loop */ ?>
 	
-	<?php /* Bottom Paged Navigation */ if ( ( '0' == $k2rollingarchives ) and !is_single() ): ?>
-	<noscript>
-		<?php k2_navigation('nav-below'); ?>
-	</noscript>
-	<?php endif; ?> 
+	<?php /* Bottom Paged Navigation */ if ( is_single() ): k2_navigation('nav-below'); endif; ?> 
 
 <?php /* If there is nothing to loop */ else: define('K2_NOT_FOUND', true); ?>
 

@@ -133,11 +133,6 @@
 			): ?>
 			K2.ajaxCommentsURL = "<?php output_javascript_url('comments-ajax.php'); ?>";
 		<?php endif; ?>
-
-		<?php if ( is_single() or ( !is_page() and ( '0' == get_option('k2rollingarchives') ) ) ): ?>
-			smartPosition('#current-content');
-		<?php endif; ?>
-
 	//]]>
 	</script>
 
