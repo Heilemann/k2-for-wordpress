@@ -240,39 +240,39 @@ class K2 {
 		// Register our scripts with WordPress
 		wp_register_script('k2functions',
 			get_bloginfo('template_directory') . '/js/k2.functions.js.php',
-			array('jquery'), '1.0-RC5');
+			array('jquery'), K2_CURRENT);
 
 		wp_register_script('humanmsg',
 			get_bloginfo('template_directory') . '/js/jquery.humanmsg.js.php',
-			array('jquery', 'jquery.easing'), '1.0-RC5');
+			array('jquery', 'jquery.easing'), K2_CURRENT);
 
 		wp_register_script('humanundo',
 			get_bloginfo('template_directory') . '/js/jquery.humanundo.js.php',
-			array('jquery'), '1.0-RC5');
+			array('jquery'), K2_CURRENT);
 
 		wp_register_script('k2rollingarchives',
 			get_bloginfo('template_directory') . '/js/k2.rollingarchives.js.php',
-			array('jquery', 'k2slider', 'k2trimmer'), '1.0-RC5');
+			array('jquery', 'k2slider', 'k2trimmer'), K2_CURRENT);
 
 		wp_register_script('k2livesearch',
 			get_bloginfo('template_directory') . '/js/k2.livesearch.js.php',
-			array('jquery'), '1.0-RC5');
+			array('jquery'), K2_CURRENT);
 
 		wp_register_script('k2slider',
 			get_bloginfo('template_directory') . '/js/k2.slider.js.php',
-			array('jquery'), '1.0-RC5');
+			array('jquery'), K2_CURRENT);
 
 		wp_register_script('k2comments',
 			get_bloginfo('template_directory') . '/js/k2.comments.js.php',
-			array('jquery'), '1.0-RC5');
+			array('jquery'), K2_CURRENT);
 
 		wp_register_script('k2trimmer',
 			get_bloginfo('template_directory') . '/js/k2.trimmer.js.php',
-			array('jquery', 'k2slider'), '1.0-RC5');
+			array('jquery', 'k2slider'), K2_CURRENT);
 
 		wp_register_script('k2sbm',
 			get_bloginfo('template_directory') . '/js/k2.sbm.js.php',
-			array('jquery', 'interface', 'jquery.dimensions', 'humanmsg', 'humanundo'), '1.0-RC5');
+			array('jquery', 'interface', 'jquery.dimensions', 'humanmsg', 'humanundo'), K2_CURRENT);
 	}
 
 

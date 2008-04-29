@@ -62,13 +62,34 @@ class K2Options {
 			add_option('k2headerimage', '', 'Current Header Image');
 
 			// Convert existing options
+
+			// Header Images
+			$image = get_option('k2header_picture');
+			if ( $image != '') {
+				if ( is_readable(K2_HEADERS_PATH . $image) ) {
+					update_option( 'k2headerimage', str_replace(ABSPATH, '', K2_HEADERS_PATH . $style) );
+				}
+			}
+
+			if ( '1' == get_option('k2imagerandomfeature') ) {
+				update_option('k2headerimage', 'random');
+			}
+
+			// Styles
 			$style = get_option('k2scheme');
 			if ( $style != '' ) {
-				if ( file_exists(K2_STYLES_PATH . $style) ) {
-					update_option('k2style', K2_STYLES_PATH . $style);
+				if ( is_readable(K2_STYLES_PATH . $style) ) {
+					update_option( 'k2style', str_replace(ABSPATH, '', K2_STYLES_PATH . $style) );
 					update_style_info();
 				}
 			}
+
+			// Delete depreciated options
+			delete_option('k2advnav');
+			delete_option('k2header_picture');
+			delete_option('k2imagerandomfeature');
+			delete_option('k2lastmodified');
+			delete_option('k2scheme');
 		}
 	}
 
