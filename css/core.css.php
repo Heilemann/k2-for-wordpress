@@ -1007,10 +1007,6 @@ img.wp-smiley {
 	list-style-image: none;
 	}
 
-ol li {
-	list-style: decimal outside;
-	}
-
 .sb-links ul li {
 	margin-top: 20px;
 	}
