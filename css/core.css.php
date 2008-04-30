@@ -23,12 +23,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	vertical-align: baseline;
 	background: transparent;
 }
-/*body {
-	line-height: 1;
-}*/
-ol, ul {
-	list-style: none;
-}
+
 blockquote, q {
 	quotes: none;
 }
@@ -41,14 +36,6 @@ q:before, q:after {
 /* remember to define focus styles! */
 :focus {
 	outline: 0;
-}
-
-/* remember to highlight inserts somehow! */
-ins {
-	text-decoration: none;
-}
-del {
-	text-decoration: line-through;
 }
 
 /* tables still need 'cellspacing="0"' in the markup */
