@@ -12,9 +12,6 @@
 		// Send the header
 		header('Content-Type: ' . get_bloginfo('html_type') . '; charset=' . get_bloginfo('charset'));
 
-		// Plugin support
-		do_action('template_redirect');
-
 		// K2 Hook
 		do_action('k2_dynamic_content');
 

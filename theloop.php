@@ -16,9 +16,6 @@
 			// Send the header
 			header('Content-Type: ' . get_bloginfo('html_type') . '; charset=' . get_bloginfo('charset'));
 
-			// Plugin support
-			do_action('template_redirect');
-
 			// K2 Hook
 			do_action('k2_dynamic_content');
 
@@ -34,6 +31,7 @@
 	// Debugging
 	if ( isset($_GET['k2debug']) ):
 		echo '<div class="alert">';
+		echo '<b>SQL:</b><br />'; var_dump($wp_query->request);
 		echo '<b>Query:</b><br />'; var_dump($wp_query->query);
 		echo '</div>';
 	endif;
