@@ -984,16 +984,16 @@ img.wp-smiley {
 	margin-top: 0.5em;
 	}
 
-.secondary ul, .secondary ol, .secondary div div {
+.secondary ul, .secondary ol {
 	margin: 5px 0 0;
 	padding-left: 0;
 	}
 
-.secondary ul ul, .secondary ol ol, .secondary div div {
+.secondary ul ul, .secondary ol ol {
 	margin: 0 0 0 10px;
 	}
        
-.secondary ul ul ul, .secondary ol ol ol, .secondary div div div {
+.secondary ul ul ul, .secondary ol ol ol {
 	margin: 0 0 0 20px;
 	}
 
@@ -1015,6 +1015,10 @@ img.wp-smiley {
 .sb-links ul li {
 	margin-top: 20px;
 	}
+
+.sb-links ul ul {
+	margin-left: 0px;
+}
 
 .sb-links ul ul li {
 	margin-top: 0;
