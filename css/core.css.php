@@ -34,11 +34,30 @@ table {
 	border-spacing: 0;
 }
 
+
+/*- Typography */
+
+body {
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Helvetica, Arial, sans-serif;
+	}
+
+strong, em, b, i {
+    font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Verdana, Helvetica, Arial, sans-serif;
+	}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Trebuchet MS", Verdana, sans-serif;
+	}
+
+.comments input[type=text], .comments textarea, code {
+	font-family: Monaco, "Courier New", Courier, monospace;
+	}
+
+
 /*- Page Structure */
 
 body {
 	font-size: 62.5%; /* Resets 1em to 10px */
-	font-family: 'Lucida Grande', Verdana, Helvetica, Arial, sans-serif;
 	color: #444;
 	background: #eee;
 	text-align: center;
@@ -208,10 +227,6 @@ ul.menu li.current_page_item a:hover {
 	}
 
 /*- Headings */
-
-h1, h2, h3, h4 {
-	font-family: 'Trebuchet MS', Verdana, Sans-Serif;
-	}
 
 h1 {
 	font-size: 3em;
@@ -737,7 +752,7 @@ li.bypostauthor blockquote {
 	}
 
 .comments input[type=text], .comments textarea {
-	font: 12px Monaco, 'Courier New', Courier, monospace;
+	font-size: 12px;
 	padding: 3px;
 	color: #777;
 	}
@@ -866,7 +881,7 @@ small, strike {
 	}
 	
 code {
-	font: 1.1em 'Courier New', Courier, Monospace;
+	font-size: 1.1em;
 	}
 
 blockquote {
