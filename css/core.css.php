@@ -19,18 +19,8 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	padding: 0;
 	border: 0;
 	outline: 0;
-	/*font-size: 100%;*/
 	vertical-align: baseline;
 	background: transparent;
-}
-
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
 }
 
 /* remember to define focus styles! */
