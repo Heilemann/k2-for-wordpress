@@ -560,17 +560,16 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	margin-top: 3px;
 	}
 
-
-.attachment img,
-.attachment-thumbnail,
-.entry-content .gallery img {
+.entry-content .gallery img,
+.image-attachment img,
+.attachment-thumbnail {
 	padding: 3px;
 	border: 1px solid #ccc;
 	}
 
-.attachment img:hover,
-.attachment-thumbnail:hover,
-.entry-content .gallery img:hover {
+.entry-content .gallery img:hover,
+.image-attachment img:hover,
+.attachment-thumbnail:hover {
 	padding: 2px;
 	border: 2px solid #27d;
 	}

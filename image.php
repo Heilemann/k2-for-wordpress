@@ -13,7 +13,12 @@
 			<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
 
 				<div class="entry-head">
-					<h3 class="entry-title"><a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><?php echo get_the_title($post->post_parent); ?></a> &raquo; <a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), attribute_escape(get_the_title()) ); ?>'><?php the_title(); ?></a></h3>
+					<h3 class="entry-title">
+					<?php if ( ! empty($post->post_parent) ): ?>
+						<a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><?php echo get_the_title($post->post_parent); ?></a> &raquo;
+					<?php endif; ?>
+					<a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), attribute_escape(get_the_title()) ); ?>'><?php the_title(); ?></a>
+					</h3>
 
 					<div class="entry-meta">
 						<div class="entry-comments">
@@ -32,7 +37,7 @@
 						<a href="<?php echo wp_get_attachment_url($post->ID); ?>"><?php echo wp_get_attachment_image( $post->ID, 'medium' ); ?></a>
 					</div>
 
-	                <div class="image-caption"><?php the_excerpt(); ?></div>
+	                <div class="image-caption"><?php echo $post->post_excerpt; ?></div>
 
 					<div class="image-description">
 						<?php the_content(sprintf(__('Continue reading \'%s\'', 'k2_domain'), the_title('', '', false))); ?>
@@ -71,7 +76,7 @@
 						<p class="<?php echo $classname; ?>"><?php echo $attachment_link; ?><br /><?php echo basename($post->guid); ?></p>
 					</div>
 
-	                <div class="image-caption"><?php the_excerpt(); ?></div>
+	                <div class="image-caption"><?php echo $post->post_excerpt; ?></div>
 
 					<div class="image-description">
 						<?php the_content(sprintf(__('Continue reading \'%s\'', 'k2_domain'), the_title('', '', false))); ?>
