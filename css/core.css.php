@@ -202,7 +202,9 @@ ul.menu li a:hover {
 	}
 
 ul.menu li.current_page_item a,
-ul.menu li.current_page_item a:hover {
+ul.menu li.current_page_item a:hover,
+ul.menu li.current_page_ancestor a,
+ul.menu li.current_page_ancestor a:hover {
 	color: #333;
 	background: white;
 	text-decoration: none;
