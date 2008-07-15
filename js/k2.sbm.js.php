@@ -54,7 +54,7 @@ function sbm_load(id, url) {
 					type: "POST",
 					processData: false,
 					url: sbm_baseUrl,
-					data: "action=add&add_name=" + module + "&add_type=" + type + "&add_sidebar=" + sidebar,
+					data: "action=k2sbm&sbm_action=add&add_name=" + module + "&add_type=" + type + "&add_sidebar=" + sidebar,
 					error: function(){
 						// Remove temp markers
 						jQuery('.marker').remove()
@@ -146,7 +146,7 @@ function sbm_load(id, url) {
 							type: "POST",
 							processData: false,
 							url: sbm_baseUrl,
-							data: 'action=reorder&' + orderData,
+							data: 'action=k2sbm&sbm_action=reorder&' + orderData,
 							success: function() {
 								humanMsg.displayMsg('Module order <strong>saved</strong>');
 							},
@@ -355,7 +355,7 @@ function sbm_load(id, url) {
 					type: "POST",
 					processData: false,
 					url: sbm_baseUrl,
-					data: "action=update&sidebar_id=" + curOptSidebar + "&module_id=" + curOptModule + "&" + jQuery('#module-options-form').serialize(),
+					data: "action=k2sbm&sbm_action=update&sidebar_id=" + curOptSidebar + "&module_id=" + curOptModule + "&" + jQuery('#module-options-form').serialize(),
 					success: function() {
 
 						// Inform the user the operation was successful
@@ -408,7 +408,8 @@ function sbm_load(id, url) {
 
 			// Get the options via AJAX
 			jQuery.post( sbm_baseUrl, {
-					action: 'control-show',
+					action: 'k2sbm',
+					sbm_action: 'control-show',
 					module_id: jQuery(moduleID).attr('id')
 				},
 				function (data) {
@@ -419,7 +420,8 @@ function sbm_load(id, url) {
 
 					// Fetch static page list
 					jQuery.post( sbm_baseUrl, {
-						action: 'control-page-list-show',
+						action: 'k2sbm',
+						sbm_action: 'control-page-list-show',
 						module_id: jQuery(moduleID).attr('id')
 					},
 					function (data) {
@@ -498,20 +500,18 @@ function sbm_load(id, url) {
 
 		
 		// Spool the FTL drive
-		jQuery(window).load(function() {
-			tabSystem();
-			humanUndo.setup(sbm_baseUrl)
-			jQuery(window).unload( humanUndo.emptyTrash )
+		tabSystem();
+		humanUndo.setup(sbm_baseUrl);
+		jQuery(window).unload( humanUndo.emptyTrash );
 
-			// Bring Backup/Restore system online
-			checkBackupLinks()
+		// Bring Backup/Restore system online
+		checkBackupLinks();
 
-			// Ignition Sequence
-			jQuery('.initloading').hide().remove();
-			jQuery('#optionswindow').css({ visibility: 'visible', display: 'none' });
-			resizeLists();
-		})
+		// Ignition Sequence
+		jQuery('.initloading').hide().remove();
+		jQuery('#optionswindow').css({ visibility: 'visible', display: 'none' });
+		resizeLists();
 
-		jQuery(window).resize(resizeLists)
+		jQuery(window).resize(resizeLists);
 
 	};

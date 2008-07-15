@@ -73,6 +73,10 @@ class K2SBM {
 		add_option('k2sbm_modules_next_id', '1', 'The ID for the next sidebar module.');
 	}
 
+	function ajax_add() {
+		var_dump($_POST);
+	}
+
 	function direct_bootstrap() {
 		global $k2sbm_registered_modules, $k2sbm_registered_sidebars, $k2sbm_active_modules, $k2sbm_disabled_modules, $k2sbm_error_text;
 
@@ -82,28 +86,28 @@ class K2SBM {
 		K2SBM::pre_bootstrap();
 
 		// Check for specific actions that return a HTML response
-		if($_POST['action'] == 'control-show') {
+		if($_POST['sbm_action'] == 'control-show') {
 			if(isset($_POST['module_id'])) {
 				$all_modules = K2SBM::get_all_modules();
 				$all_modules[$_POST['module_id']]->displayControl();
 			} else {
 				echo(false);
 			}
-		} elseif($_POST['action'] == 'control-post-list-show') {
+		} elseif($_POST['sbm_action'] == 'control-post-list-show') {
 			if(isset($_POST['module_id'])) {
 				$all_modules = K2SBM::get_all_modules();
 				$all_modules[$_POST['module_id']]->displayPostList();
 			} else {
 				echo(false);
 			}
-		} elseif($_POST['action'] == 'control-page-list-show') {
+		} elseif($_POST['sbm_action'] == 'control-page-list-show') {
 			if(isset($_POST['module_id'])) {
 				$all_modules = K2SBM::get_all_modules();
 				$all_modules[$_POST['module_id']]->displayPageList();
 			} else {
 				echo(false);
 			}
-		} elseif($_POST['action'] == 'backup') {
+		} elseif($_POST['sbm_action'] == 'backup') {
 			header('Content-Description: File Transfer');
 			header('Content-Disposition: attachment; filename=sbm-' . date('Y-m-d') . '.dat');
 			header('Content-Type: text/plain; charset=' . get_option('blog_charset'), true);
@@ -113,7 +117,7 @@ class K2SBM {
 			header('Content-type: text/plain; charset: UTF-8');
 
 			// Check what the action is
-			switch($_POST['action']) {
+			switch($_POST['sbm_action']) {
 				// Add a module to the sidebar
 				case 'add':
 					// Check the title was correct
@@ -230,9 +234,17 @@ class K2SBM {
 			<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/humanmsg.css.php" />
 
 			<script type="text/javascript">
-				//<![CDATA[
-					jQuery(document).ready(function(){ sbm_load(<?php echo(get_option('k2sbm_modules_next_id')); ?>, "<?php output_javascript_url('app/includes/sbm-direct.php'); ?>"); });
-				//]]>
+			//<![CDATA[
+				jQuery(document).ready(function(){
+					sbm_load(<?php echo get_option('k2sbm_modules_next_id'); ?>, "<?php bloginfo('wpurl'); ?>/wp-admin/admin-ajax.php");
+				});
+
+				<?php if ( ! empty($_GET['edit']) ): ?>
+					jQuery(window).load(function(){
+						jQuery("#<?php echo $_GET['edit']; ?> a.optionslink").click();
+					});
+				<?php endif; ?>
+			//]]>
 			</script>
 		<?php
 	}
@@ -754,6 +766,11 @@ class k2sbmModule {
 					$params[0]['after_title'] = '';
 				}
 
+				// Add an edit button
+				if ( current_user_can('edit_themes') ) {
+					$params[0]['after_module'] = '<span class="entry-edit module-edit"><a href="' . get_bloginfo( 'wpurl' ) . '/wp-admin/themes.php?page=k2-sbm-manager&amp;edit=' . $this->id . '" title="' . __('Edit Module', 'k2_domain') . '">' . __('Edit', 'k2_domain') . '</a></span>' . $params[0]['after_module'];
+				}
+
 				$params[0]['before_widget'] = $params[0]['before_module'];
 				$params[0]['after_widget'] = $params[0]['after_module'];
 				call_user_func_array($base_module['callback'], $params);
@@ -914,5 +931,6 @@ class k2sbmModule {
 	}
 }
 
-add_action('k2_init', array('K2SBM', 'init'));
+add_action( 'k2_init', array('K2SBM', 'init') );
+add_action( 'wp_ajax_k2sbm', array('K2SBM', 'direct_bootstrap') );
 ?>

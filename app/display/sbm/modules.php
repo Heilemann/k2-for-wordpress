@@ -105,7 +105,7 @@
 	<div id="backupsbmwindow" style="display: none;">
 
 		<div class="configstuff">
-			<form action="<?php bloginfo('template_url'); ?>/app/includes/sbm-direct.php" method="post" id="backupform" style="display: none;">
+			<form action="<?php bloginfo('wpurl'); ?>/wp-admin/admin-ajax.php" method="POST" id="backupform" style="display: none;">
 				<h3><?php _e('Backup current sidebar:', 'k2_domain'); ?></h3>
 				<!--<p><small><?php _e('This will create a backup of your current sidebar configuration.', 'k2_domain'); ?><br /><?php _e('Keep in a safe place in case of disaster.', 'k2_domain'); ?></small></p>-->
 				<p><input type="submit" value="<?php _e('Create sidebar backup &raquo;', 'k2_domain'); ?>" /></p>
