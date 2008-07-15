@@ -128,7 +128,7 @@ $index = $_POST['comment_count'];
 
 <?php if ( function_exists('get_avatar') and get_option('show_avatars') ): ?>
 	<span class="gravatar">
-		<?php echo get_avatar( $comment, 32, get_bloginfo('template_url') . '/images/defaultgravatar.jpg' ); ?>
+		<?php echo get_avatar( $comment, 32 ); ?>
 	</span>
 <?php elseif ( function_exists('gravatar_image_link') ): gravatar_image_link(); ?>
 <?php elseif ( function_exists('gravatar') ): ?>
