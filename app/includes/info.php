@@ -464,6 +464,32 @@ function get_wp_version() {
 }
 
 
+// WordPress Compatibility Functions
+
+
+/**
+ * is_front_page() - Is it the front of the site, whether blog view or a WP Page?
+ *
+ * @since 2.5
+ * @uses is_home
+ * @uses get_option
+ *
+ * @return bool True if front of site
+ */
+if ( ! function_exists('is_front_page') ) {
+	function is_front_page () {
+		// most likely case
+		if ( 'posts' == get_option('show_on_front') && is_home() )
+			return true;
+		elseif ( 'page' == get_option('show_on_front') && get_option('page_on_front') && is_page(get_option('page_on_front')) )
+			return true;
+		else
+			return false;
+	}
+}
+
+
+
 // Semantic class functions from Sandbox (http://www.plaintxt.org/themes/sandbox/)
 
 // Generates semantic classes for BODY element

@@ -27,7 +27,7 @@
 	<title><?php
 	
 	// Page or Single Post
-	if ( is_page() or is_single() ) {
+	if ( ( is_page() and !is_front_page() and !is_home() ) or is_single() ) {
 		the_title();
 
 	// Category Archive
@@ -48,7 +48,7 @@
 	}
 
 	// Insert separator for the titles above
-	if ( !is_home() and !is_404() ) {
+	if ( !is_front_page() and !is_home() and !is_404() ) {
 		_e(' at ','k2_domain');
 	}
 	
