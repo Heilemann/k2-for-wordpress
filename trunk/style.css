@@ -1,0 +1,13 @@
+/*
+Theme Name: K2
+Theme URI: http://getk2.com
+Description: <strong><a href="themes.php?page=k2-options">Configure K2</a></strong> or visit the <a href="http://getk2.com/forum/">support forums</a>, <a href="http://k2.stikipad.com/">the wiki</a> or <a href="http://code.google.com/p/kaytwo/issues/list">the bug tracker</a>. K2 was developed by <a href="http://binarybonsai.com/">Michael</a>, <a href="http://chrisjdavis.org/">Chris</a>, <a href="http://zeo.unic.net.my/">Zeo</a>, <a href="http://stevelam.org/">Steve</a> and Ben, and is licensed under the <a href="http://www.opensource.org/licenses/gpl-license.php">GPL</a>.
+Version: 1.0-RC6
+Author: Various Artists
+Author URI: http://getk2.com/
+
+CSS Documentation:	http://k2.stikipad.com/docs/show/CSS+Overview
+The Real K2: 		http://en.wikipedia.org/wiki/K2
+*/
+
+@import url('css/core.css.php');
