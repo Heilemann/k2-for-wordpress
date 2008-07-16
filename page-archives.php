@@ -15,6 +15,8 @@
 <?php get_header(); ?>
 
 <div class="content">
+
+<div id="primary-wrapper">
 	<div id="primary">
 		<div id="notices"></div>
 		<a name="startcontent" id="startcontent"></a>
@@ -34,7 +36,7 @@
 
 					<p class="archivetext"><?php printf(__('This is the frontpage of the %1$s archives. Currently the archives are spanning %2$s posts and %3$s comments, contained within the meager confines of %4$s categories. Through here, you will be able to move down into the archives by way of time or category. If you are looking for something specific, perhaps you should try the search on the sidebar.','k2_domain'), get_bloginfo('name'), $numposts, $numcomms, $numcats); ?></p>
 
-					<?php if (function_exists('af_ela_super_archive') && !($wp_version > 2.2)) { ?>
+					<?php if ( function_exists('af_ela_super_archive') ): ?>
 
 						<h3><?php _e('Live Archives','k2_domain'); ?></h3>
 						<p><?php printf(__('This is a \'live archive\', which allows you to \'dig\' into the %s repository in a fast and efficient way without having to reload this page as you explore.','k2_domain'), get_bloginfo('name')); ?> </p>
@@ -44,14 +46,14 @@
 							<div class="clear"></div>
 						</div>
 
-					<?php } else { ?>
+					<?php else: ?>
 
-						<?php if (function_exists('wp_tag_cloud')) { ?>
+						<?php if ( function_exists('wp_tag_cloud') ): ?>
 							<h3><?php _e('Tag Cloud','k2_domain'); ?></h3>
 							<div id="tag-cloud">
 							<?php wp_tag_cloud('number=0'); ?>
 							</div>
-						<?php } ?>
+						<?php endif; ?>
 
 						<h3><?php _e('Browse by Month','k2_domain'); ?></h3>
 						<ul class="archive-list">
@@ -67,7 +69,7 @@
 
 						<br class="clear" />
 						
-					<?php } ?>
+					<?php endif; ?>
 
 				</div> <!-- .entry-content -->
 			</div> <!-- #post-ID -->
@@ -76,6 +78,7 @@
 
 		<div id="dynamic-content"></div>
 	</div> <!-- #primary -->
+</div> <!-- #primary-wrapper -->
 
 	<?php get_sidebar(); ?>
 

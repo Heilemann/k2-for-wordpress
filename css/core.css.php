@@ -2,21 +2,64 @@
 
 /* This file contains the core CSS elements for K2 */
 
-/*- Page Structure */
+/*- Reset CSS */
+/* http://meyerweb.com/eric/tools/css/reset/ */
+/* v1.0 | 20080212 */
 
-* {
-	padding: 0;
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
 	margin: 0;
-	}
-
-img {
+	padding: 0;
 	border: 0;
-	}
+	outline: 0;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/*- Typography */
 
 body {
-	font: 62.5% 'Lucida Grande', Verdana, Arial, Sans-Serif; /* Resets 1em to 10px */
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Helvetica, Arial, sans-serif;
+	}
+
+strong, em, b, i {
+    font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Verdana, Helvetica, Arial, sans-serif;
+	}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Trebuchet MS", Verdana, sans-serif;
+	}
+
+.comments input[type=text], .comments textarea, code {
+	font-family: Monaco, "Courier New", Courier, monospace;
+	}
+
+
+/*- Page Structure */
+
+body {
+	font-size: 62.5%; /* Resets 1em to 10px */
 	color: #444;
-	background: #EDEDED;
+	background: #eee;
 	text-align: center;
 	}
 
@@ -36,7 +79,7 @@ body.lang-zh {
 	background: white;
 	text-align: left;
 	margin: 0 auto;
-	padding: 20px 0 10px;
+	padding-top: 20px;
 	position: relative;
 	border: 1px solid #ddd;
 	border-top: none;
@@ -56,8 +99,6 @@ body.lang-zh {
 	}
 
 #header {
-	padding: 0;
-	margin: 0;
 	position: relative;
 	height: 200px;
 	background: #3371A3;
@@ -65,7 +106,21 @@ body.lang-zh {
 	}
 
 .content {
-	padding: 0 20px;
+	padding: 0 20px 10px;
+	}
+
+body.columns-two #primary-wrapper {
+	float: left;
+	margin-right: -220px;
+	width: 100%;
+	}
+
+body.columns-two #primary {
+	margin-right: 220px;
+	}
+
+body.columns-two .secondary {
+	float: right;
 	}
 
 #primary {
@@ -79,17 +134,13 @@ body.lang-zh {
 	display: inline;
 	}
 
-.columns-three #primary {
-	padding: 10px;
-	}
-
 .columns-one .secondary {
 	width: 240px;
 	border-top: 1px solid #eee;
 	}
 
-.columns-three #sidebar-2 {
-	width: 150px;
+.columns-three .secondary {
+	width: 175px;
 	}
 
 .secondary {
@@ -103,9 +154,13 @@ body.lang-zh {
 	overflow: hidden;
 	}
 
+#sidebar-2 {
+	clear: right;
+	}
+
 .comments {
 	text-align: left;
-	padding: 30px 0 0;
+	margin: 30px 0 0;
 	position: relative;
 	}
 
@@ -134,17 +189,23 @@ ul.menu li a {
 	font-size: 1em;
 	color: white;
 	margin: 0;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
 	}
 
 ul.menu li a:hover {
 	background: #333;
-	color: #eee !important;
+	color: #eee;
 	text-decoration: none;
 	}
 
 ul.menu li.current_page_item a,
-ul.menu li.current_page_item a:hover {
-	color: #333 !important;
+ul.menu li.current_page_item a:hover,
+ul.menu li.current_page_ancestor a,
+ul.menu li.current_page_ancestor a:hover {
+	color: #333;
 	background: white;
 	text-decoration: none;
 	}
@@ -169,25 +230,23 @@ ul.menu li.current_page_item a:hover {
 
 /*- Headings */
 
-h1, h2, h3, h4 {
-	font-family: 'Trebuchet MS', Verdana, Sans-Serif;
+h1 {
+	font-size: 3em;
 	}
 
-h1 { /* H1 is the title in the header */
-	font-size: 3em;
+h1.blog-title {
 	font-weight: bold;
 	letter-spacing: -1px;
-	margin: 0;
 	padding: 75px 40px 0;
 	}
 
-h1, h1 a, h1 a:hover, h1 a:visited,
+h1.blog-title a,
 #header .description {
 	text-decoration: none;
 	color: white;
 	}
 
-h1 a:hover {
+h1.blog-title a:hover {
 	text-decoration: underline;
 	}
 
@@ -229,25 +288,25 @@ h2 { /* H2 is what kind of page you are on. Eg. 'Monthly Archive'. */
 	margin-bottom: 5px;
 	}
 
-#primary h3, #primary h4, .single #primary .k2-asides h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
+h3, h4, .single .k2-asides h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
 	font-size: 2.4em;
 	font-weight: normal;
 	letter-spacing: -1px;
 	}
 
-#primary .entry-content h3 {
+.entry-content h3 {
 	font-size: 1.8em;
 	font-weight: normal;
 	margin-top: 25px;
 	}
 
-#primary .entry-content h4 {
+.entry-content h4 {
 	font-size: 1.5em;
 	font-weight: normal;
 	margin-top: 25px;
 	}
 
-#primary .k2-asides h3 {
+.k2-asides h3 {
 	font-size: 1.6em;
 	font-weight: normal;
 	}
@@ -459,8 +518,7 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 /*- Primary Contents */
 
 .hentry {
-	margin: 0;
-	padding: 5px 0 15px;
+	margin: 5px 0 15px;
 	position: relative;
 	}
 
@@ -504,6 +562,34 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	margin-top: 3px;
 	}
 
+.entry-content .gallery img,
+.image-attachment img,
+.attachment-thumbnail {
+	padding: 3px;
+	border: 1px solid #ccc;
+	}
+
+.entry-content .gallery img:hover,
+.image-attachment img:hover,
+.attachment-thumbnail:hover {
+	padding: 2px;
+	border: 2px solid #27d;
+	}
+
+.additional-info h4 {
+	margin: 1em 0;
+	}
+
+.image-meta span {
+	font-weight: bold;
+	display: block;
+	float: left;
+	width: 100px;
+	}
+
+
+/*- Comments */
+
 .commentsrsslink {
 	background: url('../images/feed.png') left top no-repeat;
 	padding: 2px 0 2px 20px;
@@ -527,8 +613,7 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	}
 
 #commentlist {
-	margin: 0;
-	padding: 10px 0 20px;
+	margin: 10px 0 20px;
 	position: relative;
 	}
 
@@ -539,7 +624,6 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	}
 
 #commentlist li .comment-content {
-	padding: 10px 0;
 	font-size: 1.2em;
 	line-height: 1.8em;
 	}
@@ -666,11 +750,10 @@ li.bypostauthor blockquote {
 .comments form {
 	clear: both;
 	padding: 1px 0 10px;
-	margin: 0;
 	}
 
 .comments input[type=text], .comments textarea {
-	font: 1.2em 'Courier New', Courier, Monospace;
+	font-size: 12px;
 	padding: 3px;
 	color: #777;
 	}
@@ -692,7 +775,6 @@ input[type=text]:focus, textarea:focus {
 	}
 
 .comments form #submit {
-	margin: 0;
 	float: right;
 	}
 
@@ -720,6 +802,16 @@ input[type=text]:focus, textarea:focus {
 	color: #000;
 	}
 
+#footer .wp-version,
+#footer .k2-version {
+	display: none;
+	padding-left: 0.3em;
+	}
+
+.footerstats {
+	display: none;
+}
+
 /*- Links */
 
 #primary a:hover, #primary a:visited:hover,
@@ -744,8 +836,6 @@ a {
 
 .clear {
 	clear: both;
-	margin: 0;
-	padding: 0;
 	}
 
 .center {
@@ -792,7 +882,7 @@ small, strike {
 	}
 	
 code {
-	font: 1.1em 'Courier New', Courier, Monospace;
+	font-size: 1.1em;
 	}
 
 blockquote {
@@ -807,6 +897,17 @@ hr {
 	display: none;
 	}
 
+body.smartposition #nav-above {
+	position: fixed;
+	top: 0px;
+	background: #fff;
+	border-bottom: 1px solid #eee;
+	width: 500px;
+	margin: 0;
+	padding: 10px 0;
+	z-index: 10;
+	}
+
 .navigation {
 	text-align: center;
 	margin: 10px 0;
@@ -818,21 +919,18 @@ hr {
 	margin: 10px 0;
 	}
 
+.navigation .nav-previous,
 .navigation .left {
 	float: left;
 	width: 50%;
 	text-align: left;
 	}
 
+.navigation .nav-next,
 .navigation .right {
 	float: right;
 	width: 50%;
 	text-align: right;
-	}
-
-.navigation p {
-	margin: 0;
-	padding: 0;
 	}
 
 .navigation a {
@@ -872,10 +970,12 @@ img.wp-smiley {
 	background-color: #EDEDED;
 	}
 
+.image-meta,
 .entry-content ol, .entry-content ul {
 	padding: 0 0 0 35px;
 	}
 
+.image-meta li,
 .entry-content ol li, .entry-content ul li {
 	margin: 0 0 3px;
 	padding: 0;
@@ -885,16 +985,16 @@ img.wp-smiley {
 	margin-top: 0.5em;
 	}
 
-.secondary ul, .secondary ol, .secondary div div {
+.secondary ul, .secondary ol {
 	margin: 5px 0 0;
 	padding-left: 0;
 	}
 
-.secondary ul ul, .secondary ol ol, secondary div div {
+.secondary ul ul, .secondary ol ol {
 	margin: 0 0 0 10px;
 	}
        
-.secondary ul ul ul, .secondary ol ol ol, secondary div div div {
+.secondary ul ul ul, .secondary ol ol ol {
 	margin: 0 0 0 20px;
 	}
 
@@ -913,13 +1013,13 @@ img.wp-smiley {
 	list-style-image: none;
 	}
 
-ol li {
-	list-style: decimal outside;
-	}
-
 .sb-links ul li {
 	margin-top: 20px;
 	}
+
+.sb-links ul ul {
+	margin-left: 0px;
+}
 
 .sb-links ul ul li {
 	margin-top: 0;
@@ -958,6 +1058,10 @@ input[type=text], textarea {
 	width: 88%;
 	}
 
+.columns-three #s.livesearch {
+	width: 145px;
+	}
+
 #searchreset {
 	position: absolute;
 	right: 0px;
@@ -991,8 +1095,305 @@ input[type=text], textarea {
 	}
 
 /*- Attachment */
+
 .entry-content .attachment { 
 	text-align: center; 
+	}
+
+
+/*- Rolling Archives */
+
+#rollingarchives {
+	position: absolute;
+	padding: 20px 0;
+	display: block;
+	width: 500px;
+	top: 0;
+	}
+
+#rollingarchives a:hover {
+	text-decoration: underline;
+	}
+
+#rollnavigation {
+	position: relative;
+	}
+
+#rollnavigation a:active, #rollnavigation a:focus {
+	outline: none;
+	}
+
+#rollprevious,
+#rollnext,
+#rollload,
+#rollhome,
+#rollpages,
+#rolldates {
+	position: absolute;
+	top: 3px;
+	}
+
+#rollprevious:hover,
+#rollnext:hover,
+#rollhome:hover {
+	text-decoration: underline;
+	cursor: pointer;
+	}
+
+#rollhome {
+	display: none;
+	left: 54px;
+	background: url('../images/house.png') no-repeat center center;
+	width: 16px;
+	height: 16px;
+	}
+
+#rollload {
+	background: url('../images/spinner.gif') no-repeat center center;
+	top: 1px;
+	left: 50%;
+	margin-left: -8px;
+	width: 16px;
+	height: 16px;
+	}
+
+#rollload span,
+#rollhome span {
+	display: none;
+	}
+
+#rollnext,
+#rollprevious {
+	color: #666;
+	font-weight: bold;
+	}
+
+#rollpages {
+	top: 3px;
+	left: 55px;
+	color: #aaa;
+	}
+
+#rollhover {
+	position: absolute;
+	top: 7px;
+	left: -47px;
+	z-index: 100;
+	height: 45px;
+	background: url('../images/rollhover.png') no-repeat center top;
+	}
+
+#rollhover,
+#rolldates {
+	width: 100px;
+	margin-left: 5px;
+}
+
+#rollhover {
+	top: 11px;
+	}
+
+#rolldates {
+	position: absolute;
+	color: #999;
+	text-align: center;
+	font-size: .9em;
+	top: 22px;
+	margin: 0;
+	}
+
+#rollprevious {
+	left: 0;
+	text-align: left;
+	}
+
+#rollnext {
+	right: 0;
+	text-align: right;
+	}
+
+.emptypage #rollnavigation {
+	visibility: hidden;
+	}
+
+.firstpage #rollprevious {
+	visibility: visible;
+	}
+
+
+.firstpage #rollnext,
+.firstpage #rollhome {
+	visibility: hidden;
+	}
+
+.nthpage #rollnext,
+.nthpage #rollprevious,
+.nthpage #rollhome {
+	visibility: visible;
+	}
+
+.lastpage #rollnext,
+.lastpage #rollhome {
+	visibility: visible;
+	}
+
+.lastpage #rollprevious {
+	visibility: hidden;
+	}
+
+#pagetrackwrap {
+	position: absolute;
+	top: 6px;
+	left: 130px;
+	width: 240px;
+	padding-right: 9px;
+	background: url('../images/sliderbgright.png') no-repeat right center;
+	}
+
+#pagetrack {
+	width: 240px;
+	height: 7px;
+	background: url('../images/sliderbgleft.png') no-repeat left center;
+	}
+
+#pagehandle {
+	top: -5px;
+	width: 17px;
+	height: 17px;
+	background: url('../images/sliderhandle.png') no-repeat center center;
+	cursor: col-resize;
+	}
+
+#primarycontent {
+	clear: both;
+	}
+
+div.trimmed .hentry {
+	background: #f5f5f5;
+	}
+
+div.trimmed .hentry.alt {
+	background: transparent;
+	}
+
+#texttrimmer {
+	position: absolute;
+	width: 55px;
+	height: 15px;
+	top: 10px;
+	right: 55px;
+	}
+
+.firstpage #texttrimmer,
+.firstpage #pagetrackwrap {
+	visibility: hidden;
+	}
+
+.nthpage #texttrimmer,
+.nthpage #pagetrackwrap,
+.lastpage #texttrimmer,
+.lastpage #pagetrackwrap {
+	visibility: visible;
+	}
+
+#trimmertrackwrap {
+	background: url('../images/sliderbgright.png') no-repeat right center;
+	height: 7px;
+	width: 50px;
+	top: 6px;
+	padding-right: 4px;
+	position: absolute;
+	display: none;
+	}
+
+#trimmertrack {
+	background: url('../images/sliderbgleft.png') no-repeat left center;
+	width: 50px;
+	height: 7px;
+	}
+
+#trimmerhandle {
+	width: 7px;
+	height: 7px;
+	background: url('../images/sliderhandle.png') no-repeat center center;
+	cursor: col-resize;
+	}
+
+#trimmermore,
+#trimmerless {
+	display: none;
+	position: absolute;
+	top: 0;
+	height: 16px;
+	width: 16px;
+	}
+
+#trimmermore span,
+#trimmerless span {
+	display: none;
+	}
+
+#trimmermore:hover,
+#trimmerless:hover {
+	cursor: pointer;
+	}
+
+#trimmermore {
+	right: 0;
+	background: url('../images/trim_more.png');
+	}
+
+#trimmerless {
+	left: 0;
+	background: url('../images/trim_less.png');
+	}
+
+#trimmertrim:hover, #trimmeruntrim:hover {
+	text-decoration: underline;
+	}
+
+#trimmertrim, #trimmeruntrim {
+	cursor: pointer;
+	position: absolute;
+	top: 13px;
+	width: 50px;
+	text-align: center;
+	color: #999;
+	}
+
+.trimmed #trimmertrim {
+	display: none;
+	}
+
+#trimmeruntrim {
+	display: none;
+	}
+
+.trimmed #trimmeruntrim {
+	display: block;
+	}
+
+body.smartposition #rollingarchives {
+	position: fixed;
+	top: 0px;
+	background: #fff;
+	border-bottom: 1px solid #eee;
+	width: 500px;
+	z-index: 10;
+	padding-top: 10px;
+	padding-bottom: 30px;
+	}
+
+body.smartposition #trimmertrim, body.smartposition #trimmeruntrim {
+	top: 3px;
+	}
+
+#dynamic-content { /* Make room for the rolling archives */
+	padding-top: 30px;
+	}
+
+body.onepageonly #dynamic-content { /* For the rare case of having only one page of content on the frontpage */
+	padding-top: 0;
 	}
 
 /* CSS Beyond this point is for various supported plugins and not the 'core' K2 template */

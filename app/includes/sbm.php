@@ -62,6 +62,17 @@ function unregister_sidebar_module_control($name) {
 
 
 
+// New Widgets API - WordPress 2.4+
+
+function wp_register_widget_control() {
+}
+
+function wp_register_sidebar_widget() {
+}
+
+
+// Old Widgets API
+
 function register_sidebar_widget($name, $callback, $classname = '') {
 	// Compat
 	if ( is_array($name) ) {

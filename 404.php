@@ -4,6 +4,7 @@
 
 <div class="content">
 	
+<div id="primary-wrapper">
 	<div id="primary">
 		<div id="notices"></div>
 
@@ -26,6 +27,7 @@
 
 		<div id="dynamic-content"></div>
 	</div> <!-- #primary -->
+</div> <!-- #primary-wrapper -->
 
 	<?php define('K2_NOT_FOUND', true); /* So we can tell the sidebar what to do */ ?>
 	<?php get_sidebar(); ?>

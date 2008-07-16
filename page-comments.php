@@ -5,13 +5,15 @@
 <?php get_header(); ?>
 
 <div class="content">
+
+<div id="primary-wrapper">
 	<div id="primary">
 		<div id="notices"></div>
 		<a name="startcontent" id="startcontent"></a>
 
 		<div id="current-content" class="hfeed">
 
-			<?php while (have_posts()) { the_post(); ?>
+			<?php if ( have_posts() ): while ( have_posts() ): the_post(); ?>
 			<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
 
 				<div class="page-head">
@@ -26,14 +28,32 @@
 				</div>
 
 			</div> <!-- #post-ID -->
-			<?php comments_template(); ?>
 
-			<?php } // End the Loop ?>
+			<div class="comments">
+				<?php comments_template(); ?>
+			</div> <!-- .comments -->
+
+		<?php endwhile; else: ?>
+
+			<div class="hentry four04">
+
+				<div class="entry-head">
+					<h3 class="center"><?php _e('Not Found','k2_domain'); ?></h3>
+				</div>
+
+				<div class="entry-content">
+					<p><?php _e('Oh no! You\'re looking for something which just isn\'t here! Fear not however, errors are to be expected, and luckily there are tools on the sidebar for you to use in your search for what you need.','k2_domain'); ?></p>
+				</div>
+
+			</div> <!-- .hentry .four04 -->
+
+		<?php endif; ?>
 
 		</div> <!-- #current-content .hfeed -->
 
 		<div id="dynamic-content"></div>
 	</div> <!-- #primary -->
+</div> <!-- #primary-wrapper -->
 
 	<?php get_sidebar(); ?>
 

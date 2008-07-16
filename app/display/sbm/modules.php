@@ -28,10 +28,10 @@
 </div>
 <?php } ?>
 
-<div id="optionswindow">
+<div id="optionswindow" style="visibility:hidden;">
 	<a href="#" id="closelink" title="<?php _e('Close', 'k2_domain'); ?>"></a>
 
-	<table>
+	<table cellspacing="0" cellpadding="0">
 	<tr>
 		<td class="opttl">&nbsp;</td>
 		<td class="optt">&nbsp;</td>
@@ -42,23 +42,20 @@
 		<td class="optl" rowspan="3">&nbsp;</td>
 		<td class="opttabs">
 	
-	
 			<div class="tabbg">
-			<div class="tabs">
-				<a href="#" id="optionstab" class="selected" title="<?php _e('Options for this module type', 'k2_domain'); ?>"><?php _e('Options', 'k2_domain'); ?></a>
-				<a href="#" id="advancedtab"><?php _e('Advanced', 'k2_domain'); ?></a>
-				<a href="#" id="displaytab" title="<?php _e('Where to display this module', 'k2_domain'); ?>"><?php _e('Display', 'k2_domain'); ?></a>
-			</div>
+				<div class="tabs">
+					<a href="#" id="optionstab" class="selected" title="<?php _e('Options for this module type', 'k2_domain'); ?>"><?php _e('Options', 'k2_domain'); ?></a>
+					<a href="#" id="advancedtab"><?php _e('Advanced', 'k2_domain'); ?></a>
+					<a href="#" id="displaytab" title="<?php _e('Where to display this module', 'k2_domain'); ?>"><?php _e('Display', 'k2_domain'); ?></a>
+				</div>
 			</div>
 
-
-		</td><td class="optr" rowspan="3">&nbsp;</td>
+		</td>
+		<td class="optr" rowspan="3">&nbsp;</td>
 	</tr>
 
 	<tr>
 		<td class="optcontents">
-
-
 			<form id="module-options-form">
 
 				<div id="options">
@@ -67,16 +64,12 @@
 				<!--<p class="optionkeys"><?php _e('\'Enter\' saves, \'Escape\' closes.', 'k2_domain'); ?></p>-->
 
 			</form>
-
-	</tr><tr>
-		</td><td class="optbuttons">
-
-
-			<p class="submitbuttons">
-				<input type="submit" id="submit" value="<?php echo attribute_escape(__('Save', 'k2_domain')); ?>" />
-				<input type="submit" id="submitclose" value="<?php echo attribute_escape(__('Save &amp; Close', 'k2_domain')); ?>" />
-			</p>
-
+		</td>
+	</tr>
+	<tr>
+		<td class="optbuttons">
+			<input type="submit" id="submit" value="<?php echo attribute_escape(__('Save', 'k2_domain')); ?>" />
+			<input type="submit" id="submitclose" value="<?php echo attribute_escape(__('Save &amp; Close', 'k2_domain')); ?>" />
 		</td>
 	</tr>
 
@@ -112,7 +105,7 @@
 	<div id="backupsbmwindow" style="display: none;">
 
 		<div class="configstuff">
-			<form action="<?php bloginfo('template_url'); ?>/app/includes/sbm-direct.php" method="post" id="backupform" style="display: none;">
+			<form action="<?php bloginfo('wpurl'); ?>/wp-admin/admin-ajax.php" method="POST" id="backupform" style="display: none;">
 				<h3><?php _e('Backup current sidebar:', 'k2_domain'); ?></h3>
 				<!--<p><small><?php _e('This will create a backup of your current sidebar configuration.', 'k2_domain'); ?><br /><?php _e('Keep in a safe place in case of disaster.', 'k2_domain'); ?></small></p>-->
 				<p><input type="submit" value="<?php _e('Create sidebar backup &raquo;', 'k2_domain'); ?>" /></p>

@@ -3,69 +3,32 @@
 // Based on Hasse R. Hansen's K2 header plugin - http://www.ramlev.dk
 
 class K2Header {
-	function install() {
-		add_option('k2imagerandomfeature', '0', "Whether to use a random image in K2's header");
-		add_option('k2header_picture', '', "The image to use in K2's header");
+	function init() {
+		$styleinfo = get_option('k2styleinfo');
+
+		define('HEADER_IMAGE_HEIGHT', empty($styleinfo['header_height'])? K2_HEADER_HEIGHT : $styleinfo['header_height']);
+		define('HEADER_IMAGE_WIDTH', empty($styleinfo['header_width'])? K2_HEADER_WIDTH : $styleinfo['header_width']);
+		define('HEADER_TEXTCOLOR', empty($styleinfo['header_text_color'])? 'ffffff' : $styleinfo['header_text_color']);
+		define('HEADER_IMAGE', '%s/images/transparent.gif');
+
+		add_custom_image_header(array('K2Header', 'output_header_css'), array('K2Header', 'output_admin_header_css'));
 	}
 
 	function uninstall() {
-		delete_option('k2imagerandomfeature');
-		delete_option('k2header_picture');
-	}
-
-	function init() {
-		if ( function_exists('add_custom_image_header') and is_writable(K2_HEADERS_PATH) ) {
-			$styleinfo = get_option('k2styleinfo');
-			$header_image = get_option('k2header_picture');
-
-			define('HEADER_IMAGE_HEIGHT', empty($styleinfo['header_height'])? K2_HEADER_HEIGHT : $styleinfo['header_height']);
-			define('HEADER_IMAGE_WIDTH', empty($styleinfo['header_width'])? K2_HEADER_WIDTH : $styleinfo['header_width']);
-			define('HEADER_TEXTCOLOR', empty($styleinfo['header_text_color'])? 'ffffff' : $styleinfo['header_text_color']);
-			define('HEADER_IMAGE', empty($header_image)? '%s/images/transparent.gif' : get_k2info('headers_url') . $header_image);
-
-			add_custom_image_header(array('K2Header', 'output_header_css'), array('K2Header', 'output_admin_header_css'));
-		} else {
-			add_action('wp_head', array('K2Header', 'output_header_css'));
-		}
-	}
-
-	function update() {
-		// Manage the uploaded picture
-		if (!empty($_FILES['image_upload']['name']) and !empty($_FILES['image_upload']['size'])) {
-			move_uploaded_file($_FILES['image_upload']['tmp_name'], K2_HEADERS_PATH . $_FILES['image_upload']['name']);
-
-			if (isset($_POST['upload_activate'])) {
-				update_option('k2header_picture', $_FILES['image_upload']['name']);
-			}
-		}
-
-		if (!empty($_POST['k2'])) {
-
-			// Random Image
-			if(isset($_POST['k2']['imagerandomfeature'])) {
-				update_option('k2imagerandomfeature', '1');
-			} else {
-				update_option('k2imagerandomfeature', '0');
-			}
-
-			// Header Image
-			if (isset($_POST['k2']['header_picture'])) {
-				update_option('k2header_picture', $_POST['k2']['header_picture']);
-
-				// Update Custom Image Header
-				if (function_exists('set_theme_mod')) {
-					if (empty($_POST['k2']['header_picture'])) {
-						remove_theme_mod('header_image');
-					} else {
-						set_theme_mod('header_image', get_k2info('headers_url') . get_option('k2header_picture'));
-					}
-				}
-			}
-		}
+		remove_theme_mods();
 	}
 
 	function get_header_images() {
-		return K2::files_scan(K2_HEADERS_PATH, array('gif','jpeg','jpg','png'), 1);
+		global $wpdb;
+
+		$images = K2::files_scan(K2_HEADERS_PATH, array('gif','jpeg','jpg','png'), 1, 2);
+
+		$attachment_ids = (array) $wpdb->get_var("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = 'k2-header-image'");
+		foreach ($attachment_ids as $id) {
+			$images[] = str_replace(ABSPATH, '', get_attached_file($id) );
+		}
+
+		return $images;
 	}
 
 	function random_picture() {
@@ -81,29 +44,30 @@ class K2Header {
 	}
 
 	function output_header_css() {
-		if (get_option('k2imagerandomfeature') == '1') {
+		$header_image = get_option('k2headerimage');
+
+		if ( 'random' == $header_image ) {
 			$picture = K2Header::random_picture();
 		} else {
-			$picture = get_option('k2header_picture');
+			$picture = $header_image;
 		}
 		?>
 		<style type="text/css">
-		<?php if (!empty($picture)) { ?>
+		<?php if ( $picture != '' ): ?>
 		#header {
-			background-image: url("<?php echo get_k2info('headers_url') . $picture; ?>");
+			background-image: url("<?php echo get_option('siteurl') . '/' . $picture; ?>");
 		}
-		<?php } ?>
-		<?php if (function_exists('add_custom_image_header')) { ?>
-			<?php if ( 'blank' == get_header_textcolor() ) { ?>
-			#header h1, #header .description {
-				display: none;
-			}
-			<?php } else { ?>
-			#header h1 a, #header .description {
-				color: #<?php header_textcolor(); ?>;
-			}
-			<?php } ?>
-		<?php } ?>
+		<?php endif; ?>
+
+		<?php if ( 'blank' == get_header_textcolor() ): ?>
+		#header h1, #header .description {
+			display: none;
+		}
+		<?php else: ?>
+		#header h1 a, #header .description {
+			color: #<?php header_textcolor(); ?>;
+		}
+		<?php endif; ?>
 		</style>
 		<?php
 	}
@@ -146,43 +110,84 @@ class K2Header {
 		}
 		<?php } else { ?>
 		#headimg h1 a, #headimg #desc {
-			color: #<?php echo HEADER_TEXTCOLOR ?>;
+			color: #<?php header_textcolor(); ?>;
 		}
 		<?php } ?>
 		</style>
 		<?php
 	}
 
-	function process_custom_header_image($source, $id = false) {
-		// Workaround for WP 2.1 bug
-		if ( empty($source) ) {
-			$uploads = wp_upload_dir();
-			$source = str_replace($uploads['url'], $uploads['path'], get_theme_mod('header_image'));
-			$id = true;
-		}
-	
+	function process_custom_header_image($source, $id = 0) {
 		// Handle only the final step
 		if ( file_exists($source) and (strpos(basename($source),'midsize-') === false) ) {
+			if ( 2 == $_GET['step'] ) {
+				if ( get_wp_version() < 2.4 ) {
+					// Quick & dirty mime-type
+					$ext = pathinfo($source, PATHINFO_EXTENSION);
+					switch ($ext) {
+						case 'jpg':
+						case 'jpe':
+							$mime = 'jpeg';
+							break;
 
-			if ($id) {
-				$dest = K2::copy_file($source, K2_HEADERS_PATH . basename($source));
-			} else {
-				$dest = K2::move_file($source, K2_HEADERS_PATH . basename($source));
+						case 'tif':
+							$mime = 'tiff';
+							break;
+
+						default:
+							$mime = $ext;
+							break;
+					}
+
+					// Get original attachment
+					$attachment = get_post( $id );
+					$attachment->post_mime_type = 'image/' . $mime;
+					$attachment->post_excerpt = sprintf( __('Custom Header Image for K2 (%1$d x %2$d)', 'k2_domain'), HEADER_IMAGE_WIDTH, HEADER_IMAGE_HEIGHT );
+
+					// Update the attachment
+					$id = wp_insert_attachment( $attachment, $source );
+					wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $source ) );
+				}
+
+				// Allows K2 to find the attachment
+				add_post_meta( $id, 'k2-header-image', 'original' );
+
+			} elseif ( 3 == $_GET['step'] ) {
+				if ( get_wp_version() < 2.4 ) {
+					// Get original attachment
+					$parent = get_post( $_POST['attachment_id'] );
+					$parent_url = $parent->guid;
+					$url = str_replace(basename($parent_url), basename($source), $parent_url);
+
+					// Construct the object array
+					$object = array(
+						'post_title' => basename($source),
+						'post_content' => $url,
+						'post_excerpt' => sprintf( __('Custom Header Image for K2 (%1$d x %2$d)', 'k2_domain'), HEADER_IMAGE_WIDTH, HEADER_IMAGE_HEIGHT ),
+						'post_mime_type' => 'image/jpeg',
+						'guid' => $url
+					);
+
+					// Create a new attachment
+					$id = wp_insert_attachment( $object, $source );
+					wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $source ) );
+				}
+
+				// Allows K2 to find the attachment
+				add_post_meta( $id, 'k2-header-image', 'cropped' );
 			}
 
-			if (false !== $dest) {
-				update_option('k2header_picture', basename($dest));
-				set_theme_mod('header_image', get_bloginfo('template_directory') . '/images/headers/' . basename($dest));
-
-				return $dest;
-			}
+			// Update K2 Options
+			update_option( 'k2headerimage', str_replace(ABSPATH, '', $source) );
 		}
+
 		return $source;
 	}
 }
 
 add_action('k2_init', array('K2Header', 'init'), 11);
-add_action('k2_install', array('K2Header', 'install'));
+//add_action('k2_install', array('K2Header', 'install'));
 add_action('k2_uninstall', array('K2Header', 'uninstall'));
-add_filter('wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'));
+add_action('wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'), 10, 2);
+add_filter('wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'), 10, 2);
 ?>

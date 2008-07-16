@@ -139,10 +139,3 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 	if (page == 1)
 		this.trimmer.slider.setValue(100);
 };
-
-
-jQuery(window).scroll(function(){
-	if (typeof K2.RollingArchives != 'undefined' && K2.RollingArchives.active) {
-		smartPosition('#dynamic-content');
-	}
-});
