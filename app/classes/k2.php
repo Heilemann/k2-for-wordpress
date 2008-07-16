@@ -33,20 +33,6 @@ class K2 {
 		elseif ( version_compare($k2version, K2_CURRENT, '<') )
 			K2::upgrade($k2version);
 
-		// Set K2 to active
-		if ( '0' == get_option('k2active') ) {
-			update_option('k2active', '1');
-
-			if ( '1' == get_option('k2sidebarmanager') ) {
-				K2::install_sbm_loader();
-
-				if ( is_admin() ) {
-					wp_redirect('themes.php?activated=true');
-					exit;
-				}
-			}
-		}
-
 		// Register our scripts with script loader
 		K2::register_scripts();
 
@@ -116,23 +102,6 @@ class K2 {
 		// Call the upgrade handlers
 		do_action('k2_upgrade', $previous);
 
-		if ( version_compare( $previous, '1.0-RC5', '<' ) ) {
-
-			// Remove previous SBM hackery
-			$found = false;
-			$plugins = (array) get_option('active_plugins');
-
-			foreach ($plugins as $key => $plugin) {
-				if ( (strpos( $plugin, 'sbm-stub.php' ) !== false) or (strpos( $plugin, 'widgets-removal.php' ) !== false ) ) {
-					unset( $plugins[$key] );
-					$found = true;
-				}
-			}
-
-			if ( $found )
-				update_option('active_plugins', $plugins);
-		}
-
 		// Update the version
 		update_option('k2version', K2_CURRENT);
 	}
@@ -152,7 +121,6 @@ class K2 {
 
 		// Delete options
 		delete_option('k2version');
-		delete_option('k2active');
 
 		// Remove the K2 options from the database. This is a catch-all
 		$cleanup = $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'k2%'");
@@ -173,66 +141,10 @@ class K2 {
 
 
 	/**
-	 * install_sbm_loader() - Inserts the SBM Loader into active_plugins
-	 */
-	function install_sbm_loader() {
-		$plugins = (array) get_option('active_plugins');
-		$plugins[] = '../themes/' . get_template() . '/app/includes/k2-sbm-loader.php';
-		update_option('active_plugins', $plugins);
-	}
-
-	/**
-	 * remove_sbm_loader() - Removes the SBM Loader from active_plugins
-	 */
-	function remove_sbm_loader() {
-		$found = false;
-		$plugins = (array) get_option('active_plugins');
-
-		foreach ($plugins as $key => $plugin) {
-			if ( strpos( $plugin, 'k2-sbm-loader.php' ) !== false ) {
-				unset( $plugins[$key] );
-				$found = true;
-			}
-		}
-
-		if ( $found )
-			update_option('active_plugins', $plugins);
-	}
-
-	/**
-	 * switch_theme() - Called when user switches out of K2
-	 */
-	function switch_theme() {
-		K2::remove_sbm_loader();
-
-		update_option('k2active', '0');
-	}
-
-	/**
 	 * Register K2 scripts to script loader
 	 */
 
 	function register_scripts() {
-		if ( get_wp_version() < 2.4 and ( !is_admin() or (is_admin() and ($_GET['page'] == 'k2-options' or $_GET['page'] == 'k2-sbm-manager')) ) ) {
-			// Unload the bundled jQuery
-			wp_deregister_script('jquery');
-			wp_deregister_script('interface');
-		}
-
-		// Register jQuery
-		wp_register_script('jquery',
-			get_bloginfo('template_directory').'/js/jquery.js.php',
-			false, '1.2.3');
-
-		// Register jQuery Plugins
-		wp_register_script('interface',
-			get_bloginfo('template_directory').'/js/jquery.interface.js.php',
-			array('jquery'), '1.2');
-
-		wp_register_script('jquery.dimensions',
-			get_bloginfo('template_directory').'/js/jquery.dimensions.js.php',
-			array('jquery'), '1.2');
-
 		wp_register_script('jquery.easing',
 			get_bloginfo('template_directory') . '/js/jquery.easing.js.php',
 			array('jquery'), '1.1.2');
@@ -269,10 +181,6 @@ class K2 {
 		wp_register_script('k2trimmer',
 			get_bloginfo('template_directory') . '/js/k2.trimmer.js.php',
 			array('jquery', 'k2slider'), K2_CURRENT);
-
-		wp_register_script('k2sbm',
-			get_bloginfo('template_directory') . '/js/k2.sbm.js.php',
-			array('jquery', 'interface', 'jquery.dimensions', 'humanmsg', 'humanundo'), K2_CURRENT);
 	}
 
 
@@ -510,12 +418,5 @@ class K2 {
 
 
 // Actions and Filters
-add_action( 'switch_theme', array('K2', 'switch_theme'), 0 );
 add_filter('comments_array', array('K2', 'filter_comments_array') , 0);
 add_filter('the_posts', array('K2', 'filter_post_comments') , 0);
-
-if ( get_option('k2sidebarmanager') == '1' ) {
-	add_action('deactivate_../themes/' . get_template() . '/app/includes/k2-sbm-loader.php', array('K2','install_sbm_loader'));
-}
-
-?>

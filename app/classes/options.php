@@ -16,7 +16,6 @@ class K2Options {
 		add_option('k2asidescategory', '0', 'A category which will be treated differently from other categories');
 		add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on"); // (live & classic)
 		add_option('k2archives', '0', 'Set whether K2 has a Live Archive page');
-		add_option('k2sidebarmanager', '0', 'Set whether to use K2 Sidebar Manager');
 		add_option('k2livecommenting', '1', "If you don't trust JavaScript, you can turn off Live Commenting. Otherwise it is suggested you leave it on");
 		add_option('k2styleinfo', '', 'Metadata of current style.');
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
@@ -38,7 +37,6 @@ class K2Options {
 		delete_option('k2asidescategory');
 		delete_option('k2livesearch');
 		delete_option('k2archives');
-		delete_option('k2sidebarmanager');
 		delete_option('k2style');
 		delete_option('k2livecommenting');
 		delete_option('k2styleinfo');
@@ -173,15 +171,6 @@ class K2Options {
 	 */
 	
 	function update() {
-		// Sidebar Manager
-		if ( isset($_POST['k2']['sidebarmanager']) ) {
-			update_option('k2sidebarmanager', '1');
-			K2::install_sbm_loader();
-		} else {
-			update_option('k2sidebarmanager', '0');
-			K2::remove_sbm_loader();
-		}
-
 		// Columns
 		if ( isset($_POST['k2']['columns']) ) {
 			update_option('k2columns', (int) $_POST['k2']['columns']);

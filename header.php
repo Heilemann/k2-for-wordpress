@@ -35,7 +35,7 @@
 		printf( __('Category Archive for &lsquo;%s&rsquo;','k2_domain'), single_cat_title('', false) );
 
 	// Tag Archive
-	} elseif ( function_exists('is_tag') and function_exists('single_tag_title') and is_tag() ) {
+	} elseif ( is_tag() ) {
 		printf( __('Tag Archive for &lsquo;%s&rsquo;','k2_domain'), single_tag_title('', false) );
 
 	// General Archive
@@ -58,7 +58,7 @@
 	?></title>
 	<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 	<meta name="generator" content="WordPress <?php bloginfo('version'); ?>" />
-	<meta name="template" content="K2 <?php k2info('version'); ?>" />
+	<meta name="template" content="K2-Lite <?php k2info('version'); ?>" />
  	<meta name="description" content="<?php bloginfo('description'); ?>" />
   
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo get_template_directory_uri(); ?>/style.css" />

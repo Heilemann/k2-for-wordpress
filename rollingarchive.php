@@ -16,7 +16,7 @@
 		do_action('k2_dynamic_content');
 
 		// Initialize the Loop
-		query_posts( k2_parse_query($_GET) );
+		query_posts( $_GET );
 
 		$_GET['k2dynamic'] = 'init';
 	endif;

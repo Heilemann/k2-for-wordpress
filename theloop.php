@@ -20,7 +20,7 @@
 			do_action('k2_dynamic_content');
 
 			// Initialize the Loop
-			query_posts( k2_parse_query($_GET) );
+			query_posts( $_GET );
 		endif;
 	?>
 
@@ -77,12 +77,8 @@
 			elseif ( is_search() ):
 				printf( __('Search Results for \'%s\'','k2_domain'), attribute_escape( get_search_query() ) );
 
-			elseif ( function_exists('is_tag') and is_tag() ):
-				if ( function_exists('single_tag_title') ):
-					printf( __('Tag Archive for \'%s\'','k2_domain'), single_tag_title('', false) );
-				else:
-					printf( __('Tag Archive for \'%s\'','k2_domain'), attribute_escape( get_query_var('tag') ) );
-				endif;
+			elseif ( is_tag() ):
+				printf( __('Tag Archive for \'%s\'','k2_domain'), single_tag_title('', false) );
 			
 			elseif ( is_author() ):
 				printf( __('Author Archive for %s','k2_domain'), get_author_name( get_query_var('author') ) );
@@ -138,11 +134,9 @@
 
 					<?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="entry-edit">','</span>'); ?>
 
-					<?php /* Tags */ if (is_single() and function_exists('UTW_ShowTagsForCurrentPost')) { ?>
-						<span class="entry-tags"><?php _e('Tags: ','k2_domain'); ?><?php UTW_ShowTagsForCurrentPost("commalist"); ?>.</span>
-					<?php } elseif (is_single() and function_exists('the_tags')) { ?>
+					<?php if ( is_single() ): ?>
 						<span class="entry-tags"><?php the_tags(__('Tags: ','k2_domain'), ', ', '.'); ?></span>
-					<?php } ?>
+					<?php endif; ?>
 				</div> <!-- .entry-meta -->
 			</div> <!-- .entry-head -->
 
