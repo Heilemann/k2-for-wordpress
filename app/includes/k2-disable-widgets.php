@@ -10,12 +10,13 @@ Author URI: http://getk2.com/
 
 if ( '1' == get_option('k2active') ) {
 
-	define('K2_LOAD_SBM', true);
-
 	// Don't disable Widgets in WP 2.4+ Dashboard
 	if ( is_admin() and version_compare($wp_version, '2.4', '>') and ( basename($_SERVER['SCRIPT_FILENAME']) == 'index.php' or basename($_SERVER['SCRIPT_FILENAME']) == 'index-extra.php') ) return;
 
 	// Disable Widgets
 	remove_action('plugins_loaded', 'wp_maybe_load_widgets', 0);
+
+	// Tell K2 to load SBM
+	define('K2_LOAD_SBM', true);
 }
 ?>
