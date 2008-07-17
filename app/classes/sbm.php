@@ -73,9 +73,6 @@ class K2SBM {
 		add_option('k2sbm_modules_next_id', '1', 'The ID for the next sidebar module.');
 	}
 
-	function ajax_add() {
-		var_dump($_POST);
-	}
 
 	function direct_bootstrap() {
 		global $k2sbm_registered_modules, $k2sbm_registered_sidebars, $k2sbm_active_modules, $k2sbm_disabled_modules, $k2sbm_error_text;

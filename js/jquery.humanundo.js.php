@@ -23,7 +23,7 @@ var humanUndo = {
 			jQuery.ajax({
 				type: 	'POST',
 				url: 	humanUndo.ajaxurl,
-				data:	'action=remove&module_id='+moduleID+'&sidebar_id='+sidebarID,
+				data:	'action=k2sbm&sbm_action=remove&module_id='+moduleID+'&sidebar_id='+sidebarID,
 				async:	false
 			})
 

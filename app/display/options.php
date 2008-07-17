@@ -82,15 +82,6 @@
 				<input type="submit" id="save" name="save" class="button" value="<?php echo attribute_escape(__('Save Changes', 'k2_domain')); ?>" />
 			</div><!-- .savebutton -->
 
-			<div class="container">
-				<h3><label for="k2-sidebar-manager"><?php _e('Sidebar Manager', 'k2_domain'); ?></label></h3>
-
-				<p class="main-option"><input id="k2-sidebar-manager" name="k2[sidebarmanager]" type="checkbox" value="1" <?php checked('1', get_option('k2sidebarmanager')); ?> />
-				<!--<label for="k2-sidebarmanager"><?php _e('Enable K2\'s Sidebar Manager', 'k2_domain'); ?></label>--></p>
-
-				<p class="description"><?php _e('K2 has a neat sidebar system. If disabled, K2 reverts to WordPress widgets.', 'k2_domain'); ?></p>
-			</div><!-- .container -->
-
 
 			<div class="container">
 				<h3><label for="k2-columns"><?php _e('Columns', 'k2_domain'); ?></label></h3>

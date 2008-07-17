@@ -25,6 +25,15 @@ class K2 {
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
 
+		if ( defined('K2_LOAD_SBM') ) {
+			require_once( TEMPLATEPATH . '/app/classes/sbm.php' );
+			require_once( TEMPLATEPATH . '/app/includes/sbm.php' );
+		}
+
+		if ( defined('K2_WIDGETS') ) {
+			require_once(TEMPLATEPATH . '/app/classes/widgets.php');
+		}
+
 		// Check installed version, upgrade if needed
 		$k2version = get_option('k2version');
 
@@ -36,15 +45,6 @@ class K2 {
 		// Set K2 to active
 		if ( '0' == get_option('k2active') ) {
 			update_option('k2active', '1');
-
-			if ( '1' == get_option('k2sidebarmanager') ) {
-				K2::install_sbm_loader();
-
-				if ( is_admin() ) {
-					wp_redirect('themes.php?activated=true');
-					exit;
-				}
-			}
 		}
 
 		// Register our scripts with script loader
@@ -116,14 +116,17 @@ class K2 {
 		// Call the upgrade handlers
 		do_action('k2_upgrade', $previous);
 
-		if ( version_compare( $previous, '1.0-RC5', '<' ) ) {
+		if ( version_compare( $previous, '1.0-RC6.2', '<' ) ) {
 
 			// Remove previous SBM hackery
 			$found = false;
 			$plugins = (array) get_option('active_plugins');
 
 			foreach ($plugins as $key => $plugin) {
-				if ( (strpos( $plugin, 'sbm-stub.php' ) !== false) or (strpos( $plugin, 'widgets-removal.php' ) !== false ) ) {
+				if ( (strpos( $plugin, 'sbm-stub.php' ) !== false)
+					or (strpos( $plugin, 'widgets-removal.php' ) !== false )
+					or (strpos( $plugin, 'k2-sbm-loader.php' ) !== false ) ) {
+
 					unset( $plugins[$key] );
 					$found = true;
 				}
@@ -173,47 +176,19 @@ class K2 {
 
 
 	/**
-	 * install_sbm_loader() - Inserts the SBM Loader into active_plugins
-	 */
-	function install_sbm_loader() {
-		$plugins = (array) get_option('active_plugins');
-		$plugins[] = '../themes/' . get_template() . '/app/includes/k2-sbm-loader.php';
-		update_option('active_plugins', $plugins);
-	}
-
-	/**
-	 * remove_sbm_loader() - Removes the SBM Loader from active_plugins
-	 */
-	function remove_sbm_loader() {
-		$found = false;
-		$plugins = (array) get_option('active_plugins');
-
-		foreach ($plugins as $key => $plugin) {
-			if ( strpos( $plugin, 'k2-sbm-loader.php' ) !== false ) {
-				unset( $plugins[$key] );
-				$found = true;
-			}
-		}
-
-		if ( $found )
-			update_option('active_plugins', $plugins);
-	}
-
-	/**
 	 * switch_theme() - Called when user switches out of K2
 	 */
 	function switch_theme() {
-		K2::remove_sbm_loader();
-
 		update_option('k2active', '0');
 	}
+
 
 	/**
 	 * Register K2 scripts to script loader
 	 */
 
 	function register_scripts() {
-		if ( get_wp_version() < 2.4 and ( !is_admin() or (is_admin() and ($_GET['page'] == 'k2-options' or $_GET['page'] == 'k2-sbm-manager')) ) ) {
+		if ( get_wp_version() < 2.6 and ( !is_admin() or (is_admin() and ($_GET['page'] == 'k2-options' or $_GET['page'] == 'k2-sbm-manager')) ) ) {
 			// Unload the bundled jQuery
 			wp_deregister_script('jquery');
 			wp_deregister_script('interface');
@@ -222,7 +197,7 @@ class K2 {
 		// Register jQuery
 		wp_register_script('jquery',
 			get_bloginfo('template_directory').'/js/jquery.js.php',
-			false, '1.2.3');
+			false, '1.2.6');
 
 		// Register jQuery Plugins
 		wp_register_script('interface',
@@ -513,9 +488,3 @@ class K2 {
 add_action( 'switch_theme', array('K2', 'switch_theme'), 0 );
 add_filter('comments_array', array('K2', 'filter_comments_array') , 0);
 add_filter('the_posts', array('K2', 'filter_post_comments') , 0);
-
-if ( get_option('k2sidebarmanager') == '1' ) {
-	add_action('deactivate_../themes/' . get_template() . '/app/includes/k2-sbm-loader.php', array('K2','install_sbm_loader'));
-}
-
-?>
