@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: K2 SBM Loader
+Plugin Name: K2 Disable Widgets
 Plugin URI: http://getk2.com/
 Description: This plugin disables the built-in WordPress widgets, thus enabling K2's SBM.
 Author: Various Artists
