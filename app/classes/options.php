@@ -23,7 +23,7 @@ class K2Options {
 		add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.');
 		add_option('k2columns', '2', 'Number of columns to display.');
 
-		// Added 1.0-RC5
+		// Added 1.0-RC6
 		add_option('k2style', '', 'Choose the Style you want K2 to use');
 		add_option('k2dynamiccolumns', '1', 'Enable this to dynamically change the number of columns.');
 		add_option('k2headerimage', '', 'Current Header Image');
@@ -173,15 +173,6 @@ class K2Options {
 	 */
 	
 	function update() {
-		// Sidebar Manager
-		if ( isset($_POST['k2']['sidebarmanager']) ) {
-			update_option('k2sidebarmanager', '1');
-			K2::install_sbm_loader();
-		} else {
-			update_option('k2sidebarmanager', '0');
-			K2::remove_sbm_loader();
-		}
-
 		// Columns
 		if ( isset($_POST['k2']['columns']) ) {
 			update_option('k2columns', (int) $_POST['k2']['columns']);
