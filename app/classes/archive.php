@@ -23,6 +23,10 @@ class K2Archive {
 			$archives_page['post_type'] = 'page';
 			$archives_page['page_template'] = 'page-archives.php';
 
+			// For WordPress 2.6+
+			if ( ! function_exists('get_page_templates') )
+				require_once(ABSPATH . 'wp-admin/includes/theme.php');
+
 			wp_insert_post($archives_page);
 		}
 	}
