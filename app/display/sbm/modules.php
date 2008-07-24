@@ -1,16 +1,4 @@
 <?php
-	// Update Columns Number
-	if ( isset($_POST['columns_number']) ) {
-		update_option('k2columns',$_POST['columns_number']);
-	}
-
-	$column_number = get_option('k2columns');
-	$column_options = array(
-		1 => __('One Column', 'k2_domain'),
-		__('Two Columns', 'k2_domain'),
-		__('Three Columns', 'k2_domain')
-	);
-
 	$modules = K2SBM::get_installed_modules();
 	$sidebars = K2SBM::get_sidebars();
 	$disabled = K2SBM::get_disabled();
@@ -92,14 +80,6 @@
 		</span>
 
 		<a href="#" id="undo"><?php _e('Undo', 'k2_domain') ?> <span id="levels"></span></a>
-
-		<form id="columnsform" name="columnsform" action="" method="post" enctype="multipart/form-data">
-			<select id="columns-number" name="columns_number" onchange="this.form.submit();">
-			<?php foreach ($column_options as $option => $label) { ?>
-				<option value="<?php echo $option; ?>" <?php selected($column_number, $option); ?>><?php echo $label; ?></option>
-			<?php } ?>
-			</select>
-		</form>
 	</div><!-- .sbmheader -->
 
 	<div id="backupsbmwindow" style="display: none;">
@@ -110,7 +90,8 @@
 				<!--<p><small><?php _e('This will create a backup of your current sidebar configuration.', 'k2_domain'); ?><br /><?php _e('Keep in a safe place in case of disaster.', 'k2_domain'); ?></small></p>-->
 				<p><input type="submit" value="<?php _e('Create sidebar backup &raquo;', 'k2_domain'); ?>" /></p>
 
-				<input type="hidden" name="action" value="backup" />
+				<input type="hidden" name="sbm_action" value="backup" />
+				<input type="hidden" name="action" value="k2sbm" />
 			</form>
 
 			<form action="" method="post" enctype="multipart/form-data" id="restoreform">
@@ -119,7 +100,8 @@
 				<p style="text-align: center;"><input type="file" name="backup" />
 				<button><?php _e('Restore', 'k2_domain'); ?></button></p>
 
-				<input type="hidden" name="action" value="restore" />
+				<input type="hidden" name="sbm_action" value="restore" />
+				<input type="hidden" name="action" value="k2sbm" />
 			</form>
 		</div>
 	</div><!-- #backupsbmwindow -->
