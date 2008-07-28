@@ -227,8 +227,8 @@ class K2SBM {
 
 	function module_admin_head() {
 		?>
-			<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/sbm.css.php" />
-			<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/humanmsg.css.php" />
+			<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/sbm.css" />
+			<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/humanmsg.css" />
 
 			<script type="text/javascript">
 			//<![CDATA[

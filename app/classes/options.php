@@ -153,7 +153,7 @@ class K2Options {
 	
 	function admin_head() { ?>
 
-		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/options.css.php" />
+		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/options.css" />
 
 <?php }
 
@@ -173,6 +173,15 @@ class K2Options {
 	 */
 	
 	function update() {
+		/*
+		// Sidebar Manager
+		if ( isset($_POST['k2']['sidebarmanager']) ) {
+			update_option('k2sidebarmanager', '1');
+		} else {
+			update_option('k2sidebarmanager', '0');
+		}
+		*/
+
 		// Columns
 		if ( isset($_POST['k2']['columns']) ) {
 			update_option('k2columns', (int) $_POST['k2']['columns']);
