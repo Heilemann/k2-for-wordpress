@@ -87,6 +87,7 @@ class K2SBM {
 			if(isset($_POST['module_id'])) {
 				$all_modules = K2SBM::get_all_modules();
 				$all_modules[$_POST['module_id']]->displayControl();
+				exit;
 			} else {
 				echo(false);
 			}
@@ -94,6 +95,7 @@ class K2SBM {
 			if(isset($_POST['module_id'])) {
 				$all_modules = K2SBM::get_all_modules();
 				$all_modules[$_POST['module_id']]->displayPostList();
+				exit;
 			} else {
 				echo(false);
 			}
@@ -101,6 +103,7 @@ class K2SBM {
 			if(isset($_POST['module_id'])) {
 				$all_modules = K2SBM::get_all_modules();
 				$all_modules[$_POST['module_id']]->displayPageList();
+				exit;
 			} else {
 				echo(false);
 			}
@@ -176,6 +179,7 @@ class K2SBM {
 
 			// Safeguard
 			wp_cache_flush();
+			exit;
 		}
 	}
 
