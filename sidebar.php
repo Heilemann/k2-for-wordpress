@@ -1,6 +1,6 @@
 <hr />
 <div id="sidebar-1" class="secondary">
-<?php /* Widgets/SBM Check */ if ( !(function_exists('dynamic_sidebar') and dynamic_sidebar(1)) ) { ?>
+<?php if ( !dynamic_sidebar(1) ): ?>
 
 	<div id="search"><h4><?php _e('Search','k2_domain'); ?></h4>
 		<?php include (TEMPLATEPATH . '/searchform.php'); ?>
@@ -48,29 +48,29 @@
 		<h4><?php _e('About','k2_domain'); ?></h4>
 		
 		<?php /* Category Archive */ if (is_category()) { ?>
-		<p><?php printf(__('You are currently browsing the %1$s weblog archives for the %2$s category.','k2_domain'), '<a href="' . get_settings('siteurl') .'">' . get_bloginfo('name') . '</a>', single_cat_title('', false) ) ?></p>
+		<p><?php printf(__('You are currently browsing the %1$s weblog archives for the %2$s category.','k2_domain'), '<a href="' . get_option('siteurl') .'">' . get_bloginfo('name') . '</a>', single_cat_title('', false) ) ?></p>
 
 		<?php /* Day Archive */ } elseif (is_day()) { ?>
-		<p><?php printf(__('You are currently browsing the %1$s weblog archives for the day %2$s.','k2_domain'), '<a href="' . get_settings('siteurl') .'">' . get_bloginfo('name') . '</a>', get_the_time(__('l, F jS, Y','k2_domain'))) ?></p>
+		<p><?php printf(__('You are currently browsing the %1$s weblog archives for the day %2$s.','k2_domain'), '<a href="' . get_option('siteurl') .'">' . get_bloginfo('name') . '</a>', get_the_time(__('l, F jS, Y','k2_domain'))) ?></p>
 
 		<?php /* Monthly Archive */ } elseif (is_month()) { ?>
-		<p><?php printf(__('You are currently browsing the %1$s weblog archives for the month %2$s.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>', get_the_time(__('F, Y','k2_domain'))) ?></p>
+		<p><?php printf(__('You are currently browsing the %1$s weblog archives for the month %2$s.','k2_domain'), '<a href="'.get_option('siteurl').'">'.get_bloginfo('name').'</a>', get_the_time(__('F, Y','k2_domain'))) ?></p>
 
 		<?php /* Yearly Archive */ } elseif (is_year()) { ?>
-		<p><?php printf(__('You are currently browsing the %1$s weblog archives for the year %2$s.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>', get_the_time('Y')) ?></p>
+		<p><?php printf(__('You are currently browsing the %1$s weblog archives for the year %2$s.','k2_domain'), '<a href="'.get_option('siteurl').'">'.get_bloginfo('name').'</a>', get_the_time('Y')) ?></p>
 		
 		<?php /* Search */ } elseif (is_search()) { ?>
-		<p><?php printf(__('You have searched the %1$s weblog archives for \'<strong>%2$s</strong>\'.','k2_domain'),'<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>', wp_specialchars($s)) ?></p>
+		<p><?php printf(__('You have searched the %1$s weblog archives for \'<strong>%2$s</strong>\'.','k2_domain'),'<a href="'.get_option('siteurl').'">'.get_bloginfo('name').'</a>', wp_specialchars($s)) ?></p>
 
 		<?php /* Author Archive */ } elseif (is_author()) { ?>
 		<p><?php printf(__('Archive for <strong>%s</strong>.','k2_domain'), get_the_author()) ?></p>
 		<p><?php the_author_description(); ?></p>
 
 		<?php } elseif (function_exists('is_tag') and is_tag()) { ?>
-		<p><?php printf(__('You are currently browsing the %1$s weblog archives for \'%2$s\' tag.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>', get_query_var('tag') ) ?></p>
+		<p><?php printf(__('You are currently browsing the %1$s weblog archives for \'%2$s\' tag.','k2_domain'), '<a href="'.get_option('siteurl').'">'.get_bloginfo('name').'</a>', get_query_var('tag') ) ?></p>
 		
 		<?php /* Paged Archive */ } elseif (is_paged()) { ?>
-		<p><?php printf(__('You are currently browsing the %s weblog archives.','k2_domain'), '<a href="'.get_settings('siteurl').'">'.get_bloginfo('name').'</a>') ?></p>
+		<p><?php printf(__('You are currently browsing the %s weblog archives.','k2_domain'), '<a href="'.get_option('siteurl').'">'.get_bloginfo('name').'</a>') ?></p>
 
 		<?php } ?>
 	</div>
@@ -162,14 +162,14 @@
 	</div>
 	<?php } ?>
 
-<?php } /* End Widgets/SBM check */ ?>
+<?php endif; /* End Widgets/SBM check */ ?>
 </div> <!-- #sidebar-1 -->
 
-<?php if ( function_exists('dynamic_sidebar') ): for ( $i = 2; $i <= K2_SIDEBARS; $i++ ): ?>
+<?php for ( $i = 2; $i <= K2_SIDEBARS; $i++ ): ?>
 <hr />
 <div id="sidebar-<?php echo $i; ?>" class="secondary">
 <?php dynamic_sidebar($i); ?>
 </div> <!-- #sidebar-<?php echo $i; ?> -->
-<?php endfor; endif; ?>
+<?php endfor; ?>
 
 <div class="clear"></div>

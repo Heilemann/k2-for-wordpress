@@ -740,7 +740,7 @@ function k2_comment_class( $comment_count = 1, $print = true ) {
 
 // Generates time- and date-based classes for BODY, post DIVs, and comment LIs; relative to GMT (UTC)
 function k2_date_classes($t, &$c, $p = '') {
-	$t = $t + (get_settings('gmt_offset') * 3600);
+	$t = $t + (get_option('gmt_offset') * 3600);
 	$c[] = $p . 'y' . gmdate('Y', $t); // Year
 	$c[] = $p . 'm' . gmdate('m', $t); // Month
 	$c[] = $p . 'd' . gmdate('d', $t); // Day

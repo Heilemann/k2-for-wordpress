@@ -151,7 +151,7 @@
 
 	<div id="header">
 
-		<h1 class="blog-title"><a href="<?php echo get_settings('home'); ?>/" accesskey="1"><?php bloginfo('name'); ?></a></h1>
+		<h1 class="blog-title"><a href="<?php echo get_option('home'); ?>/" accesskey="1"><?php bloginfo('name'); ?></a></h1>
 		<p class="description"><?php bloginfo('description'); ?></p>
 
 		<?php /* K2 Hook */ do_action('template_header'); ?>
