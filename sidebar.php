@@ -23,7 +23,7 @@
 	?>
 
 	<div class="sb-pagemenu">
-		<h4><?php echo apply_filters('the_title', $parent_title); ?> <?php _e('Subpages','k2_domain'); ?></h4>
+		<h4><?php printf( __('%s Subpages','k2_domain'), apply_filters('the_title', $parent_title) ); ?></h4>
 		
 		<ul>
 			<?php echo $page_menu; ?>
