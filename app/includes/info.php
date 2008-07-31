@@ -172,7 +172,7 @@ function update_style_info() {
 	if ( !empty($data) and ($data['stylename'] != '') and ($data['stylelink'] != '') and ($data['author'] != '') ) {
 		// No custom style info
 		if ( $data['footer'] == '' ) {
-			$data['footer'] = K2_STYLE_FOOTER;
+			$data['footer'] = __('Styled with <a href="%stylelink%" title="%style% by %author%">%style%</a>','k2_domain');
 		}
 
 		if ( strpos($data['footer'], '%') !== false ) {

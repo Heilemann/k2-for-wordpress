@@ -19,9 +19,6 @@ if ( K2_MU ) {
 // Are we using K2 Styles?
 define('K2_USING_STYLES', get_stylesheet() == get_template());
 
-// Default style info format
-define('K2_STYLE_FOOTER', __('Styled with <a href="%stylelink%" title="%style% by %author%">%style%</a>','k2_domain'));
-
 // Number of sidebars to use
 define('K2_SIDEBARS', 2);
 
