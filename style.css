@@ -865,6 +865,10 @@ img.noborder {
 	border: none !important;
 	}
 
+a img {
+	border: none;
+	}
+
 small {
 	font-size: 0.9em;
 	line-height: 1.5em;
