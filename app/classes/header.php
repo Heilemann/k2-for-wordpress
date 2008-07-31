@@ -5,17 +5,44 @@
 class K2Header {
 	function init() {
 		$styleinfo = get_option('k2styleinfo');
+		$width = K2Header::get_header_width();
 
 		define('HEADER_IMAGE_HEIGHT', empty($styleinfo['header_height'])? K2_HEADER_HEIGHT : $styleinfo['header_height']);
-		define('HEADER_IMAGE_WIDTH', empty($styleinfo['header_width'])? K2_HEADER_WIDTH : $styleinfo['header_width']);
+		define('HEADER_IMAGE_WIDTH', $width);
 		define('HEADER_TEXTCOLOR', empty($styleinfo['header_text_color'])? 'ffffff' : $styleinfo['header_text_color']);
 		define('HEADER_IMAGE', '%s/images/transparent.gif');
 
-		add_custom_image_header(array('K2Header', 'output_header_css'), array('K2Header', 'output_admin_header_css'));
+		// Only load Custom Image Header if GD is installed
+		if ( extension_loaded('gd') && function_exists('gd_info') ) {
+			add_custom_image_header(array('K2Header', 'output_header_css'), array('K2Header', 'output_admin_header_css'));
+		}
 	}
 
 	function uninstall() {
 		remove_theme_mods();
+	}
+
+	function get_header_width() {
+		$default_widths =  array( 1 => 560, 780, 950 );
+		$styleinfo = get_option('k2styleinfo');
+		$columns = get_option('k2columns');
+
+		// dynamic columns, use 3 columns width
+		if ( 'dynamic' == $columns ) {
+			$columns = 3;
+		}
+
+		// style contains header width setting
+		if ( ! empty($styleinfo['header_width']) ) {
+			return $styleinfo['header_width'];
+		}
+
+		// style contains layout widths setting
+		if ( ! empty($styleinfo['layout_widths'][$columns]) ) {
+			return $styleinfo['layout_widths'][$columns];
+		}
+
+		return $default_widths[$columns];
 	}
 
 	function get_header_images() {

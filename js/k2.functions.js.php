@@ -115,13 +115,13 @@ function smartPosition(obj) {
 };
 
 
-// Set the number of columns based on window size and maximum set by K2 Options
+// Set the number of columns based on window size
 function dynamicColumns() {
 	var window_width = jQuery(window).width();
 
-	if (K2.columns >= 3 && window_width >= K2.layoutWidths[2]) {
+	if ( window_width >= (K2.layoutWidths[2] + 20) ) {
 		jQuery('body').removeClass('columns-one columns-two').addClass('columns-three');
-	} else if (K2.columns >= 2 && window_width >= K2.layoutWidths[1]) {
+	} else if ( window_width >= (K2.layoutWidths[1] + 20) ) {
 		jQuery('body').removeClass('columns-one columns-three').addClass('columns-two');
 	} else {
 		jQuery('body').removeClass('columns-two columns-three').addClass('columns-one');

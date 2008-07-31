@@ -184,14 +184,7 @@ class K2Options {
 
 		// Columns
 		if ( isset($_POST['k2']['columns']) ) {
-			update_option('k2columns', (int) $_POST['k2']['columns']);
-		}
-
-		// Dynamic Columns
-		if ( isset($_POST['k2']['dynamiccolumns']) ) {
-			update_option('k2dynamiccolumns', '1');
-		} else {
-			update_option('k2dynamiccolumns', '0');
+			update_option('k2columns', $_POST['k2']['columns']);
 		}
 
 		// Advanced Navigation

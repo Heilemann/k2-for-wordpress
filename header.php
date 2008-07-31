@@ -81,25 +81,20 @@
 
 	<script type="text/javascript">
 	//<![CDATA[
-	<?php if ( 1 == get_option('k2dynamiccolumns') ): ?>
-		K2.columns = <?php echo get_option('k2columns') ?>;
-
+	<?php if ( 'dynamic' == get_option('k2columns') ): ?>
 		K2.layoutWidths = <?php /* Style Layout Widths */
-			if ( ! K2_USING_STYLES ) {
-				echo '[580, 800, 970]';
-			} else {
+			if ( K2_USING_STYLES ) {
 				$styleinfo = get_option('k2styleinfo');
 				if ( empty($styleinfo['layout_widths']) )
-					echo '[580, 800, 970]';
+					echo '[560, 780, 950]';
 				else
 					output_javascript_array($styleinfo['layout_widths']);
+			} else {
+				echo '[560, 780, 950]';
 			}
 		?>;
 
-		if (K2.columns > 1) {
-			jQuery(document).ready(dynamicColumns);
-			jQuery(window).resize(dynamicColumns);
-		}
+		jQuery(window).resize(dynamicColumns);
 	<?php endif; ?>
 
 		<?php /* Debugging */ if ( isset($_GET['k2debug']) ): ?>

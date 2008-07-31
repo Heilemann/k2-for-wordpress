@@ -211,10 +211,10 @@ function get_style_data( $style_file = '' ) {
 	preg_match("|Style Footer\s*:(.*)$|mi", $style_data, $footer);
 	preg_match("|Version\s*:(.*)$|mi", $style_data, $version);
 	preg_match("|Comments\s*:(.*)$|mi", $style_data, $comments);
-	preg_match("|Header Text Color\s*:\s*#*([\dABCDEF]+)$|mi", $style_data, $header_text_color);
-	preg_match("|Header Width\s*:\s*(\d+)$|mi", $style_data, $header_width);
-	preg_match("|Header Height\s*:\s*(\d+)$|mi", $style_data, $header_height);
-	preg_match("|Layout Widths\s*:\s*(\d+)\s*(px)?\s*,\s*(\d+)\s*(px)?\s*,\s*(\d+)$|mi", $style_data, $widths);
+	preg_match("|Header Text Color\s*:\s*#*([\dABCDEF]+)|i", $style_data, $header_text_color);
+	preg_match("|Header Width\s*:\s*(\d+)|i", $style_data, $header_width);
+	preg_match("|Header Height\s*:\s*(\d+)|i", $style_data, $header_height);
+	preg_match("|Layout Widths\s*:\s*(\d+)\s*(px)?,\s*(\d+)\s*(px)?,\s*(\d+)|i", $style_data, $widths);
 
 	$layout_widths = array();
 	if ( !empty($widths) ) {
@@ -233,9 +233,9 @@ function get_style_data( $style_file = '' ) {
 		'footer' => trim($footer[1]),
 		'version' => trim($version[1]),
 		'comments' => trim($comments[1]),
-		'header_text_color' => trim($header_text_color[1]),
-		'header_width' => trim($header_width[1]),
-		'header_height' => trim($header_height[1]),
+		'header_text_color' => $header_text_color[1],
+		'header_width' => $header_width[1],
+		'header_height' => $header_height[1],
 		'layout_widths' => $layout_widths
 	);
 }

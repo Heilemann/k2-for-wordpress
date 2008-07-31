@@ -4,11 +4,6 @@
 		$current_style = get_option('k2style');
 		$style_info = get_option('k2styleinfo');
 
-		// Update the style info if style has been modified
-		if ( empty($style_info['modified']) or (filemtime(ABSPATH . $current_style) != $style_info['modified']) ) {
-			$style_info = update_style_info();
-		}
-
 		// Check that the styles folder exists
 		$is_styles_dir = is_dir(K2_STYLES_PATH);
 
@@ -24,7 +19,8 @@
 	$column_options = array(
 		1 => __('Single Column', 'k2_domain'),
 		__('Two Columns', 'k2_domain'),
-		__('Three Columns', 'k2_domain')
+		__('Three Columns', 'k2_domain'),
+		'dynamic' => __('Dynamic Columns', 'k2_domain')
 	);
 
 	// Get the asides category
@@ -94,13 +90,8 @@
 					</select>
 				</p>
 
-				<p class="secondary-option">
-					<input id="k2-dynamic-columns" name="k2[dynamiccolumns]" type="checkbox" value="1" <?php checked('1', get_option('k2dynamiccolumns')); ?> />
-					<label for="k2-dynamic-columns"><?php _e('Dynamically reduce number of columns', 'k2_domain'); ?></label>
-				</p>
-
 				<p class="description">
-					<?php _e('K2 can dynamically reduce the number of columns depending on user\'s browser width.', 'k2_domain'); ?>
+					<?php _e('Select Dynamic Columns for K2 to dynamically reduce the number of columns depending on user\'s browser width.', 'k2_domain'); ?>
 				</p>
 			</div><!-- .container -->
 
@@ -187,7 +178,7 @@
 				<p class="description"><?php
 					printf(
 						__('The current header size is <strong>%1$s px by %2$s px</strong>. Use %3$s to customize the header.', 'k2_domain'),
-						empty($style_info['header_width'])? K2_HEADER_WIDTH : $style_info['header_width'],
+						K2Header::get_header_width(),
 						empty($style_info['header_height'])? K2_HEADER_HEIGHT : $style_info['header_height'],
 						'<a href="themes.php?page=custom-header">' . __('Custom Image Header', 'k2_domain') . '</a>'
 					); ?></p>
