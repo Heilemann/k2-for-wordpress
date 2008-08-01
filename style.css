@@ -555,20 +555,6 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	margin-top: 3px;
 	}
 
-.entry-content .gallery img,
-.image-attachment img,
-.attachment-thumbnail {
-	padding: 3px;
-	border: 1px solid #ccc;
-	}
-
-.entry-content .gallery img:hover,
-.image-attachment img:hover,
-.attachment-thumbnail:hover {
-	padding: 2px;
-	border: 2px solid #27d;
-	}
-
 .additional-info h4 {
 	margin: 1em 0;
 	}
@@ -831,42 +817,69 @@ a {
 	clear: both;
 	}
 
+a img {
+	border: none;
+	}
+
+img.noborder {
+	border: none !important;
+	}
+
+.aligncenter,
 .center {
 	text-align: center;
 	}
 
-.alignright {
-	float: right;
-	}
-	
-.alignleft {
-	float: left
-	}
-
-img.center, img[align="center"] {
+.entry-content .aligncenter,
+img.center,
+img[align="center"] {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 	}
 	
-img.alignright, img[align="right"] {
-	padding: 4px;
-	margin: 0 0 2px 7px;
-	display: inline;
+.entry-content .alignright,
+img[align="right"] {
+	float: right;
+	margin: 0 0 4px 8px;
+	display: block;
 	}
 
-img.alignleft, img[align="left"] {
-	padding: 4px;
-	margin: 0 7px 2px 0;
-	display: inline;
+.entry-content .alignleft,
+img[align="left"] {
+	float: left;
+	margin: 0 8px 4px 0;
+	display: block;
 	}
 	
-img.noborder {
-	border: none !important;
+a[rel~="attachment"] img,
+.gallery a img,
+.wp-caption {
+	background-color: #F3F3F3;
+	border: 1px solid #ddd;
+	padding: 3px;
+	text-align: center;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
 	}
 
-a img {
-	border: none;
+a[rel~="attachment"] img:hover,
+.gallery a img:hover,
+.wp-caption:hover {
+	padding: 2px;
+	border: 2px solid #27d;
+	}
+
+.wp-caption a img,
+.wp-caption a img:hover {
+	padding: 4px 0px 0px;
+	border: 0 none;
+	}
+
+.wp-caption .wp-caption-text {
+	margin: 4px 0 2px;
 	}
 
 small {
