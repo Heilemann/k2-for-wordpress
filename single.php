@@ -15,9 +15,6 @@
 				<?php comments_template(); ?>
 			</div> <!-- .entry-comments -->
 
-			<noscript>
-				<?php k2_navigation('nav-below'); ?>
-			</noscript>
 		</div> <!-- #current-content -->
 
 		<div id="dynamic-content"></div>

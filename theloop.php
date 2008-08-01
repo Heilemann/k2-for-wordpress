@@ -20,7 +20,7 @@
 			do_action('k2_dynamic_content');
 
 			// Initialize the Loop
-			query_posts( k2_parse_query($_GET) );
+			query_posts( $_GET );
 		endif;
 	?>
 
@@ -39,16 +39,14 @@
 	// Get the asides category
 	$k2asidescategory = get_option('k2asidescategory');
 	$k2rollingarchives = get_option('k2rollingarchives');
-?>
 
-	<?php /* Top Paged Navigation */ if ( ( '0' == $k2rollingarchives ) and !is_single() ): k2_navigation('nav-above'); endif; ?> 
-
-<?php
 	/* Check if there are posts */
 	if ( have_posts() ):
 		/* Post index for semantic classes */
 		$post_index = 1;
 ?>
+
+	<?php /* Top Navigation */ if ( ('0' == $k2rollingarchives) or is_single() ): k2_navigation('nav-above'); endif; ?>
 
 	<?php /* Headlines for archives */ if ( ( ! is_single() and ! is_home() ) or is_paged() ): ?>
 		<div class="page-head">
@@ -104,8 +102,6 @@
 
 	<?php /* Start the loop */ while ( have_posts() ): the_post(); ?>
 
-		<?php /* Top Navigation */ if ( is_single() ): k2_navigation('nav-above'); endif; ?>
-
 		<div id="post-<?php the_ID(); ?>" class="<?php echo attribute_escape(k2_post_class($post_index++, in_category($k2asidescategory), false)); ?>">
 			<div class="entry-head">
 				<h3 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php the_title(); ?></a></h3>
@@ -156,8 +152,6 @@
 
 	<?php endwhile; /* End The Loop */ ?>
 	
-	<?php /* Bottom Paged Navigation */ if ( is_single() ): k2_navigation('nav-below'); endif; ?> 
-
 <?php /* If there is nothing to loop */ else: define('K2_NOT_FOUND', true); ?>
 
 	<div class="hentry four04">
@@ -173,6 +167,8 @@
 	</div> <!-- .hentry .four04 -->
 
 <?php endif; /* End Loop Init  */ ?>
+
+<?php /* Bottom Navigation */ if ( ('0' == $k2rollingarchives) or is_single() ): k2_navigation('nav-below'); endif; ?> 
 
 <?php if ( isset( $_GET['k2dynamic'] ) ): ?>
 </div><!-- #dynamictype -->
