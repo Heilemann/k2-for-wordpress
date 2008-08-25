@@ -37,47 +37,34 @@
 
 ?>
 
-<script type="text/javascript" charset="utf-8">
-//<![CDATA[
-	smartPosition('.configstuff');
-//]]>
-</script>
-
-<?php if ( isset($_REQUEST['updated']) ): ?>
-<div id="message2" class="updated fade">
-	<p><?php _e('K2 Options have been updated', 'k2_domain'); ?></p>
-</div>
-<?php endif; ?>
-
-<?php if ( isset($_REQUEST['configela']) ): ?>
-<div id="message2" class="updated fade">
-	<p><?php _e('The Extended Live Archives plugin has been setup for use with K2', 'k2_domain'); ?></p>
-</div>
-<?php endif; ?>
-
 <div class="wrap">
+	<?php if ( isset($_REQUEST['updated']) ): ?>
+	<div class="updated fade">
+		<p><?php _e('K2 Options have been updated', 'k2_domain'); ?></p>
+	</div>
+	<?php endif; ?>
+
+	<?php if ( isset($_REQUEST['configela']) ): ?>
+	<div class="updated fade">
+		<p><?php _e('The Extended Live Archives plugin has been setup for use with K2', 'k2_domain'); ?></p>
+	</div>
+	<?php endif; ?>
+
 	<?php if ( K2_USING_STYLES and !$is_styles_dir ): ?>
-		<div class="error"><small>
+		<div class="error">
 		<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom styles is missing.</p><p>For you to be able to use custom styles, you need to add this directory.</p>', 'k2_domain'), K2_STYLES_PATH ); ?>
-		</small></div>
+		</div>
 	<?php endif; ?>
 
 	<?php if ($dir_has_spaces): ?>
-		<div class="error"><small>
+		<div class="error">
 		<?php printf( __('<p>The K2 directory: <code>%s</code>, contains spaces. For K2 to function properly, you will need to remove the spaces from the directory name.</p>', 'k2_domain'), TEMPLATEPATH ); ?>
-		</small></div>
+		</div>
 	<?php endif; ?>
 
-
+	<h2><?php _e('K2 Options', 'k2_domain'); ?></h2>
 	<form action="<?php echo attribute_escape($_SERVER['REQUEST_URI']); ?>" method="post">
 		<?php wp_nonce_field('k2options'); ?>
-
-		<div class="configstuff">
-
-			<div class="savebutton">
-				<input type="submit" id="save" name="save" class="button" value="<?php echo attribute_escape(__('Save Changes', 'k2_domain')); ?>" />
-			</div><!-- .savebutton -->
-
 
 			<div class="container">
 				<h3><label for="k2-columns"><?php _e('Columns', 'k2_domain'); ?></label></h3>
@@ -208,37 +195,34 @@
 				
 
 			<?php /* K2 Hook */ do_action('k2_display_options'); ?>
-		</div><!-- .configstuff -->
 
-</div>
+			<div class="container advanced" id="uninstall">
+				<h3><?php _e('Uninstall K2', 'k2_domain'); ?></h3>
 
-<div class="uninstall">
-
-
-		<div class="configstuff">
-			<h3><?php _e('Uninstall K2', 'k2_domain'); ?></h3>
-
-			<script type="text/javascript">
-			function confirmUninstall() {
-				if (confirm("<?php _e('Delete your K2 settings?', 'k2_domain'); ?>") == true) {
-					return true;
-				} else {
-					return false;
+				<script type="text/javascript">
+				function confirmUninstall() {
+					if (confirm("<?php _e('Delete your K2 settings?', 'k2_domain'); ?>") == true) {
+						return true;
+					} else {
+						return false;
+					}
 				}
-			}
-			</script>
+				</script>
 
 
-			<p class="description">
-				<?php _e('Remove all K2 settings and revert WordPress to its default theme. No files are deleted.', 'k2_domain'); ?>
-			</p>
+				<p class="description">
+					<?php _e('Remove all K2 settings and revert WordPress to its default theme. No files are deleted.', 'k2_domain'); ?>
+				</p>
 
-			<p class="center">
-				<input id="uninstall" name="uninstall" type="submit" onClick="return confirmUninstall();" value="<?php echo attribute_escape(__('Reset and Uninstall K2', 'k2_domain')); ?>" class="button-secondary" />
-			</p>
-		</div>
+				<p class="center">
+					<input id="uninstall" name="uninstall" type="submit" onClick="return confirmUninstall();" value="<?php echo attribute_escape(__('Reset and Uninstall K2', 'k2_domain')); ?>" class="button-secondary" />
+				</p>
+			</div>
 
-</div>
-
+		<div class="submit">
+			<input type="button" name="advanced" value="<?php echo attribute_escape(__('Advanced Options', 'k2_domain')); ?>" class="button-secondary advanced" />
+			<input type="submit" id="save" name="save" class="button" value="<?php echo attribute_escape(__('Save Changes', 'k2_domain')); ?>" />
+		</div><!-- .options-footer -->
 	</form>
-</div>
+
+</div><!-- .wrap -->

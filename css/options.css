@@ -1,9 +1,16 @@
 /* This file contains the CSS for the 'K2 Options' admin panel */
 
+div#wpbody-content {
+	padding-top: 15px;
+	}
+
 .wrap {
 	font-family: Helvetica, Verdana, 'Lucida Grande', Arial, sans-serif;
-	border: none;
-	margin: 0px auto;
+	}
+
+.wrap h2 {
+	margin-left: 20px;
+	font-family: Helvetica, Verdana, 'Lucida Grande', Arial, sans-serif;
 	}
 
 .wrap a {
@@ -12,41 +19,22 @@
 	white-space: pre;
 	}
 
-.configstuff {
-	position: relative;
-	width: 600px;
-	margin: 0px auto;
-	padding-top: 40px; /* For floating .savebutton */
-	}
-
-.savebutton {
-	position: absolute;
-	top: 0px;
-	width: 600px;
-	margin: 0px auto;
-	padding: 10px 0px;
+.wrap .error,
+.wrap .updated {
+	border: none;
+	padding: 10px 20px;
+	-moz-border-radius: 8px;
+	margin: 10px 0px;
 	}
 
 #save {
-	float: right;
-	background: #222;
+	background: #333;
+	border-color: black;
 	color: white;
-	border: none;
-	padding: 5px 30px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	}
-
-body.smartposition .savebutton {
-	border-bottom: 1px solid #ddd;
-	position: fixed;
-	top: 0px;
-	background: #f9fcfe;
-	z-index: 100;
 	}
 
 .container {
-	margin: 30px 0px 20px;
+	margin: 30px 20px;
 	position: relative;
 	}
 
@@ -59,7 +47,7 @@ h3 {
 	white-space: pre;
 	}
 
-.configstuff .description {
+.description {
 	margin-top: 5px;
 	color: #999;
 	}
@@ -102,40 +90,32 @@ h3 {
 	margin-left: 240px;
 	}
 
-.configstuff input[type=text],
-.configstuff select {
+input[type=text],
+select {
 	color: #333;
 	width: 240px;
 	border: 1px solid #ccc;
 	}
 
-.configstuff option {
+option {
 	padding: 0px;
 	}
 
-.uninstall {
+.options-footer {
 	border: none;
-	margin-top: 2px;
-	padding: 30px 20px 50px;
-	background: #eee url('../images/sbmmanager/sbmbg.png') top repeat-x;
+	padding: 20px;
+	background: #eee;
+	-moz-border-radius: 8px;
 	}
 
 .uninstall input {
 	padding: 3px 5px;
 	}
 
-.uninstall .configstuff {
-	padding-top: 0px;
-	}
-
-#wpcontent {
-	padding-bottom: 0px;
-	}
-
-#footer {
-	display: none;
-	}
-
 .center {
 	text-align: center;
 	}
+	
+.advanced {
+	display: none;
+}
