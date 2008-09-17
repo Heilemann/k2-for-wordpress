@@ -119,7 +119,7 @@
 
 
 			<div class="container">
-				<h3><?php _e('Asides', 'k2_domain'); ?></h3>
+				<h3><label for="k2-asidescategory"><?php _e('Asides', 'k2_domain'); ?></label></h3>
 
 				<p class="main-option">
 					<select id="k2-asidescategory" name="k2[asidescategory]">
@@ -138,7 +138,7 @@
 
 			<?php if ( K2_USING_STYLES and $is_styles_dir ): ?>
 			<div class="container">
-				<h3><?php _e('Style', 'k2_domain'); ?></h3>
+				<h3><label for="k2-style"><?php _e('Style', 'k2_domain'); ?></label></h3>
 
 				<p class="main-option">
 					<select id="k2-style" name="k2[style]">
