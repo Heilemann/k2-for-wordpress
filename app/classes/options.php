@@ -17,7 +17,6 @@ class K2Options {
 		add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on"); // (live & classic)
 		add_option('k2archives', '0', 'Set whether K2 has a Live Archive page');
 		add_option('k2sidebarmanager', '0', 'Set whether to use K2 Sidebar Manager');
-		add_option('k2livecommenting', '1', "If you don't trust JavaScript, you can turn off Live Commenting. Otherwise it is suggested you leave it on");
 		add_option('k2styleinfo', '', 'Metadata of current style.');
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
 		add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.');
@@ -40,7 +39,6 @@ class K2Options {
 		delete_option('k2archives');
 		delete_option('k2sidebarmanager');
 		delete_option('k2style');
-		delete_option('k2livecommenting');
 		delete_option('k2styleinfo');
 		delete_option('k2rollingarchives');
 		delete_option('k2blogornoblog');
@@ -173,15 +171,6 @@ class K2Options {
 	 */
 	
 	function update() {
-		/*
-		// Sidebar Manager
-		if ( isset($_POST['k2']['sidebarmanager']) ) {
-			update_option('k2sidebarmanager', '1');
-		} else {
-			update_option('k2sidebarmanager', '0');
-		}
-		*/
-
 		// Columns
 		if ( isset($_POST['k2']['columns']) ) {
 			update_option('k2columns', $_POST['k2']['columns']);
@@ -203,13 +192,6 @@ class K2Options {
 		} else {
 			update_option('k2archives', '0');
 			K2Archive::delete_archive();
-		}
-
-		// Live Commenting
-		if ( isset($_POST['k2']['livecommenting']) ) {
-			update_option('k2livecommenting', '1');
-		} else {
-			update_option('k2livecommenting', '0');
 		}
 
 		// Asides

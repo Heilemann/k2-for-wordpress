@@ -30,7 +30,7 @@
 			</div> <!-- #post-ID -->
 
 			<div class="comments">
-				<?php comments_template(); ?>
+				<?php comments_template('/comments.php', true); ?>
 			</div> <!-- .comments -->
 
 		<?php endwhile; else: ?>

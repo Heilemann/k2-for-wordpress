@@ -16,9 +16,8 @@
 		wp_enqueue_script('k2livesearch');
 	}
 
-	if ((get_option('k2livecommenting') == 1) and ((is_page() or is_single()) and (!isset($_GET['jal_edit_comments'])) and ('open' == $post-> comment_status) or ('comment' == $post-> comment_type) )) {
-		wp_enqueue_script('k2comments');
-	}
+	// WP 2.7 threaded comments
+	if ( is_singular() ) wp_enqueue_script( 'comment-reply' );
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
@@ -116,18 +115,6 @@
 			);
 			<?php endif; ?>
 		});
-
-		<?php /* Live Comment */
-			if ( ( '1' == get_option('k2livecommenting') )
-				and (
-					( is_page() or is_single() )
-					and ( !isset($_GET['jal_edit_comments']) )
-					and ( 'open' == $post->comment_status )
-					or ( 'comment' == $post->comment_type )
-				)
-			): ?>
-			K2.ajaxCommentsURL = "<?php output_javascript_url('comments-ajax.php'); ?>";
-		<?php endif; ?>
 	//]]>
 	</script>
 

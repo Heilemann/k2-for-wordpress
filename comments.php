@@ -12,7 +12,9 @@
 
 	<?php return; endif; endif; ?>
 
-		<h4><?php printf(__('%1$s %2$s to &#8220;%3$s&#8221;','k2_domain'), '<span id="comments">' . get_comments_number() . '</span>', (1 == $post->comment_count) ? __('Response','k2_domain'): __('Responses','k2_domain'), the_title('', '', false)); ?></h4>
+	<?php if ( !isset($comments_by_type) ): $comments_by_type = k2_seperate_comments($comments); endif; ?>
+
+		<h4><?php printf( __('%1$s %2$s to &#8220;%3$s&#8221;', 'k2_domain'), '<span id="comments">' . count($comments_by_type['comment']) . '</span>', count($comments_by_type['comment']) ? __('Responses', 'k2_domain'): __('Response','k2_domain'), the_title('', '', false) ); ?></h4>
 
 		<div class="metalinks">
 			<span class="commentsrsslink"><?php comments_rss_link(__('Feed for this Entry','k2_domain')); ?></span>
@@ -21,113 +23,42 @@
 
 		<hr />
 
-	<?php if ( count($comments) > 0 ): ?>
-		<ol id="commentlist">
+	<?php if ( !empty($comments_by_type['comment']) ): $GLOBALS['comment_index'] = 0; ?>
+		<ul id="commentlist">
+			<?php if ( function_exists('wp_list_comments') ): ?>
+				<?php wp_list_comments('type=comment&callback=k2_comment_start_el'); ?>
+			<?php else: ?>
+				<?php foreach ($comments_by_type['comment'] as $comment): ?>
+					<?php k2_comment_item( $comment ); ?>
+				<?php endforeach; ?>
+			<?php endif; ?>
+		</ul>
 
-		<?php $index = 0; foreach ($comments as $comment): ?>
-
-			<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class( ++$index ); ?>">
-
-			<?php /* WordPress 2.5 Avatar */ if ( function_exists('get_avatar') and get_option('show_avatars') ): ?>
-				<span class="gravatar">
-					<?php echo get_avatar( $comment, 32 ); ?>
-				</span>
-			<?php /* Gravatar 2.x Plugin */ elseif ( function_exists('gravatar_image_link') ): ?>
-				<?php gravatar_image_link(); ?>
-			<?php /* Gravatar 1.x Plugin */ elseif ( function_exists('gravatar') ): ?>
-				<a href="http://www.gravatar.com/" title="<?php _e('What is this?','k2_domain'); ?>">
-					<img src="<?php gravatar('X', 32, get_bloginfo('template_url') . '/images/defaultgravatar.jpg' ); ?>" class="gravatar" alt="<?php _e('Gravatar Icon','k2_domain'); ?>" />
-				</a>
-			<?php /* End Gravatar Check */ endif; ?>
-
-				<a href="#comment-<?php comment_ID(); ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $index; ?></a>
-				<span class="commentauthor"><?php comment_author_link(); ?></span>
-
-				<div class="comment-meta">
-					<a href="#comment-<?php comment_ID(); ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>">
-						<?php
-							if ( function_exists('time_since') ):
-								printf( __('%s ago.','k2_domain'), time_since( abs( strtotime($comment->comment_date_gmt . ' GMT') ), time() ) );
-							else:
-								printf( __('%1$s at %2$s','k2_domain'), get_comment_date(), get_comment_time() );
-							endif;
-						?>
-					</a>
-
-					<?php if ( function_exists('quoter_comment') ): quoter_comment(); endif; ?>
-
-					<?php
-						if ( function_exists('jal_edit_comment_link') ):
-							jal_edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>');
-						else:
-							edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">', '</span>');
-						endif;
-					?>
-				</div><!-- .comment-meta -->
-
-				<div class="comment-content">
-					<?php comment_text(); ?> 
-				</div><!-- .comment-content -->
-
-				<?php if ( ! $comment->comment_approved ): ?>
-					<p class="comment-moderation alert">
-						<strong><?php _e('Your comment is awaiting moderation.','k2_domain'); ?></strong>
-					</p>
-				<?php endif; ?>
-			</li>
-
-		<?php endforeach; ?>
-
-		</ol><!-- #commentlist -->
+		<?php if ( function_exists('wp_list_comments') ): ?>
+		<div class="navigation">
+			<div class="nav-previous"><?php previous_comments_link() ?></div>
+			<div class="nav-next"><?php next_comments_link() ?></div>
+		</div>
+		<?php endif; ?>
 	<?php elseif ( comments_open() ): ?>
-		<ol id="commentlist">
+		<ul id="commentlist">
 			<li id="leavecomment">
 				<?php _e('No Comments','k2_domain'); ?>
 			</li>
-		</ol>
+		</ul>
 	<?php endif; // If there are comments ?>
 
-	<?php global $trackbacks; if ( count($trackbacks) > 0 ): ?>
-		<ol id="pinglist">
-
-		<?php $index = 0; foreach ($trackbacks as $comment): ?>
-
-			<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class( ++$index ); ?>">
-				<?php if ( function_exists('comment_favicon') ): ?>
-					<span class="favatar">
-						<?php comment_favicon(); ?>
-					</span>
-				<?php endif ?>
-
-				<a href="#comment-<?php comment_ID(); ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>" class="counter"><?php echo $index; ?></a>
-				<span class="commentauthor"><?php comment_author_link(); ?></span>
-
-				<div class="comment-meta">				
-				<?php
-					printf(__('%1$s on %2$s','k2_domain'), 
-						'<span class="pingtype">' . get_k2_ping_type(__('Trackback','k2_domain'), __('Pingback','k2_domain')) . '</span>',
-						sprintf('<a href="#comment-%1$s" title="%2$s">%3$s</a>',
-							get_comment_ID(),	
-							(function_exists('time_since')?
-								sprintf(__('%s ago.','k2_domain'),
-									time_since(abs(strtotime($comment->comment_date_gmt . " GMT")), time())
-								):
-								__('Permanent Link to this Comment','k2_domain')
-							),
-							sprintf(__('%1$s at %2$s','k2_domain'),
-								get_comment_date(__('M jS, Y','k2_domain')),
-								get_comment_time()
-							)			
-						)
-					);
-				?>				
-				<?php if ($user_ID) { edit_comment_link(__('Edit','k2_domain'),'<span class="comment-edit">','</span>'); } ?>
-				</div>
-			</li>
-
-			<?php endforeach; ?>
-
-		</ol> <!-- #pinglist -->
+	<?php if ( !empty($comments_by_type['pings']) ): $GLOBALS['comment_index'] = 0; ?>
+		<ul id="pinglist">
+			<?php if ( function_exists('wp_list_comments') ): ?>
+				<?php wp_list_comments( 'type=pings&callback=k2_ping_item' ); ?>
+			<?php else: ?>
+				<?php foreach ($comments_by_type['pings'] as $comment): ?>
+					<?php k2_ping_item($comment); ?>
+					</li>
+				<?php endforeach; ?>
+			<?php endif; ?>
+		</ul>
 	<?php endif; // If there are trackbacks / pingbacks ?>
 		
 	<?php /* Comments closed */ if ( !comments_open() and is_single() ): ?>
@@ -135,9 +66,23 @@
 	<?php endif; ?>
 
 	<?php /* Reply Form */ if ( comments_open() ): ?>
-	<div id="commentformbox">
-		<h4 id="respond" class="reply"><?php if (isset($_GET['jal_edit_comments'])): _e('Edit Your Comment','k2_domain'); else: _e('Leave a Reply','k2_domain'); endif; ?></h4>
+	<div id="respond">
+		<h4 class="reply"><?php
+				if ( isset( $_GET['jal_edit_comments'] ) ):
+					_e('Edit Your Comment','k2_domain');
+				elseif ( function_exists('comment_form_title') ):
+					comment_form_title( __('Leave a Reply', 'k2_domain'), __('Leave a Reply to %s', 'k2_domain') );
+				else:
+					_e('Leave a Reply','k2_domain');
+				endif;
+		?></h4>
 		
+		<?php if ( function_exists('cancel_comment_reply_link') ): ?>
+		<div class="cancel-comment-reply">
+			<small><?php cancel_comment_reply_link(); ?></small>
+		</div>
+		<?php endif; ?>
+
 		<?php if ( get_option('comment_registration') and !$user_ID ): ?>
 			<p>
 				<?php printf(__('You must <a href="%s">login</a> to post a comment.','k2_domain'), get_option('siteurl') . '/wp-login.php?redirect_to=' . get_permalink()); ?>
@@ -163,30 +108,6 @@
 
 				<p class="comment-welcomeback"><?php printf(__('Welcome back <strong>%s</strong>','k2_domain'), $comment_author); ?>
 				
-				<a href="javascript:toggleCommentAuthorInfo();" id="toggle-comment-author-info">
-					<?php _e('(Change)','k2_domain'); ?>
-				</a>
-
-				<script type="text/javascript" charset="utf-8">
-				//<![CDATA[
-					var changeMsg = "<?php echo  js_escape( __('(Change)','k2_domain') ); ?>";
-					var closeMsg = "<?php echo js_escape( __('(Close)','k2_domain') ); ?>";
-					
-					function toggleCommentAuthorInfo() {
-						jQuery('#comment-author-info').slideToggle('slow', function(){
-							if ( jQuery('#comment-author-info').css('display') == 'none' ) {
-								jQuery('#toggle-comment-author-info').text(changeMsg);
-							} else {
-								jQuery('#toggle-comment-author-info').text(closeMsg);
-							}
-						});
-					}
-
-					jQuery(document).ready(function(){
-						jQuery('#comment-author-info').hide();
-					});
-				//]]>
-				</script>
 			<?php endif; ?>
 			
 			<?php if ( ! $user_ID ): ?>
@@ -236,6 +157,7 @@
 					<input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit','k2_domain'); ?>" />
 					<input type="hidden" name="comment_count" value="<?php echo $num_comments; ?>" />
 					<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
+					<?php if ( function_exists('comment_parent_field') ): comment_parent_field(); endif; ?>
 					<span id="commentload"></span>
 				</p>
 				

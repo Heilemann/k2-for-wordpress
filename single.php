@@ -11,8 +11,8 @@
 
 			<?php include (TEMPLATEPATH . '/theloop.php'); ?>
 
-			<div class="entry-comments comments">
-				<?php comments_template(); ?>
+			<div id="entry-comments" class="entry-comments comments">
+				<?php comments_template('/comments.php', true); ?>
 			</div> <!-- .entry-comments -->
 
 		</div> <!-- #current-content -->

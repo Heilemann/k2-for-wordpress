@@ -109,16 +109,6 @@
 
 
 			<div class="container">
-				<h3><label for="k2-livecommenting"><?php _e('Live Commenting', 'k2_domain'); ?></label></h3>
-
-				<p class="main-option"><input id="k2-livecommenting" name="k2[livecommenting]" type="checkbox" value="1" <?php checked('1', get_option('k2livecommenting')); ?> />
-				<!--<label for="k2-livecommenting"><?php _e('Enable Live Commenting', 'k2_domain'); ?></label>--></p>
-				
-				<p class="description"><?php _e('Submit comments without reloading the page.', 'k2_domain'); ?></p>
-			</div><!-- .container -->
-
-
-			<div class="container">
 				<h3><label for="k2-asidescategory"><?php _e('Asides', 'k2_domain'); ?></label></h3>
 
 				<p class="main-option">

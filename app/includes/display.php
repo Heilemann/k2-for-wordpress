@@ -61,4 +61,114 @@
 
 	add_action('template_footer', 'k2_style_footer');
 
+
+	function k2_comment_start_el($comment, $args = array(), $depth = 1) {
+		global $comment_index;
+
+		$GLOBALS['comment'] = $comment;
+		$comment_index++;
+
+		extract($args, EXTR_SKIP);
 ?>
+
+<li id="comment-<?php comment_ID(); ?>" <?php if ( function_exists('comment_class') ): comment_class(); else: echo 'class="' . k2_comment_class( $comment_index, false ) . '"'; endif; ?>>
+	<div id="div-comment-<?php comment_ID(); ?>" class="comment">
+
+		<div class="comment-head">
+			<?php /* WordPress 2.5 Avatar */ if ( function_exists('get_avatar') and get_option('show_avatars') ): ?>
+				<span class="gravatar">
+					<?php echo get_avatar( $comment, 32 ); ?>
+				</span>
+			<?php /* Gravatar 2.x Plugin */ elseif ( function_exists('gravatar_image_link') ): ?>
+				<?php gravatar_image_link(); ?>
+			<?php /* Gravatar 1.x Plugin */ elseif ( function_exists('gravatar') ): ?>
+				<a href="http://www.gravatar.com/" title="<?php _e('What is this?','k2_domain'); ?>">
+					<img src="<?php gravatar('X', 32, get_bloginfo('template_url') . '/images/defaultgravatar.jpg' ); ?>" class="gravatar" alt="<?php _e('Gravatar Icon','k2_domain'); ?>" />
+				</a>
+			<?php /* End Gravatar Check */ endif; ?>
+
+			<a href="#comment-<?php comment_ID(); ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $comment_index; ?></a>
+			<span class="comment-author"><?php comment_author_link(); ?></span>
+		</div><!-- .comment-head -->
+
+		<div class="comment-meta">
+			<a href="#comment-<?php comment_ID(); ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>">
+				<?php
+					if ( function_exists('time_since') ):
+						printf( __('%s ago.','k2_domain'), time_since( abs( strtotime($comment->comment_date_gmt . ' GMT') ), time() ) );
+					else:
+						printf( __('%1$s at %2$s','k2_domain'), get_comment_date(), get_comment_time() );
+					endif;
+				?>
+			</a>
+
+			<?php if ( function_exists('quoter_comment') ): quoter_comment(); endif; ?>
+
+			<?php
+				if ( function_exists('jal_edit_comment_link') ):
+					jal_edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>');
+				else:
+					edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">', '</span>');
+				endif;
+			?>
+		</div><!-- .comment-meta -->
+
+		<div class="comment-content">
+			<?php comment_text(); ?> 
+
+			<?php if ( ! $comment->comment_approved ): ?>
+				<p class="comment-moderation alert">
+					<strong><?php _e('Your comment is awaiting moderation.','k2_domain'); ?></strong>
+				</p>
+			<?php endif; ?>
+		</div><!-- .comment-content -->
+
+		<?php if ( function_exists('comment_reply_link') ): ?>
+		<div class="comment-reply">
+			<?php echo comment_reply_link( array( 'add_below' => 'div-comment', 'depth' => $depth, 'max_depth' => $args['depth'] ) ); ?>
+		</div>
+		<?php endif; ?>
+
+	</div><!-- #div-comment -->
+<?php
+	}
+
+	function k2_comment_item($comment) {
+		k2_comment_start_el($comment, array('style' => 'ul') );
+		echo '</li>';
+	}
+
+	function k2_ping_item($comment, $args = array(), $depth = 1) {
+		global $comment_index;
+		$GLOBALS['comment'] = $comment;	?>
+
+		<li id="comment-<?php comment_ID(); ?>" class="<?php k2_comment_class( ++$comment_index ); ?>">
+			<?php if ( function_exists('comment_favicon') ): ?>
+				<span class="favatar"><?php comment_favicon(); ?></span>
+			<?php endif ?>
+
+			<a href="#comment-<?php comment_ID(); ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>" class="counter"><?php echo $comment_index; ?></a>
+			<span class="comment-author"><?php comment_author_link(); ?></span>
+
+			<div class="comment-meta">				
+			<?php
+				printf(__('%1$s on %2$s','k2_domain'), 
+					'<span class="pingtype">' . get_k2_ping_type(__('Trackback','k2_domain'), __('Pingback','k2_domain')) . '</span>',
+					sprintf('<a href="#comment-%1$s" title="%2$s">%3$s</a>',
+						get_comment_ID(),	
+						(function_exists('time_since')?
+							sprintf(__('%s ago.','k2_domain'),
+								time_since(abs(strtotime($comment->comment_date_gmt . " GMT")), time())
+							):
+							__('Permanent Link to this Comment','k2_domain')
+						),
+						sprintf(__('%1$s at %2$s','k2_domain'),
+							get_comment_date(__('M jS, Y','k2_domain')),
+							get_comment_time()
+						)			
+					)
+				);
+			?>				
+			<?php if ($user_ID) { edit_comment_link(__('Edit','k2_domain'),'<span class="comment-edit">','</span>'); } ?>
+			</div><!-- .comment-meta -->
+<?php } ?>

@@ -237,10 +237,6 @@ class K2 {
 			get_bloginfo('template_directory') . '/js/k2.slider.js.php',
 			array('jquery'), K2_CURRENT);
 
-		wp_register_script('k2comments',
-			get_bloginfo('template_directory') . '/js/k2.comments.js.php',
-			array('jquery'), K2_CURRENT);
-
 		wp_register_script('k2trimmer',
 			get_bloginfo('template_directory') . '/js/k2.trimmer.js.php',
 			array('jquery', 'k2slider'), K2_CURRENT);
@@ -440,51 +436,8 @@ class K2 {
 
 		return $path . sanitize_title_with_dashes($filename . $number) . $ext;
 	}
-
-
-	/*
-		Ronald Huereca
-		http://weblogtoolscollection.com/archives/2008/03/08/managing-trackbacks-and-pingbacks-in-your-wordpress-theme/
-	*/
-
-	// Updates the comment number for posts with trackbacks
-	function filter_post_comments($posts) {
-		foreach ($posts as $key => $p) {
-			if ($p->comment_count <= 0) {
-				return $posts;
-			}
-
-			$comments = get_approved_comments( (int) $p->ID );
-			$comments = array_filter( $comments, array('K2', 'strip_trackback') );
-			$posts[$key]->comment_count = count( $comments );
-		}
-
-		return $posts;
-	}
-
-	// Updates the count for comments and trackbacks
-	function filter_comments_array($comms) {
-		global $comments, $trackbacks;
-
-		$comments = array_filter( $comms, array('K2', 'strip_trackback') );
-		$trackbacks = array_filter( $comms, array('K2', 'strip_comment') );
-
-		return $comments;
-	}
-
-	// Strips out trackbacks/pingbacks
-	function strip_trackback($var) {
-		return ($var->comment_type != 'trackback' and $var->comment_type != 'pingback');
-	}
-
-	// Strips out comments
-	function strip_comment($var) {
-		return ($var->comment_type == 'trackback' or $var->comment_type == 'pingback');
-	}
 }
 
 
 // Actions and Filters
 add_action( 'switch_theme', array('K2', 'switch_theme'), 0 );
-add_filter('comments_array', array('K2', 'filter_comments_array') , 0);
-add_filter('the_posts', array('K2', 'filter_post_comments') , 0);

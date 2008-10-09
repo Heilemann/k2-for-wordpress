@@ -596,10 +596,22 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	position: relative;
 	}
 
+#commentlist .children {
+	margin-left: 10px;
+	}
+
 #commentlist li {
 	margin: 10px 0 0;
-	padding: 10px 10px 5px;
 	list-style: none;
+	}
+
+#commentlist li li {
+	margin-left: 20px;
+	}
+
+#commentlist .comment {
+	padding: 10px;
+	-moz-border-radius: 8px;
 	}
 
 #commentlist li .comment-content {
@@ -626,16 +638,20 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	border: none;
 	}
 
-#commentlist li .gravatar {
+#commentlist .avatar,
+#commentlist .gravatar {
 	float: right;
-	margin: -5px 0 0;
 	}
 
-#commentlist li .commentauthor {
+#commentlist .comment-author {
 	font-size: 1.5em;
 	font-weight: bold;
 	letter-spacing: -1px;
 	}
+
+.comment-author cite {
+	font-style: normal;
+}
 
 #commentlist li .counter {
 	display: none;
@@ -645,11 +661,11 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	width: 35px;
 	}
 
-li.byuser {
+li.byuser .comment {
 	background: #f6f7f8;
 	}
 
-li.bypostauthor {
+li.bypostauthor .comment {
 	background: #eee;
 	}
 
@@ -657,7 +673,27 @@ li.bypostauthor blockquote {
 	color: #333;
 	background: url('images/quote.png') no-repeat 10px 0;              
 	}
-	 
+
+.comment-reply a {
+	border: none;
+	padding: 4px 8px 4px 28px;
+	background: #9be url('images/comment.png') 8px center no-repeat;
+	height: 16px;
+	color: #fff;
+	-moz-border-radius: 4px;
+	}
+
+#commentlist #respond {
+	margin-top: 20px;
+	background: #bbb;
+	padding: 10px;
+	-moz-border-radius: 8px;
+	}
+
+#commentlist #respond a {
+	/*color: #ccc;*/
+	}
+
 #pinglist {
 	font-size: 1.2em;
 	padding: 0;
@@ -749,8 +785,9 @@ input[type=text]:focus, textarea:focus {
 	}
 
 .comments textarea {
-	width: 100%;
+	width: 95%;
 	margin: 10px 0;
+	border: 1px solid #888;
 	}
 
 .comments form #submit {

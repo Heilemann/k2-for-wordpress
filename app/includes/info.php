@@ -450,6 +450,41 @@ function k2_asides_filter($query) {
 add_filter('pre_get_posts', 'k2_asides_filter');
 
 
+// Update comment count to only include comments
+function k2_comment_count( $count ) {
+	global $id;
+
+	if ($count == 0) return $count;
+
+	$comments = get_approved_comments( $id );
+	$comments = array_filter( $comments, 'k2_strip_trackback' );
+
+	return count($comments);
+}
+
+add_filter('get_comments_number', 'k2_comment_count', 0);
+
+// Separates comments from trackbacks
+function k2_seperate_comments( $comments ) {
+	$comments_by_type = array();
+
+	$comments_by_type['comment'] = array_filter( $comments, 'k2_strip_trackback' );
+	$comments_by_type['pings'] = array_filter( $comments, 'k2_strip_comment' );
+
+	return $comments_by_type;
+}
+
+// Strips out trackbacks/pingbacks
+function k2_strip_trackback($var) {
+	return ($var->comment_type != 'trackback' and $var->comment_type != 'pingback');
+}
+
+// Strips out comments
+function k2_strip_comment($var) {
+	return ($var->comment_type == 'trackback' or $var->comment_type == 'pingback');
+}
+
+
 function get_wp_version() {
 	global $wp_version;
 
