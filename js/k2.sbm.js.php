@@ -25,7 +25,7 @@ function sbm_load(id, url) {
 					.clone()
 					.attr('class', 'module marker')
 					.css({ position: "static" })
-					.html('<div class="modulewrapper"></div>')
+					.html('<div class="slidingdoor"><span class="modulewrapper"></span></div>')
 					.appendTo(jQuery(this).children())
 			},
 			onOut: 			function (drag) {
@@ -41,7 +41,7 @@ function sbm_load(id, url) {
 				// Create new module
 				var newModule = jQuery(drag)
 									.clone()
-									.html('<div class="modulewrapper"><span class="name">'+module+'</span><span class="type">'+module+'</span><a href="#" class="optionslink"></a><a href="#" class="deletelink"></a></div>')
+									.html('<div class="slidingdoor"><span class="modulewrapper"><span class="name">'+module+'</span><span class="handle"></span><span class="type">'+module+'</span></span><a href="#" class="optionslink"> </a><a href="#" class="deletelink"> </a></div>')
 									.attr('id', 'module-' + (lastModuleID++))
 									.attr('class', 'module ' + sidebar)
 									.css({ position: "static" })
@@ -177,6 +177,9 @@ function sbm_load(id, url) {
 			// Calculate best height for columns
 			jQuery('.container:visible').each(function() {
 				var moduleHeight = 40;
+
+				if (jQuery(this).attr('id') == 'availablemodulescontainer')
+					moduleHeight = 30;
 
 				var currentContainer = parseInt((jQuery(this).children('div').children('ul').children('li').length * moduleHeight + moduleHeight ));
 				var currentHeader = parseInt(jQuery(this).children('h3').height() * 2);
