@@ -25,13 +25,15 @@
 
 	<?php if ( !empty($comments_by_type['comment']) ): $GLOBALS['comment_index'] = 0; ?>
 		<ul id="commentlist">
-			<?php if ( function_exists('wp_list_comments') ): ?>
-				<?php wp_list_comments('type=comment&callback=k2_comment_start_el'); ?>
-			<?php else: ?>
-				<?php foreach ($comments_by_type['comment'] as $comment): ?>
-					<?php k2_comment_item( $comment ); ?>
-				<?php endforeach; ?>
-			<?php endif; ?>
+		<?php
+			if ( function_exists('wp_list_comments') ):
+				wp_list_comments('type=comment&callback=k2_comment_start_el');
+			else:
+				foreach ($comments_by_type['comment'] as $comment):
+					k2_comment_item($comment);
+				endforeach;
+			endif;
+		?>
 		</ul>
 
 		<?php if ( function_exists('wp_list_comments') ): ?>
@@ -50,14 +52,15 @@
 
 	<?php if ( !empty($comments_by_type['pings']) ): $GLOBALS['comment_index'] = 0; ?>
 		<ul id="pinglist">
-			<?php if ( function_exists('wp_list_comments') ): ?>
-				<?php wp_list_comments( 'type=pings&callback=k2_ping_item' ); ?>
-			<?php else: ?>
-				<?php foreach ($comments_by_type['pings'] as $comment): ?>
-					<?php k2_ping_item($comment); ?>
-					</li>
-				<?php endforeach; ?>
-			<?php endif; ?>
+		<?php
+			if ( function_exists('wp_list_comments') ):
+				wp_list_comments( 'type=pings&callback=k2_ping_start_el' );
+			else:
+				foreach ($comments_by_type['pings'] as $comment):
+					k2_ping_item($comment);
+				endforeach;
+			endif;
+		?>
 		</ul>
 	<?php endif; // If there are trackbacks / pingbacks ?>
 		
@@ -101,13 +104,39 @@
 			<?php elseif ( $user_ID ): ?>
 		
 				<p class="comment-login">
-					<?php printf( __('Logged in as %s.','k2_domain'), '<a href="' . get_option('siteurl') . '/wp-admin/profile.php">' . $user_identity . '</a>' ); ?> <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="<?php _e('Log out of this account','k2_domain'); ?>"><?php _e('Logout','k2_domain'); ?> &raquo;</a>
+					<?php printf( __('Logged in as %s.','k2_domain'), '<a href="' . get_option('siteurl') . '/wp-admin/profile.php">' . $user_identity . '</a>' ); ?> <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="<?php _e('Log out of this account','k2_domain'); ?>"><?php _e('Logout &raquo;','k2_domain'); ?></a>
 				</p>
 	
 			<?php elseif ( '' != $comment_author ): ?>
 
 				<p class="comment-welcomeback"><?php printf(__('Welcome back <strong>%s</strong>','k2_domain'), $comment_author); ?>
 				
+				<?php /* ?>
+				<a href="javascript:toggleCommentAuthorInfo();" id="toggle-comment-author-info">
+					<?php _e('(Change)','k2_domain'); ?>
+				</a>
+
+				<script type="text/javascript" charset="utf-8">
+				//<![CDATA[
+					var changeMsg = "<?php echo  js_escape( __('(Change)','k2_domain') ); ?>";
+					var closeMsg = "<?php echo js_escape( __('(Close)','k2_domain') ); ?>";
+					
+					function toggleCommentAuthorInfo() {
+						jQuery('#comment-author-info').slideToggle('slow', function(){
+							if ( jQuery('#comment-author-info').css('display') == 'none' ) {
+								jQuery('#toggle-comment-author-info').text(changeMsg);
+							} else {
+								jQuery('#toggle-comment-author-info').text(closeMsg);
+							}
+						});
+					}
+
+					jQuery(document).ready(function(){
+						jQuery('#comment-author-info').hide();
+					});
+				//]]>
+				</script>
+				<?php */ ?>
 			<?php endif; ?>
 			
 			<?php if ( ! $user_ID ): ?>
@@ -147,18 +176,16 @@
 							quoter_comment_server();
 						endif;
 					?></textarea>
-					<span id="commenterror"></span>
 				</p>
 		
-				<?php if ( function_exists('show_subscription_checkbox') ): show_subscription_checkbox(); endif; ?>
-				<?php if ( function_exists('quoter_page') ): quoter_page(); endif; ?>
+				<?php if ( function_exists('show_subscription_checkbox') ) show_subscription_checkbox(); ?>
+				<?php if ( function_exists('quoter_page') ) quoter_page(); ?>
 
 				<p>
 					<input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit','k2_domain'); ?>" />
-					<input type="hidden" name="comment_count" value="<?php echo $num_comments; ?>" />
-					<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
-					<?php if ( function_exists('comment_parent_field') ): comment_parent_field(); endif; ?>
-					<span id="commentload"></span>
+					<?php if ( function_exists('comment_id_fields') ): comment_id_fields(); else: ?>
+						<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
+					<?php endif; ?>
 				</p>
 				
 				<div class="clear"></div>

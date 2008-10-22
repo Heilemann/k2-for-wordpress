@@ -72,7 +72,7 @@
 ?>
 
 <li id="comment-<?php comment_ID(); ?>" <?php if ( function_exists('comment_class') ): comment_class(); else: echo 'class="' . k2_comment_class( $comment_index, false ) . '"'; endif; ?>>
-	<div id="div-comment-<?php comment_ID(); ?>" class="comment">
+	<div class="comment">
 
 		<div class="comment-head">
 			<?php /* WordPress 2.5 Avatar */ if ( function_exists('get_avatar') and get_option('show_avatars') ): ?>
@@ -89,29 +89,29 @@
 
 			<a href="#comment-<?php comment_ID(); ?>" class="counter" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>"><?php echo $comment_index; ?></a>
 			<span class="comment-author"><?php comment_author_link(); ?></span>
-		</div><!-- .comment-head -->
 
-		<div class="comment-meta">
-			<a href="#comment-<?php comment_ID(); ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>">
+			<div class="comment-meta">
+				<a href="#comment-<?php comment_ID(); ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>">
+					<?php
+						if ( function_exists('time_since') ):
+							printf( __('%s ago.','k2_domain'), time_since( abs( strtotime($comment->comment_date_gmt . ' GMT') ), time() ) );
+						else:
+							printf( __('%1$s at %2$s','k2_domain'), get_comment_date(), get_comment_time() );
+						endif;
+					?>
+				</a>
+
+				<?php if ( function_exists('quoter_comment') ): quoter_comment(); endif; ?>
+
 				<?php
-					if ( function_exists('time_since') ):
-						printf( __('%s ago.','k2_domain'), time_since( abs( strtotime($comment->comment_date_gmt . ' GMT') ), time() ) );
+					if ( function_exists('jal_edit_comment_link') ):
+						jal_edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>');
 					else:
-						printf( __('%1$s at %2$s','k2_domain'), get_comment_date(), get_comment_time() );
+						edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">', '</span>');
 					endif;
 				?>
-			</a>
-
-			<?php if ( function_exists('quoter_comment') ): quoter_comment(); endif; ?>
-
-			<?php
-				if ( function_exists('jal_edit_comment_link') ):
-					jal_edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>');
-				else:
-					edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">', '</span>');
-				endif;
-			?>
-		</div><!-- .comment-meta -->
+			</div><!-- .comment-meta -->
+		</div><!-- .comment-head -->
 
 		<div class="comment-content">
 			<?php comment_text(); ?> 
@@ -124,8 +124,8 @@
 		</div><!-- .comment-content -->
 
 		<?php if ( function_exists('comment_reply_link') ): ?>
-		<div class="comment-reply">
-			<?php echo comment_reply_link( array( 'add_below' => 'div-comment', 'depth' => $depth, 'max_depth' => $args['depth'] ) ); ?>
+		<div id="comment-reply-<?php comment_ID(); ?>" class="comment-reply">
+			<?php echo comment_reply_link( array( 'add_below' => 'comment-reply', 'depth' => $depth, 'max_depth' => $args['depth'] ) ); ?>
 		</div>
 		<?php endif; ?>
 
@@ -138,7 +138,7 @@
 		echo '</li>';
 	}
 
-	function k2_ping_item($comment, $args = array(), $depth = 1) {
+	function k2_ping_start_el($comment, $args = array(), $depth = 1) {
 		global $comment_index;
 		$GLOBALS['comment'] = $comment;	?>
 
@@ -171,4 +171,11 @@
 			?>				
 			<?php if ($user_ID) { edit_comment_link(__('Edit','k2_domain'),'<span class="comment-edit">','</span>'); } ?>
 			</div><!-- .comment-meta -->
-<?php } ?>
+<?php
+	}
+
+	function k2_ping_item($comment) {
+		k2_ping_start_el($comment, array('style' => 'ul') );
+		echo '</li>';
+	}
+?>

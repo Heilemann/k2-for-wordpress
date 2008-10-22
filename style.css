@@ -597,7 +597,7 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	}
 
 #commentlist .children {
-	margin-left: 10px;
+	margin-left: 20px;
 	}
 
 #commentlist li {
@@ -605,13 +605,11 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	list-style: none;
 	}
 
-#commentlist li li {
-	margin-left: 20px;
-	}
-
 #commentlist .comment {
 	padding: 10px;
 	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
 	}
 
 #commentlist li .comment-content {
@@ -681,13 +679,14 @@ li.bypostauthor blockquote {
 	height: 16px;
 	color: #fff;
 	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
 	}
 
 #commentlist #respond {
+	padding-top: 10px;
 	margin-top: 20px;
-	background: #bbb;
-	padding: 10px;
-	-moz-border-radius: 8px;
+	border-top: 1px solid #ccc;
 	}
 
 #commentlist #respond a {
@@ -897,7 +896,6 @@ a[rel~="attachment"] img,
 	padding: 3px;
 	text-align: center;
 	-moz-border-radius: 3px;
-	-khtml-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
 	}
