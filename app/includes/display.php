@@ -125,7 +125,7 @@
 
 		<?php if ( function_exists('comment_reply_link') ): ?>
 		<div id="comment-reply-<?php comment_ID(); ?>" class="comment-reply">
-			<?php echo comment_reply_link( array( 'add_below' => 'comment-reply', 'depth' => $depth, 'max_depth' => $args['depth'] ) ); ?>
+			<?php comment_reply_link(array_merge( $args, array('add_below' => 'comment-reply', 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
 		</div>
 		<?php endif; ?>
 

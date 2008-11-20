@@ -8,29 +8,26 @@ function LiveSearch(url, searchprompt) {
 	this.input = jQuery('input#s');
 
 	// Hide the submit button
-	jQuery('#searchform input[@type=submit]').hide();
+	jQuery('#searchsubmit').addClass('hidden');
 
 	// Insert reset and loading elements
-	this.input.after('<span id="searchreset"></span><span id="searchload"></span>');
 	this.reset = jQuery('#searchreset');
 	this.loading = jQuery('#searchload');
+	this.searchLabel = jQuery('#search-label');
 
-	this.input.addClass('livesearch').val(this.searchPrompt)
-	
+	this.input.addClass('livesearch');
+	this.searchLabel.addClass('overlabel-apply');
+
 	this.loading.hide();
 	this.reset.show().fadeTo('fast', 0.3);
 
 	// Bind events to the search input
 	this.input
-		.focus(function() {
-			if (self.input.val() == self.searchPrompt) {
-				self.input.val('');
-			}
+		.focus(function(){
+			self.searchLabel.css('text-indent', '-1000px');
 		})
-		.blur(function() {
-			if (self.input.val() == '') {
-				self.input.val(self.searchPrompt);
-			}
+		.blur(function(){
+			self.searchLabel.css('text-indent', '0px');
 		})
 		.keyup(function(event) {
 			var code = event.keyCode;
@@ -82,7 +79,8 @@ LiveSearch.prototype.resetSearch = function(self) {
 	self.active = false;
 	self.prevSearch = '';
 
-	self.input.val(self.searchPrompt);
+	self.input.val('');
+	self.searchLabel.css('text-indent', '0px');
 
 	self.reset.unbind('click').fadeTo('fast', 0.3).css('cursor', 'default');
 

@@ -12,8 +12,10 @@
 		<?php while (have_posts()): the_post(); ?>
 			<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
 
-				<div class="page-head">
-					<h2><a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php the_title(); ?></a></h2>
+				<div class="entry-head">
+					<h1 class="entry-title">
+						<a href="<?php the_permalink() ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php the_title(); ?></a>
+					</h1>
 					<?php edit_post_link(__('Edit','k2_domain'), '<span class="entry-edit">','</span>'); ?>
 				</div>
 	

@@ -19,7 +19,8 @@
 	// WP 2.7 threaded comments
 	if ( is_singular() ) wp_enqueue_script( 'comment-reply' );
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
 
 <head profile="http://gmpg.org/xfn/11">
@@ -125,7 +126,9 @@
 
 <?php /* K2 Hook */ do_action('template_body_top'); ?>
 
-<a class="skiplink" href="#startcontent" accesskey="2"><?php _e('Skip to content','k2_domain'); ?></a>
+<div id="skip">
+	<a href="#startcontent" accesskey="2"><?php _e('Skip to content','k2_domain'); ?></a>
+</div>
 
 <div id="page">
 
@@ -133,7 +136,8 @@
 
 	<div id="header">
 
-		<h1 class="blog-title"><a href="<?php echo get_option('home'); ?>/" accesskey="1"><?php bloginfo('name'); ?></a></h1>
+		<?php $block = ( is_front_page() ? 'h1' : 'div' ); ?>
+		<<?php echo $block; ?> class="blog-title"><a href="<?php echo get_option('home'); ?>/" accesskey="1"><?php bloginfo('name'); ?></a></<?php echo $block; ?>>
 		<p class="description"><?php bloginfo('description'); ?></p>
 
 		<?php /* K2 Hook */ do_action('template_header'); ?>

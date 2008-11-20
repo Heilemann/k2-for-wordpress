@@ -28,14 +28,6 @@
 
 <?php endif;
 
-	// Debugging
-	if ( isset($_GET['k2debug']) ):
-		echo '<div class="alert">';
-		echo '<b>SQL:</b><br />'; var_dump($wp_query->request);
-		echo '<b>Query:</b><br />'; var_dump($wp_query->query);
-		echo '</div>';
-	endif;
-
 	// Get the asides category
 	$k2asidescategory = get_option('k2asidescategory');
 	$k2rollingarchives = get_option('k2rollingarchives');
@@ -48,10 +40,9 @@
 
 	<?php /* Top Navigation */ if ( ('0' == $k2rollingarchives) or is_single() ): k2_navigation('nav-above'); endif; ?>
 
-	<?php /* Headlines for archives */ if ( ( ! is_single() and ! is_home() ) or is_paged() ): ?>
-		<div class="page-head">
-			<h2><?php
-
+	<?php /* Headlines for archives */ if ( ! is_single() and ! is_home() ): ?>
+		<h1 class="page-head">
+		<?php
 			// Load the post for date archive titles
 			if ( is_date() ): the_post(); endif;
 
@@ -96,15 +87,16 @@
 			// Reset the post for date archive titles
 			if ( is_date() ): rewind_posts(); endif;
 
-			?></h2>
-		</div>
+		?>
+		</h1>
 	<?php endif; ?>
 
 	<?php /* Start the loop */ while ( have_posts() ): the_post(); ?>
 
 		<div id="post-<?php the_ID(); ?>" class="<?php echo attribute_escape(k2_post_class($post_index++, in_category($k2asidescategory), false)); ?>">
 			<div class="entry-head">
-				<h3 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php the_title(); ?></a></h3>
+				<?php $block = is_singular() ? 'h1' : 'h3'; ?>
+				<<?php echo $block; ?> class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php the_title(); ?></a></<?php echo $block; ?>>
 
 				<div class="entry-meta">
 					<?php
@@ -123,7 +115,7 @@
 										'<abbr class="published" title="' . get_the_time('Y-m-d\TH:i:sO') . '">'. get_the_time( get_option('date_format') ) . '</abbr>')
 							) . '</div>',
 
-							'<div class="entry-categories">' .
+							'<div class="entry-category">' .
 							sprintf( __('<span class="meta-prep">in</span> %s','k2_domain'),
 								k2_nice_category(', ', __(' and ','k2_domain'))
 							) . '</div>'
@@ -168,7 +160,7 @@
 
 <?php endif; /* End Loop Init  */ ?>
 
-<?php /* Bottom Navigation */ if ( ('0' == $k2rollingarchives) or is_single() ): k2_navigation('nav-below'); endif; ?> 
+<?php /* Bottom Navigation */ if ( ('0' == $k2rollingarchives) and !is_single() ): k2_navigation('nav-below'); endif; ?> 
 
 <?php if ( isset( $_GET['k2dynamic'] ) ): ?>
 </div><!-- #dynamictype -->
