@@ -12,8 +12,10 @@
 			<?php include (TEMPLATEPATH . '/theloop.php'); ?>
 
 			<div id="entry-comments" class="entry-comments comments">
-				<?php comments_template('/comments.php', true); ?>
+				<?php comments_template(); ?>
 			</div> <!-- .entry-comments -->
+
+			<?php k2_navigation('nav-below'); ?> 
 
 		</div> <!-- #current-content -->
 

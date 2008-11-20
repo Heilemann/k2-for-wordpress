@@ -24,14 +24,11 @@ class K2 {
 		require_once(TEMPLATEPATH . '/app/classes/options.php');
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
+		require_once(TEMPLATEPATH . '/app/includes/wp-compat.php');
 
 		if ( defined('K2_LOAD_SBM') ) {
 			require_once( TEMPLATEPATH . '/app/classes/sbm.php' );
 			require_once( TEMPLATEPATH . '/app/includes/sbm.php' );
-		}
-
-		if ( defined('K2_WIDGETS') ) {
-			require_once(TEMPLATEPATH . '/app/classes/widgets.php');
 		}
 
 		// Check installed version, upgrade if needed

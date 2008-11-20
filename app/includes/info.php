@@ -466,13 +466,15 @@ add_filter('get_comments_number', 'k2_comment_count', 0);
 
 // Separates comments from trackbacks
 function k2_seperate_comments( $comments ) {
-	$comments_by_type = array();
+	global $trackbacks;
 
-	$comments_by_type['comment'] = array_filter( $comments, 'k2_strip_trackback' );
-	$comments_by_type['pings'] = array_filter( $comments, 'k2_strip_comment' );
+	$comments_only = array_filter( $comments, 'k2_strip_trackback' );
+	$trackbacks = array_filter( $comments, 'k2_strip_comment' );
 
-	return $comments_by_type;
+	return $comments_only;
 }
+
+add_filter('comments_array', 'k2_seperate_comments');
 
 // Strips out trackbacks/pingbacks
 function k2_strip_trackback($var) {
@@ -497,33 +499,6 @@ function get_wp_version() {
 
 	return $version;
 }
-
-
-// WordPress Compatibility Functions
-
-
-/**
- * is_front_page() - Is it the front of the site, whether blog view or a WP Page?
- *
- * @since 2.5
- * @uses is_home
- * @uses get_option
- *
- * @return bool True if front of site
- */
-if ( ! function_exists('is_front_page') ) {
-	function is_front_page () {
-		// most likely case
-		if ( 'posts' == get_option('show_on_front') && is_home() )
-			return true;
-		elseif ( 'page' == get_option('show_on_front') && get_option('page_on_front') && is_page(get_option('page_on_front')) )
-			return true;
-		else
-			return false;
-	}
-}
-
-
 
 // Semantic class functions from Sandbox (http://www.plaintxt.org/themes/sandbox/)
 

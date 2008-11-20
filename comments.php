@@ -1,35 +1,31 @@
 <?php
 	// Do not access this file directly
-	if ( 'comments.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ):
+	if ( !empty($_SERVER['SCRIPT_FILENAME']) and 'comments.php' == basename($_SERVER['SCRIPT_FILENAME']) )
 		die( __('Please do not load this page directly. Thanks!', 'k2_domain') );
-	endif;
 
  	// Password Protection
-	if ( ! empty( $post->post_password ) ):
-		if ( $_COOKIE['wp-postpass_' . COOKIEHASH] != $post->post_password ): ?>
+	if ( post_password_required() ): ?>
 
-	<p class="nopassword"><?php _e('This post is password protected. Enter the password to view comments.','k2_domain'); ?></p>
+	<p class="nopassword"><?php _e('This post is password protected. Enter the password to view comments.', 'k2_domain'); ?></p>
 
-	<?php return; endif; endif; ?>
+	<?php return; endif; ?>
 
-	<?php if ( !isset($comments_by_type) ): $comments_by_type = k2_seperate_comments($comments); endif; ?>
-
-		<h4><?php printf( __('%1$s %2$s to &#8220;%3$s&#8221;', 'k2_domain'), '<span id="comments">' . count($comments_by_type['comment']) . '</span>', count($comments_by_type['comment']) ? __('Responses', 'k2_domain'): __('Response','k2_domain'), the_title('', '', false) ); ?></h4>
+		<h4><?php printf( __('%1$s %2$s to &#8220;%3$s&#8221;', 'k2_domain'), '<span id="comments">' . count($comments) . '</span>', count($comments) ? __('Responses', 'k2_domain'): __('Response','k2_domain'), the_title('', '', false) ); ?></h4>
 
 		<div class="metalinks">
 			<span class="commentsrsslink"><?php comments_rss_link(__('Feed for this Entry','k2_domain')); ?></span>
-			<?php if ('open' == $post->ping_status): ?><span class="trackbacklink"><a href="<?php trackback_url(); ?>" title="<?php _e('Copy this URI to trackback this entry.','k2_domain'); ?>"><?php _e('Trackback Address','k2_domain'); ?></a></span><?php endif; ?>
+			<?php if ( pings_open() ): ?><span class="trackbacklink"><a href="<?php trackback_url(); ?>" title="<?php _e('Copy this URI to trackback this entry.','k2_domain'); ?>"><?php _e('Trackback Address','k2_domain'); ?></a></span><?php endif; ?>
 		</div>
 
 		<hr />
 
-	<?php if ( !empty($comments_by_type['comment']) ): $GLOBALS['comment_index'] = 0; ?>
+	<?php if ( have_comments() ): $GLOBALS['comment_index'] = 0; ?>
 		<ul id="commentlist">
 		<?php
 			if ( function_exists('wp_list_comments') ):
-				wp_list_comments('type=comment&callback=k2_comment_start_el');
+				wp_list_comments('callback=k2_comment_start_el');
 			else:
-				foreach ($comments_by_type['comment'] as $comment):
+				foreach ($comments as $comment):
 					k2_comment_item($comment);
 				endforeach;
 			endif;
@@ -40,6 +36,8 @@
 		<div class="navigation">
 			<div class="nav-previous"><?php previous_comments_link() ?></div>
 			<div class="nav-next"><?php next_comments_link() ?></div>
+
+			<div class="clear"></div>
 		</div>
 		<?php endif; ?>
 	<?php elseif ( comments_open() ): ?>
@@ -50,16 +48,12 @@
 		</ul>
 	<?php endif; // If there are comments ?>
 
-	<?php if ( !empty($comments_by_type['pings']) ): $GLOBALS['comment_index'] = 0; ?>
+	<?php if ( !empty($GLOBALS['trackbacks']) ): $GLOBALS['comment_index'] = 0; ?>
 		<ul id="pinglist">
 		<?php
-			if ( function_exists('wp_list_comments') ):
-				wp_list_comments( 'type=pings&callback=k2_ping_start_el' );
-			else:
-				foreach ($comments_by_type['pings'] as $comment):
-					k2_ping_item($comment);
-				endforeach;
-			endif;
+			foreach ($GLOBALS['trackbacks'] as $comment):
+				k2_ping_item($comment);
+			endforeach;
 		?>
 		</ul>
 	<?php endif; // If there are trackbacks / pingbacks ?>
@@ -104,7 +98,7 @@
 			<?php elseif ( $user_ID ): ?>
 		
 				<p class="comment-login">
-					<?php printf( __('Logged in as %s.','k2_domain'), '<a href="' . get_option('siteurl') . '/wp-admin/profile.php">' . $user_identity . '</a>' ); ?> <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="<?php _e('Log out of this account','k2_domain'); ?>"><?php _e('Logout &raquo;','k2_domain'); ?></a>
+					<?php printf( __('Logged in as %s.','k2_domain'), '<a href="' . get_option('siteurl') . '/wp-admin/profile.php">' . $user_identity . '</a>' ); ?> <a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php _e('Log out of this account','k2_domain'); ?>"><?php _e('Logout &raquo;','k2_domain'); ?></a>
 				</p>
 	
 			<?php elseif ( '' != $comment_author ): ?>
