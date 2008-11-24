@@ -27,7 +27,9 @@ function LiveSearch(url, searchprompt) {
 			self.searchLabel.css('text-indent', '-1000px');
 		})
 		.blur(function(){
-			self.searchLabel.css('text-indent', '0px');
+			if (self.input.val() == '') {
+				self.searchLabel.css('text-indent', '0px');
+			}
 		})
 		.keyup(function(event) {
 			var code = event.keyCode;
