@@ -77,7 +77,7 @@
 				<p class="main-option"><input id="k2-sidebar-manager" name="k2[sidebarmanager]" type="checkbox" value="1" <?php checked('1', get_option('k2sidebarmanager')); ?> />
 				<!--<label for="k2-sidebarmanager"><?php _e('Enable K2\'s Sidebar Manager', 'k2_domain'); ?></label>--></p>
 				<p class="description"><?php _e('K2 has a neat sidebar system that allows you to control where/when each widget can appear.', 'k2_domain'); ?></p>
-				<?php if ( !defined('K2_LOAD_SBM') ): ?>
+				<?php if ( defined('K2_LOAD_SBM') ): ?>
 					<p class="description alert">Please disable the K2 Disable Widgets plugin to use the new Widgets Manager.</p>
 				<?php endif; ?>
 			
