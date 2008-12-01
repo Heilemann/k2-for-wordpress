@@ -470,18 +470,23 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	}
 
 .entry-edit a,
-.comment-edit a,
 .comment-reply a {
 	border: none;
 	padding: 4px 8px 4px 28px;
-	background-color: #9be;
 	background-position: 8px center;
 	background-repeat: no-repeat;
 	height: 16px;
-	color: #fff;
+	color: #333;
+	background-color: inherit;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
+	}
+
+.entry-edit a:hover,
+.comment-reply a:hover {
+	background-color: #9be;
+	color: #fff;
 	}
 
 .entry-edit a {
@@ -489,8 +494,9 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	}
 
 .comment-edit a {
+	padding: 4px 8px 4px 28px;
 	margin-left: 10px;
-	background-image: url('images/comment_edit.png');
+	background: url('images/comment_edit.png') 8px center no-repeat;
 	}
 
 .comment-reply a {
