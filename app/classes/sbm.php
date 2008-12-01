@@ -33,7 +33,7 @@ class K2SBM {
 			$k2sbm_restore = false;
 			$k2sbm_restore_error = false;
 
-			if($_POST['action'] == 'restore' && $_FILES['backup']['error'] == 0) {
+			if($_POST['sbm_action'] == 'restore' && $_FILES['backup']['error'] == 0) {
 				$data = (array)unserialize(file_get_contents($_FILES['backup']['tmp_name']));
 
 				if(isset($data['sbm_version']) && version_compare($data['sbm_version'], SBM_VERSION) <= 0) {
