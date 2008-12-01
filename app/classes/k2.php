@@ -18,6 +18,18 @@ class K2 {
 		// Load the localisation text
 		load_theme_textdomain('k2_domain');
 
+		if ( ! defined('K2_STYLES_DIR') )
+			define('K2_STYLES_DIR', TEMPLATEPATH . '/styles');
+
+		if ( ! defined('K2_STYLES_URL') )
+			define('K2_STYLES_URL', get_template_directory_uri() . '/styles');
+
+		if ( ! defined('K2_HEADERS_DIR') )
+			define('K2_HEADERS_DIR', TEMPLATEPATH . '/images/headers');
+
+		if ( ! defined('K2_HEADERS_URL') )
+			define('K2_HEADERS_URL', get_template_directory_uri() . '/images/headers');
+
 		// Load required classes and includes
 		require_once(TEMPLATEPATH . '/app/classes/archive.php');
 		require_once(TEMPLATEPATH . '/app/classes/header.php');
@@ -27,8 +39,11 @@ class K2 {
 		require_once(TEMPLATEPATH . '/app/includes/wp-compat.php');
 
 		if ( defined('K2_LOAD_SBM') ) {
-			require_once( TEMPLATEPATH . '/app/classes/sbm.php' );
-			require_once( TEMPLATEPATH . '/app/includes/sbm.php' );
+			require_once(TEMPLATEPATH . '/app/classes/sbm.php');
+			require_once(TEMPLATEPATH . '/app/includes/sbm.php');
+		} else {
+			require_once(TEMPLATEPATH . '/app/classes/widgets.php');
+			//require_once(TEMPLATEPATH . '/app/includes/widgets.php');
 		}
 
 		// Check installed version, upgrade if needed
@@ -47,24 +62,22 @@ class K2 {
 		// Register our scripts with script loader
 		K2::register_scripts();
 
-		// Register our sidebar with SBM/Widgets
-		if ( function_exists('register_sidebars') ) {
-			register_sidebars( K2_SIDEBARS, array(
-				'before_widget' => '<div id="%1$s" class="widget %2$s">',
-				'after_widget' => '</div>',
-				'before_title' => '<h4>',
-				'after_title' => '</h4>'
-			) );
-		}
+		// Register our sidebar with Widgets
+		register_sidebars( K2_SIDEBARS, array(
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => '</div>',
+			'before_title' => '<h4>',
+			'after_title' => '</h4>'
+		) );
 
 		$style = get_option('k2style');
-		if ( K2_USING_STYLES and ('' != $style) ) {
+		if ( K2_USING_STYLES and !empty($style) ) {
 			// insert full path
-			$style = ABSPATH . $style;
+			$style = K2_STYLES_DIR . "/$style";
 
 			// if style is not readable, clear style options
 			// otherwise load style's functions.php if it is readable
-			if ( !is_readable($style) ) {
+			if ( empty($style) ) {
 				update_option('k2style', '');
 				update_option('k2styleinfo', array());
 			} elseif ( is_readable( dirname($style) . '/functions.php' ) ) {
@@ -89,17 +102,6 @@ class K2 {
 
 		// Call the install handlers
 		do_action('k2_install');
-
-		// Create support folders for WordPressMU
-		if ( K2_MU ) {
-			if ( ! is_dir(ABSPATH . UPLOADS . 'k2support/') ) {
-				wp_mkdir_p(ABSPATH . UPLOADS . 'k2support/');
-			}
-
-			if ( ! is_dir(K2_MU_STYLES_PATH) ) {
-				wp_mkdir_p(K2_MU_STYLES_PATH);
-			}
-		}
 	}
 
 
@@ -185,27 +187,32 @@ class K2 {
 	 */
 
 	function register_scripts() {
-		if ( get_wp_version() < 2.6 and ( !is_admin() or (is_admin() and ($_GET['page'] == 'k2-options' or $_GET['page'] == 'k2-sbm-manager')) ) ) {
-			// Unload the bundled jQuery
-			wp_deregister_script('jquery');
-			wp_deregister_script('interface');
-		}
-
 		// Register jQuery
 		wp_register_script('jquery',
-			get_bloginfo('template_directory').'/js/jquery.js.php',
+			get_bloginfo('template_directory') . '/js/jquery.js.php',
 			false, '1.2.6');
 
-		// Register jQuery Plugins
-		wp_register_script('interface',
-			get_bloginfo('template_directory').'/js/jquery.interface.js.php',
+		wp_register_script( 'jquery-ui-core',
+			get_bloginfo('template_directory') . '/js/ui.core.js',
+			array('jquery'), '1.5.2' );
+
+		wp_register_script( 'jquery-ui-sortable',
+			get_bloginfo('template_directory') . '/js/ui.sortable.js',
+			array('jquery-ui-core'), '1.5.2' );
+
+		wp_register_script( 'jquery-ui-draggable',
+			get_bloginfo('template_directory') . '/js/ui.draggable.js',
+			array('jquery-ui-core'), '1.5.2' );
+
+		wp_register_script( 'jquery-ui-droppable',
+			get_bloginfo('template_directory') . '/js/ui.droppable.js',
+			array('jquery-ui-core', 'jquery-ui-draggable'), '1.5.2' );
+
+		wp_register_script('jquery-dimensions',
+			get_bloginfo('template_directory') . '/js/jquery.dimensions.js.php',
 			array('jquery'), '1.2');
 
-		wp_register_script('jquery.dimensions',
-			get_bloginfo('template_directory').'/js/jquery.dimensions.js.php',
-			array('jquery'), '1.2');
-
-		wp_register_script('jquery.easing',
+		wp_register_script('jquery-easing',
 			get_bloginfo('template_directory') . '/js/jquery.easing.js.php',
 			array('jquery'), '1.1.2');
 
@@ -216,7 +223,7 @@ class K2 {
 
 		wp_register_script('humanmsg',
 			get_bloginfo('template_directory') . '/js/jquery.humanmsg.js.php',
-			array('jquery', 'jquery.easing'), K2_CURRENT);
+			array('jquery', 'jquery-easing'), K2_CURRENT);
 
 		wp_register_script('humanundo',
 			get_bloginfo('template_directory') . '/js/jquery.humanundo.js.php',
@@ -240,9 +247,12 @@ class K2 {
 
 		wp_register_script('k2sbm',
 			get_bloginfo('template_directory') . '/js/k2.sbm.js.php',
-			array('jquery', 'interface', 'jquery.dimensions', 'humanmsg', 'humanundo'), K2_CURRENT);
-	}
+			array('jquery', 'interface', 'jquery-dimensions', 'humanmsg', 'humanundo'), K2_CURRENT);
 
+		wp_register_script('k2widgets',
+			get_bloginfo('template_directory') . '/js/k2.widgets.js',
+			array('jquery', 'jquery-ui-droppable', 'jquery-ui-sortable', 'jquery-dimensions', 'humanmsg', 'humanundo'), K2_CURRENT);
+	}
 
 	/**
 	 * Searches through 'styles' directory for css files
@@ -251,17 +261,9 @@ class K2 {
 	 */
 	
 	function get_styles() {
-		global $k2_styles;
-
-		if ( isset($k2_styles) )
-			return $k2_styles;
-
 		$k2_styles = array();
 
-		$style_files = K2::files_scan(K2_STYLES_PATH, 'css', 2, 2);
-
-		if ( K2_MU )
-			$style_files = array_merge( $style_files, K2::files_scan(K2_MU_STYLES_PATH, 'css', 2, 2) );
+		$style_files = K2::files_scan( K2_STYLES_DIR, 'css', 2 );
 
 		sort($style_files);
 
@@ -306,7 +308,7 @@ class K2 {
 	 * @param string $path directory to search
 	 * @param array $ext file extensions
 	 * @param integer $depth depth of search
-	 * @param mixed $relative true: use relative path or 2: relative to ABSPATH
+	 * @param mixed $relative relative to which path
 	 * @return array paths of files found
 	 */
 	
@@ -314,7 +316,7 @@ class K2 {
 		$files = array();
 
 		// Scan for all matching files
-		K2::_files_scan($path, '', $ext, $depth, $relative, $files);
+		K2::_files_scan( trailingslashit($path), '', $ext, $depth, $relative, $files);
 
 		return $files;
 	}
@@ -356,10 +358,10 @@ class K2 {
 				} elseif(is_file($file_full_path) and (empty($ext) or preg_match('/\.(' . $ext_match . ')$/i', $file))) {
 					if ( $relative === true ) {
 						$files[] = $file_path;
-					} else if ( $relative === 2 ) {
-						$files[] = str_replace(ABSPATH, '', $file_full_path);
-					} else {
+					} elseif ( $relative === false ) {
 						$files[] = $file_full_path;
+					} else {
+						$files[] = str_replace($relative, '', $file_full_path);
 					}
 				}
 			}

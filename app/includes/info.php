@@ -16,7 +16,7 @@ function get_k2info( $show = '' ) {
 
 		case 'style' :
 			if ( get_option('k2style') != '' )
-				$output = get_bloginfo('wpurl') . '/' . get_option('k2style');
+				$output = K2_STYLES_URL . '/' . get_option('k2style');
 			break;
 
 		case 'style_footer' :
@@ -25,145 +25,24 @@ function get_k2info( $show = '' ) {
 			break;
 
 		case 'styles_url' :
-			$output = get_bloginfo('wpurl') . '/' . str_replace(ABSPATH, '', K2_STYLES_PATH);
+			$output = K2_STYLES_URL . '/';
 			break;
 
 		case 'headers_url' :
-			$output = get_bloginfo('wpurl') . '/' . str_replace(ABSPATH, '', K2_HEADERS_PATH);
+			$output = K2_HEADERS_URL . '/';
 			break;
 
 		case 'current_style_dir' :
 			if ( get_option('k2style') != '' )
-				$output = ABSPATH . dirname( get_option('k2style') );
+				$output = K2_STYLES_DIR . '/' . dirname( get_option('k2style') );
 			break;
 
 		case 'current_style_url' :
 			if ( get_option('k2style') != '' )
-				$output = get_bloginfo('wpurl') . '/' . dirname( get_option('k2style') );
+				$output = K2_STYLES_URL . '/' . dirname( get_option('k2style') );
 			break;
 	}
 	return $output;
-}
-
-
-function k2_parse_query($query) {
-	if ( is_array($query) and !empty($query) ) {
-		$valid_keys = array(
-			'error'
-			, 's'
-			, 'exact'
-			, 'search_terms'
-			, 'sentence'
-
-			, 'subpost'
-			, 'subpost_id'
-			, 'attachment'
-			, 'attachment_id'
-
-			, 'p'
-			, 'name'
-			, 'static'
-			, 'pagename'
-			, 'page_id'
-
-			, 'author'
-			, 'author_name'
-			, 'feed'
-			, 'tb'
-			, 'paged'
-			, 'comments_popup'
-			, 'preview'
-			, 'withcomments'
-			, 'withoutcomments'
-			, 'post_status'
-			, 'post_type'
-
-			, 'hour'
-			, 'minute'
-			, 'second'
-			, 'day'
-			, 'monthnum'
-			, 'year'
-			, 'w'
-			, 'm'
-
-			, 'cat'
-			, 'category_name'
-			, 'category__in'
-			, 'category__not_in'
-			, 'category__and'
-
-			, 'tag'
-			, 'tag_id'
-			, 'tag__in'
-			, 'tag__not_in'
-			, 'tag__and'
-			, 'tag_slug__in'
-			, 'tag_slug__and'
-
-			, 'k2dynamic'
-			, 'k2debug'
-		);
-
-		foreach ($query as $key => $value) {
-			if ( ! in_array($key, $valid_keys) ) {
-				unset($query[$key]);
-			}
-		}
-
-		// Parse the advance search operators
-		if ( !empty($query['s']) ) {
-
-			//preg_match_all('/"(.*?)"/', $query['s'], $_quotes);
-			//$search_terms = explode(' ', preg_replace( '/".*?"/', '', $query['s'] ));
-
-			$search_terms = explode(' ', $query['s']);
-
-			foreach ($search_terms as $key => $term) {
-
-				// operators:
-				if ( strpos($term, ':') !== false ) {
-					$operation = explode(':', $term, 2);
-
-					switch( $operation[0] ) {
-
-						/*case 'cat':
-						case 'category':
-							if ( isset($query['cat']) ) {
-								$query['cat'] = $query['cat'] . ',' . get_cat_ID($operation[1]);
-							} else {
-								$query['cat'] = get_cat_ID($operation[1]);
-							}
-							break;
-						*/
-
-						case 'tag':
-							if ( isset($query['tag']) ) {
-								$query['tag'] .= ',' . $operation[1];
-							} else {
-								$query['tag'] = $operation[1];
-							}
-							break;
-
-						case 'month':
-							$query['monthnum'] = $operation[1];
-							break;
-
-						case 'author':
-							$query['author_name'] = $operation[1];
-							break;
-					}
-
-					unset($search_terms[$key]);
-				}
-			}
-
-			$query['s'] = implode($search_terms);
-		}
-
-	}
-
-	return $query;
 }
 
 function update_style_info() {
@@ -195,12 +74,12 @@ function get_style_data( $style_file = '' ) {
 	if ( '' == $style_file )
 		return false;
 
-	$style_file = ABSPATH . $style_file;
+	$style_path = K2_STYLES_DIR . "/$style_file";
 
-	if ( !is_readable($style_file) )
+	if ( ! is_readable($style_path) )
 		return false;
 
-	$style_data = implode( '', file($style_file) );
+	$style_data = implode( '', file($style_path) );
 	$style_data = str_replace( '\r', '\n', $style_data );
 
 	// parse the data
@@ -224,8 +103,8 @@ function get_style_data( $style_file = '' ) {
 	}
 
 	return array(
-		'path' => str_replace(ABSPATH, '', $style_file),
-		'modified' => filemtime($style_file),
+		'path' => $style_file,
+		'modified' => filemtime($style_path),
 		'author' => trim($author[1]),
 		'site' => clean_url( trim($site[1]) ),
 		'stylename' => trim($stylename[1]),
@@ -239,6 +118,7 @@ function get_style_data( $style_file = '' ) {
 		'layout_widths' => $layout_widths
 	);
 }
+
 
 function get_k2_ping_type($trackbacktxt = 'Trackback', $pingbacktxt = 'Pingback') {
 	$type = get_comment_type();
@@ -714,6 +594,10 @@ function k2_post_class( $post_count = 1, $post_asides = false, $print = true ) {
 function k2_comment_class( $comment_count = 1, $print = true ) {
 	global $comment, $post;
 
+	if ('' == $comment->comment_type) {
+		$comment->comment_type = 'comment';
+	}
+
 	// Collects the comment type (comment, trackback),
 	$c = array($comment->comment_type);
 
@@ -756,5 +640,3 @@ function k2_date_classes($t, &$c, $p = '') {
 	$c[] = $p . 'd' . gmdate('d', $t); // Day
 	$c[] = $p . 'h' . gmdate('H', $t); // Hour
 }
-
-?>

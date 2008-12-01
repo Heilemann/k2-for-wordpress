@@ -1,16 +1,13 @@
 /* This file contains the CSS for the 'K2 Options' admin panel */
 
-div#wpbody-content {
-	padding-top: 15px;
-	}
-
 .wrap {
-	font-family: Helvetica, Verdana, 'Lucida Grande', Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	}
 
 .wrap h2 {
-	margin-left: 20px;
-	font-family: Helvetica, Verdana, 'Lucida Grande', Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-style: normal;
+	color: #333;
 	}
 
 .wrap a {
@@ -27,19 +24,18 @@ div#wpbody-content {
 	margin: 10px 0px;
 	}
 
-#save {
-	background: #333;
-	border-color: black;
-	color: white;
+.alert {
+	font-weight: bold;
 	}
 
 .container {
-	margin: 30px 20px;
+	margin: 20px 0;
 	position: relative;
 	}
 
 h3 {
-	font: 1.6em/1.4 Helvetica, Arial, sans-serif;
+	font-size: 1.4em;
+	font-weight: normal;
 	color: #333;
 	width: 225px;
 	margin: 0px;
@@ -86,8 +82,8 @@ h3 {
 	margin-top: 5px;
 	}
 
-.secondary-option {
-	margin-left: 240px;
+.secondary {
+	color: #666;
 	}
 
 input[type=text],
@@ -114,6 +110,28 @@ option {
 
 .center {
 	text-align: center;
+	}
+
+.form-table {
+	width: auto;
+	}
+
+.form-table tr {
+	background: none;
+	}
+
+.form-table th,
+.form-table td {
+	padding: 0px;
+	}
+
+.form-table th {
+	width: 230px;
+	padding-right: 10px;
+	font-weight: normal;
+	text-align: right;
+	color: #666;
+	vertical-align: middle;
 	}
 	
 .advanced {

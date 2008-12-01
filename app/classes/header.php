@@ -45,53 +45,73 @@ class K2Header {
 		return $default_widths[$columns];
 	}
 
+	function get_header_image_url() {
+		$header_image = get_option('k2headerimage');
+
+		if ( empty($header_image) )
+			return false;
+
+		// randomly select an image
+		if ( 'random' == $header_image ) {
+			$images = K2Header::get_header_images();
+			$size = count($images);
+
+			if ( $size > 1 )
+				$header_image = $images[ rand(0, $size - 1) ];
+			else
+				$header_image = $images[0];
+		}
+
+		// image is an attachment
+		if ( is_numeric($header_image) ) {
+			$header_image = get_post_meta( $header_image, '_wp_attached_file', true );
+			$uploads = wp_upload_dir();
+
+			if ( empty($header_image) or $uploads['error'] )
+				return false;
+			
+			return trailingslashit($uploads['baseurl']) . $header_image;
+		}
+
+		return K2_HEADERS_URL . "/$header_image";
+	}
+
 	function get_header_images() {
 		global $wpdb;
 
-		$images = K2::files_scan(K2_HEADERS_PATH, array('gif','jpeg','jpg','png'), 1, 2);
+		$images = K2::files_scan(K2_HEADERS_DIR, array('gif','jpeg','jpg','png'), 1);
+		$attachment_ids = $wpdb->get_results("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = 'k2-header-image'", ARRAY_N);
 
-		$attachment_ids = (array) $wpdb->get_var("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = 'k2-header-image'");
-		foreach ($attachment_ids as $id) {
-			$images[] = str_replace(ABSPATH, '', get_attached_file($id) );
-		}
+		if ( !empty($attachment_ids) )
+			foreach ( $attachment_ids as $id_array )
+				$images[] = $id_array[0];
 
 		return $images;
 	}
 
-	function random_picture() {
-		$picture_files = K2Header::get_header_images();
-
-		$size = count($picture_files);
-
-		if ($size > 1) {
-			return ($picture_files[rand(0, $size - 1)]);
-		} else {
-			return $picture_files[0];
-		}
-	}
-
 	function output_header_css() {
-		$header_image = get_option('k2headerimage');
-
-		if ( 'random' == $header_image ) {
-			$picture = K2Header::random_picture();
-		} else {
-			$picture = $header_image;
-		}
+		$image_url = K2Header::get_header_image_url();
 		?>
 		<style type="text/css">
-		<?php if ( $picture != '' ): ?>
+		<?php if ( !empty($image_url) ): ?>
 		#header {
-			background-image: url("<?php echo get_option('siteurl') . '/' . $picture; ?>");
+			background-image: url("<?php echo $image_url; ?>");
 		}
 		<?php endif; ?>
 
 		<?php if ( 'blank' == get_header_textcolor() ): ?>
-		#header h1, #header .description {
-			display: none;
+		#header .blog-title,
+		#header .description {
+			position: absolute !important;
+			left: 0px;
+			top: -500px !important;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
 		}
 		<?php else: ?>
-		#header h1 a, #header .description {
+		#header .blog-title a,
+		#header .description {
 			color: #<?php header_textcolor(); ?>;
 		}
 		<?php endif; ?>
@@ -148,64 +168,15 @@ class K2Header {
 		// Handle only the final step
 		if ( file_exists($source) and (strpos(basename($source),'midsize-') === false) ) {
 			if ( 2 == $_GET['step'] ) {
-				if ( get_wp_version() < 2.4 ) {
-					// Quick & dirty mime-type
-					$ext = pathinfo($source, PATHINFO_EXTENSION);
-					switch ($ext) {
-						case 'jpg':
-						case 'jpe':
-							$mime = 'jpeg';
-							break;
-
-						case 'tif':
-							$mime = 'tiff';
-							break;
-
-						default:
-							$mime = $ext;
-							break;
-					}
-
-					// Get original attachment
-					$attachment = get_post( $id );
-					$attachment->post_mime_type = 'image/' . $mime;
-					$attachment->post_excerpt = sprintf( __('Custom Header Image for K2 (%1$d x %2$d)', 'k2_domain'), HEADER_IMAGE_WIDTH, HEADER_IMAGE_HEIGHT );
-
-					// Update the attachment
-					$id = wp_insert_attachment( $attachment, $source );
-					wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $source ) );
-				}
-
 				// Allows K2 to find the attachment
 				add_post_meta( $id, 'k2-header-image', 'original' );
-
 			} elseif ( 3 == $_GET['step'] ) {
-				if ( get_wp_version() < 2.4 ) {
-					// Get original attachment
-					$parent = get_post( $_POST['attachment_id'] );
-					$parent_url = $parent->guid;
-					$url = str_replace(basename($parent_url), basename($source), $parent_url);
-
-					// Construct the object array
-					$object = array(
-						'post_title' => basename($source),
-						'post_content' => $url,
-						'post_excerpt' => sprintf( __('Custom Header Image for K2 (%1$d x %2$d)', 'k2_domain'), HEADER_IMAGE_WIDTH, HEADER_IMAGE_HEIGHT ),
-						'post_mime_type' => 'image/jpeg',
-						'guid' => $url
-					);
-
-					// Create a new attachment
-					$id = wp_insert_attachment( $object, $source );
-					wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $source ) );
-				}
-
 				// Allows K2 to find the attachment
 				add_post_meta( $id, 'k2-header-image', 'cropped' );
 			}
 
 			// Update K2 Options
-			update_option( 'k2headerimage', str_replace(ABSPATH, '', $source) );
+			update_option( 'k2headerimage', $id );
 		}
 
 		return $source;
@@ -217,4 +188,3 @@ add_action('k2_init', array('K2Header', 'init'), 11);
 add_action('k2_uninstall', array('K2Header', 'uninstall'));
 add_action('wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'), 10, 2);
 add_filter('wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'), 10, 2);
-?>

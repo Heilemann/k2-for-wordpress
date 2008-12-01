@@ -5,7 +5,7 @@
 		$style_info = get_option('k2styleinfo');
 
 		// Check that the styles folder exists
-		$is_styles_dir = is_dir(K2_STYLES_PATH);
+		$is_styles_dir = is_dir(K2_STYLES_DIR);
 
 		// Get the scheme files
 		$style_files = K2::get_styles();
@@ -34,10 +34,15 @@
 
 	// Get the header pictures
 	$header_images = K2Header::get_header_images();
-
 ?>
 
 <div class="wrap">
+	<?php if ( isset($_REQUEST['restore-defaults']) ): ?>
+	<div class="updated fade">
+		<p><?php _e('K2 has been restored to default settings.', 'k2_domain'); ?></p>
+	</div>
+	<?php endif; ?>
+
 	<?php if ( isset($_REQUEST['updated']) ): ?>
 	<div class="updated fade">
 		<p><?php _e('K2 Options have been updated', 'k2_domain'); ?></p>
@@ -52,19 +57,36 @@
 
 	<?php if ( K2_USING_STYLES and !$is_styles_dir ): ?>
 		<div class="error">
-		<?php printf(__('<p>The directory: <code>%s</code>, needed to store custom styles is missing.</p><p>For you to be able to use custom styles, you need to add this directory.</p>', 'k2_domain'), K2_STYLES_PATH ); ?>
+		<?php printf(__('The directory: <strong>%s</strong>, needed to store custom styles is missing. For you to be able to use custom styles, you need to add this directory.', 'k2_domain'), K2_STYLES_DIR ); ?>
 		</div>
 	<?php endif; ?>
 
 	<?php if ($dir_has_spaces): ?>
 		<div class="error">
-		<?php printf( __('<p>The K2 directory: <code>%s</code>, contains spaces. For K2 to function properly, you will need to remove the spaces from the directory name.</p>', 'k2_domain'), TEMPLATEPATH ); ?>
+		<?php printf( __('The K2 directory: <strong>%s</strong>, contains spaces. For K2 to function properly, you will need to remove the spaces from the directory name.', 'k2_domain'), TEMPLATEPATH ); ?>
 		</div>
 	<?php endif; ?>
 
 	<h2><?php _e('K2 Options', 'k2_domain'); ?></h2>
 	<form action="<?php echo attribute_escape($_SERVER['REQUEST_URI']); ?>" method="post">
 		<?php wp_nonce_field('k2options'); ?>
+
+ 			<div class="container">
+				<h3><label for="k2-sidebar-manager"><?php _e('Widgets Manager', 'k2_domain'); ?></label></h3>
+
+				<p class="main-option"><input id="k2-sidebar-manager" name="k2[sidebarmanager]" type="checkbox" value="1" <?php checked('1', get_option('k2sidebarmanager')); ?> />
+				<!--<label for="k2-sidebarmanager"><?php _e('Enable K2\'s Sidebar Manager', 'k2_domain'); ?></label>--></p>
+				<p class="description"><?php _e('K2 has a neat sidebar system that allows you to control where/when each widget can appear.', 'k2_domain'); ?></p>
+				<?php if ( !defined('K2_LOAD_SBM') ): ?>
+					<p class="description alert">Please disable the K2 Disable Widgets plugin to use the new Widgets Manager.</p>
+				<?php endif; ?>
+			
+				<p>
+					<input type="submit" name="sbm-defaults" id="sbm-defaults" class="button-secondary" value="<?php echo attribute_escape( __('Revert to Widgets Manager Defaults', 'k2_domain') ); ?>" disabled="disabled" />
+
+					<input type="submit" name="sbm-upgrade" id="sbm-upgrade" class="button-secondary" value="<?php echo attribute_escape( __('Import old SBM settings', 'k2_domain') ); ?>" disabled="disabled" />
+				</p>
+			</div><!-- .container -->
 
 			<div class="container">
 				<h3><label for="k2-columns"><?php _e('Columns', 'k2_domain'); ?></label></h3>
@@ -89,7 +111,11 @@
 				<p class="main-option"><input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2livesearch')); ?> />
 				<!--<label for="k2-advnav"><?php _e('Enable Advanced Navigation','k2_domain'); ?></label>--></p>
 
-				<p class="description"><?php _e('Seamlessly search and navigate old posts.','k2_domain'); ?></p>
+				<p class="description"><?php _e('Seamlessly search and navigate old posts.', 'k2_domain'); ?></p>
+				<p class="advanced secondary">
+					<input id="k2-animations" name="k2[animations]" type="checkbox" value="1" <?php checked('1', get_option('k2animations')); ?> />
+					<label for="k2-animations"><?php _e('Enable JavaScript Animations', 'k2_domain'); ?></label>
+				</p>
 			</div><!-- .container -->
 
 
@@ -134,9 +160,20 @@
 					<select id="k2-style" name="k2[style]">
 						<option value="" <?php selected($current_style, ''); ?>><?php _e('Off', 'k2_domain'); ?></option>
 
-						<?php foreach($style_files as $style): ?>
+						<?php foreach( $style_files as $style ): ?>
 						<option value="<?php echo attribute_escape($style['path']); ?>" <?php selected($current_style, $style['path']); ?>>
-						<?php if ( '' == $style['stylename'] ): echo basename($style['path']); else: echo $style['stylename']; endif; if ( '' != $style['version'] ): echo ' (' . $style['version'] . ')'; endif; ?></option>
+						<?php
+							if ( ! empty($style['stylename']) ) {
+								echo $style['stylename'];
+								
+								if ( ! empty($style['version']) ) {
+									echo ' ' . $style['version'];
+								}
+							} else {
+								echo $style['path'];
+							}
+						?>
+						</option>
 						<?php endforeach; ?>
 					</select>
 				</p>
@@ -152,66 +189,61 @@
 			<div class="container">
 				<h3><?php _e('Header', 'k2_domain'); ?></h3>
 
-				<p class="description"><?php
-					printf(
-						__('The current header size is <strong>%1$s px by %2$s px</strong>. Use %3$s to customize the header.', 'k2_domain'),
+				<p class="description">
+				<?php
+					printf( __('The current header size is <strong>%1$s px by %2$s px</strong>.', 'k2_domain'),
 						K2Header::get_header_width(),
-						empty($style_info['header_height'])? K2_HEADER_HEIGHT : $style_info['header_height'],
-						'<a href="themes.php?page=custom-header">' . __('Custom Image Header', 'k2_domain') . '</a>'
-					); ?></p>
+						empty($style_info['header_height'])? K2_HEADER_HEIGHT : $style_info['header_height']
+					);
 
-				<dl class="form-list">
-					<dt>
-						<label for="k2-header-image"><?php _e('Select an Image:', 'k2_domain'); ?></label>
-					</dt>
-					<dd class="secondary-option">
-						<select id="k2-header-image" name="k2[headerimage]">
-							<option value="" <?php selected($current_header_image, ''); ?>><?php _e('Off', 'k2_domain'); ?></option>
-							<option value="random" <?php selected($current_header_image, 'random'); ?>><?php _e('Random', 'k2_domain'); ?></option>
-							<?php foreach($header_images as $image): ?>
-							<option value="<?php echo attribute_escape($image); ?>" <?php selected($current_header_image, $image); ?>><?php echo basename($image); ?></option>
-							<?php endforeach; ?>
-						</select>
-					</dd>
+					if ( extension_loaded('gd') and function_exists('gd_info') ) {
+						printf( __(' Use %s to customize the header.', 'k2_domain'),
+							'<a href="themes.php?page=custom-header">' . __('Custom Image Header', 'k2_domain') . '</a>'
+						);
+					}
+					?>
+				</p>
 
-					<dt>
-						<label for="k2-blog-tab"><?php _e('Rename the \'Blog\' tab:', 'k2_domain'); ?></label>
-					</dt>
-					<dd class="secondary-option">
-						<input id="k2-blog-tab" name="k2[blogornoblog]" type="text" value="<?php echo attribute_escape(get_option('k2blogornoblog')); ?>" />
-					</dd>
-				</dl>
+				<table class="form-table">
+					<tbody>
+						<tr>
+							<th scope="row">
+								<label for="k2-header-image"><?php _e('Select an Image:', 'k2_domain'); ?></label>
+							</th>
+							<td>
+								<select id="k2-header-image" name="k2[headerimage]">
+									<option value="" <?php selected($current_header_image, ''); ?>><?php _e('Off', 'k2_domain'); ?></option>
+									<option value="random" <?php selected($current_header_image, 'random'); ?>><?php _e('Random', 'k2_domain'); ?></option>
+									<?php foreach($header_images as $image): ?>
+										<?php if ( is_numeric($image) ): ?>
+											<option value="<?php echo attribute_escape($image); ?>" <?php selected($current_header_image, $image); ?>><?php echo basename( get_attached_file($image) ); ?></option>
+										<?php else: ?>
+											<option value="<?php echo attribute_escape($image); ?>" <?php selected($current_header_image, $image); ?>><?php echo basename($image); ?></option>
+										<?php endif; ?>
+									<?php endforeach; ?>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">
+								<label for="k2-blog-tab"><?php _e('Rename the \'Blog\' tab:', 'k2_domain'); ?></label>
+							</th>
+							<td>
+								<input id="k2-blog-tab" name="k2[blogornoblog]" type="text" value="<?php echo attribute_escape(get_option('k2blogornoblog')); ?>" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div><!-- .container -->
 				
 
 			<?php /* K2 Hook */ do_action('k2_display_options'); ?>
 
-			<div class="container advanced" id="uninstall">
-				<h3><?php _e('Uninstall K2', 'k2_domain'); ?></h3>
-
-				<script type="text/javascript">
-				function confirmUninstall() {
-					if (confirm("<?php _e('Delete your K2 settings?', 'k2_domain'); ?>") == true) {
-						return true;
-					} else {
-						return false;
-					}
-				}
-				</script>
-
-
-				<p class="description">
-					<?php _e('Remove all K2 settings and revert WordPress to its default theme. No files are deleted.', 'k2_domain'); ?>
-				</p>
-
-				<p class="center">
-					<input id="uninstall" name="uninstall" type="submit" onClick="return confirmUninstall();" value="<?php echo attribute_escape(__('Reset and Uninstall K2', 'k2_domain')); ?>" class="button-secondary" />
-				</p>
-			</div>
 
 		<div class="submit">
-			<input type="button" name="advanced" value="<?php echo attribute_escape(__('Advanced Options', 'k2_domain')); ?>" class="button-secondary advanced" />
-			<input type="submit" id="save" name="save" class="button" value="<?php echo attribute_escape(__('Save Changes', 'k2_domain')); ?>" />
+			<input type="button" name="advanced" id="advanced" value="<?php echo attribute_escape( __('Advanced Options', 'k2_domain') ); ?>" class="button-secondary" disabled="disabled" />
+			<input type="submit" name="restore-defaults" id="restore-defaults" onClick="return confirmDefaults();" value="<?php echo attribute_escape( __('Revert to K2 Defaults', 'k2_domain') ); ?>" class="button-secondary" />
+			<input type="submit" id="save" name="save" class="button-primary" value="<?php echo attribute_escape( __('Save Changes', 'k2_domain') ); ?>" />
 		</div><!-- .options-footer -->
 	</form>
 
