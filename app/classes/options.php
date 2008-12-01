@@ -94,13 +94,17 @@ class K2Options {
 			delete_option('k2scheme');
 		}
 
+		/*
 		if ( version_compare( $previous, '1.0-RC7.1', '<' ) ) {
-			K2Options::setup_widgets();
+			if ( ! defined('K2_LOAD_SBM') ) {
+				K2Options::setup_widgets();
+			}
 
 			update_option( 'k2headerimage', str_replace(K2_HEADERS_DIR, '', get_option('k2headerimage')) );
 			update_option( 'k2style', str_replace(K2_STYLES_DIR, '', get_option('k2style')) );
 			update_style_info();
 		}
+		*/
 	}
 
 	/**
