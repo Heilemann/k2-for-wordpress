@@ -127,6 +127,17 @@ body.columns-two .secondary {
 	display: inline;
 	}
 
+body.sidebars-none #primary-wrapper {
+	margin: 0px;
+	float: none;
+	}
+
+body.sidebars-none #primary {
+	float: none;
+	width: auto !important;
+	margin: 0px !important;
+	}
+
 .columns-one .secondary {
 	width: 240px;
 	border-top: 1px solid #eee;
