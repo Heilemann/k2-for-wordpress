@@ -460,11 +460,6 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	font-style: normal;
 	}
 
-.entry-category {
-	text-transform: lowercase;
-	margin-right: 10px;
-	}
-
 .entry-meta a, .comment-meta a {
 	color: #777;
 	}
@@ -506,7 +501,6 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 .commentslink {
 	padding: 2px 0 2px 20px;
 	background: url('images/comment.png') left center no-repeat;
-	margin-right: 10px;
 	}
 
 .quoter_comment {
@@ -1126,10 +1120,9 @@ img.wp-smiley {
 	display: none;
 	}
 
-#searchform {
-	display: block;
+#search-form-wrap.livesearch {
 	position: relative;
-	height: 20px;
+	height: 2.0em;
 	}
 
 input[type=text], textarea {
@@ -1139,17 +1132,19 @@ input[type=text], textarea {
 	}
 
 #s {
-	width: 79%;
+	width: 85%;
 	font-size: 1.1em;
+	margin: 4px 0px;
 	}
 
-#s.livesearch {
+.livesearch #s {
 	position: absolute;
-	top: 0;
-	width: 88%;
+	top: 0px;
+	left: 0px;
+	margin: 0px;
 	}
 
-.columns-three #s.livesearch {
+.columns-three .livesearch #s {
 	width: 145px;
 	}
 
@@ -1187,8 +1182,8 @@ input[type=text], textarea {
 
 label.overlabel-apply {
 	position: absolute;
-	top: 3px;
-	left: 5px;
+	top: 4px;
+	left: 4px;
 	z-index: 1;
 	color: #999;
 	cursor: text;

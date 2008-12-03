@@ -3,6 +3,8 @@
 function LiveSearch(url, searchprompt) {
 	var self = this;
 
+	jQuery('#search-form-wrap').addClass('livesearch');
+
 	this.url = url;
 	this.searchPrompt = searchprompt;
 	this.input = jQuery('input#s');
@@ -15,11 +17,10 @@ function LiveSearch(url, searchprompt) {
 	this.loading = jQuery('#searchload');
 	this.searchLabel = jQuery('#search-label');
 
-	this.input.addClass('livesearch');
-	this.searchLabel.addClass('overlabel-apply');
+	this.searchLabel.empty().text(searchprompt).addClass('overlabel-apply');
 
-	this.loading.hide();
-	this.reset.show().fadeTo('fast', 0.3);
+	this.loading.removeClass('hidden').hide();
+	this.reset.removeClass('hidden').show().fadeTo('fast', 0.3);
 
 	// Bind events to the search input
 	this.input
@@ -29,6 +30,10 @@ function LiveSearch(url, searchprompt) {
 		.blur(function(){
 			if (self.input.val() == '') {
 				self.searchLabel.css('text-indent', '0px');
+
+				if (self.prevSearch != '') {
+					self.resetSearch(self);
+				}
 			}
 		})
 		.keyup(function(event) {
