@@ -67,6 +67,7 @@
 		</div>
 	<?php endif; ?>
 
+	<?php if ( function_exists('screen_icon') ) screen_icon(); ?>
 	<h2><?php _e('K2 Options', 'k2_domain'); ?></h2>
 	<form action="<?php echo attribute_escape($_SERVER['REQUEST_URI']); ?>" method="post">
 		<?php wp_nonce_field('k2options'); ?>

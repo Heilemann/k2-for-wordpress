@@ -12,6 +12,7 @@
 	<?php } ?>
 
 	<div id="sbmheader">
+		<?php if ( function_exists('screen_icon') ) screen_icon(); ?>
 		<h2><?php _e('K2 Widgets Manager', 'k2_domain') ?></h2>
 
 	<!--

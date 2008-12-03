@@ -9,6 +9,7 @@
 	border: none;
 	}
 
+/*
 #sbmheader h2 {
 	position: absolute;
 	bottom: 0px;
@@ -18,7 +19,6 @@
 	border: none;
 	}
 
-/*
 .wrap {
 	position: relative;
 	background: #eee url('../images/sbmmanager/sbmbg.png') repeat-x;
@@ -40,9 +40,7 @@
 	}
 
 #sbmheader {
-	height: 55px;
 	position: relative;
-	border-bottom: 1px solid #ccc;
 	margin-bottom: 20px;
 	}
 
