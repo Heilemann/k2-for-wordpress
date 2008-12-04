@@ -145,8 +145,10 @@ function get_rolling_page_dates($query) {
 	$post_dates = $wpdb->get_results("SELECT {$wpdb->posts}.post_date_gmt FROM {$matches[1]}");
 
 	$page_dates = array();
+	setlocale(LC_TIME, WPLANG . '.' . get_option('blog_charset') );
+
 	for ($i = 0; $i < $num_pages; $i++) {
-		$page_dates[] = date(__('F, Y','k2_domain'), abs(strtotime($post_dates[$i * $per_page]->post_date_gmt . ' GMT')));
+		$page_dates[] = strftime( __('%B, %Y', 'k2_domain'), abs(strtotime($post_dates[$i * $per_page]->post_date_gmt . ' GMT')) );
 	}
 
 	return $page_dates;
