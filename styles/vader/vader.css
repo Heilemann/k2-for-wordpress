@@ -30,18 +30,12 @@ body {
 	height: 260px;
 	}
 
-h1 {
-	position: absolute;
-	top: 25px;
-	left: 50px;
-	padding: 0;
+#header .blog-title {
+	padding: 25px 50px 0px;
 	}
 
-.description {
-	position: absolute;
-	top: 55px;
-	left: 50px;
-	margin: 0 !important;
+#header .description {
+	margin: 5px 50px;
 	}
 
 #page {
@@ -83,17 +77,43 @@ h3 span a:visited {
 	color: #444;
 	font-weight: normal;
 	}
+
+.entry-edit a,
+.comment-edit a,
+.comment-reply a {
+	color: #444;
+	}
 	
 .counter a {
 	color: #222;
 	}
-	
+
 .commentlist li {
 	color: #666;
 	}
 
 .commentlist li:hover {
 	background: none;
+	}
+
+#commentlist .comment {
+	border-radius: 0px;
+	-moz-border-radius: 0px;
+	}
+
+li.byuser .comment {
+	border: 1px solid #222;
+	background-color: #111;
+	}	
+
+li.bypostauthor .comment {
+	border: 1px solid #333;
+	background-color: #222;
+	}
+
+#pinglist {
+	border: 1px solid #333;
+	background-color: #222;
 	}
 	
 blockquote, #weightedcategories, .authorcomment {
@@ -180,4 +200,11 @@ a, a:visited, .sidebar a:visited {
 body.smartposition #rollingarchives {
 	background-color: black;
 	border-bottom: 1px solid #444;
+	}
+
+#page input[type="text"],
+#page textarea {
+	color: #666;
+	background-color: #222;
+	border: 2px solid #333;
 	}
