@@ -64,13 +64,12 @@ class K2Header {
 
 		// image is an attachment
 		if ( is_numeric($header_image) ) {
-			$header_image = get_post_meta( $header_image, '_wp_attached_file', true );
-			$uploads = wp_upload_dir();
+			$header_image = wp_get_attachment_url($header_image);
 
-			if ( empty($header_image) or $uploads['error'] )
+			if ( empty($header_image) )
 				return false;
-			
-			return trailingslashit($uploads['baseurl']) . $header_image;
+
+			return $header_image;
 		}
 
 		return K2_HEADERS_URL . "/$header_image";
