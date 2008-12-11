@@ -329,14 +329,14 @@ li.multi-widget:hover {
 	font-size: 12px;
 	}
 
-.modulewrapper .type {
+.modulewrapper .desc {
 	top: 20px;
 	color: #bbb;
 	font-size: 9px;
 	line-height: 10px;
 	}
 
-.sortable .type {
+.sortable .desc {
 	display: none;
 	}
 

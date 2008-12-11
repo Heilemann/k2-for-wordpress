@@ -383,9 +383,7 @@ class K2SBM {
 			<li id="<?php echo attribute_escape( $widget['id'] ); ?>" class="new-widget <?php if ( $is_multi ) { echo 'multi-widget'; } else { echo 'widget'; } ?>">
 				<div class="modulewrapper">
 					<span class="name"><?php echo $widget['name']; ?></span>
-					<?php if ( isset( $widget['description'] ) ): ?>
-					<span class="type"><?php echo $widget['description']; ?></span>
-					<?php endif; ?>
+					<span class="desc"><?php echo wp_widget_description($widget['id']); ?></span>
 					<span class="display">
 						<img src="<?php echo get_template_directory_uri(); ?>/images/house.png" alt="<?php _e('Homepage','k2_domain'); ?>" />
 						<img src="<?php echo get_template_directory_uri(); ?>/images/calendar.png" alt=""/>
@@ -451,9 +449,7 @@ class K2SBM {
 ?>
 		<div class="modulewrapper">
 			<span class="name"><?php echo $widget_title; ?></span>
-			<?php if ( isset( $widget['description'] ) ): ?>
-			<span class="type"><?php echo $widget['description']; ?></span>
-			<?php endif; ?>
+			<span class="desc"><?php echo wp_widget_description($widget_id); ?></span>
 			<span class="display"><?php $k2sbm_active_modules[$widget_id]->showBadges(); ?></span>
 			<a href="#" class="optionslink" alt="<?php _e('Module Options', 'k2_domain') ?>"></a>
 			<a href="#" class="deletelink" alt="<?php _e('Delete Module', 'k2_domain') ?>"></a>
@@ -638,12 +634,12 @@ class k2sbmModule {
 	}
 }
 
-add_action( 'k2_init', array('K2SBM', 'init') );
 add_action( 'k2_install', array('K2SBM', 'install') );
 add_action( 'k2_upgrade', array('K2SBM', 'upgrade') );
 add_action( 'k2_uninstall', array('K2SBM', 'uninstall') );
 
 if ( get_option('k2sidebarmanager') ) {
+	add_action( 'k2_init', array('K2SBM', 'init') );
 	add_action( 'sidebar_admin_setup', array('K2SBM', 'sync_modules') );
 	add_action( 'wp_ajax_k2sbm', array('K2SBM', 'direct_bootstrap') );
 
