@@ -131,3 +131,10 @@ option {
 .advanced {
 	display: none;
 }
+
+.button[disabled],
+.button:disabled,
+.button-secondary[disabled],
+.button-secondary:disabled {
+	display: none;
+}
