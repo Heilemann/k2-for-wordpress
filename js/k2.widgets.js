@@ -264,7 +264,9 @@ function initOptionLinks() {
 				},
 				function(data) {
 					if (data.result) {
-						if ( !is_multi ) {
+						if ( is_multi ) {
+							jQuery('#' + module_id).remove();
+						} else {
 							jQuery('#' + module_id)
 								.appendTo('#available-widgets')
 								.addClass('new-widget')

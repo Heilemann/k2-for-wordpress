@@ -21,6 +21,9 @@
 			<a href="" id="backupsbm"><?php _e('Backup', 'k2_domain') ?></a>
 		</span>
 	-->
+		<div class="updated">
+			<p>Please use <a href="widgets.php">Widgets</a> to add multi-widgets (those in blue).</p>
+		</div>
 
 		<a href="#" id="undo"><?php _e('Undo', 'k2_domain') ?> <span id="levels"></span></a>
 	</div><!-- .sbmheader -->

@@ -64,6 +64,9 @@ class K2SBM {
 		if ( 'control-show' == $_POST['sbm_action'] ) {
 			$module_id = sanitize_title( $_POST['module'] );
 
+			// Widgets hack
+			K2SBM::multi_widget_hack( $module_id );
+
 			if ( isset($k2sbm_active_modules[ $module_id ]) )
 				$k2sbm_active_modules[$module_id]->displayControl();
 
@@ -302,7 +305,7 @@ class K2SBM {
 		global $k2sbm_disabled_modules, $k2sbm_active_modules;
 
 		// Widgets hack
-		$_POST['widget-id'] = array( $module_id );
+		K2SBM::multi_widget_hack( $module_id );
 
 		// Start the capture
 		ob_start();
@@ -318,6 +321,21 @@ class K2SBM {
 
 		$k2sbm_active_modules[$module_id]->showBadges();
 		K2SBM::save_modules();
+	}
+
+	function multi_widget_hack($widget_id) {
+		global $wp_registered_widgets;
+
+		$my_widget = $wp_registered_widgets[$widget_id];
+		$ids = array();
+		if ( isset( $my_widget['params'][0]['number'] ) ) {
+			foreach ($wp_registered_widgets as $widget) {
+				if ( $widget['callback'] == $my_widget['callback'] )
+					$ids[] = $widget['id'];
+			}
+
+			$_POST['widget-id'] = $ids;
+		}
 	}
 
 	function remove_module($sidebar_id, $module_id) {
@@ -364,23 +382,21 @@ class K2SBM {
 			if ( is_active_widget( $widget['callback'], $widget['id'] ) and !$is_multi )
 				continue;
 
+			$widget_id = $widget['id'];
 			if ( $is_multi ) {
-				/*
 				$num = (int) array_pop( $ids = explode( '-', $widget['id'] ) );
 				$id_base = $wp_registered_widget_controls[$widget['id']]['id_base'];
 
 				while ( isset($wp_registered_widgets["$id_base-$num"]) )
 					$num++;
 
-				$widget['id'] = "$id_base-$num";
-				*/
-				$already_shown[] = $widget['callback'];
+				$widget_id = "$id_base-$num";
 
-				//$widget['id'] = $wp_registered_widget_controls[$widget['id']]['id_base'];
+				$already_shown[] = $widget['callback'];
 			}
 			?>
 
-			<li id="<?php echo attribute_escape( $widget['id'] ); ?>" class="new-widget <?php if ( $is_multi ) { echo 'multi-widget'; } else { echo 'widget'; } ?>">
+			<li id="<?php echo attribute_escape( $widget_id ); ?>" class="new-widget <?php if ( $is_multi ) { echo 'multi-widget'; } else { echo 'widget'; } ?>">
 				<div class="modulewrapper">
 					<span class="name"><?php echo $widget['name']; ?></span>
 					<span class="desc"><?php echo wp_widget_description($widget['id']); ?></span>
@@ -409,9 +425,8 @@ class K2SBM {
 	function list_sidebar_widgets_filter( $params ) {
 		global $wp_registered_widgets;
 
-		$is_multi = isset( $wp_registered_widgets[$widget_id]['params'][0]['number'] );
-
 		$widget_id = $params[0]['widget_id'];
+		$is_multi = isset( $wp_registered_widgets[$widget_id]['params'][0]['number'] );
 
 		$params[0]['before_widget'] = '<li id="' . $widget_id . '" class="' . ( $is_multi ? 'multi-widget' : 'widget' ) . '">';
 		$params[0]['after_widget'] = '</li>';

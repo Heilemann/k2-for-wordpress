@@ -309,11 +309,11 @@ body.nomodules #undo {
 	min-height: 100px;
 }
 
-li.multi-widget {
+#available-widgets .multi-widget {
 	background-color: #669;
 	}
 
-li.multi-widget:hover {
+#available-widgets .multi-widget:hover {
 	background-color: #336;
 	}
 
@@ -537,7 +537,7 @@ li.multi-widget:hover {
 
 #options {
 	width: 440px;
-	height: 360px;
+	min-height: 360px;
 	background: #ddd;
 	}
 
@@ -635,22 +635,16 @@ input[type=checkbox] {
 	overflow-y: scroll;
 	padding: 5px;
 	border: 1px solid #999;
-	background: #e8e8e8;
+	background: #eee;
+	margin: 0px 30px;
 	}
 
 .checkbox-list {
-	overflow: auto;
 	list-style-type: none;
-	padding: 3px 0;
 	margin: 0;
 	}
 
 .checkbox-list li {
-	margin: 0 0 0 40px;
-	}
-
-.checkbox-list input[type=checkbox] {
-	margin: 3px 0 0 -20px !important;
 	}
 
 .checkbox-list label {
