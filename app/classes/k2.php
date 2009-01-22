@@ -185,7 +185,7 @@ class K2 {
 	function register_scripts() {
 		// Register jQuery
 		wp_register_script('jquery',
-			get_bloginfo('template_directory') . '/js/jquery.js.php',
+			get_bloginfo('template_directory') . '/js/jquery.js',
 			false, '1.2.6');
 
 		wp_register_script( 'jquery-ui-core',
@@ -205,44 +205,44 @@ class K2 {
 			array('jquery-ui-core', 'jquery-ui-draggable'), '1.5.2' );
 
 		wp_register_script('jquery-dimensions',
-			get_bloginfo('template_directory') . '/js/jquery.dimensions.js.php',
+			get_bloginfo('template_directory') . '/js/jquery.dimensions.js',
 			array('jquery'), '1.2');
 
 		wp_register_script('jquery-easing',
-			get_bloginfo('template_directory') . '/js/jquery.easing.js.php',
+			get_bloginfo('template_directory') . '/js/jquery.easing.js',
 			array('jquery'), '1.1.2');
 
 		// Register our scripts with WordPress
 		wp_register_script('k2functions',
-			get_bloginfo('template_directory') . '/js/k2.functions.js.php',
+			get_bloginfo('template_directory') . '/js/k2.functions.js',
 			array('jquery'), K2_CURRENT);
 
 		wp_register_script('humanmsg',
-			get_bloginfo('template_directory') . '/js/jquery.humanmsg.js.php',
+			get_bloginfo('template_directory') . '/js/jquery.humanmsg.js',
 			array('jquery', 'jquery-easing'), K2_CURRENT);
 
 		wp_register_script('humanundo',
-			get_bloginfo('template_directory') . '/js/jquery.humanundo.js.php',
+			get_bloginfo('template_directory') . '/js/jquery.humanundo.js',
 			array('jquery'), K2_CURRENT);
 
 		wp_register_script('k2rollingarchives',
-			get_bloginfo('template_directory') . '/js/k2.rollingarchives.js.php',
+			get_bloginfo('template_directory') . '/js/k2.rollingarchives.js',
 			array('jquery', 'k2slider', 'k2trimmer'), K2_CURRENT);
 
 		wp_register_script('k2livesearch',
-			get_bloginfo('template_directory') . '/js/k2.livesearch.js.php',
+			get_bloginfo('template_directory') . '/js/k2.livesearch.js',
 			array('jquery'), K2_CURRENT);
 
 		wp_register_script('k2slider',
-			get_bloginfo('template_directory') . '/js/k2.slider.js.php',
+			get_bloginfo('template_directory') . '/js/k2.slider.js',
 			array('jquery'), K2_CURRENT);
 
 		wp_register_script('k2trimmer',
-			get_bloginfo('template_directory') . '/js/k2.trimmer.js.php',
+			get_bloginfo('template_directory') . '/js/k2.trimmer.js',
 			array('jquery', 'k2slider'), K2_CURRENT);
 
 		wp_register_script('k2sbm',
-			get_bloginfo('template_directory') . '/js/k2.sbm.js.php',
+			get_bloginfo('template_directory') . '/js/k2.sbm.js',
 			array('jquery', 'interface', 'jquery-dimensions', 'humanmsg', 'humanundo'), K2_CURRENT);
 
 		wp_register_script('k2widgets',

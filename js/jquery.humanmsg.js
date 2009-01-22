@@ -1,4 +1,3 @@
-<?php require('gzip-header-js.php'); ?>
 /*
 	HUMANIZED MESSAGES 1.0
 	idea - http://www.humanized.com/weblog/2006/09/11/monolog_boxes_and_transparent_messages

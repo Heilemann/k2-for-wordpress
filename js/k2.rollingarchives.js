@@ -1,5 +1,3 @@
-<?php require('gzip-header-js.php'); ?>
-
 function RollingArchives(url, pagetext) {
 	this.url = url;
 	this.pageText = pagetext;

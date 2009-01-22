@@ -1,4 +1,3 @@
-<?php require('gzip-header-js.php'); ?>
 /*
  * jQuery 1.2.6 - New Wave Javascript
  *

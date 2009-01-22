@@ -1,5 +1,3 @@
-<?php require('gzip-header-js.php'); ?>
-
 jQuery.noConflict();
 
 var sbm_baseUrl = "";

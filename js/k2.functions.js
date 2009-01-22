@@ -1,5 +1,3 @@
-<?php require('gzip-header-js.php'); ?>
-
 jQuery.noConflict();
 
 if (typeof K2 == 'undefined') var K2 = {};

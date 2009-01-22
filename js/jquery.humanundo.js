@@ -1,4 +1,3 @@
-<?php require('gzip-header-js.php'); ?>
 /*
 	HUMANIZED UNDO 1.0
 	idea - http://humanized.com/weblog/2007/09/21/undo-made-easy-with-ajax-part-15/
