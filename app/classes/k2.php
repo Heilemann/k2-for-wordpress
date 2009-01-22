@@ -36,6 +36,7 @@ class K2 {
 		require_once(TEMPLATEPATH . '/app/classes/options.php');
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
+		require_once(TEMPLATEPATH . '/app/includes/comments.php');
 		require_once(TEMPLATEPATH . '/app/includes/wp-compat.php');
 
 		if ( defined('K2_LOAD_SBM') ) {
@@ -62,7 +63,7 @@ class K2 {
 		// Register our scripts with script loader
 		K2::register_scripts();
 
-		// Register our sidebar with Widgets
+		// Register our sidebar with widgets
 		register_sidebars( K2_SIDEBARS, array(
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
 			'after_widget' => '</div>',
@@ -70,20 +71,13 @@ class K2 {
 			'after_title' => '</h4>'
 		) );
 
-		$style = get_option('k2style');
-		if ( K2_USING_STYLES and !empty($style) ) {
-			// insert full path
-			$style = K2_STYLES_DIR . "/$style";
+		// Load the current style's functions.php if it is readable
+		$style_functions = dirname( K2_STYLES_DIR . '/' . get_option('k2style') ) . '/functions.php';
+		if ( K2_USING_STYLES and is_readable($style_functions) )
+			include_once($style_functions);
 
-			// if style is not readable, clear style options
-			// otherwise load style's functions.php if it is readable
-			if ( empty($style) ) {
-				update_option('k2style', '');
-				update_option('k2styleinfo', array());
-			} elseif ( is_readable( dirname($style) . '/functions.php' ) ) {
-				include_once( dirname($style) . '/functions.php' );
-			}
-		}
+		// Finally load pluggable functions
+		require_once(TEMPLATEPATH . '/app/includes/pluggable.php');
 
 		// There may be some things we need to do before K2 is initialised
 		// Let's do them now
@@ -146,7 +140,7 @@ class K2 {
 	 * @uses do_action() Provides 'k2_uninstall' action
 	 * @global mixed $wpdb
 	 */
-	function uninstall() {
+	function uninstall($switch_theme = false) {
 		global $wpdb;
 
 		// Call the uninstall handlers
@@ -159,18 +153,20 @@ class K2 {
 		// Remove the K2 options from the database. This is a catch-all
 		$cleanup = $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'k2%'");
 
-		// Flush the dang cache
-		wp_cache_flush();
+		if ( $switch_theme ) {
+			// Flush the dang cache
+			wp_cache_flush();
 
-		// Switch to the default theme
-		update_option('template', 'default');
-		update_option('stylesheet', 'default');
-		delete_option('current_theme');
-		$theme = get_current_theme();
-		do_action('switch_theme', $theme);
+			// Switch to the default theme
+			update_option('template', 'default');
+			update_option('stylesheet', 'default');
+			delete_option('current_theme');
+			$theme = get_current_theme();
+			do_action('switch_theme', $theme);
 
-		wp_redirect('themes.php?activated=true');
-		exit;
+			wp_redirect('themes.php?activated=true');
+			exit;
+		}
 	}
 
 

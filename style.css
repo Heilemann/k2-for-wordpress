@@ -171,32 +171,33 @@ body.sidebars-none #primary {
 /*- Main Menu in Header */
 
 ul.menu {
-	margin: 0;
-	padding: 0;
 	position: absolute;
 	bottom: 0;
-	left: 20px;
-	width: 90%;
-	}
-
-ul.menu li {
-	display: inline;
-	margin: 0;
+	margin: 0 20px;
 	}
 
 ul.menu,
-ul.menu li a {
-	padding: 5px 15px 6px;
+ul.menu li {
+	float: left;
+	list-style: none;
+	}
+
+ul.menu li {
+	margin-right: 4px;
 	}
 
 ul.menu li a {
+	display: block;
+	padding: 5px 15px;
 	font-size: 1em;
 	color: white;
-	margin: 0;
-	-moz-border-radius-topleft: 3px;
-	-moz-border-radius-topright: 3px;
-	-webkit-border-top-left-radius: 3px;
-	-webkit-border-top-right-radius: 3px;
+
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
 	}
 
 ul.menu li a:hover {
@@ -440,39 +441,53 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	text-decoration: none;
 	}
 
-.entry-meta { /* Time and category for blog entries */
+.entry-meta {
 	font-size: 1em;
 	line-height: 1.6em;
-	display: block;
-	margin-top: 1px;
 	color: #bbb;
+	}
+
+.entry-meta a,
+.comment-meta a,
+.entry-date,
+.entry-time {
+	color: #777;
 	}
 
 .entry-meta div {
 	display: inline;
 	}
 
-.meta-start {
-	padding: 2px 0 2px 20px ;
+.entry-head .entry-meta {
 	background: url('images/time.png') left top no-repeat;
+	min-height: 16px;
+	padding-left: 20px;
 	}
 
-.entry-date abbr {
-	border: 0;
-	color: #777;
+abbr.entry-date {
+	border: none;
 	}
 
-.entry-author {
-	display: none;
+.entry-pages {
+	font-size: 1.2em;
 	}
 
-.entry-author address {
-	display: inline;
-	font-style: normal;
+.entry-pages span {
+	font-weight: bold;
 	}
 
-.entry-meta a, .comment-meta a {
-	color: #777;
+.entry-tags {
+	padding: 2px 0px 2px 20px;
+	background: url('images/tag_blue.png') left center no-repeat;
+	}
+
+.entry-head .entry-tags {
+	display: block;
+	margin-left: -20px;
+	}
+
+.entry-tags a {
+	text-transform: lowercase;
 	}
 
 .entry-edit a,
@@ -505,6 +520,10 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	background: url('images/comment_edit.png') 8px center no-repeat;
 	}
 
+.comment-reply {
+	
+	}
+
 .comment-reply a {
 	background-image: url('images/comment.png');
 	}
@@ -518,17 +537,6 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	padding: 2px 0 2px 20px;
 	background: url('images/comment.png') left center no-repeat;
 	margin-left: 5px;
-	}
-
-.entry-tags {
-	display: block;
-	margin: 2px 0;
-	padding: 0 0 0 20px;
-	background: url('images/tag_blue.png') left center no-repeat;
-	}
-
-.entry-tags a {
-	text-transform: lowercase;
 	}
 
 /*- Primary Contents */
@@ -553,25 +561,36 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	margin: 13px 0;
 	}
 
-.k2-asides .entry-content p,
-.k2-asides .entry-content ul,
-.k2-asides .entry-content ol,
-.k2-asides .entry-content div,
-.k2-asides .entry-content blockquote {
+#dynamic-content .k2-asides .entry-content p,
+#dynamic-content .k2-asides .entry-content ul,
+#dynamic-content .k2-asides .entry-content ol,
+#dynamic-content .k2-asides .entry-content div,
+#dynamic-content .k2-asides .entry-content blockquote {
 	margin: 5px 0;
+	}
+
+#dynamic-content .k2-asides {
+	margin: 15px 0;
+	}
+
+#dynamic-content .k2-asides .entry-head,
+#dynamic-content .k2-asides .entry-foot {
+	display: none;
+	}
+
+#dynamic-content .k2-asides .entry-content {
+	display: block;
+	border-left: 2px solid #ddd;
+	padding-left: 20px;
+	}
+
+.asides-permalink {
+	font-weight: bold;
 	}
 
 /* Google Maps Support */
 .entry-content .map div {
 	margin: 0;
-	}
-
-.single .k2-asides .entry-content p,
-.single .k2-asides .entry-content ul,
-.single .k2-asides .entry-content ol,
-.single .k2-asides .entry-content div,
-.single .k2-asides .entry-content blockquote {
-	margin: 13px 0;
 	}
 
 .metalinks {
@@ -688,15 +707,15 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	width: 35px;
 	}
 
-li.byuser .comment {
+.byuser {
 	background: #f6f7f8;
 	}
 
-li.bypostauthor .comment {
+.bypostauthor {
 	background: #eee;
 	}
 
-li.bypostauthor blockquote {
+.bypostauthor blockquote {
 	color: #333;
 	background: url('images/quote.png') no-repeat 10px 0;              
 	}

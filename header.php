@@ -101,6 +101,8 @@
 		K2.debug = true;
 		<?php endif; ?>
 
+		K2.Animations = <?php echo (int) get_option('k2animations') ?>;
+
 		jQuery(document).ready(function(){
 			<?php /* LiveSearch */ if ( '1' == get_option('k2livesearch') ): ?>
 			K2.LiveSearch = new LiveSearch(
@@ -112,7 +114,7 @@
 			<?php /* Rolling Archives */ if ( '1' == get_option('k2rollingarchives') ): ?>
 			K2.RollingArchives = new RollingArchives(
 				"<?php output_javascript_url('theloop.php'); ?>",
-				"<?php echo attribute_escape(__('Page %1$d of %2$d',k2_domain)); ?>"
+				"<?php echo attribute_escape( __('Page %1$d of %2$d', 'k2_domain') ); ?>"
 			);
 			<?php endif; ?>
 		});
@@ -139,6 +141,8 @@
 		<?php $block = ( is_front_page() ? 'h1' : 'div' ); ?>
 		<<?php echo $block; ?> class="blog-title"><a href="<?php echo get_option('home'); ?>/" accesskey="1"><?php bloginfo('name'); ?></a></<?php echo $block; ?>>
 		<p class="description"><?php bloginfo('description'); ?></p>
+
+		<?php k2_header_menu(); // located at /app/includes/pluggable.php ?>
 
 		<?php /* K2 Hook */ do_action('template_header'); ?>
 

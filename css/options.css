@@ -76,8 +76,16 @@ h3 {
 	margin-top: 5px;
 	}
 
+.indent {
+	margin-left: 240px;
+	}
+
 .secondary {
 	color: #666;
+	}
+
+.secondary span {
+	margin-right: 1em;
 	}
 
 input[type=text],
@@ -130,11 +138,113 @@ option {
 	
 .advanced {
 	display: none;
-}
+	}
 
-.button[disabled],
-.button:disabled,
-.button-secondary[disabled],
-.button-secondary:disabled {
+.hidden {
 	display: none;
-}
+	}
+
+
+/**/
+
+#meta-preview {
+	margin: 20px 0 10px;
+	padding: 5px 20px 10px;
+	background-color: white;
+	border: 1px solid #eee;
+	max-width: 700px;
+	font-size: 10px;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Helvetica, Arial, sans-serif;
+    
+	border-raduis: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	}
+
+#meta-preview h4 {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 1.6em;
+	font-weight: normal;
+	background: #eee;
+	margin: -5px -20px 10px;
+	padding: 5px 10px;
+	}
+
+#meta-preview strong,
+#meta-preview em,
+#meta-preview b,
+#meta-preview i {
+    font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Verdana, Helvetica, Arial, sans-serif;
+	}
+
+#meta-preview a {
+	text-decoration: none;
+	}
+
+#meta-preview a:hover {
+	text-decoration: underline;
+	}
+
+.entry-title {
+	font-family: "Trebuchet MS", Verdana, sans-serif;
+	font-size: 2.4em;
+	font-weight: normal;
+	margin: 0;
+	}
+
+.entry-title a {
+	color: #444;
+	}
+
+.entry-content {
+	font-size: 1.2em;
+	line-height: 1.8em;
+	text-align: justify;
+	color: #444;
+	}
+
+.entry-meta {
+	font-size: 1em;
+	line-height: 1.6em;
+	color: #bbb;
+	}
+
+.entry-meta a,
+.comment-meta a,
+.entry-date,
+.entry-time {
+	color: #777;
+	}
+
+.entry-meta div {
+	display: inline;
+	}
+
+.entry-head .entry-meta {
+	padding-left: 20px ;
+	background: url('../images/time.png') left top no-repeat;
+	min-height: 16px;
+	}
+
+abbr.entry-date {
+	border: none;
+	}
+
+.entry-tags {
+	padding: 2px 0px 2px 20px;
+	background: url('../images/tag_blue.png') left center no-repeat;
+	}
+
+.entry-head .entry-tags {
+	display: block;
+	margin-left: -20px;
+	}
+
+.entry-tags a {
+	text-transform: lowercase;
+	}
+
+.entry-comments {
+	padding: 2px 0 2px 20px;
+	background: url('../images/comment.png') left center no-repeat;
+	}

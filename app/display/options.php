@@ -34,6 +34,12 @@
 
 	// Get the header pictures
 	$header_images = K2Header::get_header_images();
+
+	// Get post meta format
+	$entrymeta1 = get_option('k2entrymeta1');
+	if ( empty($entrymeta1) ) {
+		$entrymeta1 = __('Published by %author% on %date% in %categories%. %comments% %tags%', 'k2_domain');
+	}
 ?>
 
 <div class="wrap">
@@ -82,10 +88,10 @@
 					<p class="description alert">Please disable the K2 Disable Widgets plugin to use the new Widgets Manager.</p>
 				<?php endif; ?>
 			
-				<p>
-					<input type="submit" name="sbm-defaults" id="sbm-defaults" class="button-secondary" value="<?php echo attribute_escape( __('Revert to Widgets Manager Defaults', 'k2_domain') ); ?>" disabled="disabled" />
+				<p class="hidden">
+					<input type="submit" name="sbm-defaults" id="sbm-defaults" class="button-secondary" value="<?php echo attribute_escape( __('Revert to Widgets Manager Defaults', 'k2_domain') ); ?>" />
 
-					<input type="submit" name="sbm-upgrade" id="sbm-upgrade" class="button-secondary" value="<?php echo attribute_escape( __('Import old SBM settings', 'k2_domain') ); ?>" disabled="disabled" />
+					<input type="submit" name="sbm-upgrade" id="sbm-upgrade" class="button-secondary" value="<?php echo attribute_escape( __('Import old SBM settings', 'k2_domain') ); ?>" />
 				</p>
 			</div><!-- .container -->
 
@@ -112,10 +118,12 @@
 				<p class="main-option"><input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2livesearch')); ?> />
 				<!--<label for="k2-advnav"><?php _e('Enable Advanced Navigation','k2_domain'); ?></label>--></p>
 
-				<p class="description"><?php _e('Seamlessly search and navigate old posts.', 'k2_domain'); ?></p>
-				<p class="advanced secondary">
-					<input id="k2-animations" name="k2[animations]" type="checkbox" value="1" <?php checked('1', get_option('k2animations')); ?> />
-					<label for="k2-animations"><?php _e('Enable JavaScript Animations', 'k2_domain'); ?></label>
+				<p class="description"><?php _e('Seamlessly search and navigate old posts.','k2_domain'); ?></p>
+				<p class="secondary">
+					<span>
+						<input id="k2-animations" name="k2[animations]" type="checkbox" value="1" <?php checked('1', get_option('k2animations')); ?> />
+						<label for="k2-animations"><?php _e('JavaScript Animations', 'k2_domain'); ?></label>
+					</span>
 				</p>
 			</div><!-- .container -->
 
@@ -238,11 +246,69 @@
 			</div><!-- .container -->
 				
 
+			<div class="container">
+				<h3><?php _e('Post Entry', 'k2_domain'); ?></h3>
+
+				<p class="description">
+					<?php _e('Use the following keywords: %author%, %categories%, %comments%, %date%, %tags% and %time%.', 'k2_domain'); ?>
+				</p>
+
+				<table class="form-table">
+					<tbody>
+						<tr>
+							<th scope="row">
+								<label for="k2-entry-meta-1"><?php _e('Top Meta:', 'k2_domain'); ?></label>
+							</th>
+							<td>
+								<input id="k2-entry-meta-1" name="k2[entrymeta1]" type="text" value="<?php echo attribute_escape( get_option('k2entrymeta1') ); ?>" />
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">
+								<label for="k2-entry-meta-2"><?php _e('Bottom Meta:', 'k2_domain'); ?></label>
+							</th>
+							<td>
+								<input id="k2-entry-meta-2" name="k2[entrymeta2]" type="text" value="<?php echo attribute_escape( get_option('k2entrymeta2') ); ?>" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div id="meta-preview">
+					<h4><?php _e('Preview', 'k2_domain'); ?></h4>
+					<?php
+						query_posts('showposts=1&what_to_show=posts&order=desc');
+						if ( have_posts() ): the_post();
+					?>
+					<div id="post-<?php the_ID(); ?>">
+						<div class="entry-head">
+							<h5 class="entry-title"><a href="#" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php the_title(); ?></a></h5>
+
+							<div class="entry-meta">
+								<?php k2_entry_meta(1); ?>
+							</div> <!-- .entry-meta -->
+						</div> <!-- .entry-head -->
+
+						<div class="entry-content">
+							<?php the_excerpt(); ?>
+						</div> <!-- .entry-content -->
+
+						<div class="entry-foot">
+							<div class="entry-meta">
+								<?php k2_entry_meta(2); ?>
+							</div><!-- .entry-meta -->
+						</div><!-- .entry-foot -->
+					</div> <!-- #post-ID -->
+					<?php endif; ?>
+				</div>
+			</div><!-- .container -->
+
+
 			<?php /* K2 Hook */ do_action('k2_display_options'); ?>
 
 
 		<div class="submit">
-			<input type="button" name="advanced" id="advanced" value="<?php echo attribute_escape( __('Advanced Options', 'k2_domain') ); ?>" class="button-secondary" disabled="disabled" />
+			<input type="button" name="advanced" id="advanced" value="<?php echo attribute_escape( __('Advanced Options', 'k2_domain') ); ?>" class="button-secondary advanced" />
 			<input type="submit" name="restore-defaults" id="restore-defaults" onClick="return confirmDefaults();" value="<?php echo attribute_escape( __('Revert to K2 Defaults', 'k2_domain') ); ?>" class="button-secondary" />
 			<input type="submit" id="save" name="save" class="button-primary" value="<?php echo attribute_escape( __('Save Changes', 'k2_domain') ); ?>" />
 		</div><!-- .options-footer -->

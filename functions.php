@@ -36,7 +36,7 @@ define('K2_HEADER_HEIGHT', 200);
  */
 
 // Current version of K2
-define('K2_CURRENT', '1.0-RC7.1');
+define('K2_CURRENT', '1.0-RC7.2');
 
 // Is this MU or no?
 define('K2_MU', (isset($wpmu_version) or (strpos($wp_version, 'wordpress-mu') !== false)));

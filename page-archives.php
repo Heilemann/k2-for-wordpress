@@ -25,14 +25,16 @@
 
 			<?php the_post(); ?>
 
-			<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
-
+			<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<div class="entry-head">
 					<h1 class="entry-title">
-						<a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php the_title(); ?></a>
+						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
 					</h1>
-					<?php edit_post_link(__('Edit','k2_domain'), '<span class="entry-edit">','</span>'); ?>
-				</div>
+
+					<?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="entry-edit">', '</span>'); ?>
+
+					<?php /* K2 Hook */ do_action('template_entry_head'); ?>
+				</div><!-- .entry-head -->
 
 				<div class="entry-content">
 
@@ -50,12 +52,10 @@
 
 					<?php else: ?>
 
-						<?php if ( function_exists('wp_tag_cloud') ): ?>
-							<h3><?php _e('Tag Cloud','k2_domain'); ?></h3>
-							<div id="tag-cloud">
-							<?php wp_tag_cloud('number=0'); ?>
-							</div>
-						<?php endif; ?>
+						<h3><?php _e('Tag Cloud','k2_domain'); ?></h3>
+						<div id="tag-cloud">
+						<?php wp_tag_cloud('number=0'); ?>
+						</div>
 
 						<h3><?php _e('Browse by Month','k2_domain'); ?></h3>
 						<ul class="archive-list">
@@ -73,16 +73,28 @@
 						
 					<?php endif; ?>
 
-				</div> <!-- .entry-content -->
-			</div> <!-- #post-ID -->
+				</div><!-- .entry-content -->
 
-		</div> <!-- #current-content .hfeed -->
+				<div class="entry-foot">
+					<?php wp_link_pages( array('before' => '<div class="entry-pages"><span>' . __('Pages:','k2_domain') . '</span>', 'after' => '</div>' ) ); ?>
+
+					<?php /* K2 Hook */ do_action('template_entry_foot'); ?>
+				</div><!-- .entry-foot -->
+			</div><!-- #post-ID -->
+
+			<?php if ( get_post_custom_values('comments') ): ?>
+			<div class="comments">
+				<?php comments_template(); ?>
+			</div><!-- .comments -->
+			<?php endif; ?>
+
+		</div><!-- #current-content .hfeed -->
 
 		<div id="dynamic-content"></div>
-	</div> <!-- #primary -->
-</div> <!-- #primary-wrapper -->
+	</div><!-- #primary -->
+</div><!-- #primary-wrapper -->
 
-	<?php get_sidebar(); ?>
+<?php if ( ! get_post_custom_values('sidebarless') ) get_sidebar(); ?>
 
 </div> <!-- .content -->
 	

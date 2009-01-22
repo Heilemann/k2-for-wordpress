@@ -96,7 +96,9 @@
 			<?php output_javascript_array($page_dates); ?>
 		);
 
-		smartPosition('#dynamic-content');
+		if (K2.Animations) {
+			smartPosition('#dynamic-content');
+		}
 	});
 // ]]>
 </script>

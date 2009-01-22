@@ -26,21 +26,17 @@
 
 <div id="dynamictype" class="<?php k2_body_class(); ?>">
 
-<?php endif;
+<?php endif; ?>
 
-	// Get the asides category
-	$k2asidescategory = get_option('k2asidescategory');
-	$k2rollingarchives = get_option('k2rollingarchives');
+	<?php
+		// Get the asides category
+		$k2asidescategory = get_option('k2asidescategory');
+		$k2rollingarchives = get_option('k2rollingarchives');
+	?>
 
-	/* Check if there are posts */
-	if ( have_posts() ):
-		/* Post index for semantic classes */
-		$post_index = 1;
-?>
+	<?php /* Top Navigation */ if ( '0' == $k2rollingarchives ) k2_navigation('nav-above'); ?>
 
-	<?php /* Top Navigation */ if ( ('0' == $k2rollingarchives) or is_single() ): k2_navigation('nav-above'); endif; ?>
-
-	<?php /* Headlines for archives */ if ( ! is_single() and ! is_home() ): ?>
+	<?php /* Headlines for archives */ if ( ! is_home() ): ?>
 		<h1 class="page-head">
 		<?php
 			// Load the post for date archive titles
@@ -66,12 +62,8 @@
 			elseif ( is_search() ):
 				printf( __('Search Results for \'%s\'','k2_domain'), attribute_escape( get_search_query() ) );
 
-			elseif ( function_exists('is_tag') and is_tag() ):
-				if ( function_exists('single_tag_title') ):
-					printf( __('Tag Archive for \'%s\'','k2_domain'), single_tag_title('', false) );
-				else:
-					printf( __('Tag Archive for \'%s\'','k2_domain'), attribute_escape( get_query_var('tag') ) );
-				endif;
+			elseif ( is_tag() ):
+				printf( __('Tag Archive for \'%s\'','k2_domain'), single_tag_title('', false) );
 			
 			elseif ( is_author() ):
 				printf( __('Author Archive for %s','k2_domain'), get_author_name( get_query_var('author') ) );
@@ -91,58 +83,51 @@
 		</h1>
 	<?php endif; ?>
 
-	<?php /* Start the loop */ while ( have_posts() ): the_post(); ?>
+	<?php 
 
-		<div id="post-<?php the_ID(); ?>" class="<?php echo attribute_escape(k2_post_class($post_index++, in_category($k2asidescategory), false)); ?>">
-			<div class="entry-head">
-				<?php $block = is_singular() ? 'h1' : 'h3'; ?>
-				<<?php echo $block; ?> class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php the_title(); ?></a></<?php echo $block; ?>>
+	/* Check if there are posts */
+	if ( have_posts() ):
+		/* Post index for semantic classes */
+		$post_index = 1;
 
-				<div class="entry-meta">
-					<?php
-						printf(	__('<span class="meta-start">Published</span> %1$s %2$s %3$s<span class="meta-end">.</span>','k2_domain'),
+		/* Start the loop */
+		while ( have_posts() ): the_post(); ?>
 
-							'<div class="entry-author">' .
-							sprintf(  __('<span class="meta-prep">by</span> %s','k2_domain'),
-								'<address class="vcard author"><a href="' . get_author_posts_url(get_the_author_ID()) .'" class="url fn" title="'. sprintf(__('View all posts by %s','k2_domain'), attribute_escape(get_the_author())) .'">' . get_the_author() . '</a></address>'
-							) . '</div>',
-							
-							'<div class="entry-date">' .
-							( function_exists('time_since') ?
-									sprintf(__('%s ago','k2_domain'),
-										'<abbr class="published" title="' . get_the_time('Y-m-d\TH:i:sO') . '">' . time_since(abs(strtotime($post->post_date_gmt . " GMT")), time()) . '</abbr>') :
-									sprintf(__('<span class="meta-prep">on</span> %s','k2_domain'),
-										'<abbr class="published" title="' . get_the_time('Y-m-d\TH:i:sO') . '">'. get_the_time( get_option('date_format') ) . '</abbr>')
-							) . '</div>',
+			<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<div class="entry-head">
+					<h3 class="entry-title">
+						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
+					</h3>
 
-							'<div class="entry-category">' .
-							sprintf( __('<span class="meta-prep">in</span> %s','k2_domain'),
-								k2_nice_category(', ', __(' and ','k2_domain'))
-							) . '</div>'
-						);
-					?>
+					<?php /* Edit Link */ edit_post_link( __('Edit','k2_domain'), '<span class="entry-edit">', '</span>' ); ?>
 
-					<?php /* Comments */ comments_popup_link('0&nbsp;<span>'.__('Comments','k2_domain').'</span>', '1&nbsp;<span>'.__('Comment','k2_domain').'</span>', '%&nbsp;<span>'.__('Comments','k2_domain').'</span>', 'commentslink', '<span>'.__('Closed','k2_domain').'</span>'); ?>
+					<?php if ( 'post' == $post->post_type ): ?>
+					<div class="entry-meta">
+						<?php k2_entry_meta(1); ?>
+					</div> <!-- .entry-meta -->
+					<?php endif; ?>
 
-					<?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="entry-edit">','</span>'); ?>
+					<?php /* K2 Hook */ do_action('template_entry_head'); ?>
+				</div><!-- .entry-head -->
 
-					<?php /* Tags */ if (is_single() and function_exists('UTW_ShowTagsForCurrentPost')) { ?>
-						<span class="entry-tags"><?php _e('Tags: ','k2_domain'); ?><?php UTW_ShowTagsForCurrentPost("commalist"); ?>.</span>
-					<?php } elseif (is_single() and function_exists('the_tags')) { ?>
-						<span class="entry-tags"><?php the_tags(__('Tags: ','k2_domain'), ', ', '.'); ?></span>
-					<?php } ?>
-				</div> <!-- .entry-meta -->
-			</div> <!-- .entry-head -->
+				<div class="entry-content">
+					<?php k2_entry_content(); ?>
+				</div><!-- .entry-content -->
 
-			<div class="entry-content">
-				<?php the_content(sprintf(__('Continue reading \'%s\'', 'k2_domain'), the_title('', '', false))); ?>
+				<div class="entry-foot">
+					<?php wp_link_pages( array('before' => '<div class="entry-pages"><span>' . __('Pages:','k2_domain') . '</span>', 'after' => '</div>' ) ); ?>
 
-				<?php wp_link_pages('before=<p class="page-links"><strong>' . __('Pages:','k2_domain') . '</strong>&after=</p>'); ?>
-			</div> <!-- .entry-content -->
+					<?php if ( 'post' == $post->post_type ): ?>
+					<div class="entry-meta">
+						<?php k2_entry_meta(2); ?>
+					</div><!-- .entry-meta -->
+					<?php endif; ?>
 
-		</div> <!-- #post-ID -->
+					<?php /* K2 Hook */ do_action('template_entry_foot'); ?>
+				</div><!-- .entry-foot -->
+			</div><!-- #post-ID -->
 
-	<?php endwhile; /* End The Loop */ ?>
+		<?php endwhile; /* End The Loop */ ?>
 	
 <?php /* If there is nothing to loop */ else: define('K2_NOT_FOUND', true); ?>
 
@@ -156,11 +141,11 @@
 			<p><?php _e('Oh no! You\'re looking for something which just isn\'t here! Fear not however, errors are to be expected, and luckily there are tools on the sidebar for you to use in your search for what you need.','k2_domain'); ?></p>
 		</div>
 
-	</div> <!-- .hentry .four04 -->
+	</div><!-- .hentry .four04 -->
 
 <?php endif; /* End Loop Init  */ ?>
 
-<?php /* Bottom Navigation */ if ( ('0' == $k2rollingarchives) and !is_single() ): k2_navigation('nav-below'); endif; ?> 
+<?php /* Bottom Navigation */ if ( '0' == $k2rollingarchives) k2_navigation('nav-below'); ?> 
 
 <?php if ( isset( $_GET['k2dynamic'] ) ): ?>
 </div><!-- #dynamictype -->

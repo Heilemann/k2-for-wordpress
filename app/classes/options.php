@@ -19,17 +19,19 @@ class K2Options {
 		add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on"); // (live & classic)
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
 		add_option('k2archives', '0', 'Set whether K2 has a Live Archive page');
-		add_option('k2sidebarmanager', '1', 'Set whether to use K2 Sidebar Manager');
+		add_option('k2sidebarmanager', '0', 'Set whether to use K2 Sidebar Manager');
 		add_option('k2styleinfo', '', 'Metadata of current style.');
 		add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.');
 		add_option('k2columns', '2', 'Number of columns to display.');
 
 		// Added 1.0-RC6
 		add_option('k2style', '', 'Choose the Style you want K2 to use');
-		add_option('k2dynamiccolumns', '1', 'Enable this to dynamically change the number of columns.');
 		add_option('k2headerimage', '', 'Current Header Image');
 
-		K2Options::setup_widgets();
+		// Added 1.0-RC8
+		add_option('k2animations', '1', 'JavaScript Animation effects.');
+		add_option('k2entrymeta1', __('Published on %date% in %categories%. %comments% %tags%', 'k2_domain'), 'Customized metadata format before entry content.');
+		add_option('k2entrymeta2', '', 'Customized metadata format after entry content.');
 	}
 
 
@@ -47,8 +49,10 @@ class K2Options {
 		delete_option('k2styleinfo');
 		delete_option('k2blogornoblog');
 		delete_option('k2columns');
-		delete_option('k2dynamiccolumns');
 		delete_option('k2headerimage');
+		delete_option('k2entrymeta1');
+		delete_option('k2entrymeta2');
+		delete_option('k2animations');
 	}
 
 
@@ -88,23 +92,18 @@ class K2Options {
 
 			// Delete depreciated options
 			delete_option('k2advnav');
+			delete_option('k2dynamiccolumns');
 			delete_option('k2header_picture');
 			delete_option('k2imagerandomfeature');
 			delete_option('k2lastmodified');
 			delete_option('k2scheme');
 		}
 
-		/*
-		if ( version_compare( $previous, '1.0-RC7.1', '<' ) ) {
-			if ( ! defined('K2_LOAD_SBM') ) {
-				K2Options::setup_widgets();
-			}
-
-			update_option( 'k2headerimage', str_replace(K2_HEADERS_DIR, '', get_option('k2headerimage')) );
-			update_option( 'k2style', str_replace(K2_STYLES_DIR, '', get_option('k2style')) );
-			update_style_info();
+		if ( version_compare( $previous, '1.0-RC8', '<' ) ) {
+			add_option('k2animations', '1', 'JavaScript Animation effects.');
+			add_option('k2entrymeta1', __('Published on %date% in %categories%. %comments% %tags%', 'k2_domain'), 'Customized metadata format before entry content.');
+			add_option('k2entrymeta2', '', 'Customized metadata format after entry content.');
 		}
-		*/
 	}
 
 	/**
@@ -112,31 +111,9 @@ class K2Options {
 	*/
 
 	function restore_defaults() {
-		K2Options::uninstall();
-		K2Options::install();
+		K2::uninstall();
+		K2::install();
 	}
-
-	function setup_widgets() {
-		$sidebars_widgets = wp_get_sidebars_widgets();
-
-		if ( empty($sidebars_widgets) )
-			K2Options::restore_sbm_defaults();
-	}
-
-
-	/**
-	* Restore K2 to defaults
-	*/
-
-	function restore_sbm_defaults() {
-		$sidebar_widgets = array(
-			'sidebar-1' => array( 'search', 'k2-about', 'recent-posts', 'recent-comments' ),
-			'sidebar-2' => array( 'archives', 'links' )
-		);
-
-		wp_set_sidebars_widgets($sidebar_widgets);
-	}
-
 
 	/**
 	 * Initialization
@@ -155,6 +132,12 @@ class K2Options {
 					K2Archive::setup_archive();
 				}
 
+/*
+				if ( isset($_REQUEST['sbm-upgrade']) ) {
+					check_admin_referer('k2options');
+					K2WidgetsManager::import_sbm();
+				}
+*/
 				// Reset and Deactivate K2
 				if ( isset($_REQUEST['restore-defaults']) ) {
 					check_admin_referer('k2options');
@@ -246,6 +229,13 @@ class K2Options {
 			update_option('k2rollingarchives', '0');
 		}
 
+		// JavaScript Animations
+		if ( isset($_POST['k2']['animations']) ) {
+			update_option('k2animations', '1');
+		} else {
+			update_option('k2animations', '0');
+		}
+
 		// Archives Page (thanks to Michael Hampton, http://www.ioerror.us/ for the assist)
 		if ( isset($_POST['k2']['archives']) ) {
 			update_option('k2archives', '1');
@@ -284,6 +274,17 @@ class K2Options {
 		// Blog tab
 		if ( isset($_POST['k2']['blogornoblog']) ) {
 			update_option( 'k2blogornoblog', strip_tags( stripslashes($_POST['k2']['blogornoblog']) ) );
+		}
+
+
+		// Top post meta
+		if ( isset($_POST['k2']['entrymeta1']) ) {
+			update_option( 'k2entrymeta1', stripslashes($_POST['k2']['entrymeta1']) );
+		}
+
+		// Bottom post meta
+		if ( isset($_POST['k2']['entrymeta2']) ) {
+			update_option( 'k2entrymeta2', stripslashes($_POST['k2']['entrymeta2']) );
 		}
 
 		// K2 Hook

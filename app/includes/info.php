@@ -21,7 +21,8 @@ function get_k2info( $show = '' ) {
 
 		case 'style_footer' :
 			$styleinfo = get_option('k2styleinfo');
-			$output = stripslashes($styleinfo['footer']);
+			if ( !empty($styleinfo['footer']) )
+				$output = stripslashes($styleinfo['footer']);
 			break;
 
 		case 'styles_url' :
@@ -55,12 +56,10 @@ function update_style_info() {
 		}
 
 		if ( strpos($data['footer'], '%') !== false ) {
-			$data['footer'] = str_replace("%author%", $data['author'], $data['footer']);
-			$data['footer'] = str_replace("%site%", $data['site'], $data['footer']);
-			$data['footer'] = str_replace("%style%", $data['stylename'], $data['footer']);
-			$data['footer'] = str_replace("%stylelink%", $data['stylelink'], $data['footer']);
-			$data['footer'] = str_replace("%version%", $data['version'], $data['footer']);
-			$data['footer'] = str_replace("%comments%", $data['comments'], $data['footer']);
+
+			$keywords = array( '%author%', '%comments%', '%site%', '%style%', '%stylelink%', '%version%' );
+			$replace = array( $data['author'], $data['comments'], $data['site'], $data['stylename'], $data['stylelink'], $data['version'] );
+			$data['footer'] = str_replace( $keywords, $replace, $data['footer'] );
 		}
 	}
 
@@ -82,21 +81,58 @@ function get_style_data( $style_file = '' ) {
 	$style_data = implode( '', file($style_path) );
 	$style_data = str_replace( '\r', '\n', $style_data );
 
-	// parse the data
-	preg_match("|Author Name\s*:(.*)$|mi", $style_data, $author);
-	preg_match("|Author Site\s*:(.*)$|mi", $style_data, $site);
-	preg_match("|Style Name\s*:(.*)$|mi", $style_data, $stylename);
-	preg_match("|Style URI\s*:(.*)$|mi", $style_data, $stylelink);
-	preg_match("|Style Footer\s*:(.*)$|mi", $style_data, $footer);
-	preg_match("|Version\s*:(.*)$|mi", $style_data, $version);
-	preg_match("|Comments\s*:(.*)$|mi", $style_data, $comments);
-	preg_match("|Header Text Color\s*:\s*#*([\dABCDEF]+)|i", $style_data, $header_text_color);
-	preg_match("|Header Width\s*:\s*(\d+)|i", $style_data, $header_width);
-	preg_match("|Header Height\s*:\s*(\d+)|i", $style_data, $header_height);
-	preg_match("|Layout Widths\s*:\s*(\d+)\s*(px)?,\s*(\d+)\s*(px)?,\s*(\d+)|i", $style_data, $widths);
+	if ( preg_match("|Author Name\s*:(.*)$|mi", $style_data, $author) )
+		$author = trim( $author[1] );
+	else
+		$author = '';
+
+	if ( preg_match("|Author Site\s*:(.*)$|mi", $style_data, $site) )
+		$site = clean_url( trim( $site[1] ) );
+	else
+		$site = '';
+
+	if ( preg_match("|Style Name\s*:(.*)$|mi", $style_data, $stylename) )
+		$stylename = trim( $stylename[1] );
+	else
+		$stylename = '';
+
+	if ( preg_match("|Style URI\s*:(.*)$|mi", $style_data, $stylelink) )
+		$stylelink = clean_url( trim( $stylelink[1] ) );
+	else
+		$stylelink = '';
+
+	if ( preg_match("|Style Footer\s*:(.*)$|mi", $style_data, $footer) )
+		$footer = trim( $footer[1] );
+	else
+		$footer = '';
+
+	if ( preg_match("|Version\s*:(.*)$|mi", $style_data, $version) )
+		$version = trim( $version[1] );
+	else
+		$version = '';
+
+	if ( preg_match("|Comments\s*:(.*)$|mi", $style_data, $comments) )
+		$comments = trim( $comments[1] );
+	else
+		$comments = '';
+
+	if ( preg_match("|Header Text Color\s*:\s*#*([\dABCDEF]+)|i", $style_data, $header_text_color) )
+		 $header_text_color = $header_text_color[1];
+	else
+		 $header_text_color = '';
+
+	if ( preg_match("|Header Width\s*:\s*(\d+)|i", $style_data, $header_width) )
+		$header_width = $header_width[1];
+	else
+		$header_width = '';
+
+	if ( preg_match("|Header Height\s*:\s*(\d+)|i", $style_data, $header_height) )
+		$header_height = $header_height[1];
+	else
+		$header_height = '';
 
 	$layout_widths = array();
-	if ( !empty($widths) ) {
+	if ( preg_match("|Layout Widths\s*:\s*(\d+)\s*(px)?,\s*(\d+)\s*(px)?,\s*(\d+)|i", $style_data, $widths) ) {
 		$layout_widths[1] = $widths[1];
 		$layout_widths[2] = $widths[3];
 		$layout_widths[3] = $widths[5];
@@ -105,33 +141,20 @@ function get_style_data( $style_file = '' ) {
 	return array(
 		'path' => $style_file,
 		'modified' => filemtime($style_path),
-		'author' => trim($author[1]),
-		'site' => clean_url( trim($site[1]) ),
-		'stylename' => trim($stylename[1]),
-		'stylelink' => clean_url( trim($stylelink[1]) ),
-		'footer' => trim($footer[1]),
-		'version' => trim($version[1]),
-		'comments' => trim($comments[1]),
-		'header_text_color' => $header_text_color[1],
-		'header_width' => $header_width[1],
-		'header_height' => $header_height[1],
+		'author' => $author,
+		'site' => $site,
+		'stylename' => $stylename,
+		'stylelink' => $stylelink,
+		'footer' => $footer,
+		'version' => $version,
+		'comments' => $comments,
+		'header_text_color' => $header_text_color,
+		'header_width' => $header_width,
+		'header_height' => $header_height,
 		'layout_widths' => $layout_widths
 	);
 }
 
-
-function get_k2_ping_type($trackbacktxt = 'Trackback', $pingbacktxt = 'Pingback') {
-	$type = get_comment_type();
-	switch( $type ) {
-		case 'trackback' :
-			return $trackbacktxt;
-			break;
-		case 'pingback' :
-			return $pingbacktxt;
-			break;
-	}
-	return false;
-}
 
 function get_rolling_page_dates($query) {
 	global $wpdb;
@@ -155,14 +178,7 @@ function get_rolling_page_dates($query) {
 }
 
 function output_javascript_url($file) {
-	$template_url = get_bloginfo('template_url');
-	$url_parts = parse_url( $template_url );
-
-	if ( $url_parts->host != $_SERVER['HTTP_HOST'] ) {
-		$template_url = str_replace($url_parts->host, $_SERVER['HTTP_HOST'], $template_url);
-	}
-
-	echo $template_url .'/'. $file;
+	echo get_bloginfo('template_url') .'/'. $file;
 }
 
 
@@ -220,64 +236,6 @@ function js_value($value) {
 }
 
 
-/* By mqchen at gmail dot com, http://us.php.net/manual/en/function.http-build-query.php#72911 */
-if (!function_exists('http_build_query')) {
-	function http_build_query($data, $prefix = null, $sep = '', $key = '') {
-		$ret = array();
-		foreach ( (array) $data as $k => $v) {
-			$k = urlencode($k);
-
-			if ( is_int($k) && $prefix != null ) {
-				$k = $prefix.$k;
-			}
-
-			if ( !empty($key) ) {
-				$k = $key.'['.$k.']';
-			}
-
-			if ( is_array($v) or is_object($v) ) {
-				array_push($ret, http_build_query($v, '', $sep, $k));
-			} else {
-				array_push($ret, $k.'='.urlencode($v));
-			}
-		}
-
-        if ( empty($sep) ) {
-            $sep = ini_get("arg_separator.output");
-        }
-
-        return implode($sep, $ret);
-    }
-}
-
-
-/* By Mark Jaquith, http://txfx.net */
-function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' and ') { 
-	$categories = get_the_category(); 
-
-	if (empty($categories)) { 
-		return __('Uncategorized','k2_domain');
-	} 
-
-	$thelist = ''; 
-	$i = 1; 
-	$n = count($categories); 
-
-	foreach ($categories as $category) { 
-		if (1 < $i and $i != $n) {
-			$thelist .= $normal_separator;
-		}
-
-		if (1 < $i and $i == $n) {
-			$thelist .= $penultimate_separator;
-		}
-
-		$thelist .= '<a href="' . get_category_link($category->cat_ID) . '" title="' . sprintf(__("View all posts in %s"), $category->cat_name) . '">'.$category->cat_name.'</a>'; 
-		++$i; 
-	} 
-	return apply_filters('the_category', $thelist, $normal_separator);
-}
-
 function k2_post_groupby($groupby) {
 	// Only filter when asides_module is active
 	if ( is_home() and function_exists('is_active_module') and is_active_module('asides_sidebar_module') ) {
@@ -332,43 +290,6 @@ function k2_asides_filter($query) {
 add_filter('pre_get_posts', 'k2_asides_filter');
 
 
-// Update comment count to only include comments
-function k2_comment_count( $count ) {
-	global $id;
-
-	if ($count == 0) return $count;
-
-	$comments = get_approved_comments( $id );
-	$comments = array_filter( $comments, 'k2_strip_trackback' );
-
-	return count($comments);
-}
-
-add_filter('get_comments_number', 'k2_comment_count', 0);
-
-// Separates comments from trackbacks
-function k2_seperate_comments( $comments ) {
-	global $trackbacks;
-
-	$comments_only = array_filter( $comments, 'k2_strip_trackback' );
-	$trackbacks = array_filter( $comments, 'k2_strip_comment' );
-
-	return $comments_only;
-}
-
-add_filter('comments_array', 'k2_seperate_comments');
-
-// Strips out trackbacks/pingbacks
-function k2_strip_trackback($var) {
-	return ($var->comment_type != 'trackback' and $var->comment_type != 'pingback');
-}
-
-// Strips out comments
-function k2_strip_comment($var) {
-	return ($var->comment_type == 'trackback' or $var->comment_type == 'pingback');
-}
-
-
 function get_wp_version() {
 	global $wp_version;
 
@@ -381,6 +302,7 @@ function get_wp_version() {
 
 	return $version;
 }
+
 
 // Semantic class functions from Sandbox (http://www.plaintxt.org/themes/sandbox/)
 
@@ -395,13 +317,8 @@ function k2_body_class( $print = true ) {
 
 	// Generic semantic classes for what type of content is displayed
 
-	if ( function_exists('is_front_page') ) {
-		is_front_page()  ? $c[] = 'home'       : null;
-		is_home()        ? $c[] = 'blog'       : null;
-	} else {
-		is_home()        ? $c[] = 'home'       : null;
-	}
-
+	is_front_page()      ? $c[] = 'home'       : null;
+	is_home()            ? $c[] = 'blog'       : null;
 	is_archive()         ? $c[] = 'archive'    : null;
 	is_date()            ? $c[] = 'date'       : null;
 	is_search()          ? $c[] = 'search'     : null;
@@ -421,16 +338,19 @@ function k2_body_class( $print = true ) {
 		if ( isset($wp_query->post->post_date) )
 			k2_date_classes(mysql2date('U', $wp_query->post->post_date), $c, 's-');
 
-		// Adds category classes for each category on single posts
-		if ( $cats = get_the_category() )
-			foreach ( $cats as $cat )
-				$c[] = 's-category-' . $cat->category_nicename;
+		// Categories
+		foreach ( (array) get_the_category() as $cat ) {
+			if ( empty($cat->slug ) )
+				continue;
+			$c[] = 's-category-' . $cat->slug;
+		}
 
-		// Adds tag classes for each tags on single posts
-		if ( function_exists('get_the_tags') )
-			if ( $tags = get_the_tags() )
-				foreach ( $tags as $tag )
-					$c[] = 's-tag-' . $tag->slug;
+		// Tags
+		foreach ( (array) get_the_tags() as $tag ) {
+			if ( empty($tag->slug ) )
+				continue;
+			$c[] = 's-tag-' . $tag->slug;
+		}
 
 		// Adds MIME-specific classes for attachments
 		if ( is_attachment() ) {
@@ -459,7 +379,7 @@ function k2_body_class( $print = true ) {
 	}
 
 	// Tag name classes for BODY on tag archives
-	else if ( function_exists('is_tag') and is_tag() ) {
+	else if ( is_tag() ) {
 		$tag = $wp_query->get_queried_object();
 		$c[] = 'tag';
 		$c[] = 'tag-' . $tag->slug;
@@ -481,6 +401,10 @@ function k2_body_class( $print = true ) {
 
 		if ( $wp_query->post->post_parent ) {
 			$c[] = 'page-child parent-pageid-' . $wp_query->post->post_parent;
+		}
+
+		if ( get_post_custom_values('sidebarless') ) {
+			$c[] = 'sidebars-none';
 		}
 
 		rewind_posts();
@@ -543,96 +467,42 @@ function k2_body_class( $print = true ) {
 	return $print ? print($c) : $c;
 }
 
-// Generates semantic classes for each post DIV element
-function k2_post_class( $post_count = 1, $post_asides = false, $print = true ) {
-	global $post;
 
-	// hentry for hAtom compliace, gets 'alt' for every other post DIV, describes the post type and p[n]
-	$c = array('hentry', "p$post_count", $post->post_type, $post->post_status);
+function k2_post_class_filter($classes) {
+	global $k2_post_alt, $post;
 
-	// Author for the post queried
-	$c[] = 'author-' . sanitize_title_with_dashes(strtolower(get_the_author()));
+	if ( !$k2_post_alt )
+		$k2_post_alt = 1;
 
-	// Category for the post queried
-	foreach ( (array) get_the_category() as $cat )
-		$c[] = 'category-' . $cat->category_nicename;
-
-	// Tags for the post queried
-	if ( function_exists('get_the_tags') ) {
-		$tags = get_the_tags();
-
-		if ( !empty($tags) ) {
-			foreach ( $tags as $tag ) {
-				$c[] = 'tag-' . $tag->slug;
-			}
-		}
-	}
-
-	// For password-protected posts
-	if ( $post->post_password )
-		$c[] = 'protected';
-
-	// Applies the time- and date-based classes (below) to post DIV
-	k2_date_classes(mysql2date('U', $post->post_date), $c);
-
-	// Asides post
-	if ( $post_asides ) {
-		$c[] = 'k2-asides';
-	}
+	$classes[] = "p$k2_post_alt";
 
 	// If it's the other to the every, then add 'alt' class
-	if ( $post_count & 1 == 1 ) {
-		$c[] = 'alt';
-	}
+	if ( ++$k2_post_alt % 2 )
+		$classes[] = 'alt';
 
-	// Separates classes with a single space, collates classes for post DIV
-	$c = join( ' ', attribute_escape( apply_filters('post_class', $c) ) );
+	// Asides post
+	if ( in_category( get_option('k2asidescategory') ) )
+		$classes[] = 'k2-asides';
 
-	// And tada!
-	return $print ? print($c) : $c;
+	// Applies the time- and date-based classes (below) to post DIV
+	k2_date_classes(mysql2date('U', $post->post_date), $classes);
+
+	return $classes;
 }
 
-// Generates semantic classes for each comment LI element
-function k2_comment_class( $comment_count = 1, $print = true ) {
-	global $comment, $post;
+add_filter('post_class', 'k2_post_class_filter');
 
-	if ('' == $comment->comment_type) {
-		$comment->comment_type = 'comment';
-	}
 
-	// Collects the comment type (comment, trackback),
-	$c = array($comment->comment_type);
+function k2_comment_class_filter($classes) {
+	global $comment;
 
-	// Counts trackbacks (t[n]) or comments (c[n])
-	if ($comment->comment_type == 'comment') {
-		$c[] = "c$comment_count";
-	} else {
-		$c[] = "t$comment_count";
-	}
+	k2_date_classes(mysql2date('U', $comment->comment_date), $classes, 'c-');
 
-	// If the comment author has an id (registered), then print the display name
-	if ( $comment->user_id > 0 ) {
-		$user = get_userdata($comment->user_id);
-
-		// For all registered users, 'byuser'; to specify the registered user, 'comment-author-[display_name]'
-		$c[] = "byuser comment-author-" . sanitize_title_with_dashes(strtolower($user->display_name));
-		// For comment authors who are the author of the post
-		if ( $comment->user_id === $post->post_author )
-			$c[] = 'bypostauthor';
-	}
-
-	// If it's the other to the every, then add 'alt' class; collects time- and date-based classes
-	k2_date_classes(mysql2date('U', $comment->comment_date), $c, 'c-');
-	if ( $comment_count & 1 == 1 ) {
-		$c[] = 'alt';
-	}
-
-	// Separates classes with a single space, collates classes for comment LI
-	$c = join( ' ', attribute_escape( apply_filters('comment_class', $c) ) );
-
-	// Tada again!
-	return $print ? print($c) : $c;
+	return $classes;
 }
+
+add_filter('comment_class', 'k2_comment_class_filter');
+
 
 // Generates time- and date-based classes for BODY, post DIVs, and comment LIs; relative to GMT (UTC)
 function k2_date_classes($t, &$c, $p = '') {
