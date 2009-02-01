@@ -292,13 +292,21 @@ h2 {
 	margin-bottom: 5px;
 	}
 
-.entry-title, h3, h4, .single .k2-asides h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
+.entry-title, h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
 	font-size: 2.4em;
 	font-weight: normal;
+	}
+
+h4 {
+	font-size: 2.0em;
+	font-weight: normal;
+	}
+
+.entry-title {
 	margin-right: 60px;
 	}
 
-.page .entry-title {
+body.page .entry-title {
 	text-align: center;
 	}
 
@@ -308,7 +316,8 @@ h2 {
 	margin-top: 25px;
 	}
 
-.entry-content h4 {
+.entry-content h4,
+.entry-meta h4 {
 	font-size: 1.5em;
 	font-weight: normal;
 	margin-top: 25px;
@@ -464,6 +473,7 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	padding-left: 20px;
 	}
 
+.image-meta abbr,
 abbr.entry-date {
 	border: none;
 	}
@@ -597,15 +607,96 @@ abbr.entry-date {
 	margin-top: 3px;
 	}
 
-.additional-info h4 {
-	margin: 1em 0;
+.columns-three .template-image #primary {
+	width: 670px;
+	}
+
+.template-image .entry-foot {
+	position: absolute;
+	top: 0;
+	right: -220px;
+	width: 200px;
+	padding-top: 180px;
+	}
+
+.columns-one .template-image .entry-foot {
+	position: relative;
+	width: auto;
+	top: auto;
+	right: auto;
+	padding-top: 0;
+	margin-right: 210px;
+	}
+
+.columns-one .template-image #gallery-nav {
+	right: -210px;
+	top: 0;
+	width: 200px;
+	border-bottom: none;
+	}
+
+.entry-foot h5 {
+	font-size: 1.5em;
+	font-weight: normal;
+	}
+
+#gallery-nav img {
+	height: 96px;
+	width: 96px;
+	}
+
+#gallery-nav {
+	top: 3.2em;
+	margin: 0;
+	position: absolute;	
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 10px;
+	}
+
+#gallery-nav a {
+	text-decoration: none;
+	}
+
+#gallery-nav a span {
+	display: block;
+	}
+
+.attachment .hentry {
+	margin-left: 60px;
+	}
+
+.attachment-icon {
+	position: absolute;
+	top: 0;
+	left: -60px;
+	}
+
+.attachment-image {
+	text-align: center;
+	}
+
+.attachment-image .caption {
+	margin: 0;
+	}
+
+.attachment-image .caption p {
+	display: inline;
+	}
+
+.image-meta {
+	padding: 10px 0 10px 20px;
+	list-style-type: circle;
+	}
+
+.image-meta li {
+	margin: 3px 0;
 	}
 
 .image-meta span {
 	font-weight: bold;
 	display: block;
 	float: left;
-	width: 100px;
+	width: 8em;
 	}
 
 
@@ -1085,12 +1176,10 @@ img.wp-smiley {
 	background-color: #EDEDED;
 	}
 
-.image-meta,
 .entry-content ol, .entry-content ul {
 	padding: 0 0 0 35px;
 	}
 
-.image-meta li,
 .entry-content ol li, .entry-content ul li {
 	margin: 0 0 3px;
 	padding: 0;

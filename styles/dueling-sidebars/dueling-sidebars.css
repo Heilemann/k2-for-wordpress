@@ -13,3 +13,7 @@ body.columns-three #sidebar-1 {
 	left: -520px;
 	margin-left: -195px;
 }
+
+body.columns-three .template-image #primary {
+	margin-left: 0;
+}

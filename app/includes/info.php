@@ -248,38 +248,24 @@ function k2_post_groupby($groupby) {
 add_filter('posts_groupby', 'k2_post_groupby');
 
 function k2_asides_filter($query) {
-	global $k2sbm_current_module;
-
-	$asides = get_option('k2asidescategory');
+	$asidescat = get_option('k2asidescategory');
 
 	// Only filter when it's in the homepage
-	if ( ($asides != 0) and ($query->is_home) and (!$k2sbm_current_module) and function_exists('is_active_module') and is_active_module('asides_sidebar_module') ) {
+	if ( ($asidescat != 0) and ($query->is_home) and is_active_widget('k2_asides_widget', 'k2-asides') ) {
 
-		if ( get_wp_version() > 2.2 ) {
-			
-			$exclude_cats = $query->get('category__not_in');
-			$include_cats = $query->get('category__in');
+		$exclude_cats = $query->get('category__not_in');
+		$include_cats = $query->get('category__in');
 
-			// Remove asides from list of categories to include
-			if ( !empty($include_cats) and in_array($asides, $include_cats) ) {
-				$query->set( 'category__in', array_diff( $include_cats, array($asides) ) );
-			}
+		// Remove asides from list of categories to include
+		if ( !empty($include_cats) and in_array($asidescat, $include_cats) ) {
+			$query->set( 'category__in', array_diff( $include_cats, array($asidescat) ) );
+		}
 
-			// Insert asides into list of categories to exclude
-			if ( empty($exclude_cats) ) {
-				$query->set( 'category__not_in', array($asides) );
-			} else if ( !in_array( $asides, $exclude_cats ) ) {
-				$query->set( 'category__not_in', array_merge( $exclude_cats, array($asides) ) );
-			}
-
-		} else {
-
-			$priorcat = $query->get('cat');
-			if ( !empty($priorcat) ) {
-				$priorcat .= ',';
-			}
-
-			$query->set('cat', $priorcat . '-' . $asides);
+		// Insert asides into list of categories to exclude
+		if ( empty($exclude_cats) ) {
+			$query->set( 'category__not_in', array($asidescat) );
+		} else if ( !in_array( $asidescat, $exclude_cats ) ) {
+			$query->set( 'category__not_in', array_merge( $exclude_cats, array($asidescat) ) );
 		}
 	}
 
@@ -326,8 +312,28 @@ function k2_body_class( $print = true ) {
 	is_attachment()      ? $c[] = 'attachment' : null;
 	is_404()             ? $c[] = 'four04'     : null; // CSS does not allow a digit as first character
 
+	if ( is_attachment() ) {
+		$postID = $wp_query->post->ID;
+		the_post();
+
+		// Adds 'single' class and class with the post ID
+		$c[] = 'postid-' . $postID . ' s-slug-' . $wp_query->post->post_name;
+
+		// Adds classes for the month, day, and hour when the post was published
+		if ( isset($wp_query->post->post_date) )
+			k2_date_classes(mysql2date('U', $wp_query->post->post_date), $c, 's-');
+
+		$the_mime = get_post_mime_type();
+		$boring_stuff = array('application/', 'image/', 'text/', 'audio/', 'video/', 'music/');
+		$c[] = 'attachment-' . str_replace($boring_stuff, '', $the_mime);
+		
+		// Adds author class for the post author
+		$c[] = 's-author-' . sanitize_title_with_dashes(strtolower(get_the_author()));
+		rewind_posts();
+	}
+
 	// Special classes for BODY element when a single post
-	if ( is_single() ) {
+	elseif ( is_single() ) {
 		$postID = $wp_query->post->ID;
 		the_post();
 
@@ -350,13 +356,6 @@ function k2_body_class( $print = true ) {
 			if ( empty($tag->slug ) )
 				continue;
 			$c[] = 's-tag-' . $tag->slug;
-		}
-
-		// Adds MIME-specific classes for attachments
-		if ( is_attachment() ) {
-			$the_mime = get_post_mime_type();
-			$boring_stuff = array('application/', 'image/', 'text/', 'audio/', 'video/', 'music/');
-			$c[] = 'attachment-' . str_replace($boring_stuff, '', $the_mime);
 		}
 
 		// Adds author class for the post author
@@ -461,7 +460,7 @@ function k2_body_class( $print = true ) {
 	$c[] = 'lang-' . $locale;
 
 	// Separates classes with a single space, collates classes for BODY
-	$c = join( ' ', attribute_escape( apply_filters('body_class', $c) ) );
+	$c = attribute_escape( join( ' ', apply_filters('body_class', $c) ) );
 
 	// And tada!
 	return $print ? print($c) : $c;

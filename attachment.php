@@ -8,69 +8,72 @@
 		<a name="startcontent" id="startcontent"></a>
 
 		<div id="current-content" class="hfeed">
-<?php
-	/* Check if there are posts */
-	if ( have_posts() ) {
-		/* It saves time to only perform the following if there are posts to show */
 
-		/* Count if there are 2+ users */
-		$count_users = $wpdb->get_var("SELECT COUNT(1) FROM $wpdb->usermeta WHERE meta_key = '" . $table_prefix . "user_level' AND meta_value > 1 LIMIT 2");
+		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-		/* If there are 2+ users, this is a multiple-user blog */
-		$multiple_users = ($count_users > 1);
+			<?php if ( ! empty($post->post_parent) ): ?>
+			<div class="navigation">
+				<div class="nav-previous"><a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><span>&laquo;</span> <?php echo get_the_title($post->post_parent); ?></a></div>
+				<div class="clear"></div>
+			</div>
+			<?php endif; ?>
 
-		// Get date formats
-		$dateformat = get_option('date_format');
+			<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<div class="entry-head">
+					<h1 class="entry-title">
+						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
+					</h1>
 
-		// This also populates the iconsize for the next line
-		$attachment_link = get_the_attachment_link($post->ID, true, array(450, 800)); 
+					<?php /* Edit Link */ edit_post_link( __('Edit','k2_domain'), '<span class="entry-edit">', '</span>' ); ?>
 
-		// This lets us style narrow icons specially
-		$_post = &get_post($post->ID); $classname = ($_post->iconsize[0] <= 128 ? 'small' : '') . 'attachment'; 
-?>
+					<div class="attachment-icon">
+						<?php echo wp_get_attachment_link($post->ID, 'thumbnail', false, true); ?>
+					</div>
+				</div> <!-- .entry-head -->
 
-	<?php /* Start the loop */ while ( have_posts() ) { the_post();	?>
+				<div class="entry-content">
+					<p class="downloadlink">
+						<?php printf(  __('Download %s', 'k2_domain'), wp_get_attachment_link($post->ID, 'thumbnail') ); ?>
+						<span class="file-size"><?php echo size_format( filesize( get_attached_file($post->ID) ) ); ?></span>
+					<p>
 
-				<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
-					<div class="entry-head">
-						<h3 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php the_title(); ?></a></h3>
+					<?php the_content(); ?>
+				</div><!-- .entry-content -->
+			</div><!-- #post-ID -->
 
-						<div class="entry-meta">
-							<span class="chronodata">
-								<?php /* Date & Author */
-									printf(__('Published %1$s %2$s','k2_domain'),
-										( $multiple_users  ? sprintf(__('by %s','k2_domain'), '<span class="vcard author"><a href="' . get_author_posts_url(get_the_author_ID()) .'" class="url fn" title="'. sprintf(__('View all posts by %s','k2_domain'), attribute_escape(get_the_author())) .'">' . get_the_author() . '</a></span>'): ('')	),
-										'<abbr class="published" title="'. get_the_time('Y-m-d\TH:i:sO') . '">' .
-										( function_exists('time_since') ? sprintf(__('%s ago','k2_domain'), time_since(abs(strtotime($post->post_date_gmt . " GMT")), time())) : get_the_time($dateformat) ) 
-										. '</abbr>'						
-										);
-								?>
-							</span>
-						</div>
-					</div> <!-- .entry-head -->
+			<div class="comments">
+				<?php comments_template(); ?>
+			</div><!-- .comments -->
 
-					<div class="entry-content">
-						<p class="<?php echo $classname; ?>"><?php echo $attachment_link; ?><br /><?php echo basename($post->guid); ?></p>
-						<?php the_content(); ?>
-					</div> <!-- .entry-content -->
-				</div> <!-- #post-ID -->
+			<?php if ( ! empty($post->post_parent) ): ?>
+			<div class="navigation">
+				<div class="nav-previous"><a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><span>&laquo;</span> <?php echo get_the_title($post->post_parent); ?></a></div>
+				<div class="clear"></div>
+			</div>
+			<?php endif; ?>
 
-				<?php comments_template(); ?>	
+		<?php endwhile; else: define('K2_NOT_FOUND', true); ?>
 
-	<?php } } else { ?>
+			<div class="hentry four04">
+				<div class="entry-head">
+					<h1 class="center"><?php _e('Not Found','k2_domain'); ?></h1>
+				</div>
 
-				<h2><?php _e('Sorry, no attachments matched your criteria.','k2_domain'); ?></h2>
+				<div class="entry-content">
+					<p><?php _e('Oh no! You\'re looking for something which just isn\'t here! Fear not however, errors are to be expected, and luckily there are tools on the sidebar for you to use in your search for what you need.','k2_domain'); ?></p>
+				</div>
+			</div><!-- .hentry .four04 -->
 
-	<?php } ?>
-		</div> <!-- #current-content -->
+		<?php endif; ?>
+
+		</div><!-- #current-content -->
 
 		<div id="dynamic-content"></div>
+	</div><!-- #primary -->
+</div><!-- #primary-wrapper -->
 
-	</div> <!-- #primary -->
-</div> <!-- #primary-wrapper -->
+<?php get_sidebar(); ?>
 
-	<?php get_sidebar(); ?>
-
-</div> <!-- .content -->
+</div><!-- .content -->
 
 <?php get_footer(); ?>

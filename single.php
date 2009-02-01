@@ -15,9 +15,9 @@
 
 			<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<div class="entry-head">
-					<h3 class="entry-title">
+					<h1 class="entry-title">
 						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
-					</h3>
+					</h1>
 
 					<?php /* Edit Link */ edit_post_link( __('Edit','k2_domain'), '<span class="entry-edit">', '</span>' ); ?>
 

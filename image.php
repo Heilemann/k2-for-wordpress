@@ -1,6 +1,28 @@
+<?php
+	$k2_image_link = false;
+
+	function k2_gallery_link($output) {
+		global $k2_image_link;
+
+		switch ($k2_image_link) {
+			case 'prev':
+				$output = str_replace('</a>', '<span>&laquo; Previous</span></a>', $output);
+				break;
+
+			case 'next':
+				$output = str_replace('</a>', '<span>Next &raquo;</span></a>', $output);
+				break;
+		}
+
+		return $output;
+	}
+
+	add_filter('wp_get_attachment_link', 'k2_gallery_link');
+?>
+
 <?php get_header(); ?>
 
-<div class="content">
+<div class="content template-image">
 
 <div id="primary-wrapper">
 	<div id="primary">
@@ -10,46 +32,46 @@
 		<div id="current-content" class="hfeed">
 
 		<?php if ( have_posts() ): while ( have_posts() ): the_post(); ?>
-			<div id="post-<?php the_ID(); ?>" class="<?php k2_post_class(); ?>">
 
+			<?php if ( ! empty($post->post_parent) ): ?>
+			<div class="navigation">
+				<div class="nav-previous"><a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><span>&laquo;</span> <?php echo get_the_title($post->post_parent); ?></a></div>
+				<div class="clear"></div>
+			</div>
+			<?php endif; ?>
+
+			<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<div class="entry-head">
-					<h3 class="entry-title">
-					<?php if ( ! empty($post->post_parent) ): ?>
-						<a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><?php echo get_the_title($post->post_parent); ?></a> &raquo;
-					<?php endif; ?>
-					<a href="<?php the_permalink(); ?>" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), attribute_escape(get_the_title()) ); ?>'><?php the_title(); ?></a>
-					</h3>
+					<h1 class="entry-title">
+						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
+					</h1>
 
-					<div class="entry-meta">
-						<div class="entry-comments">
-							<a class="commentslink" href="#comments">
-								<?php /* Comments */ comments_number('0&nbsp;<span>'.__('Comments','k2_domain').'</span>', '1&nbsp;<span>'.__('Comment','k2_domain').'</span>', '%&nbsp;<span>'.__('Comments','k2_domain').'</span>'); ?>
-							</a>
-						</div>
+					<?php /* Edit Link */ edit_post_link( __('Edit','k2_domain'), '<span class="entry-edit">', '</span>' ); ?>
 
-						<?php /* Edit Link */ edit_post_link(__('Edit','k2_domain'), '<span class="entry-edit">','</span>'); ?>
-					</div> <!-- .entry-meta -->
+					<?php /* K2 Hook */ do_action('template_entry_head'); ?>
 				</div> <!-- .entry-head -->
 
-			<?php if ( get_wp_version() > 2.4 ): // WP 2.5+ ?>
 				<div class="entry-content">
-					<div class="image-attachment">
-						<a href="<?php echo wp_get_attachment_url($post->ID); ?>"><?php echo wp_get_attachment_image( $post->ID, 'medium' ); ?></a>
+					<div class="attachment-image">
+						<a href="<?php echo wp_get_attachment_url($post->ID); ?>" class="image-link"><?php echo wp_get_attachment_image( $post->ID, 'medium' ); ?></a>
+
+						<?php if ( !empty($post->post_excerpt) ): ?>
+						<div class="caption"><?php the_excerpt(); ?></div>
+						<?php endif; ?>
 					</div>
 
-	                <div class="image-caption"><?php echo $post->post_excerpt; ?></div>
-
-					<div class="image-description">
-						<?php the_content(sprintf(__('Continue reading \'%s\'', 'k2_domain'), the_title('', '', false))); ?>
-					</div>
+					<?php if ( !empty($post->post_content) ) the_content(sprintf(__('Continue reading \'%s\'', 'k2_domain'), the_title('', '', false))); ?>
 				</div> <!-- .entry-content -->
 
-				<div class="additional-info">
-					<h4>Additional Info</h4>
+				<div class="entry-foot">
+					<h5><?php _e('Photo Information', 'k2_domain'); ?></h5>
 					<ul class="image-meta">
 						<li class="dimensions">
 							<span><?php _e('Dimensions:','k2_domain'); ?></span>
-							<?php list($width, $height) = getimagesize( get_attached_file($post->ID) ); printf( _c('%1$s px &times; %2$s px|1: width, 2: height','k2_domain'), $width, $height ); ?>
+							<?php
+								list($width, $height) = getimagesize( get_attached_file($post->ID) );
+								printf( _c('%1$s &times; %2$s pixels|1: width, 2: height','k2_domain'), $width, $height );
+							?>
 						</li>
 						<li class="file-size">
 							<span><?php _e('File Size:','k2_domain'); ?></span>
@@ -57,50 +79,39 @@
 						</li>
 						<li class="uploaded">
 							<span><?php _e('Uploaded on:','k2_domain'); ?></span>
-							<?php if ( function_exists('time_since') ):
+							<?php
+								if ( function_exists('time_since') ):
 									printf( __('%s ago','k2_domain'),
 										'<abbr class="published" title="' . get_the_time('Y-m-d\TH:i:sO') . '">' . time_since(abs(strtotime($post->post_date_gmt . " GMT")), time()) . '</abbr>');
-								else: ?>
-								<abbr class="published" title="<?php get_the_time('Y-m-d\TH:i:sO'); ?>"><?php the_time( get_option('date_format') ); ?></abbr>
-							<?php endif; ?>
+								else:
+							?><abbr class="published" title="<?php the_time('Y-m-d\TH:i:sO'); ?>"><?php the_time( get_option('date_format') ); ?></abbr><?php endif; ?>
 						</li>
 
 						<?php /* K2 Hook */ do_action('k2_image_meta', $post->ID); ?>
 					</ul>
-				</div>
-			<?php else: // WP < 2.5 ?>
-				<div class="entry-content">
-					<div class="image-attachment">
-						<?php $attachment_link = get_the_attachment_link($post->ID, true, array(450, 800)); // This also populates the iconsize for the next line ?>
-						<?php $_post = &get_post($post->ID); $classname = ($_post->iconsize[0] <= 128 ? 'small' : '') . 'attachment'; // This lets us style narrow icons specially ?>
-						<p class="<?php echo $classname; ?>"><?php echo $attachment_link; ?><br /><?php echo basename($post->guid); ?></p>
+
+					<div id="gallery-nav" class="navigation">
+						<div class="nav-previous">
+							<?php $k2_image_link = 'prev'; previous_image_link(); $k2_image_link = false; ?>
+						</div>
+						<div class="nav-next">
+							<?php $k2_image_link = 'next'; next_image_link(); $k2_image_link = false; ?>
+						</div>
+						<div class="clear"></div>
 					</div>
-
-	                <div class="image-caption"><?php echo $post->post_excerpt; ?></div>
-
-					<div class="image-description">
-						<?php the_content(sprintf(__('Continue reading \'%s\'', 'k2_domain'), the_title('', '', false))); ?>
-					</div>
-				</div> <!-- .entry-content -->
-			<?php endif; ?>
-
+				</div><!-- .entry-foot -->
 			</div> <!-- #post-ID -->
 
-			<?php if ( get_wp_version() > 2.4 ): ?>
-			<div id="gallery-nav" class="navigation">
-				<div class="nav-previous">
-					<?php previous_image_link('%link', '<span class="meta-nav">&laquo;</span> %title'); ?>
-				</div>
-				<div class="nav-next">
-					<?php next_image_link('%link', '%title <span class="meta-nav">&raquo;</span>'); ?>
-				</div>
+			<div class="comments">
+				<?php comments_template(); ?>
+			</div> <!-- .comments -->
+
+			<?php if ( ! empty($post->post_parent) ): ?>
+			<div class="navigation">
+				<div class="nav-previous"><a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><span>&laquo;</span> <?php echo get_the_title($post->post_parent); ?></a></div>
 				<div class="clear"></div>
 			</div>
 			<?php endif; ?>
-
-			<div class="entry-comments comments">
-				<?php comments_template(); ?>
-			</div> <!-- .entry-comments -->
 
 		<?php endwhile; else: ?>
 
@@ -123,8 +134,6 @@
 		<div id="dynamic-content"></div>
 	</div> <!-- #primary -->
 </div> <!-- #primary-wrapper -->
-
-	<?php get_sidebar(); ?>
 
 </div> <!-- .content -->
 	
