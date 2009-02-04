@@ -360,6 +360,11 @@ function k2_body_class( $print = true ) {
 
 		// Adds author class for the post author
 		$c[] = 's-author-' . sanitize_title_with_dashes(strtolower(get_the_author()));
+
+		if ( get_post_custom_values('sidebarless') ) {
+			$c[] = 'sidebars-none';
+		}
+
 		rewind_posts();
 	}
 

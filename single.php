@@ -73,7 +73,7 @@
 	</div><!-- #primary -->
 </div><!-- #primary-wrapper -->
 
-	<?php get_sidebar(); ?>
+<?php if ( ! get_post_custom_values('sidebarless') ) get_sidebar(); ?>
 
 </div><!-- .content -->
 
