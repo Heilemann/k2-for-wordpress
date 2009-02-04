@@ -743,9 +743,6 @@ abbr.entry-date {
 
 #commentlist .comment {
 	padding: 10px;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-	border-radius: 8px;
 	}
 
 #commentlist li.comment {
