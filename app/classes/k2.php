@@ -37,6 +37,7 @@ class K2 {
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
 		require_once(TEMPLATEPATH . '/app/includes/comments.php');
+		//require_once(TEMPLATEPATH . '/app/includes/widgets.php');
 		require_once(TEMPLATEPATH . '/app/includes/wp-compat.php');
 
 		if ( defined('K2_LOAD_SBM') ) {
@@ -44,7 +45,6 @@ class K2 {
 			require_once(TEMPLATEPATH . '/app/includes/sbm.php');
 		} else {
 			require_once(TEMPLATEPATH . '/app/classes/widgets.php');
-			//require_once(TEMPLATEPATH . '/app/includes/widgets.php');
 		}
 
 		// Check installed version, upgrade if needed
@@ -106,6 +106,8 @@ class K2 {
 	 * @param string $previous Previous version K2
 	 */
 	function upgrade($previous) {
+		global $wpdb;
+
 		// Call the upgrade handlers
 		do_action('k2_upgrade', $previous);
 
@@ -129,6 +131,43 @@ class K2 {
 				update_option('active_plugins', $plugins);
 		}
 
+/*
+		if ( version_compare( $previous, '1.0-RC7.3', '<' ) ) {
+			// Search for pages using page-comments.php
+			$page_ids = $wpdb->get_results("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = 'page-comments.php'", ARRAY_N);
+
+			// Set meta comments and remove template
+			if ( ! empty($page_ids) ) {
+				foreach ($page_ids as $id) {
+					update_post_meta($id[0], 'comments', 'on');
+					delete_post_meta($id[0], '_wp_page_template');
+				}
+			}
+
+			// Search for pages using page-wide.php
+			$page_ids = $wpdb->get_results("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = 'page-wide.php'", ARRAY_N);
+
+			// Set meta sidebarless and remove template
+			if ( ! empty($page_ids) ) {
+				foreach ($page_ids as $id) {
+					update_post_meta($id[0], 'sidebarless', 'on');
+					delete_post_meta($id[0], '_wp_page_template');
+				}
+			}
+
+			// Search for pages using page-wide-comments.php
+			$page_ids = $wpdb->get_results("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = 'page-wide-comments.php'", ARRAY_N);
+
+			// Set meta comments/sidebarless and remove template
+			if ( ! empty($page_ids) ) {
+				foreach ($page_ids as $id) {
+					update_post_meta($id[0], 'comments', 'on');
+					update_post_meta($id[0], 'sidebarless', 'on');
+					delete_post_meta($id[0], '_wp_page_template');
+				}
+			}
+		}
+*/
 		// Update the version
 		update_option('k2version', K2_CURRENT);
 	}
@@ -169,6 +208,94 @@ class K2 {
 		}
 	}
 
+
+	function add_custom_query_vars($query_vars) {
+		$query_vars[] = 'k2dynamic';
+
+		return $query_vars;
+	}
+
+	function prevent_dynamic_redirect($redirect_url) {
+		if ( strpos($redirect_url, 'k2dynamic=' ) !== false )
+			return false;
+
+		return $redirect_url;
+	}
+
+	function get_home_url() {
+		if ( ('page' == get_option('show_on_front')) and ($page_id = get_option('page_for_posts')) ) {
+			return get_page_link($page_id);
+		}
+		
+		return get_bloginfo('url') . '/';
+	}
+
+	function dynamic_content() {
+		$k2dynamic = get_query_var('k2dynamic');
+
+		if ( $k2dynamic ) {
+			// Send the header
+			header('Content-Type: ' . get_bloginfo('html_type') . '; charset=' . get_bloginfo('charset'));
+
+			// K2 Hook
+			do_action('k2_dynamic_content');
+
+			if ( defined('WP_DEBUG') && true === WP_DEBUG ) {
+				global $wp_query;
+				var_dump($wp_query->query);
+			}
+
+			switch ( $k2dynamic ) {
+				default:
+					include(TEMPLATEPATH . '/app/display/theloop.php');
+					break;
+
+				case 'init':
+					include(TEMPLATEPATH . '/app/display/rollingarchive.php');
+					break;
+			}
+			exit;
+		}
+	}
+
+
+	function setup_rolling_archives() {
+		global $wp_query;
+
+		// Get the query
+		if ( is_array($wp_query->query) )
+			$rolling_query = $wp_query->query;
+		elseif ( is_string($wp_query->query) )
+			parse_str($wp_query->query, $rolling_query);
+
+		// Get list of page dates
+		if ( !is_page() and !is_single() )
+			$page_dates = get_rolling_page_dates($wp_query);
+
+		// Get the current page
+		$rolling_page = intval( get_query_var('paged') );
+		if ( $rolling_page < 1 )
+			$rolling_page = 1;
+
+		?>
+			<script type="text/javascript">
+			// <![CDATA[
+				jQuery(document).ready(function() {
+					K2.RollingArchives.setState(
+						<?php echo (int) $rolling_page; ?>,
+						<?php echo (int) $wp_query->max_num_pages; ?>,
+						<?php output_javascript_hash($rolling_query); ?>,
+						<?php output_javascript_array($page_dates); ?>
+					);
+
+					if (K2.Animations) {
+						smartPosition('#dynamic-content');
+					}
+				});
+			// ]]>
+			</script>
+		<?php
+	}
 
 	/**
 	 * switch_theme() - Called when user switches out of K2
@@ -436,3 +563,10 @@ class K2 {
 
 // Actions and Filters
 add_action( 'switch_theme', array('K2', 'switch_theme'), 0 );
+add_action( 'template_redirect', array('K2', 'dynamic_content') );
+add_filter( 'query_vars', array('K2', 'add_custom_query_vars') );
+
+// Decrease the priority of redirect_canonical
+remove_action( 'template_redirect', 'redirect_canonical' );
+add_action( 'template_redirect', 'redirect_canonical', 11 );
+//add_filter( 'redirect_canonical', array('K2', 'prevent_dynamic_redirect') );

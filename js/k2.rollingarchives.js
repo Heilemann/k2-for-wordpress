@@ -1,5 +1,4 @@
-function RollingArchives(url, pagetext) {
-	this.url = url;
+function RollingArchives(pagetext) {
 	this.pageText = pagetext;
 	this.active = false;
 };
@@ -38,8 +37,15 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 			self.pageSlider.setValueBy(1);
 			return false;
 		});
+
 		jQuery('#rollprevious').click(function() {
 			self.pageSlider.setValueBy(-1);
+			return false;
+		});
+
+		jQuery('#rollhome').click(function() {
+			self.pageSlider.setValue(self.pageCount);
+			self.validatePage(1);
 			return false;
 		});
 
@@ -60,10 +66,9 @@ RollingArchives.prototype.saveState = function() {
 
 RollingArchives.prototype.restoreState = function() {
 	if (this.prevQuery != null) {
-		var url = this.url.replace('theloop', 'rollingarchive');
 		var query = jQuery.extend(this.prevQuery, { k2dynamic: 'init' });
 
-		K2.ajaxGet(url, query,
+		K2.ajaxGet(query,
 			function(data) {
 				jQuery('#dynamic-content').html(data);
 			}
@@ -112,7 +117,7 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 		jQuery('#rollload').fadeIn('fast');
 		jQuery.extend(this.query, { paged: this.pageNumber, k2dynamic: 1 });
 
-		K2.ajaxGet(this.url, this.query,
+		K2.ajaxGet(this.query,
 			function(data) {
 
 				if (K2.Animations) {

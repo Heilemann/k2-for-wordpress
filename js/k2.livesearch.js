@@ -1,9 +1,8 @@
-function LiveSearch(url, searchprompt) {
+function LiveSearch(searchprompt) {
 	var self = this;
 
 	jQuery('#search-form-wrap').addClass('livesearch');
 
-	this.url = url;
 	this.searchPrompt = searchprompt;
 	this.input = jQuery('input#s');
 
@@ -66,10 +65,10 @@ LiveSearch.prototype.doSearch = function(self) {
 
 	self.prevSearch = self.input.val();
 
-	K2.ajaxGet(self.url, self.input.serialize() + '&k2dynamic=init',
+	K2.ajaxGet(self.input.serialize() + '&k2dynamic=init',
 		function(data) {
 			jQuery('#current-content').hide();
-			jQuery('#dynamic-content').show().html(data);
+			jQuery('#dynamic-content').html(data).show();
 
 			self.loading.fadeOut('fast');
 

@@ -94,26 +94,22 @@
 			}
 		?>;
 
+		jQuery(document).ready(dynamicColumns);
 		jQuery(window).resize(dynamicColumns);
 	<?php endif; ?>
 
-		<?php /* Debugging */ if ( isset($_GET['k2debug']) ): ?>
-		K2.debug = true;
-		<?php endif; ?>
-
+		K2.AjaxURL = "<?php bloginfo('url'); ?>/";
 		K2.Animations = <?php echo (int) get_option('k2animations') ?>;
 
 		jQuery(document).ready(function(){
 			<?php /* LiveSearch */ if ( '1' == get_option('k2livesearch') ): ?>
 			K2.LiveSearch = new LiveSearch(
-				"<?php if (get_option('k2rollingarchives') == 1) { output_javascript_url('rollingarchive.php'); } else { output_javascript_url('theloop.php'); } ?>",
 				"<?php echo attribute_escape(__('Type and Wait to Search','k2_domain')); ?>"
 			);
 			<?php endif; ?>
 
 			<?php /* Rolling Archives */ if ( '1' == get_option('k2rollingarchives') ): ?>
 			K2.RollingArchives = new RollingArchives(
-				"<?php output_javascript_url('theloop.php'); ?>",
 				"<?php echo attribute_escape( __('Page %1$d of %2$d', 'k2_domain') ); ?>"
 			);
 			<?php endif; ?>

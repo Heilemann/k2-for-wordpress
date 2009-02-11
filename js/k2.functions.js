@@ -4,9 +4,12 @@ if (typeof K2 == 'undefined') var K2 = {};
 
 K2.debug = false;
 
-K2.ajaxGet = function(url, data, complete_fn) {
+// 
+//K2.prototype.ajaxComplete = [];
+
+K2.ajaxGet = function(data, complete_fn) {
 	jQuery.ajax({
-		url:		url,
+		url:		K2.AjaxURL,
 		data:		data,
 
 		error: function(request) {
@@ -28,18 +31,24 @@ K2.ajaxGet = function(url, data, complete_fn) {
 				complete_fn( request.responseText );
 			}
 
-			// Inform JAWS
-			updateBuffer();
-
 			// Lightbox v2.03.3 - Adds new images to lightbox
 			if (typeof myLightbox != "undefined" && myLightbox instanceof Lightbox && myLightbox.updateImageList) {
 				myLightbox.updateImageList();
 			}
+
+			/*
+			if ( K2.callbacks && K2.callbacks.length > 0 ) { 
+				for ( var i = 0; i < K2.callbacks.length; i++ ) {
+					K2.callbacks[i]();
+				}
+			 }
+			*/
+
+			// Inform JAWS
+			updateBuffer();
 		}
 	});
 }
-
-
 
 function OnLoadUtils() {
 	jQuery('#comment-personaldetails').hide();
@@ -57,41 +66,6 @@ function HideUtils() {
 	jQuery('#comment-personaldetails').slideUp();
 	jQuery('#showinfo').show();
 	jQuery('#hideinfo').hide();
-};
-
-
-// Manipulation of cookies (credit: http://www.webreference.com/js/column8/functions.html)
-function setCookie(name, value, expires, path, domain, secure) {
-  var curCookie = name + "=" + escape(value) +
-      ((expires) ? "; expires=" + expires.toGMTString() : "") +
-      ((path) ? "; path=" + path : "") +
-      ((domain) ? "; domain=" + domain : "") +
-      ((secure) ? "; secure" : "");
-  document.cookie = curCookie;
-};
-
-function getCookie(name) {
-  var dc = document.cookie;
-  var prefix = name + "=";
-  var begin = dc.indexOf("; " + prefix);
-  if (begin == -1) {
-    begin = dc.indexOf(prefix);
-    if (begin != 0) return null;
-  } else
-    begin += 2;
-  var end = document.cookie.indexOf(";", begin);
-  if (end == -1)
-    end = dc.length;
-  return unescape(dc.substring(begin + prefix.length, end));
-};
-
-function deleteCookie(name, path, domain) {
-  if (getCookie(name)) {
-    document.cookie = name + "=" +
-    ((path) ? "; path=" + path : "") +
-    ((domain) ? "; domain=" + domain : "") +
-    "; expires=Thu, 01-Jan-70 00:00:01 GMT";
-  }
 };
 
 
@@ -225,3 +199,28 @@ function hideLabel(field_id, hide) {
 		}
 	}
 };
+
+/*
+jQuery('.attachment-image').ready(function(){
+	resizeImage('.image-link img', '#page', 20);
+});
+
+jQuery(window).resize(function(){
+	resizeImage('.image-link img', '#page', 20);
+});
+
+
+function resizeImage(image, container, padding) {
+	var imageObj = jQuery(image);
+	var containerObj = jQuery(container);
+
+	var imgWidth = imageObj.width();
+	var imgHeight = imageObj.height();
+	var contentWidth = containerObj.width() - padding;
+
+	var ratio = contentWidth / imgWidth;
+
+	imageObj.width(contentWidth).height(imgHeight * ratio);
+	console.log('resized to a ratio of ' + ratio);
+}
+*/

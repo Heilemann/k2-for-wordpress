@@ -2,37 +2,12 @@
 	// This is the loop, which fetches entries from your database.
 	// It is a very delicate piece of machinery. Be gentle!
 
-	// Get core WP functions when loaded dynamically
-	if ( isset($_GET['k2dynamic']) ):
+	// Get the asides category
+	$k2asidescategory = get_option('k2asidescategory');
+	$k2rollingarchives = get_option('k2rollingarchives');
 
-		// Check for CGI Mode
-		if ( 'cgi' == substr( php_sapi_name(), 0, 3 ) ):
-			require_once( preg_replace( '/wp-content.*/', '', __FILE__ ) . 'wp-config.php' );
-		else:
-			require_once( preg_replace( '/wp-content.*/', '', $_SERVER['SCRIPT_FILENAME'] ) . 'wp-config.php' );
-		endif;
-
-		if ( $_GET['k2dynamic'] != 'init' ):
-			// Send the header
-			header('Content-Type: ' . get_bloginfo('html_type') . '; charset=' . get_bloginfo('charset'));
-
-			// K2 Hook
-			do_action('k2_dynamic_content');
-
-			// Initialize the Loop
-			query_posts( $_GET );
-		endif;
-	?>
-
-<div id="dynamictype" class="<?php k2_body_class(); ?>">
-
-<?php endif; ?>
-
-	<?php
-		// Get the asides category
-		$k2asidescategory = get_option('k2asidescategory');
-		$k2rollingarchives = get_option('k2rollingarchives');
-	?>
+	global $post;
+?>
 
 	<?php /* Top Navigation */ if ( '0' == $k2rollingarchives ) k2_navigation('nav-above'); ?>
 
@@ -146,7 +121,3 @@
 <?php endif; /* End Loop Init  */ ?>
 
 <?php /* Bottom Navigation */ if ( '0' == $k2rollingarchives) k2_navigation('nav-below'); ?> 
-
-<?php if ( isset( $_GET['k2dynamic'] ) ): ?>
-</div><!-- #dynamictype -->
-<?php endif; ?>
