@@ -666,6 +666,10 @@ abbr.entry-date {
 	margin-left: 60px;
 	}
 
+.template-image .hentry {
+	margin-left: 0;
+	}
+
 .attachment-icon {
 	position: absolute;
 	top: 0;
