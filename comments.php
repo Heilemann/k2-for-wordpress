@@ -177,19 +177,18 @@
 
 				<p>
 					<input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit','k2_domain'); ?>" />
+
 					<?php if ( function_exists('comment_id_fields') ): comment_id_fields(); else: ?>
 						<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
 					<?php endif; ?>
+
+					<?php do_action('comment_form', $post->ID); ?>
 				</p>
-				
-				<div class="clear"></div>
-
-				<?php do_action('comment_form', $post->ID); ?>
-
 			</form>
 
 		<?php endif; // If registration required and not logged in ?>
 	
+		<div class="clear"></div>
 	</div> <!-- .commentformbox -->
 
 	<?php endif; // Reply Form ?>
