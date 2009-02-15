@@ -162,6 +162,13 @@ class K2Options {
 
 		add_action("admin_head-$page", array('K2Options', 'admin_head'));
 		add_action("admin_print_scripts-$page", array('K2Options', 'admin_print_scripts'));
+
+		if ( function_exists('add_contextual_help') ) {
+			add_contextual_help($page,
+				'<a href="http://groups.google.com/group/k2-support/">' .  __('K2 Support Group', 'k2_domain') . '</a><br />' .
+				'<a href="http://code.google.com/p/kaytwo/issues/list">' .  __('K2 Bug Tracker', 'k2_domain') . '</a><br />'
+				);
+		}
 	}
 
 
