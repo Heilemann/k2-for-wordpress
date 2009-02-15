@@ -645,7 +645,7 @@ function k2_body_class( $print = true ) {
 	$c[] = 'lang-' . $locale;
 
 	// Separates classes with a single space, collates classes for BODY
-	$c = join( ' ', attribute_escape( apply_filters('body_class', $c) ) );
+	$c = join( ' ', apply_filters('body_class', $c) );
 
 	// And tada!
 	return $print ? print($c) : $c;
@@ -694,7 +694,7 @@ function k2_post_class( $post_count = 1, $post_asides = false, $print = true ) {
 	}
 
 	// Separates classes with a single space, collates classes for post DIV
-	$c = join( ' ', attribute_escape( apply_filters('post_class', $c) ) );
+	$c = join( ' ', apply_filters('post_class', $c) );
 
 	// And tada!
 	return $print ? print($c) : $c;
@@ -732,7 +732,7 @@ function k2_comment_class( $comment_count = 1, $print = true ) {
 	}
 
 	// Separates classes with a single space, collates classes for comment LI
-	$c = join( ' ', attribute_escape( apply_filters('comment_class', $c) ) );
+	$c = join( ' ', apply_filters('comment_class', $c) );
 
 	// Tada again!
 	return $print ? print($c) : $c;
