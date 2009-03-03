@@ -157,6 +157,7 @@ if ( ! function_exists('k2_entry_comments') ):
 	}
 endif;
 
+
 /**
  * Displays the current post time
  *
@@ -169,3 +170,20 @@ if ( ! function_exists('k2_entry_time') ):
 	}
 endif;
 
+
+/**
+ * Register our sidebar with widgets
+ *
+ * @since 1.0-RC8
+ *
+ */
+if ( ! function_exists('k2_register_sidebars') ):
+	function k2_register_sidebars() {
+		register_sidebars( 2, array(
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => '</div>',
+			'before_title' => '<h4>',
+			'after_title' => '</h4>'
+		) );
+	}
+endif;

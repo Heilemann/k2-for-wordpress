@@ -4,13 +4,34 @@
 
 class K2Header {
 	function init() {
-		$styleinfo = get_option('k2styleinfo');
-		$width = K2Header::get_header_width();
 
-		define('HEADER_IMAGE_HEIGHT', empty($styleinfo['header_height'])? K2_HEADER_HEIGHT : $styleinfo['header_height']);
-		define('HEADER_IMAGE_WIDTH', $width);
-		define('HEADER_TEXTCOLOR', empty($styleinfo['header_text_color'])? 'ffffff' : $styleinfo['header_text_color']);
-		define('HEADER_IMAGE', '%s/images/transparent.gif');
+		if ( K2_USING_STYLES ) {
+			$styleinfo = get_option('k2styleinfo');
+
+			if ( ! defined('HEADER_IMAGE_HEIGHT') )
+				define('HEADER_IMAGE_HEIGHT', empty($styleinfo['header_height'])? 200 : $styleinfo['header_height']);
+
+			if ( ! defined('HEADER_IMAGE_WIDTH') )
+				define('HEADER_IMAGE_WIDTH', K2Header::get_header_width() );
+
+			if ( ! defined('HEADER_TEXTCOLOR') )
+				define('HEADER_TEXTCOLOR', empty($styleinfo['header_text_color'])? 'ffffff' : $styleinfo['header_text_color']);
+
+			if ( ! defined('HEADER_IMAGE') )
+				define('HEADER_IMAGE', '%s/images/transparent.gif');
+		} else {
+			if ( ! defined('HEADER_IMAGE_HEIGHT') )
+				define( 'HEADER_IMAGE_HEIGHT', 200 );
+
+			if ( ! defined('HEADER_IMAGE_WIDTH') )
+				define( 'HEADER_IMAGE_WIDTH', 950 );
+
+			if ( ! defined('HEADER_TEXTCOLOR') )
+				define( 'HEADER_TEXTCOLOR', 'ffffff' );
+
+			if ( ! defined('HEADER_IMAGE') )
+				define( 'HEADER_IMAGE', '%s/images/transparent.gif' );
+		}
 
 		// Only load Custom Image Header if GD is installed
 		if ( extension_loaded('gd') && function_exists('gd_info') ) {

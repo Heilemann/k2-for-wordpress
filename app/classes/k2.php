@@ -63,13 +63,7 @@ class K2 {
 		// Register our scripts with script loader
 		K2::register_scripts();
 
-		// Register our sidebar with widgets
-		register_sidebars( K2_SIDEBARS, array(
-			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h4>',
-			'after_title' => '</h4>'
-		) );
+		k2_register_sidebars();
 
 		// Load the current style's functions.php if it is readable
 		$style_functions = dirname( K2_STYLES_DIR . '/' . get_option('k2style') ) . '/functions.php';

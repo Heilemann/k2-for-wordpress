@@ -201,8 +201,7 @@
 				<p class="description">
 				<?php
 					printf( __('The current header size is <strong>%1$s px by %2$s px</strong>.', 'k2_domain'),
-						K2Header::get_header_width(),
-						empty($style_info['header_height'])? K2_HEADER_HEIGHT : $style_info['header_height']
+						HEADER_IMAGE_WIDTH, HEADER_IMAGE_HEIGHT
 					);
 
 					if ( extension_loaded('gd') and function_exists('gd_info') ) {
