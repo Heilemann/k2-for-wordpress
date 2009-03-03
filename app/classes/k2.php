@@ -63,8 +63,6 @@ class K2 {
 		// Register our scripts with script loader
 		K2::register_scripts();
 
-		k2_register_sidebars();
-
 		// Load the current style's functions.php if it is readable
 		$style_functions = dirname( K2_STYLES_DIR . '/' . get_option('k2style') ) . '/functions.php';
 		if ( K2_USING_STYLES and is_readable($style_functions) )
@@ -72,6 +70,9 @@ class K2 {
 
 		// Finally load pluggable functions
 		require_once(TEMPLATEPATH . '/app/includes/pluggable.php');
+
+		// Register our sidebars with widgets
+		k2_register_sidebars();
 
 		// There may be some things we need to do before K2 is initialised
 		// Let's do them now
