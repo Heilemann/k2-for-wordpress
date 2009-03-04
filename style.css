@@ -29,6 +29,42 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	padding: 0;
 }
 
+/*
+.icon-attach { background-position: 0 -20px; } 
+.icon-book_previous { background-position: 0 -56px; } 
+.icon-anchor { background-position: 0 -92px; } 
+.icon-exclamation { background-position: 0 -128px; } 
+.icon-disk { background-position: 0 -164px; } 
+.icon-star { background-position: 0 -200px; } 
+.icon-house { background-position: 0 -236px; } 
+.icon-bug { background-position: 0 -272px; } 
+.icon-control_end_blue { background-position: 0 -308px; } 
+.icon-help { background-position: 0 -344px; } 
+.icon-cog { background-position: 0 -380px; } 
+.icon-arrow_refresh { background-position: 0 -416px; } 
+.icon-control_start { background-position: 0 -452px; } 
+.icon-book_next { background-position: 0 -488px; } 
+.icon-time { background-position: 0 -524px; } 
+.icon-magnifier { background-position: 0 -560px; } 
+.icon-pencil { background-position: 0 -596px; } 
+.icon-comments { background-position: 0 -632px; } 
+.icon-add { background-position: 0 -668px; } 
+.icon-tag_blue { background-position: 0 -704px; } 
+.icon-calendar { background-position: 0 -740px; } 
+.icon-accept { background-position: 0 -776px; } 
+.icon-information { background-position: 0 -812px; } 
+.icon-tick { background-position: 0 -848px; } 
+.icon-control_start_blue { background-position: 0 -884px; } 
+.icon-comment { background-position: 0 -920px; } 
+.icon-stop { background-position: 0 -956px; } 
+.icon-feed { background-position: 0 -992px; } 
+.icon-heart { background-position: 0 -1028px; } 
+.icon-comment_edit { background-position: 0 -1064px; } 
+.icon-page { background-position: 0 -1100px; } 
+.icon-reset { background-position: 0 -1136px; } 
+.icon-control_end { background-position: 0 -1169px; }
+*/
+
 /*- Typography */
 
 body {
@@ -270,19 +306,19 @@ h2 {
 	}
 
 .page-head {
-	font-size: 2.5em;
 	margin: 20px 0;
 	text-align: center;
-	font-weight: bold;
 	}
 
-.archivepages {
+.page-head h1 {
+	font-size: 2.5em;
+	}
+
+.page-head h2 {
 	color: #999;
-	display: block;
-	font-size: .45em;
+	font-size: 2.0em;
 	font-weight: normal;
 	text-transform: lowercase;
-	margin-top: 2px;
 	}
 
 .secondary h4 { /* Secondary H4 is sidebar headlines */
@@ -401,7 +437,7 @@ body.page .entry-content h4 {
 	border: none;
 	padding: 2px;
 	padding-right: 20px;
-	background: url('images/feed.png') right center no-repeat;
+	background: url('images/icons.png') 0 -992px no-repeat;
 	height: 16px;
 	position: absolute;
 	top: 0;
@@ -473,7 +509,7 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	}
 
 .entry-head .entry-meta {
-	background: url('images/time.png') left top no-repeat;
+	background: url('images/icons.png') 0 -524px no-repeat;
 	min-height: 16px;
 	padding-left: 20px;
 	}
@@ -493,7 +529,7 @@ abbr.entry-date {
 
 .entry-tags {
 	padding: 2px 0px 2px 20px;
-	background: url('images/tag_blue.png') left center no-repeat;
+	background: url('images/icons.png') 0 -704px no-repeat;
 	}
 
 .entry-head .entry-tags {
@@ -526,13 +562,13 @@ abbr.entry-date {
 	}
 
 .entry-edit a {
-	background-image: url('images/pencil.png');
+	background: url('images/icons.png') 0px -596px no-repeat;
 	}
 
 .comment-edit a {
 	padding: 4px 8px 4px 28px;
 	margin-left: 10px;
-	background: url('images/comment_edit.png') 8px center no-repeat;
+	background: url('images/icons.png') 0 -1064px no-repeat;
 	}
 
 .comment-reply {
@@ -540,17 +576,17 @@ abbr.entry-date {
 	}
 
 .comment-reply a {
-	background-image: url('images/comment.png');
+	background: url('images/icons.png') 0 -920px no-repeat;
 	}
 
 .commentslink {
 	padding: 2px 0 2px 20px;
-	background: url('images/comment.png') left center no-repeat;
+	background: url('images/icons.png') 0 -632px no-repeat;
 	}
 
 .quoter_comment {
 	padding: 2px 0 2px 20px;
-	background: url('images/comment.png') left center no-repeat;
+	background: url('images/icons.png') 0 -632px no-repeat;
 	margin-left: 5px;
 	}
 
@@ -712,14 +748,14 @@ abbr.entry-date {
 /*- Comments */
 
 .commentsrsslink {
-	background: url('images/feed.png') left top no-repeat;
+	background: url('images/icons.png') 0 -992px no-repeat;
 	padding: 2px 0 2px 20px;
 	margin-right: 10px;
 	height: 16px;
 	}
 
 .trackbacklink {
-	background: url('images/arrow_refresh.png') left top no-repeat;
+	background: url('images/icons.png') 0 -416px no-repeat;
 	padding: 2px 0 2px 20px;
 	height: 16px;
 	}
@@ -773,7 +809,7 @@ abbr.entry-date {
 
 #commentlist li .comment-meta {
 	padding: 2px 0 2px 20px;
-	background: url('images/time.png') left center no-repeat;
+	background: url('images/icons.png') 0 -524px no-repeat;
 	display: block;
 	}
 
@@ -1278,7 +1314,7 @@ input[type=text], textarea {
 	right: 0px;
 	height: 19px;
 	width: 16px;
-	background: url('images/reset-fff.png') center center no-repeat;
+	background: url('images/icons.png') 0 -1136px no-repeat;
 	}
 
 #searchload {
@@ -1363,7 +1399,7 @@ label.overlabel-apply {
 #rollhome {
 	display: none;
 	left: 54px;
-	background: url('images/house.png') no-repeat center center;
+	background: url('images/icons.png') 0 -236px no-repeat;
 	width: 16px;
 	height: 16px;
 	}
@@ -1613,6 +1649,10 @@ body.smartposition #trimmertrim, body.smartposition #trimmeruntrim {
 
 body.onepageonly #dynamic-content { /* For the rare case of having only one page of content on the frontpage */
 	padding-top: 0;
+	}
+
+#dynamic-content .active .navigation {
+	display: none;
 	}
 
 /* CSS Beyond this point is for various supported plugins and not the 'core' K2 template */

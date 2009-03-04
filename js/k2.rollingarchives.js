@@ -11,6 +11,8 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 	this.query = query;
 	this.pageDates = pagedates;
 
+	jQuery('#rollingcontent').addClass('active');
+
 	if ( this.validatePage(pagenumber) ) {
 		jQuery('#rollingarchives').show();
 

@@ -24,56 +24,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
 
 <head profile="http://gmpg.org/xfn/11">
-	<title><?php
-	
-	// Page or Single Post
-	if ( ( is_page() and !is_front_page() and !is_home() ) or is_single() ) {
-		the_title();
-
-	// Category Archive
-	} elseif ( is_category() ) {
-		printf( __('Category Archive for &lsquo;%s&rsquo;','k2_domain'), single_cat_title('', false) );
-
-	// Tag Archive
-	} elseif ( function_exists('is_tag') and function_exists('single_tag_title') and is_tag() ) {
-		printf( __('Tag Archive for &lsquo;%s&rsquo;','k2_domain'), single_tag_title('', false) );
-
-	// General Archive
-	} elseif ( is_archive() ) {
-		printf( __('%s Archive','k2_domain'), wp_title('', false) );
-
-	// Search Results
-	} elseif ( is_search() ) {
-		printf( __('Search Results for &lsquo;%s&rsquo;','k2_domain'), attribute_escape(get_search_query()) );
-	}
-
-	// Insert separator for the titles above
-	if ( !is_front_page() and !is_home() and !is_404() ) {
-		_e(' at ','k2_domain');
-	}
-	
-	// Finally the blog name
-	bloginfo('name');
-
-	?></title>
 	<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
-	<meta name="generator" content="WordPress <?php bloginfo('version'); ?>" />
 	<meta name="template" content="K2 <?php k2info('version'); ?>" />
- 	<meta name="description" content="<?php bloginfo('description'); ?>" />
-  
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo get_template_directory_uri(); ?>/style.css" />
 
-	<?php if ( ! K2_USING_STYLES ): /* WP Theme Stylesheet */ ?>
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo get_stylesheet_uri(); ?>" />
+	<title><?php wp_title('&laquo;', true, 'right'); ?> <?php bloginfo('name'); ?></title>
+
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/style.css" />
+
+	<?php if ( ! K2_USING_STYLES ): /* Child Themes */ ?>
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
 	<?php elseif ( get_option('k2style') != '' ): /* K2 Styles */ ?>
 	<link rel="stylesheet" type="text/css" href="<?php k2info('style'); ?>" />
 	<?php endif; ?>
 
-	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="<?php bloginfo('rss2_url'); ?>" />
-	<link rel="alternate" type="text/xml" title="RSS .92" href="<?php bloginfo('rss_url'); ?>" />
-	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="<?php bloginfo('atom_url'); ?>" />
+	<link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
+	<link rel="alternate" type="application/atom+xml" title="<?php bloginfo('name'); ?> Atom Feed" href="<?php bloginfo('atom_url'); ?>" />
 
-	<?php if ( is_single() or is_page() ): ?>
+	<?php if ( is_singular() ): ?>
 	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 	<?php endif; ?>
 
@@ -134,11 +101,7 @@
 
 	<div id="header">
 
-		<?php $block = ( is_front_page() ? 'h1' : 'div' ); ?>
-		<<?php echo $block; ?> class="blog-title"><a href="<?php echo get_option('home'); ?>/" accesskey="1"><?php bloginfo('name'); ?></a></<?php echo $block; ?>>
-		<p class="description"><?php bloginfo('description'); ?></p>
-
-		<?php k2_header_menu(); // located at /app/includes/pluggable.php ?>
+		<?php locate_template( array('blocks/k2-header.php'), true ); ?>
 
 		<?php /* K2 Hook */ do_action('template_header'); ?>
 

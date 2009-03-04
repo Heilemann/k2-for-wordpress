@@ -2,109 +2,74 @@
 	// This is the loop, which fetches entries from your database.
 	// It is a very delicate piece of machinery. Be gentle!
 
-	// Get the asides category
-	$k2asidescategory = get_option('k2asidescategory');
-	$k2rollingarchives = get_option('k2rollingarchives');
+	// array for loading loop templates
+	$templates = array();
+	$page_head = '';
+	
+	if ( is_home() ) {
+		$templates[] = 'blocks/k2-loop-home.php';
 
-	global $post;
+	} elseif ( is_archive() ) {
+		if ( is_date() ) {
+			the_post();
+
+			if ( is_day() ) {
+				$templates[] = 'blocks/k2-loop-archive-day.php';
+				$page_head = sprintf( __('Daily Archive for %s','k2_domain'), get_the_time( __('F jS, Y','k2_domain') ) );
+
+			} elseif ( is_month() ) {
+				$templates[] = 'blocks/k2-loop-archive-month.php';
+				$page_head = sprintf( __('Monthly Archive for %s','k2_domain'), get_the_time( __('F, Y','k2_domain') ) );
+
+			} elseif ( is_year() ) {
+				$templates[] = 'blocks/k2-loop-archive-year.php';
+				$page_head = sprintf( __('Yearly Archive for %s','k2_domain'), get_the_time( __('Y','k2_domain') ) );
+			}
+
+			$templates[] = 'blocks/k2-loop-archive-date.php';
+
+			rewind_posts();
+		} elseif ( is_category() ) {
+			$templates[] = 'blocks/k2-loop-category-' . absint( get_query_var('cat') ) . '.php';
+			$templates[] = 'blocks/k2-loop-category.php';
+			$page_head = sprintf( __('Archive for the \'%s\' Category','k2_domain'), single_cat_title('', false) );
+			
+		} elseif ( is_tag() ) {
+			$templates[] = 'blocks/k2-loop-tag-' . get_query_var('tag') . '.php';
+			$templates[] = 'blocks/k2-loop-tag.php';
+			$page_head = sprintf( __('Tag Archive for \'%s\'','k2_domain'), single_tag_title('', false) );
+			
+		} elseif ( is_author() ) {
+			$templates[] = 'blocks/k2-loop-author.php';
+			$page_head = sprintf( __('Author Archive for %s','k2_domain'), get_author_name( get_query_var('author') ) );
+		}
+		
+		$templates[] = 'blocks/k2-loop-archive.php';
+	} elseif ( is_search() ) {
+		$templates[] = 'blocks/k2-loop-search.php';
+		$page_head = sprintf( __('Search Results for \'%s\'','k2_domain'), attribute_escape( get_search_query() ) );
+	}
+
+	$templates[] = 'blocks/k2-loop.php';
 ?>
 
-	<?php /* Top Navigation */ if ( '0' == $k2rollingarchives ) k2_navigation('nav-above'); ?>
+	<?php /* Top Navigation */ k2_navigation('nav-above'); ?>
 
-	<?php /* Headlines for archives */ if ( ! is_home() ): ?>
-		<h1 class="page-head">
-		<?php
-			// Load the post for date archive titles
-			if ( is_date() ): the_post(); endif;
+	<?php if ( ! empty($page_head) ): ?>
+		<div class="page-head">
+			<h1><?php echo $page_head; ?></h1>
 
-			// Figure out what kind of page is being shown
-			if ( is_category() ):
-				if ( get_query_var('cat') != $k2asidescategory ):
-					printf( __('Archive for the \'%s\' Category','k2_domain'), single_cat_title('', false) );
-				else:
-					echo single_cat_title();
-				endif;
-
-			elseif ( is_day() ):
-				printf( __('Daily Archive for %s','k2_domain'), get_the_time( __('F jS, Y','k2_domain') ) );
-
-			elseif ( is_month() ):
-				printf( __('Monthly Archive for %s','k2_domain'), get_the_time( __('F, Y','k2_domain') ) );
-
-			elseif ( is_year() ):
-				printf( __('Yearly Archive for %s','k2_domain'), get_the_time( __('Y','k2_domain') ) );
-
-			elseif ( is_search() ):
-				printf( __('Search Results for \'%s\'','k2_domain'), attribute_escape( get_search_query() ) );
-
-			elseif ( is_tag() ):
-				printf( __('Tag Archive for \'%s\'','k2_domain'), single_tag_title('', false) );
-			
-			elseif ( is_author() ):
-				printf( __('Author Archive for %s','k2_domain'), get_author_name( get_query_var('author') ) );
-
-			elseif ( is_paged() and ( intval(get_query_var('paged')) > 1) ):
-				 _e('Archive','k2_domain');
-			endif;
-
-			if ( ( intval( get_query_var('paged') ) > 1 ) and ( '0' == $k2rollingarchives ) ):
-				printf( '<span class="archivepages">' . __('Page %1$s of %2$s', 'k2_domain') . '</span>', intval( get_query_var('paged')), $wp_query->max_num_pages);
-			endif;
-
-			// Reset the post for date archive titles
-			if ( is_date() ): rewind_posts(); endif;
-
-		?>
-		</h1>
+			<?php if ( is_paged() ): ?>
+				<h2 class="archivepages"><?php printf( __('Page %1$s of %2$s', 'k2_domain'), intval( get_query_var('paged')), $wp_query->max_num_pages); ?></h2>
+			<?php endif; ?>
+		</div>
 	<?php endif; ?>
 
-	<?php 
+	<?php /* Check if there are posts */ if ( have_posts() ): ?>
 
-	/* Check if there are posts */
-	if ( have_posts() ):
-		/* Post index for semantic classes */
-		$post_index = 1;
-
-		/* Start the loop */
-		while ( have_posts() ): the_post(); ?>
-
-			<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<div class="entry-head">
-					<h3 class="entry-title">
-						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
-					</h3>
-
-					<?php /* Edit Link */ edit_post_link( __('Edit','k2_domain'), '<span class="entry-edit">', '</span>' ); ?>
-
-					<?php if ( 'post' == $post->post_type ): ?>
-					<div class="entry-meta">
-						<?php k2_entry_meta(1); ?>
-					</div> <!-- .entry-meta -->
-					<?php endif; ?>
-
-					<?php /* K2 Hook */ do_action('template_entry_head'); ?>
-				</div><!-- .entry-head -->
-
-				<div class="entry-content">
-					<?php k2_entry_content(); ?>
-				</div><!-- .entry-content -->
-
-				<div class="entry-foot">
-					<?php wp_link_pages( array('before' => '<div class="entry-pages"><span>' . __('Pages:','k2_domain') . '</span>', 'after' => '</div>' ) ); ?>
-
-					<?php if ( 'post' == $post->post_type ): ?>
-					<div class="entry-meta">
-						<?php k2_entry_meta(2); ?>
-					</div><!-- .entry-meta -->
-					<?php endif; ?>
-
-					<?php /* K2 Hook */ do_action('template_entry_foot'); ?>
-				</div><!-- .entry-foot -->
-			</div><!-- #post-ID -->
-
-		<?php endwhile; /* End The Loop */ ?>
+		<?php /* Load the loop templates */ locate_template( $templates, true ); ?>
 	
-<?php /* If there is nothing to loop */ else: define('K2_NOT_FOUND', true); ?>
+	<?php /* If there is nothing to loop */ else: define('K2_NOT_FOUND', true); ?>
 
 	<div class="hentry four04">
 
@@ -118,6 +83,6 @@
 
 	</div><!-- .hentry .four04 -->
 
-<?php endif; /* End Loop Init  */ ?>
+	<?php endif; /* End Loop Init  */ ?>
 
-<?php /* Bottom Navigation */ if ( '0' == $k2rollingarchives) k2_navigation('nav-below'); ?> 
+	<?php /* Bottom Navigation */ k2_navigation('nav-below'); ?> 

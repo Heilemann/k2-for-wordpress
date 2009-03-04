@@ -55,19 +55,6 @@ endif;
 
 
 /**
- * Displays the current post content
- *
- * @since 1.0-RC8
- *
- */
-if ( ! function_exists('k2_entry_content') ):
-	function k2_entry_content() {
-		the_content( sprintf( __('Continue reading \'%s\'', 'k2_domain'), the_title('', '', false) ) );
-	}
-endif;
-
-
-/**
  * Displays the current post date, if time since is installed, it will use that instead.
  * Formatted for hAtom microformat.
  *

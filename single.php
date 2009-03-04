@@ -29,7 +29,7 @@
 				</div><!-- .entry-head -->
 
 				<div class="entry-content">
-					<?php k2_entry_content(); ?>
+					<?php the_content( sprintf( __('Continue reading \'%s\'', 'k2_domain'), the_title('', '', false) ) ); ?>
 				</div><!-- .entry-content -->
 
 				<div class="entry-foot">

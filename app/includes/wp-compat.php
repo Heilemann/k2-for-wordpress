@@ -2,6 +2,41 @@
 // WordPress Compatibility Functions
 
 /**
+ * Retrieve the name of the highest priority template file that exists.
+ *
+ * Searches in the STYLESHEETPATH before TEMPLATEPATH so that themes which
+ * inherit from a parent theme can just overload one file.
+ *
+ * @since 2.7.0
+ *
+ * @param array $template_names Array of template files to search for in priority order.
+ * @param bool $load If true the template file will be loaded if it is found.
+ * @return string The template filename if one is located.
+ */
+if ( ! function_exists('locate_template') ):
+	function locate_template($template_names, $load = false) {
+		if (!is_array($template_names))
+			return '';
+
+		$located = '';
+		foreach($template_names as $template_name) {
+			if ( file_exists(STYLESHEETPATH . '/' . $template_name)) {
+				$located = STYLESHEETPATH . '/' . $template_name;
+				break;
+			} else if ( file_exists(TEMPLATEPATH . '/' . $template_name) ) {
+				$located = TEMPLATEPATH . '/' . $template_name;
+				break;
+			}
+		}
+
+		if ($load && '' != $located)
+			load_template($located);
+
+		return $located;
+	}
+endif;
+
+/**
  * Display the classes for the post div.
  *
  * @since 2.7.0
