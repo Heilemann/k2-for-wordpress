@@ -1,0 +1,100 @@
+/*
+Theme Name:		K2 960
+Theme URI:		http://getk2.com
+Description:	<strong><a href="themes.php?page=k2-options">Configure K2</a></strong> or visit the <a href="http://getk2.com/forum/">support forums</a>, <a href="http://k2.stikipad.com/">the wiki</a> or <a href="http://code.google.com/p/kaytwo/issues/list">the bug tracker</a>. K2 was developed by <a href="http://binarybonsai.com/">Michael</a>, <a href="http://chrisjdavis.org/">Chris</a>, <a href="http://zeo.unic.net.my/">Zeo</a>, <a href="http://stevelam.org/">Steve</a> and Ben, and is licensed under the <a href="http://www.opensource.org/licenses/gpl-license.php">GPL</a>.
+Version:		1.0-RC8
+Author:			Various Artists
+Author URI:		http://getk2.com/
+Template:		k2
+Tags:			ajax, blue, custom header, dynamic columns, fixed width, multiple columns, styles, widgets
+
+$Revision: 751 $
+*/
+
+@import url('css/960.css');
+
+body.columns-one #page,
+body.columns-two #page,
+body.columns-three #page {
+	width: 1000px;
+	}
+
+#page .content {
+	padding: 0 20px;
+	float: left;
+	clear: both;
+	}
+
+#page #primary {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 0;
+	}
+
+#page .secondary {
+	padding: 0;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	}
+
+#bottombars {
+	border-top: 4px solid #666;
+	color: #999;
+	background: #333;
+	float: left;
+	clear: both;
+	padding: 20px 20px 10px;
+	}
+
+#bottombars div {
+	margin-top: 0;
+	}
+
+#bottombars h4 {
+	color: #fff;
+	}
+
+/*
+#sidebar-2-bg {
+    float:left;
+    width:100%;
+    background:green;
+    overflow:hidden;
+    position:relative;
+}
+#sidebar-1-bg {
+    float:left;
+    width:100%;
+    background:yellow;
+    position:relative;
+    right:240px;
+}
+#primary-bg {
+    float:left;
+    width:100%;
+    background:red;
+    position:relative;
+    right:240px;
+}
+
+#primary {
+    float:left;
+    position:relative;
+    left:480px;
+    overflow:hidden;
+}
+
+#sidebar-1 {
+    float:left;
+    position:relative;
+    left:480px;
+    overflow:hidden;
+}
+
+#sidebar-2 {
+    float:left;
+    position:relative;
+    left:480px;
+    overflow:hidden;
+}
+*/
