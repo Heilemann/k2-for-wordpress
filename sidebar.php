@@ -165,11 +165,9 @@
 <?php endif; /* End Widgets/SBM check */ ?>
 </div> <!-- #sidebar-1 -->
 
-<?php for ( $i = 2; $i <= K2_SIDEBARS; $i++ ): ?>
 <hr />
-<div id="sidebar-<?php echo $i; ?>" class="secondary">
-<?php dynamic_sidebar($i); ?>
-</div> <!-- #sidebar-<?php echo $i; ?> -->
-<?php endfor; ?>
+<div id="sidebar-2" class="secondary">
+	<?php dynamic_sidebar(2); ?>
+</div><!-- #sidebar-2 -->
 
 <div class="clear"></div>
