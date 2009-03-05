@@ -33,21 +33,6 @@ function k2_navigation($id = 'nav-above') {
 }
 
 
-
-function k2_style_footer() {
-	if ( get_k2info('style_footer') != '' ):
-	?>
-	<p class="footerstyledwith">
-		<?php k2info('style_footer'); ?>
-	</p>
-<?php
-	endif;
-}
-
-add_action('template_footer', 'k2_style_footer');
-
-
-
 function k2_asides_permalink($content) {
 	if ( in_category( get_option('k2asidescategory') ) and ! is_singular() )
 		$content .= '<a href="' . get_permalink() . '" rel="bookmark" class="asides-permalink" title="' . k2_permalink_title(false) . '">(' . get_comments_number() . ')</a>';
