@@ -14,42 +14,60 @@ defined( 'K2_CURRENT' ) or die ( 'Error: This file can not be loaded directly.' 
 
 
 /**
- * Displays the tabbed header menu
+ * Displays the current post meta.
  *
  * @since 1.0-RC8
  *
+ * @param integer $num Optional. Meta position, 1 for top, 2 for bottom
+ *
  */
-if ( ! function_exists('k2_header_menu') ):
-	function k2_header_menu() {
+if ( ! function_exists('k2_entry_meta') ):
+	function k2_entry_meta($num = 1) {
+		$num = (int) $num;
+		if ( $num < 1 ) $num = 1;
 
-		// arguments for wp_list_pages
-		$list_args = 'sort_column=menu_order&depth=1&title_li=';
+		$meta_format = apply_filters( 'k2_entry_meta_format', get_option('k2entrymeta' . $num) );
 
-		// if a page is used as a front page, exclude it from page list
-		if ( get_option('show_on_front') == 'page' )
-			$list_args .= '&exclude=' . get_option('page_on_front');
-	?>
+		// No keywords to replace
+		if ( strpos($meta_format, '%' ) === false ) {
+			echo $meta_format;
+		} else {
 
-	<ul class="menu">
-		<li class="<?php if ( is_front_page() && !is_paged() ): ?>current_page_item<?php else: ?>page_item<?php endif; ?>">
-			<a href="<?php echo get_option('home'); ?>/" title="<?php echo attribute_escape( get_option('k2blogornoblog') ); ?>">
-				<?php echo get_option('k2blogornoblog'); ?>
-			</a>
-		</li>
+			// separate the %keywords%
+			$meta_array = preg_split('/(%.+?%)/', $meta_format, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-		<?php /* K2 Hook - do not remove */ do_action('template_header_menu'); ?>
+			// parse through the keywords
+			foreach ($meta_array as $key => $str) {
+				switch ($str) {
+					case '%author%':
+						$meta_array[$key] = k2_entry_author();
+						break;
 
-		<?php
-			// List pages sorted by menu order
-			wp_list_pages( $list_args );
-		?>
+					case '%categories%':
+						$meta_array[$key] = k2_entry_categories();
+						break;
 
-		<?php
-			// Display an Register tab if registration is enabled or an Admin tab if user is logged in
-			wp_register('<li class="admintab">','</li>');
-		?>
-	</ul><!-- .menu -->
-<?php
+					case '%comments%':
+						$meta_array[$key] = k2_entry_comments();
+						break;
+
+					case '%date%':
+						$meta_array[$key] = k2_entry_date();
+						break;
+
+					case '%time%':
+						$meta_array[$key] = k2_entry_time();
+						break;
+
+					case '%tags%':
+						$meta_array[$key] = k2_entry_tags();
+						break;
+				}
+			}
+
+			// output the result
+			echo implode('', $meta_array);
+		}
 	}
 endif;
 

@@ -53,55 +53,6 @@ function k2_permalink_title($echo = true) {
 }
 
 
-function k2_entry_meta($num = 1) {
-	$num = (int) $num;
-	if ( $num < 1 ) $num = 1;
-
-	$meta_format = apply_filters( 'k2_entry_meta_format', get_option('k2entrymeta' . $num) );
-
-	// No keywords to replace
-	if ( strpos($meta_format, '%' ) === false ) {
-		echo $meta_format;
-	} else {
-
-		// separate the %keywords%
-		$meta_array = preg_split('/(%.+?%)/', $meta_format, -1, PREG_SPLIT_DELIM_CAPTURE);
-
-		// parse through the keywords
-		foreach ($meta_array as $key => $str) {
-			switch ($str) {
-				case '%author%':
-					$meta_array[$key] = k2_entry_author();
-					break;
-
-				case '%categories%':
-					$meta_array[$key] = k2_entry_categories();
-					break;
-
-				case '%comments%':
-					$meta_array[$key] = k2_entry_comments();
-					break;
-
-				case '%date%':
-					$meta_array[$key] = k2_entry_date();
-					break;
-
-				case '%time%':
-					$meta_array[$key] = k2_entry_time();
-					break;
-
-				case '%tags%':
-					$meta_array[$key] = k2_entry_tags();
-					break;
-			}
-		}
-
-		// output the result
-		echo implode('', $meta_array);
-	}
-}
-
-
 /* By Mark Jaquith, http://txfx.net */
 function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' and ') { 
 	$categories = get_the_category(); 
