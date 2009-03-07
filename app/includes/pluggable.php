@@ -192,3 +192,15 @@ if ( ! function_exists('k2_register_sidebars') ):
 		) );
 	}
 endif;
+
+/**
+ *	Provide page options to wp_get_pages in blocks/k2-header.php
+ *
+ *	@since 1.0-RC8
+ */
+if ( ! function_exists('k2_get_page_list_args') ):
+function k2_get_page_list_args() {
+	$list_args = 'sort_column=menu_order&depth=1&title_li=';
+	return $list_args;
+}
+endif;

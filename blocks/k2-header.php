@@ -12,7 +12,7 @@
 $block = ( is_front_page() ? 'h1' : 'div' );
 
 // arguments for wp_list_pages
-$list_args = 'sort_column=menu_order&depth=1&title_li=';
+$list_args = k2_get_page_list_args(); // this function is pluggable
 
 // if a page is used as a front page, exclude it from page list
 if ( get_option('show_on_front') == 'page' )
