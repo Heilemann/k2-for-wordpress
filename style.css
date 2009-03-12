@@ -437,7 +437,7 @@ body.page .entry-content h4 {
 	border: none;
 	padding: 2px;
 	padding-right: 20px;
-	background: url('images/icons.png') 0 -992px no-repeat;
+	background: url('images/feed.png') right center no-repeat;
 	height: 16px;
 	position: absolute;
 	top: 0;
@@ -509,7 +509,7 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	}
 
 .entry-head .entry-meta {
-	background: url('images/icons.png') 0 -524px no-repeat;
+	background: url('images/time.png') left top no-repeat;
 	min-height: 16px;
 	padding-left: 20px;
 	}
@@ -529,7 +529,7 @@ abbr.entry-date {
 
 .entry-tags {
 	padding: 2px 0px 2px 20px;
-	background: url('images/icons.png') 0 -704px no-repeat;
+	background: url('images/tag_blue.png') left center no-repeat;
 	}
 
 .entry-head .entry-tags {
@@ -562,13 +562,13 @@ abbr.entry-date {
 	}
 
 .entry-edit a {
-	background: url('images/icons.png') 0px -596px no-repeat;
+	background-image: url('images/pencil.png');
 	}
 
 .comment-edit a {
 	padding: 4px 8px 4px 28px;
 	margin-left: 10px;
-	background: url('images/icons.png') 0 -1064px no-repeat;
+	background: url('images/comment_edit.png') 8px center no-repeat;
 	}
 
 .comment-reply {
@@ -576,17 +576,17 @@ abbr.entry-date {
 	}
 
 .comment-reply a {
-	background: url('images/icons.png') 0 -920px no-repeat;
+	background-image: url('images/comment.png');
 	}
 
 .commentslink {
 	padding: 2px 0 2px 20px;
-	background: url('images/icons.png') 0 -632px no-repeat;
+	background: url('images/comment.png') left center no-repeat;
 	}
 
 .quoter_comment {
 	padding: 2px 0 2px 20px;
-	background: url('images/icons.png') 0 -632px no-repeat;
+	background: url('images/comment.png') left center no-repeat;
 	margin-left: 5px;
 	}
 
@@ -748,14 +748,14 @@ abbr.entry-date {
 /*- Comments */
 
 .commentsrsslink {
-	background: url('images/icons.png') 0 -992px no-repeat;
+	background: url('images/feed.png') left top no-repeat;
 	padding: 2px 0 2px 20px;
 	margin-right: 10px;
 	height: 16px;
 	}
 
 .trackbacklink {
-	background: url('images/icons.png') 0 -416px no-repeat;
+	background: url('images/arrow_refresh.png') left top no-repeat;
 	padding: 2px 0 2px 20px;
 	height: 16px;
 	}
@@ -809,7 +809,7 @@ abbr.entry-date {
 
 #commentlist li .comment-meta {
 	padding: 2px 0 2px 20px;
-	background: url('images/icons.png') 0 -524px no-repeat;
+	background: url('images/time.png') left center no-repeat;
 	display: block;
 	}
 
@@ -1314,7 +1314,7 @@ input[type=text], textarea {
 	right: 0px;
 	height: 19px;
 	width: 16px;
-	background: url('images/icons.png') 0 -1136px no-repeat;
+	background: url('images/reset-fff.png') center center no-repeat;
 	}
 
 #searchload {
@@ -1399,7 +1399,7 @@ label.overlabel-apply {
 #rollhome {
 	display: none;
 	left: 54px;
-	background: url('images/icons.png') 0 -236px no-repeat;
+	background: url('images/house.png') no-repeat center center;
 	width: 16px;
 	height: 16px;
 	}
