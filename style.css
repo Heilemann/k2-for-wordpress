@@ -29,42 +29,6 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	padding: 0;
 }
 
-/*
-.icon-attach { background-position: 0 -20px; } 
-.icon-book_previous { background-position: 0 -56px; } 
-.icon-anchor { background-position: 0 -92px; } 
-.icon-exclamation { background-position: 0 -128px; } 
-.icon-disk { background-position: 0 -164px; } 
-.icon-star { background-position: 0 -200px; } 
-.icon-house { background-position: 0 -236px; } 
-.icon-bug { background-position: 0 -272px; } 
-.icon-control_end_blue { background-position: 0 -308px; } 
-.icon-help { background-position: 0 -344px; } 
-.icon-cog { background-position: 0 -380px; } 
-.icon-arrow_refresh { background-position: 0 -416px; } 
-.icon-control_start { background-position: 0 -452px; } 
-.icon-book_next { background-position: 0 -488px; } 
-.icon-time { background-position: 0 -524px; } 
-.icon-magnifier { background-position: 0 -560px; } 
-.icon-pencil { background-position: 0 -596px; } 
-.icon-comments { background-position: 0 -632px; } 
-.icon-add { background-position: 0 -668px; } 
-.icon-tag_blue { background-position: 0 -704px; } 
-.icon-calendar { background-position: 0 -740px; } 
-.icon-accept { background-position: 0 -776px; } 
-.icon-information { background-position: 0 -812px; } 
-.icon-tick { background-position: 0 -848px; } 
-.icon-control_start_blue { background-position: 0 -884px; } 
-.icon-comment { background-position: 0 -920px; } 
-.icon-stop { background-position: 0 -956px; } 
-.icon-feed { background-position: 0 -992px; } 
-.icon-heart { background-position: 0 -1028px; } 
-.icon-comment_edit { background-position: 0 -1064px; } 
-.icon-page { background-position: 0 -1100px; } 
-.icon-reset { background-position: 0 -1136px; } 
-.icon-control_end { background-position: 0 -1169px; }
-*/
-
 /*- Typography */
 
 body {
@@ -529,7 +493,7 @@ abbr.entry-date {
 
 .entry-tags {
 	padding: 2px 0px 2px 20px;
-	background: url('images/tag_blue.png') left center no-repeat;
+	background: url('images/tag_blue.png') left 2px no-repeat;
 	}
 
 .entry-head .entry-tags {
