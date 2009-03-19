@@ -1,5 +1,3 @@
-<?php if ( ! isset($_GET['k2dynamic']) ) { ?>
-
 <?php get_header(); ?>
 
 <div class="content">
@@ -8,12 +6,13 @@
 	<div id="primary">
 		<div id="notices"></div>
 
+		<a name="startcontent" id="startcontent"></a>
+
 		<div id="current-content" class="hfeed">
-<?php } ?>
 			<div class="hentry four04">
 
-				<div class="page-head">
-					<h2><?php _e('Error 404 - Not Found','k2_domain'); ?></h2>
+				<div class="entry-head">
+					<h1 class="entry-title"><?php _e('Error 404 - Not Found','k2_domain'); ?></h1>
 				</div>
 
 				<div class="entry-content">
@@ -21,20 +20,16 @@
 				</div>
 
 			</div> <!-- .hentry .four04 -->
-
-<?php if ( ! isset($_GET['k2dynamic']) ) { ?>
 		</div> <!-- #current-content .hfeed -->
 
 		<div id="dynamic-content"></div>
 	</div> <!-- #primary -->
 </div> <!-- #primary-wrapper -->
 
-	<?php define('K2_NOT_FOUND', true); /* So we can tell the sidebar what to do */ ?>
-	<?php get_sidebar(); ?>
+<?php get_sidebar(); ?>
 
 </div> <!-- .content -->
 
 <?php get_footer(); ?>
 
 <!-- jegelskerRikke -->
-<?php } ?>
