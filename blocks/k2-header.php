@@ -27,7 +27,7 @@ if ( get_option('show_on_front') == 'page' )
 <p class="description"><?php bloginfo('description'); ?></p>
 
 <ul class="menu">
-	<li class="<?php if ( is_front_page() && !is_paged() ): ?>current_page_item<?php else: ?>page_item<?php endif; ?>">
+	<li class="<?php if ( is_front_page() && !is_paged() ): ?>current_page_item<?php else: ?>page_item<?php endif; ?> blogtab">
 		<a href="<?php echo get_option('home'); ?>/" title="<?php echo attribute_escape( get_option('k2blogornoblog') ); ?>">
 			<?php echo get_option('k2blogornoblog'); ?>
 		</a>
