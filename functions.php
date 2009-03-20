@@ -51,6 +51,27 @@ function k2_960_display_options() {
 		<p class="description">Enter values between 1 and 16. Sidebar Widths can have multiple values separated by a space; each value represents a sidebar. For example: "8 4 4" = 3 sidebars: first sidebar is 8 units wide, second is 4 units wide and third is also 4 units wide.</p>
 		<p class="description"><strong>Warning:</strong> Before removing a sidebar, be sure to delete the widgets in the sidebar.</p>
 
+		<div id="layout" class="page-block">
+			<div class="page-header">
+				<h4>Page</h4>
+				(<span class="grid-units">16</span> units | <span class="grid-px">960</span> px)
+			</div>
+
+			<div id="primary" class="primary-block">
+				<h4>Primary</h4>
+				(<span class="grid-units">8</span> units)
+			</div>
+			<div id="sidebars">
+				<div id="sidebar-1" class="sidebar-block">
+					<h4>Sidebar 1</h4>
+					(<span class="grid-units">4</span> units)
+				</div>
+				<div id="sidebar-2" class="sidebar-block">
+					<h4>Sidebar 2</h4>
+					(<span class="grid-units">4</span> units)
+				</div>
+			</div>
+		</div>
 		<table class="form-table">
 			<tbody>
 				<tr>
@@ -100,8 +121,88 @@ function k2_960_update_options() {
 }
 
 
+function k2_960_admin_print_scripts() {
+	wp_enqueue_script('jquery-ui-draggable');
+	wp_enqueue_script('jquery-ui-resizable');
+}
+
+function k2_960_admin_head() {
+?>
+
+	<!-- <link type="text/css" href="http://jqueryui.com/latest/themes/base/ui.all.css" rel="stylesheet" />
+	<script type="text/javascript" src="http://jqueryui.com/latest/jquery-1.3.2.js"></script>
+	<script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.core.js"></script>
+	<script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.resizable.js"></script> -->
+
+	<link type="text/css" rel="stylesheet" href="<?php bloginfo('stylesheet_directory'); ?>/css/options.css" />
+
+	<script type="text/javascript" charset="utf-8">
+	//<![CDATA[
+		jQuery(document).ready(function(){
+			/*
+			jQuery(".layout-block").draggable({
+				grid: [30, 50]
+			});
+			*/
+
+			jQuery("#layout").resizable({
+				distance: 10,
+				grid: [30, 50],
+				handles: 'e',
+				maxWidth: 470,
+				minWidth: 170,
+				resize: function(event, ui) {
+					jQuery(".page-header .grid-units").text( (jQuery(this).width() + 10) / 30 );
+					jQuery(".page-header .grid-px").text( jQuery(this).width() * 2 );
+					jQuery("#sidebars").width( jQuery(this).width() - jQuery("#primary").width() - 10 ).css("left", jQuery("#primary").width() + 15);
+				}
+			});
+
+			jQuery("#primary").resizable({
+				distance: 10,
+				grid: [30, 50],
+				handles: 'e',
+				containment: 'parent',
+				minWidth: 110,
+				maxWidth: 470,
+				resize: function(event, ui) {
+					var largest_sidebar_width = 0;
+					jQuery("#sidebars > .sidebar-block").each(function() {
+						var width = jQuery(this).width();
+						if ( width > largest_sidebar_width ) {
+							largest_sidebar_width = width;
+						}
+					});
+					jQuery('#primary').resizable('option', 'maxWidth', 470 - largest_sidebar_width);
+
+					jQuery("#sidebars").width( 460 - jQuery(this).width() ).css("left", jQuery(this).width() + 15);
+					jQuery("#primary .grid-units").text( (jQuery(this).width() + 10) / 30 );
+				},
+				stop: function(event, ui) {
+					console.log( jQuery('#primary').resizable('option', 'maxWidth') );
+				}
+			});
+
+			jQuery(".sidebar-block").resizable({
+				distance: 10,
+				grid: [30, 50],
+				handles: 'e',
+				containment: 'parent',
+				minWidth: 50,
+				maxWidth: 470,
+				resize: function(event, ui) {
+					jQuery(this).children("span").text( (jQuery(this).width() + 10) / 30 );
+				}
+			});
+		});
+	//]]>
+	</script>
+<?php
+}
+
+
 add_action('k2_init', 'k2_960_init');
 add_action('k2_display_options', 'k2_960_display_options');
 add_action('k2_update_options', 'k2_960_update_options');
-
-?>
+add_action('admin_print_scripts-appearance_page_k2-options', 'k2_960_admin_print_scripts');
+add_action('admin_head-appearance_page_k2-options', 'k2_960_admin_head');
