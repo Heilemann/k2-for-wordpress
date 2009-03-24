@@ -46,60 +46,75 @@ function k2_960_display_options() {
 ?>
 
 	<div class="container">
-		<h3><?php _e('K2 960 Options', 'k2_domain'); ?></h3>
+		<h3><?php _e('Layout', 'k2_domain'); ?></h3>
 
-		<p class="description">Enter values between 1 and 16. Sidebar Widths can have multiple values separated by a space; each value represents a sidebar. For example: "8 4 4" = 3 sidebars: first sidebar is 8 units wide, second is 4 units wide and third is also 4 units wide.</p>
-		<p class="description"><strong>Warning:</strong> Before removing a sidebar, be sure to delete the widgets in the sidebar.</p>
+		<p class="description">Drag the blue handles to resize the column widths. Drag the black handles to resize each individual sidebar. Drag <em>New Sidebar</em> and drop into a sidebar zone to add a new sidebar.</p>
 
-		<div id="layout" class="page-block">
-			<div class="page-header">
+		<div id="layout-design">
+			<div id="page" class="page-block">
 				<h4>Page</h4>
-				(<span class="grid-units">16</span> units | <span class="grid-px">960</span> px)
+				<input type="hidden" id="page-width" name="k2[layout][page-width]" value="16" />
+				<span class="grid-px">960 px</span>
+
+				<div id="left-sidebars" class="sidebar-wrap">
+					<h4>Left</h4>
+					<input type="hidden" id="left-sidebars-width" name="k2[layout][left-sidebars-width]" value="4" />
+					<span class="grid-px">220 px</span>
+
+					<ul class="sidebar-list sidebar-sortable">
+						<li id="sidebar-1">
+							<h4>Sidebar 1</h4>
+							<a href="#" class="remove-sidebar"><span>Remove</span></a>
+							<input type="hidden" id="sidebar-1-width" value="4" />
+							<div class="sidebar-block">
+								<span class="grid-px">220 px</span>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div id="primary" class="primary-block">
+					<h4>Primary</h4>
+					<input type="hidden" id="primary-width" value="8" />
+					<span class="grid-px">460 px</span>
+				</div>
+				<div id="right-sidebars" class="sidebar-wrap">
+					<h4>Right</h4>
+					<input type="hidden" id="right-sidebars-width" value="4" />
+					<span class="grid-px">220 px</span>
+
+					<ul class="sidebar-list sidebar-sortable">
+						<li id="sidebar-2">
+							<h4>Sidebar 2</h4>
+							<a href="#" class="remove-sidebar"><span>Remove</span></a>
+							<input type="hidden" id="sidebar-2-width" value="4" />
+							<div class="sidebar-block">
+								<span class="grid-px">220 px</span>
+							</div>
+						</li>
+					</ul>
+				</div>
+			
+				<div id="bottombars" class="sidebar-wrap">
+					<h4>Bottom</h4>
+					<ul class="sidebar-list sidebar-sortable">
+					</ul>
+				</div>
 			</div>
 
-			<div id="primary" class="primary-block">
-				<h4>Primary</h4>
-				(<span class="grid-units">8</span> units)
-			</div>
-			<div id="sidebars">
-				<div id="sidebar-1" class="sidebar-block">
-					<h4>Sidebar 1</h4>
-					(<span class="grid-units">4</span> units)
-				</div>
-				<div id="sidebar-2" class="sidebar-block">
-					<h4>Sidebar 2</h4>
-					(<span class="grid-units">4</span> units)
-				</div>
+			<div id="layout-controls">
+				<ul id="new-sidebar-list" class="sidebar-list">
+					<li id="new-sidebar">
+						<h4>New Sidebar</h4>
+						<a href="#" class="remove-sidebar"><span>Remove</span></a>
+						<input type="hidden" id="new-sidebar-width" value="4" />
+						<div class="sidebar-block">
+							<span class="grid-px">220 px</span>
+						</div>
+					</li>
+				</ul>
 			</div>
 		</div>
-		<table class="form-table">
-			<tbody>
-				<tr>
-					<th scope="row">
-						<label for="k2-960-primary-width"><?php _e('Content Width:', 'k2_domain'); ?></label>
-					</th>
-					<td>
-						<input id="k2-960-primary-width" name="k2[primarywidth]" type="text" value="<?php echo attribute_escape( get_option('k2_960_primarywidth') ); ?>" />(Max: 16)
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">
-						<label for="k2-960-sidebar-widths"><?php _e('Sidebar Widths:', 'k2_domain'); ?></label>
-					</th>
-					<td>
-						<input id="k2-960-sidebar-widths" name="k2[sidebarwidths]" type="text" value="<?php echo attribute_escape( get_option('k2_960_sidebarwidths') ); ?>" />(Max: 16 - Content Width)
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">
-						<label for="k2-960-bottombar-widths"><?php _e('Bottombar Widths:', 'k2_domain'); ?></label>
-					</th>
-					<td>
-						<input id="k2-960-bottombar-widths" name="k2[bottombarwidths]" type="text" value="<?php echo attribute_escape( get_option('k2_960_bottombarwidths') ); ?>" />
-					</td>
-				</tr>
-			</tbody>
-		</table>
+
 	</div><!-- .container -->
 
 <?php
@@ -107,21 +122,12 @@ function k2_960_display_options() {
 
 
 function k2_960_update_options() {
-	if ( isset($_POST['k2']['primarywidth']) ) {
-		update_option( 'k2_960_primarywidth', stripslashes($_POST['k2']['primarywidth']) );
-	}
-
-	if ( isset($_POST['k2']['sidebarwidths']) ) {
-		update_option( 'k2_960_sidebarwidths', stripslashes($_POST['k2']['sidebarwidths']) );
-	}
-
-	if ( isset($_POST['k2']['bottombarwidths']) ) {
-		update_option( 'k2_960_bottombarwidths', stripslashes($_POST['k2']['bottombarwidths']) );
-	}
+	//var_dump($_POST['k2']);
 }
 
 
 function k2_960_admin_print_scripts() {
+	wp_enqueue_script('jquery-ui-sortable');
 	wp_enqueue_script('jquery-ui-draggable');
 	wp_enqueue_script('jquery-ui-resizable');
 }
@@ -139,61 +145,171 @@ function k2_960_admin_head() {
 	<script type="text/javascript" charset="utf-8">
 	//<![CDATA[
 		jQuery(document).ready(function(){
-			/*
-			jQuery(".layout-block").draggable({
-				grid: [30, 50]
-			});
-			*/
+			var numSidebars = 2;
 
-			jQuery("#layout").resizable({
+			jQuery('#page').resizable({
 				distance: 10,
 				grid: [30, 50],
 				handles: 'e',
-				maxWidth: 470,
+				maxWidth: 480,
 				minWidth: 170,
 				resize: function(event, ui) {
-					jQuery(".page-header .grid-units").text( (jQuery(this).width() + 10) / 30 );
-					jQuery(".page-header .grid-px").text( jQuery(this).width() * 2 );
-					jQuery("#sidebars").width( jQuery(this).width() - jQuery("#primary").width() - 10 ).css("left", jQuery("#primary").width() + 15);
+					thisWidth = jQuery(this).width();
+					/*
+					leftWidth = jQuery('#left-sidebars').width();
+					primaryWidth = jQuery('#primary').width();
+					rightWidth = jQuery('#right-sidebars').width();
+
+					jQuery(this).resizable('option', 'minWidth', leftWidth + primaryWidth);
+					*/
+					jQuery('#page-width').val( thisWidth / 30 );
+					jQuery('#page > .grid-px').text( (thisWidth * 2) + ' px');
 				}
 			});
 
-			jQuery("#primary").resizable({
+			function calcMaxWidth() {
+			/*var largest_left_sb, largest_right_sb = 0;
+			jQuery('#left-sidebars > .sidebar-block').each(function() {
+				var width = jQuery(this).width();
+				if ( width > largest_sidebar_width ) {
+					largest_sidebar_width = width;
+				}
+			});
+
+			jQuery('#left-sidebars > .sidebar-block').each(function() {
+				var width = jQuery(this).width();
+				if ( width > largest_sidebar_width ) {
+					largest_sidebar_width = width;
+				}
+			});*/
+			}
+
+			function initButtons() {
+				jQuery('.remove-sidebar').unbind().click(function(){
+					jQuery(this).parent().remove();
+					return false;
+				});
+			}
+
+			jQuery('#primary').resizable({
 				distance: 10,
 				grid: [30, 50],
-				handles: 'e',
+				handles: 'w, e',
 				containment: 'parent',
 				minWidth: 110,
 				maxWidth: 470,
 				resize: function(event, ui) {
-					var largest_sidebar_width = 0;
-					jQuery("#sidebars > .sidebar-block").each(function() {
-						var width = jQuery(this).width();
-						if ( width > largest_sidebar_width ) {
-							largest_sidebar_width = width;
-						}
-					});
-					jQuery('#primary').resizable('option', 'maxWidth', 470 - largest_sidebar_width);
+					var $this = jQuery(this),
+						$leftsb = jQuery('#left-sidebars'),
+						$rightsb = jQuery('#right-sidebars'),
+						thisPosition = $this.position(),
+						thisWidth = $this.width();
+					
+					if ( thisPosition.left == 5 ) {
+						$leftsb.width(0);
+						jQuery('#left-sidebars .sidebar-list').width(0);
+						jQuery('#left-sidebars .sidebar-block').resizable('option', 'maxWidth', 0);
+					} else {
+						$leftsb.width( thisPosition.left - 15 );
+						jQuery('#left-sidebars .sidebar-list').width( $leftsb.width() + 10 );
+						jQuery('#left-sidebars .sidebar-block').resizable('option', 'maxWidth', $leftsb.width());
+					}
 
-					jQuery("#sidebars").width( 460 - jQuery(this).width() ).css("left", jQuery(this).width() + 15);
-					jQuery("#primary .grid-units").text( (jQuery(this).width() + 10) / 30 );
+					if ( thisWidth + $leftsb.width() >= 460) {
+						$rightsb.width(0).css('left', 485);
+						jQuery('#right-sidebars .sidebar-list').width(0);
+						jQuery('#right-sidebars .sidebar-block').resizable('option', 'maxWidth', 0);
+					} else if ( $leftsb.width() == 0 ) {
+						$rightsb.width( 460 - thisWidth ).css('left', thisWidth + 15);
+						jQuery('#right-sidebars .sidebar-list').width( $rightsb.width() + 10 );
+						jQuery('#right-sidebars .sidebar-block').resizable('option', 'maxWidth', $rightsb.width());
+					}
+					else {
+						$rightsb.width( 450 - thisWidth - $leftsb.width() ).css('left', thisWidth + $leftsb.width() + 25);
+						jQuery('#right-sidebars .sidebar-list').width( $rightsb.width() + 10 );
+						jQuery('#right-sidebars .sidebar-block').resizable('option', 'maxWidth', $rightsb.width());
+					}
+
+					calcWidth(this);
+					calcWidth('#left-sidebars');
+					calcWidth('#right-sidebars');
 				},
 				stop: function(event, ui) {
-					console.log( jQuery('#primary').resizable('option', 'maxWidth') );
 				}
 			});
 
-			jQuery(".sidebar-block").resizable({
-				distance: 10,
-				grid: [30, 50],
-				handles: 'e',
-				containment: 'parent',
-				minWidth: 50,
-				maxWidth: 470,
-				resize: function(event, ui) {
-					jQuery(this).children("span").text( (jQuery(this).width() + 10) / 30 );
+			function calcWidth(ele) {
+				$ele = jQuery(ele);
+
+				eleUnits = ($ele.width() + 10) / 30;
+				elePx = (eleUnits * 60) - 20;
+
+				jQuery( '#' + $ele.attr('id') + '-width' ).val( eleUnits );
+				$ele.children('.grid-px').text( ($ele.width() * 2) + ' px');
+			}
+
+			function initResizables() {
+				jQuery('#page .sidebar-block').resizable('destroy').resizable({
+					distance: 10,
+					grid: [30, 50],
+					handles: 'e',
+					containment: '#left-sidebars',
+					minWidth: 40,
+					maxWidth: 470,
+					resize: function(e, ui) {
+						jQuery(this).parent().width( jQuery(this).width() );
+						calcWidth(this);
+					},
+					stop: function(e, ui) {
+						var units = ( jQuery(this).width() + 10 ) / 30;
+						jQuery( '#' + jQuery(this).parent().attr('id') + '-width' ).val( units );
+					}
+				});
+			}
+
+			jQuery('.sidebar-sortable').sortable({
+				connectWith: jQuery('.sidebar-sortable'),
+				cursor: 'move',
+				forcePlaceholderSize: true,
+				handle: 'h4',
+				placeholder: 'sidebar-placeholder',
+				tolerance: 'pointer',
+				over: function(e, ui) {
+					jQuery(this).parent().addClass('active');
+				},
+
+				out: function(e, ui) {
+					jQuery(this).parent().removeClass('active');
+				},
+				
+				stop: function(e, ui) {
+					if ( ui.item.is('#new-sidebar') ) {
+						++numSidebars;
+						ui.item.removeClass('ui-draggable').attr('id', 'sidebar-' + numSidebars);
+						ui.item.children('h4').text('Sidebar ' + numSidebars);
+						ui.item.children('input').attr('id', 'sidebar-' + numSidebars + '-width');
+						ui.item.draggable('destroy');
+
+						initButtons();
+					}
 				}
 			});
+
+			jQuery('#new-sidebar').draggable({
+				connectToSortable: '.sidebar-sortable',
+				cursor: 'move',
+				handle: 'h4',
+				opacity: 0.8,
+				helper: function() {
+					$clone = jQuery(this).clone();
+					$clone.children('h4').text('Sidebar ' + (numSidebars + 1));
+					
+					return $clone;
+				}
+			});
+
+			initButtons();
+			initResizables();
 		});
 	//]]>
 	</script>
