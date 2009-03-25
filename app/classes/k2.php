@@ -37,14 +37,11 @@ class K2 {
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
 		require_once(TEMPLATEPATH . '/app/includes/comments.php');
-		//require_once(TEMPLATEPATH . '/app/includes/widgets.php');
 		require_once(TEMPLATEPATH . '/app/includes/wp-compat.php');
 
-		if ( defined('K2_LOAD_SBM') ) {
-			require_once(TEMPLATEPATH . '/app/classes/sbm.php');
-			require_once(TEMPLATEPATH . '/app/includes/sbm.php');
-		} else {
+		if ( ! defined('K2_LOAD_SBM') ) {
 			require_once(TEMPLATEPATH . '/app/classes/widgets.php');
+			//require_once(TEMPLATEPATH . '/app/includes/widgets.php');
 		}
 
 		// Check installed version, upgrade if needed
@@ -54,11 +51,6 @@ class K2 {
 			K2::install();
 		elseif ( version_compare($k2version, K2_CURRENT, '<') )
 			K2::upgrade($k2version);
-
-		// Set K2 to active
-		if ( '0' == get_option('k2active') ) {
-			update_option('k2active', '1');
-		}
 
 		// Register our scripts with script loader
 		K2::register_scripts();
@@ -182,7 +174,6 @@ class K2 {
 
 		// Delete options
 		delete_option('k2version');
-		delete_option('k2active');
 
 		// Remove the K2 options from the database. This is a catch-all
 		$cleanup = $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'k2%'");
@@ -292,12 +283,6 @@ class K2 {
 		<?php
 	}
 
-	/**
-	 * switch_theme() - Called when user switches out of K2
-	 */
-	function switch_theme() {
-		update_option('k2active', '0');
-	}
 
 
 	/**
@@ -557,7 +542,6 @@ class K2 {
 
 
 // Actions and Filters
-add_action( 'switch_theme', array('K2', 'switch_theme'), 0 );
 add_action( 'template_redirect', array('K2', 'dynamic_content') );
 add_filter( 'query_vars', array('K2', 'add_custom_query_vars') );
 
