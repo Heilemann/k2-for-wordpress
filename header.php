@@ -4,20 +4,6 @@
 
 	// Load localizatons
 	load_theme_textdomain('k2_domain');
-
-	// Load our scripts
-	wp_enqueue_script('k2functions');
-
-	if (get_option('k2rollingarchives') == 1) {
-		wp_enqueue_script('k2rollingarchives');
-	}
-
-	if (get_option('k2livesearch') == 1) {
-		wp_enqueue_script('k2livesearch');
-	}
-
-	// WP 2.7 threaded comments
-	if ( is_singular() ) wp_enqueue_script( 'comment-reply' );
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -45,44 +31,6 @@
 	<?php endif; ?>
 
 	<?php wp_head(); ?>
-
-	<script type="text/javascript">
-	//<![CDATA[
-	<?php if ( 'dynamic' == get_option('k2columns') ): ?>
-		K2.layoutWidths = <?php /* Style Layout Widths */
-			if ( K2_USING_STYLES ) {
-				$styleinfo = get_option('k2styleinfo');
-				if ( empty($styleinfo['layout_widths']) )
-					echo '[560, 780, 950]';
-				else
-					output_javascript_array($styleinfo['layout_widths']);
-			} else {
-				echo '[560, 780, 950]';
-			}
-		?>;
-
-		jQuery(document).ready(dynamicColumns);
-		jQuery(window).resize(dynamicColumns);
-	<?php endif; ?>
-
-		K2.AjaxURL = "<?php bloginfo('url'); ?>/";
-		K2.Animations = <?php echo (int) get_option('k2animations') ?>;
-
-		jQuery(document).ready(function(){
-			<?php /* LiveSearch */ if ( '1' == get_option('k2livesearch') ): ?>
-			K2.LiveSearch = new LiveSearch(
-				"<?php echo attribute_escape(__('Type and Wait to Search','k2_domain')); ?>"
-			);
-			<?php endif; ?>
-
-			<?php /* Rolling Archives */ if ( '1' == get_option('k2rollingarchives') ): ?>
-			K2.RollingArchives = new RollingArchives(
-				"<?php echo attribute_escape( __('Page %1$d of %2$d', 'k2_domain') ); ?>"
-			);
-			<?php endif; ?>
-		});
-	//]]>
-	</script>
 
 	<?php wp_get_archives('type=monthly&format=link'); ?>
 </head>

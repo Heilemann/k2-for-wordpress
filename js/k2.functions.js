@@ -11,6 +11,7 @@ K2.ajaxGet = function(data, complete_fn) {
 	jQuery.ajax({
 		url:		K2.AjaxURL,
 		data:		data,
+		dataType:	'html',
 
 		error: function(request) {
 			jQuery('#notices')

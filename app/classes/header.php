@@ -52,6 +52,10 @@ class K2Header {
 		if ( 'dynamic' == $columns ) {
 			$columns = 3;
 		}
+		
+		if ( $columns < 1 ) {
+			$columns = 1;
+		}
 
 		// style contains header width setting
 		if ( ! empty($styleinfo['header_width']) ) {

@@ -10,7 +10,7 @@ defined('K2_CURRENT') or die ('Error: This file can not be loaded directly.');
 class K2 {
 
 	/**
-	 * init() - Class constructor
+	 * Initializes K2
 	 *
 	 * @uses do_action() Provides 'k2_init' action
 	 */
@@ -33,7 +33,6 @@ class K2 {
 		// Load required classes and includes
 		require_once(TEMPLATEPATH . '/app/classes/archive.php');
 		require_once(TEMPLATEPATH . '/app/classes/header.php');
-		require_once(TEMPLATEPATH . '/app/classes/options.php');
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
 		require_once(TEMPLATEPATH . '/app/includes/comments.php');
@@ -73,13 +72,36 @@ class K2 {
 
 
 	/**
-	 * install() - Starts the installation process and creates supporting folders for WordPress mu.
+	 * Starts the installation process
 	 *
 	 * @uses do_action() Provides 'k2_install' action
 	 */
 	function install() {
-		// Add the version number
 		add_option('k2version', K2_CURRENT, 'This option stores K2\'s version number');
+		add_option('k2asidescategory', '0', 'A category which will be treated differently from other categories');
+		add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on"); // (live & classic)
+		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
+		add_option('k2archives', '0', 'Set whether K2 has a Live Archive page');
+		add_option('k2sidebarmanager', '0', 'Set whether to use K2 Sidebar Manager');
+		add_option('k2styleinfo', '', 'Metadata of current style.');
+		add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.');
+		add_option('k2columns', '2', 'Number of columns to display.');
+
+		// Added 1.0-RC6
+		add_option('k2style', '', 'Choose the Style you want K2 to use');
+		add_option('k2headerimage', '', 'Current Header Image');
+
+		// Added 1.0-RC8
+		add_option('k2animations', '1', 'JavaScript Animation effects.');
+		add_option('k2entrymeta1', __('Published on %date% in %categories%. %comments% %tags%', 'k2_domain'), 'Customized metadata format before entry content.');
+		add_option('k2entrymeta2', '', 'Customized metadata format after entry content.');
+
+		// Install a default set of widgets
+		if ( function_exists('wp_get_sidebars_widgets') ) {
+			$sidebars_widgets = wp_get_sidebars_widgets();
+			if ( empty( $sidebars_widgets ) )
+				K2::default_widgets();
+		}
 
 		// Call the install handlers
 		do_action('k2_install');
@@ -87,7 +109,7 @@ class K2 {
 
 
 	/**
-	 * upgrade() - Starts the upgrade process
+	 * Starts the upgrade process
 	 *
 	 * @uses do_action() Provides 'k2_upgrade' action
 	 * @param string $previous Previous version K2
@@ -95,8 +117,44 @@ class K2 {
 	function upgrade($previous) {
 		global $wpdb;
 
-		// Call the upgrade handlers
-		do_action('k2_upgrade', $previous);
+		if ( version_compare( $previous, '1.0-RC5', '<' ) ) {
+			// Add new options
+			add_option('k2style', '', 'Choose the Style you want K2 to use');
+			add_option('k2dynamiccolumns', '1', 'Enable this to dynamically change the number of columns.');
+			add_option('k2headerimage', '', 'Current Header Image');
+
+			// Convert existing options
+
+			// Header Images
+			if ( '1' == get_option('k2imagerandomfeature') ) {
+				update_option('k2headerimage', 'random');
+			} else {
+				$image = get_option('k2header_picture');
+				if ( $image != '') {
+					if ( is_readable(K2_HEADERS_DIR . "/$image") ) {
+						update_option( 'k2headerimage', $image );
+					}
+				}
+			}
+
+			// Styles
+			$style = get_option('k2scheme');
+			if ( $style != '' ) {
+				if ( is_readable(K2_STYLES_DIR . "/$style") ) {
+					update_option( 'k2style', $style );
+					update_style_info();
+				}
+			}
+
+			// Delete depreciated options
+			delete_option('k2advnav');
+			delete_option('k2dynamiccolumns');
+			delete_option('k2header_picture');
+			delete_option('k2imagerandomfeature');
+			delete_option('k2lastmodified');
+			delete_option('k2scheme');
+		}
+
 
 		if ( version_compare( $previous, '1.0-RC6.2', '<' ) ) {
 
@@ -118,7 +176,7 @@ class K2 {
 				update_option('active_plugins', $plugins);
 		}
 
-/*
+
 		if ( version_compare( $previous, '1.0-RC7.3', '<' ) ) {
 			// Search for pages using page-comments.php
 			$page_ids = $wpdb->get_results("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = 'page-comments.php'", ARRAY_N);
@@ -154,14 +212,29 @@ class K2 {
 				}
 			}
 		}
-*/
+
+
+		if ( version_compare( $previous, '1.0-RC8', '<' ) ) {
+			add_option('k2animations', '1', 'JavaScript Animation effects.');
+			add_option('k2entrymeta1', __('Published on %date% in %categories%. %comments% %tags%', 'k2_domain'), 'Customized metadata format before entry content.');
+			add_option('k2entrymeta2', '', 'Customized metadata format after entry content.');
+
+			// Install a default set of widgets
+			$sidebars_widgets = wp_get_sidebars_widgets();
+			if ( empty( $sidebars_widgets ) )
+				K2::default_widgets();
+		}
+
+		// Call the upgrade handlers
+		do_action('k2_upgrade', $previous);
+
 		// Update the version
 		update_option('k2version', K2_CURRENT);
 	}
 
 
 	/**
-	 * uninstall() - Activates Default theme and removes K2 options
+	 * Removes K2 options
 	 *
 	 * @uses do_action() Provides 'k2_uninstall' action
 	 * @global mixed $wpdb
@@ -169,11 +242,24 @@ class K2 {
 	function uninstall($switch_theme = false) {
 		global $wpdb;
 
-		// Call the uninstall handlers
-		do_action('k2_uninstall');
-
 		// Delete options
 		delete_option('k2version');
+		delete_option('k2asidescategory');
+		delete_option('k2livesearch');
+		delete_option('k2rollingarchives');
+		delete_option('k2archives');
+		delete_option('k2sidebarmanager');
+		delete_option('k2style');
+		delete_option('k2styleinfo');
+		delete_option('k2blogornoblog');
+		delete_option('k2columns');
+		delete_option('k2headerimage');
+		delete_option('k2entrymeta1');
+		delete_option('k2entrymeta2');
+		delete_option('k2animations');
+
+		// Call the uninstall handlers
+		do_action('k2_uninstall');
 
 		// Remove the K2 options from the database. This is a catch-all
 		$cleanup = $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'k2%'");
@@ -195,12 +281,224 @@ class K2 {
 	}
 
 
+	/**
+	 * Restores K2 to default settings
+	 */
+	function restore_defaults() {
+		K2::uninstall();
+		K2::install();
+	}
+
+
+	/**
+	 * 
+	 */
+	function admin_init() {
+		// Inside K2 Options page
+		if ( isset($_GET['page']) and ('k2-options' == $_GET['page']) and isset($_REQUEST['k2-options-submit']) ) {
+			check_admin_referer('k2options');
+
+			// Setup ELA
+			if ( isset($_REQUEST['configela']) ) {
+				K2Archive::setup_archive();
+
+			// Reset K2
+			} elseif ( isset($_REQUEST['restore-defaults']) ) {
+				K2::restore_defaults();
+
+			// Reset Sidebars
+			} elseif ( isset($_REQUEST['default-widgets']) ) {
+				K2::default_widgets();
+
+				// Save Settings
+			} elseif ( isset($_REQUEST['save']) and isset($_REQUEST['k2']) ) {
+				K2::update_options();
+			}
+		}
+	}
+
+
+	/**
+	 * Adds K2 Options to Appearance menu, adds actions for head and scripts
+	 */
+	function add_options_menu() {
+		$page = add_theme_page(__('K2 Options','k2_domain'), __('K2 Options','k2_domain'), 'edit_themes', 'k2-options', array('K2', 'admin'));
+
+		add_action( "admin_head-$page", array('K2', 'admin_head') );
+		add_action( "admin_print_scripts-$page", array('K2', 'admin_print_scripts') );
+
+		if ( function_exists('add_contextual_help') ) {
+			add_contextual_help($page,
+				'<a href="http://groups.google.com/group/k2-support/">' .  __('K2 Support Group', 'k2_domain') . '</a><br />' .
+				'<a href="http://code.google.com/p/kaytwo/issues/list">' .  __('K2 Bug Tracker', 'k2_domain') . '</a><br />'
+				);
+		}
+	}
+
+
+	/**
+	 * Displays K2 Options page
+	 */
+	function admin() {
+		include(TEMPLATEPATH . '/app/display/options.php');
+	}
+
+
+	/**
+	 * Displays content in HEAD tag. Called by action: admin_head
+	 */
+	function admin_head() {
+		?>
+
+		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/options.css" />
+		<script type="text/javascript">
+		function confirmDefaults() {
+			if (confirm("<?php _e('Do you want to restore K2 to default settings? This will remove all your K2 settings.', 'k2_domain'); ?>") == true) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		</script>
+	<?php
+	}
+
+
+	/**
+	 * Enqueues scripts. Called by action: admin_print_scripts
+	 */
+	function admin_print_scripts() {
+		// Add our script to the queue
+		wp_enqueue_script('k2functions');
+	}
+
+
+	/**
+	 * Updates options
+	 *
+	 * @uses do_action() Provides 'k2_update_options' action
+	 */
+	function update_options() {
+		// Sidebar Manager
+		if ( isset($_POST['k2']['sidebarmanager']) ) {
+			update_option('k2sidebarmanager', '1');
+		} else {
+			update_option('k2sidebarmanager', '0');
+		}
+
+		// Columns
+		if ( isset($_POST['k2']['columns']) ) {
+			update_option('k2columns', $_POST['k2']['columns']);
+		}
+
+		// Advanced Navigation
+		if ( isset($_POST['k2']['advnav']) ) {
+			update_option('k2livesearch', '1');
+			update_option('k2rollingarchives', '1');
+		} else {
+			update_option('k2livesearch', '0');
+			update_option('k2rollingarchives', '0');
+		}
+
+		// JavaScript Animations
+		if ( isset($_POST['k2']['animations']) ) {
+			update_option('k2animations', '1');
+		} else {
+			update_option('k2animations', '0');
+		}
+
+		// Archives Page (thanks to Michael Hampton, http://www.ioerror.us/ for the assist)
+		if ( isset($_POST['k2']['archives']) ) {
+			update_option('k2archives', '1');
+			K2Archive::create_archive();
+		} else {
+			update_option('k2archives', '0');
+			K2Archive::delete_archive();
+		}
+
+		// Asides
+		if ( isset($_POST['k2']['asidescategory']) ) {
+			update_option('k2asidescategory', (int) $_POST['k2']['asidescategory']);
+		}
+
+		// Style
+		if ( isset($_POST['k2']['style']) ) {
+			update_option('k2style', $_POST['k2']['style']);
+			update_style_info();
+		} else {
+			update_option('k2style', '');
+			update_option('k2styleinfo', array());
+		}
+
+		// Header Image
+		if ( isset($_POST['k2']['headerimage']) ) {
+			update_option('k2headerimage', $_POST['k2']['headerimage']);
+
+			// Update Custom Image Header
+			if ( ('' == $_POST['k2']['headerimage']) or ('random' == $_POST['k2']['headerimage']) ) {
+				remove_theme_mod('header_image');
+			} else {
+				set_theme_mod('header_image', K2Header::get_header_image_url() );
+			}
+		}
+
+		// Blog tab
+		if ( isset($_POST['k2']['blogornoblog']) ) {
+			update_option( 'k2blogornoblog', strip_tags( stripslashes($_POST['k2']['blogornoblog']) ) );
+		}
+
+
+		// Top post meta
+		if ( isset($_POST['k2']['entrymeta1']) ) {
+			update_option( 'k2entrymeta1', stripslashes($_POST['k2']['entrymeta1']) );
+		}
+
+		// Bottom post meta
+		if ( isset($_POST['k2']['entrymeta2']) ) {
+			update_option( 'k2entrymeta2', stripslashes($_POST['k2']['entrymeta2']) );
+		}
+
+		// K2 Hook
+		do_action('k2_update_options');
+	}
+
+
+	/**
+	 * Assigns a default set of widgets
+	 */
+	function default_widgets() {
+		/*
+		global $wp_registered_widgets;
+
+		$sidebars_widgets = array( 'sidebar-1' => array() );
+
+		// Fill first sidebar
+		if ( isset($wp_registered_widgets['search']) ) $sidebars_widgets['sidebar-1'][] = 'search';
+		if ( isset($wp_registered_widgets['k2-about']) ) $sidebars_widgets['sidebar-1'][] = 'k2-about';
+		if ( isset($wp_registered_widgets['recent-posts']) ) $sidebars_widgets['sidebar-1'][] = 'recent-posts';
+		if ( isset($wp_registered_widgets['recent-comments']) ) $sidebars_widgets['sidebar-1'][] = 'recent-comments';
+		if ( isset($wp_registered_widgets['archives']) ) $sidebars_widgets['sidebar-1'][] = 'archives';
+		if ( isset($wp_registered_widgets['tag_cloud']) ) $sidebars_widgets['sidebar-1'][] = 'tag_cloud';
+		if ( isset($wp_registered_widgets['links']) ) $sidebars_widgets['sidebar-1'][] = 'links';
+
+		wp_set_sidebars_widgets( $sidebars_widgets );
+		*/
+	}
+
+
+	/**
+	 * Adds k2dynamic into the list of query variables, used for dynamic content
+	 */
 	function add_custom_query_vars($query_vars) {
 		$query_vars[] = 'k2dynamic';
 
 		return $query_vars;
 	}
 
+
+	/**
+	 * Filter to prevent redirect_canonical() from redirecting dynamic content
+	 */
 	function prevent_dynamic_redirect($redirect_url) {
 		if ( strpos($redirect_url, 'k2dynamic=' ) !== false )
 			return false;
@@ -208,6 +506,10 @@ class K2 {
 		return $redirect_url;
 	}
 
+
+	/**
+	 * Return the home page link, used for dynamic content
+	 */
 	function get_home_url() {
 		if ( ('page' == get_option('show_on_front')) and ($page_id = get_option('page_for_posts')) ) {
 			return get_page_link($page_id);
@@ -216,15 +518,20 @@ class K2 {
 		return get_bloginfo('url') . '/';
 	}
 
+
+	/**
+	 * Handles displaying dynamic content such as LiveSearch, RollingArchives
+	 *
+	 * @uses do_action() Provides 'k2_dynamic_content' action
+	 */
 	function dynamic_content() {
 		$k2dynamic = get_query_var('k2dynamic');
 
 		if ( $k2dynamic ) {
+			define('DOING_AJAX', true);
+
 			// Send the header
 			header('Content-Type: ' . get_bloginfo('html_type') . '; charset=' . get_bloginfo('charset'));
-
-			// K2 Hook
-			do_action('k2_dynamic_content');
 
 			if ( defined('WP_DEBUG') && true === WP_DEBUG ) {
 				global $wp_query;
@@ -240,11 +547,17 @@ class K2 {
 					include(TEMPLATEPATH . '/app/display/rollingarchive.php');
 					break;
 			}
+
+			// K2 Hook
+			do_action('k2_dynamic_content');
 			exit;
 		}
 	}
 
 
+	/**
+	 * Helper function used by RollingArchives
+	 */
 	function setup_rolling_archives() {
 		global $wp_query;
 
@@ -284,11 +597,9 @@ class K2 {
 	}
 
 
-
 	/**
 	 * Register K2 scripts to script loader
 	 */
-
 	function register_scripts() {
 		// Register jQuery
 		wp_register_script('jquery',
@@ -334,19 +645,19 @@ class K2 {
 
 		wp_register_script('k2rollingarchives',
 			get_bloginfo('template_directory') . '/js/k2.rollingarchives.js',
-			array('jquery', 'k2slider', 'k2trimmer'), K2_CURRENT);
+			array('jquery', 'k2slider', 'k2trimmer'), K2_CURRENT, true);
 
 		wp_register_script('k2livesearch',
 			get_bloginfo('template_directory') . '/js/k2.livesearch.js',
-			array('jquery'), K2_CURRENT);
+			array('jquery'), K2_CURRENT, true);
 
 		wp_register_script('k2slider',
 			get_bloginfo('template_directory') . '/js/k2.slider.js',
-			array('jquery'), K2_CURRENT);
+			array('jquery'), K2_CURRENT, true);
 
 		wp_register_script('k2trimmer',
 			get_bloginfo('template_directory') . '/js/k2.trimmer.js',
-			array('jquery', 'k2slider'), K2_CURRENT);
+			array('jquery', 'k2slider'), K2_CURRENT, true);
 
 		wp_register_script('k2sbm',
 			get_bloginfo('template_directory') . '/js/k2.sbm.js',
@@ -357,12 +668,78 @@ class K2 {
 			array('jquery', 'jquery-ui-droppable', 'jquery-ui-sortable', 'jquery-dimensions', 'humanmsg', 'humanundo'), K2_CURRENT);
 	}
 
+
+	/**
+	 * Enqueues scripts needed by K2
+	 */
+	function enqueue_scripts() {
+		// Load our scripts
+		wp_enqueue_script('k2functions');
+
+		if (get_option('k2rollingarchives') == 1) {
+			wp_enqueue_script('k2rollingarchives');
+		}
+
+		if (get_option('k2livesearch') == 1) {
+			wp_enqueue_script('k2livesearch');
+		}
+
+		// WP 2.7 threaded comments
+		if ( is_singular() ) wp_enqueue_script( 'comment-reply' );
+	}
+	
+
+	/**
+	 * Initializes scripts in the header
+	 */
+	function header_scripts() {
+?>
+	<script type="text/javascript">
+	//<![CDATA[
+	<?php if ( 'dynamic' == get_option('k2columns') ): ?>
+		K2.layoutWidths = <?php /* Style Layout Widths */
+			if ( K2_USING_STYLES ) {
+				$styleinfo = get_option('k2styleinfo');
+				if ( empty($styleinfo['layout_widths']) )
+					echo '[560, 780, 950]';
+				else
+					output_javascript_array($styleinfo['layout_widths']);
+			} else {
+				echo '[560, 780, 950]';
+			}
+		?>;
+
+		jQuery(document).ready(dynamicColumns);
+		jQuery(window).resize(dynamicColumns);
+	<?php endif; ?>
+
+		K2.AjaxURL = "<?php bloginfo('url'); ?>/";
+		K2.Animations = <?php echo (int) get_option('k2animations') ?>;
+
+		jQuery(document).ready(function(){
+			<?php /* LiveSearch */ if ( '1' == get_option('k2livesearch') ): ?>
+			K2.LiveSearch = new LiveSearch(
+				"<?php echo attribute_escape(__('Type and Wait to Search','k2_domain')); ?>"
+			);
+			<?php endif; ?>
+
+			<?php /* Rolling Archives */ if ( '1' == get_option('k2rollingarchives') ): ?>
+			K2.RollingArchives = new RollingArchives(
+				"<?php echo attribute_escape( __('Page %1$d of %2$d', 'k2_domain') ); ?>"
+			);
+			<?php endif; ?>
+		});
+	//]]>
+	</script>
+<?php
+	}
+
+
 	/**
 	 * Searches through 'styles' directory for css files
 	 *
 	 * @return array paths to style files
 	 */
-	
 	function get_styles() {
 		$k2_styles = array();
 
@@ -387,7 +764,6 @@ class K2 {
 	 * @param string $dir_path directory to scan
 	 * @param array $ignore list of files to ignore
 	 */
-	
 	function include_all($dir_path, $ignore = false) {
 		// Open the directory
 		$dir = @dir($dir_path) or die('Could not open required directory ' . $dir_path);
@@ -414,7 +790,6 @@ class K2 {
 	 * @param mixed $relative relative to which path
 	 * @return array paths of files found
 	 */
-	
 	function files_scan($path, $ext = false, $depth = 1, $relative = true) {
 		$files = array();
 
@@ -436,7 +811,6 @@ class K2 {
 	 * @param string $files 
 	 * @return array paths of files found
 	 */
-	
 	function _files_scan($base_path, $path, $ext, $depth, $relative, &$files) {
 		if (!empty($ext)) {
 			if (!is_array($ext)) {
@@ -483,7 +857,6 @@ class K2 {
 	 * @param boolean $overwrite if destination exists, overwrite
 	 * @return string new path to file
 	 */
-	
 	function move_file($source, $dest, $overwrite = false) {
 		return K2::_copy_or_move_file($source, $dest, $overwrite, true);
 	}
@@ -542,6 +915,10 @@ class K2 {
 
 
 // Actions and Filters
+add_action( 'admin_menu', array('K2', 'add_options_menu') );
+add_action( 'admin_init', array('K2', 'admin_init') );
+add_action( 'wp_print_scripts', array('K2', 'enqueue_scripts') );
+add_action( 'wp_head', array('K2', 'header_scripts') );
 add_action( 'template_redirect', array('K2', 'dynamic_content') );
 add_filter( 'query_vars', array('K2', 'add_custom_query_vars') );
 

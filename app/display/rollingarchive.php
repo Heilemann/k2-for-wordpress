@@ -1,8 +1,3 @@
-<?php
-	// Load Rolling Archives?
-	if ( '1' == get_option('k2rollingarchives') ): 
-?>
-
 <div id="rollingarchives" style="display:none;">
 	<div id="texttrimmer">
 		<div id="trimmertrackwrap"><div id="trimmertrack"><div id="trimmerhandle"></div></div></div>
@@ -34,16 +29,8 @@
 	</div> <!-- #rollnavigation -->
 </div> <!-- #rollingarchives -->
 
-<?php if ( !isset($_GET['k2dynamic']) ): ?>
-<noscript>
-	<?php k2_navigation('nav-above'); ?> 
-</noscript>
-<?php endif; ?>
-
-<?php K2::setup_rolling_archives(); ?>
-
-<?php endif; ?>
-
 <div id="rollingcontent" class="hfeed">
 	<?php include(TEMPLATEPATH . '/app/display/theloop.php'); ?>
 </div><!-- #rollingcontent .hfeed -->
+
+<?php K2::setup_rolling_archives(); ?>

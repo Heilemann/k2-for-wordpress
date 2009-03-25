@@ -49,7 +49,13 @@
 	</div>
 	<?php endif; ?>
 
-	<?php if ( isset($_REQUEST['updated']) ): ?>
+	<?php if ( isset($_REQUEST['default-widgets']) ): ?>
+	<div class="updated fade">
+		<p><?php _e('A default set of widgets has been installed.', 'k2_domain'); ?></p>
+	</div>
+	<?php endif; ?>
+
+	<?php if ( isset($_REQUEST['save']) ): ?>
 	<div class="updated fade">
 		<p><?php _e('K2 Options have been updated', 'k2_domain'); ?></p>
 	</div>
@@ -76,7 +82,6 @@
 	<?php if ( function_exists('screen_icon') ) screen_icon(); ?>
 	<h2><?php _e('K2 Options', 'k2_domain'); ?></h2>
 	<form action="<?php echo attribute_escape($_SERVER['REQUEST_URI']); ?>" method="post">
-		<?php wp_nonce_field('k2options'); ?>
 
  			<div class="container">
 				<h3><label for="k2-sidebar-manager"><?php _e('Widgets Manager', 'k2_domain'); ?></label></h3>
@@ -85,13 +90,13 @@
 				<!--<label for="k2-sidebarmanager"><?php _e('Enable K2\'s Sidebar Manager', 'k2_domain'); ?></label>--></p>
 				<p class="description"><?php _e('K2 has a neat sidebar system that allows you to control where/when each widget can appear.', 'k2_domain'); ?></p>
 				<?php if ( defined('K2_LOAD_SBM') ): ?>
-					<p class="description alert">Please disable the K2 Disable Widgets plugin to use the new Widgets Manager.</p>
+					<p class="description alert">Please disable the K2 Sidebar Manager plugin to use the new Widgets Manager.</p>
 				<?php endif; ?>
 			
-				<p class="hidden">
-					<input type="submit" name="sbm-defaults" id="sbm-defaults" class="button-secondary" value="<?php echo attribute_escape( __('Revert to Widgets Manager Defaults', 'k2_domain') ); ?>" />
+				<p class="secondary">
+					<!--<input type="submit" name="default-widgets" id="default-widgets" class="button-secondary" value="<?php echo attribute_escape( __('Install a Default Set of Widgets', 'k2_domain') ); ?>" />-->
 
-					<input type="submit" name="sbm-upgrade" id="sbm-upgrade" class="button-secondary" value="<?php echo attribute_escape( __('Import old SBM settings', 'k2_domain') ); ?>" />
+					<!--<input type="submit" name="sbm-upgrade" id="sbm-upgrade" class="button-secondary" value="<?php echo attribute_escape( __('Import old SBM settings', 'k2_domain') ); ?>" />-->
 				</p>
 			</div><!-- .container -->
 
@@ -307,6 +312,9 @@
 
 
 		<div class="submit">
+			<?php wp_nonce_field('k2options'); ?>
+			<input type="hidden" name="k2-options-submit" value="k2-options-submit" />
+
 			<input type="button" name="advanced" id="advanced" value="<?php echo attribute_escape( __('Advanced Options', 'k2_domain') ); ?>" class="button-secondary advanced" />
 			<input type="submit" name="restore-defaults" id="restore-defaults" onClick="return confirmDefaults();" value="<?php echo attribute_escape( __('Revert to K2 Defaults', 'k2_domain') ); ?>" class="button-secondary" />
 			<input type="submit" id="save" name="save" class="button-primary" value="<?php echo attribute_escape( __('Save Changes', 'k2_domain') ); ?>" />
