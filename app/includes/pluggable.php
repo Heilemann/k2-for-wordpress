@@ -12,7 +12,6 @@
 // Prevent users from directly loading this include file
 defined( 'K2_CURRENT' ) or die ( 'Error: This file can not be loaded directly.' );
 
-
 /**
  * Displays the current post meta.
  *
@@ -26,48 +25,9 @@ if ( ! function_exists('k2_entry_meta') ):
 		$num = (int) $num;
 		if ( $num < 1 ) $num = 1;
 
-		$meta_format = apply_filters( 'k2_entry_meta_format', get_option('k2entrymeta' . $num) );
+		$entrymeta = preg_replace( '/%(.+?)%/', '[entry_$1]', get_option('k2entrymeta' . $num) );
 
-		// No keywords to replace
-		if ( strpos($meta_format, '%' ) === false ) {
-			echo $meta_format;
-		} else {
-
-			// separate the %keywords%
-			$meta_array = preg_split('/(%.+?%)/', $meta_format, -1, PREG_SPLIT_DELIM_CAPTURE);
-
-			// parse through the keywords
-			foreach ($meta_array as $key => $str) {
-				switch ($str) {
-					case '%author%':
-						$meta_array[$key] = k2_entry_author();
-						break;
-
-					case '%categories%':
-						$meta_array[$key] = k2_entry_categories();
-						break;
-
-					case '%comments%':
-						$meta_array[$key] = k2_entry_comments();
-						break;
-
-					case '%date%':
-						$meta_array[$key] = k2_entry_date();
-						break;
-
-					case '%time%':
-						$meta_array[$key] = k2_entry_time();
-						break;
-
-					case '%tags%':
-						$meta_array[$key] = k2_entry_tags();
-						break;
-				}
-			}
-
-			// output the result
-			echo implode('', $meta_array);
-		}
+		echo do_shortcode($entrymeta);
 	}
 endif;
 
@@ -204,3 +164,11 @@ function k2_get_page_list_args() {
 	return $list_args;
 }
 endif;
+
+
+add_shortcode('entry_author', 'k2_entry_author');
+add_shortcode('entry_categories', 'k2_entry_categories');
+add_shortcode('entry_comments', 'k2_entry_comments');
+add_shortcode('entry_date', 'k2_entry_date');
+add_shortcode('entry_tags', 'k2_entry_tags');
+add_shortcode('entry_time', 'k2_entry_time');
