@@ -49,7 +49,7 @@ class K2SBM {
 	}
 
 	function uninstall() {
-		remove_option('k2sbm_modules');
+		delete_option('k2sbm_modules');
 	}
 
 	function direct_bootstrap() {
