@@ -18,30 +18,22 @@ class K2 {
 		// Load the localisation text
 		load_theme_textdomain('k2_domain');
 
-		if ( ! defined('K2_STYLES_DIR') )
-			define('K2_STYLES_DIR', TEMPLATEPATH . '/styles');
-
-		if ( ! defined('K2_STYLES_URL') )
-			define('K2_STYLES_URL', get_template_directory_uri() . '/styles');
-
-		if ( ! defined('K2_HEADERS_DIR') )
-			define('K2_HEADERS_DIR', TEMPLATEPATH . '/images/headers');
-
-		if ( ! defined('K2_HEADERS_URL') )
-			define('K2_HEADERS_URL', get_template_directory_uri() . '/images/headers');
+		@define('K2_STYLES_DIR', TEMPLATEPATH . '/styles');
+		@define('K2_STYLES_URL', get_template_directory_uri() . '/styles');
+		@define('K2_HEADERS_DIR', TEMPLATEPATH . '/images/headers');
+		@define('K2_HEADERS_URL', get_template_directory_uri() . '/images/headers');
 
 		// Load required classes and includes
+		require_once(TEMPLATEPATH . '/app/includes/wp-compat.php');
 		require_once(TEMPLATEPATH . '/app/classes/archive.php');
 		require_once(TEMPLATEPATH . '/app/classes/header.php');
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
 		require_once(TEMPLATEPATH . '/app/includes/comments.php');
-		require_once(TEMPLATEPATH . '/app/includes/wp-compat.php');
+		require_once(TEMPLATEPATH . '/app/includes/widgets.php');
 
-		if ( ! defined('K2_LOAD_SBM') ) {
+		if ( ! defined('K2_LOAD_SBM') )
 			require_once(TEMPLATEPATH . '/app/classes/widgets.php');
-			//require_once(TEMPLATEPATH . '/app/includes/widgets.php');
-		}
 
 		// Check installed version, upgrade if needed
 		$k2version = get_option('k2version');
@@ -115,115 +107,16 @@ class K2 {
 	 * @param string $previous Previous version K2
 	 */
 	function upgrade($previous) {
-		global $wpdb;
+		// Delete deprecated options
+		delete_option('k2advnav');
+		delete_option('k2dynamiccolumns');
+		delete_option('k2header_picture');
+		delete_option('k2imagerandomfeature');
+		delete_option('k2lastmodified');
+		delete_option('k2scheme');
 
-		if ( version_compare( $previous, '1.0-RC5', '<' ) ) {
-			// Add new options
-			add_option('k2style', '', 'Choose the Style you want K2 to use');
-			add_option('k2dynamiccolumns', '1', 'Enable this to dynamically change the number of columns.');
-			add_option('k2headerimage', '', 'Current Header Image');
-
-			// Convert existing options
-
-			// Header Images
-			if ( '1' == get_option('k2imagerandomfeature') ) {
-				update_option('k2headerimage', 'random');
-			} else {
-				$image = get_option('k2header_picture');
-				if ( $image != '') {
-					if ( is_readable(K2_HEADERS_DIR . "/$image") ) {
-						update_option( 'k2headerimage', $image );
-					}
-				}
-			}
-
-			// Styles
-			$style = get_option('k2scheme');
-			if ( $style != '' ) {
-				if ( is_readable(K2_STYLES_DIR . "/$style") ) {
-					update_option( 'k2style', $style );
-					update_style_info();
-				}
-			}
-
-			// Delete depreciated options
-			delete_option('k2advnav');
-			delete_option('k2dynamiccolumns');
-			delete_option('k2header_picture');
-			delete_option('k2imagerandomfeature');
-			delete_option('k2lastmodified');
-			delete_option('k2scheme');
-		}
-
-
-		if ( version_compare( $previous, '1.0-RC6.2', '<' ) ) {
-
-			// Remove previous SBM hackery
-			$found = false;
-			$plugins = (array) get_option('active_plugins');
-
-			foreach ($plugins as $key => $plugin) {
-				if ( (strpos( $plugin, 'sbm-stub.php' ) !== false)
-					or (strpos( $plugin, 'widgets-removal.php' ) !== false )
-					or (strpos( $plugin, 'k2-sbm-loader.php' ) !== false ) ) {
-
-					unset( $plugins[$key] );
-					$found = true;
-				}
-			}
-
-			if ( $found )
-				update_option('active_plugins', $plugins);
-		}
-
-
-		if ( version_compare( $previous, '1.0-RC7.3', '<' ) ) {
-			// Search for pages using page-comments.php
-			$page_ids = $wpdb->get_results("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = 'page-comments.php'", ARRAY_N);
-
-			// Set meta comments and remove template
-			if ( ! empty($page_ids) ) {
-				foreach ($page_ids as $id) {
-					update_post_meta($id[0], 'comments', 'on');
-					delete_post_meta($id[0], '_wp_page_template');
-				}
-			}
-
-			// Search for pages using page-wide.php
-			$page_ids = $wpdb->get_results("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = 'page-wide.php'", ARRAY_N);
-
-			// Set meta sidebarless and remove template
-			if ( ! empty($page_ids) ) {
-				foreach ($page_ids as $id) {
-					update_post_meta($id[0], 'sidebarless', 'on');
-					delete_post_meta($id[0], '_wp_page_template');
-				}
-			}
-
-			// Search for pages using page-wide-comments.php
-			$page_ids = $wpdb->get_results("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = 'page-wide-comments.php'", ARRAY_N);
-
-			// Set meta comments/sidebarless and remove template
-			if ( ! empty($page_ids) ) {
-				foreach ($page_ids as $id) {
-					update_post_meta($id[0], 'comments', 'on');
-					update_post_meta($id[0], 'sidebarless', 'on');
-					delete_post_meta($id[0], '_wp_page_template');
-				}
-			}
-		}
-
-
-		if ( version_compare( $previous, '1.0-RC8', '<' ) ) {
-			add_option('k2animations', '1', 'JavaScript Animation effects.');
-			add_option('k2entrymeta1', __('Published on %date% in %categories%. %comments% %tags%', 'k2_domain'), 'Customized metadata format before entry content.');
-			add_option('k2entrymeta2', '', 'Customized metadata format after entry content.');
-
-			// Install a default set of widgets
-			$sidebars_widgets = wp_get_sidebars_widgets();
-			if ( empty( $sidebars_widgets ) )
-				K2::default_widgets();
-		}
+		// Install options
+		K2::install();
 
 		// Call the upgrade handlers
 		do_action('k2_upgrade', $previous);
@@ -260,24 +153,6 @@ class K2 {
 
 		// Call the uninstall handlers
 		do_action('k2_uninstall');
-
-		// Remove the K2 options from the database. This is a catch-all
-		$cleanup = $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'k2%'");
-
-		if ( $switch_theme ) {
-			// Flush the dang cache
-			wp_cache_flush();
-
-			// Switch to the default theme
-			update_option('template', 'default');
-			update_option('stylesheet', 'default');
-			delete_option('current_theme');
-			$theme = get_current_theme();
-			do_action('switch_theme', $theme);
-
-			wp_redirect('themes.php?activated=true');
-			exit;
-		}
 	}
 
 
@@ -658,10 +533,6 @@ class K2 {
 		wp_register_script('k2trimmer',
 			get_bloginfo('template_directory') . '/js/k2.trimmer.js',
 			array('jquery', 'k2slider'), K2_CURRENT, true);
-
-		wp_register_script('k2sbm',
-			get_bloginfo('template_directory') . '/js/k2.sbm.js',
-			array('jquery', 'interface', 'jquery-dimensions', 'humanmsg', 'humanundo'), K2_CURRENT);
 
 		wp_register_script('k2widgets',
 			get_bloginfo('template_directory') . '/js/k2.widgets.js',

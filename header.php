@@ -17,9 +17,11 @@
 
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/style.css" />
 
-	<?php if ( ! K2_USING_STYLES ): /* Child Themes */ ?>
+	<?php if ( K2_CHILD_THEME ): /* Child Themes */ ?>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
-	<?php elseif ( get_option('k2style') != '' ): /* K2 Styles */ ?>
+	<?php endif; ?>
+
+	<?php if ( get_option('k2style') != '' ): /* K2 Styles */ ?>
 	<link rel="stylesheet" type="text/css" href="<?php k2info('style'); ?>" />
 	<?php endif; ?>
 

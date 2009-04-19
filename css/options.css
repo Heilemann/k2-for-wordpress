@@ -248,3 +248,12 @@ abbr.entry-date {
 	padding: 2px 0 2px 20px;
 	background: url('../images/comment.png') left center no-repeat;
 	}
+
+
+.button-secondary {
+	float: right;
+}
+
+.submit {
+	max-width: 780px;
+}

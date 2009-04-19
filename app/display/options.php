@@ -1,15 +1,13 @@
 <?php
-	if ( K2_USING_STYLES ) {
-		// Get the current K2 Style
-		$current_style = get_option('k2style');
-		$style_info = get_option('k2styleinfo');
+	// Get the current K2 Style
+	$current_style = get_option('k2style');
+	$style_info = get_option('k2styleinfo');
 
-		// Check that the styles folder exists
-		$is_styles_dir = is_dir(K2_STYLES_DIR);
+	// Check that the styles folder exists
+	$is_styles_dir = is_dir(K2_STYLES_DIR);
 
-		// Get the scheme files
-		$style_files = K2::get_styles();
-	}
+	// Get the scheme files
+	$style_files = K2::get_styles();
 
 	// Check that the K2 folder has no spaces
 	$dir_has_spaces = (strpos(TEMPLATEPATH, ' ') !== false);

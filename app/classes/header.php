@@ -4,34 +4,43 @@
 
 class K2Header {
 	function init() {
+		$columns = get_option('k2columns');
 
-		if ( K2_USING_STYLES ) {
+		// dynamic columns, use 3 columns width
+		if ( 'dynamic' == $columns )
+			$columns = 3;
+		
+		// set minimum of 1 column
+		if ( $columns < 1 )
+			$columns = 1;
+
+		// default k2 widths
+		$default_widths =  array( 1 => 560, 780, 950 );
+
+		// Load style settings
+		if ( get_option('k2style') != '' ) {
 			$styleinfo = get_option('k2styleinfo');
 
-			if ( ! defined('HEADER_IMAGE_HEIGHT') )
-				define('HEADER_IMAGE_HEIGHT', empty($styleinfo['header_height'])? 200 : $styleinfo['header_height']);
+			if ( ! empty($styleinfo['header_height']) )
+				@define( 'HEADER_IMAGE_HEIGHT', $styleinfo['header_height'] );
 
-			if ( ! defined('HEADER_IMAGE_WIDTH') )
-				define('HEADER_IMAGE_WIDTH', K2Header::get_header_width() );
+			// style contains header width setting
+			if ( ! empty($styleinfo['header_width']) )
+				@define( 'HEADER_IMAGE_WIDTH', $styleinfo['header_width'] );
 
-			if ( ! defined('HEADER_TEXTCOLOR') )
-				define('HEADER_TEXTCOLOR', empty($styleinfo['header_text_color'])? 'ffffff' : $styleinfo['header_text_color']);
+			// style contains layout widths setting
+			if ( ! empty($styleinfo['layout_widths'][$columns]) )
+				@define( 'HEADER_IMAGE_WIDTH', $styleinfo['layout_widths'][$columns] );
 
-			if ( ! defined('HEADER_IMAGE') )
-				define('HEADER_IMAGE', '%s/images/transparent.gif');
-		} else {
-			if ( ! defined('HEADER_IMAGE_HEIGHT') )
-				define( 'HEADER_IMAGE_HEIGHT', 200 );
-
-			if ( ! defined('HEADER_IMAGE_WIDTH') )
-				define( 'HEADER_IMAGE_WIDTH', 950 );
-
-			if ( ! defined('HEADER_TEXTCOLOR') )
-				define( 'HEADER_TEXTCOLOR', 'ffffff' );
-
-			if ( ! defined('HEADER_IMAGE') )
-				define( 'HEADER_IMAGE', '%s/images/transparent.gif' );
+			if ( ! empty($styleinfo['header_text_color']) )
+				@define( 'HEADER_TEXTCOLOR', $styleinfo['header_text_color'] );
 		}
+		
+		// Default settings
+		@define( 'HEADER_IMAGE_HEIGHT', 200 );
+		@define( 'HEADER_IMAGE_WIDTH', $default_widths[$columns] );
+		@define( 'HEADER_TEXTCOLOR', 'ffffff' );
+		@define( 'HEADER_IMAGE', '%s/images/transparent.gif' );
 
 		// Only load Custom Image Header if GD is installed
 		if ( extension_loaded('gd') && function_exists('gd_info') ) {
@@ -41,33 +50,6 @@ class K2Header {
 
 	function uninstall() {
 		remove_theme_mods();
-	}
-
-	function get_header_width() {
-		$default_widths =  array( 1 => 560, 780, 950 );
-		$styleinfo = get_option('k2styleinfo');
-		$columns = get_option('k2columns');
-
-		// dynamic columns, use 3 columns width
-		if ( 'dynamic' == $columns ) {
-			$columns = 3;
-		}
-		
-		if ( $columns < 1 ) {
-			$columns = 1;
-		}
-
-		// style contains header width setting
-		if ( ! empty($styleinfo['header_width']) ) {
-			return $styleinfo['header_width'];
-		}
-
-		// style contains layout widths setting
-		if ( ! empty($styleinfo['layout_widths'][$columns]) ) {
-			return $styleinfo['layout_widths'][$columns];
-		}
-
-		return $default_widths[$columns];
 	}
 
 	function get_header_image_url() {

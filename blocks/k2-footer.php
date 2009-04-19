@@ -18,7 +18,7 @@
 	?>
 </p>
 
-<?php if ( K2_USING_STYLES and get_k2info('style_footer') != '' ): ?>
+<?php if ( get_k2info('style_footer') != '' ): ?>
 	<p class="footerstyledwith">
 		<?php k2info('style_footer'); ?>
 	</p>
