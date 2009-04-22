@@ -10,27 +10,31 @@
 	<?php /* Menu for subpages of current page */
 		global $notfound;
 		if (is_page() and ($notfound != '1')) {
-			$current_page = $post->ID;
+			/*$current_page = $post->ID;
 			while($current_page) {
 				$page_query = $wpdb->get_row("SELECT ID, post_title, post_status, post_parent FROM $wpdb->posts WHERE ID = '$current_page'");
 				$current_page = $page_query->post_parent;
 			}
 			$parent_id = $page_query->ID;
-			$parent_title = $page_query->post_title;
-
-			$page_menu = wp_list_pages('echo=0&sort_column=menu_order&title_li=&child_of='. $parent_id);
+			$parent_title = $page_query->post_title;*/
+			
+			$ancestor = array_pop(get_post_ancestors($post->ID));
+			$ancestor = isset($ancestor) ? $ancestor : $post->ID;
+			$title = get_the_title($ancestor);
+			$page_menu = wp_list_pages('echo=0&sort_column=menu_order&title_li=&child_of='. $ancestor);
+			
 			if ($page_menu) {
 	?>
 
 	<div class="sb-pagemenu">
-		<h4><?php printf( __('%s Subpages','k2_domain'), apply_filters('the_title', $parent_title) ); ?></h4>
+		<h4><?php printf( __('%s Subpages','k2_domain'), apply_filters('the_title', $title) ); ?></h4>
 		
 		<ul>
 			<?php echo $page_menu; ?>
 		</ul>
 			
-		<?php if ($parent_id != $post->ID) { ?>
-			<a href="<?php echo get_permalink($parent_id); ?>"><?php printf(__('Back to %s','k2_domain'), apply_filters('the_title',$parent_title) ); ?></a>
+		<?php if ($ancestor != $post->ID) { ?>
+			<a href="<?php echo get_permalink($ancestor); ?>"><?php printf(__('Back to %s','k2_domain'), apply_filters('the_title',$title) ); ?></a>
 		<?php } ?>
 	</div>
 	<?php } } ?>
