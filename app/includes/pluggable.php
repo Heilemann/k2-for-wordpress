@@ -161,6 +161,11 @@ endif;
 if ( ! function_exists('k2_get_page_list_args') ):
 function k2_get_page_list_args() {
 	$list_args = 'sort_column=menu_order&depth=1&title_li=';
+	
+	// if a page is used as a front page, exclude it from page list
+	if ( get_option('show_on_front') == 'page' )
+		$list_args .= '&exclude=' . get_option('page_on_front');
+	
 	return $list_args;
 }
 endif;
