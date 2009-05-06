@@ -46,6 +46,30 @@ function get_k2info( $show = '' ) {
 	return $output;
 }
 
+function k2_add_styles_to_theme_editor() {
+	global $wp_themes, $pagenow;
+
+	if ( ('theme-editor.php' == $pagenow) and strpos(K2_STYLES_DIR, WP_CONTENT_DIR) !== false ) {
+		get_themes();
+		$current = get_current_theme();
+
+		// Get the path relative to wp-content
+		$style_path = str_replace(WP_CONTENT_DIR, '', K2_STYLES_DIR);
+
+		// Get a list of style css
+		$styles = K2::files_scan( K2_STYLES_DIR, 'css', 2 );;
+
+		// Loop through each style css and add to the list
+		foreach ($styles as $style_css) {
+			$wp_themes[$current]['Stylesheet Files'][] = "$style_path/$style_css";
+		}
+	}
+}
+
+if ( ! K2_CHILD_THEME ) {
+	add_action( 'admin_init', 'k2_add_styles_to_theme_editor' );
+}
+
 function update_style_info() {
 	$data = get_style_data( get_option('k2style') );
 
@@ -122,20 +146,20 @@ function get_style_data( $style_file = '' ) {
 		 $header_text_color = '';
 
 	if ( preg_match("|Header Width\s*:\s*(\d+)|i", $style_data, $header_width) )
-		$header_width = $header_width[1];
+		$header_width = (int) $header_width[1];
 	else
-		$header_width = '';
+		$header_width = 0;
 
 	if ( preg_match("|Header Height\s*:\s*(\d+)|i", $style_data, $header_height) )
-		$header_height = $header_height[1];
+		$header_height = (int) $header_height[1];
 	else
-		$header_height = '';
+		$header_height = 0;
 
 	$layout_widths = array();
 	if ( preg_match("|Layout Widths\s*:\s*(\d+)\s*(px)?,\s*(\d+)\s*(px)?,\s*(\d+)|i", $style_data, $widths) ) {
-		$layout_widths[1] = $widths[1];
-		$layout_widths[2] = $widths[3];
-		$layout_widths[3] = $widths[5];
+		$layout_widths[1] = (int) $widths[1];
+		$layout_widths[2] = (int) $widths[3];
+		$layout_widths[3] = (int) $widths[5];
 	}
 
 	return array(
