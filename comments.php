@@ -76,7 +76,7 @@
 		
 		<?php if ( function_exists('cancel_comment_reply_link') ): ?>
 		<div class="cancel-comment-reply">
-			<small><?php cancel_comment_reply_link(); ?></small>
+			<?php cancel_comment_reply_link( __('Cancel Reply', 'k2_domain') ); ?>
 		</div>
 		<?php endif; ?>
 

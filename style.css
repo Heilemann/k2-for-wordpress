@@ -819,9 +819,18 @@ abbr.entry-date {
 	}
 
 #commentlist #respond {
-	padding-top: 10px;
-	margin-top: 20px;
-	border-top: 1px solid #ccc;
+	background-color: #ddd;
+	margin: 1em 0;
+	padding: 1em;
+	position: relative;
+	}
+
+#commentlist .cancel-comment-reply {
+	position: absolute;
+	top: 1em;
+	right: 1em;
+	background: url(images/cross.png) no-repeat left center;
+	padding: 2px 0 2px 20px;
 	}
 
 #commentlist #respond a {
