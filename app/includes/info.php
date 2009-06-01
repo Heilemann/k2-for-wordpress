@@ -318,7 +318,7 @@ function get_wp_version() {
 
 // Generates semantic classes for BODY element
 function k2_body_class( $print = true ) {
-	global $wp_query, $current_user;
+	global $wp_query, $current_user, $blog_id;
 	
 	$c = array('wordpress', 'k2');
 
@@ -487,6 +487,12 @@ function k2_body_class( $print = true ) {
 		$locale = $lang_array[0];
 	}
 	$c[] = 'lang-' . $locale;
+
+    // For WPMU. Set a class for the blog ID    
+    if ( isset($blog_id) )
+    {
+        $c[] = 'wpmu-' . $blog_id;
+    }
 
 	// Separates classes with a single space, collates classes for BODY
 	$c = attribute_escape( join( ' ', apply_filters('body_class', $c) ) );
