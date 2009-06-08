@@ -388,6 +388,14 @@ function k2_body_class( $print = true ) {
 		if ( get_post_custom_values('sidebarless') ) {
 			$c[] = 'sidebars-none';
 		}
+		
+		if ( get_post_custom_values('hidesidebar1') ) {
+			$c[] = 'hidesidebar-1';
+		}
+
+		if ( get_post_custom_values('hidesidebar2') ) {
+			$c[] = 'hidesidebar-2';
+		}
 
 		rewind_posts();
 	}
@@ -433,6 +441,14 @@ function k2_body_class( $print = true ) {
 
 		if ( get_post_custom_values('sidebarless') ) {
 			$c[] = 'sidebars-none';
+		}
+
+		if ( get_post_custom_values('hidesidebar1') ) {
+			$c[] = 'hidesidebar-1';
+		}
+
+		if ( get_post_custom_values('hidesidebar2') ) {
+			$c[] = 'hidesidebar-2';
 		}
 
 		rewind_posts();
@@ -490,9 +506,7 @@ function k2_body_class( $print = true ) {
 
     // For WPMU. Set a class for the blog ID    
     if ( isset($blog_id) )
-    {
         $c[] = 'wpmu-' . $blog_id;
-    }
 
 	// Separates classes with a single space, collates classes for BODY
 	$c = attribute_escape( join( ' ', apply_filters('body_class', $c) ) );
