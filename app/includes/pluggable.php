@@ -32,6 +32,7 @@ if ( ! function_exists('k2_template_css') ):
 		// Styles
 		$active_styles = get_option('k2style');
 		if ( ! empty($active_styles) ) {
+			krsort($active_styles);
 			foreach ( $active_styles as $style ) {
 				echo '<link rel="stylesheet" type="text/css" href="' . K2_STYLES_URL . '/' . $style . '" />' . "\n";
 			}

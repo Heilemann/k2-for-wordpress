@@ -33,4 +33,10 @@
 	<?php include(TEMPLATEPATH . '/app/display/theloop.php'); ?>
 </div><!-- #rollingcontent .hfeed -->
 
-<?php K2::setup_rolling_archives(); ?>
+<?php
+	if ( defined('DOING_AJAX') and true == DOING_AJAX ) {
+		add_action( 'k2_dynamic_content', array('K2', 'setup_rolling_archives') );
+	} else {
+		add_action( 'wp_footer', array('K2', 'setup_rolling_archives') );
+	}
+?>

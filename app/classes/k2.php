@@ -32,9 +32,6 @@ class K2 {
 		require_once(TEMPLATEPATH . '/app/includes/comments.php');
 		require_once(TEMPLATEPATH . '/app/includes/widgets.php');
 
-		if ( ! defined('K2_LOAD_SBM') )
-			require_once(TEMPLATEPATH . '/app/classes/widgets.php');
-
 		// Check installed version, upgrade if needed
 		$k2version = get_option('k2version');
 
@@ -46,10 +43,15 @@ class K2 {
 		// Register our scripts with script loader
 		K2::register_scripts();
 
-		// Load the current style's functions.php if it is readable
-		$style_functions = dirname( K2_STYLES_DIR . '/' . get_option('k2style') ) . '/functions.php';
-		if ( K2_USING_STYLES and is_readable($style_functions) )
-			include_once($style_functions);
+		// Load the current styles functions.php if it is readable
+		$active_styles = get_option('k2style');
+		if ( ! empty($active_styles) ) {
+			foreach ($active_styles as $style) {
+				$style_functions = dirname( K2_STYLES_DIR . '/' . $style ) . '/functions.php';
+				if ( is_readable($style_functions) )
+					include_once($style_functions);
+			}
+		}
 
 		// Finally load pluggable functions
 		require_once(TEMPLATEPATH . '/app/includes/pluggable.php');
@@ -80,7 +82,7 @@ class K2 {
 		add_option('k2columns', '2', 'Number of columns to display.');
 
 		// Added 1.0-RC6
-		add_option('k2style', '', 'Choose the Style you want K2 to use');
+		add_option('k2style', array(), 'Choose the Style you want K2 to use');
 		add_option('k2headerimage', '', 'Current Header Image');
 
 		// Added 1.0-RC8
@@ -88,12 +90,17 @@ class K2 {
 		add_option('k2entrymeta1', __('Published on %date% in %categories%. %comments% %tags%', 'k2_domain'), 'Customized metadata format before entry content.');
 		add_option('k2entrymeta2', '', 'Customized metadata format after entry content.');
 
+		/*
+		add_option('k2stylespath', '%k2%/styles', 'Location of K2 Styles');
+		add_option('k2headerspath', '%k2%/images/headers', 'Location of K2 Header images');
+
 		// Install a default set of widgets
 		if ( function_exists('wp_get_sidebars_widgets') ) {
 			$sidebars_widgets = wp_get_sidebars_widgets();
 			if ( empty( $sidebars_widgets ) )
-				K2::default_widgets();
+				k2_default_widgets();
 		}
+		*/
 
 		// Call the install handlers
 		do_action('k2_install');
@@ -114,6 +121,15 @@ class K2 {
 		delete_option('k2imagerandomfeature');
 		delete_option('k2lastmodified');
 		delete_option('k2scheme');
+
+		if ( version_compare($previous, '1.0-RC8', '<') ) {
+			$style = get_option('k2style');
+			if ( empty($style) ) {
+				update_option( 'k2style', array() );
+			} elseif ( !is_array($style) ) {
+				update_option( 'k2style', array($style) );
+			}
+		}
 
 		// Install options
 		K2::install();
@@ -150,6 +166,8 @@ class K2 {
 		delete_option('k2entrymeta1');
 		delete_option('k2entrymeta2');
 		delete_option('k2animations');
+		//delete_option('k2stylespath');
+		//delete_option('k2headerspath');
 
 		// Call the uninstall handlers
 		do_action('k2_uninstall');
@@ -176,18 +194,28 @@ class K2 {
 			// Setup ELA
 			if ( isset($_REQUEST['configela']) ) {
 				K2Archive::setup_archive();
+				wp_redirect('themes.php?page=k2-options&ela=true');
+				die;
 
 			// Reset K2
 			} elseif ( isset($_REQUEST['restore-defaults']) ) {
 				K2::restore_defaults();
+				wp_redirect('themes.php?page=k2-options&defaults=true');
+				die;
 
+			/*
 			// Reset Sidebars
 			} elseif ( isset($_REQUEST['default-widgets']) ) {
-				K2::default_widgets();
+				k2_default_widgets();
+				wp_redirect('themes.php?page=k2-options&widgets=true');
+				die;
+			*/
 
 				// Save Settings
 			} elseif ( isset($_REQUEST['save']) and isset($_REQUEST['k2']) ) {
 				K2::update_options();
+				wp_redirect('themes.php?page=k2-options&saved=true');
+				die;
 			}
 		}
 	}
@@ -224,17 +252,12 @@ class K2 {
 	 */
 	function admin_head() {
 		?>
-
-		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/options.css" />
-		<script type="text/javascript">
-		function confirmDefaults() {
-			if (confirm("<?php _e('Do you want to restore K2 to default settings? This will remove all your K2 settings.', 'k2_domain'); ?>") == true) {
-				return true;
-			} else {
-				return false;
-			}
-		}
+		<script type="text/javascript" charset="utf-8">
+		//<![CDATA[
+			var defaults_prompt = "<?php _e('Do you want to restore K2 to default settings? This will remove all your K2 settings.', 'k2_domain'); ?>";
+		//]]>
 		</script>
+		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/options.css" />
 	<?php
 	}
 
@@ -244,7 +267,7 @@ class K2 {
 	 */
 	function admin_print_scripts() {
 		// Add our script to the queue
-		wp_enqueue_script('k2functions');
+		wp_enqueue_script('k2options');
 	}
 
 
@@ -301,7 +324,7 @@ class K2 {
 			update_option('k2style', $_POST['k2']['style']);
 			update_style_info();
 		} else {
-			update_option('k2style', '');
+			update_option('k2style', array());
 			update_option('k2styleinfo', array());
 		}
 
@@ -335,29 +358,6 @@ class K2 {
 
 		// K2 Hook
 		do_action('k2_update_options');
-	}
-
-
-	/**
-	 * Assigns a default set of widgets
-	 */
-	function default_widgets() {
-		/*
-		global $wp_registered_widgets;
-
-		$sidebars_widgets = array( 'sidebar-1' => array() );
-
-		// Fill first sidebar
-		if ( isset($wp_registered_widgets['search']) ) $sidebars_widgets['sidebar-1'][] = 'search';
-		if ( isset($wp_registered_widgets['k2-about']) ) $sidebars_widgets['sidebar-1'][] = 'k2-about';
-		if ( isset($wp_registered_widgets['recent-posts']) ) $sidebars_widgets['sidebar-1'][] = 'recent-posts';
-		if ( isset($wp_registered_widgets['recent-comments']) ) $sidebars_widgets['sidebar-1'][] = 'recent-comments';
-		if ( isset($wp_registered_widgets['archives']) ) $sidebars_widgets['sidebar-1'][] = 'archives';
-		if ( isset($wp_registered_widgets['tag_cloud']) ) $sidebars_widgets['sidebar-1'][] = 'tag_cloud';
-		if ( isset($wp_registered_widgets['links']) ) $sidebars_widgets['sidebar-1'][] = 'links';
-
-		wp_set_sidebars_widgets( $sidebars_widgets );
-		*/
 	}
 
 
@@ -510,6 +510,10 @@ class K2 {
 			get_bloginfo('template_directory') . '/js/k2.functions.js',
 			array('jquery'), K2_CURRENT);
 
+		wp_register_script('k2options',
+			get_bloginfo('template_directory') . '/js/k2.options.js',
+			array('jquery', 'jquery-ui-sortable'), K2_CURRENT);
+
 		wp_register_script('humanmsg',
 			get_bloginfo('template_directory') . '/js/jquery.humanmsg.js',
 			array('jquery', 'jquery-easing'), K2_CURRENT);
@@ -545,25 +549,27 @@ class K2 {
 	 */
 	function enqueue_scripts() {
 		// Load our scripts
-		wp_enqueue_script('k2functions');
+		if ( ! is_admin() ) {
 
-		if (get_option('k2rollingarchives') == 1) {
-			wp_enqueue_script('k2rollingarchives');
+			wp_enqueue_script('k2functions');
+
+			if ( '1' == get_option('k2rollingarchives') )
+				wp_enqueue_script('k2rollingarchives');
+
+			if ( '1' == get_option('k2livesearch') )
+				wp_enqueue_script('k2livesearch');
+
+			// WP 2.7 threaded comments
+			if ( is_singular() )
+				wp_enqueue_script( 'comment-reply' );
 		}
-
-		if (get_option('k2livesearch') == 1) {
-			wp_enqueue_script('k2livesearch');
-		}
-
-		// WP 2.7 threaded comments
-		if ( is_singular() ) wp_enqueue_script( 'comment-reply' );
 	}
 	
 
 	/**
-	 * Initializes scripts in the header
+	 * Initializes scripts
 	 */
-	function header_scripts() {
+	function init_scripts() {
 ?>
 	<script type="text/javascript">
 	//<![CDATA[
@@ -598,7 +604,13 @@ class K2 {
 			K2.RollingArchives = new RollingArchives(
 				"<?php echo attribute_escape( __('Page %1$d of %2$d', 'k2_domain') ); ?>"
 			);
+
+			jQuery('body').addClass('rollingarchives');
 			<?php endif; ?>
+
+			jQuery('#dynamic-content').ajaxSuccess(function () {
+				<?php /* K2 Hook */ do_action('ajax_success_js'); ?>
+			});
 		});
 	//]]>
 	</script>
@@ -612,12 +624,29 @@ class K2 {
 	 * @return array paths to style files
 	 */
 	function get_styles() {
+		global $k2_styles;
+
+		if ( ! empty($k2_styles) )
+			return $k2_styles;
+
 		$k2_styles = array();
 
+		// get list of all style files
 		$style_files = K2::files_scan( K2_STYLES_DIR, 'css', 2 );
-
 		sort($style_files);
 
+		// get active styles
+		$active_styles = get_option('k2style');
+
+		if ( ! empty($active_styles) ) {
+			// get inactive styles
+			$inactive_styles = array_diff($style_files, $active_styles);
+
+			// merge active with inactive
+			$style_files = array_merge($active_styles, $inactive_styles);
+		}
+
+		// loop through and get their data
 		foreach ( (array) $style_files as $style_file ) {
 			$style_data = get_style_data($style_file);
 
@@ -789,7 +818,7 @@ class K2 {
 add_action( 'admin_menu', array('K2', 'add_options_menu') );
 add_action( 'admin_init', array('K2', 'admin_init') );
 add_action( 'wp_print_scripts', array('K2', 'enqueue_scripts') );
-add_action( 'wp_head', array('K2', 'header_scripts') );
+add_action( 'wp_footer', array('K2', 'init_scripts') );
 add_action( 'template_redirect', array('K2', 'dynamic_content') );
 add_filter( 'query_vars', array('K2', 'add_custom_query_vars') );
 

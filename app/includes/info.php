@@ -71,7 +71,7 @@ if ( ! K2_CHILD_THEME ) {
 }
 
 function update_style_info() {
-	$data = get_style_data( get_option('k2style') );
+	$data = get_style_data( array_shift( get_option('k2style') ) );
 
 	if ( !empty($data) and ($data['stylename'] != '') and ($data['stylelink'] != '') and ($data['author'] != '') ) {
 		// No custom style info
@@ -87,7 +87,7 @@ function update_style_info() {
 		}
 	}
 
-	update_option('k2styleinfo', $data);	
+	update_option('k2styleinfo', $data);
 
 	return $data;
 }

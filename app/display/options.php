@@ -1,7 +1,6 @@
 <?php
 	// Get the current K2 Style
-	$current_style = get_option('k2style');
-	$style_info = get_option('k2styleinfo');
+	$active_styles = get_option('k2style');
 
 	// Check that the styles folder exists
 	$is_styles_dir = is_dir(K2_STYLES_DIR);
@@ -41,31 +40,31 @@
 ?>
 
 <div class="wrap">
-	<?php if ( isset($_REQUEST['restore-defaults']) ): ?>
+	<?php if ( isset($_GET['defaults']) ): ?>
 	<div class="updated fade">
 		<p><?php _e('K2 has been restored to default settings.', 'k2_domain'); ?></p>
 	</div>
 	<?php endif; ?>
 
-	<?php if ( isset($_REQUEST['default-widgets']) ): ?>
+	<?php if ( isset($_GET['widgets']) ): ?>
 	<div class="updated fade">
 		<p><?php _e('A default set of widgets has been installed.', 'k2_domain'); ?></p>
 	</div>
 	<?php endif; ?>
 
-	<?php if ( isset($_REQUEST['save']) ): ?>
+	<?php if ( isset($_GET['saved']) ): ?>
 	<div class="updated fade">
 		<p><?php _e('K2 Options have been updated', 'k2_domain'); ?></p>
 	</div>
 	<?php endif; ?>
 
-	<?php if ( isset($_REQUEST['configela']) ): ?>
+	<?php if ( isset($_GET['ela']) ): ?>
 	<div class="updated fade">
 		<p><?php _e('The Extended Live Archives plugin has been setup for use with K2', 'k2_domain'); ?></p>
 	</div>
 	<?php endif; ?>
 
-	<?php if ( K2_USING_STYLES and !$is_styles_dir ): ?>
+	<?php if ( !$is_styles_dir ): ?>
 		<div class="error">
 		<?php printf(__('The directory: <strong>%s</strong>, needed to store custom styles is missing. For you to be able to use custom styles, you need to add this directory.', 'k2_domain'), K2_STYLES_DIR ); ?>
 		</div>
@@ -80,26 +79,9 @@
 	<?php if ( function_exists('screen_icon') ) screen_icon(); ?>
 	<h2><?php _e('K2 Options', 'k2_domain'); ?></h2>
 	<form action="<?php echo attribute_escape($_SERVER['REQUEST_URI']); ?>" method="post">
-
- 			<div class="container">
-				<h3><label for="k2-sidebar-manager"><?php _e('Widgets Manager', 'k2_domain'); ?></label></h3>
-
-				<p class="main-option"><input id="k2-sidebar-manager" name="k2[sidebarmanager]" type="checkbox" value="1" <?php checked('1', get_option('k2sidebarmanager')); ?> />
-				<!--<label for="k2-sidebarmanager"><?php _e('Enable K2\'s Sidebar Manager', 'k2_domain'); ?></label>--></p>
-				<p class="description"><?php _e('K2 has a neat sidebar system that allows you to control where/when each widget can appear.', 'k2_domain'); ?></p>
-				<?php if ( defined('K2_LOAD_SBM') ): ?>
-					<p class="description alert">Please disable the K2 Sidebar Manager plugin to use the new Widgets Manager.</p>
-				<?php endif; ?>
-			
-				<p class="secondary">
-					<!--<input type="submit" name="default-widgets" id="default-widgets" class="button-secondary" value="<?php echo attribute_escape( __('Install a Default Set of Widgets', 'k2_domain') ); ?>" />-->
-
-					<!--<input type="submit" name="sbm-upgrade" id="sbm-upgrade" class="button-secondary" value="<?php echo attribute_escape( __('Import old SBM settings', 'k2_domain') ); ?>" />-->
-				</p>
-			</div><!-- .container -->
-
-			<div class="container">
-				<h3><label for="k2-columns"><?php _e('Columns', 'k2_domain'); ?></label></h3>
+		<ul class="options-list">
+			<li>
+				<h3 class="main-label"><label for="k2-columns"><?php _e('Columns', 'k2_domain'); ?></label></h3>
 
 				<p class="main-option">
 					<select id="k2-columns" name="k2[columns]">
@@ -112,30 +94,31 @@
 				<p class="description">
 					<?php _e('Select Dynamic Columns for K2 to dynamically reduce the number of columns depending on user\'s browser width.', 'k2_domain'); ?>
 				</p>
-			</div><!-- .container -->
+			</li>
+			<li>
+				<h3 class="main-label"><label for="k2-advnav"><?php _e('Advanced Navigation','k2_domain'); ?></label></h3>
 
-
-			<div class="container">
-				<h3><label for="k2-advnav"><?php _e('Advanced Navigation','k2_domain'); ?></label></h3>
-
-				<p class="main-option"><input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2livesearch')); ?> />
-				<!--<label for="k2-advnav"><?php _e('Enable Advanced Navigation','k2_domain'); ?></label>--></p>
+				<p class="main-option">
+					<input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2livesearch')); ?> />
+				</p>
 
 				<p class="description"><?php _e('Seamlessly search and navigate old posts.','k2_domain'); ?></p>
-				<p class="secondary">
-					<span>
-						<input id="k2-animations" name="k2[animations]" type="checkbox" value="1" <?php checked('1', get_option('k2animations')); ?> />
-						<label for="k2-animations"><?php _e('JavaScript Animations', 'k2_domain'); ?></label>
-					</span>
+				<p class="secondary-option">
+					<input id="k2-animations" name="k2[animations]" type="checkbox" value="1" <?php checked('1', get_option('k2animations')); ?> />
+					<label for="k2-animations"><?php _e('JavaScript Animations', 'k2_domain'); ?></label>
 				</p>
-			</div><!-- .container -->
 
+				<!-- <p class="secondary-option advanced-option">
+					<label for="k2-ajax-complete"><?php _e('JavaScript code to run after dynamic content is loaded:', 'k2_domain'); ?></label>
+					<textarea id="k2-ajax-complete" name="k2[ajaxcompletejs]" rows="5" cols="50"></textarea>
+				</p> -->
+			</li>
+			<li>
+				<h3 class="main-label"><label for="k2-archives"><?php _e('Archives Page', 'k2_domain'); ?></label></h3>
 
-			<div class="container">
-				<h3><label for="k2-archives"><?php _e('Archives Page', 'k2_domain'); ?></label></h3>
-
-				<p class="main-option"><input id="k2-archives" name="k2[archives]" type="checkbox" value="add_archive" <?php checked('1', get_option('k2archives')); ?> />
-				<!--<label for="k2-archives"><?php _e('Enable Archives Page', 'k2_domain'); ?></label>--></p>
+				<p class="main-option">
+					<input id="k2-archives" name="k2[archives]" type="checkbox" value="add_archive" <?php checked('1', get_option('k2archives')); ?> />
+				</p>
 
 				<p class="description"><?php _e('Installs a pre-made archives page.', 'k2_domain'); ?></p>
 
@@ -143,11 +126,9 @@
 					<p class="center">
 						<input id="configela" name="configela" class="button-secondary" type="submit" value="<?php echo attribute_escape(__('Configure Extended Live Archives for K2', 'k2_domain')); ?>" /></p>
 				<?php endif; ?>
-			</div><!-- .container -->
-
-
-			<div class="container">
-				<h3><label for="k2-asidescategory"><?php _e('Asides', 'k2_domain'); ?></label></h3>
+			</li>
+			<li>
+				<h3 class="main-label"><label for="k2-asidescategory"><?php _e('Asides', 'k2_domain'); ?></label></h3>
 
 				<p class="main-option">
 					<select id="k2-asidescategory" name="k2[asidescategory]">
@@ -160,45 +141,54 @@
 				</p>
 
 				<p class="description"><?php _e('Aside posts are styled differently and can be placed on the sidebar.', 'k2_domain'); ?></p>
+			</li>
 
-			</div><!-- .container -->
-
-
-			<?php if ( K2_USING_STYLES and $is_styles_dir ): ?>
-			<div class="container">
-				<h3><label for="k2-style"><?php _e('Style', 'k2_domain'); ?></label></h3>
-
-				<p class="main-option">
-					<select id="k2-style" name="k2[style]">
-						<option value="" <?php selected($current_style, ''); ?>><?php _e('Off', 'k2_domain'); ?></option>
-
-						<?php foreach( $style_files as $style ): ?>
-						<option value="<?php echo attribute_escape($style['path']); ?>" <?php selected($current_style, $style['path']); ?>>
-						<?php
-							if ( ! empty($style['stylename']) ) {
-								echo $style['stylename'];
-								
-								if ( ! empty($style['version']) ) {
-									echo ' ' . $style['version'];
-								}
-							} else {
-								echo $style['path'];
-							}
-						?>
-						</option>
-						<?php endforeach; ?>
-					</select>
-				</p>
+			<?php if ( $is_styles_dir ): ?>
+			<li>
+				<h3><?php _e('Style', 'k2_domain'); ?></h3>
 
 				<p class="description">
 					<?php _e('No need to edit core files, K2 is highly customizable.', 'k2_domain'); ?>
 					<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS"><?php _e('Read&nbsp;more.', 'k2_domain'); ?></a>
 				</p>
-			</div><!-- .container -->
+
+				<table id="k2-styles" class="widefat" cellspacing="0">
+					<thead>
+						<tr>
+							<th class="manage-column column-cb check-column" scope="col">
+								<input type="checkbox" />
+							</th>
+							<th class="manage-column column-title"><?php _e('Style'); ?></th>
+							<th class="manage-column column-author"><?php _e('Author'); ?></th>
+							<th class="manage-column column-version"><?php _e('Version'); ?></th>
+						</tr>
+					</thead>
+				
+					<tbody>
+						<?php foreach( $style_files as $style ): ?>
+							<tr>
+								<th class="check-column" scope="row">
+									<input type="checkbox" name="k2[style][]" value="<?php echo attribute_escape($style['path']); ?>" <?php if ( in_array($style['path'], $active_styles) ) echo 'checked="checked"'; ?> />
+								</th>
+								<td class="column-title">
+									<span class="style-name"><?php echo $style['stylename']; ?></span>
+									<span class="style-path"><?php echo $style['path']; ?></span>
+								</td>
+								<td class="column-author">
+									<a href="<?php echo $style['site']; ?>"><?php echo $style['author']; ?></a>
+								</td>
+								<td class="column-version">
+									<?php echo $style['version']; ?>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+			</li>
 			<?php endif; ?>
 
 
-			<div class="container">
+			<li>
 				<h3><?php _e('Header', 'k2_domain'); ?></h3>
 
 				<p class="description">
@@ -245,14 +235,14 @@
 						</tr>
 					</tbody>
 				</table>
-			</div><!-- .container -->
+			</li>
 				
 
-			<div class="container">
+			<li>
 				<h3><?php _e('Post Entry', 'k2_domain'); ?></h3>
 
 				<p class="description">
-					<?php _e('Use the following keywords: %author%, %categories%, %comments%, %date%, %tags% and %time%.', 'k2_domain'); ?>
+					<?php _e('Use the following keywords: %author%, %categories%, %comments%, %date%, %tags% and %time%. You can also use third-party shortcodes.', 'k2_domain'); ?>
 				</p>
 
 				<table class="form-table">
@@ -276,13 +266,14 @@
 					</tbody>
 				</table>
 
-				<div id="meta-preview">
-					<h4><?php _e('Preview', 'k2_domain'); ?></h4>
+
+				<div id="meta-preview" class="postbox">
+					<h3 class="hndle"><span><?php _e('Preview', 'k2_domain'); ?></span></h3>
 					<?php
 						query_posts('showposts=1&what_to_show=posts&order=desc');
 						if ( have_posts() ): the_post();
 					?>
-					<div id="post-<?php the_ID(); ?>">
+					<div id="post-<?php the_ID(); ?>" class="inside">
 						<div class="entry-head">
 							<h5 class="entry-title"><a href="#" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), wp_specialchars(strip_tags(the_title('', '', false)),1) ); ?>'><?php the_title(); ?></a></h5>
 
@@ -303,19 +294,20 @@
 					</div> <!-- #post-ID -->
 					<?php endif; ?>
 				</div>
-			</div><!-- .container -->
+			</li>
+		</ul>
 
-
-			<?php /* K2 Hook */ do_action('k2_display_options'); ?>
-
+		<?php /* K2 Hook */ do_action('k2_display_options'); ?>
 
 		<div class="submit">
 			<?php wp_nonce_field('k2options'); ?>
 			<input type="hidden" name="k2-options-submit" value="k2-options-submit" />
 
-			<input type="button" name="advanced" id="advanced" value="<?php echo attribute_escape( __('Advanced Options', 'k2_domain') ); ?>" class="button-secondary advanced" />
-			<input type="submit" name="restore-defaults" id="restore-defaults" onClick="return confirmDefaults();" value="<?php echo attribute_escape( __('Revert to K2 Defaults', 'k2_domain') ); ?>" class="button-secondary" />
 			<input type="submit" id="save" name="save" class="button-primary" value="<?php echo attribute_escape( __('Save Changes', 'k2_domain') ); ?>" />
+
+			<input type="submit" name="restore-defaults" id="restore-defaults" onClick="return confirmDefaults();" value="<?php echo attribute_escape( __('Revert to K2 Defaults', 'k2_domain') ); ?>" class="button-secondary" />
+			<input type="button" name="advanced" id="advanced-btn" value="<?php echo attribute_escape( __('Show Advanced Options', 'k2_domain') ); ?>" class="button-secondary advanced" />
+			<input type="submit" name="default-widgets" id="default-widgets-btn" class="button-secondary" value="<?php echo attribute_escape( __('Install a Default Set of Widgets', 'k2_domain') ); ?>" />
 		</div><!-- .options-footer -->
 	</form>
 

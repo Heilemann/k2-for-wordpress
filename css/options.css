@@ -1,9 +1,5 @@
 /* This file contains the CSS for the 'K2 Options' admin panel */
 
-.wrap {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	}
-
 .wrap a {
 	color: #0A5199;
 	border: none;
@@ -27,18 +23,27 @@
 	position: relative;
 	}
 
-h3 {
-	font-size: 1.4em;
-	font-weight: normal;
-	color: #333;
-	width: 225px;
-	margin: 0px;
-	overflow: hidden;
-	white-space: pre;
+.options-list {
+	max-width: 90%;
 	}
 
-.description {
-	margin-top: 5px;
+.options-list li {
+	margin: 2em 0;
+	}
+
+.options-list h3 {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	font-weight: normal;
+	color: #333;
+	}
+
+h3.main-label {
+	float: left;
+	margin: 0;
+	}
+
+p.description {
 	color: #999;
 	}
 
@@ -66,26 +71,19 @@ h3 {
 	}
 
 .main-option {
-	position: absolute;
-	left: 240px;
-	top: 0px;
-	margin: 0px;
-	}
-
-.main-option input[type=checkbox] {
-	margin-top: 5px;
+	margin-left: 250px;
 	}
 
 .indent {
-	margin-left: 240px;
+	margin-left: 250px;
 	}
 
-.secondary {
+.secondary-option {
 	color: #666;
 	}
 
-.secondary span {
-	margin-right: 1em;
+label + textarea {
+	display: block;
 	}
 
 input[type=text],
@@ -136,38 +134,30 @@ option {
 	vertical-align: middle;
 	}
 	
-.advanced {
-	display: none;
-	}
-
 .hidden {
-	display: none;
+	position: absolute;
+	left: -999px;
+	top: auto;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
 	}
 
-
-/**/
 
 #meta-preview {
 	margin: 20px 0 10px;
-	padding: 5px 20px 10px;
-	background-color: white;
-	border: 1px solid #eee;
-	max-width: 700px;
-	font-size: 10px;
-    font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Helvetica, Arial, sans-serif;
-    
-	border-raduis: 8px;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
 	}
 
-#meta-preview h4 {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 1.6em;
+#meta-preview h3 {
+	font-size: 1.23em;
 	font-weight: normal;
-	background: #eee;
-	margin: -5px -20px 10px;
-	padding: 5px 10px;
+	line-height: 1;
+	margin: 0;
+	padding: 7px 9px;
+	}
+
+#meta-preview .inside {
+	padding: 10px;
 	}
 
 #meta-preview strong,
@@ -249,11 +239,29 @@ abbr.entry-date {
 	background: url('../images/comment.png') left center no-repeat;
 	}
 
+.style-path {
+	display: block;
+	font-style: italic;
+	}
 
-.button-secondary {
-	float: right;
-}
+#k2-styles .column-author {
+	width: 25%;
+	}
+
+#k2-styles .column-version {
+	width: 10%;
+	text-align: center;
+	}
+
+#k2-styles .style-name {
+	font-weight: bold;
+	}
 
 .submit {
-	max-width: 780px;
+	max-width: 90%;
 }
+
+#advanced-btn,
+#default-widgets-btn {
+	display: none;
+	}

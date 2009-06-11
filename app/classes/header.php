@@ -18,9 +18,9 @@ class K2Header {
 		$default_widths =  array( 1 => 560, 780, 950 );
 
 		// Load style settings
-		if ( get_option('k2style') != '' ) {
-			$styleinfo = get_option('k2styleinfo');
-
+		$styleinfo = get_option('k2styleinfo');
+		if ( ! empty($styleinfo) ) {
+			// style contains header height setting
 			if ( ! empty($styleinfo['header_height']) )
 				@define( 'HEADER_IMAGE_HEIGHT', $styleinfo['header_height'] );
 
