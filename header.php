@@ -15,16 +15,6 @@
 
 	<title><?php wp_title('&laquo;', true, 'right'); ?> <?php bloginfo('name'); ?></title>
 
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/style.css" />
-
-	<?php if ( K2_CHILD_THEME ): /* Child Themes */ ?>
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
-	<?php endif; ?>
-
-	<?php if ( get_option('k2style') != '' ): /* K2 Styles */ ?>
-	<link rel="stylesheet" type="text/css" href="<?php k2info('style'); ?>" />
-	<?php endif; ?>
-
 	<link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
 	<link rel="alternate" type="application/atom+xml" title="<?php bloginfo('name'); ?> Atom Feed" href="<?php bloginfo('atom_url'); ?>" />
 
