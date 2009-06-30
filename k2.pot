@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: K2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-12 10:54-0800\n"
+"POT-Creation-Date: 2009-06-30 13:02-0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Steve Lam <spikeyslam@gmail.com>\n"
 "Language-Team: \n"
@@ -160,7 +160,7 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: header.php:35
+#: header.php:41
 msgid "Skip to content"
 msgstr ""
 
@@ -387,34 +387,126 @@ msgstr ""
 msgid "Folksonomy"
 msgstr ""
 
-#: app/classes/k2.php:90
+#: app/classes/header.php:78
+msgid "Header"
+msgstr ""
+
+#: app/classes/header.php:82
+#, php-format
+msgid "The current header size is <strong>%1$s px by %2$s px</strong>."
+msgstr ""
+
+#: app/classes/header.php:87
+#, php-format
+msgid " Use %s to customize the header."
+msgstr ""
+
+#: app/classes/header.php:88
+msgid "Custom Image Header"
+msgstr ""
+
+#: app/classes/header.php:98
+msgid "Select an Image:"
+msgstr ""
+
+#: app/classes/header.php:102
+msgid "Off"
+msgstr ""
+
+#: app/classes/header.php:103
+msgid "Random"
+msgstr ""
+
+#: app/classes/header.php:116
+msgid "Rename the 'Blog' tab:"
+msgstr ""
+
+#: app/classes/k2.php:77
 msgid "Published on %date% in %categories%. %comments% %tags%"
 msgstr ""
 
-#: app/classes/k2.php:228
-#: app/display/options.php:80
+#: app/classes/k2.php:203
+#: app/display/options.php:62
 msgid "K2 Options"
 msgstr ""
 
-#: app/classes/k2.php:235
+#: app/classes/k2.php:210
 msgid "K2 Support Group"
 msgstr ""
 
-#: app/classes/k2.php:236
+#: app/classes/k2.php:211
 msgid "K2 Bug Tracker"
 msgstr ""
 
-#: app/classes/k2.php:257
+#: app/classes/k2.php:232
 msgid "Do you want to restore K2 to default settings? This will remove all your K2 settings."
 msgstr ""
 
-#: app/classes/k2.php:599
+#: app/classes/k2.php:529
 msgid "Type and Wait to Search"
 msgstr ""
 
-#: app/classes/k2.php:605
+#: app/classes/k2.php:535
 #, php-format
 msgid "Page %1$d of %2$d"
+msgstr ""
+
+#: app/classes/styles.php:140
+msgid "Child Theme"
+msgstr ""
+
+#: app/classes/styles.php:142
+msgid "Wordpress"
+msgstr ""
+
+#: app/classes/styles.php:146
+msgid "Styles"
+msgstr ""
+
+#: app/classes/styles.php:150
+#, php-format
+msgid "The directory: <strong>%s</strong>, needed to store custom styles is missing. For you to be able to use custom styles, you need to add this directory."
+msgstr ""
+
+#: app/classes/styles.php:155
+msgid "No need to edit core files, K2 is highly customizable."
+msgstr ""
+
+#: app/classes/styles.php:156
+msgid "Read&nbsp;more."
+msgstr ""
+
+#: app/classes/styles.php:163
+msgid "Styles Directory:"
+msgstr ""
+
+#: app/classes/styles.php:166
+msgid "Styles Root Directory:"
+msgstr ""
+
+#: app/classes/styles.php:212
+msgid "Style"
+msgstr ""
+
+#: app/classes/styles.php:213
+msgid "Author"
+msgstr ""
+
+#: app/classes/styles.php:214
+msgid "Version"
+msgstr ""
+
+#: app/classes/styles.php:215
+msgid "Tags"
+msgstr ""
+
+#: app/classes/styles.php:223
+#, php-format
+msgid "There are no css files found in: <strong>%s</strong>."
+msgstr ""
+
+#: app/classes/styles.php:352
+msgid "Styled with <a href=\"%stylelink%\" title=\"%style% by %author%\">%style%</a>"
 msgstr ""
 
 #: app/classes/widgets.php:113
@@ -505,191 +597,134 @@ msgstr ""
 msgid "No pages"
 msgstr ""
 
-#: app/display/options.php:17
+#: app/display/options.php:9
 msgid "Single Column"
 msgstr ""
 
-#: app/display/options.php:18
+#: app/display/options.php:10
 msgid "Two Columns"
 msgstr ""
 
-#: app/display/options.php:19
+#: app/display/options.php:11
 msgid "Three Columns"
 msgstr ""
 
-#: app/display/options.php:20
+#: app/display/options.php:12
 msgid "Dynamic Columns"
 msgstr ""
 
-#: app/display/options.php:38
+#: app/display/options.php:24
 msgid "Published by %author% on %date% in %categories%. %comments% %tags%"
 msgstr ""
 
-#: app/display/options.php:45
+#: app/display/options.php:31
 msgid "K2 has been restored to default settings."
 msgstr ""
 
-#: app/display/options.php:51
+#: app/display/options.php:37
 msgid "A default set of widgets has been installed."
 msgstr ""
 
-#: app/display/options.php:57
+#: app/display/options.php:43
 msgid "K2 Options have been updated"
 msgstr ""
 
-#: app/display/options.php:63
+#: app/display/options.php:49
 msgid "The Extended Live Archives plugin has been setup for use with K2"
 msgstr ""
 
-#: app/display/options.php:69
-#, php-format
-msgid "The directory: <strong>%s</strong>, needed to store custom styles is missing. For you to be able to use custom styles, you need to add this directory."
-msgstr ""
-
-#: app/display/options.php:75
+#: app/display/options.php:55
 #, php-format
 msgid "The K2 directory: <strong>%s</strong>, contains spaces. For K2 to function properly, you will need to remove the spaces from the directory name."
 msgstr ""
 
-#: app/display/options.php:84
+#: app/display/options.php:66
 msgid "Columns"
 msgstr ""
 
-#: app/display/options.php:95
+#: app/display/options.php:77
 msgid "Select Dynamic Columns for K2 to dynamically reduce the number of columns depending on user's browser width."
 msgstr ""
 
-#: app/display/options.php:99
+#: app/display/options.php:81
 msgid "Advanced Navigation"
 msgstr ""
 
-#: app/display/options.php:105
+#: app/display/options.php:87
 msgid "Seamlessly search and navigate old posts."
 msgstr ""
 
-#: app/display/options.php:108
+#: app/display/options.php:92
 msgid "JavaScript Animations"
 msgstr ""
 
-#: app/display/options.php:112
-msgid "JavaScript code to run after dynamic content is loaded:"
+#: app/display/options.php:95
+msgid "Ajax Success JavaScript"
 msgstr ""
 
-#: app/display/options.php:117
+#: app/display/options.php:96
+msgid "JavaScript code that will be executed whenever Advanced Navigation is dynamically loaded."
+msgstr ""
+
+#: app/display/options.php:102
 msgid "Archives Page"
 msgstr ""
 
-#: app/display/options.php:123
+#: app/display/options.php:108
 msgid "Installs a pre-made archives page."
 msgstr ""
 
-#: app/display/options.php:127
+#: app/display/options.php:112
 msgid "Configure Extended Live Archives for K2"
 msgstr ""
 
-#: app/display/options.php:131
+#: app/display/options.php:116
 msgid "Asides"
 msgstr ""
 
-#: app/display/options.php:135
-#: app/display/options.php:216
-msgid "Off"
-msgstr ""
-
-#: app/display/options.php:143
+#: app/display/options.php:128
 msgid "Aside posts are styled differently and can be placed on the sidebar."
 msgstr ""
 
-#: app/display/options.php:148
-#: app/display/options.php:161
-msgid "Style"
-msgstr ""
-
-#: app/display/options.php:151
-msgid "No need to edit core files, K2 is highly customizable."
-msgstr ""
-
-#: app/display/options.php:152
-msgid "Read&nbsp;more."
-msgstr ""
-
-#: app/display/options.php:162
-msgid "Author"
-msgstr ""
-
-#: app/display/options.php:163
-msgid "Version"
-msgstr ""
-
-#: app/display/options.php:192
-msgid "Header"
-msgstr ""
-
-#: app/display/options.php:196
-#, php-format
-msgid "The current header size is <strong>%1$s px by %2$s px</strong>."
-msgstr ""
-
-#: app/display/options.php:201
-#, php-format
-msgid " Use %s to customize the header."
-msgstr ""
-
-#: app/display/options.php:202
-msgid "Custom Image Header"
-msgstr ""
-
-#: app/display/options.php:212
-msgid "Select an Image:"
-msgstr ""
-
-#: app/display/options.php:217
-msgid "Random"
-msgstr ""
-
-#: app/display/options.php:230
-msgid "Rename the 'Blog' tab:"
-msgstr ""
-
-#: app/display/options.php:242
+#: app/display/options.php:132
 msgid "Post Entry"
 msgstr ""
 
-#: app/display/options.php:245
+#: app/display/options.php:135
 msgid "Use the following keywords: %author%, %categories%, %comments%, %date%, %tags% and %time%. You can also use third-party shortcodes."
 msgstr ""
 
-#: app/display/options.php:252
+#: app/display/options.php:142
 msgid "Top Meta:"
 msgstr ""
 
-#: app/display/options.php:260
+#: app/display/options.php:150
 msgid "Bottom Meta:"
 msgstr ""
 
-#: app/display/options.php:271
+#: app/display/options.php:161
 msgid "Preview"
 msgstr ""
 
-#: app/display/options.php:278
+#: app/display/options.php:168
 #: app/includes/widgets.php:90
 #, php-format
 msgid "Permanent Link to \"%s\""
 msgstr ""
 
-#: app/display/options.php:306
+#: app/display/options.php:196
 msgid "Save Changes"
 msgstr ""
 
-#: app/display/options.php:308
+#: app/display/options.php:198
 msgid "Revert to K2 Defaults"
 msgstr ""
 
-#: app/display/options.php:309
+#: app/display/options.php:199
 msgid "Show Advanced Options"
 msgstr ""
 
-#: app/display/options.php:310
+#: app/display/options.php:200
 msgid "Install a Default Set of Widgets"
 msgstr ""
 
@@ -928,40 +963,36 @@ msgstr ""
 msgid "View all posts in %s"
 msgstr ""
 
-#: app/includes/info.php:79
-msgid "Styled with <a href=\"%stylelink%\" title=\"%style% by %author%\">%style%</a>"
-msgstr ""
-
-#: app/includes/info.php:198
+#: app/includes/info.php:52
 msgid "%B, %Y"
 msgstr ""
 
-#: app/includes/pluggable.php:103
+#: app/includes/pluggable.php:73
 msgid " and "
 msgstr ""
 
-#: app/includes/pluggable.php:118
+#: app/includes/pluggable.php:88
 #, php-format
 msgid "View all posts by %s"
 msgstr ""
 
-#: app/includes/pluggable.php:132
+#: app/includes/pluggable.php:102
 msgid "<span>Tags:</span> "
 msgstr ""
 
-#: app/includes/pluggable.php:150
+#: app/includes/pluggable.php:120
 msgid "0 <span>Comments</span>"
 msgstr ""
 
-#: app/includes/pluggable.php:150
+#: app/includes/pluggable.php:120
 msgid "1 <span>Comment</span>"
 msgstr ""
 
-#: app/includes/pluggable.php:150
+#: app/includes/pluggable.php:120
 msgid "% <span>Comments</span>"
 msgstr ""
 
-#: app/includes/pluggable.php:150
+#: app/includes/pluggable.php:120
 msgid "<span>Closed</span>"
 msgstr ""
 
