@@ -29,7 +29,7 @@
 	</div> <!-- #rollnavigation -->
 </div> <!-- #rollingarchives -->
 
-<div id="rollingcontent" class="hfeed">
+<div id="rollingcontent" class="hfeed" aria-live="polite" aria-atomic="true">
 	<?php include(TEMPLATEPATH . '/app/display/theloop.php'); ?>
 </div><!-- #rollingcontent .hfeed -->
 

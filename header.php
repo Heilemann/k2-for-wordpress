@@ -15,6 +15,12 @@
 
 	<title><?php wp_title('&laquo;', true, 'right'); ?> <?php bloginfo('name'); ?></title>
 
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/style.css" />
+
+	<?php /* Child Themes */ if ( K2_CHILD_THEME ): ?>
+		<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
+	<?php endif; ?>
+
 	<link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
 	<link rel="alternate" type="application/atom+xml" title="<?php bloginfo('name'); ?> Atom Feed" href="<?php bloginfo('atom_url'); ?>" />
 
@@ -39,7 +45,7 @@
 
 	<?php /* K2 Hook */ do_action('template_before_header'); ?>
 
-	<div id="header">
+	<div id="header" role="banner">
 
 		<?php locate_template( array('blocks/k2-header.php'), true ); ?>
 

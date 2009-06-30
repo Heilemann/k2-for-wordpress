@@ -1,6 +1,6 @@
 <hr />
 <?php if ( ! get_post_custom_values('hidesidebar1') ): ?>
-<div id="sidebar-1" class="secondary">
+<div id="sidebar-1" class="secondary" role="complementary">
 <?php if ( !dynamic_sidebar(1) ): ?>
 
 	<div id="search"><h4><?php _e('Search','k2_domain'); ?></h4>
@@ -172,7 +172,7 @@
 <?php endif; ?>
 <hr />
 <?php if ( ! get_post_custom_values('hidesidebar2') ): ?>
-<div id="sidebar-2" class="secondary">
+<div id="sidebar-2" class="secondary" role="complementary">
 	<?php dynamic_sidebar(2); ?>
 </div><!-- #sidebar-2 -->
 <?php endif; ?>

@@ -32,11 +32,6 @@ K2.ajaxGet = function(data, complete_fn) {
 				complete_fn( request.responseText );
 			}
 
-			// Lightbox v2.03.3 - Adds new images to lightbox
-			if (typeof myLightbox != "undefined" && myLightbox instanceof Lightbox && myLightbox.updateImageList) {
-				myLightbox.updateImageList();
-			}
-
 			/*
 			if ( K2.callbacks && K2.callbacks.length > 0 ) { 
 				for ( var i = 0; i < K2.callbacks.length; i++ ) {
@@ -44,9 +39,6 @@ K2.ajaxGet = function(data, complete_fn) {
 				}
 			 }
 			*/
-
-			// Inform JAWS
-			updateBuffer();
 		}
 	});
 }
@@ -99,42 +91,6 @@ function dynamicColumns() {
 		jQuery('body').removeClass('columns-two columns-three').addClass('columns-one');
 	}
 };
-
-/*
-	Improving Ajax applications for JAWS users
-	http://juicystudio.com/article/improving-ajax-applications-for-jaws-users.php
-*/
-
-function prepareBuffer() {
-	var objNew = document.createElement('p');
-	var objHidden = document.createElement('input');
-
-	objHidden.setAttribute('type', 'hidden');
-	objHidden.setAttribute('value', '1');
-	objHidden.setAttribute('id', 'virtualbufferupdate');
-	objHidden.setAttribute('name', 'virtualbufferupdate');
-
-	objNew.appendChild(objHidden);
-	document.body.appendChild(objNew);
-};
-
-function updateBuffer() {
-	var objHidden = document.getElementById('virtualbufferupdate');
-
-	if (objHidden) {
-		if (objHidden.getAttribute('value') == '1')
-			objHidden.setAttribute('value', '0');
-		else
-			objHidden.setAttribute('value', '1');
-	}
-};
-
-jQuery(document).ready(function(){
-	prepareBuffer();
-});
-
-
-
 
 function initOverLabels () {
 	if (!document.getElementById) return;

@@ -3,9 +3,11 @@
 <div class="content">
 	
 <div id="primary-wrapper">
-	<div id="primary">
+	<div id="primary" role="main">
 		<div id="notices"></div>
 		<a name="startcontent" id="startcontent"></a>
+
+		<?php /* K2 Hook */ do_action('template_primary_begin'); ?>
 
 		<?php if ( '1' == get_option('k2rollingarchives') ): ?>
 		<div id="dynamic-content">
@@ -22,6 +24,8 @@
 
 		<div id="dynamic-content"></div>
 		<?php endif; ?>
+
+		<?php /* K2 Hook */ do_action('template_primary_end'); ?>
 	</div> <!-- #primary -->
 </div> <!-- #primary-wrapper -->
 

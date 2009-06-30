@@ -14,36 +14,6 @@ defined( 'K2_CURRENT' ) or die ( 'Error: This file can not be loaded directly.' 
 
 
 /**
- * Loads necessary Stylesheets in <head>
- *
- * @since 1.0-RC8
- *
- */
-if ( ! function_exists('k2_template_css') ):
-	function k2_template_css() {
-
-		// K2
-		echo '<link rel="stylesheet" type="text/css" media="screen" href="' . get_bloginfo('template_url') . '/style.css" />' . "\n";
-
-		// Child Themes
-		if ( K2_CHILD_THEME )
-			echo '<link rel="stylesheet" type="text/css" media="screen" href="' . get_bloginfo('stylesheet_url') . '" />' . "\n";
-
-		// Styles
-		$active_styles = get_option('k2style');
-		if ( ! empty($active_styles) ) {
-			krsort($active_styles);
-			foreach ( $active_styles as $style ) {
-				echo '<link rel="stylesheet" type="text/css" href="' . K2_STYLES_URL . '/' . $style . '" />' . "\n";
-			}
-		}
-	}
-endif;
-
-add_action( 'wp_head', 'k2_template_css' );
-
-
-/**
  * Displays the current post meta.
  *
  * @since 1.0-RC8
