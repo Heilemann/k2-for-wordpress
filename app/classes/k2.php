@@ -69,7 +69,6 @@ class K2 {
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
 		add_option('k2archives', '0', 'Set whether K2 has a Live Archive page');
 		add_option('k2sidebarmanager', '0', 'Set whether to use K2 Sidebar Manager');
-		add_option('k2styleinfo', '', 'Metadata of current style.');
 		add_option('k2columns', '2', 'Number of columns to display.');
 
 		// Added 1.0-RC8
@@ -81,8 +80,6 @@ class K2 {
 		add_option('k2ajaxdonejs', $defaultjs, 'JavaScript to execute when Ajax is completed');
 
 		/*
-		add_option('k2headerspath', '%k2%/images/headers', 'Location of K2 Header images');
-
 		// Install a default set of widgets
 		if ( function_exists('wp_get_sidebars_widgets') ) {
 			$sidebars_widgets = wp_get_sidebars_widgets();
