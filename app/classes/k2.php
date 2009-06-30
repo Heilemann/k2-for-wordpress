@@ -18,19 +18,20 @@ class K2 {
 		// Load the localisation text
 		load_theme_textdomain('k2_domain');
 
-		@define('K2_STYLES_DIR', TEMPLATEPATH . '/styles');
-		@define('K2_STYLES_URL', get_template_directory_uri() . '/styles');
-		@define('K2_HEADERS_DIR', TEMPLATEPATH . '/images/headers');
-		@define('K2_HEADERS_URL', get_template_directory_uri() . '/images/headers');
-
 		// Load required classes and includes
 		require_once(TEMPLATEPATH . '/app/includes/wp-compat.php');
 		require_once(TEMPLATEPATH . '/app/classes/archive.php');
-		require_once(TEMPLATEPATH . '/app/classes/header.php');
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
 		require_once(TEMPLATEPATH . '/app/includes/comments.php');
 		require_once(TEMPLATEPATH . '/app/includes/widgets.php');
+		//require_once(TEMPLATEPATH . '/app/classes/widgets.php');
+
+		if ( K2_STYLES )
+			require_once(TEMPLATEPATH . '/app/classes/styles.php');
+
+		if ( K2_HEADERS )
+			require_once(TEMPLATEPATH . '/app/classes/header.php');
 
 		// Check installed version, upgrade if needed
 		$k2version = get_option('k2version');
@@ -43,15 +44,9 @@ class K2 {
 		// Register our scripts with script loader
 		K2::register_scripts();
 
-		// Load the current styles functions.php if it is readable
-		$active_styles = get_option('k2style');
-		if ( ! empty($active_styles) ) {
-			foreach ($active_styles as $style) {
-				$style_functions = dirname( K2_STYLES_DIR . '/' . $style ) . '/functions.php';
-				if ( is_readable($style_functions) )
-					include_once($style_functions);
-			}
-		}
+		// There may be some things we need to do before K2 is initialised
+		// Let's do them now
+		do_action('k2_init');
 
 		// Finally load pluggable functions
 		require_once(TEMPLATEPATH . '/app/includes/pluggable.php');
@@ -59,9 +54,6 @@ class K2 {
 		// Register our sidebars with widgets
 		k2_register_sidebars();
 
-		// There may be some things we need to do before K2 is initialised
-		// Let's do them now
-		do_action('k2_init');
 	}
 
 
@@ -78,20 +70,17 @@ class K2 {
 		add_option('k2archives', '0', 'Set whether K2 has a Live Archive page');
 		add_option('k2sidebarmanager', '0', 'Set whether to use K2 Sidebar Manager');
 		add_option('k2styleinfo', '', 'Metadata of current style.');
-		add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.');
 		add_option('k2columns', '2', 'Number of columns to display.');
-
-		// Added 1.0-RC6
-		add_option('k2style', array(), 'Choose the Style you want K2 to use');
-		add_option('k2headerimage', '', 'Current Header Image');
 
 		// Added 1.0-RC8
 		add_option('k2animations', '1', 'JavaScript Animation effects.');
 		add_option('k2entrymeta1', __('Published on %date% in %categories%. %comments% %tags%', 'k2_domain'), 'Customized metadata format before entry content.');
 		add_option('k2entrymeta2', '', 'Customized metadata format after entry content.');
 
+		$defaultjs = "// Lightbox v2.03.3 - Adds new images to lightbox\nif (typeof myLightbox != 'undefined' && myLightbox instanceof Lightbox && myLightbox.updateImageList) {\n\tmyLightbox.updateImageList();\n}\n";
+		add_option('k2ajaxdonejs', $defaultjs, 'JavaScript to execute when Ajax is completed');
+
 		/*
-		add_option('k2stylespath', '%k2%/styles', 'Location of K2 Styles');
 		add_option('k2headerspath', '%k2%/images/headers', 'Location of K2 Header images');
 
 		// Install a default set of widgets
@@ -122,15 +111,6 @@ class K2 {
 		delete_option('k2lastmodified');
 		delete_option('k2scheme');
 
-		if ( version_compare($previous, '1.0-RC8', '<') ) {
-			$style = get_option('k2style');
-			if ( empty($style) ) {
-				update_option( 'k2style', array() );
-			} elseif ( !is_array($style) ) {
-				update_option( 'k2style', array($style) );
-			}
-		}
-
 		// Install options
 		K2::install();
 
@@ -158,16 +138,11 @@ class K2 {
 		delete_option('k2rollingarchives');
 		delete_option('k2archives');
 		delete_option('k2sidebarmanager');
-		delete_option('k2style');
-		delete_option('k2styleinfo');
-		delete_option('k2blogornoblog');
 		delete_option('k2columns');
-		delete_option('k2headerimage');
 		delete_option('k2entrymeta1');
 		delete_option('k2entrymeta2');
 		delete_option('k2animations');
-		//delete_option('k2stylespath');
-		//delete_option('k2headerspath');
+		delete_option('k2ajaxdonejs');
 
 		// Call the uninstall handlers
 		do_action('k2_uninstall');
@@ -255,6 +230,7 @@ class K2 {
 		<script type="text/javascript" charset="utf-8">
 		//<![CDATA[
 			var defaults_prompt = "<?php _e('Do you want to restore K2 to default settings? This will remove all your K2 settings.', 'k2_domain'); ?>";
+			var codepress_path = "<?php echo includes_url('js/codepress/'); ?>";
 		//]]>
 		</script>
 		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/options.css" />
@@ -319,33 +295,6 @@ class K2 {
 			update_option('k2asidescategory', (int) $_POST['k2']['asidescategory']);
 		}
 
-		// Style
-		if ( isset($_POST['k2']['style']) ) {
-			update_option('k2style', $_POST['k2']['style']);
-			update_style_info();
-		} else {
-			update_option('k2style', array());
-			update_option('k2styleinfo', array());
-		}
-
-		// Header Image
-		if ( isset($_POST['k2']['headerimage']) ) {
-			update_option('k2headerimage', $_POST['k2']['headerimage']);
-
-			// Update Custom Image Header
-			if ( ('' == $_POST['k2']['headerimage']) or ('random' == $_POST['k2']['headerimage']) ) {
-				remove_theme_mod('header_image');
-			} else {
-				set_theme_mod('header_image', K2Header::get_header_image_url() );
-			}
-		}
-
-		// Blog tab
-		if ( isset($_POST['k2']['blogornoblog']) ) {
-			update_option( 'k2blogornoblog', strip_tags( stripslashes($_POST['k2']['blogornoblog']) ) );
-		}
-
-
 		// Top post meta
 		if ( isset($_POST['k2']['entrymeta1']) ) {
 			update_option( 'k2entrymeta1', stripslashes($_POST['k2']['entrymeta1']) );
@@ -354,6 +303,11 @@ class K2 {
 		// Bottom post meta
 		if ( isset($_POST['k2']['entrymeta2']) ) {
 			update_option( 'k2entrymeta2', stripslashes($_POST['k2']['entrymeta2']) );
+		}
+
+		// Ajax Success JavaScript
+		if ( isset($_POST['k2']['ajaxdonejs']) ) {
+			update_option( 'k2ajaxdonejs', stripslashes($_POST['k2']['ajaxdonejs']) );
 		}
 
 		// K2 Hook
@@ -477,26 +431,6 @@ class K2 {
 	 */
 	function register_scripts() {
 		// Register jQuery
-		wp_register_script('jquery',
-			get_bloginfo('template_directory') . '/js/jquery.js',
-			false, '1.2.6');
-
-		wp_register_script( 'jquery-ui-core',
-			get_bloginfo('template_directory') . '/js/ui.core.js',
-			array('jquery'), '1.5.2' );
-
-		wp_register_script( 'jquery-ui-sortable',
-			get_bloginfo('template_directory') . '/js/ui.sortable.js',
-			array('jquery-ui-core'), '1.5.2' );
-
-		wp_register_script( 'jquery-ui-draggable',
-			get_bloginfo('template_directory') . '/js/ui.draggable.js',
-			array('jquery-ui-core'), '1.5.2' );
-
-		wp_register_script( 'jquery-ui-droppable',
-			get_bloginfo('template_directory') . '/js/ui.droppable.js',
-			array('jquery-ui-core', 'jquery-ui-draggable'), '1.5.2' );
-
 		wp_register_script('jquery-dimensions',
 			get_bloginfo('template_directory') . '/js/jquery.dimensions.js',
 			array('jquery'), '1.2');
@@ -537,10 +471,6 @@ class K2 {
 		wp_register_script('k2trimmer',
 			get_bloginfo('template_directory') . '/js/k2.trimmer.js',
 			array('jquery', 'k2slider'), K2_CURRENT, true);
-
-		wp_register_script('k2widgets',
-			get_bloginfo('template_directory') . '/js/k2.widgets.js',
-			array('jquery', 'jquery-ui-droppable', 'jquery-ui-sortable', 'jquery-dimensions', 'humanmsg', 'humanundo'), K2_CURRENT);
 	}
 
 
@@ -609,52 +539,12 @@ class K2 {
 			<?php endif; ?>
 
 			jQuery('#dynamic-content').ajaxSuccess(function () {
-				<?php /* K2 Hook */ do_action('ajax_success_js'); ?>
+				<?php echo get_option('k2ajaxdonejs'); ?>
 			});
 		});
 	//]]>
 	</script>
 <?php
-	}
-
-
-	/**
-	 * Searches through 'styles' directory for css files
-	 *
-	 * @return array paths to style files
-	 */
-	function get_styles() {
-		global $k2_styles;
-
-		if ( ! empty($k2_styles) )
-			return $k2_styles;
-
-		$k2_styles = array();
-
-		// get list of all style files
-		$style_files = K2::files_scan( K2_STYLES_DIR, 'css', 2 );
-		sort($style_files);
-
-		// get active styles
-		$active_styles = get_option('k2style');
-
-		if ( ! empty($active_styles) ) {
-			// get inactive styles
-			$inactive_styles = array_diff($style_files, $active_styles);
-
-			// merge active with inactive
-			$style_files = array_merge($active_styles, $inactive_styles);
-		}
-
-		// loop through and get their data
-		foreach ( (array) $style_files as $style_file ) {
-			$style_data = get_style_data($style_file);
-
-			if ( ! empty($style_data) )
-				$k2_styles[] = $style_data;
-		}
-
-		return $k2_styles;
 	}
 
 

@@ -31,11 +31,28 @@
 	margin: 2em 0;
 	}
 
-.options-list h3 {
+.options-list li li {
+	margin: 1em 0;
+	}
+
+.options-list ul {
+	padding-left: 50px;
+	}
+
+.wrap h3,
+.wrap h4 {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 16px;
 	font-weight: normal;
 	color: #333;
+	}
+
+.options-list h3 {
+	font-size: 1.5em;
+	}
+
+.options-list h4 {
+	font-size: 1.25em;
+	margin-bottom: 0.25em;
 	}
 
 h3.main-label {
@@ -75,7 +92,7 @@ p.description {
 	}
 
 .indent {
-	margin-left: 250px;
+	margin-left: 250px !important;
 	}
 
 .secondary-option {
@@ -113,7 +130,7 @@ option {
 	}
 
 .form-table {
-	width: auto;
+	margin: 1em 0;
 	}
 
 .form-table tr {
@@ -122,16 +139,14 @@ option {
 
 .form-table th,
 .form-table td {
-	padding: 0px;
+	padding: 5px 10px 5px 0;
 	}
 
 .form-table th {
-	width: 230px;
-	padding-right: 10px;
+	width: 240px;
 	font-weight: normal;
 	text-align: right;
 	color: #666;
-	vertical-align: middle;
 	}
 	
 .hidden {
@@ -177,7 +192,8 @@ option {
 
 .entry-title {
 	font-family: "Trebuchet MS", Verdana, sans-serif;
-	font-size: 2.4em;
+	font-size: 2em;
+	line-height: 1.4;
 	font-weight: normal;
 	margin: 0;
 	}
@@ -261,7 +277,6 @@ abbr.entry-date {
 	max-width: 90%;
 }
 
-#advanced-btn,
-#default-widgets-btn {
-	display: none;
+#k2ajax {
+	width: 100%;
 	}

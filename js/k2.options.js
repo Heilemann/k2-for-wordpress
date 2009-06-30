@@ -20,12 +20,14 @@ jQuery(document).ready(function(){
 		}
 	);
 
-	jQuery('.postbox h3, .postbox .handlediv').click( function() {
-		var p = jQuery(this).parent('.postbox');
-		p.toggleClass('closed');
-	} );
-
 	jQuery('#k2-styles').sortable({
 		items: 'tbody tr'
 	});
+
+/*
+	jQuery('#k2-options').submit(function(){
+		if (jQuery('#k2_ajax_complete_cp').length)
+			jQuery('#k2_ajax_complete_cp').val(textareaid.getCode()).removeAttr('disabled');
+	});
+*/
 });

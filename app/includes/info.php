@@ -14,171 +14,25 @@ function get_k2info( $show = '' ) {
     		$output = K2_CURRENT;
 			break;
 
-		case 'style' :
-			if ( get_option('k2style') != '' )
-				$output = K2_STYLES_URL . '/' . get_option('k2style');
-			break;
-
 		case 'style_footer' :
-			$styleinfo = get_option('k2styleinfo');
-			if ( !empty($styleinfo['footer']) )
-				$output = stripslashes($styleinfo['footer']);
+			if ( K2_STYLES ) {
+				$styleinfo = get_option('k2styleinfo');
+				if ( !empty($styleinfo['footer']) )
+					$output = stripslashes($styleinfo['footer']);
+			}
 			break;
 
 		case 'styles_url' :
-			$output = K2_STYLES_URL . '/';
+			if ( K2_STYLES )
+				$output = K2Styles::get_styles_url();
 			break;
 
 		case 'headers_url' :
 			$output = K2_HEADERS_URL . '/';
 			break;
-
-		case 'current_style_dir' :
-			if ( get_option('k2style') != '' )
-				$output = K2_STYLES_DIR . '/' . dirname( get_option('k2style') );
-			break;
-
-		case 'current_style_url' :
-			if ( get_option('k2style') != '' )
-				$output = K2_STYLES_URL . '/' . dirname( get_option('k2style') );
-			break;
 	}
 	return $output;
 }
-
-function k2_add_styles_to_theme_editor() {
-	global $wp_themes, $pagenow;
-
-	if ( ('theme-editor.php' == $pagenow) and strpos(K2_STYLES_DIR, WP_CONTENT_DIR) !== false ) {
-		get_themes();
-		$current = get_current_theme();
-
-		// Get the path relative to wp-content
-		$style_path = str_replace(WP_CONTENT_DIR, '', K2_STYLES_DIR);
-
-		// Get a list of style css
-		$styles = K2::files_scan( K2_STYLES_DIR, 'css', 2 );;
-
-		// Loop through each style css and add to the list
-		foreach ($styles as $style_css) {
-			$wp_themes[$current]['Stylesheet Files'][] = "$style_path/$style_css";
-		}
-	}
-}
-
-if ( ! K2_CHILD_THEME ) {
-	add_action( 'admin_init', 'k2_add_styles_to_theme_editor' );
-}
-
-function update_style_info() {
-	$data = get_style_data( array_shift( get_option('k2style') ) );
-
-	if ( !empty($data) and ($data['stylename'] != '') and ($data['stylelink'] != '') and ($data['author'] != '') ) {
-		// No custom style info
-		if ( $data['footer'] == '' ) {
-			$data['footer'] = __('Styled with <a href="%stylelink%" title="%style% by %author%">%style%</a>','k2_domain');
-		}
-
-		if ( strpos($data['footer'], '%') !== false ) {
-
-			$keywords = array( '%author%', '%comments%', '%site%', '%style%', '%stylelink%', '%version%' );
-			$replace = array( $data['author'], $data['comments'], $data['site'], $data['stylename'], $data['stylelink'], $data['version'] );
-			$data['footer'] = str_replace( $keywords, $replace, $data['footer'] );
-		}
-	}
-
-	update_option('k2styleinfo', $data);
-
-	return $data;
-}
-
-function get_style_data( $style_file = '' ) {
-	// if no style selected, exit
-	if ( '' == $style_file )
-		return false;
-
-	$style_path = K2_STYLES_DIR . "/$style_file";
-
-	if ( ! is_readable($style_path) )
-		return false;
-
-	$style_data = implode( '', file($style_path) );
-	$style_data = str_replace( '\r', '\n', $style_data );
-
-	if ( preg_match("|Author Name\s*:(.*)$|mi", $style_data, $author) )
-		$author = trim( $author[1] );
-	else
-		$author = '';
-
-	if ( preg_match("|Author Site\s*:(.*)$|mi", $style_data, $site) )
-		$site = clean_url( trim( $site[1] ) );
-	else
-		$site = '';
-
-	if ( preg_match("|Style Name\s*:(.*)$|mi", $style_data, $stylename) )
-		$stylename = trim( $stylename[1] );
-	else
-		$stylename = '';
-
-	if ( preg_match("|Style URI\s*:(.*)$|mi", $style_data, $stylelink) )
-		$stylelink = clean_url( trim( $stylelink[1] ) );
-	else
-		$stylelink = '';
-
-	if ( preg_match("|Style Footer\s*:(.*)$|mi", $style_data, $footer) )
-		$footer = trim( $footer[1] );
-	else
-		$footer = '';
-
-	if ( preg_match("|Version\s*:(.*)$|mi", $style_data, $version) )
-		$version = trim( $version[1] );
-	else
-		$version = '';
-
-	if ( preg_match("|Comments\s*:(.*)$|mi", $style_data, $comments) )
-		$comments = trim( $comments[1] );
-	else
-		$comments = '';
-
-	if ( preg_match("|Header Text Color\s*:\s*#*([\dABCDEF]+)|i", $style_data, $header_text_color) )
-		 $header_text_color = $header_text_color[1];
-	else
-		 $header_text_color = '';
-
-	if ( preg_match("|Header Width\s*:\s*(\d+)|i", $style_data, $header_width) )
-		$header_width = (int) $header_width[1];
-	else
-		$header_width = 0;
-
-	if ( preg_match("|Header Height\s*:\s*(\d+)|i", $style_data, $header_height) )
-		$header_height = (int) $header_height[1];
-	else
-		$header_height = 0;
-
-	$layout_widths = array();
-	if ( preg_match("|Layout Widths\s*:\s*(\d+)\s*(px)?,\s*(\d+)\s*(px)?,\s*(\d+)|i", $style_data, $widths) ) {
-		$layout_widths[1] = (int) $widths[1];
-		$layout_widths[2] = (int) $widths[3];
-		$layout_widths[3] = (int) $widths[5];
-	}
-
-	return array(
-		'path' => $style_file,
-		'modified' => filemtime($style_path),
-		'author' => $author,
-		'site' => $site,
-		'stylename' => $stylename,
-		'stylelink' => $stylelink,
-		'footer' => $footer,
-		'version' => $version,
-		'comments' => $comments,
-		'header_text_color' => $header_text_color,
-		'header_width' => $header_width,
-		'header_height' => $header_height,
-		'layout_widths' => $layout_widths
-	);
-}
-
 
 function get_rolling_page_dates($query) {
 	global $wpdb;
@@ -515,6 +369,13 @@ function k2_body_class( $print = true ) {
 	return $print ? print($c) : $c;
 }
 
+function k2_post_class( $post_count = 1, $post_asides = false, $print = true ) {
+	_deprecated_function(__FUNCTION__, '0.0', 'post_class()');
+
+	$c = join( ' ', get_post_class() );
+
+	return $print ? print($c) : $c;
+}
 
 function k2_post_class_filter($classes) {
 	global $k2_post_alt, $post;

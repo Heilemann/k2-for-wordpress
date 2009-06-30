@@ -1,12 +1,16 @@
 <?php 
 // Current version of K2
-define('K2_CURRENT', '1.0-RC7.4');
+define('K2_CURRENT', '1.0-RC7.5');
 
 // Is this MU or no?
 define('K2_MU', (isset($wpmu_version) or (strpos($wp_version, 'wordpress-mu') !== false)));
 
 // Are we using K2 Styles?
 define('K2_CHILD_THEME', get_stylesheet() != get_template());
+
+// Features that can be disabled by Child Themes
+@define( 'K2_STYLES', true );
+@define( 'K2_HEADERS', true );
 
 // WordPress compatibility
 @define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
