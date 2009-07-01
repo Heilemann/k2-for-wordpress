@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: K2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-30 13:02-0800\n"
+"POT-Creation-Date: 2009-07-01 13:10-0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Steve Lam <spikeyslam@gmail.com>\n"
 "Language-Team: \n"
@@ -421,91 +421,87 @@ msgstr ""
 msgid "Rename the 'Blog' tab:"
 msgstr ""
 
-#: app/classes/k2.php:77
+#: app/classes/k2.php:76
 msgid "Published on %date% in %categories%. %comments% %tags%"
 msgstr ""
 
-#: app/classes/k2.php:203
+#: app/classes/k2.php:197
 #: app/display/options.php:62
 msgid "K2 Options"
 msgstr ""
 
-#: app/classes/k2.php:210
+#: app/classes/k2.php:204
 msgid "K2 Support Group"
 msgstr ""
 
-#: app/classes/k2.php:211
+#: app/classes/k2.php:205
 msgid "K2 Bug Tracker"
 msgstr ""
 
-#: app/classes/k2.php:232
+#: app/classes/k2.php:226
 msgid "Do you want to restore K2 to default settings? This will remove all your K2 settings."
 msgstr ""
 
-#: app/classes/k2.php:529
+#: app/classes/k2.php:523
 msgid "Type and Wait to Search"
 msgstr ""
 
-#: app/classes/k2.php:535
+#: app/classes/k2.php:529
 #, php-format
 msgid "Page %1$d of %2$d"
 msgstr ""
 
-#: app/classes/styles.php:140
+#: app/classes/styles.php:186
 msgid "Child Theme"
 msgstr ""
 
-#: app/classes/styles.php:142
-msgid "Wordpress"
-msgstr ""
-
-#: app/classes/styles.php:146
+#: app/classes/styles.php:191
 msgid "Styles"
 msgstr ""
 
-#: app/classes/styles.php:150
+#: app/classes/styles.php:195
 #, php-format
 msgid "The directory: <strong>%s</strong>, needed to store custom styles is missing. For you to be able to use custom styles, you need to add this directory."
 msgstr ""
 
-#: app/classes/styles.php:155
+#: app/classes/styles.php:200
 msgid "No need to edit core files, K2 is highly customizable."
 msgstr ""
 
-#: app/classes/styles.php:156
+#: app/classes/styles.php:201
 msgid "Read&nbsp;more."
 msgstr ""
 
-#: app/classes/styles.php:163
+#: app/classes/styles.php:208
 msgid "Styles Directory:"
 msgstr ""
 
-#: app/classes/styles.php:166
+#: app/classes/styles.php:211
 msgid "Styles Root Directory:"
 msgstr ""
 
-#: app/classes/styles.php:212
+#: app/classes/styles.php:229
 msgid "Style"
 msgstr ""
 
-#: app/classes/styles.php:213
+#: app/classes/styles.php:230
 msgid "Author"
 msgstr ""
 
-#: app/classes/styles.php:214
+#: app/classes/styles.php:231
 msgid "Version"
 msgstr ""
 
-#: app/classes/styles.php:215
+#: app/classes/styles.php:232
 msgid "Tags"
 msgstr ""
 
-#: app/classes/styles.php:223
+#: app/classes/styles.php:240
 #, php-format
 msgid "There are no css files found in: <strong>%s</strong>."
 msgstr ""
 
-#: app/classes/styles.php:352
+#: app/classes/styles.php:389
 msgid "Styled with <a href=\"%stylelink%\" title=\"%style% by %author%\">%style%</a>"
 msgstr ""
 
@@ -707,7 +703,6 @@ msgid "Preview"
 msgstr ""
 
 #: app/display/options.php:168
-#: app/includes/widgets.php:90
 #, php-format
 msgid "Permanent Link to \"%s\""
 msgstr ""
@@ -996,48 +991,69 @@ msgstr ""
 msgid "<span>Closed</span>"
 msgstr ""
 
-#: app/includes/widgets.php:19
+#: app/includes/widgets.php:36
 #, php-format
 msgid "The %1$s archives for the %2$s category."
 msgstr ""
 
-#: app/includes/widgets.php:25
-#: app/includes/widgets.php:31
-#: app/includes/widgets.php:37
+#: app/includes/widgets.php:42
+#: app/includes/widgets.php:48
+#: app/includes/widgets.php:54
 #, php-format
 msgid "The %1$s archives for %2$s."
 msgstr ""
 
-#: app/includes/widgets.php:43
+#: app/includes/widgets.php:60
 #, php-format
 msgid "You searched the %1$s archives for <strong>%2$s</strong>."
 msgstr ""
 
-#: app/includes/widgets.php:53
+#: app/includes/widgets.php:70
 #, php-format
 msgid "The %1$s archives for the <strong>%2$s</strong> tag."
 msgstr ""
 
-#: app/includes/widgets.php:59
+#: app/includes/widgets.php:76
 #, php-format
 msgid "The %s weblog archives."
 msgstr ""
 
-#: app/includes/widgets.php:81
-msgid "RSS Feed for Asides"
+#: app/includes/widgets.php:116
+#: app/includes/widgets.php:190
+msgid "Title:"
 msgstr ""
 
-#: app/includes/widgets.php:90
+#: app/includes/widgets.php:120
+msgid "About Text:"
+msgstr ""
+
+#: app/includes/widgets.php:122
+msgid "Enter a blurp about yourself here, and it will show up on the front page. Deleting the content disables the about blurp."
+msgstr ""
+
+#: app/includes/widgets.php:154
 msgid "(more)"
 msgstr ""
 
-#: app/includes/widgets.php:113
-#: app/includes/widgets.php:114
+#: app/includes/widgets.php:194
+msgid "Number of asides to show:"
+msgstr ""
+
+#: app/includes/widgets.php:237
+msgid "Message about the current area and optional front-page message"
+msgstr ""
+
+#: app/includes/widgets.php:238
+#: app/includes/widgets.php:239
 msgid "K2 About"
 msgstr ""
 
-#: app/includes/widgets.php:116
-#: app/includes/widgets.php:117
+#: app/includes/widgets.php:241
+msgid "Asides on your sidebar"
+msgstr ""
+
+#: app/includes/widgets.php:242
+#: app/includes/widgets.php:243
 msgid "K2 Asides"
 msgstr ""
 
