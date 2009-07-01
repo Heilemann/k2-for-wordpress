@@ -197,8 +197,8 @@
 
 			<input type="submit" name="restore-defaults" id="restore-defaults" onClick="return confirmDefaults();" value="<?php echo attribute_escape( __('Revert to K2 Defaults', 'k2_domain') ); ?>" class="button-secondary" />
 			<input type="button" name="advanced" id="advanced-btn" value="<?php echo attribute_escape( __('Show Advanced Options', 'k2_domain') ); ?>" class="button-secondary advanced" />
-			<!-- <input type="submit" name="default-widgets" id="default-widgets-btn" class="button-secondary" value="<?php echo attribute_escape( __('Install a Default Set of Widgets', 'k2_domain') ); ?>" /> -->
-		</div><!-- .options-footer -->
+			<input type="submit" name="default-widgets" id="default-widgets-btn" class="button-secondary" value="<?php echo attribute_escape( __('Install a Default Set of Widgets', 'k2_domain') ); ?>" />
+		</div><!-- .submit -->
 	</form>
 
 </div><!-- .wrap -->

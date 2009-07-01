@@ -75,6 +75,7 @@ class K2 {
 		add_option('k2animations', '1', 'JavaScript Animation effects.');
 		add_option('k2entrymeta1', __('Published on %date% in %categories%. %comments% %tags%', 'k2_domain'), 'Customized metadata format before entry content.');
 		add_option('k2entrymeta2', '', 'Customized metadata format after entry content.');
+		add_option('k2widgetoptions', array(), 'Stored options for various K2 widgets');
 
 		$defaultjs = "// Lightbox v2.03.3 - Adds new images to lightbox\nif (typeof myLightbox != 'undefined' && myLightbox instanceof Lightbox && myLightbox.updateImageList) {\n\tmyLightbox.updateImageList();\n}\n";
 		add_option('k2ajaxdonejs', $defaultjs, 'JavaScript to execute when Ajax is completed');
@@ -123,11 +124,8 @@ class K2 {
 	 * Removes K2 options
 	 *
 	 * @uses do_action() Provides 'k2_uninstall' action
-	 * @global mixed $wpdb
 	 */
-	function uninstall($switch_theme = false) {
-		global $wpdb;
-
+	function uninstall() {
 		// Delete options
 		delete_option('k2version');
 		delete_option('k2asidescategory');
@@ -139,6 +137,7 @@ class K2 {
 		delete_option('k2entrymeta1');
 		delete_option('k2entrymeta2');
 		delete_option('k2animations');
+		delete_option('k2widgetoptions');
 		delete_option('k2ajaxdonejs');
 
 		// Call the uninstall handlers
@@ -175,13 +174,11 @@ class K2 {
 				wp_redirect('themes.php?page=k2-options&defaults=true');
 				die;
 
-			/*
 			// Reset Sidebars
 			} elseif ( isset($_REQUEST['default-widgets']) ) {
 				k2_default_widgets();
 				wp_redirect('themes.php?page=k2-options&widgets=true');
 				die;
-			*/
 
 				// Save Settings
 			} elseif ( isset($_REQUEST['save']) and isset($_REQUEST['k2']) ) {
