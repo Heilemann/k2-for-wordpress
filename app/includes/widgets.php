@@ -203,17 +203,21 @@ function k2_asides_widget_control() {
  * Assigns a default set of widgets
  */
 function k2_default_widgets() {
-	$sidebar = array();
+	// Sidebar 1
+	$sidebar1 = array();
+	k2_add_widget($sidebar1, 'search');
+	k2_add_widget($sidebar1, 'k2-about');
+	k2_add_widget($sidebar1, 'recent-posts');
+	k2_add_widget($sidebar1, 'recent-comments');
 
-	k2_add_widget($sidebar, 'search');
-	k2_add_widget($sidebar, 'k2-about');
-	k2_add_widget($sidebar, 'recent-posts');
-	k2_add_widget($sidebar, 'recent-comments');
-	k2_add_widget($sidebar, 'archives');
-	k2_add_widget($sidebar, 'tag_cloud');
-	k2_add_widget($sidebar, 'links');
+	// Sidebar 2
+	$sidebar2 = array();
+	k2_add_widget($sidebar2, 'archives');
+	k2_add_widget($sidebar2, 'tag_cloud');
+	k2_add_widget($sidebar2, 'links');
 
-	wp_set_sidebars_widgets( array('sidebar-1' => $sidebar) );
+	// Save them
+	wp_set_sidebars_widgets( array('sidebar-1' => $sidebar1, 'sidebar-2' => $sidebar2) );
 }
 
 function k2_add_widget(&$sidebar, $widget_id, $settings = false) {

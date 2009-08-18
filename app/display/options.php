@@ -63,6 +63,19 @@
 	<form action="<?php echo attribute_escape($_SERVER['REQUEST_URI']); ?>" method="post" id="k2-options">
 		<ul class="options-list">
 			<li>
+				<h3 class="main-label"><label for="k2-sidebar-manager"><?php _e('Widgets Manager', 'k2_domain'); ?></label></h3>
+
+				<p class="main-option"><input id="k2-sidebar-manager" name="k2[sidebarmanager]" type="checkbox" value="1" <?php checked('1', get_option('k2sidebarmanager')); ?> />
+
+				<p class="description"><?php _e('K2 has a neat sidebar system that allows you to control where/when each widget can appear.', 'k2_domain'); ?></p>
+		
+				<p class="secondary">
+					<input type="submit" name="default-widgets" id="default-widgets" class="button-secondary advanced-option" value="<?php echo attribute_escape( __('Install a Default Set of Widgets', 'k2_domain') ); ?>" />
+
+					<!--<input type="submit" name="sbm-upgrade" id="sbm-upgrade" class="button-secondary" value="<?php echo attribute_escape( __('Import old SBM settings', 'k2_domain') ); ?>" />-->
+				</p>
+			</li>
+			<li>
 				<h3 class="main-label"><label for="k2-columns"><?php _e('Columns', 'k2_domain'); ?></label></h3>
 
 				<p class="main-option">

@@ -22,7 +22,7 @@
 		</span>
 	-->
 		<div class="updated">
-			<p>Please use <a href="widgets.php">Widgets</a> to add multi-widgets (those in blue).</p>
+			<p>Please use the built-in <a href="widgets.php">Widgets panel</a> to add/remove widgets. This is getting incorporated into built-in Widgets panel.</p>
 		</div>
 
 		<a href="#" id="undo"><?php _e('Undo', 'k2_domain') ?> <span id="levels"></span></a>
@@ -32,6 +32,7 @@
 
 		<div class="initloading"><?php _e('Loading', 'k2_domain'); ?></div>
 
+		<?php if ( get_wp_version() < 2.8 ): ?>
 		<div id="availablemodulescontainer" class="container">
 			<h3><?php _e('Available Widgets', 'k2_domain') ?></h3>
 
@@ -41,6 +42,7 @@
 				</ul>
 			</div>
 		</div><!-- #availablemodulescontainer -->
+		<?php endif; ?>
 
 
 		<?php foreach ( $wp_registered_sidebars as $sidebar_id => $sidebar ): ?>

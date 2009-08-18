@@ -160,7 +160,9 @@ class K2SBM {
 
 	function module_admin_scripts() {
 		// Add our script to the queue
-		wp_enqueue_script('k2widgets');
+		wp_enqueue_script('k2widgets',
+				get_bloginfo('template_directory') . '/js/k2.widgets.js',
+				array('jquery', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-sortable', 'jquery-dimensions', 'humanmsg', 'humanundo'), K2_CURRENT);
 	}
 
 	function module_admin_head() {

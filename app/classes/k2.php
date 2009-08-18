@@ -25,12 +25,17 @@ class K2 {
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
 		require_once(TEMPLATEPATH . '/app/includes/comments.php');
 		require_once(TEMPLATEPATH . '/app/includes/widgets.php');
-		//require_once(TEMPLATEPATH . '/app/classes/widgets.php');
+		require_once(TEMPLATEPATH . '/app/classes/widgets.php');
 
-		if ( K2_STYLES )
+		/*
+		if ( defined('K2_LAYOUT') and K2_LAYOUT == true )
+			require_once(TEMPLATEPATH . '/app/classes/layout.php');
+		*/
+
+		if ( defined('K2_STYLES') and K2_STYLES == true )
 			require_once(TEMPLATEPATH . '/app/classes/styles.php');
 
-		if ( K2_HEADERS )
+		if ( defined('K2_HEADERS') and K2_HEADERS == true )
 			require_once(TEMPLATEPATH . '/app/classes/header.php');
 
 		// Check installed version, upgrade if needed
@@ -425,6 +430,10 @@ class K2 {
 	 */
 	function register_scripts() {
 		// Register jQuery
+		wp_register_script('jquery-ui-slider',
+			get_bloginfo('template_directory') . '/js/ui.slider.js',
+			array('jquery-ui-core'), '1.7.2');
+
 		wp_register_script('jquery-dimensions',
 			get_bloginfo('template_directory') . '/js/jquery.dimensions.js',
 			array('jquery'), '1.2');
