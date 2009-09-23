@@ -1094,6 +1094,19 @@ a[rel~="attachment"] img:hover,
 	margin: 4px 0 2px;
 	}
 
+.smallcaps {
+	font-variant: small-caps;
+	}
+
+abbr[title],
+acronym[title] {
+	cursor: help;
+	}
+
+abbr.entry-date {
+	cursor: inherit;
+	}
+
 small {
 	font-size: 0.9em;
 	line-height: 1.5em;
