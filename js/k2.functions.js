@@ -181,3 +181,12 @@ function resizeImage(image, container, padding) {
 	console.log('resized to a ratio of ' + ratio);
 }
 */
+
+function initARIA() {
+	jQuery('#header').attr('role', 'banner');
+	jQuery('#header .menu').attr('role', 'navigation');
+	jQuery('#primary').attr('role', 'main');
+	jQuery('#rollingcontent').attr('aria-live', 'polite').attr('aria-atomic', 'true');
+	jQuery('.secondary').attr('role', 'complementary');
+	jQuery('#footer').attr('role', 'contentinfo');
+};

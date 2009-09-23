@@ -229,7 +229,6 @@ class K2 {
 		<script type="text/javascript" charset="utf-8">
 		//<![CDATA[
 			var defaults_prompt = "<?php _e('Do you want to restore K2 to default settings? This will remove all your K2 settings.', 'k2_domain'); ?>";
-			var codepress_path = "<?php echo includes_url('js/codepress/'); ?>";
 		//]]>
 		</script>
 		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/options.css" />
@@ -544,6 +543,8 @@ class K2 {
 			jQuery('#dynamic-content').ajaxSuccess(function () {
 				<?php echo get_option('k2ajaxdonejs'); ?>
 			});
+
+			initARIA();
 		});
 	//]]>
 	</script>

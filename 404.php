@@ -3,7 +3,7 @@
 <div class="content">
 	
 <div id="primary-wrapper">
-	<div id="primary" role="main">
+	<div id="primary">
 		<div id="notices"></div>
 
 		<a name="startcontent" id="startcontent"></a>

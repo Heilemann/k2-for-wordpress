@@ -45,7 +45,7 @@
 
 	<?php /* K2 Hook */ do_action('template_before_header'); ?>
 
-	<div id="header" role="banner">
+	<div id="header">
 
 		<?php locate_template( array('blocks/k2-header.php'), true ); ?>
 

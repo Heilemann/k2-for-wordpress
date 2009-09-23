@@ -7,7 +7,7 @@
 
 <?php /* K2 Hook */ do_action('template_before_footer'); ?>
 
-<div id="footer" role="contentinfo">
+<div id="footer">
 
 	<?php locate_template( array('blocks/k2-footer.php'), true ); ?>
 

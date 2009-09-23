@@ -22,7 +22,7 @@ $list_args = k2_get_page_list_args(); // this function is pluggable
 
 <p class="description"><?php bloginfo('description'); ?></p>
 
-<ul class="menu" role="navigation">
+<ul class="menu">
 	<li class="<?php if ( is_front_page() && !is_paged() ): ?>current_page_item<?php else: ?>page_item<?php endif; ?> blogtab">
 		<a href="<?php echo get_option('home'); ?>/" title="<?php echo attribute_escape( get_option('k2blogornoblog') ); ?>">
 			<?php echo get_option('k2blogornoblog'); ?>
