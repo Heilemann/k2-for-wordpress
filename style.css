@@ -1,3 +1,5 @@
+/* @override http://localhost/k2/wp-content/themes/kaytwo/style.css */
+
 /*
 Theme Name: K2
 Theme URI: http://getk2.com
@@ -29,6 +31,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	padding: 0;
 }
 
+
 /*- Typography */
 
 body {
@@ -39,8 +42,12 @@ strong, em, b, i {
     font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Verdana, Helvetica, Arial, sans-serif;
 	}
 
-h1, h2, h3, h4, h5, h6, .blog-title {
+h1, .blog-title, h2, h3 {
 	font-family: "Trebuchet MS", Verdana, sans-serif;
+	}
+
+h4, h5, h6 {
+	font-family: Verdana, sans-serif;
 	}
 
 .comments input[type=text], .comments textarea, code {
@@ -66,7 +73,7 @@ body.lang-ko,
 body.lang-ja,
 body.lang-th,
 body.lang-zh {
-	font-size: 75%; /* Resets 1em to 12px */
+	font-size: 75%; /* Resets 1em to 12px, for internationalized K2s */
 	}
 
 #page {
@@ -78,6 +85,12 @@ body.lang-zh {
 	border: 1px solid #ddd;
 	border-top: none;
 	clear: both;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
 	}
 
 .columns-one #page {
@@ -100,7 +113,7 @@ body.lang-zh {
 	}
 
 .content {
-	padding: 0 20px 10px;
+	padding: 0 20px 30px;
 	}
 
 body.columns-two #primary-wrapper {
