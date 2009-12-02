@@ -106,6 +106,7 @@ body.lang-zh {
 	height: 200px;
 	background: #3371A3;
 	background-position: top right;
+	background-repeat: no-repeat;
 	}
 
 .content {
