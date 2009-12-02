@@ -14,7 +14,7 @@ The Real K2: 		http://en.wikipedia.org/wiki/K2
 $Revision$
 */
 
-/*- Reset CSS */
+/* Reset CSS */
 /* http://meyerweb.com/eric/tools/css/reset/ */
 /* v1.0 | 20080212 */
 
@@ -29,10 +29,10 @@ fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td {
 	margin: 0;
 	padding: 0;
-}
+	}
 
 
-/*- Typography */
+/* Typography */
 
 body {
     font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Helvetica, Arial, sans-serif;
@@ -51,7 +51,7 @@ h4, h5, h6 {
 	}
 
 
-/*- Page Structure */
+/* Page Structure */
 
 body {
 	font-size: 62.5%; /* Resets 1em to 10px */
@@ -178,7 +178,7 @@ body.sidebars-none #primary {
 	position: relative;
 	}
 
-/*- Main Menu in Header */
+/* Main Menu in Header */
 
 ul.menu {
 	position: absolute;
@@ -227,7 +227,7 @@ body.single ul.menu li.blogtab a:hover {
 	text-decoration: none;
 	}
 
-/*- Sidebar Subpages Menu */
+/* Sidebar Subpages Menu */
 
 .sb-pagemenu ul {
 	margin-left: 10px;
@@ -243,7 +243,7 @@ body.single ul.menu li.blogtab a:hover {
 	}
 
 
-/*- Headings */
+/* Headings */
 
 h1 {
 	font-size: 3em;
@@ -364,7 +364,7 @@ body.page .entry-content h4 {
 
 .secondary div div {
 	margin: 0;
-}
+	}
 
 #primary .metalink a, #primary .metalink a:visited, /* The Metalink class takes care of the comments, edit, rss and trackback links next to the titles */
 .secondary .metalink a, .secondary .metalink a:visited,
@@ -396,11 +396,11 @@ body.page .entry-content h4 {
 .comment-login, .comment-welcomeback {
 	margin-top: 15px;
 	color: #777;
-}
+	}
 
 #comment-personaldetails {
 	margin-top: 10px;
-}
+	}
 
 .feedicon { /* Next to Comment Section Headline */
 	border: 0 !important;
@@ -545,10 +545,6 @@ abbr.entry-date {
 	background: url('images/comment_edit.png') 8px center no-repeat;
 	}
 
-.comment-reply {
-	
-	}
-
 .comment-reply a {
 	background-image: url('images/comment.png');
 	}
@@ -564,7 +560,8 @@ abbr.entry-date {
 	margin-left: 5px;
 	}
 
-/*- Primary Contents */
+
+/* Primary Contents */
 
 .hentry {
 	margin: 5px 0 15px;
@@ -719,7 +716,7 @@ abbr.entry-date {
 	}
 
 
-/*- Comments */
+/* Comments */
 
 .commentsrsslink {
 	background: url('images/feed.png') left top no-repeat;
@@ -804,7 +801,7 @@ abbr.entry-date {
 
 .comment-author cite {
 	font-style: normal;
-}
+	}
 
 #commentlist li .counter {
 	display: none;
@@ -901,7 +898,7 @@ abbr.entry-date {
 	padding: 5px;
 	color: #FF0000;
 	background-color: #FFFF99;
-}
+	}
 
 .comments #commentload {
 	display: none;
@@ -911,7 +908,7 @@ abbr.entry-date {
 	height: 18px;
 	width: 18px;
 	background: url('images/spinner.gif') center center no-repeat;
-}
+	}
 
 .comments form {
 	clear: both;
@@ -977,9 +974,10 @@ input[type=text]:focus, textarea:focus {
 
 .footerstats {
 	display: none;
-}
+	}
 
-/*- Links */
+
+/* Links */
 
 #primary a:hover, #primary a:visited:hover,
 .secondary a:hover, .secondary a:visited:hover {
@@ -1000,7 +998,7 @@ a {
 	}
 
 
-/*- Various Tags and Classes */
+/* Various Tags and Classes */
 
 .hidden {
 	position: absolute !important;
@@ -1171,7 +1169,9 @@ img.wp-smiley {
 	padding: 0 0 0 5px !important;
 	}
 
-/*- Begin Lists */
+
+/* Lists */
+
 .archive-list {
 	list-style: none;
 	margin: 10px 0 0 0 !important;
@@ -1237,13 +1237,14 @@ img.wp-smiley {
 
 .sb-links ul ul {
 	margin-left: 0px;
-}
+	}
 
 .sb-links ul ul li {
 	margin-top: 0;
 	}
 
-/*- Search Form and Livesearch */
+
+/* Search Form and Livesearch */
 
 #search {
 	margin-top: 20px;
@@ -1323,14 +1324,14 @@ label.overlabel-apply {
 	}
 
 
-/*- Attachment */
+/* Attachment */
 
 .entry-content .attachment { 
 	text-align: center; 
 	}
 
 
-/*- Rolling Archives */
+/* Rolling Archives */
 
 #rollingarchives {
 	padding: 20px 0;
@@ -1616,9 +1617,6 @@ body.smartposition #trimmertrim, body.smartposition #trimmeruntrim {
 	top: 3px;
 	}
 
-#dynamic-content { /* Make room for the rolling archives */
-	}
-
 body.onepageonly #dynamic-content { /* For the rare case of having only one page of content on the frontpage */
 	padding-top: 0;
 	}
@@ -1627,12 +1625,12 @@ body.onepageonly #dynamic-content { /* For the rare case of having only one page
 	display: none;
 	}
 
+
+
 /* CSS Beyond this point is for various supported plugins and not the 'core' K2 template */
 
 
-/*-
-	Links Module
-*/
+/* Links Module */
 
 .sb-links h4 {
 	display: none;
@@ -1647,12 +1645,8 @@ body.onepageonly #dynamic-content { /* For the rare case of having only one page
 	}
 
 
-
-
-/*-
-	Brian's Latest Comments
-	http://meidell.dk/archives/2004/09/12/brians-latest-comments/
-*/
+/* Brian's Latest Comments
+	http://meidell.dk/archives/2004/09/12/brians-latest-comments/ */
 
 #brians-latest-comments ul li span a, #brians-latest-comments ul li small a,
 .sb-comments-blc ul li span a, .sb-comments-blc ul li small a {
@@ -1664,14 +1658,14 @@ body.onepageonly #dynamic-content { /* For the rare case of having only one page
 #brians-latest-comments ul li,
 .sb-comments-blc ul li {
 	margin-bottom: 6px;
-}
+	}
 
 #brians-latest-comments ul li > a[title="Go to the comments of this entry"],
 .sb-comments-blc ul li > a[title="Go to the comments of this entry"] {
 	position: absolute;
 	right:0;
 	color: #999;
-}
+	}
 
 .activityentry {
 	font-size: 1.1em;
@@ -1685,9 +1679,7 @@ div#latest-comments small {
 	}
 
 
-/*-
-	FlickrRSS
-*/
+/* FlickrRSS */
 
 .sb-flickr div {
 	margin-top: 10px !important;
@@ -1695,18 +1687,17 @@ div#latest-comments small {
 
 .sb-flickr div img {
 	padding: 5px;
-}
+	}
 
 .sb-flickr div a {
 	}
 	
 .sb-flickr div a img {
 	margin: 0px 5px;
-}
+	}
 
-/*
-	Calendar Module
-*/
+
+/* Calendar Module */
 
 #wp-calendar {
 	width: 100%;
@@ -1743,18 +1734,15 @@ div#latest-comments small {
 	background: #f3f3f3;
 	}
 
-/*
-	Ultimate Tag Warrior
-	K2 removes UTW's default tags for more default control.
-*/
+/* 	Ultimate Tag Warrior
+	K2 removes UTW's default tags for more default control. */
 
 .localtags, .technoratitags {
 	display: none;
 	}
 
-/*
-	Contact Form
-*/
+
+/* Contact Form */
 
 .contactform {
 	width: 100%; 
@@ -1784,13 +1772,14 @@ div#latest-comments small {
 	border: 1px solid #ff0000;
 	}
 
+
 /* Noteworthy */
 
 .category-noteworthy h3.entry-title {
 	background: url('images/heart.png') no-repeat right center;
 	padding-right: 25px;
 	display: inline;
-}
+	}
 
 .noteworthyLink { margin-left: 5px }
 
