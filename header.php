@@ -37,10 +37,6 @@
 
 <?php /* K2 Hook */ do_action('template_body_top'); ?>
 
-<div id="skip">
-	<a href="#startcontent" accesskey="2"><?php _e('Skip to content','k2_domain'); ?></a>
-</div>
-
 <div id="page">
 
 	<?php /* K2 Hook */ do_action('template_before_header'); ?>

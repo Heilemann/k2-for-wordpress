@@ -981,23 +981,6 @@ input[type=text]:focus, textarea:focus {
 
 /*- Links */
 
-#skip a, #skip a:hover, #skip a:visited
-{
-	position: absolute;
-	left: 0px;
-	top: -500px;
-	width: 1px;
-	height: 1px;
-	overflow: hidden;
-	}
- 
-#skip a:focus
-{
-	position: static;
-	width: auto;
-	height: auto;
-	} 
-
 #primary a:hover, #primary a:visited:hover,
 .secondary a:hover, .secondary a:visited:hover {
 	text-decoration: underline;
@@ -1016,16 +999,9 @@ a {
 	color: #b41;
 	}
 
+
 /*- Various Tags and Classes */
 
-/*
-.hidden {
-	overflow: hidden;
-	position: absolute;
-	text-indent: -1000px;
-	text-align: left;
-	}
-*/
 .hidden {
 	position: absolute !important;
 	left: 0px;
