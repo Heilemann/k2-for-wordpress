@@ -50,10 +50,6 @@ h4, h5, h6 {
 	font-family: Verdana, sans-serif;
 	}
 
-.comments input[type=text], .comments textarea, code {
-	font-family: Monaco, "Courier New", Courier, monospace;
-	}
-
 
 /*- Page Structure */
 
@@ -223,7 +219,9 @@ ul.menu li a:hover {
 ul.menu li.current_page_item a,
 ul.menu li.current_page_item a:hover,
 ul.menu li.current_page_ancestor a,
-ul.menu li.current_page_ancestor a:hover {
+ul.menu li.current_page_ancestor a:hover,
+body.single ul.menu li.blogtab a,
+body.single ul.menu li.blogtab a:hover {
 	color: #333;
 	background: white;
 	text-decoration: none;
@@ -244,8 +242,6 @@ ul.menu li.current_page_ancestor a:hover {
 	padding: 0;
 	}
 
-.sb-pagemenu .current_page_item {
-	}
 
 /*- Headings */
 
@@ -923,8 +919,7 @@ abbr.entry-date {
 	}
 
 .comments input[type=text], .comments textarea {
-	font-size: 12px;
-	padding: 3px;
+	padding: 2px;
 	color: #777;
 	}
 
@@ -946,6 +941,7 @@ input[type=text]:focus, textarea:focus {
 	}
 
 .comments form #submit {
+	margin-right: 20px;
 	float: right;
 	}
 
