@@ -82,7 +82,7 @@
 
 		<?php if ( get_option('comment_registration') and !$user_ID ): ?>
 			<p>
-				<?php printf(__('You must <a href="%s">login</a> to post a comment.','k2_domain'), get_option('siteurl') . '/wp-login.php?redirect_to=' . get_permalink()); ?>
+				<?php printf(__('You must <a href="%s">login</a> to post a comment.','k2_domain'), get_option('siteurl') . '/wp-login.php?redirect_to=' . htmlentities(urlencode(get_permalink()))); ?>
 			</p>
 		<?php else: ?>
 			<form action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" method="post" id="commentform">
