@@ -168,7 +168,7 @@ class K2 {
 			check_admin_referer('k2options');
 
 			// Reset K2
-			} elseif ( isset($_REQUEST['restore-defaults']) ) {
+			if ( isset($_REQUEST['restore-defaults']) ) {
 				K2::restore_defaults();
 				wp_redirect('themes.php?page=k2-options&defaults=true');
 				die;
