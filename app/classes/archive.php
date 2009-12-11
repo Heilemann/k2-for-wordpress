@@ -1,5 +1,5 @@
 <?php
-/* This class holds all the code for creating, deleting and setting up the archives, powered by Extended Live Archives: http://www.sonsofskadi.net/extended-live-archive/ */
+/* This class holds all the code for creating, deleting and setting up the pre-made archives page */
 
 class K2Archive {
 	function install() {

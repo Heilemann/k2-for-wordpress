@@ -32,12 +32,6 @@
 	</div>
 	<?php endif; ?>
 
-	<?php if ( isset($_GET['widgets']) ): ?>
-	<div class="updated fade">
-		<p><?php _e('A default set of widgets has been installed.', 'k2_domain'); ?></p>
-	</div>
-	<?php endif; ?>
-
 	<?php if ( isset($_GET['saved']) ): ?>
 	<div class="updated fade">
 		<p><?php _e('K2 Options have been updated', 'k2_domain'); ?></p>
@@ -113,7 +107,6 @@
 				</p>
 
 				<p class="description"><?php _e('Installs a pre-made archives page.', 'k2_domain'); ?></p>
-
 			</li>
 			<li>
 				<h3 class="main-label"><label for="k2-asidescategory"><?php _e('Asides', 'k2_domain'); ?></label></h3>

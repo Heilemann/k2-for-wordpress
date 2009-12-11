@@ -167,7 +167,7 @@
 	</div>
 	<?php } ?>
 
-<?php endif; /* End Widgets/SBM check */ ?>
+<?php endif; /* End Widgets check */ ?>
 </div> <!-- #sidebar-1 -->
 <?php endif; ?>
 <hr />

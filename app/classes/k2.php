@@ -24,8 +24,6 @@ class K2 {
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
 		require_once(TEMPLATEPATH . '/app/includes/comments.php');
-		require_once(TEMPLATEPATH . '/app/includes/widgets.php');
-		require_once(TEMPLATEPATH . '/app/classes/widgets.php');
 
 		/*
 		if ( defined('K2_LAYOUT') and K2_LAYOUT == true )

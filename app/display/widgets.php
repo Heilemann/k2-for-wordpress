@@ -11,23 +11,6 @@
 	</div>
 	<?php } ?>
 
-	<div id="sbmheader">
-		<?php if ( function_exists('screen_icon') ) screen_icon(); ?>
-		<h2><?php _e('K2 Widgets Manager', 'k2_domain') ?></h2>
-
-	<!--
-		<span class="backuprestore">
-			<a href="" id="restoresbm"><?php _e('Restore', 'k2_domain') ?></a>
-			<a href="" id="backupsbm"><?php _e('Backup', 'k2_domain') ?></a>
-		</span>
-	-->
-		<div class="updated">
-			<p>Please use the built-in <a href="widgets.php">Widgets panel</a> to add/remove widgets. This is getting incorporated into built-in Widgets panel.</p>
-		</div>
-
-		<a href="#" id="undo"><?php _e('Undo', 'k2_domain') ?> <span id="levels"></span></a>
-	</div><!-- .sbmheader -->
-
 	<div class="containerwrap">
 
 		<div class="initloading"><?php _e('Loading', 'k2_domain'); ?></div>
