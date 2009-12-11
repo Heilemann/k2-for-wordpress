@@ -117,16 +117,6 @@ function k2_comment_start_el($comment, $args = array(), $depth = 1) {
 							endif;
 						?>
 					</a>
-
-					<?php if ( function_exists('quoter_comment') ): quoter_comment(); endif; ?>
-
-					<?php
-						if ( function_exists('jal_edit_comment_link') ):
-							jal_edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>');
-						else:
-							edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">', '</span>');
-						endif;
-					?>
 				</div><!-- .comment-meta -->
 			</div><!-- .comment-head -->
 
@@ -140,11 +130,23 @@ function k2_comment_start_el($comment, $args = array(), $depth = 1) {
 				<?php endif; ?>
 			</div><!-- .comment-content -->
 
-			<?php if ( function_exists('comment_reply_link') ): ?>
-			<div id="comment-reply-<?php comment_ID(); ?>" class="comment-reply">
-				<?php comment_reply_link(array_merge( $args, array('add_below' => 'comment-reply', 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+			<div class="buttons">
+				<?php if ( function_exists('comment_reply_link') ): ?>
+				<div id="comment-reply-<?php comment_ID(); ?>" class="comment-reply">
+					<?php comment_reply_link(array_merge( $args, array('add_below' => 'comment-reply', 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+				</div>
+				<?php endif; ?>
+	
+				<?php if ( function_exists('quoter_comment') ): quoter_comment(); endif; ?>
+	
+				<?php
+					if ( function_exists('jal_edit_comment_link') ):
+						jal_edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>');
+					else:
+						edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">', '</span>');
+					endif;
+				?>
 			</div>
-			<?php endif; ?>
 
 		</div><!-- comment -->
 <?php

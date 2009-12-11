@@ -173,10 +173,10 @@
 				</p>
 		
 				<?php if ( function_exists('show_subscription_checkbox') ) show_subscription_checkbox(); ?>
-				<?php if ( function_exists('quoter_page') ) quoter_page(); ?>
+				<div><?php if ( function_exists('quoter_page') ) quoter_page(); ?></div>
 
 				<p>
-					<input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit','k2_domain'); ?>" />
+					<div><input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit','k2_domain'); ?>" /></div>
 
 					<?php if ( function_exists('comment_id_fields') ): comment_id_fields(); else: ?>
 						<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />

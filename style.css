@@ -9,7 +9,7 @@ Author: Various Artists
 Author URI: http://getk2.com/
 Tags: ajax, blue, custom-header, fixed-width, one-column, two-columns, three-columns, dynamic-columns, multiple-columns, theme-options, threaded-comments, microformats, styles, widgets, framework
 
-The Real K2: 		http://en.wikipedia.org/wiki/K2
+The Real K2: http://en.wikipedia.org/wiki/K2
 
 $Revision$
 */
@@ -449,7 +449,8 @@ body.page .entry-content h4 {
 .entry-head .entry-edit {
 	position: absolute;
 	right: 0;
-	top: 4px;
+	top: 7px;
+	font-size: 1.1em;
 	}
 
 .entry-title, .entry-title a, .entry-title a:visited,
@@ -484,9 +485,7 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	}
 
 .entry-head .entry-meta {
-	background: url('images/time.png') left top no-repeat;
 	min-height: 16px;
-	padding-left: 20px;
 	}
 
 .image-meta abbr,
@@ -503,13 +502,11 @@ abbr.entry-date {
 	}
 
 .entry-tags {
-	padding: 2px 0px 2px 20px;
-	background: url('images/tag_blue.png') left 2px no-repeat;
+	padding: 2px 0px;
 	}
 
 .entry-head .entry-tags {
 	display: block;
-	margin-left: -20px;
 	}
 
 .entry-tags a {
@@ -517,50 +514,43 @@ abbr.entry-date {
 	}
 
 .entry-edit a,
-.comment-reply a {
+.buttons a {
 	border: none;
-	padding: 4px 8px 4px 28px;
-	background-position: 8px center;
-	background-repeat: no-repeat;
+	padding: 4px 8px;
 	height: 16px;
 	color: #333;
-	background-color: inherit;
+	background: #e7e7e7;
+	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
-	border-radius: 4px;
+	}
+
+.bypostauthor .buttons a {
+	background: #e1e1e1;
 	}
 
 .entry-edit a:hover,
-.comment-reply a:hover {
-	background-color: #9be;
+.buttons a:hover {
+	background-color: #333;
 	color: #fff;
+	text-decoration: none;
 	}
 
-.entry-edit a {
-	background-image: url('images/pencil.png');
-	}
-
-.comment-edit a {
-	padding: 4px 8px 4px 28px;
-	margin-left: 10px;
-	background: url('images/comment_edit.png') 8px center no-repeat;
-	}
-
-.comment-reply a {
-	background-image: url('images/comment.png');
-	}
-
-.commentslink {
-	padding: 2px 0 2px 20px;
-	background: url('images/comment.png') left center no-repeat;
-	}
-
-.quoter_comment {
-	padding: 2px 0 2px 20px;
-	background: url('images/comment.png') left center no-repeat;
+.buttons a {
 	margin-left: 5px;
 	}
 
+.buttons {
+	text-align: right;
+	}
+
+div.comment-reply {
+	display: inline;
+	}
+
+.commentslink {
+	padding: 2px 0;
+	}
 
 /* Primary Contents */
 
@@ -611,14 +601,19 @@ abbr.entry-date {
 	font-weight: bold;
 	}
 
-/* Google Maps Support */
-.entry-content .map div {
+.entry-content .map div { /* Google Maps Support */
 	margin: 0;
 	}
 
 .metalinks {
 	margin-top: 3px;
 	}
+
+#primary a.post-edit-link:hover,
+#primary a.comment-edit-link:hover,
+#primary a.comment-reply-link:hover {
+	text-decoration: none;
+}
 
 .columns-three .template-image #primary {
 	width: 670px;
@@ -719,16 +714,18 @@ abbr.entry-date {
 
 /* Comments */
 
+.comments .metalinks {
+	display: none; /* Rarely used these days, so let's hide it. */
+}
+
 .commentsrsslink {
-	background: url('images/feed.png') left top no-repeat;
-	padding: 2px 0 2px 20px;
+	padding: 2px 0;
 	margin-right: 10px;
 	height: 16px;
 	}
 
 .trackbacklink {
-	background: url('images/arrow_refresh.png') left top no-repeat;
-	padding: 2px 0 2px 20px;
+	padding: 2px 0;
 	height: 16px;
 	}
 
@@ -760,6 +757,9 @@ abbr.entry-date {
 
 #commentlist .comment {
 	padding: 10px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	}
 
 #commentlist li.comment {
@@ -780,8 +780,7 @@ abbr.entry-date {
 	}
 
 #commentlist li .comment-meta {
-	padding: 2px 0 2px 20px;
-	background: url('images/time.png') left center no-repeat;
+	padding: 2px 0;
 	display: block;
 	}
 
@@ -817,7 +816,7 @@ abbr.entry-date {
 	}
 
 .bypostauthor {
-	background: #eee;
+	background: #f2f2f2;
 	}
 
 .bypostauthor blockquote {
@@ -882,7 +881,7 @@ abbr.entry-date {
 	text-align: center;
 	margin: 30px 0 20px !important;
 	color: #ddd;
-	font-size: 2em;
+	font-size: 1.7em;
 	}
 
 .comments #loading {
