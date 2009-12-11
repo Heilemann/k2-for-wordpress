@@ -1,4 +1,7 @@
-/* @override http://localhost/k2/wp-content/themes/kaytwo/style.css */
+/* @override 
+	http://localhost/k2/wp-content/themes/kaytwo/style.css
+	http://priscillaice.net/wp-content/themes/k2/style.css
+*/
 
 /*
 Theme Name: K2
@@ -174,6 +177,7 @@ body.sidebars-none #primary {
 	}
 
 .comments {
+	clear: both;
 	text-align: left;
 	margin: 30px 0 0;
 	position: relative;
@@ -956,7 +960,6 @@ input[type=text]:focus, textarea:focus {
 
 #footer a {
 	color: #888;
-	text-decoration: underline;
 	font-weight: bold;
 	}
 
