@@ -44,12 +44,6 @@
 	</div>
 	<?php endif; ?>
 
-	<?php if ( isset($_GET['ela']) ): ?>
-	<div class="updated fade">
-		<p><?php _e('The Extended Live Archives plugin has been setup for use with K2', 'k2_domain'); ?></p>
-	</div>
-	<?php endif; ?>
-
 	<?php if ($dir_has_spaces): ?>
 		<div class="error">
 		<?php printf( __('The K2 directory: <strong>%s</strong>, contains spaces. For K2 to function properly, you will need to remove the spaces from the directory name.', 'k2_domain'), TEMPLATEPATH ); ?>
@@ -120,10 +114,6 @@
 
 				<p class="description"><?php _e('Installs a pre-made archives page.', 'k2_domain'); ?></p>
 
-				<?php if ( function_exists('af_ela_set_config') ): ?>
-					<p class="center">
-						<input id="configela" name="configela" class="button-secondary" type="submit" value="<?php echo attribute_escape(__('Configure Extended Live Archives for K2', 'k2_domain')); ?>" /></p>
-				<?php endif; ?>
 			</li>
 			<li>
 				<h3 class="main-label"><label for="k2-asidescategory"><?php _e('Asides', 'k2_domain'); ?></label></h3>

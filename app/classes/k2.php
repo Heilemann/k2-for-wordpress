@@ -167,12 +167,6 @@ class K2 {
 		if ( isset($_GET['page']) and ('k2-options' == $_GET['page']) and isset($_REQUEST['k2-options-submit']) ) {
 			check_admin_referer('k2options');
 
-			// Setup ELA
-			if ( isset($_REQUEST['configela']) ) {
-				K2Archive::setup_archive();
-				wp_redirect('themes.php?page=k2-options&ela=true');
-				die;
-
 			// Reset K2
 			} elseif ( isset($_REQUEST['restore-defaults']) ) {
 				K2::restore_defaults();
