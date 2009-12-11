@@ -181,14 +181,16 @@ function k2_body_class( $print = true ) {
 
 	// Generic semantic classes for what type of content is displayed
 
-	is_front_page()      ? $c[] = 'home'       : null;
-	is_home()            ? $c[] = 'blog'       : null;
-	is_archive()         ? $c[] = 'archive'    : null;
-	is_date()            ? $c[] = 'date'       : null;
-	is_search()          ? $c[] = 'search'     : null;
-	is_paged()           ? $c[] = 'paged'      : null;
-	is_attachment()      ? $c[] = 'attachment' : null;
-	is_404()             ? $c[] = 'four04'     : null; // CSS does not allow a digit as first character
+	is_front_page()      					? $c[] = 'home'       		: null;
+	is_home()            					? $c[] = 'blog'       		: null;
+	is_archive()         					? $c[] = 'archive'    		: null;
+	is_date()            					? $c[] = 'date'       		: null;
+	is_search()          					? $c[] = 'search'     		: null;
+	is_paged()           					? $c[] = 'paged'      		: null;
+	is_attachment()      					? $c[] = 'attachment' 		: null;
+	(get_option('k2rollingarchives')=='1') 	? $c[] = 'rollingarchives' 	: null;
+	(get_option('k2animations')=='1') 		? $c[] = 'animations' 		: null;
+	is_404()             					? $c[] = 'four04'     		: null; // CSS does not allow a digit as first character
 
 	if ( is_attachment() ) {
 		$postID = $wp_query->post->ID;
