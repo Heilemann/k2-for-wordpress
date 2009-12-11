@@ -956,7 +956,7 @@ input[type=text]:focus, textarea:focus {
 
 #footer a {
 	color: #888;
-	border-bottom: 1px solid #ccc;
+	text-decoration: underline;
 	font-weight: bold;
 	}
 
