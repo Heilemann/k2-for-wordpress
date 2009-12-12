@@ -121,22 +121,14 @@ function k2_comment_start_el($comment, $args = array(), $depth = 1) {
 			</div><!-- .comment-head -->
 
 			<div class="comment-content">
-				<?php comment_text(); ?> 
-
 				<?php if ( ! $comment->comment_approved ): ?>
-				<p class="comment-moderation alert">
-					<strong><?php _e('Your comment is awaiting moderation.','k2_domain'); ?></strong>
-				</p>
+				<p class="comment-moderation alert"><?php _e('Your comment is awaiting moderation.','k2_domain'); ?></p>
 				<?php endif; ?>
+
+				<?php comment_text(); ?> 
 			</div><!-- .comment-content -->
 
 			<div class="buttons">
-				<?php if ( function_exists('comment_reply_link') ): ?>
-				<div id="comment-reply-<?php comment_ID(); ?>" class="comment-reply">
-					<?php comment_reply_link(array_merge( $args, array('add_below' => 'comment-reply', 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
-				</div>
-				<?php endif; ?>
-	
 				<?php if ( function_exists('quoter_comment') ): quoter_comment(); endif; ?>
 	
 				<?php
@@ -146,7 +138,14 @@ function k2_comment_start_el($comment, $args = array(), $depth = 1) {
 						edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">', '</span>');
 					endif;
 				?>
-			</div>
+
+				<?php if ( function_exists('comment_reply_link') ): ?>
+				<div id="comment-reply-<?php comment_ID(); ?>" class="comment-reply">
+					<?php comment_reply_link(array_merge( $args, array('add_below' => 'comment-reply', 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+				</div>
+				<?php endif; ?>
+			</div><!-- .buttons -->
+
 
 		</div><!-- comment -->
 <?php

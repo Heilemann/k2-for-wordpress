@@ -6,7 +6,7 @@
 /*
 Theme Name: K2
 Theme URI: http://getk2.com
-Description: <strong><a href="themes.php?page=k2-options">Configure K2</a></strong> or visit the <a href="http://groups.google.com/group/k2-support">support forums</a>, <a href="http://code.google.com/p/kaytwo/w/list">the wiki</a> or <a href="http://code.google.com/p/kaytwo/issues/list">the bug tracker</a>. K2 was developed by <a href="http://binarybonsai.com/">Michael</a>, <a href="http://chrisjdavis.org/">Chris</a>, <a href="http://zeo.unic.net.my/">Zeo</a>, <a href="http://stevelam.org/">Steve</a> and Ben, and is licensed under the <a href="http://www.opensource.org/licenses/gpl-license.php">GPL</a>.
+Description: <strong><a href="themes.php?page=k2-options">Configure K2</a></strong> or visit the <a href="http://groups.google.com/group/k2-support">support forums</a>, <a href="http://code.google.com/p/kaytwo/w/list">the wiki</a> or <a href="http://code.google.com/p/kaytwo/issues/list">the bug tracker</a>. K2 was developed by <a href="http://binarybonsai.com/">Michael</a>, <a href="http://chrisjdavis.org/">Chris</a>, <a href="http://zeo.unic.net.my/">Zeo</a>, <a href="http://stevelam.org/">Steve</a>, Ben and Eric, and is licensed under the <a href="http://www.opensource.org/licenses/gpl-license.php">GPL</a>.
 Version: 1.0-RC8
 Author: Various Artists
 Author URI: http://getk2.com/
@@ -514,44 +514,59 @@ abbr.entry-date {
 	text-transform: lowercase;
 	}
 
+div.comment-reply {
+	display: inline;
+}
+
 .entry-edit a,
-.buttons a {
+a.quoter_comment,
+a.quoter_page,
+a.comment_quote_link,
+a.comment-edit-link,
+a.comment-reply-link,
+a#cancel-comment-reply-link,
+.comment-edit a {
 	border: none;
 	padding: 4px 8px;
 	height: 16px;
+	line-height: 16px;
 	color: #333;
 	background: #e7e7e7;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
+	display: inline;
 	}
 
-.bypostauthor .buttons a {
-	background: #e1e1e1;
-	}
+#commentlist #respond a.quoter_page,
+#commentlist #respond a#cancel-comment-reply-link {
+	background: #ddd;
+}
 
 .entry-edit a:hover,
-.buttons a:hover {
+a.quoter_comment:hover,
+a.quoter_page:hover,
+#commentlist #respond a.quoter_page:hover,
+a.comment_quote_link:hover,
+a.comment-edit-link:hover,
+a.comment-reply-link:hover,
+#commentlist #respond a#cancel-comment-reply-link:hover,
+a#cancel-comment-reply-link:hover,
+.comment-edit a:hover {
 	background-color: #333;
 	color: #fff;
 	text-decoration: none;
 	}
 
-.buttons a {
-	margin-left: 5px;
-	}
-
-.buttons {
-	text-align: right;
-	}
-
-div.comment-reply {
-	display: inline;
-	}
+div.quoter_page_container {
+	margin: 5px 0;
+	display: none; /* Hidden because it's not too nice an implementation */
+}
 
 .commentslink {
 	padding: 2px 0;
 	}
+
 
 /* Primary Contents */
 
@@ -817,7 +832,7 @@ div.comment-reply {
 	}
 
 .bypostauthor {
-	background: #f2f2f2;
+	background: #f6f6f6;
 	}
 
 .bypostauthor blockquote {
@@ -825,23 +840,24 @@ div.comment-reply {
 	background: url('images/quote.png') no-repeat 10px 0;              
 	}
 
-#commentlist #respond {
-	background-color: #ddd;
-	margin: 1em 0;
-	padding: 1em;
+#respond {
 	position: relative;
+	}
+
+#commentlist #respond {
+	background: #eee;
+	margin-top: 15px;
+	padding: 10px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 	}
 
 #commentlist .cancel-comment-reply {
 	position: absolute;
 	top: 1em;
 	right: 1em;
-	background: url(images/cross.png) no-repeat left center;
-	padding: 2px 0 2px 20px;
-	}
-
-#commentlist #respond a {
-	/*color: #ccc;*/
+	padding: 2px 0;
 	}
 
 #pinglist {
@@ -933,13 +949,12 @@ input[type=text]:focus, textarea:focus {
 	}
 
 .comments textarea {
-	width: 95%;
+	width: 99%;
 	margin: 10px 0;
 	border: 1px solid #888;
 	}
 
 .comments form #submit {
-	margin-right: 20px;
 	float: right;
 	}
 
@@ -979,8 +994,7 @@ input[type=text]:focus, textarea:focus {
 
 /* Links */
 
-#primary a:hover, #primary a:visited:hover,
-.secondary a:hover, .secondary a:visited:hover {
+a:hover, a:visited:hover {
 	text-decoration: underline;
 	}
 
@@ -1055,9 +1069,9 @@ a[rel~="attachment"] img,
 	border: 1px solid #ddd;
 	padding: 3px;
 	text-align: center;
+	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
-	border-radius: 3px;
 	}
 
 a[rel~="attachment"] img:hover,
@@ -1157,11 +1171,9 @@ body.smartposition #nav-above {
 
 .alert {
 	background: #FFF6BF;
-	border-top: 2px solid #FFD324;
-	border-bottom: 2px solid #FFD324;
 	text-align: center;
 	margin: 10px auto;
-	padding: 5px 20px;
+	padding: 4px 20px;
 	}
 
 img.wp-smiley {

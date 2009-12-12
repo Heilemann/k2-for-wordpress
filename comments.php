@@ -73,6 +73,8 @@
 					_e('Leave a Reply','k2_domain');
 				endif;
 		?></h4>
+
+		<div class="quoter_page_container"><?php if ( function_exists('quoter_page') ) quoter_page(); ?></div>
 		
 		<?php if ( function_exists('cancel_comment_reply_link') ): ?>
 		<div class="cancel-comment-reply">
@@ -105,7 +107,6 @@
 
 				<p class="comment-welcomeback"><?php printf(__('Welcome back <strong>%s</strong>','k2_domain'), $comment_author); ?>
 				
-				<?php /* ?>
 				<a href="javascript:toggleCommentAuthorInfo();" id="toggle-comment-author-info">
 					<?php _e('(Change)','k2_domain'); ?>
 				</a>
@@ -130,7 +131,6 @@
 					});
 				//]]>
 				</script>
-				<?php */ ?>
 			<?php endif; ?>
 			
 			<?php if ( ! $user_ID ): ?>
@@ -173,8 +173,7 @@
 				</p>
 		
 				<?php if ( function_exists('show_subscription_checkbox') ) show_subscription_checkbox(); ?>
-				<div><?php if ( function_exists('quoter_page') ) quoter_page(); ?></div>
-
+		
 				<p>
 					<div><input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit','k2_domain'); ?>" /></div>
 
