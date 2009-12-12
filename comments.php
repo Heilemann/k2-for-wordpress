@@ -1,4 +1,4 @@
-<?php
+<?php 
 	// Do not access this file directly
 	if ( !empty($_SERVER['SCRIPT_FILENAME']) and 'comments.php' == basename($_SERVER['SCRIPT_FILENAME']) )
 		die( __('Please do not load this page directly. Thanks!', 'k2_domain') );
