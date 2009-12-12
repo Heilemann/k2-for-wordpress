@@ -24,11 +24,7 @@ class K2 {
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
 		require_once(TEMPLATEPATH . '/app/includes/comments.php');
-
-		/*
-		if ( defined('K2_LAYOUT') and K2_LAYOUT == true )
-			require_once(TEMPLATEPATH . '/app/classes/layout.php');
-		*/
+		require_once(TEMPLATEPATH . '/app/includes/widgets.php');
 
 		if ( defined('K2_STYLES') and K2_STYLES == true )
 			require_once(TEMPLATEPATH . '/app/classes/styles.php');
@@ -70,8 +66,7 @@ class K2 {
 		add_option('k2asidescategory', '0', 'A category which will be treated differently from other categories');
 		add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on"); // (live & classic)
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
-		add_option('k2archives', '0', 'Set whether K2 has a Live Archive page');
-		add_option('k2sidebarmanager', '0', 'Set whether to use K2 Sidebar Manager');
+		add_option('k2archives', '0', 'Set whether K2 has an archives page');
 		add_option('k2columns', '2', 'Number of columns to display.');
 
 		// Added 1.0-RC8
@@ -83,14 +78,12 @@ class K2 {
 		$defaultjs = "// Lightbox v2.03.3 - Adds new images to lightbox\nif (typeof myLightbox != 'undefined' && myLightbox instanceof Lightbox && myLightbox.updateImageList) {\n\tmyLightbox.updateImageList();\n}\n";
 		add_option('k2ajaxdonejs', $defaultjs, 'JavaScript to execute when Ajax is completed');
 
-		/*
 		// Install a default set of widgets
 		if ( function_exists('wp_get_sidebars_widgets') ) {
 			$sidebars_widgets = wp_get_sidebars_widgets();
 			if ( empty( $sidebars_widgets ) )
 				k2_default_widgets();
 		}
-		*/
 
 		// Call the install handlers
 		do_action('k2_install');
