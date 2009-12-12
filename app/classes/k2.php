@@ -435,14 +435,6 @@ class K2 {
 			get_bloginfo('template_directory') . '/js/k2.options.js',
 			array('jquery', 'jquery-ui-sortable'), K2_CURRENT);
 
-		wp_register_script('humanmsg',
-			get_bloginfo('template_directory') . '/js/jquery.humanmsg.js',
-			array('jquery', 'jquery-easing'), K2_CURRENT);
-
-		wp_register_script('humanundo',
-			get_bloginfo('template_directory') . '/js/jquery.humanundo.js',
-			array('jquery'), K2_CURRENT);
-
 		wp_register_script('k2rollingarchives',
 			get_bloginfo('template_directory') . '/js/k2.rollingarchives.js',
 			array('jquery', 'k2slider', 'k2trimmer'), K2_CURRENT, true);
