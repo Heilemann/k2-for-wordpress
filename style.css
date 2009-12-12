@@ -317,10 +317,6 @@ h4 {
 	font-weight: normal;
 	}
 
-.entry-title {
-	margin-right: 60px;
-	}
-
 .four04 .entry-title,
 body.page .entry-title {
 	text-align: center;
@@ -455,6 +451,7 @@ body.page .entry-content h4 {
 	right: 0;
 	top: 7px;
 	font-size: 1.1em;
+	display: inline;
 	}
 
 .entry-title, .entry-title a, .entry-title a:visited,
