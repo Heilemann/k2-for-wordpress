@@ -1345,19 +1345,31 @@ label.overlabel-apply {
 
 /* Rolling Archives */
 
-#rollingarchives {
-	padding: 10px 0 25px;
+#rollingarchives { /* Navigation hub for AJAX-powered navigation */
+	position: absolute;
+	top: 0;
+	height: 22px;
 	display: block;
 	width: 500px;
-	position: relative;
+	padding-top: 15px !important;
+	padding-bottom: 10px !important;
 	}
+
+body.smartposition #rollingarchives { /* Attaches RA to top of window when scrolling down */
+	position: fixed;
+	background: #fff;
+	border-bottom: 1px solid #eee;
+	z-index: 1000;
+	}
+
+#dynamic-content { /* Contains both the RA nav and content, and is used for as a top marker for the smartposition */
+	position: absolute;
+	top: 5px;
+	padding-top: 15px;
+}
 
 #rollingarchives a:hover {
 	text-decoration: underline;
-	}
-
-#rollnavigation {
-	position: relative;
 	}
 
 #rollnavigation a:active, #rollnavigation a:focus {
@@ -1369,9 +1381,10 @@ label.overlabel-apply {
 #rollload,
 #rollhome,
 #rollpages,
-#rolldates {
+#rolldates,
+#texttrimmer {
 	position: absolute;
-	top: 3px;
+	top: 17px;
 	}
 
 #rollprevious:hover,
@@ -1391,7 +1404,7 @@ label.overlabel-apply {
 
 #rollload {
 	background: url('images/spinner.gif') no-repeat center center;
-	top: 1px;
+	top: 16px;
 	left: 50%;
 	margin-left: -8px;
 	width: 16px;
@@ -1410,7 +1423,6 @@ label.overlabel-apply {
 	}
 
 #rollpages {
-	top: 3px;
 	left: 55px;
 	color: #aaa;
 	}
@@ -1428,7 +1440,7 @@ label.overlabel-apply {
 #rolldates {
 	width: 100px;
 	margin-left: 5px;
-}
+	}
 
 #rollhover {
 	top: 11px;
@@ -1484,7 +1496,7 @@ label.overlabel-apply {
 
 #pagetrackwrap {
 	position: absolute;
-	top: 6px;
+	top: 16px;
 	left: 130px;
 	width: 240px;
 	padding-right: 9px;
@@ -1493,20 +1505,23 @@ label.overlabel-apply {
 
 #pagetrack {
 	width: 240px;
-	height: 7px;
-	background: url('images/sliderbgleft.png') no-repeat left center;
+	height: 15px;
+	background: red url('images/sliderbgleft.png') no-repeat left center;
 	}
 
 #pagehandle {
-	top: -5px;
-	width: 17px;
-	height: 17px;
+	width: 15px;
+	height: 15px;
 	background: url('images/sliderhandle.png') no-repeat center center;
 	cursor: col-resize;
 	}
 
 #primarycontent {
 	clear: both;
+	}
+
+#rollingcontent {
+	margin-top: 40px;
 	}
 
 div.trimmed .hentry {
@@ -1518,17 +1533,15 @@ div.trimmed .hentry.alt {
 	}
 
 #texttrimmer {
-	position: absolute;
 	width: 55px;
 	height: 15px;
-	top: 0;
 	right: 55px;
 	}
 
-.firstpage #texttrimmer,
+/*.firstpage #texttrimmer,
 .firstpage #pagetrackwrap {
 	visibility: hidden;
-	}
+	}*/
 
 .nthpage #texttrimmer,
 .nthpage #pagetrackwrap,
@@ -1595,8 +1608,6 @@ div.trimmed .hentry.alt {
 
 #trimmertrim, #trimmeruntrim {
 	cursor: pointer;
-	position: absolute;
-	top: 13px;
 	width: 50px;
 	text-align: center;
 	color: #999;
@@ -1612,17 +1623,6 @@ div.trimmed .hentry.alt {
 
 .trimmed #trimmeruntrim {
 	display: block;
-	}
-
-body.smartposition #rollingarchives {
-	position: fixed;
-	top: 0px;
-	background: #fff;
-	border-bottom: 1px solid #eee;
-	width: 500px;
-	z-index: 10;
-	padding-top: 10px;
-	padding-bottom: 30px;
 	}
 
 body.smartposition #trimmertrim, body.smartposition #trimmeruntrim {

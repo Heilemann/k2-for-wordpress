@@ -64,9 +64,7 @@ function HideUtils() {
 
 /* Fix the position of an element when it is about to be scrolled off-screen */
 function smartPosition(obj) {
-	if ( jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 7 ) {
-		return;
-	}
+	if ( jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 7 ) return;
 	
 	jQuery(window).scroll(function() {
 		// Detect if content is being scroll offscreen.

@@ -1,12 +1,4 @@
 <div id="rollingarchives" style="display:none;">
-	<div id="texttrimmer">
-		<div id="trimmertrackwrap"><div id="trimmertrack"><div id="trimmerhandle"></div></div></div>
-		
-		<div id="trimmerless"><span><?php _e('Less','k2_domain'); ?></span></div>
-		<div id="trimmermore"><span><?php _e('More','k2_domain'); ?></span></div>
-		<div id="trimmertrim"><span><?php _e('Trim','k2_domain'); ?></span></div>
-		<div id="trimmeruntrim"><span><?php _e('Untrim','k2_domain'); ?></span></div>
-	</div>
 
 	<div id="rollnavigation">
 		<div id="pagetrackwrap"><div id="pagetrack"><div id="pagehandle"><div id="rollhover"><div id="rolldates"></div></div></div></div></div>
@@ -26,6 +18,14 @@
 			<?php _e('Newer','k2_domain'); ?> <span>&raquo;</span>
 		</a>
 
+		<div id="texttrimmer">
+			<div id="trimmertrackwrap"><div id="trimmertrack"><div id="trimmerhandle"></div></div></div>
+			
+			<div id="trimmerless"><span><?php _e('Less','k2_domain'); ?></span></div>
+			<div id="trimmermore"><span><?php _e('More','k2_domain'); ?></span></div>
+			<div id="trimmertrim"><span><?php _e('Trim','k2_domain'); ?></span></div>
+			<div id="trimmeruntrim"><span><?php _e('Untrim','k2_domain'); ?></span></div>
+		</div>
 	</div> <!-- #rollnavigation -->
 </div> <!-- #rollingarchives -->
 
