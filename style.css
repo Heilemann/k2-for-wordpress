@@ -1363,7 +1363,7 @@ body.smartposition #rollingarchives { /* Attaches RA to top of window when scrol
 	}
 
 #dynamic-content { /* Contains both the RA nav and content, and is used for as a top marker for the smartposition */
-	position: absolute;
+	position: relative;
 	top: 5px;
 	padding-top: 15px;
 }
