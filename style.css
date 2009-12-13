@@ -1796,6 +1796,13 @@ div#latest-comments small {
 .noteworthyLink { margin-left: 5px }
 
 
+/* GeoPress Fix */
+
+.entry-content div.mapstraction {
+	margin: 0;
+	}
+
+
 /* Tag Cloud Module */
 
 .sb-wptagcloud ul {
