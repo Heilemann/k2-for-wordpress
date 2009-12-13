@@ -1,5 +1,3 @@
-/* @override http://localhost/k2/wp-content/themes/kaytwo/style.css */
-
 /*
 Theme Name: K2
 Theme URI: http://getk2.com
@@ -1539,10 +1537,10 @@ div.trimmed .hentry.alt {
 	right: 55px;
 	}
 
-/*.firstpage #texttrimmer,
+.firstpage #texttrimmer,
 .firstpage #pagetrackwrap {
 	visibility: hidden;
-	}*/
+	}
 
 .nthpage #texttrimmer,
 .nthpage #pagetrackwrap,
