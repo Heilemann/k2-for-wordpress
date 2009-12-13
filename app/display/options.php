@@ -21,7 +21,7 @@
 	// Get post meta format
 	$entrymeta1 = get_option('k2entrymeta1');
 	if ( empty($entrymeta1) ) {
-		$entrymeta1 = __('Published by %author% on %date% in %categories%. %comments% %tags%', 'k2_domain');
+		$entrymeta1 = __('Published by %author% on %date% in %categories%. %comments%. %tags%.', 'k2_domain');
 	}
 ?>
 
