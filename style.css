@@ -1,3 +1,5 @@
+/* @override http://localhost/k2/wp-content/themes/kaytwo/style.css */
+
 /*
 Theme Name: K2
 Theme URI: http://getk2.com
@@ -70,8 +72,13 @@ body.lang-zh {
 	font-size: 75%; /* Resets 1em to 12px, for internationalized K2s */
 	}
 
-#page {
+#page,
+body.smartposition #rollingarchives {
 	background: white;
+	}
+
+
+#page {
 	text-align: left;
 	margin: 0 auto;
 	padding-top: 20px;
@@ -446,6 +453,10 @@ body.page .entry-content h4 {
 	top: 7px;
 	font-size: 1.1em;
 	display: inline;
+	}
+
+.entry-title {
+	margin-right: 40px;
 	}
 
 .entry-title, .entry-title a, .entry-title a:visited,
@@ -1339,15 +1350,16 @@ label.overlabel-apply {
 
 /* Rolling Archives */
 
-#rollingarchives { /* Navigation hub for AJAX-powered navigation */
+#rollingarchives { /* AJAX-powered navigation hub */
 	position: absolute;
 	top: 0;
 	height: 45px;
 	display: block;
 	width: 500px;
+	border-bottom: none;
 	}
 
-body.smartposition #rollingarchives { /* Attaches RA to top of window when scrolling down */
+body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS when #dynamic-content passes the top of the window */
 	position: fixed;
 	background: #fff;
 	border-bottom: 1px solid #eee;
@@ -1489,15 +1501,13 @@ body.smartposition #rollingarchives { /* Attaches RA to top of window when scrol
 	position: absolute;
 	top: 16px;
 	left: 130px;
-	width: 240px;
-	padding-right: 9px;
-	background: url('images/sliderbgright.png') no-repeat right center;
+	width: 248px;
 	}
 
 #pagetrack {
-	width: 240px;
+	width: 248px;
 	height: 15px;
-	background: url('images/sliderbgleft.png') no-repeat left center;
+	background: url('images/sliderbg.png') no-repeat 4px center;
 	}
 
 #pagehandle {
@@ -1529,10 +1539,10 @@ div.trimmed .hentry.alt {
 	right: 55px;
 	}
 
-.firstpage #texttrimmer,
+/*.firstpage #texttrimmer,
 .firstpage #pagetrackwrap {
 	visibility: hidden;
-	}
+	}*/
 
 .nthpage #texttrimmer,
 .nthpage #pagetrackwrap,

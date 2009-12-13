@@ -20,7 +20,7 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 		jQuery('#rollhover').hide();
 
 		// Setup the page slider
-		this.pageSlider = new K2Slider('#pagehandle', '#pagetrack', {
+		this.pageSlider = new K2Slider('#pagehandle', '#pagetrackwrap', {
 			minimum: 1,
 			maximum: self.pageCount,
 			value: self.pageCount - self.pageNumber + 1,
