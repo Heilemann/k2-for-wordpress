@@ -122,17 +122,17 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 		K2.ajaxGet(this.query,
 			function(data) {
 
-				if (K2.Animations) {
+				/* if (K2.Animations) {
 					if (self.pageNumber == 1) {
 						jQuery('html,body').animate({
 							scrollTop: jQuery('body').offset().top - 1
-						}, 1000);
+						}, 500);
 					} else {
 						jQuery('html,body').animate({
 							scrollTop: jQuery('#dynamic-content').offset().top - 1
-						}, 1000);
+						}, 500);
 					}
-				}
+				} */
 				
 				jQuery('#rollhover').fadeOut('slow');
 				jQuery('#rollload').fadeOut('fast');
