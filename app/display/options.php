@@ -115,7 +115,7 @@
 				<h3><?php _e('Post Entry', 'k2_domain'); ?></h3>
 
 				<p class="description">
-					<?php _e('Use the following keywords: %author%, %categories%, %comments%, %date%, %tags% and %time%. You can also use third-party shortcodes.', 'k2_domain'); ?>
+					<?php _e('Use the following keywords: %author%, %categories%, %comments%, %date%, %tags% and %time%. <!--You can also use third-party shortcodes.-->', 'k2_domain'); ?>
 				</p>
 
 				<table class="form-table">
