@@ -4,7 +4,7 @@ function LiveSearch(searchprompt) {
 	jQuery('#search-form-wrap').addClass('livesearch');
 
 	this.searchPrompt = searchprompt;
-	this.input = jQuery('input#s');
+	this.searchform = jQuery('#searchform');
 
 	// Hide the submit button
 	jQuery('#searchsubmit').addClass('hidden');
@@ -65,7 +65,7 @@ LiveSearch.prototype.doSearch = function(self) {
 
 	self.prevSearch = self.input.val();
 
-	K2.ajaxGet(self.input.serialize() + '&k2dynamic=init',
+	K2.ajaxGet(self.searchform.serialize() + '&k2dynamic=init',
 		function(data) {
 			jQuery('#current-content').hide();
 			jQuery('#dynamic-content').html(data).show();
