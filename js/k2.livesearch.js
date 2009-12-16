@@ -5,6 +5,7 @@ function LiveSearch(searchprompt) {
 
 	this.searchPrompt = searchprompt;
 	this.searchform = jQuery('#searchform');
+	this.searchField = jQuery('#s');
 
 	// Hide the submit button
 	jQuery('#searchsubmit').addClass('hidden');
@@ -20,12 +21,12 @@ function LiveSearch(searchprompt) {
 	this.reset.removeClass('hidden').show().fadeTo('fast', 0.3);
 
 	// Bind events to the search input
-	this.input
+	this.searchField
 		.focus(function(){
 			self.searchLabel.css('text-indent', '-1000px');
 		})
 		.blur(function(){
-			if (self.input.val() == '') {
+			if (self.searchField.val() == '') {
 				self.searchLabel.css('text-indent', '0px');
 
 				if (self.prevSearch != '') {
@@ -36,10 +37,10 @@ function LiveSearch(searchprompt) {
 		.keyup(function(event) {
 			var code = event.keyCode;
 
-			if (self.input.val() == '') {
+			if (self.searchField.val() == '') {
 				return false;
 			} else if (code == 27) {
-				self.input.val('');
+				self.searchField.val('');
 			} else if (code != 13) {
 				if (self.timer) {
 					clearTimeout(self.timer);
@@ -50,7 +51,7 @@ function LiveSearch(searchprompt) {
 };
 
 LiveSearch.prototype.doSearch = function(self) {
-	if (self.input.val() == self.prevSearch) return;
+	if (self.searchField.val() == self.prevSearch) return;
 
 	self.reset.fadeTo('fast', 0.3);
 	self.loading.fadeIn('fast');
@@ -63,7 +64,7 @@ LiveSearch.prototype.doSearch = function(self) {
 		}
 	}
 
-	self.prevSearch = self.input.val();
+	self.prevSearch = self.searchField.val();
 
 	K2.ajaxGet(self.searchform.serialize() + '&k2dynamic=init',
 		function(data) {
@@ -83,7 +84,7 @@ LiveSearch.prototype.resetSearch = function(self) {
 	self.active = false;
 	self.prevSearch = '';
 
-	self.input.val('');
+	self.searchField.val('');
 	self.searchLabel.css('text-indent', '0px');
 
 	self.reset.unbind('click').fadeTo('fast', 0.3).css('cursor', 'default');
