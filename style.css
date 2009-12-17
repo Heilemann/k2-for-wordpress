@@ -1441,11 +1441,10 @@ body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS
 #rollhover,
 #rolldates {
 	width: 100px;
-	margin-left: 5px;
 	}
 
 #rollhover {
-	top: 11px;
+	top: 8px;
 	}
 
 #rolldates {
@@ -1500,20 +1499,32 @@ body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS
 	position: absolute;
 	top: 16px;
 	left: 130px;
-	width: 248px;
+	width: 250px;
 	}
 
 #pagetrack {
-	width: 248px;
-	height: 15px;
-	background: url('images/sliderbg.png') no-repeat 4px center;
+	height: 6px;
+	background: #eee;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border: 1px solid #ddd;
+	margin-top: 3px;
 	}
 
 #pagehandle {
-	width: 15px;
-	height: 15px;
-	background: url('images/sliderhandle.png') no-repeat center center;
+	width: 6px;
+	height: 6px;
+	margin: 0 1px;
+	background: #999;
 	cursor: col-resize;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	}
+
+#pagehandle:hover {
+	background: #333;
 	}
 
 #primarycontent {
