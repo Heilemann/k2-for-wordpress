@@ -345,11 +345,6 @@ class K2 {
 			// Send the header
 			header('Content-Type: ' . get_bloginfo('html_type') . '; charset=' . get_bloginfo('charset'));
 
-			if ( defined('WP_DEBUG') && true === WP_DEBUG ) {
-				global $wp_query;
-				var_dump($wp_query->query);
-			}
-
 			switch ( $k2dynamic ) {
 				default:
 					include(TEMPLATEPATH . '/app/display/theloop.php');
