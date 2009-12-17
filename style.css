@@ -1,3 +1,5 @@
+/* @override http://localhost/k2/wp-content/themes/kaytwo/style.css */
+
 /*
 Theme Name: K2
 Theme URI: http://getk2.com
@@ -1262,11 +1264,11 @@ img.wp-smiley {
 
 /* Search Form and Livesearch */
 
-#search {
+.widget_search {
 	margin-top: 20px;
 	}
 
-#search h4 {
+.widget_search h4 {
 	display: none;
 	}
 
@@ -1282,9 +1284,14 @@ input[type=text], textarea {
 	}
 
 #s {
-	width: 85%;
+	width: 100%;
 	font-size: 1.1em;
 	margin: 4px 0px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border: 1px solid #bbb;
+	padding: 3px;
 	}
 
 .livesearch #s {
@@ -1300,7 +1307,8 @@ input[type=text], textarea {
 
 #searchreset {
 	position: absolute;
-	right: 0px;
+	top: 1px;
+	right: -4px;
 	height: 19px;
 	width: 16px;
 	background: url('images/reset-fff.png') center center no-repeat;
@@ -1308,26 +1316,11 @@ input[type=text], textarea {
 
 #searchload {
 	position: absolute;
-	right: 0;
-	top: 0;
+	right: -4px;
+	top: 1px;
 	height: 18px;
 	width: 18px;
 	background: url('images/spinner.gif') center center no-repeat;
-	}
-
-.livesearchform input[type=submit] {
-	margin: 0;
-	}
-
-#searchcontrols {
-	text-align: center;
-	padding: 1px;
-	background: #ddd;
-	}
-
-#searchcontrols small {
-	margin: 0;
-	padding: 0;
 	}
 
 label.overlabel-apply {
