@@ -172,7 +172,7 @@
 					?></textarea>
 				</p>
 		
-				<?php if ( function_exists('show_subscription_checkbox') ) show_subscription_checkbox(); ?>
+				<?php do_action('comment_form', $post->ID); ?>
 		
 				<p>
 					<div><input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit','k2_domain'); ?>" /></div>
@@ -181,7 +181,6 @@
 						<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
 					<?php endif; ?>
 
-					<?php do_action('comment_form', $post->ID); ?>
 				</p>
 			</form>
 
