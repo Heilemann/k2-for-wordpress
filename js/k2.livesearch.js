@@ -29,16 +29,18 @@ function LiveSearch(searchprompt) {
 			if (self.searchField.val() == '') {
 				self.searchLabel.show().removeClass('fade');
 
-				if (self.prevSearch != '')
+				if (self.prevSearch != '') {
 					self.resetSearch(self);
+				}
 			}
 		})
 		.keydown(function(event) {
 			if (self.searchField.val() == '') {
 				self.searchLabel.show();
 
-				if (self.prevSearch != '')
+				if (self.prevSearch != '') {
 					self.resetSearch(self);
+				}
 			}
 
 			var code = event.keyCode;
@@ -48,8 +50,9 @@ function LiveSearch(searchprompt) {
 			} else if (code != 13) { // Not Enter
 				self.searchLabel.hide()
 
-				if (self.timer)
+				if (self.timer) {
 					clearTimeout(self.timer);
+				}
 				self.timer = setTimeout(function(){ self.doSearch(self); }, 500);
 			}
 		})
@@ -58,8 +61,8 @@ function LiveSearch(searchprompt) {
 
 			if (code != 13) { // Not Enter
 				if (self.searchField.val() == '') {
-					clearTimeout(self.timer);
 					self.resetSearch(self);
+					clearTimeout(self.timer);
 				}
 			}
 		});
