@@ -285,7 +285,7 @@ h2 {
 	}
 
 .page-head {
-	margin: 20px 0;
+	margin: 10px 0 20px;
 	text-align: center;
 	}
 
@@ -1287,11 +1287,11 @@ input[type=text], textarea {
 	width: 100%;
 	font-size: 1.1em;
 	margin: 4px 0px;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
 	border: 1px solid #bbb;
-	padding: 3px;
+	padding: 4px;
 	}
 
 .livesearch #s {
@@ -1311,7 +1311,7 @@ body.columns-three .livesearch #s {
 
 #searchreset, #searchload {
 	position: absolute;
-	top: 1px;
+	top: 2px;
 	z-index: 2;
 	}
 
@@ -1332,12 +1332,16 @@ body.columns-three .livesearch #s {
 label.overlabel-apply {
 	position: absolute;
 	top: 4px;
-	left: 4px;
+	left: 6px;
 	z-index: 1;
 	color: #999;
 	cursor: text;
+	font-size: 1.1em;
 	}
 
+label.overlabel-apply.fade {
+	color: #ccc;
+	}
 
 /* Attachment */
 

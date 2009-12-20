@@ -18,42 +18,58 @@ function LiveSearch(searchprompt) {
 	this.searchLabel.empty().text(searchprompt).addClass('overlabel-apply');
 
 	this.loading.removeClass('hidden').hide();
-	this.reset.removeClass('hidden').show().fadeTo('fast', 0.3);
+	this.reset.removeClass('hidden').show().fadeTo('fast', 0);
 
 	// Bind events to the search input
 	this.searchField
 		.focus(function(){
-			self.searchLabel.css('text-indent', '-1000px');
+			self.searchLabel.addClass('fade');
 		})
 		.blur(function(){
 			if (self.searchField.val() == '') {
-				self.searchLabel.css('text-indent', '0px');
+				self.searchLabel.show().removeClass('fade');
 
-				if (self.prevSearch != '') {
+				if (self.prevSearch != '')
 					self.resetSearch(self);
-				}
+			}
+		})
+		.keydown(function(event) {
+			if (self.searchField.val() == '') {
+				self.searchLabel.show();
+
+				if (self.prevSearch != '')
+					self.resetSearch(self);
+			}
+
+			var code = event.keyCode;
+
+			if (code == 27) { // Escape
+				self.resetSearch(self);
+			} else if (code != 13) { // Not Enter
+				self.searchLabel.hide()
+
+				if (self.timer)
+					clearTimeout(self.timer);
+				self.timer = setTimeout(function(){ self.doSearch(self); }, 500);
 			}
 		})
 		.keyup(function(event) {
 			var code = event.keyCode;
 
-			if (self.searchField.val() == '') {
-				return false;
-			} else if (code == 27) {
-				self.searchField.val('');
-			} else if (code != 13) {
-				if (self.timer) {
+			if (code != 13) { // Not Enter
+				if (self.searchField.val() == '') {
 					clearTimeout(self.timer);
+					self.resetSearch(self);
 				}
-				self.timer = setTimeout(function(){ self.doSearch(self); }, 500);
 			}
 		});
 };
 
+
 LiveSearch.prototype.doSearch = function(self) {
 	if (self.searchField.val() == self.prevSearch) return;
 
-	self.reset.fadeTo('fast', 0.3);
+	self.reset.fadeTo('fast', 0);
 	self.loading.fadeIn('fast');
 
 	if (!self.active) {
@@ -86,8 +102,9 @@ LiveSearch.prototype.resetSearch = function(self) {
 
 	self.searchField.val('');
 	self.searchLabel.css('text-indent', '0px');
+	self.searchLabel.show();
 
-	self.reset.unbind('click').fadeTo('fast', 0.3).css('cursor', 'default');
+	self.reset.unbind('click').fadeTo('fast', 0).css('cursor', 'default');
 
 	if ( jQuery('#current-content').length ) {
 		jQuery('#dynamic-content').hide().html('');
