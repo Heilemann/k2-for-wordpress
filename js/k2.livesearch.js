@@ -47,8 +47,9 @@ function LiveSearch(searchprompt) {
 
 			if (code == 27) { // Escape
 				self.resetSearch(self);
-			} else if (code != 13) { // Not Enter
-				self.searchLabel.hide()
+
+			} else if (code != 13 && code != 9) { // Not Enter or TAB
+				self.searchLabel.addClass('hide')
 
 				if (self.timer) {
 					clearTimeout(self.timer);
@@ -63,6 +64,9 @@ function LiveSearch(searchprompt) {
 				if (self.searchField.val() == '') {
 					self.resetSearch(self);
 					clearTimeout(self.timer);
+				} else {
+					self.reset.fadeTo('fast', 0);
+					self.loading.fadeIn('fast');
 				}
 			}
 		});
@@ -71,9 +75,6 @@ function LiveSearch(searchprompt) {
 
 LiveSearch.prototype.doSearch = function(self) {
 	if (self.searchField.val() == self.prevSearch) return;
-
-	self.reset.fadeTo('fast', 0);
-	self.loading.fadeIn('fast');
 
 	if (!self.active) {
 		self.active = true;
@@ -104,8 +105,8 @@ LiveSearch.prototype.resetSearch = function(self) {
 	self.prevSearch = '';
 
 	self.searchField.val('');
-	self.searchLabel.css('text-indent', '0px');
-	self.searchLabel.show();
+	self.searchLabel.removeClass('hide');
+	self.loading.fadeOut('fast');
 
 	self.reset.unbind('click').fadeTo('fast', 0).css('cursor', 'default');
 

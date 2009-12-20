@@ -1148,9 +1148,8 @@ body.smartposition #nav-above {
 
 .navigation {
 	text-align: center;
-	margin: 10px 0;
-	padding: 0;
-	width: 100%;
+	line-height: 45px;
+	height: 45px;
 	}
 
 .comments .navigation {
@@ -1265,16 +1264,11 @@ img.wp-smiley {
 /* Search Form and Livesearch */
 
 .widget_search {
-	margin-top: 20px;
+	margin-top: 21px !important;
 	}
 
 .widget_search h4 {
 	display: none;
-	}
-
-#search-form-wrap.livesearch {
-	position: relative;
-	height: 2.0em;
 	}
 
 input[type=text], textarea {
@@ -1283,24 +1277,48 @@ input[type=text], textarea {
 	margin: 0;
 	}
 
-#s {
-	width: 100%;
+#search-label {
+	display: none;
+	}
+
+#search-label.overlabel-apply { /* Inline label for livesearch */
+	position: absolute;
+	color: #999;
+	cursor: text;
+	display: block;
+	}
+
+#search-label.overlabel-apply.fade { /* Fade label when #s has focus */
+	color: #ccc;
+	}
+
+#search-label.overlabel-apply.hide { /* Hide label when #s isn't empty */
+	text-indent: -1000px;
+	}
+
+#s, #search-label.overlabel-apply { /* Style #s and label in same way */
 	font-size: 1.1em;
-	margin: 4px 0px;
+	width: 190px;
 	border-radius: 2px;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	border: 1px solid #bbb;
-	padding: 4px;
+	z-index: 1;
+	padding: 3px 4px;
+}
+
+#s {
+	margin: 0px;
+	width: 60%;
+	line-height: 15px;
 	}
 
 .livesearch #s {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	margin: 0px;
+	margin: 0;
 	z-index: 2;
+	padding: 5px;
 	background: transparent;
+	border: 0;
 	padding-right: 20px;
 	width: 175px;
 	}
@@ -1312,7 +1330,8 @@ body.columns-three .livesearch #s {
 #searchreset, #searchload {
 	position: absolute;
 	top: 2px;
-	z-index: 2;
+	z-index: 3;
+	opacity: 0;
 	}
 
 #searchreset {
@@ -1323,24 +1342,15 @@ body.columns-three .livesearch #s {
 	}
 
 #searchload {
-	right: 1px;
+	right: 2px;
 	height: 18px;
 	width: 18px;
 	background: url('images/spinner.gif') center center no-repeat;
 	}
 
-label.overlabel-apply {
-	position: absolute;
-	top: 4px;
-	left: 6px;
-	z-index: 1;
-	color: #999;
-	cursor: text;
-	font-size: 1.1em;
-	}
-
-label.overlabel-apply.fade {
-	color: #ccc;
+#searchsubmit { /* Static search button */
+	float: right;
+	width: 30%;
 	}
 
 /* Attachment */
@@ -1428,7 +1438,8 @@ body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS
 	}
 
 #rollnext,
-#rollprevious {
+#rollprevious,
+.navigation a {
 	color: #666;
 	font-weight: bold;
 	}
