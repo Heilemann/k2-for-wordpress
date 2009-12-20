@@ -1312,17 +1312,18 @@ body.columns-three .livesearch #s {
 #searchreset, #searchload {
 	position: absolute;
 	top: 1px;
-	right: 3px;
 	z-index: 2;
 	}
 
 #searchreset {
+	right: 3px;
 	height: 19px;
 	width: 16px;
 	background: url('images/reset-fff.png') center center no-repeat;
 	}
 
 #searchload {
+	right: 1px;
 	height: 18px;
 	width: 18px;
 	background: url('images/spinner.gif') center center no-repeat;
