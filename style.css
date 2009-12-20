@@ -1343,13 +1343,20 @@ label.overlabel-apply {
 /* Rolling Archives */
 
 #rollingarchives { /* AJAX-powered navigation hub */
-	position: absolute;
 	top: 0;
 	height: 45px;
 	display: block;
 	width: 500px;
 	border-bottom: none;
 	}
+
+body.smartposition #dynamic-content {
+	padding-top: 45px;
+}
+
+body.smartposition #dynamic-content.onepageonly {
+	padding-top: 0;
+}
 
 body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS when #dynamic-content passes the top of the window */
 	position: fixed;
@@ -1360,7 +1367,6 @@ body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS
 
 #dynamic-content { /* Contains both the RA nav and content, and is used for as a top marker for the smartposition */
 	position: relative;
-	padding-top: 15px;
 }
 
 #rollingarchives a:hover {
@@ -1524,10 +1530,6 @@ body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS
 	clear: both;
 	}
 
-#rollingcontent {
-	margin-top: 40px;
-	}
-
 div.trimmed .hentry {
 	background: #f5f5f5;
 	}
@@ -1637,7 +1639,7 @@ body.onepageonly #dynamic-content { /* For the rare case of having only one page
 	padding-top: 0;
 	}
 
-#dynamic-content .active .navigation {
+body.showrollingarchives #dynamic-content .navigation {
 	display: none;
 	}
 

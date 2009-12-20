@@ -11,7 +11,7 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 	this.query = query;
 	this.pageDates = pagedates;
 
-	jQuery('#rollingcontent').addClass('active');
+	jQuery('body').addClass('showrollingarchives');
 
 	if ( this.validatePage(pagenumber) ) {
 		jQuery('#rollingarchives').show();
@@ -56,7 +56,7 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 		this.trimmer = new TextTrimmer(100);
 		this.active = true;
 	} else {
-		jQuery('#rollingarchives').hide();
+		jQuery('body').addClass('hiderollingarchives');
 	}
 };
 
