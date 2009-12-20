@@ -1299,25 +1299,30 @@ input[type=text], textarea {
 	top: 0px;
 	left: 0px;
 	margin: 0px;
+	z-index: 2;
+	background: transparent;
+	padding-right: 20px;
+	width: 175px;
 	}
 
-.columns-three .livesearch #s {
-	width: 145px;
+body.columns-three .livesearch #s {
+	width: 150px;
+	}
+
+#searchreset, #searchload {
+	position: absolute;
+	top: 1px;
+	right: 3px;
+	z-index: 2;
 	}
 
 #searchreset {
-	position: absolute;
-	top: 1px;
-	right: -4px;
 	height: 19px;
 	width: 16px;
 	background: url('images/reset-fff.png') center center no-repeat;
 	}
 
 #searchload {
-	position: absolute;
-	right: -4px;
-	top: 1px;
 	height: 18px;
 	width: 18px;
 	background: url('images/spinner.gif') center center no-repeat;
