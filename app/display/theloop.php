@@ -2,6 +2,8 @@
 	// This is the loop, which fetches entries from your database.
 	// It is a very delicate piece of machinery. Be gentle!
 
+	global $wp_query;
+
 	// array for loading loop templates
 	$templates = array();
 	$page_head = '';
