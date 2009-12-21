@@ -227,8 +227,6 @@ option {
 	}
 
 .entry-head .entry-meta {
-	padding-left: 20px ;
-	background: url('../images/time.png') left top no-repeat;
 	min-height: 16px;
 	}
 
@@ -237,13 +235,11 @@ abbr.entry-date {
 	}
 
 .entry-tags {
-	padding: 2px 0px 2px 20px;
-	background: url('../images/tag_blue.png') left center no-repeat;
+	padding: 2px 0;
 	}
 
 .entry-head .entry-tags {
 	display: block;
-	margin-left: -20px;
 	}
 
 .entry-tags a {
@@ -251,8 +247,7 @@ abbr.entry-date {
 	}
 
 .entry-comments {
-	padding: 2px 0 2px 20px;
-	background: url('../images/comment.png') left center no-repeat;
+	padding: 2px 0;
 	}
 
 .style-path {
