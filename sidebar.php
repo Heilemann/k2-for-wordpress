@@ -10,15 +10,7 @@
 
 	<?php /* Menu for subpages of current page */
 		global $notfound;
-		if (is_page() and ($notfound != '1')) {
-			/*$current_page = $post->ID;
-			while($current_page) {
-				$page_query = $wpdb->get_row("SELECT ID, post_title, post_status, post_parent FROM $wpdb->posts WHERE ID = '$current_page'");
-				$current_page = $page_query->post_parent;
-			}
-			$parent_id = $page_query->ID;
-			$parent_title = $page_query->post_title;*/
-			
+		if (is_page() and ($notfound != '1')) {			
 			$ancestor = array_pop(get_post_ancestors($post->ID));
 			$ancestor = isset($ancestor) ? $ancestor : $post->ID;
 			$title = get_the_title($ancestor);
@@ -124,21 +116,6 @@
 		</div>
 	</div>
 	<?php } ?>
-
-
-	<?php /* if ((function_exists('feedlist')) and is_home() and !(is_paged()) ) { ?> 
-	<div class="sb-feedlist"><h4><?php _e('Feedlist','k2_domain'); ?></h4>
-		<ul>
-			<?php feedList(array("rss_feed_url"=>"",
-				"num_items"=>10,
-				"show_description"=>false,
-				"random"=>true,
-				"sort"=>"asc","new_window"=>true)); 
-			?>
-			</ul>
-	</div>
-	<?php } */ ?>
-
 
 	<?php /* Links */ if ( (is_home()) and !(is_page()) and !(is_single()) and !(is_search()) and !(is_archive()) and !(is_author()) and !(is_category()) and !(is_paged()) ) { $links_list_exist = @$wpdb->get_var("SELECT link_id FROM $wpdb->links LIMIT 1"); if($links_list_exist) { ?>
 	<div class="sb-links">

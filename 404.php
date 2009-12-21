@@ -7,19 +7,9 @@
 		<div id="notices"></div>
 
 		<a name="startcontent" id="startcontent"></a>
-
-		<div id="current-content" class="hfeed">
-			<div class="hentry four04">
-
-				<div class="entry-head">
-					<h1 class="entry-title"><?php _e('Error 404 - Not Found','k2_domain'); ?></h1>
-				</div>
-
-				<div class="entry-content">
-					<p><?php _e('Oh no! You\'re looking for something which just isn\'t here!','k2_domain'); ?></p>
-				</div>
-
-			</div> <!-- .hentry .four04 -->
+		
+			<?php include(TEMPLATEPATH . 'blocks/k2-four04.php'); ?>
+		
 		</div> <!-- #current-content .hfeed -->
 
 		<div id="dynamic-content"></div>
@@ -31,5 +21,3 @@
 </div> <!-- .content -->
 
 <?php get_footer(); ?>
-
-<!-- jegelskerRikke -->
