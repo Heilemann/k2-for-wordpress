@@ -320,3 +320,25 @@ if ( ! function_exists('wp_page_menu') ):
 			return $menu;
 	}
 endif;
+
+/**
+ * Retrieve translated string with gettext context
+ *
+ * Quite a few times, there will be collisions with similar translatable text
+ * found in more than two places but with different translated context.
+ *
+ * By including the context in the pot file translators can translate the two
+ * string differently
+ *
+ * @since 2.8
+ *
+ * @param string $text Text to translate
+ * @param string $context Context information for the translators
+ * @param string $domain Optional. Domain to retrieve the translated text
+ * @return string Translated context string without pipe
+ */
+if ( ! function_exists('_x') ):
+	function _x( $single, $context, $domain = 'default' ) {
+		return translate_with_gettext_context( $single, $context, $domain );
+	}
+endif;
