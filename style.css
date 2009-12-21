@@ -1,3 +1,5 @@
+/* @override http://localhost/k2/wp-content/themes/kaytwo/style.css */
+
 /*
 Theme Name: K2
 Theme URI: http://getk2.com
@@ -1259,10 +1261,10 @@ img.wp-smiley {
 	}
 
 
-/* Search Form and Livesearch */
+/* Search Widget, incl. Livesearch */
 
 .widget_search {
-	margin-top: 21px !important;
+	margin-top: 20px !important;
 	}
 
 .widget_search h4 {
@@ -1275,15 +1277,17 @@ input[type=text], textarea {
 	margin: 0;
 	}
 
-#search-label {
+#search-label { /* The 'Search for:' label */
 	display: none;
 	}
 
 #search-label.overlabel-apply { /* Inline label for livesearch */
-	position: absolute;
-	color: #999;
-	cursor: text;
 	display: block;
+	position: absolute;
+	color: #888;
+	cursor: text;
+	padding: 4px 5px;
+	z-index: 1;
 	}
 
 #search-label.overlabel-apply.fade { /* Fade label when #s has focus */
@@ -1297,42 +1301,46 @@ input[type=text], textarea {
 #s, #search-label.overlabel-apply { /* Style #s and label in same way */
 	font-size: 1.1em;
 	width: 190px;
+	line-height: 15px;
 	border-radius: 2px;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
-	border: 1px solid #bbb;
-	z-index: 1;
-	padding: 3px 4px;
-}
-
-#s {
-	margin: 0px;
-	width: 60%;
-	line-height: 15px;
 	}
 
-.livesearch #s {
-	margin: 0;
-	z-index: 2;
-	padding: 5px;
+#s { /* The actual search input field */
+	position: relative;
+	padding: 3px;
+	width: 60%;
+	border: 1px solid #ddd;
 	background: transparent;
-	border: 0;
+	z-index: 2;
+	}
+
+.livesearch #s { /* The search input field w. livesearch enabled */
 	padding-right: 20px;
 	width: 175px;
 	}
 
-body.columns-three .livesearch #s {
+body.columns-three #search-label.overlabel-apply { /* For Three Columns */
+	width: 165px;
+	}
+
+body.columns-three .livesearch #s { /* For Three Columns */
 	width: 150px;
 	}
 
-#searchreset, #searchload {
+#s:focus {
+	border-color: #333;
+	}
+
+#searchreset, #searchload { /* Reset button & loading spinner */
 	position: absolute;
 	top: 2px;
-	z-index: 3;
 	opacity: 0;
 	}
 
 #searchreset {
+	z-index: 3;
 	right: 3px;
 	height: 19px;
 	width: 16px;
@@ -1340,6 +1348,7 @@ body.columns-three .livesearch #s {
 	}
 
 #searchload {
+	z-index: 4;
 	right: 2px;
 	height: 18px;
 	width: 18px;
@@ -1350,6 +1359,7 @@ body.columns-three .livesearch #s {
 	float: right;
 	width: 30%;
 	}
+
 
 /* Attachment */
 
@@ -1368,14 +1378,6 @@ body.columns-three .livesearch #s {
 	border-bottom: none;
 	}
 
-body.smartposition #dynamic-content {
-	padding-top: 45px;
-}
-
-body.smartposition #dynamic-content.onepageonly {
-	padding-top: 0;
-}
-
 body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS when #dynamic-content passes the top of the window */
 	position: fixed;
 	background: #fff;
@@ -1383,9 +1385,17 @@ body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS
 	z-index: 1000;
 	}
 
+body.smartposition #dynamic-content { /* When scrolling past content top, adjust for fixing RA interface to top of screen */
+	padding-top: 45px;
+	}
+
+body.smartposition #dynamic-content.onepageonly { /* If there is only a single page, remove space at top of page */
+	padding-top: 0;
+	}
+
 #dynamic-content { /* Contains both the RA nav and content, and is used for as a top marker for the smartposition */
 	position: relative;
-}
+	}
 
 #rollingarchives a:hover {
 	text-decoration: underline;
@@ -1395,20 +1405,12 @@ body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS
 	outline: none;
 	}
 
-#rollprevious,
-#rollnext,
-#rollload,
-#rollhome,
-#rollpages,
-#rolldates,
-#texttrimmer {
+#rollprevious, #rollnext, #rollload, #rollhome, #rollpages, #rolldates, #texttrimmer {
 	position: absolute;
 	top: 17px;
 	}
 
-#rollprevious:hover,
-#rollnext:hover,
-#rollhome:hover {
+#rollprevious:hover, #rollnext:hover, #rollhome:hover {
 	text-decoration: underline;
 	cursor: pointer;
 	}
@@ -1430,14 +1432,11 @@ body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS
 	height: 16px;
 	}
 
-#rollload span,
-#rollhome span {
+#rollload span, #rollhome span {
 	display: none;
 	}
 
-#rollnext,
-#rollprevious,
-.navigation a {
+#rollnext, #rollprevious, .navigation a {
 	color: #666;
 	font-weight: bold;
 	}
@@ -1456,8 +1455,7 @@ body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS
 	background: url('images/rollhover.png') no-repeat center top;
 	}
 
-#rollhover,
-#rolldates {
+#rollhover, #rolldates {
 	width: 100px;
 	}
 
