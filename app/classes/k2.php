@@ -52,6 +52,10 @@ class K2 {
 
 		// Register our sidebars with widgets
 		k2_register_sidebars();
+		
+		// Register the fact that K2 supports post-thumbnails
+		if ( function_exists( 'add_theme_support' ) )
+			add_theme_support( 'post-thumbnails' );
 
 	}
 
