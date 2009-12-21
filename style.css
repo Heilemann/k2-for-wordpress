@@ -1,3 +1,5 @@
+/* @override http://localhost/k2/wp-content/themes/kaytwo/style.css */
+
 /*
 Theme Name: K2
 Theme URI: http://getk2.com
@@ -167,7 +169,6 @@ body.sidebars-none #primary {
 	font-size: 1em;
 	line-height: 1.5em;
 	color: #666;
-	position: relative;
 	padding: 0 10px;
 	overflow: hidden;
 	}
@@ -183,7 +184,24 @@ body.sidebars-none #primary {
 	position: relative;
 	}
 
+
 /* Main Menu in Header */
+
+.admintab a {
+	position: fixed;
+	top: 5px;
+	right: 5px;
+	color: #333 !important;
+	background: #cfcfcf;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+.admintab a:hover {
+	background: #333 !important;
+	color: white !important;
+}
 
 ul.menu {
 	position: absolute;
@@ -529,12 +547,12 @@ a.comment_quote_link,
 a.comment-edit-link,
 a.comment-reply-link,
 a#cancel-comment-reply-link,
-.comment-edit a {
+.comment-edit a { /* Rounded Buttons */
 	border: none;
 	padding: 4px 8px;
 	height: 16px;
 	line-height: 16px;
-	color: #333;
+	color: #333 !important;
 	background: #e7e7e7;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -922,7 +940,6 @@ div.quoter_page_container {
 	}
 
 .comments #commentload {
-	display: none;
 	padding-top: 3px;
 	float: right;
 	vertical-align: middle;
@@ -1286,6 +1303,7 @@ input[type=text], textarea {
 	cursor: text;
 	padding: 4px 5px;
 	z-index: 1;
+	background: white;
 	}
 
 #search-label.overlabel-apply.fade { /* Fade label when #s has focus */
@@ -1335,21 +1353,18 @@ body.columns-three .livesearch #s { /* For Three Columns */
 	position: absolute;
 	top: 2px;
 	opacity: 0;
+	right: 2px;
+	height: 18px;
+	width: 18px;
 	}
 
 #searchreset {
 	z-index: 3;
-	right: 3px;
-	height: 19px;
-	width: 16px;
 	background: url('images/reset-fff.png') center center no-repeat;
 	}
 
 #searchload {
 	z-index: 4;
-	right: 2px;
-	height: 18px;
-	width: 18px;
 	background: url('images/spinner.gif') center center no-repeat;
 	}
 
@@ -1840,18 +1855,3 @@ div#latest-comments small {
 	white-space: nowrap;
 	text-transform: lowercase;
 	}
-
-.admintab a {
-	position: fixed;
-	top: 5px;
-	right: 5px;
-	color: #333 !important;
-	background: #cfcfcf;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-}
-
-.admintab a:hover {
-	background: #ae0a1e !important;
-}

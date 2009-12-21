@@ -17,8 +17,8 @@ function LiveSearch(searchprompt) {
 
 	this.searchLabel.empty().text(searchprompt).addClass('overlabel-apply');
 
-	this.loading.removeClass('hidden').hide();
-	this.reset.removeClass('hidden').show().fadeTo('fast', 0);
+	this.loading.removeClass('hidden').show();
+	this.reset.removeClass('hidden').show();
 
 	// Bind events to the search input
 	this.searchField
@@ -66,7 +66,7 @@ function LiveSearch(searchprompt) {
 					clearTimeout(self.timer);
 				} else {
 					self.reset.fadeTo('fast', 0);
-					self.loading.fadeIn('fast');
+					self.loading.fadeTo('fast', 1);
 				}
 			}
 		});
@@ -91,7 +91,7 @@ LiveSearch.prototype.doSearch = function(self) {
 			jQuery('#current-content').hide();
 			jQuery('#dynamic-content').html(data).show();
 
-			self.loading.fadeOut('fast');
+			self.loading.fadeTo('fast', 0);
 
 			self.reset.click(function(){
 				self.resetSearch(self);
@@ -106,7 +106,7 @@ LiveSearch.prototype.resetSearch = function(self) {
 
 	self.searchField.val('');
 	self.searchLabel.removeClass('hide');
-	self.loading.fadeOut('fast');
+	self.loading.fadeTo('fast', 0);
 
 	self.reset.unbind('click').fadeTo('fast', 0).css('cursor', 'default');
 
