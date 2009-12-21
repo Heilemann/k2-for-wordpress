@@ -79,28 +79,7 @@ class K2Styles {
 	function set_styles_dir( $path = false ) {
 		if ( empty($path) )
 			$path = get_option('k2stylespath');
-
-		/*
-		$path = explode('/', $path, 2);
-
-		switch ( $path[0] ) {
-			default:
-			case '%k2%':
-				$dir = TEMPLATEPATH;
-				break;
-
-			case '%child%':
-				$dir = STYLESHEETPATH;
-				break;
-
-			case '%content%':
-				$dir = WP_CONTENT_DIR;
-				break;
-		}
-
-		$dir .= '/' . $path[1];
-		*/
-
+			
 		$dir = str_replace(
 					array( '%k2%', '%child%', '%content%' ),
 					array( TEMPLATEPATH, STYLESHEETPATH, WP_CONTENT_DIR ),
