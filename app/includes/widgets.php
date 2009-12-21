@@ -152,7 +152,6 @@ function k2_asides_widget($args) {
 			<?php while ( $asides->have_posts() ): $asides->the_post(); ?>
 				<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 					<span>&raquo;&nbsp;</span><?php the_content( __('(more)', 'k2_domain') ); ?>
-					<span class="metalink"><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php comments_number('(0)','(1)','(%)'); ?></a></span>
 					<?php /* Edit Link */ edit_post_link( __('Edit','k2_domain'), '<span class="entry-edit">', '</span>' ); ?>
 				</div>
 			<?php endwhile; ?>
