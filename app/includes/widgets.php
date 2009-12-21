@@ -28,7 +28,7 @@ function k2_about_widget($args) {
 		echo $before_title . $title . $after_title;
 ?>
 
-	<?php if ( ! empty($options['about']['message']) and ( is_home() or is_front_page() ) ): ?>
+	<?php if ( ! empty($options['about']['message']) and ( is_home() or is_front_page() or is_page() ) ): ?>
 		<div><?php echo stripslashes( $options['about']['message'] ); ?></div>
 	<?php endif; ?>
 
