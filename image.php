@@ -70,7 +70,7 @@
 							<span><?php _e('Dimensions:','k2_domain'); ?></span>
 							<?php
 								list($width, $height) = getimagesize( get_attached_file($post->ID) );
-								printf( _x('%1$s &times; %2$s pixels|1: width, 2: height', 'k2_image', 'k2_domain'), $width, $height );
+								printf( _x('%1$s &times; %2$s pixels', 'k2_image', 'k2_domain'), $width, $height );
 							?>
 						</li>
 						<li class="file-size">

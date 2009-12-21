@@ -189,7 +189,7 @@ function k2_ping_start_el($comment, $args = array(), $depth = 1) {
 
 		<div class="comment-meta">				
 		<?php
-			printf( _x('%1$s on %2$s|1:ping type, 2: date/time', 'k2_comments', 'k2_domain'), 
+			printf( _x('%1$s on %2$s', 'k2_comments', 'k2_domain'), 
 				'<span class="pingtype">' . comment_type( __('Comment', 'k2_domain'), __('Trackback', 'k2_domain'), __('Pingback', 'k2_domain') ) . '</span>',
 				sprintf('<a href="#comment-%1$s" title="%2$s">%3$s</a>',
 					get_comment_ID(),	
@@ -199,7 +199,7 @@ function k2_ping_start_el($comment, $args = array(), $depth = 1) {
 						):
 						__('Permanent Link to this Comment', 'k2_domain')
 					),
-					sprintf( _x('%1$s at %2$s|1:date, 2:time', 'k2_comments', 'k2_domain'),
+					sprintf( _x('%1$s at %2$s', 'k2_comments', 'k2_domain'),
 						get_comment_date( __('M jS, Y','k2_domain') ),
 						get_comment_time()
 					)			
