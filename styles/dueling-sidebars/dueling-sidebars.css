@@ -14,6 +14,7 @@ body.columns-three #primary {
 }
 
 body.columns-three #sidebar-1 {
+	position: relative;
 	left: -520px;
 	margin-left: -195px;
 }
