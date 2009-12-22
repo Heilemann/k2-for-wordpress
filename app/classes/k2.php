@@ -24,7 +24,9 @@ class K2 {
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
 		require_once(TEMPLATEPATH . '/app/includes/comments.php');
-		require_once(TEMPLATEPATH . '/app/includes/widgets.php');
+
+		if ( class_exists('WP_Widget') ) // WP 2.8+
+			require_once(TEMPLATEPATH . '/app/includes/widgets.php');
 
 		if ( defined('K2_STYLES') and K2_STYLES == true )
 			require_once(TEMPLATEPATH . '/app/classes/styles.php');
@@ -77,17 +79,9 @@ class K2 {
 		add_option('k2animations', '1', 'JavaScript Animation effects.');
 		add_option('k2entrymeta1', __('Published on %date% in %categories%. %comments% %tags%', 'k2_domain'), 'Customized metadata format before entry content.');
 		add_option('k2entrymeta2', '', 'Customized metadata format after entry content.');
-		add_option('k2widgetoptions', array(), 'Stored options for various K2 widgets');
 
 		$defaultjs = "// Lightbox v2.03.3 - Adds new images to lightbox\nif (typeof myLightbox != 'undefined' && myLightbox instanceof Lightbox && myLightbox.updateImageList) {\n\tmyLightbox.updateImageList();\n}\n";
 		add_option('k2ajaxdonejs', $defaultjs, 'JavaScript to execute when Ajax is completed');
-
-		// Install a default set of widgets
-		if ( function_exists('wp_get_sidebars_widgets') ) {
-			$sidebars_widgets = wp_get_sidebars_widgets();
-			if ( empty( $sidebars_widgets ) )
-				k2_default_widgets();
-		}
 
 		// Call the install handlers
 		do_action('k2_install');
@@ -132,12 +126,10 @@ class K2 {
 		delete_option('k2livesearch');
 		delete_option('k2rollingarchives');
 		delete_option('k2archives');
-		delete_option('k2sidebarmanager');
 		delete_option('k2columns');
 		delete_option('k2entrymeta1');
 		delete_option('k2entrymeta2');
 		delete_option('k2animations');
-		delete_option('k2widgetoptions');
 		delete_option('k2ajaxdonejs');
 
 		// Call the uninstall handlers
@@ -240,13 +232,6 @@ class K2 {
 	 * @uses do_action() Provides 'k2_update_options' action
 	 */
 	function update_options() {
-		// Sidebar Manager
-		if ( isset($_POST['k2']['sidebarmanager']) ) {
-			update_option('k2sidebarmanager', '1');
-		} else {
-			update_option('k2sidebarmanager', '0');
-		}
-
 		// Columns
 		if ( isset($_POST['k2']['columns']) ) {
 			update_option('k2columns', $_POST['k2']['columns']);
@@ -413,10 +398,6 @@ class K2 {
 	 */
 	function register_scripts() {
 		// Register jQuery
-		wp_register_script('jquery-ui-slider',
-			get_bloginfo('template_directory') . '/js/ui.slider.js',
-			array('jquery-ui-core'), '1.7.2');
-
 		wp_register_script('jquery-dimensions',
 			get_bloginfo('template_directory') . '/js/jquery.dimensions.js',
 			array('jquery'), '1.2');

@@ -113,47 +113,6 @@ function js_value($value) {
 	return '""';
 }
 
-
-function k2_post_groupby($groupby) {
-	// Only filter when asides_module is active
-	if ( is_home() and function_exists('is_active_module') and is_active_module('asides_sidebar_module') ) {
-		return '';
-	}
-
-	return $groupby;
-}
-
-add_filter('posts_groupby', 'k2_post_groupby');
-
-function k2_asides_filter($query) {
-	$asidescat = get_option('k2asidescategory');
-
-	// Only filter when it's in the homepage
-	if ( ($asidescat != 0) and ($query->is_home) and is_active_widget('k2_asides_widget', 'k2-asides') ) {
-
-		$exclude_cats = $query->get('category__not_in');
-		$include_cats = $query->get('category__in');
-
-		// Remove asides from list of categories to include
-		if ( !empty($include_cats) and in_array($asidescat, $include_cats) ) {
-			$query->set( 'category__in', array_diff( $include_cats, array($asidescat) ) );
-		}
-
-		// Insert asides into list of categories to exclude
-		if ( empty($exclude_cats) ) {
-			$query->set( 'category__not_in', array($asidescat) );
-		} else if ( !in_array( $asidescat, $exclude_cats ) ) {
-			$query->set( 'category__not_in', array_merge( $exclude_cats, array($asidescat) ) );
-		}
-	}
-
-	return $query;
-}
-
-// Filter to remove asides from the loop
-add_filter('pre_get_posts', 'k2_asides_filter');
-
-
 function get_wp_version() {
 	global $wp_version;
 
