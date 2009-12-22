@@ -864,9 +864,10 @@ div.quoter_page_container {
 
 #respond {
 	position: relative;
+	margin-top: 20px;
 	}
 
-#commentlist #respond {
+#commentlist #respond { /* For threaded comments */
 	background: #eee;
 	margin-top: 15px;
 	padding: 10px;
@@ -1382,6 +1383,10 @@ body.columns-three .livesearch #s { /* For Three Columns */
 
 
 /* Rolling Archives */
+
+body.rollingarchives .navigation {
+	display: none;
+}
 
 #rollingarchives { /* AJAX-powered navigation hub */
 	top: 0;
