@@ -1,0 +1,277 @@
+/* This file contains the CSS for the 'K2 Options' admin panel */
+
+.wrap a {
+	color: #0A5199;
+	border: none;
+	white-space: pre;
+	}
+
+.wrap .error,
+.wrap .updated {
+	border: none;
+	padding: 10px 20px;
+	-moz-border-radius: 8px;
+	margin: 10px 0px;
+	}
+
+.alert {
+	font-weight: bold;
+	}
+
+.container {
+	margin: 20px 0;
+	position: relative;
+	}
+
+.options-list {
+	max-width: 90%;
+	}
+
+.options-list li {
+	margin: 2em 0;
+	}
+
+.options-list li li {
+	margin: 1em 0;
+	}
+
+.options-list ul {
+	padding-left: 50px;
+	}
+
+.wrap h3,
+.wrap h4 {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: normal;
+	color: #333;
+	}
+
+.options-list h3 {
+	font-size: 1.5em;
+	}
+
+.options-list h4 {
+	font-size: 1.25em;
+	margin-bottom: 0.25em;
+	}
+
+h3.main-label {
+	float: left;
+	margin: 0;
+	}
+
+p.description {
+	color: #999;
+	}
+
+.error {
+	color: #666;
+	}
+
+.form-list dt {
+	font-size: 1.1em;
+	color: #666;
+	width: 225px;
+	margin-bottom: 0px 0px 6px;
+	overflow: hidden;
+	text-align: right;
+	float: left;
+	padding: 4px 0;
+	}
+
+.form-list dd {
+	margin-left: 240px;
+}
+
+.form-list dd.description {
+	margin-left: 0px;
+	}
+
+.main-option {
+	margin-left: 250px;
+	}
+
+.indent {
+	margin-left: 250px !important;
+	}
+
+.secondary-option {
+	color: #666;
+	}
+
+label + textarea {
+	display: block;
+	}
+
+input[type=text],
+select {
+	color: #333;
+	width: 240px;
+	border: 1px solid #ccc;
+	}
+
+option {
+	padding: 0px;
+	}
+
+.options-footer {
+	border: none;
+	padding: 20px;
+	background: #eee;
+	-moz-border-radius: 8px;
+	}
+
+.uninstall input {
+	padding: 3px 5px;
+	}
+
+.center {
+	text-align: center;
+	}
+
+.form-table {
+	margin: 1em 0;
+	}
+
+.form-table tr {
+	background: none;
+	}
+
+.form-table th,
+.form-table td {
+	padding: 5px 10px 5px 0;
+	}
+
+.form-table th {
+	width: 240px;
+	font-weight: normal;
+	text-align: right;
+	color: #666;
+	}
+	
+.hidden {
+	position: absolute;
+	left: -999px;
+	top: auto;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	}
+
+
+#meta-preview {
+	margin: 20px 0 10px;
+	}
+
+#meta-preview h3 {
+	font-size: 1.23em;
+	font-weight: normal;
+	line-height: 1;
+	margin: 0;
+	padding: 7px 9px;
+	}
+
+#meta-preview .inside {
+	padding: 10px;
+	}
+
+#meta-preview strong,
+#meta-preview em,
+#meta-preview b,
+#meta-preview i {
+    font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Verdana, Helvetica, Arial, sans-serif;
+	}
+
+#meta-preview a {
+	text-decoration: none;
+	}
+
+#meta-preview a:hover {
+	text-decoration: underline;
+	}
+
+.entry-title {
+	font-family: "Trebuchet MS", Verdana, sans-serif;
+	font-size: 2em;
+	line-height: 1.4;
+	font-weight: normal;
+	margin: 0;
+	}
+
+.entry-title a {
+	color: #444;
+	}
+
+.entry-content {
+	font-size: 1.2em;
+	line-height: 1.8em;
+	text-align: justify;
+	color: #444;
+	}
+
+.entry-meta {
+	font-size: 1em;
+	line-height: 1.6em;
+	color: #bbb;
+	}
+
+.entry-meta a,
+.comment-meta a,
+.entry-date,
+.entry-time {
+	color: #777;
+	}
+
+.entry-meta div {
+	display: inline;
+	}
+
+.entry-head .entry-meta {
+	min-height: 16px;
+	}
+
+abbr.entry-date {
+	border: none;
+	}
+
+.entry-tags {
+	padding: 2px 0;
+	}
+
+.entry-head .entry-tags {
+	display: block;
+	}
+
+.entry-tags a {
+	text-transform: lowercase;
+	}
+
+.entry-comments {
+	padding: 2px 0;
+	}
+
+.style-path {
+	display: block;
+	font-style: italic;
+	}
+
+#k2-styles .column-author {
+	width: 25%;
+	}
+
+#k2-styles .column-version {
+	width: 10%;
+	text-align: center;
+	}
+
+#k2-styles .style-name {
+	font-weight: bold;
+	}
+
+.submit {
+	max-width: 90%;
+}
+
+#k2ajax {
+	width: 100%;
+	}
