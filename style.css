@@ -110,6 +110,7 @@ body.smartposition #rollingarchives {
 	background: #3371A3;
 	background-position: top right;
 	background-repeat: no-repeat;
+	overflow: hidden;
 	}
 
 .content {
@@ -203,6 +204,7 @@ body.sidebars-none #primary {
 
 ul.menu {
 	position: absolute;
+	white-space: nowrap;
 	bottom: 0;
 	margin: 0 20px;
 	}
