@@ -1,3 +1,5 @@
+/* @override http://localhost/k2/wp-content/themes/kaytwo/style.css */
+
 /*
 Theme Name: K2
 Theme URI: http://getk2.com
@@ -339,7 +341,7 @@ h4 {
 	}
 
 .four04 .entry-title,
-body.page .entry-title {
+body.page #current-content .entry-title {
 	margin-left: 40px;
 	text-align: center;
 	}
@@ -1508,7 +1510,6 @@ body.smartposition #dynamic-content.onepageonly { /* If there is only a single p
 	visibility: visible;
 	}
 
-
 .firstpage #rollnext,
 .firstpage #rollhome {
 	visibility: hidden;
@@ -1678,6 +1679,9 @@ body.showrollingarchives #dynamic-content .navigation {
 	display: none;
 	}
 
+#dynamic-content .archivepages { /* Hide 'Page X of Y' when RA is active */
+	display: none;
+	}
 
 
 /* CSS Beyond this point is for various supported plugins and not the 'core' K2 template */
