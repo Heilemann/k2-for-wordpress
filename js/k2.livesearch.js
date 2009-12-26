@@ -71,6 +71,9 @@ function LiveSearch(searchprompt) {
 		this.doSearch(self);
 		this.searchLabel.addClass('hide');
 	}
+
+	self.loading.fadeTo('fast', 0);
+	self.reset.fadeTo('fast', 0);
 };
 
 
