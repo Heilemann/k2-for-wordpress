@@ -3,23 +3,19 @@ function LiveSearch(searchprompt) {
 
 	jQuery('#search-form-wrap').addClass('livesearch');
 
-	this.searchPrompt = searchprompt;
-	this.searchform = jQuery('#searchform');
-	this.searchField = jQuery('#s');
+	this.searchPrompt	= searchprompt;
+	this.searchform		= jQuery('#searchform');
+	this.searchField	= jQuery('#s');
+	this.reset			= jQuery('#searchreset');
+	this.loading		= jQuery('#searchload');
+	this.searchLabel	= jQuery('#search-label');
 
 	// Hide the submit button
 	jQuery('#searchsubmit').addClass('hidden');
 
-	// Insert reset and loading elements
-	this.reset = jQuery('#searchreset');
-	this.loading = jQuery('#searchload');
-	this.searchLabel = jQuery('#search-label');
-
+	// Inlinize label
 	this.searchLabel.empty().text(searchprompt).addClass('overlabel-apply');
 	
-	this.loading.removeClass('hidden').show();
-	this.reset.removeClass('hidden').show();
-
 	// Bind events to the search input
 	this.searchField
 		.focus(function(){

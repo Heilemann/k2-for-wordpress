@@ -5,8 +5,8 @@
 		<input type="submit" id="searchsubmit" value="<?php echo attribute_escape( __('Search &raquo;', 'k2_domain') ); ?>" />
 
 		<?php if ( get_option('k2livesearch') ): ?>
-			<span id="searchreset" title="<?php echo attribute_escape( __('Reset Search', 'k2_domain') ); ?>" class="hidden"></span>
-			<span id="searchload" class="hidden"></span>
+			<span id="searchreset" title="<?php echo attribute_escape( __('Reset Search', 'k2_domain') ); ?>"></span>
+			<span id="searchload"></span>
 		<?php endif; ?>
 	</div>
 </form>
