@@ -33,11 +33,17 @@
 				</div><!-- .entry-foot -->
 			</div><!-- #post-ID -->
 
-			<?php if ( get_post_custom_values('comments') ): ?>
+			<?php if ( comments_open() ): ?> 
 			<div class="comments">
 				<?php comments_template(); ?>
 			</div><!-- .comments -->
 			<?php endif; ?>
+
+			<?php /* if ( get_post_custom_values('comments') ): ?>
+			<div class="comments">
+				<?php comments_template(); ?>
+			</div><!-- .comments -->
+			<?php endif; */ ?>
 
 		<?php endwhile; else: define('K2_NOT_FOUND', true); ?>
 
