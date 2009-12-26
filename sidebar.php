@@ -117,7 +117,7 @@
 	</div>
 	<?php } ?>
 
-	<?php /* Links */ if ( (is_home()) and !(is_page()) and !(is_single()) and !(is_search()) and !(is_archive()) and !(is_author()) and !(is_category()) and !(is_paged()) ) { $links_list_exist = @$wpdb->get_var("SELECT link_id FROM $wpdb->links LIMIT 1"); if($links_list_exist) { ?>
+	<?php /* Links */ if ( (is_home()) and !(is_page()) and !(is_single()) and !(is_search()) and !(is_archive()) and !(is_author()) and !(is_category()) and !(is_paged()) ) { $links_list_exist = get_bookmarks(); if($links_list_exist) { ?>
 	<div class="sb-links">
 		<ul>
 			<?php wp_list_bookmarks('title_before=<h4>&title_after=</h4>'); ?>

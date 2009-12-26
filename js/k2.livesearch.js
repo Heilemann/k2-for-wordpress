@@ -16,7 +16,7 @@ function LiveSearch(searchprompt) {
 	this.searchLabel = jQuery('#search-label');
 
 	this.searchLabel.empty().text(searchprompt).addClass('overlabel-apply');
-
+	
 	this.loading.removeClass('hidden').show();
 	this.reset.removeClass('hidden').show();
 
@@ -70,6 +70,11 @@ function LiveSearch(searchprompt) {
 				}
 			}
 		});
+
+	if (this.searchField.val() != '') { // If searchfield isn't empty when page is loaded.
+		this.doSearch(self);
+		this.searchLabel.addClass('hide');
+	}
 };
 
 

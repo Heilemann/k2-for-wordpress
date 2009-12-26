@@ -3,11 +3,11 @@
 */ ?>
 
 <?php /* Counts the posts, comments and categories on your blog */
-	$numposts = $wpdb->get_var("SELECT COUNT(1) FROM $wpdb->posts WHERE post_status = 'publish' AND post_type != 'page'");
-	if (0 < $numposts) $numposts = number_format($numposts); 
+	$numpostsarray	= wp_count_posts('post');
+	$numposts		= $numpostsarray->publish;
 	
-	$numcomms = $wpdb->get_var("SELECT COUNT(1) FROM $wpdb->comments WHERE comment_approved = '1'");
-	if (0 < $numcomms) $numcomms = number_format($numcomms);
+	$numcommsarray	= wp_count_comments();
+	$numcomms		= $numcommsarray->approved;
 	
 	$numcats = count(get_all_category_ids());
 ?>
