@@ -59,6 +59,8 @@ class K2 {
 		if ( function_exists( 'add_theme_support' ) )
 			add_theme_support( 'post-thumbnails' );
 
+		// Automatically output feed links. Requires WP 2.8+
+		automatic_feed_links();
 	}
 
 
