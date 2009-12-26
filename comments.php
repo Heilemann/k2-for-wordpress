@@ -32,14 +32,10 @@
 		?>
 		</ul>
 
-		<?php if ( function_exists('wp_list_comments') ): ?>
-		<div class="navigation">
-			<div class="nav-previous"><?php previous_comments_link() ?></div>
-			<div class="nav-next"><?php next_comments_link() ?></div>
+		<?php if ( function_exists('wp_list_comments') ):
+			/* Navigation */ k2_navigation('nav-comments');
+		endif; ?>
 
-			<div class="clear"></div>
-		</div>
-		<?php endif; ?>
 	<?php elseif ( comments_open() ): ?>
 		<ul id="commentlist">
 			<li id="leavecomment">
