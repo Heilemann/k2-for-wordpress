@@ -16,7 +16,7 @@ define('K2_CHILD_THEME', get_stylesheet() != get_template());
 @define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
 @define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content' );
 
-/* Blast you red baron! Initialise the k2 system */
+/* Blast you red baron! Initialize the k2 system! */
 require_once(TEMPLATEPATH . '/app/classes/k2.php');
 K2::init();
 ?>
