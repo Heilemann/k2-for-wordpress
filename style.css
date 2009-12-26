@@ -1530,8 +1530,8 @@ body.smartposition #dynamic-content.onepageonly { /* If there is only a single p
 #pagetrackwrap {
 	position: absolute;
 	top: 16px;
-	left: 130px;
-	width: 250px;
+	left: 140px;
+	width: 230px;
 	}
 
 #pagetrack {
