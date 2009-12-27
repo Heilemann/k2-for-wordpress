@@ -103,9 +103,9 @@ class K2Header {
 								<option value="random" <?php selected($current_header_image, 'random'); ?>><?php _e('Random', 'k2_domain'); ?></option>
 								<?php foreach($header_images as $image): ?>
 									<?php if ( is_numeric($image) ): ?>
-										<option value="<?php echo attribute_escape($image); ?>" <?php selected($current_header_image, $image); ?>><?php echo basename( get_attached_file($image) ); ?></option>
+										<option value="<?php echo esc_attr($image); ?>" <?php selected($current_header_image, $image); ?>><?php echo basename( get_attached_file($image) ); ?></option>
 									<?php else: ?>
-										<option value="<?php echo attribute_escape($image); ?>" <?php selected($current_header_image, $image); ?>><?php echo basename($image); ?></option>
+										<option value="<?php echo esc_attr($image); ?>" <?php selected($current_header_image, $image); ?>><?php echo basename($image); ?></option>
 									<?php endif; ?>
 								<?php endforeach; ?>
 							</select>

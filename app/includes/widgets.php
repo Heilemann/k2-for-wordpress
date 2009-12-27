@@ -63,7 +63,7 @@ class K2_Widget_About extends WP_Widget {
 		<?php elseif ( is_search() ): // Search ?>
 			<p><?php printf( __('You searched the %1$s archives for <strong>%2$s</strong>.', 'k2_domain'),
 						'<a href="' . get_option('siteurl') . '">' . get_bloginfo('name') . '</a>',
-						attribute_escape( get_search_query() )
+						esc_attr( get_search_query() )
 					); ?></p>
 
 		<?php elseif ( is_author() ): // Author Archive ?>

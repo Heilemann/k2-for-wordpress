@@ -487,13 +487,13 @@ class K2 {
 		jQuery(document).ready(function(){
 			<?php /* LiveSearch */ if ( '1' == get_option('k2livesearch') ): ?>
 			K2.LiveSearch = new LiveSearch(
-				"<?php echo attribute_escape(__('Type and Wait to Search','k2_domain')); ?>"
+				"<?php esc_attr_e('Type and Wait to Search','k2_domain'); ?>"
 			);
 			<?php endif; ?>
 
 			<?php /* Rolling Archives */ if ( '1' == get_option('k2rollingarchives') ): ?>
 			K2.RollingArchives = new RollingArchives(
-				"<?php echo attribute_escape( __('Page %1$d of %2$d', 'k2_domain') ); ?>"
+				"<?php esc_attr_e('Page %1$d of %2$d', 'k2_domain'); ?>"
 			);
 
 			jQuery('body').addClass('rollingarchives');

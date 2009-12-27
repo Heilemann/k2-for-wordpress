@@ -85,7 +85,7 @@ endif;
 if ( ! function_exists('k2_entry_author') ):
 	function k2_entry_author() {
 		return '<span class="vcard author entry-author"><a href="' . get_author_posts_url( get_the_author_ID() ) .
-					'" class="url fn" title="' . sprintf( __('View all posts by %s', 'k2_domain'), attribute_escape( get_the_author() ) ) .
+					'" class="url fn" title="' . sprintf( __('View all posts by %s', 'k2_domain'), esc_attr( get_the_author() ) ) .
 					'">' . get_the_author() . '</a></span>';
 	}
 endif;

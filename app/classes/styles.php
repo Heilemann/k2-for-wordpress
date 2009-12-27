@@ -193,7 +193,7 @@ class K2Styles {
 									<option value="<?php echo $value; ?>" <?php selected( $value, $styles_path[0] ); ?>><?php echo $label; ?></option>
 								<?php endforeach; ?>
 							</select>
-							<input id="k2-styles-dir" name="k2[stylesdir]" type="text" value="<?php echo attribute_escape( $styles_path[1] ); ?>" />
+							<input id="k2-styles-dir" name="k2[stylesdir]" type="text" value="<?php echo esc_attr( $styles_path[1] ); ?>" />
 						</td>
 					</tr>
 				</tbody>
@@ -222,7 +222,7 @@ class K2Styles {
 					<?php else: foreach( $style_files as $style ): ?>
 						<tr>
 							<th class="check-column" scope="row">
-								<input type="checkbox" name="k2[styles][]" value="<?php echo attribute_escape($style['path']); ?>" <?php if ( in_array($style['path'], $active_styles) ) echo 'checked="checked"'; ?> />
+								<input type="checkbox" name="k2[styles][]" value="<?php echo esc_attr($style['path']); ?>" <?php if ( in_array($style['path'], $active_styles) ) echo 'checked="checked"'; ?> />
 							</th>
 							<td class="column-title">
 								<span class="style-name"><?php echo $style['stylename']; ?></span>
@@ -407,7 +407,7 @@ class K2Styles {
 			$author = '';
 
 		if ( preg_match("|Author Site\s*:(.*)$|mi", $style_data, $site) )
-			$site = clean_url( trim( $site[1] ) );
+			$site = esc_url( trim( $site[1] ) );
 		else
 			$site = '';
 
@@ -417,7 +417,7 @@ class K2Styles {
 			$stylename = '';
 
 		if ( preg_match("|Style URI\s*:(.*)$|mi", $style_data, $stylelink) )
-			$stylelink = clean_url( trim( $stylelink[1] ) );
+			$stylelink = esc_url( trim( $stylelink[1] ) );
 		else
 			$stylelink = '';
 

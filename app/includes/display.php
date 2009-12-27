@@ -44,7 +44,7 @@ add_filter('the_content', 'k2_asides_permalink');
 
 
 function k2_permalink_title($echo = true) {
-	$output = sprintf( __('Permanent Link to %s','k2_domain'), wp_specialchars( strip_tags( the_title('', '', false) ), 1) );
+	$output = sprintf( __('Permanent Link to %s','k2_domain'), esc_html( strip_tags( the_title('', '', false) ), 1) );
 	
 	if ($echo)
 		echo $output;

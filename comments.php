@@ -109,8 +109,8 @@
 
 				<script type="text/javascript" charset="utf-8">
 				//<![CDATA[
-					var changeMsg = "<?php echo  js_escape( __('(Change)','k2_domain') ); ?>";
-					var closeMsg = "<?php echo js_escape( __('(Close)','k2_domain') ); ?>";
+					var changeMsg = "<?php echo  esc_js( __('(Change)','k2_domain') ); ?>";
+					var closeMsg = "<?php echo esc_js( __('(Close)','k2_domain') ); ?>";
 					
 					function toggleCommentAuthorInfo() {
 						jQuery('#comment-author-info').slideToggle('slow', function(){
@@ -132,21 +132,21 @@
 			<?php if ( ! $user_ID ): ?>
 				<div id="comment-author-info">
 					<p>
-						<input type="text" name="author" id="author" value="<?php echo attribute_escape($comment_author); ?>" size="22" tabindex="1" />
+						<input type="text" name="author" id="author" value="<?php echo esc_attr($comment_author); ?>" size="22" tabindex="1" />
 						<label for="author">
 							<strong><?php _e('Name','k2_domain'); ?></strong> <?php if ( $req ): _e('(required)','k2_domain'); endif; ?>
 						</label>
 					</p>
 					
 					<p>
-						<input type="text" name="email" id="email" value="<?php echo attribute_escape($comment_author_email); ?>" size="22" tabindex="2" />
+						<input type="text" name="email" id="email" value="<?php echo esc_attr($comment_author_email); ?>" size="22" tabindex="2" />
 						<label for="email">
 							<strong><?php _e('Mail','k2_domain'); ?></strong> (<?php _e('will not be published','k2_domain'); ?>) <?php if ( $req ): _e('(required)', 'k2_domain'); endif; ?>
 						</label>
 					</p>
 					
 					<p>
-						<input type="text" name="url" id="url" value="<?php echo attribute_escape($comment_author_url); ?>" size="22" tabindex="3" />
+						<input type="text" name="url" id="url" value="<?php echo esc_attr($comment_author_url); ?>" size="22" tabindex="3" />
 						<label for="url">
 							<strong><?php _e('Website','k2_domain'); ?></strong>
 						</label>

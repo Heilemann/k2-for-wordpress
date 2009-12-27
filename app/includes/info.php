@@ -94,12 +94,12 @@ function js_format_array(&$item, $key) {
 }
 
 function js_format_hash(&$item, $key) {
-	$item = '"' . js_escape($key) . '": ' . js_value($item);
+	$item = '"' . esc_js($key) . '": ' . js_value($item);
 }
 
 function js_value($value) {
 	if ( is_string($value) )
-		return '"' . js_escape($value) . '"';
+		return '"' . esc_js($value) . '"';
 	
 	if ( is_bool($value) )
       return $value ? 'true' : 'false';
@@ -327,7 +327,7 @@ function k2_body_class( $print = true ) {
 	$c = array_merge( $c, k2_browser_classes() );
 	
 	// Separates classes with a single space, collates classes for BODY
-	$c = attribute_escape( join( ' ', apply_filters('body_class', $c) ) );
+	$c = esc_attr( join( ' ', apply_filters('body_class', $c) ) );
 
 	// And tada!
 	return $print ? print($c) : $c;

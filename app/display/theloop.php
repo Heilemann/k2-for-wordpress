@@ -49,7 +49,7 @@
 		$templates[] = 'blocks/k2-loop-archive.php';
 	} elseif ( is_search() ) {
 		$templates[] = 'blocks/k2-loop-search.php';
-		$page_head = sprintf( __('Search Results for \'%s\'','k2_domain'), attribute_escape( get_search_query() ) );
+		$page_head = sprintf( __('Search Results for \'%s\'','k2_domain'), esc_attr( get_search_query() ) );
 	}
 
 	$templates[] = 'blocks/k2-loop.php';
