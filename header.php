@@ -1,9 +1,6 @@
 <?php
 	// Prevent users from directly loading this theme file
 	defined( 'K2_CURRENT' ) or die ( 'Error: This file can not be loaded directly.' );
-
-	// Load localizatons
-	load_theme_textdomain('k2_domain');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
