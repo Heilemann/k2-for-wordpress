@@ -31,7 +31,7 @@ while ( have_posts() ): the_post(); ?>
 		</div><!-- .entry-head -->
 
 		<div class="entry-content">
-			<?php if ( has_post_thumbnail() ) : ?>
+			<?php if ( function_exists(has_post_thumbnail) ) : ?>
 				<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( array( 75, 75 ), array( 'class' => 'alignleft' ) ); ?></a>
 			<?php endif; ?>
 			<?php the_content( sprintf( __('Continue reading \'%s\'', 'k2_domain'), the_title('', '', false) ) ); ?>

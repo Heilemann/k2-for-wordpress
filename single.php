@@ -29,10 +29,6 @@
 				</div><!-- .entry-head -->
 
 				<div class="entry-content">
-					<?php if ( has_post_thumbnail() ) : ?>
-						<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'medium', array( 'class' => 'alignleft' ) ); ?></a>
-					<?php endif; ?>
-					<?php the_content( sprintf( __('Continue reading \'%s\'', 'k2_domain'), the_title('', '', false) ) ); ?>
 				</div><!-- .entry-content -->
 
 				<div class="entry-foot">
