@@ -323,15 +323,12 @@ class K2Styles {
 			get_themes();
 			$current = get_current_theme();
 
-			// Get the path relative to wp-content
-			$style_path = str_replace(WP_CONTENT_DIR, '', $styles_dir);
-
 			// Get a list of style css
 			$styles = K2::files_scan( $styles_dir, 'css', 2 );;
 
 			// Loop through each style css and add to the list
 			foreach ($styles as $style_css) {
-				$wp_themes[$current]['Stylesheet Files'][] = "$style_path/$style_css";
+				$wp_themes[$current]['Stylesheet Files'][] = "$style_dir/$style_css";
 			}
 		}
 	}
