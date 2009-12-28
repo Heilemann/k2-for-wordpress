@@ -205,10 +205,10 @@ class K2Styles {
 						<th class="manage-column column-cb check-column" scope="col">
 							<input type="checkbox" />
 						</th>
-						<th class="manage-column column-title"><?php _e('Style'); ?></th>
-						<th class="manage-column column-author"><?php _e('Author'); ?></th>
-						<th class="manage-column column-version"><?php _e('Version'); ?></th>
-						<th class="manage-column column-tags"><?php _e('Tags'); ?></th>
+						<th class="manage-column column-title"><?php _e('Style', 'k2_domain'); ?></th>
+						<th class="manage-column column-author"><?php _e('Author', 'k2_domain'); ?></th>
+						<th class="manage-column column-version"><?php _e('Version', 'k2_domain'); ?></th>
+						<th class="manage-column column-tags"><?php _e('Tags', 'k2_domain'); ?></th>
 					</tr>
 				</thead>
 		
