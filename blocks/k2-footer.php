@@ -34,5 +34,5 @@
 </p>
 
 <p class="footerstats">
-	<?php printf( __('%d queries. %.4f seconds.','k2_domain'), $wpdb->num_queries , timer_stop() ); ?>
+	<?php printf( __('%d queries. %s seconds.', 'k2_domain'), get_num_queries(), timer_stop(0, 3) ); ?>
 </p>
