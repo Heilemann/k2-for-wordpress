@@ -73,7 +73,7 @@
 	
 	<?php /* If there is nothing to loop */ else: define('K2_NOT_FOUND', true); ?>
 
-		<?php include(TEMPLATEPATH . '/blocks/k2-four04.php'); ?>
+		<?php locate_template( array('blocks/k2-404.php'), true ); ?>
 
 	<?php endif; /* End Loop Init  */ ?>
 

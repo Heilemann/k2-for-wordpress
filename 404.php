@@ -8,7 +8,7 @@
 
 		<a name="startcontent" id="startcontent"></a>
 		
-			<?php include(TEMPLATEPATH . '/blocks/k2-four04.php'); ?>
+			<?php locate_template( array('blocks/k2-404.php'), true ); ?>
 		
 		</div> <!-- #current-content .hfeed -->
 
