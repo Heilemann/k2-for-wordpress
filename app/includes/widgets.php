@@ -101,7 +101,7 @@ class K2_Widget_About extends WP_Widget {
 			<p>
 				<label for="<?php echo $this->get_field_id('message'); ?>"><?php _e('About Text:', 'k2_domain'); ?></label>
 				<textarea id="<?php echo $this->get_field_id('message'); ?>" name="<?php echo $this->get_field_name('message'); ?>" rows="6" cols="30" class="widefat"><?php echo $message; ?></textarea>
-				<small><?php _e('Enter a blurp about yourself here, and it will show up on the front page. Deleting the content disables the about blurp.','k2_domain'); ?></small>
+				<small><?php _e('Enter a blurb about yourself here, and it will show up on the front page. Deleting the content disables the about blurb.','k2_domain'); ?></small>
 			</p>
 		<?php 
 	}
