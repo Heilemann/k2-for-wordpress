@@ -1406,7 +1406,7 @@ body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS
 	position: fixed;
 	background: #fff;
 	border-bottom: 1px solid #eee;
-	z-index: 1000;
+	z-index: 50;
 	}
 
 body.smartposition #dynamic-content { /* When scrolling past content top, adjust for fixing RA interface to top of screen */
@@ -1474,7 +1474,7 @@ body.smartposition #dynamic-content.onepageonly { /* If there is only a single p
 	position: absolute;
 	top: 7px;
 	left: -47px;
-	z-index: 100;
+	z-index: 55;
 	height: 45px;
 	background: url('images/rollhover.png') no-repeat center top;
 	}
