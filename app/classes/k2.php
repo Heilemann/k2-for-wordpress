@@ -386,7 +386,7 @@ class K2 {
 					);
 
 					if (K2.Animations) {
-						smartPosition('#dynamic-content');
+						smartPosition('#dynamic-content', 'smartposition');
 					}
 				});
 			// ]]>
@@ -419,7 +419,7 @@ class K2 {
 
 		wp_register_script('k2rollingarchives',
 			get_bloginfo('template_directory') . '/js/k2.rollingarchives.js',
-			array('jquery', 'k2slider', 'k2trimmer'), K2_CURRENT, true);
+			array('jquery', 'k2slider'), K2_CURRENT, true);
 
 		wp_register_script('k2livesearch',
 			get_bloginfo('template_directory') . '/js/k2.livesearch.js',
@@ -428,10 +428,6 @@ class K2 {
 		wp_register_script('k2slider',
 			get_bloginfo('template_directory') . '/js/k2.slider.js',
 			array('jquery'), K2_CURRENT, true);
-
-		wp_register_script('k2trimmer',
-			get_bloginfo('template_directory') . '/js/k2.trimmer.js',
-			array('jquery', 'k2slider'), K2_CURRENT, true);
 	}
 
 
@@ -498,6 +494,10 @@ class K2 {
 
 			jQuery('body').addClass('rollingarchives');
 			<?php endif; ?>
+
+			<?php /* Attach Comment Form to Bottom of Page */ if ( ('1' == get_option('k2animations')) && is_single() ): /* Not for use just yet ?>
+			smartPosition('#respond', 'smartposrespond' ,'bottom');
+			<?php */ endif;  ?>
 
 			jQuery('#dynamic-content').ajaxSuccess(function () {
 				<?php echo get_option('k2ajaxdonejs'); ?>

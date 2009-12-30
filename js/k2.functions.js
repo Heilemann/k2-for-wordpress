@@ -63,19 +63,36 @@ function HideUtils() {
 
 
 /* Fix the position of an element when it is about to be scrolled off-screen */
-function smartPosition(obj) {
-	if ( jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 7 ) return;
-	
-	jQuery(window).scroll(function() {
-		// Detect if content is being scroll offscreen.
-		if ( (document.documentElement.scrollTop || document.body.scrollTop) >= jQuery(obj).offset().top) {
-			jQuery('body').addClass('smartposition');
-		} else {
-			jQuery('body').removeClass('smartposition');
-		}
-	});
+function smartPosition(obj, class, edge) {
+	if ( jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 7 ) return; /* No IE6 or lower */
+
+	if (edge == 'bottom') { // Check Obj pos vs bottom edge
+		jQuery(window)
+			.scroll(function() { checkBottom(obj, class) })
+			.resize(function() { checkBottom(obj, class) })
+			.onload(function() { checkBottom(obj, class) })
+	} else {  // Check Obj pos vs top edge
+		jQuery(window)
+			.scroll(function() { checkTop(obj, class) })
+	}
 };
 
+
+function checkBottom(obj, class) {
+	if ( (document.documentElement.scrollTop + document.documentElement.clientHeight|| document.body.scrollTop + document.documentElement.clientHeight) >= jQuery(obj).offset().top ) {
+		jQuery('body').addClass(class);
+	} else {
+		jQuery('body').removeClass(class);
+	}
+}
+
+function checkTop(obj, class) {
+	if ( (document.documentElement.scrollTop || document.body.scrollTop) >= jQuery(obj).offset().top ) {
+		jQuery('body').addClass(class);
+	} else {
+		jQuery('body').removeClass(class);
+	}
+}
 
 // Set the number of columns based on window size
 function dynamicColumns() {
@@ -90,6 +107,8 @@ function dynamicColumns() {
 	}
 };
 
+
+// Enable moving labels into their input fields.
 function initOverLabels () {
 	if (!document.getElementById) return;
 

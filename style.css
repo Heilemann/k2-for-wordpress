@@ -119,17 +119,17 @@ body.smartposition #rollingarchives {
 	padding: 0 20px 30px;
 	}
 
-body.columns-two #primary-wrapper {
+.columns-two #primary-wrapper {
 	float: left;
 	margin-right: -220px;
 	width: 100%;
 	}
 
-body.columns-two #primary {
+.columns-two #primary {
 	margin-right: 220px;
 	}
 
-body.columns-two .secondary {
+.columns-two .secondary {
 	float: right;
 	}
 
@@ -144,12 +144,12 @@ body.columns-two .secondary {
 	display: inline;
 	}
 
-body.sidebars-none #primary-wrapper {
+.sidebars-none #primary-wrapper {
 	margin: 0px;
 	float: none;
 	}
 
-body.sidebars-none #primary {
+.sidebars-none #primary {
 	float: none;
 	width: auto !important;
 	margin: 0px !important;
@@ -204,24 +204,24 @@ body.sidebars-none #primary {
 	color: white !important;
 }
 
-ul.menu {
+.menu {
 	position: absolute;
 	white-space: nowrap;
 	bottom: 0;
 	margin: 0 20px;
 	}
 
-ul.menu,
-ul.menu li {
+.menu,
+.menu li {
 	float: left;
 	list-style: none;
 	}
 
-ul.menu li {
+.menu li {
 	margin-right: 4px;
 	}
 
-ul.menu li a {
+.menu li a {
 	display: block;
 	padding: 5px 15px;
 	font-size: 1em;
@@ -234,18 +234,18 @@ ul.menu li a {
 	-webkit-border-top-right-radius: 4px;
 	}
 
-ul.menu li a:hover {
+.menu li a:hover {
 	background: #333;
 	color: #eee;
 	text-decoration: none;
 	}
 
-ul.menu li.current_page_item a,
-ul.menu li.current_page_item a:hover,
-ul.menu li.current_page_ancestor a,
-ul.menu li.current_page_ancestor a:hover,
-body.single ul.menu li.blogtab a,
-body.single ul.menu li.blogtab a:hover {
+.menu li.current_page_item a,
+.menu li.current_page_item a:hover,
+.menu li.current_page_ancestor a,
+.menu li.current_page_ancestor a:hover,
+body.single .menu li.blogtab a,
+body.single .menu li.blogtab a:hover {
 	color: #333;
 	background: white;
 	text-decoration: none;

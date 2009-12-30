@@ -127,7 +127,8 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 		K2.ajaxGet(this.query,
 			function(data) {
 
-				/* if (K2.Animations) {
+				/* Temporarily removed until I decide if it's just too obnoxious to have in at all.
+				if (K2.Animations) { 
 					if (self.pageNumber == 1) {
 						jQuery('html,body').animate({
 							scrollTop: jQuery('body').offset().top - 1
