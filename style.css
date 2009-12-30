@@ -1,3 +1,5 @@
+/* @override http://localhost/k2/wp-content/themes/kaytwo/style.css */
+
 /*
 Theme Name: K2
 Theme URI: http://getk2.com
@@ -1190,6 +1192,9 @@ body.smartposition #nav-above {
 	float: right;
 	width: 50%;
 	text-align: right;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	}
 
 .navigation a {
@@ -1437,14 +1442,6 @@ body.smartposition #dynamic-content.onepageonly { /* If there is only a single p
 #rollprevious:hover, #rollnext:hover, #rollhome:hover {
 	text-decoration: underline;
 	cursor: pointer;
-	}
-
-#rollhome {
-	display: none;
-	left: 54px;
-	background: url('images/house.png') no-repeat center center;
-	width: 16px;
-	height: 16px;
 	}
 
 #rollload {
