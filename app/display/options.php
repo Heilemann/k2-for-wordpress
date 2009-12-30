@@ -141,7 +141,7 @@
 
 
 				<div id="meta-preview" class="postbox">
-					<h3 class="hndle"><span><?php _e('Preview', 'k2_domain'); ?></span></h3>
+					<h3 class="handle"><span><?php _e('Preview', 'k2_domain'); ?></span></h3>
 					<?php
 						query_posts('showposts=1&what_to_show=posts&order=desc');
 						if ( have_posts() ): the_post();
