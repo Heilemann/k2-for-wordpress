@@ -2,7 +2,7 @@
 Theme Name: K2
 Theme URI: http://getk2.com
 Description: <strong><a href="themes.php?page=k2-options">Configure K2</a></strong> or visit the <a href="http://groups.google.com/group/k2-support">support forums</a>, <a href="http://code.google.com/p/kaytwo/w/list">the wiki</a> or <a href="http://code.google.com/p/kaytwo/issues/list">the bug tracker</a>. K2 was developed by <a href="http://binarybonsai.com/">Michael</a>, <a href="http://chrisjdavis.org/">Chris</a>, <a href="http://zeo.unic.net.my/">Zeo</a>, <a href="http://stevelam.org/">Steve</a>, Ben and <a href="http://xentek.net/">Eric Marden</a>, and is licensed under the <a href="http://www.opensource.org/licenses/gpl-license.php">GPL</a>.
-Version: 1.0.1
+Version: 1.0.2
 Author: Various Artists
 Author URI: http://getk2.com/
 Tags: blue, custom-header, fixed-width, flexible-width, one-column, two-columns, three-columns, theme-options, threaded-comments, microformats, translation-ready, light
@@ -1594,58 +1594,6 @@ div.trimmed .hentry.alt {
 .lastpage #texttrimmer,
 .lastpage #pagetrackwrap {
 	visibility: visible;
-	}
-
-#trimmertrackwrap {
-	background: url('images/sliderbgright.png') no-repeat right center;
-	height: 7px;
-	width: 50px;
-	top: 6px;
-	padding-right: 4px;
-	position: absolute;
-	display: none;
-	}
-
-#trimmertrack {
-	background: url('images/sliderbgleft.png') no-repeat left center;
-	width: 50px;
-	height: 7px;
-	}
-
-#trimmerhandle {
-	width: 7px;
-	height: 7px;
-	background: url('images/sliderhandle.png') no-repeat center center;
-	cursor: col-resize;
-	}
-
-#trimmermore,
-#trimmerless {
-	display: none;
-	position: absolute;
-	top: 0;
-	height: 16px;
-	width: 16px;
-	}
-
-#trimmermore span,
-#trimmerless span {
-	display: none;
-	}
-
-#trimmermore:hover,
-#trimmerless:hover {
-	cursor: pointer;
-	}
-
-#trimmermore {
-	right: 0;
-	background: url('images/trim_more.png');
-	}
-
-#trimmerless {
-	left: 0;
-	background: url('images/trim_less.png');
 	}
 
 #trimmertrim:hover, #trimmeruntrim:hover {
