@@ -1567,11 +1567,15 @@ body.smartposition #dynamic-content.onepageonly { /* If there is only a single p
 	clear: both;
 	}
 
-div.trimmed .hentry {
+body.trim .entry-content, body.trim .entry-foot {
+	display: none;
+	}
+
+body.trim .hentry {
 	background: #f5f5f5;
 	}
 
-div.trimmed .hentry.alt {
+body.trim .hentry.alt {
 	background: transparent;
 	}
 

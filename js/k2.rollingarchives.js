@@ -45,15 +45,20 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 			return false;
 		});
 
-		jQuery('#rollhome').click(function() {
-			self.pageSlider.setValue(self.pageCount);
-			self.validatePage(1);
-			return false;
-		});
+		jQuery('#trimmertrim').click(function() {
+			jQuery('body').addClass('trim');
+			jQuery(this).hide()
+			jQuery('#trimmeruntrim').show()
+		})
+	
+		jQuery('#trimmeruntrim').click(function() {
+			jQuery('body').removeClass('trim');
+			jQuery(this).hide()
+			jQuery('#trimmertrim').show()
+		})
 
 		this.updatePageText( this.pageNumber );
 
-		this.trimmer = new TextTrimmer(100);
 		this.active = true;
 	} else {
 		jQuery('body').addClass('hiderollingarchives');
@@ -137,12 +142,13 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 				jQuery('#rollhover').fadeOut('slow');
 				jQuery('#rollload').fadeOut('fast');
 				jQuery('#rollingcontent').html(data);
-				
-				self.trimmer.trimAgain();
 			}
 		);
 	}
 
-	if (page == 1)
-		this.trimmer.slider.setValue(100);
+	if (page == 1) { /* Reset trimmer setting */
+		jQuery('body').removeClass('trim');
+		jQuery('#trimmeruntrim').hide()
+		jQuery('#trimmertrim').show()
+	}
 };

@@ -8,9 +8,6 @@
 		<a id="rollprevious" title="<?php _e('Older','k2_domain'); ?>" href="#">
 			<span>&laquo;</span> <?php _e('Older','k2_domain'); ?>
 		</a>
-		<div id="rollhome" title="<?php _e('Home','k2_domain'); ?>">
-			<span><?php _e('Home','k2_domain'); ?></span>
-		</div>
 		<div id="rollload" title="<?php _e('Loading','k2_domain'); ?>">
 			<span><?php _e('Loading','k2_domain'); ?></span>
 		</div>
@@ -19,10 +16,6 @@
 		</a>
 
 		<div id="texttrimmer">
-			<div id="trimmertrackwrap"><div id="trimmertrack"><div id="trimmerhandle"></div></div></div>
-			
-			<div id="trimmerless"><span><?php _e('Less','k2_domain'); ?></span></div>
-			<div id="trimmermore"><span><?php _e('More','k2_domain'); ?></span></div>
 			<div id="trimmertrim"><span><?php _e('Trim','k2_domain'); ?></span></div>
 			<div id="trimmeruntrim"><span><?php _e('Untrim','k2_domain'); ?></span></div>
 		</div>
