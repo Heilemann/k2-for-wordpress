@@ -63,34 +63,34 @@ function HideUtils() {
 
 
 /* Fix the position of an element when it is about to be scrolled off-screen */
-function smartPosition(obj, class, edge) {
+function smartPosition(obj, classname, edge) {
 	if ( jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 7 ) return; /* No IE6 or lower */
 
 	if (edge == 'bottom') { // Check Obj pos vs bottom edge
 		jQuery(window)
-			.scroll(function() { checkBottom(obj, class) })
-			.resize(function() { checkBottom(obj, class) })
-			.onload(function() { checkBottom(obj, class) })
+			.scroll(function() { checkBottom(obj, classname); })
+			.resize(function() { checkBottom(obj, classname); })
+			.onload(function() { checkBottom(obj, classname); });
 	} else {  // Check Obj pos vs top edge
 		jQuery(window)
-			.scroll(function() { checkTop(obj, class) })
+			.scroll(function() { checkTop(obj, classname); });
 	}
 };
 
 
-function checkBottom(obj, class) {
+function checkBottom(obj, classname) {
 	if ( (document.documentElement.scrollTop + document.documentElement.clientHeight|| document.body.scrollTop + document.documentElement.clientHeight) >= jQuery(obj).offset().top ) {
-		jQuery('body').addClass(class);
+		jQuery('body').addClass(classname);
 	} else {
-		jQuery('body').removeClass(class);
+		jQuery('body').removeClass(classname);
 	}
 }
 
-function checkTop(obj, class) {
+function checkTop(obj, classname) {
 	if ( (document.documentElement.scrollTop || document.body.scrollTop) >= jQuery(obj).offset().top ) {
-		jQuery('body').addClass(class);
+		jQuery('body').addClass(classname);
 	} else {
-		jQuery('body').removeClass(class);
+		jQuery('body').removeClass(classname);
 	}
 }
 
