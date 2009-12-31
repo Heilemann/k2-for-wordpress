@@ -176,8 +176,6 @@ function k2_comment_item($comment) {
  * @param int $depth Depth of comment in reference to parents.
  */
 function k2_ping_start_el($comment, $args = array(), $depth = 1) {
-	global $user_ID;
-	
 	$GLOBALS['comment'] = $comment;
 ?>
 
@@ -209,8 +207,7 @@ function k2_ping_start_el($comment, $args = array(), $depth = 1) {
 					)			
 				)
 			);
-		
-			if ( $user_ID )
+			
 				edit_comment_link( __('Edit', 'k2_domain'), '<span class="comment-edit">', '</span>' );
 		?>
 		</div><!-- .comment-meta -->
