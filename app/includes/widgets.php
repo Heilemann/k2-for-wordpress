@@ -36,49 +36,49 @@ class K2_Widget_About extends WP_Widget {
 			if ( $title != '<none>' )
 				echo $before_title . $title . $after_title; ?>
 
-		<?php if ( is_category() ): // Category Archive ?>
-			<p><?php printf( __('The %1$s archives for the %2$s category.', 'k2_domain'),
-						'<a href="' . get_option('siteurl') . '">' . get_bloginfo('name') . '</a>',
+		<?php if ( is_category() ) : // Category Archive ?>
+			<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for the %3$s category.', 'k2_domain'),
+						get_option('siteurl'), get_bloginfo('name'),
 						single_cat_title('', false)
 					); ?></p>
 
-		<?php elseif ( is_day() ): // Day Archive ?>
-			<p><?php printf( __('The %1$s archives for %2$s.', 'k2_domain'),
-						'<a href="' . get_option('siteurl') . '">' . get_bloginfo('name') . '</a>',
+		<?php elseif ( is_day() ) : // Day Archive ?>
+			<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for the day %3$s.', 'k2_domain'),
+						get_option('siteurl'), get_bloginfo('name'),
 						get_the_time( __('l, F jS, Y', 'k2_domain') )
 					); ?></p>
 
-		<?php elseif ( is_month() ): // Monthly Archive ?>
-			<p><?php printf( __('The %1$s archives for %2$s.', 'k2_domain'),
-						'<a href="' . get_option('siteurl') . '">' . get_bloginfo('name') . '</a>',
+		<?php elseif ( is_month() ) : // Monthly Archive ?>
+			<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for the month %3$s.', 'k2_domain'),
+						get_option('siteurl'), get_bloginfo('name'),
 						get_the_time( __('F, Y', 'k2_domain') )
 					); ?></p>
 
-		<?php elseif ( is_year() ): // Yearly Archive ?>
-			<p><?php printf( __('The %1$s archives for %2$s.', 'k2_domain'),
-						'<a href="' . get_option('siteurl') . '">' . get_bloginfo('name') . '</a>',
+		<?php elseif ( is_year() ) : // Yearly Archive ?>
+			<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for the year %3$s.', 'k2_domain'),
+						get_option('siteurl'), get_bloginfo('name'),
 						get_the_time('Y')
 					); ?></p>
 
-		<?php elseif ( is_search() ): // Search ?>
-			<p><?php printf( __('You searched the %1$s archives for <strong>%2$s</strong>.', 'k2_domain'),
-						'<a href="' . get_option('siteurl') . '">' . get_bloginfo('name') . '</a>',
+		<?php elseif ( is_search() ) : // Search ?>
+			<p><?php printf( __('You have searched the <a href="%1$s">%2$s</a> weblog archives for \'<strong>%3$s</strong>\'.', 'k2_domain'),
+						get_option('siteurl'), get_bloginfo('name'),
 						esc_attr( get_search_query() )
 					); ?></p>
 
-		<?php elseif ( is_author() ): // Author Archive ?>
+		<?php elseif ( is_author() ) : // Author Archive ?>
 			<p><?php printf( __('Archive for <strong>%s</strong>.', 'k2_domain'), get_the_author() ); ?></p>
 			<p><?php the_author_description(); ?></p>
 
-		<?php elseif ( is_tag() ): // Tag Archive ?>
-			<p><?php printf( __('The %1$s archives for the <strong>%2$s</strong> tag.','k2_domain'),
-						'<a href="' . get_option('siteurl') . '">' . get_bloginfo('name') . '</a>',
+		<?php elseif ( is_tag() ) : // Tag Archive ?>
+			<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for \'%3$s\' tag.', 'k2_domain'),
+						get_option('siteurl'), get_bloginfo('name'),
 						get_query_var('tag')
 					); ?></p>
 
-		<?php elseif ( is_paged() ): // Paged Archive ?>
-			<p><?php printf( __('The %s weblog archives.','k2_domain'),
-						'<a href="' . get_option('siteurl') . '">' . get_bloginfo('name') . '</a>'
+		<?php elseif ( is_paged() ) : // Paged Archive ?>
+			<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives.', 'k2_domain'),
+						get_option('siteurl'), get_bloginfo('name')
 					); ?></p>
 
 		<?php endif; ?>
@@ -101,7 +101,7 @@ class K2_Widget_About extends WP_Widget {
 			<p>
 				<label for="<?php echo $this->get_field_id('message'); ?>"><?php _e('About Text:', 'k2_domain'); ?></label>
 				<textarea id="<?php echo $this->get_field_id('message'); ?>" name="<?php echo $this->get_field_name('message'); ?>" rows="6" cols="30" class="widefat"><?php echo $message; ?></textarea>
-				<small><?php _e('Enter a blurb about yourself here, and it will show up on the front page. Deleting the content disables the about blurb.','k2_domain'); ?></small>
+				<small><?php _e('Enter a blurb about yourself here, and it will show up on the front page. Deleting the content disables the about blurb.', 'k2_domain'); ?></small>
 			</p>
 		<?php 
 	}
@@ -145,7 +145,7 @@ class K2_Widget_Asides extends WP_Widget {
 				<?php while ( $asides->have_posts() ): $asides->the_post(); ?>
 					<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 						<span>&raquo;&nbsp;</span><?php the_content( __('(more)', 'k2_domain') ); ?>
-						<?php /* Edit Link */ edit_post_link( __('Edit','k2_domain'), '<span class="entry-edit">', '</span>' ); ?>
+						<?php /* Edit Link */ edit_post_link( __('Edit', 'k2_domain'), '<span class="entry-edit">', '</span>' ); ?>
 					</div>
 				<?php endwhile; ?>
 				</div>

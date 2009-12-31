@@ -49,7 +49,7 @@ if ( ! function_exists('k2_entry_date') ):
 		$output = '<abbr class="published entry-date" title="' . get_the_time('Y-m-d\TH:i:sO') . '">';
 
 		if ( function_exists('time_since') )
-			$output .= sprintf( __('%s ago','k2_domain'), time_since( abs( strtotime( $post->post_date_gmt . ' GMT' ) ), time() ) );
+			$output .= sprintf( __('%s ago', 'k2_domain'), time_since( abs( strtotime( $post->post_date_gmt . ' GMT' ) ), time() ) );
 		else
 			$output .= get_the_time( get_option('date_format') );
 
@@ -70,7 +70,7 @@ endif;
  */
 if ( ! function_exists('k2_entry_categories') ):
 	function k2_entry_categories() {
-		return '<span class="entry-categories">' . k2_nice_category(', ', __(' and ','k2_domain')) . '</span>';
+		return '<span class="entry-categories">' . k2_nice_category(', ', __(' and ', 'k2_domain')) . '</span>';
 	}
 endif;
 
@@ -99,7 +99,7 @@ endif;
  */
 if ( ! function_exists('k2_entry_tags') ):
 function k2_entry_tags() {
-	if ( $tags = get_the_tag_list( __('<span>Tags:</span> ','k2_domain'), ', ', '.' ) )
+	if ( $tags = get_the_tag_list( __('<span>Tags:</span> ', 'k2_domain'), ', ', '.' ) )
 		return '<span class="entry-tags">' . $tags . '</span>';
 
 	return $tags;

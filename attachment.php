@@ -24,7 +24,7 @@
 						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
 					</h1>
 
-					<?php /* Edit Link */ edit_post_link( __('Edit','k2_domain'), '<span class="entry-edit">', '</span>' ); ?>
+					<?php /* Edit Link */ edit_post_link( __('Edit', 'k2_domain'), '<span class="entry-edit">', '</span>' ); ?>
 
 					<div class="attachment-icon">
 						<?php echo wp_get_attachment_link($post->ID, 'thumbnail', false, true); ?>
@@ -33,7 +33,7 @@
 
 				<div class="entry-content">
 					<p class="downloadlink">
-						<?php printf(  __('Download %s', 'k2_domain'), wp_get_attachment_link($post->ID, 'thumbnail') ); ?>
+						<?php printf( __('Download %s', 'k2_domain'), wp_get_attachment_link($post->ID, 'thumbnail') ); ?>
 						<span class="file-size"><?php echo size_format( filesize( get_attached_file($post->ID) ) ); ?></span>
 					<p>
 

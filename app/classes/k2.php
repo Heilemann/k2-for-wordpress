@@ -182,7 +182,7 @@ class K2 {
 	 * Adds K2 Options to Appearance menu, adds actions for head and scripts
 	 */
 	function add_options_menu() {
-		$page = add_theme_page(__('K2 Options','k2_domain'), __('K2 Options','k2_domain'), 'edit_themes', 'k2-options', array('K2', 'admin'));
+		$page = add_theme_page( __('K2 Options', 'k2_domain'), __('K2 Options', 'k2_domain'), 'edit_themes', 'k2-options', array('K2', 'admin') );
 
 		add_action( "admin_head-$page", array('K2', 'admin_head') );
 		add_action( "admin_print_scripts-$page", array('K2', 'admin_print_scripts') );
@@ -489,7 +489,7 @@ class K2 {
 
 			<?php /* Rolling Archives */ if ( '1' == get_option('k2rollingarchives') ): ?>
 			K2.RollingArchives = new RollingArchives(
-				"<?php esc_attr_e('Page %1$d of %2$d', 'k2_domain'); ?>"
+				"<?php /* translators: 1: current page, 2: total pages */ esc_attr_e('Page %1$d of %2$d', 'k2_domain'); ?>"
 			);
 
 			jQuery('body').addClass('rollingarchives');

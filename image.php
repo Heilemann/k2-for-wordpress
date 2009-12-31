@@ -6,11 +6,11 @@
 
 		switch ($k2_image_link) {
 			case 'prev':
-				$output = str_replace('</a>', '<span>&laquo; Previous</span></a>', $output);
+				$output = str_replace('</a>', '<span>' . __('&laquo; Previous', 'k2_domain') . '</span></a>', $output);
 				break;
 
 			case 'next':
-				$output = str_replace('</a>', '<span>Next &raquo;</span></a>', $output);
+				$output = str_replace('</a>', '<span>' . __('Next &raquo;', 'k2_domain') . '</span></a>', $output);
 				break;
 		}
 
@@ -46,7 +46,7 @@
 						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
 					</h1>
 
-					<?php /* Edit Link */ edit_post_link( __('Edit','k2_domain'), '<span class="entry-edit">', '</span>' ); ?>
+					<?php /* Edit Link */ edit_post_link( __('Edit', 'k2_domain'), '<span class="entry-edit">', '</span>' ); ?>
 
 					<?php /* K2 Hook */ do_action('template_entry_head'); ?>
 				</div> <!-- .entry-head -->
@@ -67,21 +67,22 @@
 					<h5><?php _e('Photo Information', 'k2_domain'); ?></h5>
 					<ul class="image-meta">
 						<li class="dimensions">
-							<span><?php _e('Dimensions:','k2_domain'); ?></span>
+							<span><?php _e('Dimensions:', 'k2_domain'); ?></span>
 							<?php
 								list($width, $height) = getimagesize( get_attached_file($post->ID) );
-								printf( _x('%1$s &times; %2$s pixels', 'k2_image', 'k2_domain'), $width, $height );
+								/* translators: 1: image width, 2: image height */ 
+								printf( __('%1$s &times; %2$s pixels', 'k2_domain'), $width, $height );
 							?>
 						</li>
 						<li class="file-size">
-							<span><?php _e('File Size:','k2_domain'); ?></span>
+							<span><?php _e('File Size:', 'k2_domain'); ?></span>
 							<?php echo size_format( filesize( get_attached_file($post->ID) ) ); ?>
 						</li>
 						<li class="uploaded">
-							<span><?php _e('Uploaded on:','k2_domain'); ?></span>
+							<span><?php _e('Uploaded on:', 'k2_domain'); ?></span>
 							<?php
 								if ( function_exists('time_since') ):
-									printf( __('%s ago','k2_domain'),
+									printf( __('%s ago', 'k2_domain'),
 										'<abbr class="published" title="' . get_the_time('Y-m-d\TH:i:sO') . '">' . time_since(abs(strtotime($post->post_date_gmt . " GMT")), time()) . '</abbr>');
 								else:
 							?><abbr class="published" title="<?php the_time('Y-m-d\TH:i:sO'); ?>"><?php the_time( get_option('date_format') ); ?></abbr><?php endif; ?>
@@ -118,11 +119,11 @@
 			<div class="hentry four04">
 
 				<div class="entry-head">
-					<h3 class="center"><?php _e('Not Found','k2_domain'); ?></h3>
+					<h3 class="center"><?php _e('Not Found', 'k2_domain'); ?></h3>
 				</div>
 
 				<div class="entry-content">
-					<p><?php _e('Oh no! You\'re looking for something which just isn\'t here! Fear not however, errors are to be expected, and luckily there are tools on the sidebar for you to use in your search for what you need.','k2_domain'); ?></p>
+					<p><?php _e('Oh no! You\'re looking for something which just isn\'t here! Fear not however, errors are to be expected, and luckily there are tools on the sidebar for you to use in your search for what you need.', 'k2_domain'); ?></p>
 				</div>
 
 			</div> <!-- .hentry .four04 -->

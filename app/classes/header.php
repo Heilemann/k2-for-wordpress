@@ -79,12 +79,13 @@ class K2Header {
 
 			<p class="description">
 			<?php
+				/* translators: 1: header image width, 2: header image height */
 				printf( __('The current header size is <strong>%1$s px by %2$s px</strong>.', 'k2_domain'),
 					HEADER_IMAGE_WIDTH, HEADER_IMAGE_HEIGHT
 				);
 
 				if ( extension_loaded('gd') and function_exists('gd_info') ) {
-					printf( __(' Use %s to customize the header.', 'k2_domain'),
+					printf( __('Use %s to customize the header.', 'k2_domain'),
 						'<a href="themes.php?page=custom-header">' . __('Custom Image Header', 'k2_domain') . '</a>'
 					);
 				}

@@ -11,8 +11,9 @@
 
 <p class="footerpoweredby">
 	<?php
-		printf( _x('Powered by %1$s and %2$s', 'k2_footer', 'k2_domain'),
-			'<a href="http://wordpress.org/">' . __('WordPress', 'k2_domain') . '</a>',
+		/* translators: 1: WordPress, 2: K2 */ 
+		printf( __('Powered by %1$s and %2$s', 'k2_domain'),
+			'<a href="http://wordpress.org/">WordPress</a>',
 			'<a href="http://getk2.com/" title="' . __('Loves you like a kitten.', 'k2_domain') . '">K2</a>'
 		);
 	?>
@@ -26,9 +27,10 @@
 
 <p class="footerfeedlinks">
 	<?php
-		printf( _x('%1$s and %2$s', 'k2_footer', 'k2_domain'),
-			'<a href="' . get_bloginfo('rss2_url') . '">' . __('Entries Feed','k2_domain') . '</a>',
-			'<a href="' . get_bloginfo('comments_rss2_url') . '">' . __('Comments Feed','k2_domain') . '</a>'
+		/* translators: 1: entries feed, 2: comments feed */ 
+		printf( __('%1$s and %2$s', 'k2_domain'),
+			'<a href="' . get_bloginfo('rss2_url') . '">' . __('Entries Feed', 'k2_domain') . '</a>',
+			'<a href="' . get_bloginfo('comments_rss2_url') . '">' . __('Comments Feed', 'k2_domain') . '</a>'
 		);
 	?>
 </p>

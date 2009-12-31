@@ -177,7 +177,7 @@ class K2Styles {
 
 			<p class="description">
 				<?php _e('No need to edit core files, K2 is highly customizable.', 'k2_domain'); ?>
-				<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS"><?php _e('Read&nbsp;more.', 'k2_domain'); ?></a>
+				<a href="http://code.google.com/p/kaytwo/wiki/K2CSSandCustomCSS"><?php _e('Read more.', 'k2_domain'); ?></a>
 			</p>
 
 			<table class="form-table">

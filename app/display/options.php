@@ -66,13 +66,13 @@
 				</p>
 			</li>
 			<li>
-				<h3 class="main-label"><label for="k2-advnav"><?php _e('Advanced Navigation','k2_domain'); ?></label></h3>
+				<h3 class="main-label"><label for="k2-advnav"><?php _e('Advanced Navigation', 'k2_domain'); ?></label></h3>
 
 				<p class="main-option">
 					<input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2livesearch')); ?> />
 				</p>
 
-				<p class="description"><?php _e('Seamlessly search and navigate old posts.','k2_domain'); ?></p>
+				<p class="description"><?php _e('Seamlessly search and navigate old posts.', 'k2_domain'); ?></p>
 
 				<ul class="advanced-option">
 					<li>
@@ -148,7 +148,7 @@
 					?>
 					<div id="post-<?php the_ID(); ?>" class="inside">
 						<div class="entry-head">
-							<h5 class="entry-title"><a href="#" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"','k2_domain'), esc_html(strip_tags(the_title('', '', false)),1) ); ?>'><?php the_title(); ?></a></h5>
+							<h5 class="entry-title"><a href="#" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"', 'k2_domain'), esc_html(strip_tags(the_title('', '', false)), 1) ); ?>'><?php the_title(); ?></a></h5>
 
 							<div class="entry-meta">
 								<?php k2_entry_meta(1); ?>

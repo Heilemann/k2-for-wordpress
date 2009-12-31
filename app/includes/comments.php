@@ -108,12 +108,13 @@ function k2_comment_start_el($comment, $args = array(), $depth = 1) {
 				<span class="comment-author"><?php comment_author_link(); ?></span>
 
 				<div class="comment-meta">
-					<a href="#comment-<?php comment_ID(); ?>" title="<?php _e('Permanent Link to this Comment','k2_domain'); ?>">
+					<a href="#comment-<?php comment_ID(); ?>" title="<?php _e('Permanent Link to this Comment', 'k2_domain'); ?>">
 						<?php
 							if ( function_exists('time_since') ):
-								printf( __('%s ago.','k2_domain'), time_since( abs( strtotime($comment->comment_date_gmt . ' GMT') ), time() ) );
+								printf( __('%s ago.', 'k2_domain'), time_since( abs( strtotime($comment->comment_date_gmt . ' GMT') ), time() ) );
 							else:
-								printf( __('%1$s at %2$s','k2_domain'), get_comment_date(), get_comment_time() );
+								/* translators: 1: comment date, 2: comment time */
+								printf( __('%1$s at %2$s', 'k2_domain'), get_comment_date(), get_comment_time() );
 							endif;
 						?>
 					</a>
@@ -122,7 +123,7 @@ function k2_comment_start_el($comment, $args = array(), $depth = 1) {
 
 			<div class="comment-content">
 				<?php if ( ! $comment->comment_approved ): ?>
-				<p class="comment-moderation alert"><?php _e('Your comment is awaiting moderation.','k2_domain'); ?></p>
+				<p class="comment-moderation alert"><?php _e('Your comment is awaiting moderation.', 'k2_domain'); ?></p>
 				<?php endif; ?>
 
 				<?php comment_text(); ?> 
@@ -133,9 +134,9 @@ function k2_comment_start_el($comment, $args = array(), $depth = 1) {
 	
 				<?php
 					if ( function_exists('jal_edit_comment_link') ):
-						jal_edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>');
+						jal_edit_comment_link(__('Edit', 'k2_domain'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>');
 					else:
-						edit_comment_link(__('Edit','k2_domain'), '<span class="comment-edit">', '</span>');
+						edit_comment_link(__('Edit', 'k2_domain'), '<span class="comment-edit">', '</span>');
 					endif;
 				?>
 
@@ -189,7 +190,8 @@ function k2_ping_start_el($comment, $args = array(), $depth = 1) {
 
 		<div class="comment-meta">				
 		<?php
-			printf( _x('%1$s on %2$s', 'k2_comments', 'k2_domain'), 
+			/* translators: 1: ping type, 2: datetime */ 
+			printf( __('%1$s on %2$s', 'k2_domain'), 
 				'<span class="pingtype">' . comment_type( __('Comment', 'k2_domain'), __('Trackback', 'k2_domain'), __('Pingback', 'k2_domain') ) . '</span>',
 				sprintf('<a href="#comment-%1$s" title="%2$s">%3$s</a>',
 					get_comment_ID(),	
@@ -199,8 +201,10 @@ function k2_ping_start_el($comment, $args = array(), $depth = 1) {
 						):
 						__('Permanent Link to this Comment', 'k2_domain')
 					),
-					sprintf( _x('%1$s at %2$s', 'k2_comments', 'k2_domain'),
-						get_comment_date( __('M jS, Y','k2_domain') ),
+					/* translators: 1: comment date, 2: comment time */
+					sprintf( __('%1$s at %2$s', 'k2_domain'),
+						/* translators: pingback/trackback date format, see http://php.net/date */
+						get_comment_date( __('M jS, Y', 'k2_domain') ),
 						get_comment_time()
 					)			
 				)
