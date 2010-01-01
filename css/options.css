@@ -158,6 +158,10 @@ option {
 	overflow: hidden;
 	}
 
+#k2-entry-meta-1:focus,
+#k2-entry-meta-2:focus {
+	width: 100%
+}
 
 #meta-preview {
 	margin: 20px 0 10px;
