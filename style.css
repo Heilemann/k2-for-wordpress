@@ -112,7 +112,6 @@ body.smartposition #rollingarchives {
 	background: #3371A3;
 	background-position: top right;
 	background-repeat: no-repeat;
-	overflow: hidden;
 	}
 
 .content {
@@ -192,16 +191,18 @@ body.smartposition #rollingarchives {
 	position: fixed;
 	top: 5px;
 	right: 5px;
-	color: #333 !important;
+	color: #333;
 	background: #cfcfcf;
+	padding: 5px 10px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 }
 
 .admintab a:hover {
-	background: #333 !important;
-	color: white !important;
+	background: #333;
+	color: white;
+	text-decoration: none !important;
 }
 
 .menu {
@@ -211,21 +212,30 @@ body.smartposition #rollingarchives {
 	margin: 0 20px;
 	}
 
-.menu,
-.menu li {
+.menu li a {
+	display: block;
+	}
+
+.menu li a:hover {
+	text-decoration: none;
+	}
+
+.menu ul {
 	float: left;
 	list-style: none;
 	}
 
 .menu li {
-	margin-right: 4px;
+	display: block;
 	}
 
-.menu li a {
-	display: block;
-	padding: 5px 15px;
-	font-size: 1em;
-	color: white;
+/* top menu */
+
+.menu > ul > li {
+	padding: 0 5px;
+	margin-right: 5px;
+	float: left;
+
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
 	-moz-border-radius-topleft: 4px;
@@ -234,21 +244,95 @@ body.smartposition #rollingarchives {
 	-webkit-border-top-right-radius: 4px;
 	}
 
-.menu li a:hover {
-	background: #333;
-	color: #eee;
-	text-decoration: none;
+/*
+.menu > ul > li.has_children > a {
+	padding-right: 20px;
+	background: transparent url('images/bullet_arrow_down.png') no-repeat right center;
+	}
+*/
+
+.menu > ul > li.current_page_ancestor,
+.menu > ul > li.current_page_item {
+	background: white;
 	}
 
-.menu li.current_page_item a,
-.menu li.current_page_item a:hover,
-.menu li.current_page_ancestor a,
-.menu li.current_page_ancestor a:hover,
-body.single .menu li.blogtab a,
-body.single .menu li.blogtab a:hover {
+.menu > ul > li.current_page_ancestor > a,
+.menu > ul > li.current_page_item > a {
 	color: #333;
-	background: white;
-	text-decoration: none;
+	}
+
+.menu > ul > li:hover  {
+	background-color: #333;
+	}
+
+.menu > ul > li > a {
+	padding: 5px 10px;
+	color: white;
+	}
+
+.menu > ul > li > a:hover {
+	color: #eee;
+	}
+
+.menu li ul {
+	background-color: #333;
+	height: auto;
+	left: -999em;
+	position: absolute;
+	z-index: 500;
+	padding: 8px 0;
+	width: 15em;
+
+	border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 4px 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+
+	margin: 0 0 0 -5px;
+	}
+
+
+.menu li li {
+	width: 15em;
+	}
+
+.menu li li a {
+	color: #ccc;
+	display: block;
+	padding: 0.5em 2em 0.5em 1em;
+	width: 12em;
+	}
+
+/*
+.menu li.has_children > a {
+	background: url(images/bullet_go.png) no-repeat right center;
+	}
+*/
+
+.menu ul ul li:hover > a {
+	color: white;
+	background-color: #666;
+	}
+
+.menu li ul ul { /* third-and-above-level lists */
+	border-radius: 0 4px 4px 0;
+	-moz-border-radius: 0 4px 4px 0;
+	-webkit-border-bottom-left-radius: 0;
+	-webkit-border-top-right-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+	
+	margin: -30px 0 0 15em;
+	}
+
+.menu li:hover ul ul,
+.menu li:hover ul ul ul {
+	left: -999em;
+	}
+
+.menu li:hover ul,
+.menu li li:hover ul,
+.menu li li li:hover ul { /* lists nested under hovered list items */
+	left: auto;
 	}
 
 /* Sidebar Subpages Menu */
