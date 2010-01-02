@@ -483,7 +483,7 @@ class K2 {
 		jQuery(document).ready(function(){
 			<?php /* LiveSearch */ if ( '1' == get_option('k2livesearch') ): ?>
 			K2.LiveSearch = new LiveSearch(
-				"<?php esc_attr_e('Type and Wait to Search','k2_domain'); ?>"
+				"<?php esc_attr_e('Search','k2_domain'); ?>"
 			);
 			<?php endif; ?>
 
