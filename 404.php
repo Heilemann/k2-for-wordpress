@@ -8,8 +8,8 @@
 
 		<a name="startcontent" id="startcontent"></a>
 		
+		<div id="current-content" class="hfeed">
 			<?php locate_template( array('blocks/k2-404.php'), true ); ?>
-		
 		</div> <!-- #current-content .hfeed -->
 
 		<div id="dynamic-content"></div>
@@ -21,3 +21,5 @@
 </div> <!-- .content -->
 
 <?php get_footer(); ?>
+
+<!-- jegelskerRikke -->
