@@ -17,15 +17,15 @@
 
 			if ( is_day() ) {
 				$templates[] = 'blocks/k2-loop-archive-day.php';
-				$page_head = /* translators: daily archive date format, see http://php.net/date */ sprintf( __('Daily Archive for %s', 'k2_domain'), get_the_time( __('l, F jS, Y', 'k2_domain') ) );
+				$page_head = /* translators: daily archive date format (here: 'Weekday, Month Xth, Year'), see http://php.net/date */ sprintf( __('Daily Archive for %s', 'k2_domain'), get_the_time( __('l, F jS, Y', 'k2_domain') ) );
 
 			} elseif ( is_month() ) {
 				$templates[] = 'blocks/k2-loop-archive-month.php';
-				$page_head = /* translators: monthly archive date format, see http://php.net/date */ sprintf( __('Monthly Archive for %s', 'k2_domain'), get_the_time( __('F, Y', 'k2_domain') ) );
+				$page_head = /* translators: monthly archive date format (here: 'Month, Year'), see http://php.net/date */ sprintf( __('Monthly Archive for %s', 'k2_domain'), get_the_time( __('F, Y', 'k2_domain') ) );
 
 			} elseif ( is_year() ) {
 				$templates[] = 'blocks/k2-loop-archive-year.php';
-				$page_head = /* translators: yearly archive date format, see http://php.net/date */ sprintf( __('Yearly Archive for %s', 'k2_domain'), get_the_time('Y') );
+				$page_head = /* translators: yearly archive date format (here: 'Year'), see http://php.net/date */ sprintf( __('Yearly Archive for %s', 'k2_domain'), get_the_time('Y') );
 			}
 
 			$templates[] = 'blocks/k2-loop-archive-date.php';

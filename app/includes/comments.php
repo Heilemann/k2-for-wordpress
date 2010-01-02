@@ -201,7 +201,7 @@ function k2_ping_start_el($comment, $args = array(), $depth = 1) {
 					),
 					/* translators: 1: comment date, 2: comment time */
 					sprintf( __('%1$s at %2$s', 'k2_domain'),
-						/* translators: pingback/trackback date format, see http://php.net/date */
+						/* translators: pingback/trackback date format (here: 'Month Xth, Year'), see http://php.net/date */
 						get_comment_date( __('M jS, Y', 'k2_domain') ),
 						get_comment_time()
 					)			

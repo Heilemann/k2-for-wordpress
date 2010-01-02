@@ -48,10 +48,10 @@
 		<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for the %3$s category.', 'k2_domain'), get_option('siteurl'), get_bloginfo('name'), single_cat_title('', false) ); ?></p>
 
 		<?php /* Day Archive */ } elseif (is_day()) { ?>
-		<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for the day %3$s.', 'k2_domain'), get_option('siteurl'), get_bloginfo('name'), /* translators: date format for daily archive, see http://php.net/date */ get_the_time( __('l, F jS, Y', 'k2_domain') ) ); ?></p>
+		<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for the day %3$s.', 'k2_domain'), get_option('siteurl'), get_bloginfo('name'), /* translators: date format for daily archive  (here: 'Weekday, Month Xth, Year'), see http://php.net/date */ get_the_time( __('l, F jS, Y', 'k2_domain') ) ); ?></p>
 
 		<?php /* Monthly Archive */ } elseif (is_month()) { ?>
-		<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for the month %3$s.', 'k2_domain'), get_option('siteurl'), get_bloginfo('name'), /* translators: date format for monthly archive, see http://php.net/date */ get_the_time( __('F, Y', 'k2_domain') ) ); ?></p>
+		<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for the month %3$s.', 'k2_domain'), get_option('siteurl'), get_bloginfo('name'), /* translators: date format for monthly archive (here: 'Month, Year'), see http://php.net/date */ get_the_time( __('F, Y', 'k2_domain') ) ); ?></p>
 
 		<?php /* Yearly Archive */ } elseif (is_year()) { ?>
 		<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for the year %3$s.', 'k2_domain'), get_option('siteurl'), get_bloginfo('name'), get_the_time('Y') ); ?></p>

@@ -1,15 +1,15 @@
 function RollingArchives(pagetext) {
-	this.pageText = pagetext;
-	this.active = false;
+	this.pageText	= pagetext;
+	this.active		= false;
 };
 
 RollingArchives.prototype.setState = function(pagenumber, pagecount, query, pagedates) {
-	var self = this;
+	var self		= this;
 
-	this.pageNumber = pagenumber;
-	this.pageCount = pagecount;
-	this.query = query;
-	this.pageDates = pagedates;
+	this.pageNumber	= pagenumber;
+	this.pageCount 	= pagecount;
+	this.query 		= query;
+	this.pageDates 	= pagedates;
 
 	jQuery('body').addClass('showrollingarchives');
 
@@ -113,6 +113,15 @@ RollingArchives.prototype.validatePage = function(newpage) {
 	return 0;
 };
 
+RollingArchives.prototype.loading = function(gostop) {
+	if (gostop == 'start') {
+		jQuery('body')
+			.addClass('loading')
+	} else {
+		jQuery('body')
+			.removeClass('loading')
+	}
+};
 
 RollingArchives.prototype.gotoPage = function(newpage) {
 	var self = this;
@@ -121,7 +130,9 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 	if ( (page != this.pageNumber) && (page > 0) ) {
 		this.pageNumber = page;
 
-		jQuery('#rollload').fadeIn('fast');
+		self.loading('start');
+//		jQuery('#rollload').fadeIn('fast');
+
 		jQuery.extend(this.query, { paged: this.pageNumber, k2dynamic: 1 });
 
 		K2.ajaxGet(this.query,
@@ -141,7 +152,8 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 				} */
 				
 				jQuery('#rollhover').fadeOut('slow');
-				jQuery('#rollload').fadeOut('fast');
+				self.loading('stop');
+//				jQuery('#rollload').fadeOut('fast');
 				jQuery('#rollingcontent').html(data);
 			}
 		);

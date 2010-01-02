@@ -489,7 +489,7 @@ class K2 {
 
 			<?php /* Rolling Archives */ if ( '1' == get_option('k2rollingarchives') ): ?>
 			K2.RollingArchives = new RollingArchives(
-				"<?php /* translators: 1: current page, 2: total pages */ esc_attr_e('Page %1$d of %2$d', 'k2_domain'); ?>"
+				"<?php /* translators: 1: current page, 2: total pages */ esc_attr_e('%1$d of %2$d', 'k2_domain'); ?>"
 			);
 
 			jQuery('body').addClass('rollingarchives');
