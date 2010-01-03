@@ -116,10 +116,10 @@ RollingArchives.prototype.validatePage = function(newpage) {
 RollingArchives.prototype.loading = function(gostop) {
 	if (gostop == 'start') {
 		jQuery('body')
-			.addClass('loading')
+			.addClass('rollload')
 	} else {
 		jQuery('body')
-			.removeClass('loading')
+			.removeClass('rollload')
 	}
 };
 
@@ -131,7 +131,6 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 		this.pageNumber = page;
 
 		self.loading('start');
-//		jQuery('#rollload').fadeIn('fast');
 
 		jQuery.extend(this.query, { paged: this.pageNumber, k2dynamic: 1 });
 
@@ -153,7 +152,6 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 				
 				jQuery('#rollhover').fadeOut('slow');
 				self.loading('stop');
-//				jQuery('#rollload').fadeOut('fast');
 				jQuery('#rollingcontent').html(data);
 			}
 		);
