@@ -75,18 +75,18 @@ class K2Header {
 
 ?>
 		<li>
-			<h3><?php _e('Header', 'k2_domain'); ?></h3>
+			<h3><?php _e('Header', 'k2'); ?></h3>
 
 			<p class="description">
 			<?php
 				/* translators: 1: header image width, 2: header image height */
-				printf( __('The current header size is <strong>%1$s px by %2$s px</strong>.', 'k2_domain'),
+				printf( __('The current header size is <strong>%1$s px by %2$s px</strong>.', 'k2'),
 					HEADER_IMAGE_WIDTH, HEADER_IMAGE_HEIGHT
 				);
 
 				if ( extension_loaded('gd') and function_exists('gd_info') ) {
-					printf( __('Use %s to customize the header.', 'k2_domain'),
-						'<a href="themes.php?page=custom-header">' . __('Custom Image Header', 'k2_domain') . '</a>'
+					printf( __('Use %s to customize the header.', 'k2'),
+						'<a href="themes.php?page=custom-header">' . __('Custom Image Header', 'k2') . '</a>'
 					);
 				}
 				?>
@@ -96,12 +96,12 @@ class K2Header {
 				<tbody>
 					<tr>
 						<th scope="row">
-							<label for="k2-header-image"><?php _e('Select an Image:', 'k2_domain'); ?></label>
+							<label for="k2-header-image"><?php _e('Select an Image:', 'k2'); ?></label>
 						</th>
 						<td>
 							<select id="k2-header-image" name="k2[headerimage]">
-								<option value="" <?php selected($current_header_image, ''); ?>><?php _e('Off', 'k2_domain'); ?></option>
-								<option value="random" <?php selected($current_header_image, 'random'); ?>><?php _e('Random', 'k2_domain'); ?></option>
+								<option value="" <?php selected($current_header_image, ''); ?>><?php _e('Off', 'k2'); ?></option>
+								<option value="random" <?php selected($current_header_image, 'random'); ?>><?php _e('Random', 'k2'); ?></option>
 								<?php foreach($header_images as $image): ?>
 									<?php if ( is_numeric($image) ): ?>
 										<option value="<?php echo esc_attr($image); ?>" <?php selected($current_header_image, $image); ?>><?php echo basename( get_attached_file($image) ); ?></option>
@@ -114,7 +114,7 @@ class K2Header {
 					</tr>
 					<tr>
 						<th scope="row">
-							<label for="k2-blog-tab"><?php _e('Rename the \'Blog\' tab:', 'k2_domain'); ?></label>
+							<label for="k2-blog-tab"><?php _e('Rename the \'Blog\' tab:', 'k2'); ?></label>
 						</th>
 						<td>
 							<input id="k2-blog-tab" name="k2[blogornoblog]" type="text" value="<?php form_option('k2blogornoblog'); ?>" />

@@ -16,7 +16,7 @@ class K2 {
 	 */
 	function init() {
 		// Loads localisation from K2's languages directory
-		load_theme_textdomain('k2_domain', TEMPLATEPATH . '/languages');
+		load_theme_textdomain('k2', TEMPLATEPATH . '/languages');
 
 		// Load required classes and includes
 		require_once(TEMPLATEPATH . '/app/includes/wp-compat.php');
@@ -79,7 +79,7 @@ class K2 {
 
 		// Added 1.0-RC8
 		add_option('k2animations', '1', 'JavaScript Animation effects.');
-		add_option('k2entrymeta1', __('Published on %date% in %categories%. %comments% %tags%', 'k2_domain'), 'Customized metadata format before entry content.');
+		add_option('k2entrymeta1', __('Published on %date% in %categories%. %comments% %tags%', 'k2'), 'Customized metadata format before entry content.');
 		add_option('k2entrymeta2', '', 'Customized metadata format after entry content.');
 
 		$defaultjs = "// Lightbox v2.03.3 - Adds new images to lightbox\nif (typeof myLightbox != 'undefined' && myLightbox instanceof Lightbox && myLightbox.updateImageList) {\n\tmyLightbox.updateImageList();\n}\n";
@@ -182,15 +182,15 @@ class K2 {
 	 * Adds K2 Options to Appearance menu, adds actions for head and scripts
 	 */
 	function add_options_menu() {
-		$page = add_theme_page( __('K2 Options', 'k2_domain'), __('K2 Options', 'k2_domain'), 'edit_themes', 'k2-options', array('K2', 'admin') );
+		$page = add_theme_page( __('K2 Options', 'k2'), __('K2 Options', 'k2'), 'edit_themes', 'k2-options', array('K2', 'admin') );
 
 		add_action( "admin_head-$page", array('K2', 'admin_head') );
 		add_action( "admin_print_scripts-$page", array('K2', 'admin_print_scripts') );
 
 		if ( function_exists('add_contextual_help') ) {
 			add_contextual_help($page,
-				'<a href="http://groups.google.com/group/k2-support/">' .  __('K2 Support Group', 'k2_domain') . '</a><br />' .
-				'<a href="http://code.google.com/p/kaytwo/issues/list">' .  __('K2 Bug Tracker', 'k2_domain') . '</a><br />'
+				'<a href="http://groups.google.com/group/k2-support/">' .  __('K2 Support Group', 'k2') . '</a><br />' .
+				'<a href="http://code.google.com/p/kaytwo/issues/list">' .  __('K2 Bug Tracker', 'k2') . '</a><br />'
 				);
 		}
 	}
@@ -211,7 +211,7 @@ class K2 {
 		?>
 		<script type="text/javascript" charset="utf-8">
 		//<![CDATA[
-			var defaults_prompt = "<?php _e('Do you want to restore K2 to default settings? This will remove all your K2 settings.', 'k2_domain'); ?>";
+			var defaults_prompt = "<?php _e('Do you want to restore K2 to default settings? This will remove all your K2 settings.', 'k2'); ?>";
 		//]]>
 		</script>
 		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/options.css" />
@@ -483,13 +483,13 @@ class K2 {
 		jQuery(document).ready(function(){
 			<?php /* LiveSearch */ if ( '1' == get_option('k2livesearch') ): ?>
 			K2.LiveSearch = new LiveSearch(
-				"<?php esc_attr_e('Search','k2_domain'); ?>"
+				"<?php esc_attr_e('Search','k2'); ?>"
 			);
 			<?php endif; ?>
 
 			<?php /* Rolling Archives */ if ( '1' == get_option('k2rollingarchives') ): ?>
 			K2.RollingArchives = new RollingArchives(
-				"<?php /* translators: 1: current page, 2: total pages */ esc_attr_e('%1$d of %2$d', 'k2_domain'); ?>"
+				"<?php /* translators: 1: current page, 2: total pages */ esc_attr_e('%1$d of %2$d', 'k2'); ?>"
 			);
 
 			jQuery('body').addClass('rollingarchives');

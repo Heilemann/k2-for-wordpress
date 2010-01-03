@@ -19,7 +19,7 @@
 						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
 					</h1>
 
-					<?php /* Edit Link */ edit_post_link( __('Edit', 'k2_domain'), '<span class="entry-edit">', '</span>' ); ?>
+					<?php /* Edit Link */ edit_post_link( __('Edit', 'k2'), '<span class="entry-edit">', '</span>' ); ?>
 
 					<div class="entry-meta">
 						<?php k2_entry_meta(1); ?>
@@ -32,11 +32,11 @@
 					<?php if ( function_exists('has_post_thumbnail') and has_post_thumbnail() ) : ?>
 						<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'medium', array( 'class' => 'alignleft' ) ); ?></a>
 					<?php endif; ?>
-					<?php the_content( sprintf( __('Continue reading \'%s\'', 'k2_domain'), the_title('', '', false) ) ); ?>
+					<?php the_content( sprintf( __('Continue reading \'%s\'', 'k2'), the_title('', '', false) ) ); ?>
 				</div><!-- .entry-content -->
 
 				<div class="entry-foot">
-					<?php wp_link_pages( array('before' => '<div class="entry-pages"><span>' . __('Pages:', 'k2_domain') . '</span>', 'after' => '</div>' ) ); ?>
+					<?php wp_link_pages( array('before' => '<div class="entry-pages"><span>' . __('Pages:', 'k2') . '</span>', 'after' => '</div>' ) ); ?>
 
 					<div class="entry-meta">
 						<?php k2_entry_meta(2); ?>

@@ -49,7 +49,7 @@ if ( ! function_exists('k2_entry_date') ):
 		$output = '<abbr class="published entry-date" title="' . get_the_time('Y-m-d\TH:i:sO') . '">';
 
 		if ( function_exists('time_since') )
-			$output .= sprintf( __('%s ago', 'k2_domain'), time_since( abs( strtotime( $post->post_date_gmt . ' GMT' ) ), time() ) );
+			$output .= sprintf( __('%s ago', 'k2'), time_since( abs( strtotime( $post->post_date_gmt . ' GMT' ) ), time() ) );
 		else
 			$output .= get_the_time( get_option('date_format') );
 
@@ -70,7 +70,7 @@ endif;
  */
 if ( ! function_exists('k2_entry_categories') ):
 	function k2_entry_categories() {
-		return '<span class="entry-categories">' . k2_nice_category(', ', __(' and ', 'k2_domain')) . '</span>';
+		return '<span class="entry-categories">' . k2_nice_category(', ', __(' and ', 'k2')) . '</span>';
 	}
 endif;
 
@@ -85,7 +85,7 @@ endif;
 if ( ! function_exists('k2_entry_author') ):
 	function k2_entry_author() {
 		return '<span class="vcard author entry-author"><a href="' . get_author_posts_url( get_the_author_ID() ) .
-					'" class="url fn" title="' . sprintf( __('View all posts by %s', 'k2_domain'), esc_attr( get_the_author() ) ) .
+					'" class="url fn" title="' . sprintf( __('View all posts by %s', 'k2'), esc_attr( get_the_author() ) ) .
 					'">' . get_the_author() . '</a></span>';
 	}
 endif;
@@ -99,7 +99,7 @@ endif;
  */
 if ( ! function_exists('k2_entry_tags') ):
 function k2_entry_tags() {
-	if ( $tags = get_the_tag_list( __('<span>Tags:</span> ', 'k2_domain'), ', ', '.' ) )
+	if ( $tags = get_the_tag_list( __('<span>Tags:</span> ', 'k2'), ', ', '.' ) )
 		return '<span class="entry-tags">' . $tags . '</span>';
 
 	return $tags;
@@ -117,7 +117,7 @@ if ( ! function_exists('k2_entry_comments') ):
 	function k2_entry_comments() {
 		ob_start();
 
-		comments_popup_link( __('0 <span>Comments</span>', 'k2_domain'), __('1 <span>Comment</span>', 'k2_domain'), __('% <span>Comments</span>', 'k2_domain'), 'commentslink', __('<span>Closed</span>', 'k2_domain') );
+		comments_popup_link( __('0 <span>Comments</span>', 'k2'), __('1 <span>Comment</span>', 'k2'), __('% <span>Comments</span>', 'k2'), 'commentslink', __('<span>Closed</span>', 'k2') );
 
 		return '<span class="entry-comments">' . ob_get_clean() . '</span>';
 	}

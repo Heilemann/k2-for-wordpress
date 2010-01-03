@@ -17,15 +17,15 @@
 
 			if ( is_day() ) {
 				$templates[] = 'blocks/k2-loop-archive-day.php';
-				$page_head = /* translators: daily archive date format (here: 'Weekday, Month Xth, Year'), see http://php.net/date */ sprintf( __('Daily Archive for %s', 'k2_domain'), get_the_time( __('l, F jS, Y', 'k2_domain') ) );
+				$page_head = /* translators: daily archive date format (here: 'Weekday, Month Xth, Year'), see http://php.net/date */ sprintf( __('Daily Archive for %s', 'k2'), get_the_time( __('l, F jS, Y', 'k2') ) );
 
 			} elseif ( is_month() ) {
 				$templates[] = 'blocks/k2-loop-archive-month.php';
-				$page_head = /* translators: monthly archive date format (here: 'Month, Year'), see http://php.net/date */ sprintf( __('Monthly Archive for %s', 'k2_domain'), get_the_time( __('F, Y', 'k2_domain') ) );
+				$page_head = /* translators: monthly archive date format (here: 'Month, Year'), see http://php.net/date */ sprintf( __('Monthly Archive for %s', 'k2'), get_the_time( __('F, Y', 'k2') ) );
 
 			} elseif ( is_year() ) {
 				$templates[] = 'blocks/k2-loop-archive-year.php';
-				$page_head = /* translators: yearly archive date format (here: 'Year'), see http://php.net/date */ sprintf( __('Yearly Archive for %s', 'k2_domain'), get_the_time('Y') );
+				$page_head = /* translators: yearly archive date format (here: 'Year'), see http://php.net/date */ sprintf( __('Yearly Archive for %s', 'k2'), get_the_time('Y') );
 			}
 
 			$templates[] = 'blocks/k2-loop-archive-date.php';
@@ -34,22 +34,22 @@
 		} elseif ( is_category() ) {
 			$templates[] = 'blocks/k2-loop-category-' . absint( get_query_var('cat') ) . '.php';
 			$templates[] = 'blocks/k2-loop-category.php';
-			$page_head = sprintf( __('Archive for the \'%s\' Category', 'k2_domain'), single_cat_title('', false) );
+			$page_head = sprintf( __('Archive for the \'%s\' Category', 'k2'), single_cat_title('', false) );
 			
 		} elseif ( is_tag() ) {
 			$templates[] = 'blocks/k2-loop-tag-' . get_query_var('tag') . '.php';
 			$templates[] = 'blocks/k2-loop-tag.php';
-			$page_head = sprintf( __('Tag Archive for \'%s\'', 'k2_domain'), single_tag_title('', false) );
+			$page_head = sprintf( __('Tag Archive for \'%s\'', 'k2'), single_tag_title('', false) );
 			
 		} elseif ( is_author() ) {
 			$templates[] = 'blocks/k2-loop-author.php';
-			$page_head = sprintf( __('Author Archive for %s', 'k2_domain'), get_author_name( get_query_var('author') ) );
+			$page_head = sprintf( __('Author Archive for %s', 'k2'), get_author_name( get_query_var('author') ) );
 		}
 		
 		$templates[] = 'blocks/k2-loop-archive.php';
 	} elseif ( is_search() ) {
 		$templates[] = 'blocks/k2-loop-search.php';
-		$page_head = sprintf( __('Search Results for \'%s\'', 'k2_domain'), esc_attr( get_search_query() ) );
+		$page_head = sprintf( __('Search Results for \'%s\'', 'k2'), esc_attr( get_search_query() ) );
 	}
 
 	$templates[] = 'blocks/k2-loop.php';
@@ -62,7 +62,7 @@
 			<h1><?php echo $page_head; ?></h1>
 
 			<?php if ( is_paged() ): ?>
-				<h2 class="archivepages"><?php /* translators: 1: current page, 2: total pages */ printf( __('Page %1$s of %2$s', 'k2_domain'), intval( get_query_var('paged')), $wp_query->max_num_pages ); ?></h2>
+				<h2 class="archivepages"><?php /* translators: 1: current page, 2: total pages */ printf( __('Page %1$s of %2$s', 'k2'), intval( get_query_var('paged')), $wp_query->max_num_pages ); ?></h2>
 			<?php endif; ?>
 		</div>
 	<?php endif; ?>

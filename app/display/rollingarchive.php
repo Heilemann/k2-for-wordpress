@@ -5,19 +5,19 @@
 
 		<div id="rollpages"></div>
 		
-		<a id="rollprevious" title="<?php _e('Older', 'k2_domain'); ?>" href="#">
-			<span>&laquo;</span> <?php _e('Older', 'k2_domain'); ?>
+		<a id="rollprevious" title="<?php _e('Older', 'k2'); ?>" href="#">
+			<span>&laquo;</span> <?php _e('Older', 'k2'); ?>
 		</a>
-		<div id="rollload" title="<?php _e('Loading', 'k2_domain'); ?>">
-			<span><?php _e('Loading', 'k2_domain'); ?></span>
+		<div id="rollload" title="<?php _e('Loading', 'k2'); ?>">
+			<span><?php _e('Loading', 'k2'); ?></span>
 		</div>
-		<a id="rollnext" title="<?php _e('Newer', 'k2_domain'); ?>" href="#">
-			<?php _e('Newer', 'k2_domain'); ?> <span>&raquo;</span>
+		<a id="rollnext" title="<?php _e('Newer', 'k2'); ?>" href="#">
+			<?php _e('Newer', 'k2'); ?> <span>&raquo;</span>
 		</a>
 
 		<div id="texttrimmer">
-			<div id="trimmertrim"><span><?php _e('Trim', 'k2_domain'); ?></span></div>
-			<div id="trimmeruntrim"><span><?php _e('Untrim', 'k2_domain'); ?></span></div>
+			<div id="trimmertrim"><span><?php _e('Trim', 'k2'); ?></span></div>
+			<div id="trimmeruntrim"><span><?php _e('Untrim', 'k2'); ?></span></div>
 		</div>
 	</div> <!-- #rollnavigation -->
 </div> <!-- #rollingarchives -->

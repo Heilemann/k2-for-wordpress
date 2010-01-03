@@ -15,9 +15,9 @@ class K2Archive {
 
 		if ( empty($archives_id) ) {
 			$archives_page = array();
-			$archives_page['post_content'] = __('Do not edit this page', 'k2_domain');
-			$archives_page['post_excerpt'] = __('Do not edit this page', 'k2_domain');
-			$archives_page['post_title'] = __('Archives', 'k2_domain');
+			$archives_page['post_content'] = __('Do not edit this page', 'k2');
+			$archives_page['post_excerpt'] = __('Do not edit this page', 'k2');
+			$archives_page['post_title'] = __('Archives', 'k2');
 			$archives_page['post_name'] = 'archivepage';
 			$archives_page['post_status'] = 'publish';
 			$archives_page['post_type'] = 'page';

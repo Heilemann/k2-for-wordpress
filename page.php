@@ -17,7 +17,7 @@
 						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
 					</h1>
 
-					<?php /* Edit Link */ edit_post_link(__('Edit', 'k2_domain'), '<span class="entry-edit">', '</span>'); ?>
+					<?php /* Edit Link */ edit_post_link(__('Edit', 'k2'), '<span class="entry-edit">', '</span>'); ?>
 
 					<?php /* K2 Hook */ do_action('template_entry_head'); ?>
 				</div><!-- .entry-head -->
@@ -27,7 +27,7 @@
 				</div><!-- .entry-content -->
 
 				<div class="entry-foot">
-					<?php wp_link_pages( array('before' => '<div class="entry-pages"><span>' . __('Pages:', 'k2_domain') . '</span>', 'after' => '</div>' ) ); ?>
+					<?php wp_link_pages( array('before' => '<div class="entry-pages"><span>' . __('Pages:', 'k2') . '</span>', 'after' => '</div>' ) ); ?>
 
 					<?php /* K2 Hook */ do_action('template_entry_foot'); ?>
 				</div><!-- .entry-foot -->
