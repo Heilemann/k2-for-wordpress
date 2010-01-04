@@ -117,7 +117,7 @@ if ( ! function_exists('k2_entry_comments') ):
 	function k2_entry_comments() {
 		ob_start();
 
-		comments_popup_link( __('0 <span>Comments</span>', 'k2'), __('1 <span>Comment</span>', 'k2'), __('% <span>Comments</span>', 'k2'), 'commentslink', __('<span>Closed</span>', 'k2') );
+		comments_popup_link( __('0 <span>Comments</span>', 'k2'), __('1 <span>Comment</span>', 'k2'), _n('% <span>Comment</span>', '% <span>Comments</span>', get_comments_number(), 'k2'), 'commentslink', __('<span>Closed</span>', 'k2') );
 
 		return '<span class="entry-comments">' . ob_get_clean() . '</span>';
 	}
