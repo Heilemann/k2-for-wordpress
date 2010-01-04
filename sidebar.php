@@ -39,7 +39,7 @@
 		</div>
 	<?php } ?>
 
-	<?php if (!is_home() and !is_page() and !is_single() or is_paged()) { ?>
+	<?php if (!is_404() and !is_home() and !is_page() and !is_single() or is_paged()) { ?>
 		
 	<div class="sb-about">
 		<h4><?php _e('About', 'k2'); ?></h4>
@@ -83,7 +83,7 @@
 	</div>
 	<?php } ?>
 
-	<?php /* Latest Entries */ if ( (is_home()) or (is_search() or (is_404()) or (defined('K2_NOT_FOUND'))) or (function_exists('is_tag') and is_tag()) or ( (is_archive()) and (!is_author()) ) ) { ?>
+	<?php /* Latest Entries */ if ( (is_home()) or (is_search() or (!is_404()) or (defined('K2_NOT_FOUND'))) or (function_exists('is_tag') and is_tag()) or ( (is_archive()) and (!is_author()) ) ) { ?>
 	<div class="sb-latest">
 		<h4><?php _e('Latest', 'k2'); ?></h4>
 		<a href="<?php bloginfo('rss2_url'); ?>" title="<?php _e('RSS Feed for Blog Entries', 'k2'); ?>" class="feedlink"><span><?php _e('RSS', 'k2'); ?></span></a>
