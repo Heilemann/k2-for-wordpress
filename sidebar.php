@@ -27,7 +27,7 @@
 		</ul>
 			
 		<?php if ($ancestor != $post->ID) { ?>
-			<a href="<?php echo get_permalink($ancestor); ?>"><?php printf( _x('Back to \'%s\'', 'page', 'k2'), apply_filters('the_title', $title) ); ?></a>
+			<a href="<?php echo get_permalink($ancestor); ?>"><?php printf( __('Back to \'%s\'', 'k2'), apply_filters('the_title', $title) ); ?></a>
 		<?php } ?>
 	</div>
 	<?php } } ?>
@@ -35,7 +35,7 @@
 	
 	<?php if (is_attachment()) { ?>
 		<div class="sb-pagemenu">
-			<a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><?php printf( _x('Back to \'%s\'', 'attachment', 'k2'), get_the_title($post->post_parent) ); ?></a>
+			<a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><?php printf( __('Back to \'%s\'', 'k2'), get_the_title($post->post_parent) ); ?></a>
 		</div>
 	<?php } ?>
 
