@@ -8,11 +8,11 @@
 		<p class="nopassword"><?php _e('This post is password protected. Enter the password to view comments.', 'k2'); ?></p>
 	<?php return; endif; ?>
 
-		<h4><?php /* translators: 1: language string for the number of comment, 2: post title */
-					printf( __('%1$s to &#8220;%2$s&#8221;', 'k2'),
-						comments_number( __('<span id="comments">0</span> Responses', 'k2'), __('<span id="comments">1</span> Response', 'k2'), __('<span id="comments">%</span> Responses', 'k2')),
-						the_title('', '', false) 
-					);
+		<h4><?php /* translators: 1: language string for the number of comment(s), 2: post title */
+			printf( __('%1$s to &#8220;%2$s&#8221;', 'k2'),
+				sprintf( _n('<span id="comments">%s</span> Response', '<span id="comments">%s</span> Responses', get_comments_number(), 'k2'), number_format_i18n(get_comments_number()) ),
+				the_title('', '', false) 
+			);
 		?></h4>
 
 		<div class="metalinks">
