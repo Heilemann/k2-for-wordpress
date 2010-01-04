@@ -8,7 +8,7 @@
  */
 
 // Prevent users from directly loading this include file
-defined( 'K2_CURRENT' ) or die ( 'Error: This file can not be loaded directly.' );
+defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly.', 'k2') );
 
 
 class K2_Widget_About extends WP_Widget {

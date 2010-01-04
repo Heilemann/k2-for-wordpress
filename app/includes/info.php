@@ -1,6 +1,6 @@
 <?php
 // Prevent users from directly loading this file
-defined( 'K2_CURRENT' ) or die ( 'Error: This file can not be loaded directly.' );
+defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly.', 'k2') );
 
 function k2info( $show = '' ) {
 	echo get_k2info($show);

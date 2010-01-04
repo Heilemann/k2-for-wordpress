@@ -1,6 +1,6 @@
 <?php
 // Prevent users from directly loading this class file
-defined('K2_CURRENT') or die ('Error: This file can not be loaded directly.');
+defined('K2_CURRENT') or die ( __('Error: This file can not be loaded directly.', 'k2') );
 
 /**
  * K2 - Main class
@@ -519,7 +519,7 @@ class K2 {
 	 */
 	function include_all($dir_path, $ignore = false) {
 		// Open the directory
-		$dir = @dir($dir_path) or die('Could not open required directory ' . $dir_path);
+		$dir = @dir($dir_path) or die( sprintf( __('Could not open required directory' , 'k2'), $dir_path ) );
 
 		// Get all the files from the directory
 		while(($file = $dir->read()) !== false) {
