@@ -733,6 +733,10 @@ div.quoter_page_container {
 	margin: 0;
 	}
 
+.wp-post-image {
+	padding-top: 5px;
+}
+
 .metalinks {
 	margin-top: 3px;
 	}
