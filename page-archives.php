@@ -54,7 +54,7 @@
 
 					<h3><?php _e('Browse by Category', 'k2'); ?></h3>
 					<ul class="archive-list">
-						<?php wp_list_cats('hierarchical=0&optioncount=1'); ?>
+						<?php wp_list_cats('hierarchical=1&optioncount=1'); ?>
 					</ul>
 
 					<br class="clear" />
