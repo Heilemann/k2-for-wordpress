@@ -11,10 +11,11 @@
 	<?php /* Menu for subpages of current page */
 		global $notfound;
 		if (is_page() and ($notfound != '1')) {			
-			$ancestor = array_pop(get_post_ancestors($post->ID));
-			$ancestor = isset($ancestor) ? $ancestor : $post->ID;
-			$title = get_the_title($ancestor);
-			$page_menu = wp_list_pages('echo=0&sort_column=menu_order&title_li=&child_of='. $ancestor);
+			$ancestor	= array_pop(get_post_ancestors($post->ID));
+			$postID		= isset($post->ID) ? $post->ID : 0;
+			$ancestor	= isset($ancestor) ? $ancestor : $postID;
+			$title		= get_the_title($ancestor);
+			$page_menu	= wp_list_pages('echo=0&title_li=&child_of='. $ancestor);
 			
 			if ($page_menu) {
 	?>
