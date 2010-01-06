@@ -45,7 +45,7 @@
 				<?php _e('No Comments', 'k2'); ?>
 			</li>
 		</ul>
-	<?php endif; // If there are comments ?>
+	<?php endif; /* If there are comments */ ?>
 
 	<?php if ( !empty($GLOBALS['trackbacks']) ) : $GLOBALS['comment_index'] = 0; ?>
 		<ul id="pinglist">
@@ -55,7 +55,7 @@
 			endforeach;
 		?>
 		</ul>
-	<?php endif; // If there are trackbacks / pingbacks ?>
+	<?php endif; /* If there are trackbacks / pingbacks */ ?>
 		
 	<?php /* Comments closed */ if ( !comments_open() and is_single() ) : ?>
 		<div id="comments-closed-msg"><?php _e('Comments are currently closed.', 'k2'); ?></div>
@@ -153,7 +153,7 @@
 						</label>
 					</p>			
 				</div><!-- comment-personaldetails -->
-			<?php endif; // If not logged in ?>
+			<?php endif; /* If not logged in */ ?>
 
 				<!--<p><?php printf( __('<strong>XHTML:</strong> You can use these tags: <code>%s</code>', 'k2'), allowed_tags() ); ?></p>-->
 		
@@ -181,9 +181,9 @@
 				</p>
 			</form>
 
-		<?php endif; // If registration required and not logged in ?>
+		<?php endif; /* If registration required and not logged in */ ?>
 	
 		<div class="clear"></div>
 	</div> <!-- .commentformbox -->
 
-	<?php endif; // Reply Form ?>
+	<?php endif; /* Reply Form */ ?>
