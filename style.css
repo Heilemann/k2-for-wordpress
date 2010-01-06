@@ -331,13 +331,28 @@ body.smartposition #rollingarchives {
 .menu ul ul li:hover > a {
 	color: white;
 	background: #444;
+	}
+
+.menu ul ul li:first-child:hover > a {
+	border-top-right-radius: 4px;
+	-moz-border-radius-topright: 4px;
+	-webkit-border-top-right-radius: 4px;
+	}
+
+.menu ul ul li:last-child:hover > a {
+	border-bottom-right-radius: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+	}
+
+.menu ul ul li.has_children:hover > a {
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
 	-moz-border-radius-bottomright: 0;
 	-moz-border-radius-topright: 0;
 	-webkit-border-top-right-radius: 0;
 	-webkit-border-bottom-right-radius: 0;
-	}
+}
 
 .menu li ul ul { /* third-and-above-level lists */
 	margin: -2.4em 0 0 15em;
@@ -353,6 +368,7 @@ body.smartposition #rollingarchives {
 .menu li li li:hover ul { /* lists nested under hovered list items */
 	left: auto;
 	}
+	
 
 /* Sidebar Subpages Menu */
 
