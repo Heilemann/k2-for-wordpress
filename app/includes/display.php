@@ -78,3 +78,15 @@ function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' a
 	} 
 	return apply_filters('the_category', $thelist, $normal_separator);
 }
+
+
+function k2_page_css_class_filter( $css_class, $page ) {
+	global $wpdb;
+
+	if ( $wpdb->get_var( $wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_parent = %d AND post_type = 'page' LIMIT 1", $page->ID) ) )
+		$css_class[] = 'has_children';
+
+	return $css_class;
+}
+
+add_filter('page_css_class', 'k2_page_css_class_filter', 10, 2);
