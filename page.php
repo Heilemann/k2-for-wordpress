@@ -39,12 +39,6 @@
 			</div><!-- .comments -->
 			<?php endif; ?>
 
-			<?php /* if ( get_post_custom_values('comments') ): ?>
-			<div class="comments">
-				<?php comments_template(); ?>
-			</div><!-- .comments -->
-			<?php endif; */ ?>
-
 		<?php endwhile; else: define('K2_NOT_FOUND', true); ?>
 
 			<?php locate_template( array('blocks/k2-404.php'), true ); ?>

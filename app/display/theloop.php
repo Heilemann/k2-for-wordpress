@@ -43,7 +43,7 @@
 			
 		} elseif ( is_author() ) {
 			$templates[] = 'blocks/k2-loop-author.php';
-			$page_head = sprintf( __('Author Archive for %s', 'k2'), get_author_name( get_query_var('author') ) );
+			$page_head = sprintf( __('Author Archive for %s', 'k2'), get_the_author_meta( 'display_name', get_query_var('author') ) );
 		}
 		
 		$templates[] = 'blocks/k2-loop-archive.php';

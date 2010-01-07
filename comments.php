@@ -22,22 +22,15 @@
 
 		<hr />
 
-	<?php if ( have_comments() ) : $GLOBALS['comment_index'] = 0; ?>
+	<?php if ( have_comments() ): ?>
 		<ul id="commentlist">
-		<?php
-			if ( function_exists('wp_list_comments') ) :
-				wp_list_comments('callback=k2_comment_start_el');
-			else:
-				foreach ($comments as $comment) :
-					k2_comment_item($comment);
-				endforeach;
-			endif;
-		?>
+			<?php wp_list_comments( array( 'callback' => 'k2_comment_start_el', 'type' => 'comment' ) ); ?>
 		</ul>
 
-		<?php if ( function_exists('wp_list_comments') ) :
-			/* Navigation */ k2_navigation('nav-comments');
-		endif; ?>
+		<div id="comments-nav" class="navigation">
+			<div class="nav-previous"><?php previous_comments_link(); ?></div>
+			<div class="nav-next"><?php next_comments_link(); ?></div>
+		</div>
 
 	<?php elseif ( comments_open() ) : ?>
 		<ul id="commentlist">
@@ -47,13 +40,9 @@
 		</ul>
 	<?php endif; /* If there are comments */ ?>
 
-	<?php if ( !empty($GLOBALS['trackbacks']) ) : $GLOBALS['comment_index'] = 0; ?>
+	<?php if ( ! empty( $wp_query->comments_by_type['pings'] ) ): ?>
 		<ul id="pinglist">
-		<?php
-			foreach ($GLOBALS['trackbacks'] as $comment) :
-				k2_ping_item($comment);
-			endforeach;
-		?>
+			<?php wp_list_comments( array( 'callback' => 'k2_ping_start_el', 'type' => 'pings' ) ); ?>
 		</ul>
 	<?php endif; /* If there are trackbacks / pingbacks */ ?>
 		
@@ -75,11 +64,9 @@
 
 		<div class="quoter_page_container"><?php if ( function_exists('quoter_page') ) quoter_page(); ?></div>
 		
-		<?php if ( function_exists('cancel_comment_reply_link') ) : ?>
 		<div class="cancel-comment-reply">
 			<?php cancel_comment_reply_link( __('Cancel Reply', 'k2') ); ?>
 		</div>
-		<?php endif; ?>
 
 		<?php if ( get_option('comment_registration') and !is_user_logged_in() ) : ?>
 			<p><?php printf( __('You must be <a href="%s">logged in</a> to post a comment.', 'k2'), wp_login_url( get_permalink() )); ?></p>
@@ -173,11 +160,7 @@
 		
 				<p>
 					<div><input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit', 'k2'); ?>" /></div>
-
-					<?php if ( function_exists('comment_id_fields') ) : comment_id_fields(); else: ?>
-						<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
-					<?php endif; ?>
-
+					<?php comment_id_fields(); ?>
 				</p>
 			</form>
 

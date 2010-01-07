@@ -27,7 +27,7 @@
 	<?php wp_get_archives('type=monthly&format=link'); ?>
 </head>
 
-<body class="<?php k2_body_class(); ?>">
+<body <?php body_class(); ?>>
 
 <?php /* K2 Hook */ do_action('template_body_top'); ?>
 

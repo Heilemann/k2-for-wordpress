@@ -84,7 +84,7 @@ endif;
  */
 if ( ! function_exists('k2_entry_author') ):
 	function k2_entry_author() {
-		return '<span class="vcard author entry-author"><a href="' . get_author_posts_url( get_the_author_ID() ) .
+		return '<span class="vcard author entry-author"><a href="' . get_author_posts_url( get_the_author_meta('ID') ) .
 					'" class="url fn" title="' . sprintf( __('View all posts by %s', 'k2'), esc_attr( get_the_author() ) ) .
 					'">' . get_the_author() . '</a></span>';
 	}
@@ -154,23 +154,6 @@ if ( ! function_exists('k2_register_sidebars') ):
 	}
 endif;
 
-/**
- *	Provide page options to wp_get_pages in blocks/k2-header.php
- *
- *	@since 1.0-RC8
- */
-if ( ! function_exists('k2_get_page_list_args') ):
-function k2_get_page_list_args() {
-	$list_args = 'sort_column=menu_order&depth=1&title_li=';
-	
-	// if a page is used as a front page, exclude it from page list
-	if ( get_option('show_on_front') == 'page' )
-		$list_args .= '&exclude=' . get_option('page_on_front');
-	
-	return $list_args;
-}
-endif;
-
 
 add_shortcode('entry_author', 'k2_entry_author');
 add_shortcode('entry_categories', 'k2_entry_categories');
@@ -178,3 +161,126 @@ add_shortcode('entry_comments', 'k2_entry_comments');
 add_shortcode('entry_date', 'k2_entry_date');
 add_shortcode('entry_tags', 'k2_entry_tags');
 add_shortcode('entry_time', 'k2_entry_time');
+
+
+/**
+ * Displays current comment
+ *
+ * @since 1.0
+ *
+ * @param object $comment Comment data object.
+ * @param array $args
+ * @param int $depth Depth of comment in reference to parents.
+ */
+if ( ! function_exists('k2_comment_start_el') ):
+	function k2_comment_start_el($comment, $args = array(), $depth = 1) {
+		$GLOBALS['comment'] = $comment;
+
+		extract($args, EXTR_SKIP);
+	?>
+
+		<li id="comment-<?php comment_ID(); ?>">
+			<div <?php comment_class(); ?>>
+
+				<div class="comment-head">
+					<?php if ( get_option('show_avatars') ): ?>
+						<span class="gravatar">
+							<?php echo get_avatar( $comment, 32 ); ?>
+						</span>
+					<?php endif; ?>
+
+					<span class="comment-author"><?php comment_author_link(); ?></span>
+
+					<div class="comment-meta">
+						<a href="#comment-<?php comment_ID(); ?>" title="<?php _e('Permanent Link to this Comment', 'k2'); ?>">
+							<?php
+								if ( function_exists('time_since') ):
+									printf( __('%s ago.', 'k2'), time_since( abs( strtotime($comment->comment_date_gmt . ' GMT') ), time() ) );
+								else:
+									/* translators: 1: comment date, 2: comment time */
+									printf( __('%1$s at %2$s', 'k2'), get_comment_date(), get_comment_time() );
+								endif;
+							?>
+						</a>
+					</div><!-- .comment-meta -->
+				</div><!-- .comment-head -->
+
+				<div class="comment-content">
+					<?php if ( ! $comment->comment_approved ): ?>
+					<p class="comment-moderation alert"><?php _e('Your comment is awaiting moderation.', 'k2'); ?></p>
+					<?php endif; ?>
+
+					<?php comment_text(); ?> 
+				</div><!-- .comment-content -->
+
+				<div class="buttons">
+					<?php if ( function_exists('quoter_comment') ): quoter_comment(); endif; ?>
+	
+					<?php
+						if ( function_exists('jal_edit_comment_link') ):
+							jal_edit_comment_link(__('Edit', 'k2'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>');
+						else:
+							edit_comment_link(__('Edit', 'k2'), '<span class="comment-edit">', '</span>');
+						endif;
+					?>
+
+					<div id="comment-reply-<?php comment_ID(); ?>" class="comment-reply">
+						<?php comment_reply_link(array_merge( $args, array('add_below' => 'comment-reply', 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+					</div>
+				</div><!-- .buttons -->
+
+			</div><!-- comment -->
+	<?php
+	}
+endif;
+
+
+/**
+ * Displays current pingback/trackback
+ *
+ * @since 1.0
+ *
+ * @param object $comment Comment data object.
+ * @param array $args
+ * @param int $depth Depth of comment in reference to parents.
+ */
+if ( ! function_exists('k2_ping_start_el') ):
+	function k2_ping_start_el($comment, $args = array(), $depth = 1) {
+		$GLOBALS['comment'] = $comment;
+	?>
+
+		<li id="comment-<?php comment_ID(); ?>" <?php comment_class(); ?>>
+			<?php if ( function_exists('comment_favicon') ): ?>
+				<span class="favatar"><?php comment_favicon(); ?></span>
+			<?php endif; ?>
+
+			<span class="comment-author"><?php comment_author_link(); ?></span>
+
+			<div class="comment-meta">				
+			<?php
+				/* translators: 1: ping type, 2: datetime */ 
+				printf( __('%1$s on %2$s', 'k2'), 
+					'<span class="pingtype">' . comment_type( __('Comment', 'k2'), __('Trackback', 'k2'), __('Pingback', 'k2') ) . '</span>',
+					sprintf('<a href="#comment-%1$s" title="%2$s">%3$s</a>',
+						get_comment_ID(),	
+						(function_exists('time_since')?
+							sprintf( __('%s ago.', 'k2'),
+								time_since( abs( strtotime($comment->comment_date_gmt . " GMT") ), time() )
+							):
+							__('Permanent Link to this Comment', 'k2')
+						),
+						/* translators: 1: comment date, 2: comment time */
+						sprintf( __('%1$s at %2$s', 'k2'),
+							/* translators: pingback/trackback date format (here: 'Month Xth, Year'), see http://php.net/date */
+							get_comment_date( __('M jS, Y', 'k2') ),
+							get_comment_time()
+						)			
+					)
+				);
+			
+					edit_comment_link( __('Edit', 'k2'), '<span class="comment-edit">', '</span>' );
+			?>
+			</div><!-- .comment-meta -->
+	<?php
+	}
+endif;
