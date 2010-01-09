@@ -1,4 +1,4 @@
-# Translation of the WordPress theme K2 1.0.2 by Various Artists.
+# Translation of the WordPress theme K2 1.0.2.
 # Copyright (C) 2010 K2 Team
 # This file is distributed under the same license as the K2 package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: K2 1.0.2\n"
-"Report-Msgid-Bugs-To: http://code.google.com/p/kaytwo/issues/list\n"
-"POT-Creation-Date: 2010-01-05 03:34+0800\n"
+"Report-Msgid-Bugs-To: http://code.google.com/p/kaytwo-i18n/issues/list\n"
+"POT-Creation-Date: 2010-01-09 18:42+0800\n"
 "PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "Do not edit this page"
 msgstr ""
 
-#: ../app/classes/archive.php:20 ../sidebar.php:130
+#: ../app/classes/archive.php:20 ../sidebar.php:131
 msgid "Archives"
 msgstr ""
 
@@ -67,37 +67,37 @@ msgstr ""
 msgid "Error: This file can not be loaded directly."
 msgstr ""
 
-#: ../app/classes/k2.php:82
+#: ../app/classes/k2.php:81
 msgid "Published on %date% in %categories%. %comments% %tags%"
 msgstr ""
 
-#: ../app/classes/k2.php:185 ../app/display/options.php:50
+#: ../app/classes/k2.php:184 ../app/display/options.php:50
 msgid "K2 Options"
 msgstr ""
 
-#: ../app/classes/k2.php:192
+#: ../app/classes/k2.php:191
 msgid "K2 Support Group"
 msgstr ""
 
-#: ../app/classes/k2.php:193
+#: ../app/classes/k2.php:192
 msgid "K2 Bug Tracker"
 msgstr ""
 
-#: ../app/classes/k2.php:214
+#: ../app/classes/k2.php:213
 msgid "Do you want to restore K2 to default settings? This will remove all your K2 settings."
 msgstr ""
 
-#: ../app/classes/k2.php:486 ../sidebar.php:6
+#: ../app/classes/k2.php:485 ../sidebar.php:6
 msgid "Search"
 msgstr ""
 
 #. translators: 1: current page, 2: total pages
-#: ../app/classes/k2.php:492
+#: ../app/classes/k2.php:491
 #, php-format
 msgid "%1$d of %2$d"
 msgstr ""
 
-#: ../app/classes/k2.php:522
+#: ../app/classes/k2.php:519
 msgid "Could not open required directory"
 msgstr ""
 
@@ -297,7 +297,7 @@ msgstr ""
 
 #. translators: date format for daily archive  (here: 'Weekday, Month Xth, Year'), see http://php.net/date
 #: ../app/display/theloop.php:20 ../app/includes/widgets.php:48
-#: ../sidebar.php:51
+#: ../sidebar.php:52
 msgid "l, F jS, Y"
 msgstr ""
 
@@ -309,7 +309,7 @@ msgstr ""
 
 #. translators: date format for monthly archive (here: 'Month, Year'), see http://php.net/date
 #: ../app/display/theloop.php:24 ../app/includes/widgets.php:54
-#: ../sidebar.php:54
+#: ../sidebar.php:55
 msgid "F, Y"
 msgstr ""
 
@@ -343,55 +343,6 @@ msgstr ""
 #: ../app/display/theloop.php:65
 #, php-format
 msgid "Page %1$s of %2$s"
-msgstr ""
-
-#: ../app/includes/comments.php:111 ../app/includes/comments.php:200
-msgid "Permanent Link to this Comment"
-msgstr ""
-
-#: ../app/includes/comments.php:114 ../app/includes/comments.php:197
-#, php-format
-msgid "%s ago."
-msgstr ""
-
-#. translators: 1: comment date, 2: comment time
-#: ../app/includes/comments.php:117 ../app/includes/comments.php:203
-#, php-format
-msgid "%1$s at %2$s"
-msgstr ""
-
-#: ../app/includes/comments.php:126
-msgid "Your comment is awaiting moderation."
-msgstr ""
-
-#: ../app/includes/comments.php:137 ../app/includes/comments.php:139
-#: ../app/includes/comments.php:211 ../app/includes/widgets.php:148
-#: ../attachment.php:27 ../blocks/k2-loop.php:22 ../image.php:49
-#: ../page-archives.php:34 ../page.php:20 ../single.php:22
-msgid "Edit"
-msgstr ""
-
-#. translators: 1: ping type, 2: datetime
-#: ../app/includes/comments.php:192
-#, php-format
-msgid "%1$s on %2$s"
-msgstr ""
-
-#: ../app/includes/comments.php:193
-msgid "Comment"
-msgstr ""
-
-#: ../app/includes/comments.php:193
-msgid "Trackback"
-msgstr ""
-
-#: ../app/includes/comments.php:193
-msgid "Pingback"
-msgstr ""
-
-#. translators: pingback/trackback date format (here: 'Month Xth, Year'), see http://php.net/date
-#: ../app/includes/comments.php:205
-msgid "M jS, Y"
 msgstr ""
 
 #: ../app/includes/display.php:24
@@ -452,6 +403,55 @@ msgstr[1] ""
 msgid "<span>Closed</span>"
 msgstr ""
 
+#: ../app/includes/pluggable.php:195 ../app/includes/pluggable.php:270
+msgid "Permanent Link to this Comment"
+msgstr ""
+
+#: ../app/includes/pluggable.php:198 ../app/includes/pluggable.php:267
+#, php-format
+msgid "%s ago."
+msgstr ""
+
+#. translators: 1: comment date, 2: comment time
+#: ../app/includes/pluggable.php:201 ../app/includes/pluggable.php:273
+#, php-format
+msgid "%1$s at %2$s"
+msgstr ""
+
+#: ../app/includes/pluggable.php:210
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: ../app/includes/pluggable.php:221 ../app/includes/pluggable.php:223
+#: ../app/includes/pluggable.php:281 ../app/includes/widgets.php:148
+#: ../attachment.php:27 ../blocks/k2-loop.php:22 ../image.php:49
+#: ../page-archives.php:34 ../page.php:20 ../single.php:22
+msgid "Edit"
+msgstr ""
+
+#. translators: 1: ping type, 2: datetime
+#: ../app/includes/pluggable.php:262
+#, php-format
+msgid "%1$s on %2$s"
+msgstr ""
+
+#: ../app/includes/pluggable.php:263
+msgid "Comment"
+msgstr ""
+
+#: ../app/includes/pluggable.php:263
+msgid "Trackback"
+msgstr ""
+
+#: ../app/includes/pluggable.php:263
+msgid "Pingback"
+msgstr ""
+
+#. translators: pingback/trackback date format (here: 'Month Xth, Year'), see http://php.net/date
+#: ../app/includes/pluggable.php:275
+msgid "M jS, Y"
+msgstr ""
+
 #: ../app/includes/widgets.php:16
 msgid "Message about the current area and optional front-page message"
 msgstr ""
@@ -461,46 +461,46 @@ msgid "K2 About"
 msgstr ""
 
 #: ../app/includes/widgets.php:23 ../app/includes/widgets.php:92
-#: ../sidebar.php:45
+#: ../sidebar.php:46
 msgid "About"
 msgstr ""
 
-#: ../app/includes/widgets.php:40 ../sidebar.php:48
+#: ../app/includes/widgets.php:40 ../sidebar.php:49
 #, php-format
 msgid "You are currently browsing the <a href=\"%1$s\">%2$s</a> weblog archives for the %3$s category."
 msgstr ""
 
-#: ../app/includes/widgets.php:46 ../sidebar.php:51
+#: ../app/includes/widgets.php:46 ../sidebar.php:52
 #, php-format
 msgid "You are currently browsing the <a href=\"%1$s\">%2$s</a> weblog archives for the day %3$s."
 msgstr ""
 
-#: ../app/includes/widgets.php:52 ../sidebar.php:54
+#: ../app/includes/widgets.php:52 ../sidebar.php:55
 #, php-format
 msgid "You are currently browsing the <a href=\"%1$s\">%2$s</a> weblog archives for the month %3$s."
 msgstr ""
 
-#: ../app/includes/widgets.php:58 ../sidebar.php:57
+#: ../app/includes/widgets.php:58 ../sidebar.php:58
 #, php-format
 msgid "You are currently browsing the <a href=\"%1$s\">%2$s</a> weblog archives for the year %3$s."
 msgstr ""
 
-#: ../app/includes/widgets.php:64 ../sidebar.php:60
+#: ../app/includes/widgets.php:64 ../sidebar.php:61
 #, php-format
 msgid "You have searched the <a href=\"%1$s\">%2$s</a> weblog archives for '<strong>%3$s</strong>'."
 msgstr ""
 
-#: ../app/includes/widgets.php:70 ../sidebar.php:63
+#: ../app/includes/widgets.php:70 ../sidebar.php:64
 #, php-format
 msgid "Archive for <strong>%s</strong>."
 msgstr ""
 
-#: ../app/includes/widgets.php:74 ../sidebar.php:67
+#: ../app/includes/widgets.php:74 ../sidebar.php:68
 #, php-format
 msgid "You are currently browsing the <a href=\"%1$s\">%2$s</a> weblog archives for '%3$s' tag."
 msgstr ""
 
-#: ../app/includes/widgets.php:80 ../sidebar.php:70
+#: ../app/includes/widgets.php:80 ../sidebar.php:71
 #, php-format
 msgid "You are currently browsing the <a href=\"%1$s\">%2$s</a> weblog archives."
 msgstr ""
@@ -531,10 +531,6 @@ msgstr ""
 
 #: ../app/includes/widgets.php:170
 msgid "Number of asides to show:"
-msgstr ""
-
-#: ../app/includes/wp-compat.php:290
-msgid "Home"
 msgstr ""
 
 #: ../attachment.php:36
@@ -626,88 +622,88 @@ msgstr ""
 msgid "Trackback Address"
 msgstr ""
 
-#: ../comments.php:45
+#: ../comments.php:38
 msgid "No Comments"
 msgstr ""
 
-#: ../comments.php:61
+#: ../comments.php:50
 msgid "Comments are currently closed."
 msgstr ""
 
-#: ../comments.php:68
+#: ../comments.php:57
 msgid "Edit Your Comment"
 msgstr ""
 
-#: ../comments.php:70 ../comments.php:72
+#: ../comments.php:59 ../comments.php:61
 msgid "Leave a Reply"
 msgstr ""
 
-#: ../comments.php:70
+#: ../comments.php:59
 #, php-format
 msgid "Leave a Reply to %s"
 msgstr ""
 
-#: ../comments.php:80
+#: ../comments.php:68
 msgid "Cancel Reply"
 msgstr ""
 
-#: ../comments.php:85
+#: ../comments.php:72
 #, php-format
 msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
 msgstr ""
 
-#: ../comments.php:100
+#: ../comments.php:87
 #, php-format
 msgid "Logged in as <a href=\"%1$s\">%2$s</a>."
 msgstr ""
 
-#: ../comments.php:100
+#: ../comments.php:87
 msgid "Log out of this account"
 msgstr ""
 
-#: ../comments.php:100
+#: ../comments.php:87
 msgid "Log out &raquo;"
 msgstr ""
 
-#: ../comments.php:105
+#: ../comments.php:92
 #, php-format
 msgid "Welcome back <strong>%s</strong>"
 msgstr ""
 
-#: ../comments.php:108 ../comments.php:113
+#: ../comments.php:95 ../comments.php:100
 msgid "(Change)"
 msgstr ""
 
-#: ../comments.php:114
+#: ../comments.php:101
 msgid "(Close)"
 msgstr ""
 
-#: ../comments.php:138
+#: ../comments.php:125
 msgid "Name"
 msgstr ""
 
-#: ../comments.php:138 ../comments.php:145
+#: ../comments.php:125 ../comments.php:132
 msgid "(required)"
 msgstr ""
 
-#: ../comments.php:145
+#: ../comments.php:132
 msgid "Mail"
 msgstr ""
 
-#: ../comments.php:145
+#: ../comments.php:132
 msgid "(will not be published)"
 msgstr ""
 
-#: ../comments.php:152
+#: ../comments.php:139
 msgid "Website"
 msgstr ""
 
-#: ../comments.php:158
+#: ../comments.php:145
 #, php-format
 msgid "<strong>XHTML:</strong> You can use these tags: <code>%s</code>"
 msgstr ""
 
-#: ../comments.php:175
+#: ../comments.php:162
 msgid "Submit"
 msgstr ""
 
@@ -775,72 +771,48 @@ msgstr ""
 msgid "Reset Search"
 msgstr ""
 
-#: ../sidebar.php:23
+#: ../sidebar.php:24
 #, php-format
 msgid "%s Subpages"
 msgstr ""
 
-#: ../sidebar.php:30 ../sidebar.php:38
+#: ../sidebar.php:31 ../sidebar.php:39
 #, php-format
 msgid "Back to '%s'"
 msgstr ""
 
-#: ../sidebar.php:78
+#: ../sidebar.php:79
 msgid "Comments"
 msgstr ""
 
-#: ../sidebar.php:79
+#: ../sidebar.php:80
 msgid "RSS Feed for all Comments"
 msgstr ""
 
-#: ../sidebar.php:79 ../sidebar.php:89 ../sidebar.php:111
+#: ../sidebar.php:80 ../sidebar.php:90 ../sidebar.php:112
 msgid "RSS"
 msgstr ""
 
-#: ../sidebar.php:88
+#: ../sidebar.php:89
 msgid "Latest"
 msgstr ""
 
-#: ../sidebar.php:89
+#: ../sidebar.php:90
 msgid "RSS Feed for Blog Entries"
 msgstr ""
 
-#: ../sidebar.php:100
+#: ../sidebar.php:101
 msgid "Related Entries"
 msgstr ""
 
-#: ../sidebar.php:110
+#: ../sidebar.php:111
 msgid "Flickr"
 msgstr ""
 
-#: ../sidebar.php:111
+#: ../sidebar.php:112
 msgid "RSS Feed for flickr"
 msgstr ""
 
-#: ../sidebar.php:138
+#: ../sidebar.php:139
 msgid "Categories"
-msgstr ""
-
-#. Theme Name of an extension
-msgid "K2"
-msgstr ""
-
-#. Theme URI of an extension
-msgid "http://getk2.com"
-msgstr ""
-
-#. Description of an extension
-msgid "<strong><a href=\"themes.php?page=k2-options\">Configure K2</a></strong> or visit the <a href=\"http://groups.google.com/group/k2-support\">support forums</a>, <a href=\"http://code.google.com/p/kaytwo/w/list\">the wiki</a> or <a href=\"http://code.google.com/p/kaytwo/issues/list\">the bug tracker</a>. K2 was developed by <a href=\"http://binarybonsai.com/\">Michael</a>, <a href=\"http://chrisjdavis.org/\">Chris</a>, <a href=\"http://zeo.unic.net.my/\">Zeo</a>, <a href=\"http://stevelam.org/\">Steve</a>, Ben and <a href=\"http://xentek.net/\">Eric Marden</a>, and is licensed under the <a href=\"http://www.opensource.org/licenses/gpl-license.php\">GPL</a>."
-msgstr ""
-
-#. Author of an extension
-msgid "Various Artists"
-msgstr ""
-
-#. Author URI of an extension
-msgid "http://getk2.com/"
-msgstr ""
-
-#. Tags of an extension
-msgid "blue, custom-header, fixed-width, flexible-width, one-column, two-columns, three-columns, theme-options, threaded-comments, microformats, translation-ready, light"
 msgstr ""
