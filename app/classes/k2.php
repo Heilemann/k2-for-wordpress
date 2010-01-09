@@ -496,7 +496,7 @@ class K2 {
 			smartPosition('#respond', 'smartposrespond' ,'bottom');
 			<?php */ endif;  ?>
 
-			jQuery('#dynamic-content').ajaxSuccess(function () {
+			jQuery('#dynamic-content').ajaxComplete(function () {
 				<?php echo get_option('k2ajaxdonejs'); ?>
 			});
 
