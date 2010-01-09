@@ -25,5 +25,5 @@ $block = ( is_front_page() ? 'h1' : 'div' );
 
 <?php
 	// Display an Register tab if registration is enabled or an Admin tab if user is logged in
-	wp_register('<div class="admintab">','</div>');
+	wp_register('<div class="siteadmin">','</div>');
 ?>

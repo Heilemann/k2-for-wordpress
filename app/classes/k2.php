@@ -410,7 +410,11 @@ class K2 {
 		// Register our scripts with WordPress
 		wp_register_script('k2functions',
 			get_bloginfo('template_directory') . '/js/k2.functions.js',
-			array('jquery'), K2_CURRENT);
+			array('jquery', 'superfish'), K2_CURRENT);
+
+		wp_register_script('superfish',
+			get_bloginfo('template_directory') . '/js/jquery.superfish.js',
+			array('jquery'), '1.4.8');
 
 		wp_register_script('k2options',
 			get_bloginfo('template_directory') . '/js/k2.options.js',
@@ -492,15 +496,13 @@ class K2 {
 			);
 			<?php endif; ?>
 
-			<?php /* Attach Comment Form to Bottom of Page */ if ( ('1' == get_option('k2animations')) && is_single() ): /* Not for use just yet ?>
-			smartPosition('#respond', 'smartposrespond' ,'bottom');
-			<?php */ endif;  ?>
-
 			jQuery('#dynamic-content').ajaxComplete(function () {
 				<?php echo get_option('k2ajaxdonejs'); ?>
 			});
 
 			initARIA();
+			
+			initMenu();
 		});
 	//]]>
 	</script>

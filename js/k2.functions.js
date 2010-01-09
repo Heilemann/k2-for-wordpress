@@ -199,6 +199,8 @@ function resizeImage(image, container, padding) {
 }
 */
 
+
+// Enable ARIA (http://www.w3.org/WAI/intro/aria)
 function initARIA() {
 	jQuery('#header').attr('role', 'banner');
 	jQuery('#header .menu').attr('role', 'navigation');
@@ -207,3 +209,27 @@ function initARIA() {
 	jQuery('.secondary').attr('role', 'complementary');
 	jQuery('#footer').attr('role', 'contentinfo');
 };
+
+
+// Make menu awesome using Superfish
+function initMenu() {
+	jQuery('.menu ul').superfish({
+		autoArrows:		false,									// Disable generation of arrow mark-up 
+		speed:			80,										// Fade-in fast
+		disableHI:		true,									// Don't use hoverIntent
+		onBeforeShow:	function() {							// Make children inherit parents width
+							jQuery(this).css('minWidth', jQuery(this).parent().width())
+						},
+		onHide:			function() {							// Force display levels 3+
+							jQuery('.menu ul ul ul')
+								.removeClass('sf-js-enabled')
+								.css('visibility','visible')	
+								.css('display', 'block')
+						}
+	});
+	
+	// Remove annoying and useless tooltips from the menu.
+	jQuery('.menu a').each(function () {
+		jQuery(this).attr('title','')
+	});
+}
