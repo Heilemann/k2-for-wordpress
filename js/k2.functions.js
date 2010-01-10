@@ -4,7 +4,7 @@ if (typeof K2 == 'undefined') var K2 = {};
 
 K2.debug = false;
 
-// 
+
 //K2.prototype.ajaxComplete = [];
 
 K2.ajaxGet = function(data, complete_fn) {
@@ -14,13 +14,11 @@ K2.ajaxGet = function(data, complete_fn) {
 		dataType:	'html',
 
 		error: function(request) {
-			jQuery('#notices')
-				.show()
-				.append('<p class="alert">Error ' + request.status + ': ' + request.statusText + '</p>');
+			jQuery('#primary').prepend('<p id="rollingalert" class="alert">Error ' + request.status + ': ' + request.statusText + '</p>');
 		},
 
 		success: function() {
-			jQuery('#notices').hide().html();
+			jQuery('#rollingalert').remove();
 		},
 
 		complete: function(request) {

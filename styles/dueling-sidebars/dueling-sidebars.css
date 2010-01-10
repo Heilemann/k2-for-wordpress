@@ -11,14 +11,14 @@
 
 body.columns-three #primary {
 	margin-left: 195px;
-}
+	}
 
 body.columns-three #sidebar-1 {
 	position: relative;
 	left: -520px;
 	margin-left: -195px;
-}
+	}
 
 body.columns-three .template-image #primary {
 	margin-left: 0;
-}
+	}

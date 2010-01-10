@@ -9,6 +9,12 @@
  */
 ?>
 
+
+<?php
+	wp_register('<div class="siteadmin">','</div>'); // Admin & Register Button
+?>
+
+
 <p class="footerpoweredby">
 	<?php
 		/* translators: 1: WordPress, 2: K2 */ 

@@ -22,8 +22,3 @@ $block = ( is_front_page() ? 'h1' : 'div' );
 	// Display the page tabs
 	wp_page_menu( array( 'show_home' => esc_attr( get_option('k2blogornoblog') ), 'depth' => 3 ) );
 ?>
-
-<?php
-	// Display an Register tab if registration is enabled or an Admin tab if user is logged in
-	wp_register('<div class="siteadmin">','</div>');
-?>

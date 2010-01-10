@@ -132,16 +132,35 @@ function k2_body_class_filter($classes) {
 
 	$classes[] = 'wordpress k2';
 
+	/* Detect whether the sidebars are in use and add appropriate classes */
+	if ( is_active_sidebar('Sidebar #2') && is_active_sidebar('Sidebar #1') )
+		$classes[] = 'columns-three';
+
+	else if ( is_active_sidebar('Sidebar #1') )
+		$classes[] = 'columns-two sidebar-1';
+
+	else if ( is_active_sidebar('Sidebar #2') )
+		$classes[] = 'columns-two sidebar-2';
+
+	else
+		$classes[] = 'columns-one';
+
+
+	// If Rolling Archives is active
 	if ( '1' == get_option('k2rollingarchives') )
 		$classes[] = 'rollingarchives';
+
+	// If animations are turned on *CURRENTLY NOT IN USE*
 	if ( '1' == get_option('k2animations') )
 		$classes[] = 'animations';
 
+	// Only on single posts and static pages
 	if ( is_single() or is_page() ) {
-		// Author
+		// Add 'author-XXXX' class
 		$author = get_userdata($wp_query->post->post_author);
 		$classes[] = 'author-' . sanitize_html_class($author->user_nicename , $author->ID);
 
+		// If the post or page has a relevant custom field set
 		if ( get_post_custom_values('sidebarless') )
 			$classes[] = 'sidebars-none';
 		if ( get_post_custom_values('hidesidebar1') )
@@ -149,33 +168,33 @@ function k2_body_class_filter($classes) {
 		if ( get_post_custom_values('hidesidebar2') )
 			$classes[] = 'hidesidebar-2';
 
-		if ( is_single() ) {
-			$classes[] = 's-slug-' . $wp_query->post->post_name;
+		// Add 'slug-XXXX' for the post or page slug -- CONSIDER REMOVING; WHAT WORTH DOES IT HAVE OVER 'postid-X'?
+		$classes[] = 'slug-' . $wp_query->post->post_name;
 
+		// Only for posts...
+		if ( is_single() ) {
 			// Adds classes for the month, day, and hour when the post was published
 			if ( isset($wp_query->post->post_date) )
 				k2_date_classes( mysql2date( 'U', $wp_query->post->post_date ), $classes, 's-' );
 
-			// Categories
+			// Add 'category-XXXX' for each relevant category
 			foreach ( (array) get_the_category($wp_query->post->ID) as $cat ) {
 				if ( empty($cat->slug ) )
 					continue;
 				$classes[] = 'category-' . sanitize_html_class($cat->slug, $cat->cat_ID);
 			}
 
-			// Tags
+			// Add 'tag-XXXX' for each relevant tag
 			foreach ( (array) get_the_tags($wp_query->post->ID) as $tag ) {
 				if ( empty($tag->slug ) )
 					continue;
 				$classes[] = 'tag-' . sanitize_html_class($tag->slug, $tag->term_id);
 			}
-		} elseif ( is_page() ) {
-			$classes[] = 'page-slug-' . $wp_query->post->post_name;
 		}
 	}
 
 	// Sidebar layout settings
-	switch ( get_option('k2columns') ) {
+/*	switch ( get_option('k2columns') ) {
 		case '1':
 			$classes[] = 'columns-one';
 			break;
@@ -187,7 +206,7 @@ function k2_body_class_filter($classes) {
 		case '3':
 			$classes[] = 'columns-three';
 			break;
-	}
+	}*/
 
 	// Language settings
 	$locale = get_locale();

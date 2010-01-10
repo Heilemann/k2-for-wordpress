@@ -3,15 +3,6 @@
 	// Check that the K2 folder has no spaces
 	$dir_has_spaces = (strpos(TEMPLATEPATH, ' ') !== false);
 
-	// Get the sidebar
-	$column_number = get_option('k2columns');
-	$column_options = array(
-		1 => __('Single Column', 'k2'),
-		__('Two Columns', 'k2'),
-		__('Three Columns', 'k2'),
-		'dynamic' => __('Dynamic Columns', 'k2')
-	);
-
 	// Get the asides category
 	$asides_id = get_option('k2asidescategory');
 
@@ -50,21 +41,6 @@
 	<h2><?php _e('K2 Options', 'k2'); ?></h2>
 	<form action="<?php echo esc_attr($_SERVER['REQUEST_URI']); ?>" method="post" id="k2-options">
 		<ul class="options-list">
-			<li>
-				<h3 class="main-label"><label for="k2-columns"><?php _e('Columns', 'k2'); ?></label></h3>
-
-				<p class="main-option">
-					<select id="k2-columns" name="k2[columns]">
-						<?php foreach ( $column_options as $option => $label ): ?>
-						<option value="<?php echo $option; ?>" <?php selected($column_number, $option); ?>><?php echo $label; ?></option>
-						<?php endforeach; ?>
-					</select>
-				</p>
-
-				<p class="description">
-					<?php _e('Select Dynamic Columns for K2 to dynamically reduce the number of columns depending on user\'s browser width.', 'k2'); ?>
-				</p>
-			</li>
 			<li>
 				<h3 class="main-label"><label for="k2-advnav"><?php _e('Advanced Navigation', 'k2'); ?></label></h3>
 
