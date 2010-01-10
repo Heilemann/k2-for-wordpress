@@ -48,7 +48,6 @@ class K2Header {
 		@define( 'HEADER_IMAGE_HEIGHT', 200 );
 		@define( 'HEADER_IMAGE_WIDTH', $default_widths[$columns] );
 		@define( 'HEADER_TEXTCOLOR', 'ffffff' );
-		@define( 'HEADER_IMAGE', '%s/images/transparent.gif' );
 
 		// Only load Custom Image Header if GD is installed
 		if ( extension_loaded('gd') && function_exists('gd_info') ) {
@@ -230,9 +229,7 @@ class K2Header {
 		}
 
 		#headimg h1 {
-			font-size: 30px;
-			font-weight: bold;
-			letter-spacing: -1px;
+			font: bold 30px 'Trebuchet MS', Verdana, Sans-Serif;
 			margin: 0;
 			padding: 75px 40px 0;
 			border: none;
