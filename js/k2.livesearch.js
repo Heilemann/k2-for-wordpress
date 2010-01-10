@@ -9,6 +9,7 @@ function LiveSearch(searchprompt) {
 	this.reset			= jQuery('#searchreset');
 	this.loading		= jQuery('#searchload');
 	this.searchLabel	= jQuery('#search-label');
+	this.savedData		= '';
 
 	// Hide the submit button
 	jQuery('#searchsubmit').addClass('hidden');
@@ -90,10 +91,11 @@ LiveSearch.prototype.doSearch = function(self) {
 
 	self.prevSearch = self.searchField.val();
 
+	this.savedData = jQuery('.content').html();
+
 	K2.ajaxGet(self.searchform.serialize() + '&k2dynamic=init',
 		function(data) {
-			jQuery('#current-content').hide();
-			jQuery('#dynamic-content').html(data).show();
+			jQuery('#content').html(data);
 
 			self.loading.fadeTo('fast', 0);
 
@@ -114,10 +116,7 @@ LiveSearch.prototype.resetSearch = function(self) {
 
 	self.reset.unbind('click').fadeTo('fast', 0).css('cursor', 'default');
 
-	if ( jQuery('#current-content').length ) {
-		jQuery('#dynamic-content').hide().html('');
-		jQuery('#current-content').show();
-	}
+	jQuery('.content').html(this.savedData);
 
 	if (typeof K2.RollingArchives != 'undefined' && K2.RollingArchives.restoreState) {
 		K2.RollingArchives.restoreState();

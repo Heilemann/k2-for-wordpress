@@ -11,7 +11,7 @@
 	<div id="primary">
 		<a name="startcontent"></a>
 
-		<div id="current-content" class="hfeed">
+		<div id="content" class="hfeed">
 
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
@@ -51,8 +51,6 @@
 
 		</div><!-- #current-content -->
 
-		<div id="dynamic-content"></div>
-
 	</div><!-- #primary -->
 
 	
@@ -65,6 +63,6 @@
 	<?php endif; ?>
 	
 
-</div><!-- .content -->
+</div><!-- .wrapper -->
 	
 <?php get_footer(); ?>

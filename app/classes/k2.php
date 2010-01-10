@@ -334,15 +334,8 @@ class K2 {
 			// Send the header
 			header('Content-Type: ' . get_bloginfo('html_type') . '; charset=' . get_bloginfo('charset'));
 
-			switch ( $k2dynamic ) {
-				default:
-					include(TEMPLATEPATH . '/app/display/theloop.php');
-					break;
-
-				case 'init':
-					include(TEMPLATEPATH . '/app/display/rollingarchive.php');
-					break;
-			}
+			// Include the content
+			include(TEMPLATEPATH . '/app/display/theloop.php');
 
 			// K2 Hook
 			do_action('k2_dynamic_content');
@@ -373,9 +366,11 @@ class K2 {
 			$rolling_page = 1;
 
 		?>
+		<?php echo 'qrqweqweqwe:'.$wp_query->max_num_pages; ?>
 			<script type="text/javascript">
 			// <![CDATA[
 				jQuery(document).ready(function() {
+
 					K2.RollingArchives.setState(
 						<?php echo (int) $rolling_page; ?>,
 						<?php echo (int) $wp_query->max_num_pages; ?>,
@@ -493,7 +488,7 @@ class K2 {
 			);
 			<?php endif; ?>
 
-			jQuery('#dynamic-content').ajaxComplete(function () {
+			jQuery('#content').ajaxComplete(function () {
 				<?php echo get_option('k2ajaxdonejs'); ?>
 			});
 

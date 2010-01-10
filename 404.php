@@ -11,17 +11,15 @@
 	<div id="primary">
 		<a name="startcontent" id="startcontent"></a>
 		
-		<div id="current-content" class="hfeed">
+		<div id="content" class="hfeed">
 			<?php locate_template( array('blocks/k2-404.php'), true ); ?>
-		</div> <!-- #current-content .hfeed -->
-
-		<div id="dynamic-content"></div>
+		</div> <!-- #content .hfeed -->
 
 	</div> <!-- #primary -->
 	
 	<?php get_sidebar(); ?>
 
-</div> <!-- .content -->
+</div> <!-- .wrapper -->
 
 <?php get_footer(); ?>
 

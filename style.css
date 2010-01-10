@@ -132,6 +132,11 @@ body.home.rollingarchives #primary { /* Flush RA with header */
 	padding-top: 0;
 }
 
+body.home.onepageonly.rollingarchives #primary { /* No RA, so back to 10px */
+	padding-top: 10px;
+}
+
+
 * html #primary {
 	display: inline;
 	}
@@ -459,7 +464,7 @@ h4 {
 	}
 
 .four04 .entry-title,
-body.page #current-content .entry-title {
+body.page #content .entry-title {
 	margin-left: 40px;
 	text-align: center;
 	}
@@ -732,24 +737,24 @@ div.quoter_page_container {
 	margin: 13px 0;
 	}
 
-#dynamic-content .k2-asides .entry-content p,
-#dynamic-content .k2-asides .entry-content ul,
-#dynamic-content .k2-asides .entry-content ol,
-#dynamic-content .k2-asides .entry-content div,
-#dynamic-content .k2-asides .entry-content blockquote {
+#content .k2-asides .entry-content p,
+#content .k2-asides .entry-content ul,
+#content .k2-asides .entry-content ol,
+#content .k2-asides .entry-content div,
+#content .k2-asides .entry-content blockquote {
 	margin: 5px 0;
 	}
 
-#dynamic-content .k2-asides {
+#content .k2-asides {
 	margin: 15px 0;
 	}
 
-#dynamic-content .k2-asides .entry-head,
-#dynamic-content .k2-asides .entry-foot {
+#content .k2-asides .entry-head,
+#content .k2-asides .entry-foot {
 	display: none;
 	}
 
-#dynamic-content .k2-asides .entry-content {
+#content .k2-asides .entry-content {
 	display: block;
 	border-left: 2px solid #ddd;
 	padding-left: 20px;
@@ -1527,7 +1532,11 @@ body.rollingarchives #nav-below {
 	position: relative;
 	}
 
-body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS when #dynamic-content passes the top of the window */
+body.onepageonly #rollingarchives {
+	display: none;
+}
+
+body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS when #content passes the top of the window */
 	position: fixed;
 	background: #fff;
 	border-bottom: 1px solid #eee;
@@ -1538,11 +1547,11 @@ body.smartposition #primary { /* When scrolling past content top, adjust for fix
 	padding-top: 45px !important;
 	}
 
-body.smartposition #dynamic-content.onepageonly { /* If there is only a single page, remove space at top of page */
+body.smartposition #content.onepageonly { /* If there is only a single page, remove space at top of page */
 	padding-top: 0;
 	}
 
-#dynamic-content { /* Contains both the RA nav and content, and is used for as a top marker for the smartposition */
+#content { /* Contains both the RA nav and content, and is used for as a top marker for the smartposition */
 	position: relative;
 	}
 
@@ -1740,7 +1749,7 @@ body.smartposition #trimmertrim, body.smartposition #trimmeruntrim {
 	top: 3px;
 	}
 
-body.onepageonly #dynamic-content { /* For the rare case of having only one page of content on the frontpage */
+body.onepageonly #content { /* For the rare case of having only one page of content on the frontpage */
 	padding-top: 0;
 	}
 
@@ -1748,7 +1757,7 @@ body.rollingarchives.home .navigation {
 	display: none;
 }
 
-#dynamic-content .archivepages { /* Hide 'Page X of Y' when RA is active */
+#content .archivepages { /* Hide 'Page X of Y' when RA is active */
 	display: none;
 	}
 

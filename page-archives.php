@@ -25,7 +25,7 @@
 	<div id="primary">
 		<a name="startcontent"></a>
 
-		<div id="current-content" class="hfeed">
+		<div id="content" class="hfeed">
 
 			<?php the_post(); ?>
 
@@ -78,9 +78,7 @@
 			</div><!-- .comments -->
 			<?php endif; ?>
 
-		</div><!-- #current-content .hfeed -->
-
-		<div id="dynamic-content"></div>
+		</div><!-- #content .hfeed -->
 
 	</div><!-- #primary -->
 	
@@ -93,6 +91,6 @@
 	<?php endif; ?>
 	
 
-</div> <!-- .content -->
+</div> <!-- .wrapper -->
 	
 <?php get_footer(); ?>

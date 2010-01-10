@@ -91,8 +91,8 @@ RollingArchives.prototype.updatePageText = function(page) {
 
 
 RollingArchives.prototype.validatePage = function(newpage) {
-	console.log(this.PageCount);
 	if (this.pageCount > 1) {
+
 		if (newpage >= this.pageCount) {
 			jQuery('body').removeClass('onepageonly firstpage nthpage').addClass('lastpage');
 			return this.pageCount;
@@ -144,7 +144,7 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 						}, 500);
 					} else {
 						jQuery('html,body').animate({
-							scrollTop: jQuery('#dynamic-content').offset().top - 1
+							scrollTop: jQuery('#content').offset().top - 1
 						}, 500);
 					}
 				} */

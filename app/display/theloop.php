@@ -78,3 +78,13 @@
 	<?php endif; /* End Loop Init  */ ?>
 
 	<?php /* Bottom Navigation */ k2_navigation('nav-below'); ?> 
+	
+
+	<?php
+	/* Initialize Rolling Archives if needed */
+	if ( defined('DOING_AJAX') and true == DOING_AJAX ) {
+		add_action( 'k2_dynamic_content', array('K2', 'setup_rolling_archives') );
+	} else {
+		add_action( 'wp_footer', array('K2', 'setup_rolling_archives') );
+	}
+	?>
