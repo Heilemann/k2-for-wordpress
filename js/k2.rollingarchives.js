@@ -11,27 +11,7 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 	this.query 			= query;
 	this.pageDates 		= pagedates;
 
-	if ( this.validatePage(pagenumber) ) {
-		jQuery('#rollingarchives').show();
-
-		jQuery('#rollload').hide();
-		jQuery('#rollhover').hide();
-
-		// Setup the page slider
-		this.pageSlider = new K2Slider('#pagehandle', '#pagetrackwrap', {
-			minimum: 1,
-			maximum: self.pageCount,
-			value: self.pageCount - self.pageNumber + 1,
-			onSlide: function(value) {
-				jQuery('#rollhover').show();
-				self.updatePageText( self.pageCount - value + 1);
-			},
-			onChange: function(value) {
-				self.updatePageText( self.pageCount - value + 1);
-				self.gotoPage( self.pageCount - value + 1 );
-			}
-		});
-
+	if ( !jQuery('body').hasClass('rollingarchives')) {
 		// Add click events
 		jQuery('#rollnext').click(function() {
 			self.pageSlider.setValueBy(1);
@@ -54,6 +34,30 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 			jQuery(this).hide()
 			jQuery('#trimmertrim').show()
 		})
+
+		jQuery('body').addClass('rollingarchives')
+	}
+
+	if ( this.validatePage(pagenumber) ) {
+		jQuery('#rollingarchives').show();
+
+		jQuery('#rollload').hide();
+		jQuery('#rollhover').hide();
+
+		// Setup the page slider
+		this.pageSlider = new K2Slider('#pagehandle', '#pagetrackwrap', {
+			minimum: 1,
+			maximum: self.pageCount,
+			value: self.pageCount - self.pageNumber + 1,
+			onSlide: function(value) {
+				jQuery('#rollhover').show();
+				self.updatePageText( self.pageCount - value + 1);
+			},
+			onChange: function(value) {
+				self.updatePageText( self.pageCount - value + 1);
+				self.gotoPage( self.pageCount - value + 1 );
+			}
+		});
 
 		this.updatePageText( this.pageNumber );
 

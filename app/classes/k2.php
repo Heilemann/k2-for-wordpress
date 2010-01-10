@@ -366,7 +366,7 @@ class K2 {
 			$rolling_page = 1;
 
 		?>
-		<?php echo 'qrqweqweqwe:'.$wp_query->max_num_pages; ?>
+
 			<script type="text/javascript">
 			// <![CDATA[
 				jQuery(document).ready(function() {
