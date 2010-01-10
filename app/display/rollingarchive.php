@@ -22,10 +22,6 @@
 	</div> <!-- #rollnavigation -->
 </div> <!-- #rollingarchives -->
 
-<div id="rollingcontent" class="hfeed" aria-live="polite" aria-atomic="true">
-	<?php include(TEMPLATEPATH . '/app/display/theloop.php'); ?>
-</div><!-- #rollingcontent .hfeed -->
-
 <?php
 	if ( defined('DOING_AJAX') and true == DOING_AJAX ) {
 		add_action( 'k2_dynamic_content', array('K2', 'setup_rolling_archives') );

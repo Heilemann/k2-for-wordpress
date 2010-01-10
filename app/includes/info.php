@@ -133,7 +133,7 @@ function k2_body_class_filter($classes) {
 	$classes[] = 'wordpress k2';
 
 	/* Detect whether the sidebars are in use and add appropriate classes */
-	if ( is_active_sidebar('Sidebar #2') && is_active_sidebar('Sidebar #1') )
+	if ( is_active_sidebar('sidebar-1') && is_active_sidebar('sidebar-2') )
 		$classes[] = 'columns-three';
 
 	else if ( is_active_sidebar('Sidebar #1') )

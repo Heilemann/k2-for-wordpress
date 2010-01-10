@@ -159,8 +159,7 @@ if ( ! function_exists('k2_register_sidebars') ):
 
 		    register_sidebar(array(
 		        'id'			=>	'sidebar-1',
-		        'name'			=>	__('Sidebar #1', 'k2'),
-		        'description'	=>	__('Placed right, on top.', 'k2'),
+		        'name'			=>	__('Left Sidebar', 'k2'),
 		        'before_widget'	=>	'<span><div id="%1$s" class="widget %2$s">',
 		        'after_widget'	=>	'</div></span>',
 		        'before_title'	=>	'<h4 class="widgettitle">',
@@ -169,8 +168,7 @@ if ( ! function_exists('k2_register_sidebars') ):
 
 		    register_sidebar(array(
 		        'id'			=>	'sidebar-2',
-		        'name'			=>	__('Sidebar #2', 'k2'),
-		        'description'	=>	__('Place either below Sidebar #1 in one- and two-column mode and to the left of the content in three-column mode .', 'k2'),
+		        'name'			=>	__('Right Sidebar', 'k2'),
 		        'before_widget'	=>	'<span><div id="%1$s" class="widget %2$s">',
 		        'after_widget'	=>	'</div></span>',
 		        'before_title'	=>	'<h4 class="widgettitle">',
@@ -197,15 +195,6 @@ if ( ! function_exists('k2_register_sidebars') ):
 		        'after_title'	=>	'</h4>'
 		    ));
 		}
-
-		/* Old sidebars setup. Deprecated and to be removed
-		register_sidebars( 3, array(
-			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget' => '</div>',
-			'before_title' => '<h4>',
-			'after_title' => '</h4>'
-		) );
-		*/
 	}
 endif;
 

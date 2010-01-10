@@ -113,18 +113,8 @@ body.smartposition #rollingarchives {
 	background-repeat: no-repeat;
 	}
 
-.content {
+.wrapper {
 	padding: 0 20px 30px;
-	}
-
-.columns-two #primary-wrapper {
-	float: left;
-	margin-right: -220px;
-	width: 100%;
-	}
-
-.columns-two #primary {
-	margin-right: 220px;
 	}
 
 .columns-two .secondary {
@@ -138,11 +128,15 @@ body.smartposition #rollingarchives {
 	padding: 10px;
 	}
 
+body.home.rollingarchives #primary { /* Flush RA with header */
+	padding-top: 0;
+}
+
 * html #primary {
 	display: inline;
 	}
 
-.sidebars-none #primary-wrapper {
+.sidebars-none #primary {
 	margin: 0px;
 	float: none;
 	}
@@ -340,28 +334,27 @@ body.smartposition #rollingarchives {
 #widgetsfooter > span {
 	display: inline-block;
 	float: left;
-}
-
-body.columns-three #widgetsheader > span,
-body.columns-three #widgetsfooter > span {
-	width: 20%;
-}
-
-body.columns-two #widgetsheader > span,
-body.columns-two #widgetsfooter > span {
-	width: 25%;
-}
+	}
 
 body.columns-one #widgetsheader > span,
 body.columns-one #widgetsfooter > span {
 	width: 33%;
-}
+	}
+
+body.columns-two #widgetsheader > span,
+body.columns-two #widgetsfooter > span {
+	width: 25%;
+	}
+
+body.columns-three #widgetsheader > span,
+body.columns-three #widgetsfooter > span {
+	width: 20%;
+	}
 
 #widgetsheader .widget,
 #widgetsfooter .widget {
 	margin: 0 10px;
-}
-
+	}
 
 /* Widgets: Below Single Post */
 
@@ -1531,6 +1524,7 @@ body.rollingarchives #nav-below {
 	display: block;
 	width: 500px;
 	border-bottom: none;
+	position: relative;
 	}
 
 body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS when #dynamic-content passes the top of the window */
@@ -1540,8 +1534,8 @@ body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS
 	z-index: 50;
 	}
 
-body.smartposition #dynamic-content { /* When scrolling past content top, adjust for fixing RA interface to top of screen */
-	padding-top: 45px;
+body.smartposition #primary { /* When scrolling past content top, adjust for fixing RA interface to top of screen */
+	padding-top: 45px !important;
 	}
 
 body.smartposition #dynamic-content.onepageonly { /* If there is only a single page, remove space at top of page */
@@ -1689,10 +1683,6 @@ body.smartposition #dynamic-content.onepageonly { /* If there is only a single p
 	background: #333;
 	}
 
-#primarycontent {
-	clear: both;
-	}
-
 body.trim .entry-content, body.trim .entry-foot {
 	display: none;
 	}
@@ -1754,9 +1744,9 @@ body.onepageonly #dynamic-content { /* For the rare case of having only one page
 	padding-top: 0;
 	}
 
-body.showrollingarchives #dynamic-content .navigation {
+body.rollingarchives.home .navigation {
 	display: none;
-	}
+}
 
 #dynamic-content .archivepages { /* Hide 'Page X of Y' when RA is active */
 	display: none;

@@ -19,34 +19,20 @@
 	Comments	:
 */
 
-#page {
-	/* The entire design is contained within the 'page' id */
+#page {				/* The entire design is contained within the 'page' id */
 	}
 	
-#header {
-	/* Contains the H1 and menu */
+#header {			/* Contains the H1 and menu */
+	}
+
+#wrapper {			/* Contains content and all widget areas. */
 	}
 	
-#primary {
-	/* Contains the main column */
+#primary {			/* Contains the main column */
 	}
 
-.hentry {
-	/* Each entry is contained within the 'hentry' class */
+.hentry {			/* Each entry is contained within the 'hentry' class */
 	}
 
-.entry-content {
-	/* The meat and potatoes of every entry */
-	}
-
-#sidebar-1 {
-	/* The first sidebar */
-	}
-
-#sidebar-2 {
-	/* The second sidebar */
-	}
-
-.secondary {
-	/* Contains both sidebars */
+.entry-content {	/* The meat and potatoes of every entry */
 	}

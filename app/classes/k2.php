@@ -74,7 +74,6 @@ class K2 {
 		add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on"); // (live & classic)
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
 		add_option('k2archives', '0', 'Set whether K2 has an archives page');
-		add_option('k2columns', '2', 'Number of columns to display.');
 
 		// Added 1.0-RC8
 		add_option('k2animations', '1', 'JavaScript Animation effects.');
@@ -384,9 +383,7 @@ class K2 {
 						<?php output_javascript_array($page_dates); ?>
 					);
 
-					if (K2.Animations) {
-						smartPosition('#dynamic-content', 'smartposition');
-					}
+					smartPosition('#primary', 'smartposition');
 				});
 			// ]]>
 			</script>

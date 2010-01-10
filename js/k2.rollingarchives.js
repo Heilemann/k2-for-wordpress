@@ -1,17 +1,15 @@
 function RollingArchives(pagetext) {
-	this.pageText	= pagetext;
-	this.active		= false;
+	this.pageText		= pagetext;
+	this.active			= false;
 };
 
 RollingArchives.prototype.setState = function(pagenumber, pagecount, query, pagedates) {
-	var self		= this;
+	var self			= this;
 
-	this.pageNumber	= pagenumber;
-	this.pageCount 	= pagecount;
-	this.query 		= query;
-	this.pageDates 	= pagedates;
-
-	jQuery('body').addClass('showrollingarchives');
+	this.pageNumber		= pagenumber;
+	this.pageCount 		= pagecount;
+	this.query 			= query;
+	this.pageDates 		= pagedates;
 
 	if ( this.validatePage(pagenumber) ) {
 		jQuery('#rollingarchives').show();
@@ -77,7 +75,7 @@ RollingArchives.prototype.restoreState = function() {
 
 		K2.ajaxGet(query,
 			function(data) {
-				jQuery('#dynamic-content').html(data);
+				jQuery('#content').html(data);
 			}
 		);
 	}
@@ -93,22 +91,23 @@ RollingArchives.prototype.updatePageText = function(page) {
 
 
 RollingArchives.prototype.validatePage = function(newpage) {
+	console.log(this.PageCount);
 	if (this.pageCount > 1) {
 		if (newpage >= this.pageCount) {
-			jQuery('#dynamic-content').removeClass('onepageonly firstpage nthpage').addClass('lastpage');
+			jQuery('body').removeClass('onepageonly firstpage nthpage').addClass('lastpage');
 			return this.pageCount;
 
 		} else if (newpage <= 1) {
-			jQuery('#dynamic-content').removeClass('onepageonly nthpage lastpage').addClass('firstpage');
+			jQuery('body').removeClass('onepageonly nthpage lastpage').addClass('firstpage');
 			return 1;
 
 		} else {
-			jQuery('#dynamic-content').removeClass('onepageonly firstpage lastpage').addClass('nthpage');
+			jQuery('body').removeClass('onepageonly firstpage lastpage').addClass('nthpage');
 			return newpage;
 		}
 	}
 
-	jQuery('#dynamic-content').removeClass('firstpage nthpage lastpage').addClass('onepageonly');
+	jQuery('body').removeClass('firstpage nthpage lastpage').addClass('onepageonly');
 
 	return 0;
 };
@@ -127,7 +126,7 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 	var self = this;
 	var page = this.validatePage(newpage);
 
-	if ( (page != this.pageNumber) && (page > 0) ) {
+	if ( (page != this.pageNumber) ) {
 		this.pageNumber = page;
 
 		self.loading('start');
@@ -152,7 +151,7 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 				
 				jQuery('#rollhover').fadeOut('slow');
 				self.loading('stop');
-				jQuery('#rollingcontent').html(data);
+				jQuery('#content').html(data);
 			}
 		);
 	}
