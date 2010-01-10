@@ -158,8 +158,8 @@ option {
 	overflow: hidden;
 	}
 
-#k2-entry-meta-1,
-#k2-entry-meta-2 {
+#k2-post-meta-1,
+#k2-post-meta-2 {
 	width: 100%
 }
 
@@ -194,7 +194,7 @@ option {
 	text-decoration: underline;
 	}
 
-.entry-title {
+.post-title {
 	font-family: "Trebuchet MS", Verdana, sans-serif;
 	font-size: 2em;
 	line-height: 1.4;
@@ -202,35 +202,35 @@ option {
 	margin: 0;
 	}
 
-.entry-title a {
+.post-title a {
 	color: #444;
 	}
 
-.entry-content {
+.post-content {
 	font-size: 1.2em;
 	line-height: 1.8em;
 	text-align: justify;
 	color: #444;
 	}
 
-.entry-meta {
+.post-meta {
 	font-size: 1em;
 	line-height: 1.6em;
 	color: #bbb;
 	}
 
-.entry-meta a,
+.post-meta a,
 .comment-meta a,
 .entry-date,
 .entry-time {
 	color: #777;
 	}
 
-.entry-meta div {
+.post-meta div {
 	display: inline;
 	}
 
-.entry-head .entry-meta {
+.post-header .post-meta {
 	min-height: 16px;
 	}
 
@@ -242,7 +242,7 @@ abbr.entry-date {
 	padding: 2px 0;
 	}
 
-.entry-head .entry-tags {
+.post-header .entry-tags {
 	display: block;
 	}
 

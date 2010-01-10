@@ -24,9 +24,9 @@
 
 <div class="wrapper template-image">
 
-	<?php if ( is_active_sidebar('widgetsheader') ) : ?>
-	<div id="widgetsheader" class="widgets">
-		<?php dynamic_sidebar('widgetsheader'); ?>
+	<?php if ( is_active_sidebar('widgets-top') ) : ?>
+	<div id="widgets-top" class="widgets">
+		<?php dynamic_sidebar('widgets-top'); ?>
 	</div>
 	<?php endif; ?>
 
@@ -45,17 +45,17 @@
 			<?php endif; ?>
 
 			<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<div class="entry-head">
-					<h1 class="entry-title">
+				<div class="post-header">
+					<h1 class="post-title">
 						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
 					</h1>
 
 					<?php /* Edit Link */ edit_post_link( __('Edit', 'k2'), '<span class="entry-edit">', '</span>' ); ?>
 
 					<?php /* K2 Hook */ do_action('template_entry_head'); ?>
-				</div> <!-- .entry-head -->
+				</div> <!-- .post-header -->
 
-				<div class="entry-content">
+				<div class="post-content">
 					<div class="attachment-image">
 						<a href="<?php echo wp_get_attachment_url($post->ID); ?>" class="image-link"><?php echo wp_get_attachment_image( $post->ID, 'medium' ); ?></a>
 
@@ -65,9 +65,9 @@
 					</div>
 
 					<?php if ( !empty($post->post_content) ) the_content(sprintf(__('Continue reading \'%s\'', 'k2'), the_title('', '', false))); ?>
-				</div> <!-- .entry-content -->
+				</div> <!-- .post-content -->
 
-				<div class="entry-foot">
+				<div class="post-footer">
 					<h5><?php _e('Photo Information', 'k2'); ?></h5>
 					<ul class="image-meta">
 						<li class="dimensions">
@@ -104,7 +104,7 @@
 						</div>
 						<div class="clear"></div>
 					</div>
-				</div><!-- .entry-foot -->
+				</div><!-- .post-footer -->
 			</div> <!-- #post-ID -->
 
 			<div class="comments">
@@ -122,11 +122,11 @@
 
 			<div class="hentry four04">
 
-				<div class="entry-head">
+				<div class="post-header">
 					<h3 class="center"><?php _e('Not Found', 'k2'); ?></h3>
 				</div>
 
-				<div class="entry-content">
+				<div class="post-content">
 					<p><?php _e('Oh no! You\'re looking for something which just isn\'t here! Fear not however, errors are to be expected, and luckily there are tools on the sidebar for you to use in your search for what you need.', 'k2'); ?></p>
 				</div>
 
@@ -138,9 +138,9 @@
 
 	</div> <!-- #primary -->
 	
-	<?php if ( is_active_sidebar('widgetsfooter') ) : ?>
-	<div id="widgetsfooter" class="widgets">
-		<?php dynamic_sidebar('widgetsfooter'); ?>
+	<?php if ( is_active_sidebar('widgets-bottom') ) : ?>
+	<div id="widgets-bottom" class="widgets">
+		<?php dynamic_sidebar('widgets-bottom'); ?>
 	</div>
 	<?php endif; ?>
 

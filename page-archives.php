@@ -16,9 +16,9 @@
 
 <div class="wrapper">
 
-	<?php if ( is_active_sidebar('widgetsheader') ) : ?>
-	<div id="widgetsheader" class="widgets">
-		<?php dynamic_sidebar('widgetsheader'); ?>
+	<?php if ( is_active_sidebar('widgets-top') ) : ?>
+	<div id="widgets-top" class="widgets">
+		<?php dynamic_sidebar('widgets-top'); ?>
 	</div>
 	<?php endif; ?>
 
@@ -30,17 +30,17 @@
 			<?php the_post(); ?>
 
 			<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<div class="entry-head">
-					<h1 class="entry-title">
+				<div class="post-header">
+					<h1 class="post-title">
 						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
 					</h1>
 
 					<?php /* Edit Link */ edit_post_link(__('Edit', 'k2'), '<span class="entry-edit">', '</span>'); ?>
 
 					<?php /* K2 Hook */ do_action('template_entry_head'); ?>
-				</div><!-- .entry-head -->
+				</div><!-- .post-header -->
 
-				<div class="entry-content">
+				<div class="post-content">
 
 					<p class="archivetext"><?php /* translators: 1: blog name, 2: post count, 3: comment count, 4: category count */ printf( __('This is the frontpage of the %1$s archives. Currently the archives are spanning %2$s posts and %3$s comments, contained within the meager confines of %4$s categories. Through here, you will be able to move down into the archives by way of time or category. If you are looking for something specific, perhaps you should try the search on the sidebar.', 'k2'), get_bloginfo('name'), $numposts, $numcomms, $numcats ); ?></p>
 
@@ -63,13 +63,13 @@
 
 					<br class="clear" />
 						
-				</div><!-- .entry-content -->
+				</div><!-- .post-content -->
 
-				<div class="entry-foot">
+				<div class="post-footer">
 					<?php wp_link_pages( array('before' => '<div class="entry-pages"><span>' . __('Pages:', 'k2') . '</span>', 'after' => '</div>' ) ); ?>
 
 					<?php /* K2 Hook */ do_action('template_entry_foot'); ?>
-				</div><!-- .entry-foot -->
+				</div><!-- .post-footer -->
 			</div><!-- #post-ID -->
 
 			<?php if ( get_post_custom_values('comments') ): ?>
@@ -84,9 +84,9 @@
 	
 	<?php if ( ! get_post_custom_values('sidebarless') ) get_sidebar(); ?>
 
-	<?php if ( is_active_sidebar('widgetsfooter') ) : ?>
-	<div id="widgetsfooter" class="widgets">
-		<?php dynamic_sidebar('widgetsfooter'); ?>
+	<?php if ( is_active_sidebar('widgets-bottom') ) : ?>
+	<div id="widgets-bottom" class="widgets">
+		<?php dynamic_sidebar('widgets-bottom'); ?>
 	</div>
 	<?php endif; ?>
 	

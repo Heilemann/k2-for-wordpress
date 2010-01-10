@@ -133,14 +133,14 @@ function k2_body_class_filter($classes) {
 	$classes[] = 'wordpress k2';
 
 	/* Detect whether the sidebars are in use and add appropriate classes */
-	if ( is_active_sidebar('sidebar-1') && is_active_sidebar('sidebar-2') )
+	if ( is_active_sidebar('widgets-sidebar-1') && is_active_sidebar('widgets-sidebar-2') )
 		$classes[] = 'columns-three';
 
-	else if ( is_active_sidebar('Sidebar #1') )
-		$classes[] = 'columns-two sidebar-1';
+	else if ( is_active_sidebar('widgets-sidebar-1') )
+		$classes[] = 'columns-two widgets-sidebar-1';
 
-	else if ( is_active_sidebar('Sidebar #2') )
-		$classes[] = 'columns-two sidebar-2';
+	else if ( is_active_sidebar('widgets-sidebar-2') )
+		$classes[] = 'columns-two widgets-sidebar-2';
 
 	else
 		$classes[] = 'columns-one';
@@ -160,9 +160,9 @@ function k2_body_class_filter($classes) {
 		if ( get_post_custom_values('sidebarless') )
 			$classes[] = 'sidebars-none';
 		if ( get_post_custom_values('hidesidebar1') )
-			$classes[] = 'hidesidebar-1';
+			$classes[] = 'hidewidgets-sidebar-1';
 		if ( get_post_custom_values('hidesidebar2') )
-			$classes[] = 'hidesidebar-2';
+			$classes[] = 'hidewidgets-sidebar-2';
 
 		// Add 'slug-XXXX' for the post or page slug -- CONSIDER REMOVING; WHAT WORTH DOES IT HAVE OVER 'postid-X'?
 		$classes[] = 'slug-' . $wp_query->post->post_name;

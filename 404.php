@@ -2,9 +2,9 @@
 
 <div class="wrapper">
 	
-	<?php if ( is_active_sidebar('widgetsheader') ) : ?>
-	<div id="widgetsheader" class="widgets">
-		<?php dynamic_sidebar('widgetsheader'); ?>
+	<?php if ( is_active_sidebar('widgets-top') ) : ?>
+	<div id="widgets-top" class="widgets">
+		<?php dynamic_sidebar('widgets-top'); ?>
 	</div>
 	<?php endif; ?>
 

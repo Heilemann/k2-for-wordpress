@@ -404,9 +404,13 @@ class K2 {
 			get_bloginfo('template_directory') . '/js/k2.functions.js',
 			array('jquery', 'superfish'), K2_CURRENT);
 
+		wp_register_script('hoverintent',
+			get_bloginfo('template_directory') . '/js/jquery.hoverintent.js',
+			array('jquery'), '5');
+
 		wp_register_script('superfish',
 			get_bloginfo('template_directory') . '/js/jquery.superfish.js',
-			array('jquery'), '1.4.8');
+			array('jquery', 'hoverintent'), '1.4.8');
 
 		wp_register_script('k2options',
 			get_bloginfo('template_directory') . '/js/k2.options.js',

@@ -214,7 +214,6 @@ function initMenu() {
 	jQuery('.menu ul').superfish({
 		autoArrows:		false,									// Disable generation of arrow mark-up 
 		speed:			80,										// Fade-in fast
-		disableHI:		true,									// Don't use hoverIntent
 		onBeforeShow:	function() {							// Make children inherit parents width
 							jQuery(this).css('minWidth', jQuery(this).parent().width())
 						},

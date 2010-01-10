@@ -145,7 +145,7 @@ class K2_Widget_Asides extends WP_Widget {
 				<?php while ( $asides->have_posts() ): $asides->the_post(); ?>
 					<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 						<span>&raquo;&nbsp;</span><?php the_content( __('(more)', 'k2') ); ?>
-						<?php /* Edit Link */ edit_post_link( __('Edit', 'k2'), '<span class="entry-edit">', '</span>' ); ?>
+						<?php /* Edit Link */ edit_post_link( __('Edit', 'k2'), '<span class="post-edit">', '</span>' ); ?>
 					</div>
 				<?php endwhile; ?>
 				</div>
@@ -188,16 +188,16 @@ class K2_Widget_Asides extends WP_Widget {
 function k2_default_widgets() {
 	$sidebars_widgets = wp_get_widget_defaults();
 
-	if ( isset($sidebars_widgets['sidebar-1']) and isset($sidebars_widgets['sidebar-2']) ) {
-		$sidebars_widgets['sidebar-1'] = $sidebars_widgets['sidebar-2'] = array();
+	if ( isset($sidebars_widgets['widgets-sidebar-1']) and isset($sidebars_widgets['widgets-sidebar-2']) ) {
+		$sidebars_widgets['widgets-sidebar-1'] = $sidebars_widgets['widgets-sidebar-2'] = array();
 
-		k2_add_widget($sidebars_widgets['sidebar-1'], 'search');
-		k2_add_widget($sidebars_widgets['sidebar-1'], 'k2-about');
-		k2_add_widget($sidebars_widgets['sidebar-1'], 'recent-posts');
-		k2_add_widget($sidebars_widgets['sidebar-1'], 'recent-comments');
-		k2_add_widget($sidebars_widgets['sidebar-2'], 'archives');
-		k2_add_widget($sidebars_widgets['sidebar-2'], 'tag_cloud');
-		k2_add_widget($sidebars_widgets['sidebar-2'], 'links');
+		k2_add_widget($sidebars_widgets['widgets-sidebar-1'], 'search');
+		k2_add_widget($sidebars_widgets['widgets-sidebar-1'], 'k2-about');
+		k2_add_widget($sidebars_widgets['widgets-sidebar-1'], 'recent-posts');
+		k2_add_widget($sidebars_widgets['widgets-sidebar-1'], 'recent-comments');
+		k2_add_widget($sidebars_widgets['widgets-sidebar-1'], 'archives');
+		k2_add_widget($sidebars_widgets['widgets-sidebar-1'], 'tag_cloud');
+		k2_add_widget($sidebars_widgets['widgets-sidebar-1'], 'links');
 
 		wp_set_sidebars_widgets( $sidebars_widgets );
 	}

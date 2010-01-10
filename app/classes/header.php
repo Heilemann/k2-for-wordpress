@@ -8,9 +8,9 @@
 class K2Header {
 	function init() {
 
-		if ( is_active_sidebar('sidebar-1') && is_active_sidebar('sidebar-2') )
+		if ( is_active_sidebar('widgets-sidebar-1') && is_active_sidebar('widgets-sidebar-2') )
 			$columns = 3;
-		else if ( is_active_sidebar('sidebar-1') || is_active_sidebar('sidebar-2') )
+		else if ( is_active_sidebar('widgets-sidebar-1') || is_active_sidebar('widgets-sidebar-2') )
 			$columns = 2;
 		else
 			$columns = 1;

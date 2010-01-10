@@ -148,7 +148,7 @@ if ( ! function_exists('k2_register_sidebars') ):
 		if ( function_exists('register_sidebar') ) {
 
 		    register_sidebar(array(
-		        'id' 			=>	'widgetsheader',
+		        'id' 			=>	'widgets-top',
 		        'name'			=>	__('Below Page Header', 'k2'),
 		        'description'	=>	__('Just below the header.', 'k2'),
 		        'before_widget'	=>	'<span><div id="%1$s" class="widget %2$s">', // <span>'s is used for horizontal sizing, <div> for padding
@@ -158,7 +158,7 @@ if ( ! function_exists('k2_register_sidebars') ):
 		    ));
 
 		    register_sidebar(array(
-		        'id'			=>	'sidebar-1',
+		        'id'			=>	'widgets-sidebar-1',
 		        'name'			=>	__('Left Sidebar', 'k2'),
 		        'before_widget'	=>	'<span><div id="%1$s" class="widget %2$s">',
 		        'after_widget'	=>	'</div></span>',
@@ -167,7 +167,7 @@ if ( ! function_exists('k2_register_sidebars') ):
 		    ));
 
 		    register_sidebar(array(
-		        'id'			=>	'sidebar-2',
+		        'id'			=>	'widgets-sidebar-2',
 		        'name'			=>	__('Right Sidebar', 'k2'),
 		        'before_widget'	=>	'<span><div id="%1$s" class="widget %2$s">',
 		        'after_widget'	=>	'</div></span>',
@@ -186,7 +186,7 @@ if ( ! function_exists('k2_register_sidebars') ):
 		    ));
 
 		    register_sidebar(array(
-		        'id' 			=>	'widgetsfooter',
+		        'id' 			=>	'widgets-bottom',
 		        'name'			=>	__('Page Footer', 'k2'),
 		        'description'	=>	__('Just below the header.', 'k2'),
 		        'before_widget'	=>	'<span><div id="%1$s" class="widget %2$s">',

@@ -2,9 +2,9 @@
 
 <div class="wrapper">
 
-	<?php if ( is_active_sidebar('widgetsheader') ) : ?>
-	<div id="widgetsheader" class="widgets">
-		<?php dynamic_sidebar('widgetsheader'); ?>
+	<?php if ( is_active_sidebar('widgets-top') ) : ?>
+	<div id="widgets-top" class="widgets">
+		<?php dynamic_sidebar('widgets-top'); ?>
 	</div>
 	<?php endif; ?>
 	
@@ -30,9 +30,9 @@
 
 	<?php get_sidebar(); ?>
 
-	<?php if ( is_active_sidebar('widgetsfooter') ) : ?>
-	<div id="widgetsfooter" class="widgets">
-		<?php dynamic_sidebar('widgetsfooter'); ?>
+	<?php if ( is_active_sidebar('widgets-bottom') ) : ?>
+	<div id="widgets-bottom" class="widgets">
+		<?php dynamic_sidebar('widgets-bottom'); ?>
 	</div>
 	<?php endif; ?>
 	

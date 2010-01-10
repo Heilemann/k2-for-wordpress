@@ -1,11 +1,11 @@
 <hr />
 
 
-<?php if ( ! get_post_custom_values('hidesidebar1') ): ?>
+<?php if ( ! get_post_custom_values('hidesidebar1') && is_active_sidebar('widgets-sidebar-1') ): ?>
 
-	<div id="sidebar-1" class="widgets secondary">
-		<?php dynamic_sidebar('sidebar-1'); ?>
-	</div><!-- #sidebar-1 -->
+	<div id="widgets-sidebar-1" class="widgets secondary">
+		<?php dynamic_sidebar('widgets-sidebar-1'); ?>
+	</div><!-- #widgets-sidebar-1 -->
 
 <?php endif; ?>
 
@@ -13,11 +13,11 @@
 <hr />
 
 
-<?php if ( ! get_post_custom_values('hidesidebar2') ): ?>
+<?php if ( ! get_post_custom_values('hidesidebar2') && is_active_sidebar('widgets-sidebar-2') ): ?>
 
-	<div id="sidebar-2" class="widgets secondary">
-		<?php dynamic_sidebar('sidebar-2'); ?>
-	</div><!-- #sidebar-2 -->
+	<div id="widgets-sidebar-2" class="widgets secondary">
+		<?php dynamic_sidebar('widgets-sidebar-2'); ?>
+	</div><!-- #widgets-sidebar-2 -->
 
 <?php endif; ?>
 

@@ -2,9 +2,9 @@
 
 <div class="wrapper">
 
-	<?php if ( is_active_sidebar('widgetsheader') ) : ?>
-	<div id="widgetsheader" class="widgets">
-		<?php dynamic_sidebar('widgetsheader'); ?>
+	<?php if ( is_active_sidebar('widgets-top') ) : ?>
+	<div id="widgets-top" class="widgets">
+		<?php dynamic_sidebar('widgets-top'); ?>
 	</div>
 	<?php endif; ?>
 
@@ -23,8 +23,8 @@
 			<?php endif; ?>
 
 			<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<div class="entry-head">
-					<h1 class="entry-title">
+				<div class="post">
+					<h1 class="post-title">
 						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
 					</h1>
 
@@ -33,16 +33,16 @@
 					<div class="attachment-icon">
 						<?php echo wp_get_attachment_link($post->ID, 'thumbnail', false, true); ?>
 					</div>
-				</div> <!-- .entry-head -->
+				</div> <!-- .post-header -->
 
-				<div class="entry-content">
+				<div class="post-content">
 					<p class="downloadlink">
 						<?php printf( __('Download %s', 'k2'), wp_get_attachment_link($post->ID, 'thumbnail') ); ?>
 						<span class="file-size"><?php echo size_format( filesize( get_attached_file($post->ID) ) ); ?></span>
 					<p>
 
 					<?php the_content(); ?>
-				</div><!-- .entry-content -->
+				</div><!-- .post-content -->
 			</div><!-- #post-ID -->
 
 			<div class="comments">
@@ -68,9 +68,9 @@
 		
 	<?php get_sidebar(); ?>
 
-	<?php if ( is_active_sidebar('widgetsfooter') ) : ?>
-	<div id="widgetsfooter" class="widgets">
-		<?php dynamic_sidebar('widgetsfooter'); ?>
+	<?php if ( is_active_sidebar('widgets-bottom') ) : ?>
+	<div id="widgets-bottom" class="widgets">
+		<?php dynamic_sidebar('widgets-bottom'); ?>
 	</div>
 	<?php endif; ?>
 	

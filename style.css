@@ -171,7 +171,7 @@ body.home.onepageonly.rollingarchives #primary { /* No RA, so back to 10px */
 	overflow: hidden;
 	}
 
-#sidebar-2 {
+#widgets-sidebar-2 {
 	clear: right;
 	}
 
@@ -328,36 +328,36 @@ body.home.onepageonly.rollingarchives #primary { /* No RA, so back to 10px */
 
 /* Widgets: 'Below Header' & 'Page Footer' */
 
-#widgetsheader,
-#widgetsfooter {
+#widgets-top,		/* Below Header */
+#widgets-bottom {	/* Page Footer */
 	margin-top: 20px;
 	overflow: auto;
 	width: 100%;
 	}
 
-#widgetsheader > span,
-#widgetsfooter > span {
+#widgets-top > span,
+#widgets-bottom > span {
 	display: inline-block;
 	float: left;
 	}
 
-body.columns-one #widgetsheader > span,
-body.columns-one #widgetsfooter > span {
+body.columns-one #widgets-top > span,
+body.columns-one #widgets-bottom > span {
 	width: 33%;
 	}
 
-body.columns-two #widgetsheader > span,
-body.columns-two #widgetsfooter > span {
+body.columns-two #widgets-top > span,
+body.columns-two #widgets-bottom > span {
 	width: 25%;
 	}
 
-body.columns-three #widgetsheader > span,
-body.columns-three #widgetsfooter > span {
+body.columns-three #widgets-top > span,
+body.columns-three #widgets-bottom > span {
 	width: 20%;
 	}
 
-#widgetsheader .widget,
-#widgetsfooter .widget {
+#widgets-top .widget,
+#widgets-bottom .widget {
 	margin: 0 10px;
 	}
 
@@ -441,7 +441,7 @@ h2 {
 	font-weight: normal;
 	}
 
-.entry-title, h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
+.post-title, h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
 	font-size: 2.4em;
 	font-weight: normal;
 	}
@@ -459,24 +459,24 @@ h4 {
 	margin-bottom: 10px;
 	}
 
-.entry-title {
+.post-title {
 	margin-right: 40px;
 	}
 
-.four04 .entry-title,
-body.page #content .entry-title {
+.four04 .post-title,
+body.page #content .post-title {
 	margin-left: 40px;
 	text-align: center;
 	}
 
-.entry-content h3 {
+.post-content h3 {
 	font-size: 1.8em;
 	font-weight: normal;
 	margin-top: 25px;
 	}
 
-.entry-content h4,
-.entry-meta h4 {
+.post-content h4,
+.post-meta h4 {
 	font-size: 1.5em;
 	font-weight: normal;
 	margin-top: 25px;
@@ -487,18 +487,18 @@ body.page #content .entry-title {
 	font-weight: normal;
 	}
 
-.entry-head {
+.post-header {
 	margin-top: 10px;
 	position: relative;
 	}
 
-body.page .entry-content h3 {
+body.page .post-content h3 {
 	font-size: 1.7em;
 	display: block;
 	padding: 15px 0 0;
 	}
 
-body.page .entry-content h4 {
+body.page .post-content h4 {
 	font-size: 1.5em;
 	display: block;
 	padding: 15px 0 0;
@@ -521,16 +521,16 @@ body.page .entry-content h4 {
 	font-weight: normal;
 	}
 
-#primary .hentry .entry-head .metalink {
+#primary .post .post-header .metalink {
 	font-size: 1.8em;
 	margin-left: 15px;
 	}
 
-#primary .k2-asides .entry-head .metalink {
+#primary .k2-asides .post-header .metalink {
 	font-size: 1.4em;
 	}
 
-.single #primary .k2-asides .entry-content {
+.single #primary .k2-asides .post-content {
 	font-size: 1.5em;
 	color: #999;
 	}
@@ -599,38 +599,38 @@ body.page .entry-content h4 {
 	display: inline;
 	}
 
-.entry-title, .entry-title a, .entry-title a:visited,
+.post-title, .post-title a, .post-title a:visited,
 h2, h2 a, h2 a:visited,
 h3, h3 a, h3 a:visited,
 h4, h4 a, h4 a:visited {
 	color: #444;
 	}
 
-.entry-title, .entry-title a, .entry-title a:hover, .entry-title a:visited,
+.post-title, .post-title a, .post-title a:hover, .post-title a:visited,
 h2, h2 a, h2 a:hover, h2 a:visited,
 h3, h3 a, h3 a:hover, h3 a:visited,
 h4, h4 a, h4 a:hover, h4 a:visited {
 	text-decoration: none;
 	}
 
-.entry-meta {
+.post-meta {
 	font-size: 1em;
 	line-height: 1.6em;
 	color: #bbb;
 	}
 
-.entry-meta a,
+.post-meta a,
 .comment-meta a,
 .entry-date,
 .entry-time {
 	color: #777;
 	}
 
-.entry-meta div {
+.post-meta div {
 	display: inline;
 	}
 
-.entry-head .entry-meta {
+.post-header .post-meta {
 	min-height: 16px;
 	}
 
@@ -651,7 +651,7 @@ abbr.entry-date {
 	padding: 2px 0px;
 	}
 
-.entry-head .entry-tags {
+.post-header .entry-tags {
 	display: block;
 	}
 
@@ -717,31 +717,31 @@ div.quoter_page_container {
 
 /* Primary Contents */
 
-.hentry {
+.post {
 	margin: 0 0 25px;
 	position: relative;
 	}
 
-.entry-content {
+.post-content {
 	font-size: 1.2em;
 	line-height: 1.8em;
 	text-align: justify;
 	color: #444;
 	}
 
-.entry-content p,
-.entry-content ul,
-.entry-content ol,
-.entry-content div,
-.entry-content blockquote {
+.post-content p,
+.post-content ul,
+.post-content ol,
+.post-content div,
+.post-content blockquote {
 	margin: 13px 0;
 	}
 
-#content .k2-asides .entry-content p,
-#content .k2-asides .entry-content ul,
-#content .k2-asides .entry-content ol,
-#content .k2-asides .entry-content div,
-#content .k2-asides .entry-content blockquote {
+#content .k2-asides .post-content p,
+#content .k2-asides .post-content ul,
+#content .k2-asides .post-content ol,
+#content .k2-asides .post-content div,
+#content .k2-asides .post-content blockquote {
 	margin: 5px 0;
 	}
 
@@ -749,12 +749,12 @@ div.quoter_page_container {
 	margin: 15px 0;
 	}
 
-#content .k2-asides .entry-head,
-#content .k2-asides .entry-foot {
+#content .k2-asides .post-header,
+#content .k2-asides .post-footer {
 	display: none;
 	}
 
-#content .k2-asides .entry-content {
+#content .k2-asides .post-content {
 	display: block;
 	border-left: 2px solid #ddd;
 	padding-left: 20px;
@@ -764,7 +764,7 @@ div.quoter_page_container {
 	font-weight: bold;
 	}
 
-.entry-content .map div { /* Google Maps Support */
+.post-content .map div { /* Google Maps Support */
 	margin: 0;
 	}
 
@@ -786,7 +786,7 @@ div.quoter_page_container {
 	width: 670px;
 	}
 
-.template-image .entry-foot {
+.template-image .post-footer {
 	position: absolute;
 	top: 0;
 	right: -220px;
@@ -794,7 +794,7 @@ div.quoter_page_container {
 	padding-top: 180px;
 	}
 
-.columns-one .template-image .entry-foot {
+.columns-one .template-image .post-footer {
 	position: relative;
 	width: auto;
 	top: auto;
@@ -810,7 +810,7 @@ div.quoter_page_container {
 	border-bottom: none;
 	}
 
-.entry-foot h5 {
+.post-footer h5 {
 	font-size: 1.5em;
 	font-weight: normal;
 	}
@@ -836,11 +836,11 @@ div.quoter_page_container {
 	display: block;
 	}
 
-.attachment .hentry {
+.attachment .post {
 	margin-left: 60px;
 	}
 
-.template-image .hentry {
+.template-image .post {
 	margin-left: 0;
 	}
 
@@ -1177,7 +1177,7 @@ a {
 	text-decoration: none;
 	}
 
-.entry-content a:visited {
+.post-content a:visited {
 	color: #b41;
 	}
 
@@ -1210,7 +1210,7 @@ img.noborder {
 	text-align: center;
 	}
 
-.entry-content .aligncenter,
+.post-content .aligncenter,
 img.center,
 img[align="center"] {
 	display: block;
@@ -1218,14 +1218,14 @@ img[align="center"] {
 	margin-right: auto;
 	}
 	
-.entry-content .alignright,
+.post-content .alignright,
 img[align="right"] {
 	float: right;
 	margin: 0 0 4px 8px;
 	display: block;
 	}
 
-.entry-content .alignleft,
+.post-content .alignleft,
 img[align="left"] {
 	float: left;
 	margin: 0 8px 4px 0;
@@ -1381,11 +1381,11 @@ img.wp-smiley {
 	padding-left: 10px;
 }
 
-.entry-content ol, .entry-content ul {
+.post-content ol, .post-content ul {
 	padding: 0 0 0 35px;
 	}
 
-.entry-content ol li, .entry-content ul li {
+.post-content ol li, .post-content ul li {
 	margin: 0 0 3px;
 	padding: 0;
 	}
@@ -1512,7 +1512,7 @@ body.columns-three .livesearch #s { /* For Three Columns */
 
 /* Attachment */
 
-.entry-content .attachment { 
+.post-content .attachment { 
 	text-align: center; 
 	}
 
@@ -1692,15 +1692,15 @@ body.smartposition #content.onepageonly { /* If there is only a single page, rem
 	background: #333;
 	}
 
-body.trim .entry-content, body.trim .entry-foot {
+body.trim .post-content, body.trim .post-footer {
 	display: none;
 	}
 
-body.trim .hentry {
+body.trim .post {
 	background: #f5f5f5;
 	}
 
-body.trim .hentry.alt {
+body.trim .post.alt {
 	background: transparent;
 	}
 
@@ -1873,7 +1873,7 @@ div#latest-comments small {
 
 /* GeoPress Fix */
 
-.entry-content div.mapstraction {
+.post-content div.mapstraction {
 	margin: 0;
 	}
 
