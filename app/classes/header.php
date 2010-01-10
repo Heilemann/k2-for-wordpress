@@ -7,12 +7,14 @@
 
 class K2Header {
 	function init() {
-		$columns = get_option('k2columns');
 
-		// dynamic columns, use 3 columns width
-		if ( 'dynamic' == $columns )
+		if ( is_active_sidebar('Sidebar #2') && is_active_sidebar('Sidebar #1') )
 			$columns = 3;
-		
+		else if ( is_active_sidebar('Sidebar #1') || is_active_sidebar('Sidebar #2') )
+			$columns = 2;
+		else
+			$columns = 1;
+
 		// set minimum of 1 column
 		if ( $columns < 1 )
 			$columns = 1;
