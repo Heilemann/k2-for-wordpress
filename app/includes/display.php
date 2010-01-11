@@ -83,7 +83,7 @@ function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' a
 function k2_page_css_class_filter( $css_class, $page ) {
 	global $wpdb;
 
-	if ( $wpdb->get_var( $wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_parent = %d AND post_type = 'page' LIMIT 1", $page->ID) ) )
+	if ( $wpdb->get_var( $wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_parent = %d AND post_type = 'page' AND post_status = 'publish' LIMIT 1", $page->ID) ) )
 		$css_class[] = 'has_children';
 
 	return $css_class;
