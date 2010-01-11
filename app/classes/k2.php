@@ -19,7 +19,7 @@ class K2 {
 		load_theme_textdomain('k2', TEMPLATEPATH . '/languages');
 
 		// Load required classes and includes
-		require_once(TEMPLATEPATH . '/app/includes/wp-compat.php');
+		include_once(TEMPLATEPATH . '/app/includes/wp-compat.php');
 		require_once(TEMPLATEPATH . '/app/classes/archive.php');
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
@@ -48,8 +48,9 @@ class K2 {
 		// Let's do them now
 		do_action('k2_init');
 
-		// Finally load pluggable functions
+		// Finally load pluggable & deprecated functions
 		require_once(TEMPLATEPATH . '/app/includes/pluggable.php');
+		include_once(TEMPLATEPATH . '/app/includes/deprecated.php');
 
 		// Register our sidebars with widgets
 		k2_register_sidebars();
