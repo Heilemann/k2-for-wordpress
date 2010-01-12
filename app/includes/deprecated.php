@@ -15,8 +15,6 @@
  * @see get_body_class()
  */
 function k2_body_class( $print = true ) {
-	_deprecated_function(__FUNCTION__, '0.0', 'body_class()');
-
 	$c = join( ' ', get_body_class() );
 
 	return $print ? print($c) : $c;
@@ -29,8 +27,6 @@ function k2_body_class( $print = true ) {
  * @see get_post_class()
  */
 function k2_post_class( $post_count = 1, $post_asides = false, $print = true ) {
-	_deprecated_function(__FUNCTION__, '0.0', 'post_class()');
-
 	$c = join( ' ', get_post_class() );
 
 	return $print ? print($c) : $c;
