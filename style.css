@@ -1519,6 +1519,7 @@ body.columns-three .livesearch #s { /* For Three Columns */
 
 /* Rolling Archives */
 
+body.rollingarchives #nav-above,
 body.rollingarchives #nav-below {
 	display: none;
 }
