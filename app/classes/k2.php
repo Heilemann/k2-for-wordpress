@@ -76,7 +76,6 @@ class K2 {
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
 		add_option('k2archives', '0', 'Set whether K2 has an archives page');
 
-		// Added 1.0-RC8
 		add_option('k2animations', '1', 'JavaScript Animation effects.');
 		add_option('k2entrymeta1', __('Published on %date% in %categories%. %comments% %tags%', 'k2'), 'Customized metadata format before entry content.');
 		add_option('k2entrymeta2', '', 'Customized metadata format after entry content.');
@@ -96,14 +95,6 @@ class K2 {
 	 * @param string $previous Previous version K2
 	 */
 	function upgrade($previous) {
-		// Delete deprecated options
-		delete_option('k2advnav');
-		delete_option('k2dynamiccolumns');
-		delete_option('k2header_picture');
-		delete_option('k2imagerandomfeature');
-		delete_option('k2lastmodified');
-		delete_option('k2scheme');
-
 		// Install options
 		K2::install();
 
@@ -127,7 +118,6 @@ class K2 {
 		delete_option('k2livesearch');
 		delete_option('k2rollingarchives');
 		delete_option('k2archives');
-		delete_option('k2columns');
 		delete_option('k2entrymeta1');
 		delete_option('k2entrymeta2');
 		delete_option('k2animations');
@@ -233,11 +223,6 @@ class K2 {
 	 * @uses do_action() Provides 'k2_update_options' action
 	 */
 	function update_options() {
-		// Columns
-		if ( isset($_POST['k2']['columns']) ) {
-			update_option('k2columns', $_POST['k2']['columns']);
-		}
-
 		// Advanced Navigation
 		if ( isset($_POST['k2']['advnav']) ) {
 			update_option('k2livesearch', '1');
@@ -460,23 +445,6 @@ class K2 {
 ?>
 	<script type="text/javascript">
 	//<![CDATA[
-	<?php if ( 'dynamic' == get_option('k2columns') ): ?>
-		K2.layoutWidths = <?php /* Style Layout Widths */
-			if ( K2_USING_STYLES ) {
-				$styleinfo = get_option('k2styleinfo');
-				if ( empty($styleinfo['layout_widths']) )
-					echo '[560, 780, 950]';
-				else
-					json_encode( $styleinfo['layout_widths'] );
-			} else {
-				echo '[560, 780, 950]';
-			}
-		?>;
-
-		jQuery(document).ready(dynamicColumns);
-		jQuery(window).resize(dynamicColumns);
-	<?php endif; ?>
-
 		K2.AjaxURL = "<?php bloginfo('url'); ?>/";
 		K2.Animations = <?php echo (int) get_option('k2animations') ?>;
 
