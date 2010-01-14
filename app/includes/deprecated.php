@@ -31,3 +31,57 @@ function k2_post_class( $post_count = 1, $post_asides = false, $print = true ) {
 
 	return $print ? print($c) : $c;
 }
+
+// Generate JavaScript array from an array
+function output_javascript_array($array, $print = true) {
+	$output = '[';
+
+	if ( is_array($array) and !empty($array) ) {
+		array_walk($array, 'js_format_array');
+		$output .= implode(', ', $array);
+	}
+
+	$output .= ']';
+
+	return $print ? print($output) : $output;
+}
+
+
+// Generate JavaScript hash from an associated array
+function output_javascript_hash($array, $print = true) {
+	$output = '{';
+
+	if ( is_array($array) and !empty($array) ) {
+		array_walk($array, 'js_format_hash');
+		$output .= implode(', ', $array);
+	}
+
+	$output .= '}';
+
+	return $print ? print($output) : $output;
+}
+
+function js_format_array(&$item, $key) {
+	$item = js_value($item);
+}
+
+function js_format_hash(&$item, $key) {
+	$item = '"' . esc_js($key) . '": ' . js_value($item);
+}
+
+function js_value($value) {
+	if ( is_string($value) )
+		return '"' . esc_js($value) . '"';
+	
+	if ( is_bool($value) )
+      return $value ? 'true' : 'false';
+
+	if ( is_numeric($value) )
+		return $value;
+		
+	if ( empty($value) )
+		return '0';
+
+	return '""';
+}
+

@@ -375,8 +375,8 @@ class K2 {
 					K2.RollingArchives.setState(
 						<?php echo (int) $rolling_page; ?>,
 						<?php echo (int) $wp_query->max_num_pages; ?>,
-						<?php output_javascript_hash($rolling_query); ?>,
-						<?php output_javascript_array($page_dates); ?>
+						<?php echo json_encode($rolling_query); ?>,
+						<?php echo json_encode($page_dates); ?>
 					);
 
 					smartPosition('#primary', 'smartposition');
@@ -467,7 +467,7 @@ class K2 {
 				if ( empty($styleinfo['layout_widths']) )
 					echo '[560, 780, 950]';
 				else
-					output_javascript_array($styleinfo['layout_widths']);
+					json_encode( $styleinfo['layout_widths'] );
 			} else {
 				echo '[560, 780, 950]';
 			}
