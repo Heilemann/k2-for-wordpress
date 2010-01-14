@@ -342,6 +342,9 @@ class K2 {
 		elseif ( is_string($wp_query->query) )
 			parse_str($wp_query->query, $rolling_query);
 
+		// in case of empty $rolling_query
+		$rolling_query['k2dynamic'] = 1;
+
 		// Get list of page dates
 		if ( !is_page() and !is_single() )
 			$page_dates = get_rolling_page_dates($wp_query);
