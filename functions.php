@@ -16,6 +16,9 @@ define('K2_CHILD_THEME', get_stylesheet() != get_template());
 @define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
 @define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content' );
 
+// Loads localisation from K2's languages directory
+load_theme_textdomain('k2', TEMPLATEPATH . '/languages');
+		
 /* Blast you red baron! Initialize the k2 system! */
 require_once(TEMPLATEPATH . '/app/classes/k2.php');
 K2::init();

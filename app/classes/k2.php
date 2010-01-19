@@ -15,9 +15,6 @@ class K2 {
 	 * @uses do_action() Provides 'k2_init' action
 	 */
 	function init() {
-		// Loads localisation from K2's languages directory
-		load_theme_textdomain('k2', TEMPLATEPATH . '/languages');
-
 		// Load required classes and includes
 		include_once(TEMPLATEPATH . '/app/includes/wp-compat.php');
 		require_once(TEMPLATEPATH . '/app/classes/archive.php');
