@@ -136,21 +136,6 @@ function k2_body_class_filter($classes) {
 		}
 	}
 
-	// Sidebar layout settings
-/*	switch ( get_option('k2columns') ) {
-		case '1':
-			$classes[] = 'columns-one';
-			break;
-		default:
-		case '2':
-			$classes[] = 'columns-two';
-			break;
-		case 'dynamic':
-		case '3':
-			$classes[] = 'columns-three';
-			break;
-	}*/
-
 	// Language settings
 	$locale = get_locale();
 	if ( empty($locale) ) {
@@ -283,57 +268,4 @@ function k2_browser_classes($ua = null) {
 		
 		return $b;
 
-}
-
-
-/**
- * Updates comment count to only include comments
- *
- * @since 1.0
- * @global int $id The current post id
- *
- * @param int $count Current number of comments/pings of current post
- *
- * @return int The number of comments only
- */
-function k2_comment_count( $count ) {
-	global $id;
-
-	if ($count == 0) return $count;
-
-	$comments = get_approved_comments( $id );
-	$comments = array_filter( $comments, 'k2_strip_trackback' );
-
-	return count($comments);
-}
-
-add_filter('get_comments_number', 'k2_comment_count', 0);
-
-
-/**
- * Strips out trackbacks/pingbacks
- *
- * @since 1.0
- *
- * @param object $var current comment
- *
- * @return boolean true if comment
- */
-// 
-function k2_strip_trackback($var) {
-	return ($var->comment_type != 'trackback' and $var->comment_type != 'pingback');
-}
-
-
-/**
- * Strips out comments
- *
- * @since 1.0
- *
- * @param object $var current comment
- *
- * @return boolean true if trackback/pingback
- */
-function k2_strip_comment($var) {
-	return ($var->comment_type == 'trackback' or $var->comment_type == 'pingback');
 }
