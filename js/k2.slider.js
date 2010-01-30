@@ -60,8 +60,8 @@ function K2Slider(handle, track, options) {
 
 			self.updateFinished(self);
 		}
-		self.active = false;
 		self.dragging = false;
+		self.active = false;
 	});
 
 	jQuery(document).mousemove(function(event){

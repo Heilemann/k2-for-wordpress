@@ -1,14 +1,14 @@
 function LiveSearch(searchprompt) {
 	var self = this;
 
-	jQuery('#search-form-wrap').addClass('livesearch');
+	jQuery('body').addClass('livesearch');
 
-	this.searchPrompt	= searchprompt;
-	this.searchform		= jQuery('#searchform');
-	this.searchField	= jQuery('#s');
-	this.reset			= jQuery('#searchreset');
-	this.loading		= jQuery('#searchload');
-	this.searchLabel	= jQuery('#search-label');
+	this.searchPrompt		= searchprompt;
+	this.searchform			= jQuery('#searchform');
+	this.searchField		= jQuery('#s');
+	this.reset				= jQuery('#searchreset');
+	this.loading			= jQuery('#searchload');
+	this.searchLabel		= jQuery('#search-label');
 
 	// Hide the submit button
 	jQuery('#searchsubmit').addClass('hidden');
@@ -78,14 +78,12 @@ function LiveSearch(searchprompt) {
 
 
 LiveSearch.prototype.doSearch = function(self) {
-	if (self.searchField.val() == self.prevSearch) return;
+	if (self.searchField.val() == self.prevSearch) return; // Don't do the same search again.
 
 	if (!self.active) {
 		self.active = true;
-
-		if (typeof K2.RollingArchives != 'undefined' && K2.RollingArchives.saveState) {
-			K2.RollingArchives.saveState();
-		}
+		
+		jQuery('body').removeClass('livesearchinactive').addClass('livesearchactive'); // Used to show/hide elements w. CSS.
 	}
 
 	self.prevSearch = self.searchField.val();
@@ -106,7 +104,6 @@ LiveSearch.prototype.doSearch = function(self) {
 LiveSearch.prototype.resetSearch = function(self) {
 	self.active = false;
 	self.prevSearch = '';
-
 	self.searchField.val('');
 	self.searchLabel.removeClass('hide');
 	self.loading.fadeTo('fast', 0);

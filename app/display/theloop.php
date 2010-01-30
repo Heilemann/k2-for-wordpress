@@ -13,6 +13,7 @@
 
 	} elseif ( is_archive() ) {
 		if ( is_date() ) {
+
 			the_post();
 
 			if ( is_day() ) {
@@ -79,12 +80,9 @@
 
 	<?php /* Bottom Navigation */ k2_navigation('nav-below'); ?> 
 	
-
 	<?php
 	/* Initialize Rolling Archives if needed */
 	if ( defined('DOING_AJAX') and true == DOING_AJAX ) {
 		add_action( 'k2_dynamic_content', array('K2', 'setup_rolling_archives') );
-	} else {
-		add_action( 'wp_footer', array('K2', 'setup_rolling_archives') );
 	}
 	?>

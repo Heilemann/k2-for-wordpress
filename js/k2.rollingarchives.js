@@ -1,17 +1,44 @@
-function RollingArchives(pagetext) {
-	this.pageText		= pagetext;
-	this.active			= false;
-};
+function RollingArchives(content, pagetext, older, newer, loading, trim, untrim) {
+	this.content			= content;
+	this.pageText			= pagetext; // 'X of Y' for pagecounts.
+	this.older				= older;
+	this.newer				= newer;
+	this.loading			= loading;
+	this.trim				= trim;
+	this.untrim				= untrim;
+
+	this.active				= false;
+
+	// Insert the Rolling Archives UI
+	jQuery(content).before('\
+		<div id="rollingarchives">\
+			<div id="rollnavigation">\
+				<div id="pagetrackwrap"><div id="pagetrack"><div id="pagehandle"><div id="rollhover"><div id="rolldates"></div></div></div></div></div>\
+				\
+				<div id="rollpages"></div>\
+				\
+				<a id="rollprevious" title="' + this.older + '" href="#"><span>&laquo;</span> '+ this.older +'</a>\
+				<div id="rollload" title="'+ this.loading +'"><span>'+ this.loading +'</span></div>\
+				<a id="rollnext" title="'+ this.newer +'" href="#">'+ this.newer +' <span>&raquo;</span></a>\
+				\
+				<div id="texttrimmer">\
+					<div id="trimmertrim"><span>'+ this.trim +'</span></div>\
+					<div id="trimmeruntrim"><span>'+ this.untrim +'</span></div>\
+				</div>\
+			</div> <!-- #rollnavigation -->\
+		</div> <!-- #rollingarchives -->\
+	')
+};							
 
 RollingArchives.prototype.setState = function(pagenumber, pagecount, query, pagedates) {
-	var self			= this;
+	var self				= this;
+							
+	this.pageNumber			= pagenumber;
+	this.pageCount 			= pagecount;
+	this.query 				= query;
+	this.pageDates 			= pagedates;
 
-	this.pageNumber		= pagenumber;
-	this.pageCount 		= pagecount;
-	this.query 			= query;
-	this.pageDates 		= pagedates;
-
-	if ( !jQuery('body').hasClass('rollingarchives')) {
+	if ( !jQuery('body').hasClass('rollingarchives') ) {
 		// Add click events
 		jQuery('#rollnext').click(function() {
 			self.pageSlider.setValueBy(1);
@@ -39,6 +66,8 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 	}
 
 	if ( this.validatePage(pagenumber) ) {
+		jQuery('body').removeClass('hiderollingarchives').addClass('showrollingarchives')
+
 		jQuery('#rollingarchives').show();
 
 		jQuery('#rollload').hide();
@@ -63,25 +92,24 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 
 		this.active = true;
 	} else {
-		jQuery('body').addClass('hiderollingarchives');
+		jQuery('body').removeClass('showrollingarchives').addClass('hiderollingarchives');
 	}
 };
 
 
 RollingArchives.prototype.saveState = function() {
-	this.prevQuery = this.query;
+	// this.prevQuery = this.query;
+	this.originalContent = jQuery('#content').html();
 };
 
 
 RollingArchives.prototype.restoreState = function() {
-	if (this.prevQuery != null) {
-		var query = jQuery.extend(this.prevQuery, { k2dynamic: 'init' });
+	if (this.originalContent != '') {
+		jQuery('body').removeClass('livesearchactive').addClass('livesearchinactive'); // Used to show/hide elements w. CSS.
 
-		K2.ajaxGet(query,
-			function(data) {
-				jQuery('#content').html(data);
-			}
-		);
+		jQuery('#content').html(this.originalContent)
+
+		initialRollingArchives();
 	}
 };
 
@@ -133,7 +161,6 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 	if ( (page != this.pageNumber) ) {
 		this.pageNumber = page;
 
-		self.loading('start');
 
 		jQuery.extend(this.query, { paged: this.pageNumber, k2dynamic: 1 });
 
@@ -154,7 +181,7 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 				} */
 				
 				jQuery('#rollhover').fadeOut('slow');
-				self.loading('stop');
+
 				jQuery('#content').html(data);
 			}
 		);

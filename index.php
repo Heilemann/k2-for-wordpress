@@ -13,16 +13,11 @@
 
 		<?php /* K2 Hook */ do_action('template_primary_begin'); ?>
 
+		<div id="content" class="hfeed">
 
-		<?php if ( '1' == get_option('k2rollingarchives') )
-			include(TEMPLATEPATH . '/app/display/rollingarchive.php'); ?>
+			<?php include(TEMPLATEPATH . '/app/display/theloop.php'); ?>
 
-			<div id="content" class="hfeed">
-	
-				<?php include(TEMPLATEPATH . '/app/display/theloop.php'); ?>
-	
-			</div> <!-- #content -->
-
+		</div> <!-- #content -->
 
 		<?php /* K2 Hook */ do_action('template_primary_end'); ?>
 

@@ -339,9 +339,6 @@ class K2 {
 		elseif ( is_string($wp_query->query) )
 			parse_str($wp_query->query, $rolling_query);
 
-		// in case of empty $rolling_query
-		$rolling_query['k2dynamic'] = 1;
-
 		// Get list of page dates
 		if ( !is_page() and !is_single() )
 			$page_dates = get_rolling_page_dates($wp_query);
@@ -350,27 +347,26 @@ class K2 {
 		$rolling_page = intval( get_query_var('paged') );
 		if ( $rolling_page < 1 )
 			$rolling_page = 1;
-
 		?>
 
 			<script type="text/javascript">
 			// <![CDATA[
-				jQuery(document).ready(function() {
 
+				jQuery(document).ready(function() {
 					K2.RollingArchives.setState(
 						<?php echo (int) $rolling_page; ?>,
 						<?php echo (int) $wp_query->max_num_pages; ?>,
 						<?php echo json_encode($rolling_query); ?>,
 						<?php echo json_encode($page_dates); ?>
 					);
-
-					smartPosition('#primary', 'smartposition');
 				});
+
 			// ]]>
 			</script>
+
 		<?php
 	}
-
+	
 
 	/**
 	 * Register K2 scripts to script loader
@@ -442,13 +438,45 @@ class K2 {
 	 * Initializes scripts
 	 */
 	function init_scripts() {
+		global $wp_query;
+
+		// Get the query
+		if ( is_array($wp_query->query) )
+			$rolling_query = $wp_query->query;
+		elseif ( is_string($wp_query->query) )
+			parse_str($wp_query->query, $rolling_query);
+
+		// Get list of page dates
+		if ( !is_page() and !is_single() )
+			$page_dates = get_rolling_page_dates($wp_query);
+
+		// Get the current page
+		$rolling_page = intval( get_query_var('paged') );
+		if ( $rolling_page < 1 )
+			$rolling_page = 1;
+
+		// Future content will be dynamic.		
+		$rolling_query['k2dynamic'] = 1;
+
 ?>
 	<script type="text/javascript">
 	//<![CDATA[
 		K2.AjaxURL = "<?php bloginfo('url'); ?>/";
 		K2.Animations = <?php echo (int) get_option('k2animations') ?>;
 
+		// Setup a function for returning to the original RA UI
+		function initialRollingArchives() {
+			K2.RollingArchives.setState(
+				<?php echo (int) $rolling_page; ?>,
+				<?php echo (int) $wp_query->max_num_pages; ?>,
+				<?php echo json_encode($rolling_query); ?>,
+				<?php echo json_encode($page_dates); ?>
+			);
+		}
+		
 		jQuery(document).ready(function(){
+			/* Make ready K2's sub-systems */
+			
 			<?php /* LiveSearch */ if ( '1' == get_option('k2livesearch') ): ?>
 			K2.LiveSearch = new LiveSearch(
 				"<?php esc_attr_e('Search','k2'); ?>"
@@ -457,8 +485,20 @@ class K2 {
 
 			<?php /* Rolling Archives */ if ( '1' == get_option('k2rollingarchives') ): ?>
 			K2.RollingArchives = new RollingArchives(
-				"<?php /* translators: 1: current page, 2: total pages */ esc_attr_e('%1$d of %2$d', 'k2'); ?>"
+				"#content",
+				"<?php /* translators: 1: current page, 2: total pages */ esc_attr_e('%1$d of %2$d', 'k2'); ?>", // Page X of Y
+				"<?php _e('Older', 'k2'); ?>",
+				"<?php _e('Newer', 'k2'); ?>",
+				"<?php _e('Loading', 'k2'); ?>",
+				"<?php _e('Trim', 'k2'); ?>",
+				"<?php _e('Untrim', 'k2'); ?>"
 			);
+
+			initialRollingArchives();		// Setup the rolling archives UI
+
+			K2.RollingArchives.saveState(); // Save the original content for later
+
+			smartPosition('#primary', 'smartposition');
 			<?php endif; ?>
 
 			jQuery('#content').ajaxComplete(function () {

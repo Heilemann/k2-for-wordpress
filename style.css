@@ -2,7 +2,7 @@
 
 /*
 Theme Name:		K2
-Version:		1.0.2
+Version:		1.1
 Theme URI:		http://getk2.com
 Author:			Various Artists
 Author URI:		http://getk2.com/
@@ -29,6 +29,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	margin: 0;
 	padding: 0;
 	}
+
 
 
 /* Typography */
@@ -724,8 +725,7 @@ div.quoter_page_container {
 
 .post-content {
 	font-size: 1.2em;
-	line-height: 1.8em;
-	text-align: justify;
+	line-height: 2.2em;
 	color: #444;
 	}
 
@@ -1311,9 +1311,7 @@ body.smartposition #nav-above {
 	}
 
 .navigation {
-	text-align: center;
-	line-height: 45px;
-	height: 45px;
+	padding: 10px 10px 10px 0;
 	}
 
 .comments .navigation {
@@ -1522,6 +1520,9 @@ body.columns-three .livesearch #s { /* For Three Columns */
 body.rollingarchives #nav-above,
 body.rollingarchives #nav-below {
 	display: none;
+}
+
+body.single.livesearchinactive #rollingarchives {
 }
 
 #rollingarchives { /* AJAX-powered navigation hub */
