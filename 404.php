@@ -9,15 +9,27 @@
 	<?php endif; ?>
 
 	<div id="primary">
-		<a name="startcontent" id="startcontent"></a>
+		<a name="startcontent"></a>
 		
+		<?php /* K2 Hook */ do_action('template_primary_begin'); ?>
+
 		<div id="content" class="hfeed">
+
 			<?php locate_template( array('blocks/k2-404.php'), true ); ?>
+
 		</div> <!-- #content .hfeed -->
+
+		<?php /* K2 Hook */ do_action('template_primary_end'); ?>
 
 	</div> <!-- #primary -->
 	
 	<?php get_sidebar(); ?>
+
+	<?php if ( is_active_sidebar('widgets-bottom') ) : ?>
+	<div id="widgets-bottom" class="widgets">
+		<?php dynamic_sidebar('widgets-bottom'); ?>
+	</div>
+	<?php endif; ?>
 
 </div> <!-- .wrapper -->
 

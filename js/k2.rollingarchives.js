@@ -1,12 +1,5 @@
 function RollingArchives(content, pagetext, older, newer, loading, trim, untrim) {
-	this.content			= content;
 	this.pageText			= pagetext; // 'X of Y' for pagecounts.
-	this.older				= older;
-	this.newer				= newer;
-	this.loading			= loading;
-	this.trim				= trim;
-	this.untrim				= untrim;
-
 	this.active				= false;
 
 	// Insert the Rolling Archives UI
@@ -17,13 +10,13 @@ function RollingArchives(content, pagetext, older, newer, loading, trim, untrim)
 				\
 				<div id="rollpages"></div>\
 				\
-				<a id="rollprevious" title="' + this.older + '" href="#"><span>&laquo;</span> '+ this.older +'</a>\
-				<div id="rollload" title="'+ this.loading +'"><span>'+ this.loading +'</span></div>\
-				<a id="rollnext" title="'+ this.newer +'" href="#">'+ this.newer +' <span>&raquo;</span></a>\
+				<a id="rollprevious" title="' + older + '" href="#"><span>&laquo;</span> '+ older +'</a>\
+				<div id="rollload" title="'+ loading +'"><span>'+ loading +'</span></div>\
+				<a id="rollnext" title="'+ newer +'" href="#">'+ newer +' <span>&raquo;</span></a>\
 				\
 				<div id="texttrimmer">\
-					<div id="trimmertrim"><span>'+ this.trim +'</span></div>\
-					<div id="trimmeruntrim"><span>'+ this.untrim +'</span></div>\
+					<div id="trimmertrim"><span>'+ trim +'</span></div>\
+					<div id="trimmeruntrim"><span>'+ untrim +'</span></div>\
 				</div>\
 			</div> <!-- #rollnavigation -->\
 		</div> <!-- #rollingarchives -->\
@@ -161,6 +154,7 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 	if ( (page != this.pageNumber) ) {
 		this.pageNumber = page;
 
+		self.loading('start');
 
 		jQuery.extend(this.query, { paged: this.pageNumber, k2dynamic: 1 });
 
@@ -181,7 +175,7 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 				} */
 				
 				jQuery('#rollhover').fadeOut('slow');
-
+				self.loading('stop');
 				jQuery('#content').html(data);
 			}
 		);

@@ -472,10 +472,12 @@ class K2 {
 				<?php echo json_encode($rolling_query); ?>,
 				<?php echo json_encode($page_dates); ?>
 			);
+
+			smartPosition('#primary', 'smartposition'); // Prepare a 'sticky' scroll point
 		}
 		
+		/* Make ready K2's sub-systems */
 		jQuery(document).ready(function(){
-			/* Make ready K2's sub-systems */
 			
 			<?php /* LiveSearch */ if ( '1' == get_option('k2livesearch') ): ?>
 			K2.LiveSearch = new LiveSearch(
@@ -484,6 +486,7 @@ class K2 {
 			<?php endif; ?>
 
 			<?php /* Rolling Archives */ if ( '1' == get_option('k2rollingarchives') ): ?>
+			// Insert the Rolling Archives UI.
 			K2.RollingArchives = new RollingArchives(
 				"#content",
 				"<?php /* translators: 1: current page, 2: total pages */ esc_attr_e('%1$d of %2$d', 'k2'); ?>", // Page X of Y
@@ -494,20 +497,20 @@ class K2 {
 				"<?php _e('Untrim', 'k2'); ?>"
 			);
 
-			initialRollingArchives();		// Setup the rolling archives UI
+			initialRollingArchives();		// Initialize the Rolling Archives UI
 
-			K2.RollingArchives.saveState(); // Save the original content for later
-
-			smartPosition('#primary', 'smartposition');
+			K2.RollingArchives.saveState(); // Save the original content for later retrieval
 			<?php endif; ?>
 
+			<?php /* JS to run after jQuery Ajax calls */ if (get_option('k2ajaxdonejs') != '') { ?>
 			jQuery('#content').ajaxComplete(function () {
 				<?php echo get_option('k2ajaxdonejs'); ?>
 			});
+			<?php } ?>
 
-			initARIA();
+			initARIA(); // Setup ARIA for disabled access
 			
-			initMenu();
+			initMenu(); // Setup the delayed hover actions of the menu
 		});
 	//]]>
 	</script>

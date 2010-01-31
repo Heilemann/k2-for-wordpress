@@ -11,6 +11,8 @@
 	<div id="primary">
 		<a name="startcontent"></a>
 
+		<?php /* K2 Hook */ do_action('template_primary_begin'); ?>
+
 		<div id="content" class="hfeed">
 
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
@@ -49,7 +51,9 @@
 
 		<?php endif; ?>
 
-		</div><!-- #current-content -->
+		</div><!-- #content -->
+
+		<?php /* K2 Hook */ do_action('template_primary_end'); ?>
 
 	</div><!-- #primary -->
 
