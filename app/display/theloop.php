@@ -56,8 +56,6 @@
 	$templates[] = 'blocks/k2-loop.php';
 ?>
 
-	<?php /* Top Navigation */ k2_navigation('nav-above'); ?>
-
 	<?php if ( ! empty($page_head) ): ?>
 		<div class="page-head">
 			<h1><?php echo $page_head; ?></h1>
@@ -78,8 +76,7 @@
 
 	<?php endif; /* End Loop Init  */ ?>
 
-	<?php /* Bottom Navigation */ k2_navigation('nav-below'); ?> 
-	
+
 	<?php
 	/* Initialize Rolling Archives if needed */
 	if ( defined('DOING_AJAX') and true == DOING_AJAX ) {

@@ -73,7 +73,7 @@ body.lang-zh {
 	}
 
 #page,
-body.smartposition #rollingarchives {
+#rollingarchives {
 	background: white;
 	}
 
@@ -94,15 +94,18 @@ body.smartposition #rollingarchives {
 	-webkit-border-bottom-right-radius: 5px;
 	}
 
-.columns-one #page {
+.columns-one #page,
+.columns-one.smartposition #rollingarchives {
 	width: 560px;
 	}
 
-.columns-two #page {
+.columns-two #page,
+.columns-two.smartposition #rollingarchives {
 	width: 780px;
 	}
 
-.columns-three #page {
+.columns-three #page,
+.columns-three.smartposition #rollingarchives {
 	width: 950px;
 	}
 
@@ -115,7 +118,7 @@ body.smartposition #rollingarchives {
 	}
 
 .wrapper {
-	padding: 0 20px 30px;
+	padding: 0 20px 0px;
 	}
 
 .columns-two .secondary {
@@ -129,7 +132,7 @@ body.smartposition #rollingarchives {
 	padding: 10px;
 	}
 
-body.home.rollingarchives #primary { /* Flush RA with header */
+body.showrollingarchives #primary { /* Flush RA with header */
 	padding-top: 0;
 }
 
@@ -138,19 +141,16 @@ body.home.onepageonly.rollingarchives #primary { /* No RA, so back to 10px */
 }
 
 
-* html #primary {
+* html #primary { /* IE Hack */
 	display: inline;
 	}
 
-.sidebars-none #primary {
-	margin: 0px;
-	float: none;
+#primary {
+	margin-top: 9px;
 	}
 
-.sidebars-none #primary {
-	float: none;
-	width: auto !important;
-	margin: 0px !important;
+#content {
+	margin-top: 5px;
 	}
 
 .columns-one .secondary {
@@ -170,7 +170,8 @@ body.home.onepageonly.rollingarchives #primary { /* No RA, so back to 10px */
 	color: #666;
 	padding: 0 10px;
 	overflow: hidden;
-	}
+	padding-bottom: 20px;
+}
 
 #widgets-sidebar-2 {
 	clear: right;
@@ -272,11 +273,6 @@ body.home.onepageonly.rollingarchives #primary { /* No RA, so back to 10px */
 	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
 	
 	background: #f3f3f3;
-	background: -moz-linear-gradient(top, #eee, #f7f7f7);
-	background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#f7f7f7));
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffeeeeee,endColorstr=#fff7f7f7);
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffeeeeee,endColorstr=#fff7f7f7)";
-
 	border-radius: 0 3px 3px 3px;
 	-moz-border-radius: 0 3px 3px 3px;
 	-webkit-border-top-right-radius: 3px;
@@ -336,14 +332,14 @@ body.home.onepageonly.rollingarchives #primary { /* No RA, so back to 10px */
 	width: 100%;
 	}
 
-#widgets-top > span,
-#widgets-bottom > span {
+#widgets-top > div,
+#widgets-bottom > div {
 	display: inline-block;
 	float: left;
 	}
 
-body.columns-one #widgets-top > span,
-body.columns-one #widgets-bottom > span {
+body.columns-one #widgets-top > div,
+body.columns-one #widgets-bottom > div {
 	width: 33%;
 	}
 
@@ -352,8 +348,8 @@ body.columns-two #widgets-bottom > span {
 	width: 25%;
 	}
 
-body.columns-three #widgets-top > span,
-body.columns-three #widgets-bottom > span {
+body.columns-three #widgets-top > div,
+body.columns-three #widgets-bottom > div {
 	width: 20%;
 	}
 
@@ -369,7 +365,7 @@ body.columns-three #widgets-bottom > span {
 	width: 100%;
 	}
 
-#widgetspost > span {
+#widgetspost > div {
 	display: inline-block;
 	float: left;
 	width: 50%;
@@ -421,10 +417,6 @@ h1 {
 
 h2 {
 	font-size: 2.5em;
-	}
-
-#rollingarchives.emptypage {
-	display: none;
 	}
 
 .page-head {
@@ -489,7 +481,6 @@ body.page #content .post-title {
 	}
 
 .post-header {
-	margin-top: 10px;
 	position: relative;
 	}
 
@@ -719,7 +710,7 @@ div.quoter_page_container {
 /* Primary Contents */
 
 .post {
-	margin: 0 0 25px;
+	margin: 0 0 30px;
 	position: relative;
 	}
 
@@ -1299,46 +1290,6 @@ hr {
 	display: none;
 	}
 
-body.smartposition #nav-above {
-	position: fixed;
-	top: 0px;
-	background: #fff;
-	border-bottom: 1px solid #eee;
-	width: 500px;
-	margin: 0;
-	padding: 10px 0;
-	z-index: 10;
-	}
-
-.navigation {
-	padding: 10px 10px 10px 0;
-	}
-
-.comments .navigation {
-	margin: 20px 0;
-	}
-
-.navigation .nav-previous,
-.navigation .left {
-	float: left;
-	width: 50%;
-	text-align: left;
-	}
-
-.navigation .nav-next,
-.navigation .right {
-	float: right;
-	width: 50%;
-	text-align: right;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	}
-
-.navigation a {
-	color: #999;
-	}
-
 .alert {
 	background: #FFF6BF;
 	text-align: center;
@@ -1471,12 +1422,12 @@ input[type=text], textarea {
 	width: 175px;
 	}
 
-body.columns-three #search-label.overlabel-apply { /* For Three Columns */
-	width: 165px;
+.livesearch.columns-three #s {
+	width: 150px;
 	}
 
-body.columns-three .livesearch #s { /* For Three Columns */
-	width: 150px;
+.livesearch.columns-three #search-label.overlabel-apply { /* For Three Columns */
+	width: 165px;
 	}
 
 #s:focus {
@@ -1491,6 +1442,11 @@ body.columns-three .livesearch #s { /* For Three Columns */
 	height: 18px;
 	width: 18px;
 	}
+
+.smartposition #searchreset,
+.smartposition #searchload {
+	top: 14px;
+}
 
 #searchreset {
 	z-index: 4;
@@ -1515,39 +1471,91 @@ body.columns-three .livesearch #s { /* For Three Columns */
 	}
 
 
-/* Rolling Archives */
+/* 
+	NAVIGATION
+	.navigation is traditional page-by-page
+	#rollingarchives is 'advanced' AJAX-powered
+	 The two are mutually exclusive, with the exception of permalinks where .navigation is always used.
+	 */
 
-body.rollingarchives #nav-above,
-body.rollingarchives #nav-below {
+#rollingarchives,
+.navigation {
+	height: 45px;
+	padding: 0;
+}
+
+.comments .navigation {
+	margin: 20px 0;
+	}
+
+.navigation .nav-previous,
+.navigation .left {
+	float: left;
+	width: 45%;
+	text-align: left;
+	padding: 6px 5% 10px 0;
+	}
+
+.navigation .nav-next,
+.navigation .right {
+	float: right;
+	width: 45%;
+	text-align: right;
+	padding: 6px 0 10px 5%;
+	}
+
+.navigation a {
+	color: #999;
+	}
+
+body.showrollingarchives .navigation {
 	display: none;
 }
 
-body.single.livesearchinactive #rollingarchives {
-}
-
 #rollingarchives { /* AJAX-powered navigation hub */
+	position: relative;
 	top: 0;
-	height: 45px;
 	display: block;
 	width: 500px;
 	border-bottom: none;
-	position: relative;
+	}
+
+#rollingarchives.emptypage {
+	display: none;
 	}
 
 body.onepageonly #rollingarchives {
 	display: none;
-}
+	}
 
 body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS when #content passes the top of the window */
 	position: fixed;
-	background: #fff;
-	border-bottom: 1px solid #eee;
+	margin-left: -30px;
+	background: #f8f8f8;
+	-webkit-transition: background .3s linear;
 	z-index: 50;
 	}
+
+body.smartposition #widgets-sidebar-1 div.widget_search:first-child #searchform,
+body.smartposition #widgets-sidebar-2 div.widget_search:first-child #searchform { /* Fix search to top of window when scrolling past, if it is the first widget on the sidebar */
+	position: fixed;
+	top: 0;
+	z-index: 50;
+	margin-top: 0px !important;
+	height: 33px !important;
+	padding-top: 12px;
+}
+
 
 body.smartposition #primary { /* When scrolling past content top, adjust for fixing RA interface to top of screen */
 	padding-top: 45px !important;
 	}
+
+body.smartposition #widgets-sidebar-1 div.widget_search:first-child,
+body.smartposition #widgets-sidebar-2 div.widget_search:first-child {
+	padding-top: 24px;
+}
+
 
 body.smartposition #content.onepageonly { /* If there is only a single page, remove space at top of page */
 	padding-top: 0;
@@ -1565,7 +1573,28 @@ body.smartposition #content.onepageonly { /* If there is only a single page, rem
 	outline: none;
 	}
 
-#rollprevious, #rollnext, #rollload, #rollhome, #rollpages, #rolldates, #texttrimmer {
+.smartposition #rollprevious,
+.smartposition #rollpages,
+.smartposition #pagetrackwrap {
+	margin-left: 30px;
+}
+
+.columns-one.smartposition #rollnext,
+.columns-one.smartposition #texttrimmer {
+	margin-right: 30px;
+}
+
+.columns-two.smartposition #rollnext,
+.columns-two.smartposition #texttrimmer {
+	margin-right: 250px;
+}
+
+.columns-three.smartposition #rollnext,
+.columns-three.smartposition #texttrimmer {
+	margin-right: 420px;
+}
+
+#rollprevious, #rollnext, #rollload, #rollpages, #rolldates, #texttrimmer {
 	position: absolute;
 	top: 17px;
 	}
@@ -1699,11 +1728,11 @@ body.trim .post-content, body.trim .post-footer {
 	}
 
 body.trim .post {
-	background: #f5f5f5;
-	}
-
-body.trim .post.alt {
-	background: transparent;
+	margin: 0 -10px 10px;
+	padding: 5px 10px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	}
 
 #texttrimmer {

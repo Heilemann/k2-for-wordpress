@@ -156,24 +156,13 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 
 		self.loading('start');
 
+		scrollToContent();
+
 		jQuery.extend(this.query, { paged: this.pageNumber, k2dynamic: 1 });
 
 		K2.ajaxGet(this.query,
 			function(data) {
 
-				/* Temporarily removed until I decide if it's just too obnoxious to have in at all.
-				if (K2.Animations) { 
-					if (self.pageNumber == 1) {
-						jQuery('html,body').animate({
-							scrollTop: jQuery('body').offset().top - 1
-						}, 500);
-					} else {
-						jQuery('html,body').animate({
-							scrollTop: jQuery('#content').offset().top - 1
-						}, 500);
-					}
-				} */
-				
 				jQuery('#rollhover').fadeOut('slow');
 				self.loading('stop');
 				jQuery('#content').html(data);

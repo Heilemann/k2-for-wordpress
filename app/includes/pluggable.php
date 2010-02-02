@@ -151,8 +151,8 @@ if ( ! function_exists('k2_register_sidebars') ):
 		        'id' 			=>	'widgets-top',
 		        'name'			=>	__('Below Page Header', 'k2'),
 		        'description'	=>	__('Just below the header.', 'k2'),
-		        'before_widget'	=>	'<span><div id="%1$s" class="widget %2$s">', // <span>'s is used for horizontal sizing, <div> for padding
-		        'after_widget'	=>	'</div></span>',
+		        'before_widget'	=>	'<div><div id="%1$s" class="widget %2$s">', // <span>'s is used for horizontal sizing, <div> for padding
+		        'after_widget'	=>	'</div></div>',
 		        'before_title'	=>	'<h4 class="widgettitle">',
 		        'after_title'	=>	'</h4>'
 		    ));
@@ -160,8 +160,8 @@ if ( ! function_exists('k2_register_sidebars') ):
 		    register_sidebar(array(
 		        'id'			=>	'widgets-sidebar-1',
 		        'name'			=>	__('Left Sidebar', 'k2'),
-		        'before_widget'	=>	'<span><div id="%1$s" class="widget %2$s">',
-		        'after_widget'	=>	'</div></span>',
+		        'before_widget'	=>	'<div id="%1$s" class="widget %2$s">',
+		        'after_widget'	=>	'</div>',
 		        'before_title'	=>	'<h4 class="widgettitle">',
 		        'after_title'	=>	'</h4>'
 		    ));
@@ -169,8 +169,8 @@ if ( ! function_exists('k2_register_sidebars') ):
 		    register_sidebar(array(
 		        'id'			=>	'widgets-sidebar-2',
 		        'name'			=>	__('Right Sidebar', 'k2'),
-		        'before_widget'	=>	'<span><div id="%1$s" class="widget %2$s">',
-		        'after_widget'	=>	'</div></span>',
+		        'before_widget'	=>	'<div id="%1$s" class="widget %2$s">',
+		        'after_widget'	=>	'</div>',
 		        'before_title'	=>	'<h4 class="widgettitle">',
 		        'after_title'	=>	'</h4>'
 		    ));
@@ -179,8 +179,8 @@ if ( ! function_exists('k2_register_sidebars') ):
 		        'id' 			=>	'widgetspost',
 		        'name'			=>	__('After Posts', 'k2'),
 		        'description'	=>	__('On single blog post pages, following the post and preceeding the comments.', 'k2'),
-		        'before_widget'	=>	'<span><div id="%1$s" class="widget %2$s">',
-		        'after_widget'	=>	'</div></span>',
+		        'before_widget'	=>	'<div id="%1$s" class="widget %2$s">',
+		        'after_widget'	=>	'</div>',
 		        'before_title'	=>	'<h4 class="widgettitle">',
 		        'after_title'	=>	'</h4>'
 		    ));
@@ -189,8 +189,8 @@ if ( ! function_exists('k2_register_sidebars') ):
 		        'id' 			=>	'widgets-bottom',
 		        'name'			=>	__('Page Footer', 'k2'),
 		        'description'	=>	__('Just below the header.', 'k2'),
-		        'before_widget'	=>	'<span><div id="%1$s" class="widget %2$s">',
-		        'after_widget'	=>	'</div></span>',
+		        'before_widget'	=>	'<div id="%1$s" class="widget %2$s">',
+		        'after_widget'	=>	'</div>',
 		        'before_title'	=>	'<h4 class="widgettitle">',
 		        'after_title'	=>	'</h4>'
 		    ));

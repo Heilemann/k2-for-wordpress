@@ -88,6 +88,8 @@ LiveSearch.prototype.doSearch = function(self) {
 
 	self.prevSearch = self.searchField.val();
 
+	scrollToContent();
+
 	K2.ajaxGet(self.searchform.serialize() + '&k2dynamic=init',
 		function(data) {
 			jQuery('#content').html(data);

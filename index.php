@@ -13,12 +13,16 @@
 
 		<?php /* K2 Hook */ do_action('template_primary_begin'); ?>
 
+		<?php /* Top Navigation */ k2_navigation('nav-above'); ?>
+
 		<div id="content" class="hfeed">
 
 			<?php include(TEMPLATEPATH . '/app/display/theloop.php'); ?>
 
 		</div> <!-- #content -->
 
+		<?php /* Bottom Navigation */ k2_navigation('nav-below'); ?> 
+	
 		<?php /* K2 Hook */ do_action('template_primary_end'); ?>
 
 	</div> <!-- #primary -->

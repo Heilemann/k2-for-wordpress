@@ -515,6 +515,7 @@ class K2 {
 	//]]>
 	</script>
 <?php
+
 	}
 
 
@@ -675,12 +676,12 @@ class K2 {
 
 
 // Actions and Filters
-add_action( 'admin_menu', array('K2', 'add_options_menu') );
-add_action( 'admin_init', array('K2', 'admin_init') );
-add_action( 'wp_print_scripts', array('K2', 'enqueue_scripts') );
-add_action( 'wp_footer', array('K2', 'init_scripts') );
-add_action( 'template_redirect', array('K2', 'dynamic_content') );
-add_filter( 'query_vars', array('K2', 'add_custom_query_vars') );
+add_action( 'admin_menu', 			array('K2', 'add_options_menu') );
+add_action( 'admin_init', 			array('K2', 'admin_init') );
+add_action( 'wp_print_scripts', 	array('K2', 'enqueue_scripts') );
+add_action( 'wp_footer', 			array('K2', 'init_scripts') );
+add_action( 'template_redirect', 	array('K2', 'dynamic_content') );
+add_filter( 'query_vars', 			array('K2', 'add_custom_query_vars') );
 
 // Decrease the priority of redirect_canonical
 remove_action( 'template_redirect', 'redirect_canonical' );

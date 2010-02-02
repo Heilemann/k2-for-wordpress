@@ -77,7 +77,7 @@ function smartPosition(obj, classname, edge) {
 
 
 function checkBottom(obj, classname) {
-	if ( (document.documentElement.scrollTop + document.documentElement.clientHeight|| document.body.scrollTop + document.documentElement.clientHeight) >= jQuery(obj).offset().top ) {
+	if ( (document.documentElement.scrollTop + document.documentElement.clientHeight || document.body.scrollTop + document.documentElement.clientHeight) >= jQuery(obj).offset().top && jQuery('body').hasClass('showrollingarchives')) {
 		jQuery('body').addClass(classname);
 	} else {
 		jQuery('body').removeClass(classname);
@@ -85,11 +85,19 @@ function checkBottom(obj, classname) {
 }
 
 function checkTop(obj, classname) {
-	if ( (document.documentElement.scrollTop || document.body.scrollTop) >= jQuery(obj).offset().top ) {
+	if ( (document.documentElement.scrollTop || document.body.scrollTop) >= jQuery(obj).offset().top && jQuery('body').hasClass('showrollingarchives')) {
 		jQuery('body').addClass(classname);
 	} else {
 		jQuery('body').removeClass(classname);
 	}
+}
+
+
+/* When using RA and Livesearch, scroll to the top of the content, if animations are turned on and conditions are met */
+function scrollToContent() {
+	if (K2.Animations)
+		if (self.pageNumber != 1 && jQuery('body').hasClass('smartposition'))
+			jQuery('html,body').animate({ scrollTop: jQuery('#primary').offset().top - 1 }, 500);
 }
 
 // Set the number of columns based on window size

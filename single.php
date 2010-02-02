@@ -13,11 +13,11 @@
 
 		<?php /* K2 Hook */ do_action('template_primary_begin'); ?>
 
+		<?php /* Top Navigation */ k2_navigation('nav-above'); ?>
+
 		<div id="content" class="hfeed">
 
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-
-			<?php k2_navigation('nav-above'); ?> 
 
 			<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<div class="post-header">
@@ -62,16 +62,16 @@
 				<?php comments_template(); ?>
 			</div><!-- .comments -->
 
-			<?php k2_navigation('nav-below'); ?> 
-
 		<?php endwhile; else: define('K2_NOT_FOUND', true); ?>
 
 			<?php locate_template( array('blocks/k2-404.php'), true ); ?>
 
 		<?php endif; ?>
 
-
 		</div><!-- #content -->
+
+
+		<?php /* Bottom Navigation */ k2_navigation('nav-below'); ?> 
 
 		<?php /* K2 Hook */ do_action('template_primary_end'); ?>
 
