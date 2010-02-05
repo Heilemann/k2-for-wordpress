@@ -1,3 +1,5 @@
+/* @override http://localhost/k2/wp-content/themes/k2/styles/dueling-sidebars/dueling-sidebars.css */
+
 /*
 	Style Name	: Dueling Sidebars
 	Style URI	: http://getk2.com/
@@ -19,6 +21,14 @@ body.columns-three #widgets-sidebar-1 {
 	margin-left: -195px;
 	}
 
+body.webkit.smartposition #widgets-sidebar-1 div.widget_search:first-child #searchform {
+	margin-left: -520px;
+}
+
 body.columns-three .template-image #primary {
 	margin-left: 0;
 	}
+
+body.columns-three #rollingarchivesbg {
+	margin-left: -225px;
+}

@@ -72,11 +72,9 @@ body.lang-zh {
 	font-size: 75%; /* Resets 1em to 12px, for internationalized K2s */
 	}
 
-#page,
-#rollingarchives {
+#page {
 	background: white;
 	}
-
 
 #page {
 	text-align: left;
@@ -95,17 +93,17 @@ body.lang-zh {
 	}
 
 .columns-one #page,
-.columns-one.smartposition #rollingarchives {
+.columns-one.smartposition #rollingarchivesbg {
 	width: 560px;
 	}
 
 .columns-two #page,
-.columns-two.smartposition #rollingarchives {
+.columns-two.smartposition #rollingarchivesbg {
 	width: 780px;
 	}
 
 .columns-three #page,
-.columns-three.smartposition #rollingarchives {
+.columns-three.smartposition #rollingarchivesbg {
 	width: 950px;
 	}
 
@@ -1528,11 +1526,23 @@ body.onepageonly #rollingarchives {
 	display: none;
 	}
 
+#rollingarchivesbg {
+	display: none;
+	}
+
+body.smartposition #rollingarchivesbg {
+	display: block;
+	background: #f4f4f4;
+	z-index: 45;
+	position: fixed;
+	top: 0;
+	margin-left: -30px; /* Counter-act #primary & #wrapper paddings */
+	height: 45px;
+	background: #f8f8f8;
+	}
+
 body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS when #content passes the top of the window */
 	position: fixed;
-	margin-left: -30px;
-	background: #f8f8f8;
-	-webkit-transition: background .3s linear;
 	z-index: 50;
 	}
 
@@ -1541,8 +1551,6 @@ body.smartposition #widgets-sidebar-2 div.widget_search:first-child #searchform 
 	position: fixed;
 	top: 0;
 	z-index: 50;
-	margin-top: 0px !important;
-	height: 33px !important;
 	padding-top: 12px;
 }
 
@@ -1555,7 +1563,6 @@ body.smartposition #widgets-sidebar-1 div.widget_search:first-child,
 body.smartposition #widgets-sidebar-2 div.widget_search:first-child {
 	padding-top: 24px;
 }
-
 
 body.smartposition #content.onepageonly { /* If there is only a single page, remove space at top of page */
 	padding-top: 0;
@@ -1572,27 +1579,6 @@ body.smartposition #content.onepageonly { /* If there is only a single page, rem
 #rollnavigation a:active, #rollnavigation a:focus {
 	outline: none;
 	}
-
-.smartposition #rollprevious,
-.smartposition #rollpages,
-.smartposition #pagetrackwrap {
-	margin-left: 30px;
-}
-
-.columns-one.smartposition #rollnext,
-.columns-one.smartposition #texttrimmer {
-	margin-right: 30px;
-}
-
-.columns-two.smartposition #rollnext,
-.columns-two.smartposition #texttrimmer {
-	margin-right: 250px;
-}
-
-.columns-three.smartposition #rollnext,
-.columns-three.smartposition #texttrimmer {
-	margin-right: 420px;
-}
 
 #rollprevious, #rollnext, #rollload, #rollpages, #rolldates, #texttrimmer {
 	position: absolute;

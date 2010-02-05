@@ -4,6 +4,7 @@ function RollingArchives(content, pagetext, older, newer, loading, trim, untrim)
 
 	// Insert the Rolling Archives UI
 	jQuery(content).before('\
+		<div id="rollingarchivesbg"></div>\
 		<div id="rollingarchives">\
 			<div id="rollnavigation">\
 				<div id="pagetrackwrap"><div id="pagetrack"><div id="pagehandle"><div id="rollhover"><div id="rolldates"></div></div></div></div></div>\
