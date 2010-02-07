@@ -1485,9 +1485,14 @@ input[type=text], textarea {
 	padding: 0;
 }
 
+body.rollingarchives .navigation,
 body.showrollingarchives .navgation, /* If RA or LS are in use, hide static navigation */
 body.livesearchactive .navigation {
 	display: none;
+}
+
+body.rollingarchives.single .navigation {
+	display: block;
 }
 
 body.showrollingarchives,

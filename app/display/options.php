@@ -119,7 +119,7 @@
 				<div id="meta-preview" class="postbox">
 					<h3 class="handle"><span><?php _e('Preview', 'k2'); ?></span></h3>
 					<?php
-						query_posts('showposts=1&what_to_show=posts&order=desc');
+						query_posts('showposts=1&what_to_show=posts&order=desc&post_status=publish');
 						if ( have_posts() ): the_post();
 					?>
 					<div id="post-<?php the_ID(); ?>" class="inside">

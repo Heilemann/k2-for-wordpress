@@ -1,0 +1,140 @@
+/* This CSS file styles the visual editor in the admin */
+
+strong, em, b, i {
+    font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Verdana, Helvetica, Arial, sans-serif;
+	}
+
+h1, h2, h3 {
+	font-family: "Trebuchet MS", Verdana, sans-serif;
+	}
+
+h4, h5, h6 {
+	font-family: Verdana, sans-serif;
+	}
+
+h1 {
+	font-size: 2.5em;
+	}
+
+h2 {
+	color: #999;
+	font-size: 2.0em;
+	font-weight: normal;
+	}
+
+h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
+	font-size: 1.3em;
+	font-weight: normal;
+	margin-top: 25px;
+	}
+
+h4 {
+	font-size: 1.5em;
+	font-weight: normal;
+	margin-top: 25px;
+	}
+
+p,
+ul,
+ol,
+div {
+	margin: 13px 0;
+	}
+
+p {
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Helvetica, Arial, sans-serif;
+	font-size: 1em;
+	line-height: 2em;
+	color: #444;
+	}
+
+/* Links */
+
+a:hover, a:visited:hover {
+	text-decoration: underline;
+	}
+
+h2 a:hover, h2 span a:hover {
+	color: #27d !important;
+	}
+
+a {
+	color: #27d;
+	text-decoration: none;
+	}
+
+.post-content a:visited {
+	color: #b41;
+	}
+
+
+a img {
+	border: none;
+	}
+
+
+img.noborder {
+	border: none !important;
+	}
+
+.aligncenter,
+.center {
+	text-align: center;
+	}
+
+.aligncenter,
+img.center,
+img[align="center"] {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	}
+	
+.alignright,
+img[align="right"] {
+	float: right;
+	margin: 0 0 4px 8px;
+	display: block;
+	}
+
+.alignleft,
+img[align="left"] {
+	float: left;
+	margin: 0 8px 4px 0;
+	display: block;
+	}
+
+.wp-caption a img,
+.wp-caption a img:hover {
+	padding: 4px 0px 0px;
+	border: 0 none;
+	}
+
+.wp-caption .wp-caption-text {
+	margin: 4px 0 2px;
+	}
+
+code {
+	font-size: 1.1em;
+	}
+
+blockquote {
+	margin: 20px 0;
+	padding: 0 20px 0 50px;
+	background: url('../images/quote.png') no-repeat 10px 0;
+	}
+
+blockquote p {
+	margin:  0;
+}
+
+ol, 
+ul {
+	padding: 0 0 0 35px;
+	}
+
+ol li, 
+ul li {
+	margin: 0 0 3px;
+	padding: 0;
+	}
