@@ -93,7 +93,7 @@ function k2_body_class_filter($classes) {
 		$classes[] = 'columns-one';
 
 
-	// If animations are turned on *CURRENTLY NOT IN USE*
+	// If animations are turned on
 	if ( '1' == get_option('k2animations') )
 		$classes[] = 'animations';
 

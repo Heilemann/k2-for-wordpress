@@ -50,7 +50,7 @@ function LiveSearch(searchprompt) {
 				if (self.timer) {
 					clearTimeout(self.timer);
 				}
-				self.timer = setTimeout(function(){ self.doSearch(self); }, 500);
+				self.timer = setTimeout(function() { self.doSearch(self); }, 500);
 			}
 		})
 		.keyup(function(event) {
@@ -78,7 +78,16 @@ function LiveSearch(searchprompt) {
 
 
 LiveSearch.prototype.doSearch = function(self) {
-	if (self.searchField.val() == self.prevSearch) return; // Don't do the same search again.
+	if (self.searchField.val() == self.prevSearch) // Don't perform the same search twice
+		return;
+
+	if (self.prevSearch && (self.searchField.val() != self.prevSearch)) // Not an automated search
+		jQuery.bbq.removeState('page');
+
+	if (self.searchField.val() == '') { // A forced search, probably triggered by .ready()
+		self.searchField.val(jQuery.deparam.fragment().search);
+		self.searchLabel.addClass('hide')
+	}
 
 	if (!self.active) {
 		self.active = true;
@@ -90,15 +99,22 @@ LiveSearch.prototype.doSearch = function(self) {
 
 	scrollToContent();
 
-	K2.ajaxGet(self.searchform.serialize() + '&k2dynamic=init',
+	jQuery.bbq.pushState( 'search=' + self.searchField.val() ); // Update the hash/fragment
+
+	K2.ajaxGet(self.searchform.serialize() + '&k2dynamic=init&paged=' + jQuery.deparam.fragment().page,
 		function(data) {
 			jQuery('#content').html(data);
 
+			console.log('Before')
 			self.loading.fadeTo('fast', 0);
+			console.log('After')
 
-			self.reset.click(function(){
-				self.resetSearch(self);
-			}).fadeTo('fast', 1.0).css('cursor', 'pointer');
+			jQuery.bbq.pushState( 'search=' + self.searchField.val() ); // Update the hash/fragment
+
+			self.reset
+				.click( function() { self.resetSearch(self); })
+				.fadeTo( 'fast', 1.0 )
+				.css('cursor', 'pointer')
 		}
 	);
 };

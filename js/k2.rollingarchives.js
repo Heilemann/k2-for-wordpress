@@ -103,6 +103,9 @@ RollingArchives.prototype.restoreState = function() {
 
 		jQuery('#content').html(this.originalContent)
 
+		jQuery.bbq.removeState('page');
+		jQuery.bbq.removeState('search');
+
 		initialRollingArchives();
 	}
 };
@@ -155,9 +158,11 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 	if ( (page != this.pageNumber) ) {
 		this.pageNumber = page;
 
-		self.loading('start');
+		jQuery.bbq.pushState( 'page='+page ); // Update the hash/fragment
 
-		scrollToContent();
+		self.loading('start'); // Show the loading spinner
+
+		scrollToContent(); // Scroll if needed
 
 		jQuery.extend(this.query, { paged: this.pageNumber, k2dynamic: 1 });
 

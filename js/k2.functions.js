@@ -41,35 +41,32 @@ K2.ajaxGet = function(data, complete_fn) {
 	});
 }
 
-function OnLoadUtils() {
-	jQuery('#comment-personaldetails').hide();
-	jQuery('#showinfo').show();
-	jQuery('#hideinfo').hide();
-};
+K2.parseFragments = function() {
+	// Parse out and perform livesearch fragment
+	if (jQuery.deparam.fragment().search)
+		K2.LiveSearch.doSearch(K2.LiveSearch);
 
-function ShowUtils() {
-	jQuery('#comment-personaldetails').slideDown();
-	jQuery('#showinfo').hide();
-	jQuery('#hideinfo').show();
-};
-
-function HideUtils() {
-	jQuery('#comment-personaldetails').slideUp();
-	jQuery('#showinfo').show();
-	jQuery('#hideinfo').hide();
-};
+	// If only a page fragment is present
+	if (jQuery.deparam.fragment().page && !jQuery.deparam.fragment().search)
+		K2.RollingArchives.gotoPage(jQuery.deparam.fragment().page);
+}
 
 
-/* Fix the position of an element when it is about to be scrolled off-screen */
+// Check for an element being scrolled off-screen
 function smartPosition(obj, classname, edge) {
 	if ( jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 7 ) return; /* No IE6 or lower */
 
+
 	if (edge == 'bottom') { // Check Obj pos vs bottom edge
+		checkBottom(obj, classname);  // Check on load
+
 		jQuery(window)
 			.scroll(function() { checkBottom(obj, classname); })
 			.resize(function() { checkBottom(obj, classname); })
 			.onload(function() { checkBottom(obj, classname); });
 	} else {  // Check Obj pos vs top edge
+		checkTop(obj, classname); // Check on load
+		
 		jQuery(window)
 			.scroll(function() { checkTop(obj, classname); });
 	}
@@ -211,7 +208,7 @@ function initARIA() {
 	jQuery('#header').attr('role', 'banner');
 	jQuery('#header .menu').attr('role', 'navigation');
 	jQuery('#primary').attr('role', 'main');
-	jQuery('#rollingcontent').attr('aria-live', 'polite').attr('aria-atomic', 'true');
+	jQuery('#content').attr('aria-live', 'polite').attr('aria-atomic', 'true');
 	jQuery('.secondary').attr('role', 'complementary');
 	jQuery('#footer').attr('role', 'contentinfo');
 };

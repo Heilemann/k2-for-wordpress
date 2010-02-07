@@ -21,9 +21,10 @@ body.columns-three #widgets-sidebar-1 {
 	margin-left: -195px;
 	}
 
+/* Webkit doesn't retain the position of the left-shifted searchform properly */
 body.webkit.smartposition #widgets-sidebar-1 div.widget_search:first-child #searchform {
 	margin-left: -520px;
-}
+	}
 
 body.columns-three .template-image #primary {
 	margin-left: 0;
@@ -31,4 +32,4 @@ body.columns-three .template-image #primary {
 
 body.columns-three #rollingarchivesbg {
 	margin-left: -225px;
-}
+	}

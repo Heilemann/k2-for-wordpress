@@ -1,4 +1,7 @@
-/* @override http://localhost/k2/wp-content/themes/k2/style.css */
+/* @override 
+	http://localhost/k2/wp-content/themes/k2/style.css
+	http://localhost/k2/wp-content/themes/K2/style.css
+*/
 
 /*
 Theme Name:		K2
@@ -1480,6 +1483,16 @@ input[type=text], textarea {
 .navigation {
 	height: 45px;
 	padding: 0;
+}
+
+body.showrollingarchives .navgation, /* If RA or LS are in use, hide static navigation */
+body.livesearchactive .navigation {
+	display: none;
+}
+
+body.showrollingarchives,
+body.livesearchactive {
+	overflow-y: scroll; /* Avoid horizontal 'popping' when using RA and LS */
 }
 
 .comments .navigation {

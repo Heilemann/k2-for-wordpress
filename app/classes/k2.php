@@ -213,6 +213,22 @@ class K2 {
 		wp_enqueue_script('k2options');
 	}
 
+	/**
+	 * Updates options
+	 *
+	 * @uses do_action() Provides 'k2_update_options' action
+	 */
+	function admin_style_visual_editor($url) {
+ 
+		if ( !empty($url) )
+			$url .= ',';
+	
+		// Change the path here if using sub-directory
+		$url .= trailingslashit( get_stylesheet_directory_uri() ) . 'css/visualeditor.css';
+	 
+		return $url;
+	}
+
 
 	/**
 	 * Updates options
@@ -361,6 +377,12 @@ class K2 {
 					);
 				});
 
+			<?php if ($rolling_page > 1) { ?>
+				jQuery.bbq.pushState( 'page=' + <?php echo (int) $rolling_page; ?> ); // Update the hash/fragment
+			<?php } else { ?>	
+				jQuery.bbq.removeState( 'page' ); // Remove the hash/fragment
+			<?php } ?>	
+
 			// ]]>
 			</script>
 
@@ -382,9 +404,9 @@ class K2 {
 			array('jquery'), '1.1.2');
 
 		// Register our scripts with WordPress
-		wp_register_script('k2functions',
-			get_bloginfo('template_directory') . '/js/k2.functions.js',
-			array('jquery', 'superfish'), K2_CURRENT);
+		wp_register_script('bbq',
+			get_bloginfo('template_directory') . '/js/jquery.bbq.js',
+			array('jquery'), '1.1.1');
 
 		wp_register_script('hoverintent',
 			get_bloginfo('template_directory') . '/js/jquery.hoverintent.js',
@@ -394,21 +416,25 @@ class K2 {
 			get_bloginfo('template_directory') . '/js/jquery.superfish.js',
 			array('jquery', 'hoverintent'), '1.4.8');
 
+		wp_register_script('k2functions',
+			get_bloginfo('template_directory') . '/js/k2.functions.js',
+			array('jquery', 'superfish'), K2_CURRENT);
+
 		wp_register_script('k2options',
 			get_bloginfo('template_directory') . '/js/k2.options.js',
 			array('jquery', 'jquery-ui-sortable'), K2_CURRENT);
 
-		wp_register_script('k2rollingarchives',
-			get_bloginfo('template_directory') . '/js/k2.rollingarchives.js',
-			array('jquery', 'k2slider'), K2_CURRENT, true);
-
-		wp_register_script('k2livesearch',
-			get_bloginfo('template_directory') . '/js/k2.livesearch.js',
-			array('jquery'), K2_CURRENT, true);
-
 		wp_register_script('k2slider',
 			get_bloginfo('template_directory') . '/js/k2.slider.js',
 			array('jquery'), K2_CURRENT, true);
+
+		wp_register_script('k2rollingarchives',
+			get_bloginfo('template_directory') . '/js/k2.rollingarchives.js',
+			array('jquery', 'bbq', 'k2slider'), K2_CURRENT, true);
+
+		wp_register_script('k2livesearch',
+			get_bloginfo('template_directory') . '/js/k2.livesearch.js',
+			array('jquery', 'bbq'), K2_CURRENT, true);
 	}
 
 
@@ -461,8 +487,8 @@ class K2 {
 ?>
 	<script type="text/javascript">
 	//<![CDATA[
-		K2.AjaxURL = "<?php bloginfo('url'); ?>/";
-		K2.Animations = <?php echo (int) get_option('k2animations') ?>;
+		K2.AjaxURL		= "<?php bloginfo('url'); ?>/";
+		K2.Animations	= <?php echo (int) get_option('k2animations') ?>;
 
 		// Setup a function for returning to the original RA UI
 		function initialRollingArchives() {
@@ -511,6 +537,13 @@ class K2 {
 			initARIA(); // Setup ARIA for disabled access
 			
 			initMenu(); // Setup the delayed hover actions of the menu
+
+			// Continually check for fragment changes
+			jQuery(window).bind( 'hashchange', function() {
+				K2.parseFragments();
+			});
+
+			K2.parseFragments();
 		});
 	//]]>
 	</script>
@@ -678,6 +711,7 @@ class K2 {
 // Actions and Filters
 add_action( 'admin_menu', 			array('K2', 'add_options_menu') );
 add_action( 'admin_init', 			array('K2', 'admin_init') );
+add_filter( 'mce_css', 				array('K2', 'admin_style_visual_editor') );
 add_action( 'wp_print_scripts', 	array('K2', 'enqueue_scripts') );
 add_action( 'wp_footer', 			array('K2', 'init_scripts') );
 add_action( 'template_redirect', 	array('K2', 'dynamic_content') );
