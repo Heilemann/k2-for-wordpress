@@ -189,36 +189,43 @@ class K2Header {
 		return $images;
 	}
 
+	/**
+	 * Output custom header background image and text color CSS classes if set by the user.
+	 */
 	function output_header_css() {
 		$image_url = K2Header::get_header_image_url();
+
+		if ( get_header_textcolor() != HEADER_TEXTCOLOR && !empty($image_url) ): // Do we need to insert anything?
 		?>
+
 		<style type="text/css">
 		<?php if ( !empty($image_url) ): ?>
-		#header {
-			background-image: url("<?php echo $image_url; ?>");
-		}
+			#header {
+				background-image: url("<?php echo $image_url; ?>");
+			}
 		<?php endif; ?>
 
 		<?php if ( 'blank' == get_header_textcolor() ): ?>
-		#header .blog-title,
-		#header .description {
-			position: absolute !important;
-			left: 0px;
-			top: -500px !important;
-			width: 1px;
-			height: 1px;
-			overflow: hidden;
-		}
-		<?php else: ?>
-		#header .blog-title a,
-		#header .description {
-			color: #<?php header_textcolor(); ?>;
-		}
+			#header .blog-title,
+			#header .description {
+				display: none;
+			}
+
+		<?php elseif ( get_header_textcolor() != HEADER_TEXTCOLOR ): ?>
+			#header .blog-title a,
+			#header .description {
+				color: #<?php header_textcolor(); ?>;
+			}
 		<?php endif; ?>
 		</style>
+
 		<?php
+		endif;
 	}
 
+	/**
+	 * Output CSS for 'Custom Header Image' admin page.
+	 */
 	function output_admin_header_css() {
 		?>
 		<style type="text/css">
