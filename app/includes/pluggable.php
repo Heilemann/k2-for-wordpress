@@ -188,7 +188,7 @@ if ( ! function_exists('k2_register_sidebars') ):
 		    register_sidebar(array(
 		        'id' 			=>	'widgets-bottom',
 		        'name'			=>	__('Page Footer', 'k2'),
-		        'description'	=>	__('Just below the header.', 'k2'),
+		        'description'	=>	__('At the bottom of the page.', 'k2'),
 		        'before_widget'	=>	'<div id="%1$s" class="widget %2$s">',
 		        'after_widget'	=>	'</div>',
 		        'before_title'	=>	'<h4 class="widgettitle">',
