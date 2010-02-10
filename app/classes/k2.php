@@ -100,6 +100,11 @@ class K2 {
 
 		// Update the version
 		update_option('k2version', K2_CURRENT);
+
+		// Clean-up deprecated options
+		delete_option('k2sidebarmanager');
+		delete_option('k2sbm_modules');
+		delete_option('k2sidebarmanager');
 	}
 
 
