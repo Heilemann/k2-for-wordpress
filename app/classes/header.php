@@ -86,6 +86,7 @@ class K2Header {
 				);
 
 				if ( extension_loaded('gd') and function_exists('gd_info') ) {
+					echo ' ';
 					printf( __('Use %s to customize the header.', 'k2'),
 						'<a href="themes.php?page=custom-header">' . __('Custom Image Header', 'k2') . '</a>'
 					);
@@ -288,12 +289,12 @@ class K2Header {
 	}
 }
 
-add_action('k2_init', array('K2Header', 'init'), 11);
-add_action('k2_install', array('K2Header', 'install'));
-add_action('k2_uninstall', array('K2Header', 'uninstall'));
+add_action( 'k2_init', array('K2Header', 'init'), 11 );
+add_action( 'k2_install', array('K2Header', 'install') );
+add_action( 'k2_uninstall', array('K2Header', 'uninstall') );
 
 add_action( 'k2_display_options', array('K2Header', 'display_options') );
 add_action( 'k2_update_options', array('K2Header', 'update_options') );
 
-add_action('wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'), 10, 2);
-add_filter('wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'), 10, 2);
+add_action( 'wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'), 10, 2 );
+add_filter( 'wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'), 10, 2 );
