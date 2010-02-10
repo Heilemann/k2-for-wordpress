@@ -328,7 +328,7 @@ class K2Styles {
 
 			// Loop through each style css and add to the list
 			foreach ($styles as $style_css) {
-				$wp_themes[$current]['Stylesheet Files'][] = "$style_dir/$style_css";
+				$wp_themes[$current]['Stylesheet Files'][] = "$styles_dir/$style_css";
 			}
 		}
 	}
