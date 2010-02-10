@@ -103,6 +103,23 @@ label + textarea {
 	display: block;
 	}
 
+textarea#k2ajax {
+	height: 53px;
+	margin: 0 !important;
+	padding-bottom: 0;
+	overflow: hidden;
+	opacity: .6;
+	}
+
+textarea#k2ajax:hover {
+	opacity: 1;
+	}
+
+textarea#k2ajax.active {
+	overflow: auto;
+	opacity: 1;
+	}
+
 input[type=text],
 select {
 	color: #333;

@@ -14,6 +14,7 @@
 	if ( empty($entrymeta1) ) {
 		$entrymeta1 = __('Published by %author% on %date% in %categories%. %comments%. %tags%.', 'k2');
 	}
+	
 ?>
 
 <div class="wrap">
@@ -58,7 +59,7 @@
 					<li>
 						<h4><label for="k2ajax"><?php _e('Ajax Success JavaScript', 'k2'); ?></label></h4>
 						<p class="description"><?php _e('JavaScript code that will be executed whenever Advanced Navigation is dynamically loaded.', 'k2'); ?></p>
-						<textarea id="k2ajax" name="k2[ajaxdonejs]" rows="8" cols="80" class="codepress javascript"><?php form_option('k2ajaxdonejs'); ?></textarea>
+						<textarea id="k2ajax" name="k2[ajaxdonejs]" class="codepress javascript"><?php form_option('k2ajaxdonejs'); ?></textarea>
 					</li>
 				</ul>
 			</li>
