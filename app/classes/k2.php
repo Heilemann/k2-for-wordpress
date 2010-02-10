@@ -56,6 +56,12 @@ class K2 {
 		if ( function_exists( 'add_theme_support' ) )
 			add_theme_support( 'post-thumbnails' );
 
+		// Only load Custom Background if GD is installed and WP supports it.
+		if ( function_exists('add_custom_background') && extension_loaded('gd') && function_exists('gd_info') ) {
+			add_custom_background();
+		}
+
+
 		// Automatically output feed links. Requires WP 2.8+
 		automatic_feed_links();
 	}
