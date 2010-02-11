@@ -61,7 +61,6 @@ class K2 {
 			add_custom_background();
 		}
 
-
 		// Automatically output feed links. Requires WP 2.8+
 		automatic_feed_links();
 	}

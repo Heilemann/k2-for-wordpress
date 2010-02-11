@@ -442,6 +442,11 @@ class K2Styles {
 		else
 			$header_width = 0;
 
+		if ( preg_match("|Content Width\s*:\s*(\d+)|i", $style_data, $content_width) )
+			$content_width = (int) $content_width[1];
+		else
+			$content_width = 0;
+
 		if ( preg_match("|Header Height\s*:\s*(\d+)|i", $style_data, $header_height) )
 			$header_height = (int) $header_height[1];
 		else
@@ -471,6 +476,7 @@ class K2Styles {
 			'version' => $version,
 			'comments' => $comments,
 			'header_text_color' => $header_text_color,
+			'content_width' => $content_width,
 			'header_width' => $header_width,
 			'header_height' => $header_height,
 			'layout_widths' => $layout_widths,

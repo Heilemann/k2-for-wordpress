@@ -90,3 +90,15 @@ function k2_page_css_class_filter( $css_class, $page ) {
 }
 
 add_filter('page_css_class', 'k2_page_css_class_filter', 10, 2);
+
+
+/**
+ * Filters post content and resizes embedded videos and images to content width.
+ */
+function k2_resize_embeds( $content ) {
+	return str_replace( 'width="480" height="295"></embed>', 'width="500" height="307"></embed>', $content );
+}
+
+add_filter( 'the_content',	'k2_resize_embeds' );
+
+
