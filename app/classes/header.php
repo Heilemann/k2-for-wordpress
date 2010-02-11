@@ -3,7 +3,7 @@
 // Based on Hasse R. Hansen's K2 header plugin - http://www.ramlev.dk
 
 @define('K2_HEADERS_DIR', TEMPLATEPATH . '/images/headers');
-@define('K2_HEADERS_URL', get_template_directory_uri() . '/images/headers');
+@define('K2_HEADERS_URL', TEMPLATEURL . '/images/headers');
 
 class K2Header {
 	function init() {
