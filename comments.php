@@ -4,9 +4,8 @@
 		die( __('Please do not load this page directly. Thanks!', 'k2') );
 
  	// Password Protection
-	if ( post_password_required() ) : ?>
-		<p class="nopassword"><?php _e('This post is password protected. Enter the password to view comments.', 'k2'); ?></p>
-	<?php return; endif; ?>
+	if ( post_password_required() ) return;
+?>
 
 		<h4><?php /* translators: 1: language string for the number of comment(s), 2: post title */
 			printf( __('%1$s to &#8220;%2$s&#8221;', 'k2'),
@@ -22,15 +21,23 @@
 
 		<hr />
 
-	<?php if ( have_comments() ): ?>
+	<?php if ( have_comments() ) : ?>
+
+		<?php $total_pages = get_comment_pages_count(); if ( $total_pages > 1 ) : // Are there comments to navigate through? ?>
+		<div id="comments-nav" class="navigation">
+			<?php paginate_comments_links( ) ?>
+		</div>
+		<?php endif; // check for comment navigation ?>
+
 		<ul id="commentlist">
-			<?php wp_list_comments( array( 'callback' => 'k2_comment_start_el', 'type' => 'comment' ) ); ?>
+			<?php wp_list_comments( array( 'callback' => 'k2_comment_type_switch' ) ); ?>
 		</ul>
 
+		<?php if ( $total_pages > 1 ) : // Are there comments to navigate through? ?>
 		<div id="comments-nav" class="navigation">
-			<div class="nav-previous"><?php previous_comments_link(); ?></div>
-			<div class="nav-next"><?php next_comments_link(); ?></div>
+			<?php paginate_comments_links(  ) ?>
 		</div>
+		<?php endif; // check for comment navigation ?>
 
 	<?php elseif ( comments_open() ) : ?>
 		<ul id="commentlist">
@@ -40,12 +47,6 @@
 		</ul>
 	<?php endif; /* If there are comments */ ?>
 
-	<?php if ( ! empty( $wp_query->comments_by_type['pings'] ) ): ?>
-		<ul id="pinglist">
-			<?php wp_list_comments( array( 'callback' => 'k2_ping_start_el', 'type' => 'pings' ) ); ?>
-		</ul>
-	<?php endif; /* If there are trackbacks / pingbacks */ ?>
-		
 	<?php /* Comments closed */ if ( !comments_open() and is_single() ) : ?>
 		<div id="comments-closed-msg"><?php _e('Comments are currently closed.', 'k2'); ?></div>
 	<?php endif; ?>

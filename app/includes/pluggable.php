@@ -208,7 +208,30 @@ add_shortcode('entry_time', 'k2_entry_time');
 
 
 /**
- * Displays current comment
+ * Switch between displaying comments or ping-/trackbacks.
+ *
+ * @since 1.1
+ *
+ * @param object $comment Comment data object.
+ * @param array $args
+ * @param int $depth Depth of comment in reference to parents.
+ */
+
+if ( ! function_exists('k2_comment_type_switch') ):
+	function k2_comment_type_switch($comment, $args = array(), $depth = 1) {
+		$GLOBALS['comment'] = $comment;
+
+		if ($comment->comment_type == ('pingback' || 'trackback')):
+			k2_ping_start_el($comment, $args, $depth);
+		else:
+			k2_comment_start_el($comment, $args, $depth);
+		endif;
+	}
+endif;
+
+
+/**
+ * Displays current comment.
  *
  * @since 1.0
  *
@@ -222,7 +245,6 @@ if ( ! function_exists('k2_comment_start_el') ):
 
 		extract($args, EXTR_SKIP);
 	?>
-
 		<li id="comment-<?php comment_ID(); ?>">
 			<div <?php comment_class(); ?>>
 
@@ -293,38 +315,42 @@ if ( ! function_exists('k2_ping_start_el') ):
 		$GLOBALS['comment'] = $comment;
 	?>
 
-		<li id="comment-<?php comment_ID(); ?>" <?php comment_class(); ?>>
-			<?php if ( function_exists('comment_favicon') ): ?>
-				<span class="favatar"><?php comment_favicon(); ?></span>
-			<?php endif; ?>
+		<li id="comment-<?php comment_ID(); ?>">
+			<div <?php comment_class(); ?>>
 
-			<span class="comment-author"><?php comment_author_link(); ?></span>
+				<?php if ( function_exists('comment_favicon') ): ?>
+					<span class="favatar"><?php comment_favicon(); ?></span>
+				<?php endif; ?>
+	
+				<span class="comment-author"><?php comment_author_link(); ?></span>
+	
+				<div class="comment-meta">				
+				<?php
+					/* translators: 1: ping type, 2: datetime */ 
+					printf( __('%1$s on %2$s', 'k2'), 
+						'<span class="pingtype">' . comment_type( __('Comment', 'k2'), __('Trackback', 'k2'), __('Pingback', 'k2') ) . '</span>',
+						sprintf('<a href="#comment-%1$s" title="%2$s">%3$s</a>',
+							get_comment_ID(),	
+							(function_exists('time_since')?
+								sprintf( __('%s ago.', 'k2'),
+									time_since( abs( strtotime($comment->comment_date_gmt . " GMT") ), time() )
+								):
+								__('Permanent Link to this Comment', 'k2')
+							),
+							/* translators: 1: comment date, 2: comment time */
+							sprintf( __('%1$s at %2$s', 'k2'),
+								/* translators: pingback/trackback date format (here: 'Month Xth, Year'), see http://php.net/date */
+								get_comment_date( __('M jS, Y', 'k2') ),
+								get_comment_time()
+							)			
+						)
+					);
+				
+						edit_comment_link( __('Edit', 'k2'), '<span class="comment-edit">', '</span>' );
+				?>
+				</div><!-- .comment-meta -->
 
-			<div class="comment-meta">				
-			<?php
-				/* translators: 1: ping type, 2: datetime */ 
-				printf( __('%1$s on %2$s', 'k2'), 
-					'<span class="pingtype">' . comment_type( __('Comment', 'k2'), __('Trackback', 'k2'), __('Pingback', 'k2') ) . '</span>',
-					sprintf('<a href="#comment-%1$s" title="%2$s">%3$s</a>',
-						get_comment_ID(),	
-						(function_exists('time_since')?
-							sprintf( __('%s ago.', 'k2'),
-								time_since( abs( strtotime($comment->comment_date_gmt . " GMT") ), time() )
-							):
-							__('Permanent Link to this Comment', 'k2')
-						),
-						/* translators: 1: comment date, 2: comment time */
-						sprintf( __('%1$s at %2$s', 'k2'),
-							/* translators: pingback/trackback date format (here: 'Month Xth, Year'), see http://php.net/date */
-							get_comment_date( __('M jS, Y', 'k2') ),
-							get_comment_time()
-						)			
-					)
-				);
-			
-					edit_comment_link( __('Edit', 'k2'), '<span class="comment-edit">', '</span>' );
-			?>
-			</div><!-- .comment-meta -->
+			</div><!-- .comment -->
 	<?php
 	}
 endif;

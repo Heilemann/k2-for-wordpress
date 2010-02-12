@@ -1,3 +1,5 @@
+/* @override http://localhost/k2/wp-content/themes/k2/styles/k2.classic/k2.classic.css */
+
 /*
 	Author				: K2 Team
 	Author URI			: http://getk2.com/
@@ -522,7 +524,6 @@ body.page .post-content h4 {
 
 .comment-meta {
 	margin: 0 15px 0 0;
-	float: none;
 	}
 
 .comment-login, .comment-welcomeback {
@@ -604,6 +605,10 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	color: #bbb;
 	}
 
+.comment-meta {
+	color:  #999;
+	}
+
 .post-meta a,
 .comment-meta a,
 .entry-date,
@@ -642,7 +647,7 @@ abbr.entry-date {
 
 div.comment-reply {
 	display: inline;
-}
+	}
 
 .entry-edit a,
 a.quoter_comment,
@@ -664,7 +669,8 @@ a#cancel-comment-reply-link,
 	display: inline;
 	}
 
-#pinglist a.comment-edit-link {
+.pingback a.comment-edit-link,
+.trackback a.comment-edit-link {
 	padding: 2px 8px;
 	margin-left: 10px;
 	font-size: .8em;
@@ -673,7 +679,7 @@ a#cancel-comment-reply-link,
 #commentlist #respond a.quoter_page,
 #commentlist #respond a#cancel-comment-reply-link {
 	background: #ddd;
-}
+	}
 
 .entry-edit a:hover,
 a.quoter_comment:hover,
@@ -693,7 +699,7 @@ a#cancel-comment-reply-link:hover,
 div.quoter_page_container {
 	margin: 5px 0;
 	display: none; /* Hidden because it's not too nice an implementation */
-}
+	}
 
 .commentslink {
 	padding: 2px 0;
@@ -865,6 +871,17 @@ div.quoter_page_container {
 
 /* Comments */
 
+#comments-nav {
+	height: inherit;
+	color: #aaa;
+	text-align: center;
+	font-size: 1.1em;
+}
+
+#comments-nav .page-numbers {
+	padding: 5px;
+}
+
 .comments .metalinks {
 	display: none; /* Rarely used these days, so let's hide it. */
 }
@@ -898,23 +915,16 @@ div.quoter_page_container {
 	margin-left: 20px;
 	}
 
-#commentlist .children li {
-	}
-
 #commentlist li {
-	margin: 10px 0 0;
+	margin: 10px 0;
 	list-style: none;
-	}
-
-#commentlist .comment {
-	padding: 10px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	}
 
-#commentlist li.comment {
-	padding: 0;
+#commentlist li > div {
+	padding: 10px;
 	}
 
 #commentlist li .comment-content {
@@ -948,6 +958,11 @@ div.quoter_page_container {
 #commentlist .comment-author {
 	font-size: 1.5em;
 	font-weight: bold;
+	}
+
+#commentlist .pingback .comment-author,
+#commentlist .trackback .comment-author {
+	font-size: 1.3em;
 	}
 
 .comment-author cite {
@@ -996,36 +1011,16 @@ div.quoter_page_container {
 	padding: 2px 0;
 	}
 
-#pinglist {
-	font-size: 1.2em;
-	padding: 0;
-	margin: 10px 0 10px;
-	background: #f6f7f8;
-	}
-
-#pinglist li {
-	margin-left: 40px;
-	padding: 7px 0;
-	list-style: none;
-	}
-
-#pinglist li small {
-	font-size: 0.8em;
-	display: block;
-	}
-
-#pinglist li .counter {
-	display: none;
-	}
-
-#pinglist li span.favatar img {
+.pingback span.favatar img,
+.trackback span.favatar img {
 	margin-left: -25px;
 	border: none;
 	padding: 0;
 	float: left;
 	}
 
-#pinglist li img {
+.pingback img,
+.trackback img {
 	padding: 0;
 	border: none;
 	}
