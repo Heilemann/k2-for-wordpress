@@ -497,8 +497,6 @@ class K2 {
 ?>
 	<script type="text/javascript">
 	//<![CDATA[
-		K2.AjaxURL		= "<?php bloginfo('url'); ?>/";
-		K2.Animations	= <?php echo (int) get_option('k2animations') ?>;
 
 		// Setup a function for returning to the original RA UI
 		function initialRollingArchives() {
@@ -514,6 +512,9 @@ class K2 {
 		
 		/* Make ready K2's sub-systems */
 		jQuery(document).ready(function(){
+
+			K2.AjaxURL		= "<?php bloginfo('url'); ?>/";
+			K2.Animations	= <?php echo (int) get_option('k2animations') ?>;
 			
 			<?php /* LiveSearch */ if ( '1' == get_option('k2livesearch') ): ?>
 			K2.LiveSearch = new LiveSearch(
