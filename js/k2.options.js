@@ -17,10 +17,8 @@ jQuery(document).ready(function(){
 		})
 
 
-	/* Sorting them doesn't do anything, but it should of course, for now it's off.
 	jQuery('#k2-styles').sortable({
 		items: 'tbody tr'
 	});
-	*/
 
 });

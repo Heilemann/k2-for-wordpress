@@ -93,7 +93,7 @@
 				<p class="comment-welcomeback"><?php printf(__('Welcome back <strong>%s</strong>', 'k2'), $comment_author); ?>
 				
 				<a href="javascript:toggleCommentAuthorInfo();" id="toggle-comment-author-info">
-					<?php _e('(Change)', 'k2'); ?>
+					(<?php _e('Change Your Details', 'k2'); ?>)
 				</a>
 
 				<script type="text/javascript" charset="utf-8">
