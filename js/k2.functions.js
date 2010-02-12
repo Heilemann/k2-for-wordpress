@@ -63,7 +63,7 @@ function smartPosition(obj, classname, edge) {
 		jQuery(window)
 			.scroll(function() { checkBottom(obj, classname); })
 			.resize(function() { checkBottom(obj, classname); })
-			.onload(function() { checkBottom(obj, classname); });
+			.onload(function() { checkBottom(obj, classname); })
 	} else {  // Check Obj pos vs top edge
 		checkTop(obj, classname); // Check on load
 		
