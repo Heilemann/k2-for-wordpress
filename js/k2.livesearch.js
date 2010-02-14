@@ -105,9 +105,7 @@ LiveSearch.prototype.doSearch = function(self) {
 		function(data) {
 			jQuery('#content').html(data);
 
-			console.log('Before')
 			self.loading.fadeTo('fast', 0);
-			console.log('After')
 
 			jQuery.bbq.pushState( 'search=' + self.searchField.val() ); // Update the hash/fragment
 
