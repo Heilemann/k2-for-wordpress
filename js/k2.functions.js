@@ -5,8 +5,12 @@ if (typeof K2 == 'undefined') var K2 = {};
 K2.debug = false;
 
 
-//K2.prototype.ajaxComplete = [];
+// K2.prototype.ajaxComplete = [];
 
+
+/**
+ * Configure K2's AJAX settings.
+ */
 K2.ajaxGet = function(data, complete_fn) {
 	jQuery.ajax({
 		url:		K2.AjaxURL,
@@ -39,23 +43,37 @@ K2.ajaxGet = function(data, complete_fn) {
 			*/
 		}
 	});
-}
+};
 
+
+/**
+ * Parse out fragments from the URI (eg. something.com#search=bongo)
+ * and execute the relevant Rolling Archive or LiveSearch code.
+ * Makes use of the BBQ jQuery plugin.
+ *
+ */
 K2.parseFragments = function() {
 	// Parse out and perform livesearch fragment
-	if (jQuery.deparam.fragment().search)
-		K2.LiveSearch.doSearch(K2.LiveSearch);
+	if ( jQuery.deparam.fragment().search && K2.LiveSearch )
+		K2.LiveSearch.doSearch( K2.LiveSearch );
 
 	// If only a page fragment is present
-	if (jQuery.deparam.fragment().page && !jQuery.deparam.fragment().search)
-		K2.RollingArchives.gotoPage(jQuery.deparam.fragment().page);
+	if ( jQuery.deparam.fragment().page && !jQuery.deparam.fragment().search && K2.RollingArchives )
+		K2.RollingArchives.gotoPage( jQuery.deparam.fragment().page );
 }
 
 
-// Check for an element being scrolled off-screen
-function smartPosition(obj, classname, edge) {
-	if ( jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 7 ) return; /* No IE6 or lower */
 
+/**
+ * When a given element scrolls off the top of the screen, add a given classname to 'body'. 
+ *
+ * @param {String} obj			The element to watch.
+ * @param {String} classname	The classname to attach to 'body'.
+ * @param {String} edge			Can be set to 'bottom', in which case it checks to see if it's
+ * 								scrolled off the bottom. Otherwise it always checks the top.
+ */
+smartPosition = function(obj, classname, edge) {
+	if ( jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 7 ) return; // No IE6 or lower
 
 	if (edge == 'bottom') { // Check Obj pos vs bottom edge
 		checkBottom(obj, classname);  // Check on load
@@ -72,8 +90,10 @@ function smartPosition(obj, classname, edge) {
 	}
 };
 
-
-function checkBottom(obj, classname) {
+/**
+ * Check if an element disappears underneath the fold
+ */
+checkBottom = function(obj, classname) {
 	if ( (document.documentElement.scrollTop + document.documentElement.clientHeight || document.body.scrollTop + document.documentElement.clientHeight) >= jQuery(obj).offset().top && jQuery('body').hasClass('showrollingarchives')) {
 		jQuery('body').addClass(classname);
 	} else {
@@ -81,23 +101,29 @@ function checkBottom(obj, classname) {
 	}
 }
 
-function checkTop(obj, classname) {
+/**
+ * Check if an element disappears above the window
+ */
+checkTop = function(obj, classname) {
 	if ( (document.documentElement.scrollTop || document.body.scrollTop) >= jQuery(obj).offset().top && jQuery('body').hasClass('showrollingarchives')) {
 		jQuery('body').addClass(classname);
 	} else {
 		jQuery('body').removeClass(classname);
 	}
-}
+};
 
 
 /* When using RA and Livesearch, scroll to the top of the content, if animations are turned on and conditions are met */
 function scrollToContent() {
 	if (K2.Animations)
 		if (self.pageNumber != 1 && jQuery('body').hasClass('smartposition'))
-			jQuery('html,body').animate({ scrollTop: jQuery('#primary').offset().top - 1 }, 500);
-}
+			jQuery('html,body').animate({ scrollTop: jQuery('#primary').offset().top }, 100);
+};
 
-// Set the number of columns based on window size
+
+/**
+ * Set the number of columns based on window size
+ */ 
 function dynamicColumns() {
 	var window_width = jQuery(window).width();
 
@@ -108,10 +134,12 @@ function dynamicColumns() {
 	} else {
 		jQuery('body').removeClass('columns-two columns-three').addClass('columns-one');
 	}
-};
+}
 
 
-// Enable moving labels into their input fields.
+/**
+ * Enable moving labels into the input element they are attached to.
+ */
 function initOverLabels () {
 	if (!document.getElementById) return;
 
@@ -177,6 +205,8 @@ function hideLabel(field_id, hide) {
 	}
 };
 
+
+
 /*
 jQuery('.attachment-image').ready(function(){
 	resizeImage('.image-link img', '#page', 20);
@@ -203,7 +233,9 @@ function resizeImage(image, container, padding) {
 */
 
 
-// Enable ARIA (http://www.w3.org/WAI/intro/aria)
+/**
+ * Enable ARIA for better disabled accessibility (http://www.w3.org/WAI/intro/aria)
+ */
 function initARIA() {
 	jQuery('#header').attr('role', 'banner');
 	jQuery('#header .menu').attr('role', 'navigation');
@@ -211,10 +243,13 @@ function initARIA() {
 	jQuery('#content').attr('aria-live', 'polite').attr('aria-atomic', 'true');
 	jQuery('.secondary').attr('role', 'complementary');
 	jQuery('#footer').attr('role', 'contentinfo');
-};
+}
+jQuery(document).ready( initARIA )
 
 
-// Make menu awesome using Superfish
+/**
+ * Make menu awesome using Superfish
+ */ 
 function initMenu() {
 	jQuery('.menu ul').superfish({
 		autoArrows:		false,									// Disable generation of arrow mark-up 
@@ -235,3 +270,4 @@ function initMenu() {
 		jQuery(this).attr('title','')
 	});
 }
+jQuery(document).ready( initMenu )

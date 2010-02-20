@@ -14,6 +14,7 @@ function get_k2info( $show = '' ) {
     		$output = K2_CURRENT;
 			break;
 
+/*
 		case 'style_footer' :
 			if ( K2_STYLES ) {
 				$styleinfo = get_option('k2styleinfo');
@@ -21,11 +22,14 @@ function get_k2info( $show = '' ) {
 					$output = stripslashes($styleinfo['footer']);
 			}
 			break;
+*/
 
+/*
 		case 'styles_url' :
 			if ( K2_STYLES )
 				$output = K2Styles::get_styles_url();
 			break;
+*/
 
 		case 'headers_url' :
 			$output = K2_HEADERS_URL . '/';

@@ -1,4 +1,6 @@
-/* @override http://localhost/k2/wp-content/themes/k2/styles/k2.classic/k2.classic.css */
+/* @override 
+	http://localhost/k2/wp-content/themes/k2/css/k2.css
+*/
 
 /*
 	Author				: K2 Team
@@ -123,8 +125,8 @@ body.lang-zh {
 #primary {
 	position: relative;
 	float: left;
-	width: 500px;
-	padding: 10px;
+	width: 520px;
+	padding: 10px 0;
 	}
 
 body.showrollingarchives #primary { /* Flush RA with header */
@@ -142,10 +144,6 @@ body.home.onepageonly.rollingarchives #primary { /* No RA, so back to 10px */
 
 #primary {
 	margin-top: 9px;
-	}
-
-#content {
-	margin-top: 5px;
 	}
 
 .columns-one .secondary {
@@ -242,7 +240,7 @@ body.home.onepageonly.rollingarchives #primary { /* No RA, so back to 10px */
 
 .menu > ul > li.current_page_ancestor.has_children > a:after,
 .menu > ul > li.current_page_item.has_children > a:after {
-	background: url('images/arrows.png') no-repeat left top;
+	background: url('../images/arrows.png') no-repeat left top;
 	}
 
 .menu > ul > li.has_children:hover > a:after,
@@ -254,7 +252,7 @@ body.home.onepageonly.rollingarchives #primary { /* No RA, so back to 10px */
 	height: 4px;
 	width: 7px;
 	content: '';
-	background: url('images/arrows.png') no-repeat left bottom;
+	background: url('../images/arrows.png') no-repeat left bottom;
 	}
 
 .menu > ul > li > ul { /* Child Menus */
@@ -544,7 +542,7 @@ body.page .post-content h4 {
 	border: none;
 	padding: 2px;
 	padding-right: 20px;
-	background: url('images/feed.png') right center no-repeat;
+	background: url('../images/feed.png') right center no-repeat;
 	height: 16px;
 	position: absolute;
 	top: 0;
@@ -709,8 +707,18 @@ div.quoter_page_container {
 /* Primary Contents */
 
 .post {
-	margin: 0 0 30px;
 	position: relative;
+	margin: 0 0 20px;
+	padding: 5px 10px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-webkit-transition: -webkit-box-shadow .2s ease-out;
+	}
+
+.post.selected {
+	-webkit-box-shadow: 0 0 5px rgba(55,136,209,0.94);
+	-moz-box-shadow: 0 0 5px rgba(55,136,209,0.94);
 	}
 
 .post-content {
@@ -987,7 +995,7 @@ div.quoter_page_container {
 
 .bypostauthor > div.comment blockquote {
 	color: #333;
-	background: url('images/quote.png') no-repeat 10px 0;              
+	background: url('../images/quote.png') no-repeat 10px 0;              
 	}
 
 #respond {
@@ -1054,7 +1062,7 @@ div.quoter_page_container {
 	vertical-align: middle;
 	height: 18px;
 	width: 18px;
-	background: url('images/spinner.gif') center center no-repeat;
+	background: url('../images/spinner.gif') center center no-repeat;
 	}
 
 .comments form {
@@ -1176,6 +1184,10 @@ a {
 	clear: both;
 	}
 
+.post p {
+	overflow: auto;
+	}
+
 a img {
 	border: none;
 	}
@@ -1270,7 +1282,7 @@ blockquote {
 	margin: 20px 0;
 	padding: 0 20px 0 50px;
 	color: #333;
-	background: url('images/quote.png') no-repeat 10px 0;
+	background: url('../images/quote.png') no-repeat 10px 0;
 	border: none;
 	}
 
@@ -1438,12 +1450,12 @@ input[type=text], textarea {
 
 #searchreset {
 	z-index: 4;
-	background: url('images/reset-fff.png') center center no-repeat;
+	background: url('../images/reset-fff.png') center center no-repeat;
 	}
 
 #searchload {
 	z-index: 3;
-	background: url('images/spinner.gif') center center no-repeat;
+	background: url('../images/spinner.gif') center center no-repeat;
 	}
 
 #searchsubmit { /* Static search button */
@@ -1472,14 +1484,15 @@ input[type=text], textarea {
 	padding: 0;
 }
 
+body.rollingarchives.single .navigation {
+	display: block;
+}
+
 body.rollingarchives .navigation,
+body.showrollingarchives.single .navigation,
 body.showrollingarchives .navgation, /* If RA or LS are in use, hide static navigation */
 body.livesearchactive .navigation {
 	display: none;
-}
-
-body.rollingarchives.single .navigation {
-	display: block;
 }
 
 body.showrollingarchives,
@@ -1521,6 +1534,7 @@ body.showrollingarchives .navigation {
 	display: block;
 	width: 500px;
 	border-bottom: none;
+	margin: 0 10px;
 	}
 
 #rollingarchives.emptypage {
@@ -1541,7 +1555,7 @@ body.smartposition #rollingarchivesbg {
 	z-index: 45;
 	position: fixed;
 	top: 0;
-	margin-left: -30px; /* Counter-act #primary & #wrapper paddings */
+	margin-left: -20px; /* Counter-act #primary & #wrapper paddings */
 	height: 45px;
 	background: #f8f8f8;
 	}
@@ -1575,6 +1589,7 @@ body.smartposition #content.onepageonly { /* If there is only a single page, rem
 
 #content { /* Contains both the RA nav and content, and is used for as a top marker for the smartposition */
 	position: relative;
+	margin-top: 5px;
 	}
 
 #rollingarchives a:hover {
@@ -1590,13 +1605,31 @@ body.smartposition #content.onepageonly { /* If there is only a single page, rem
 	top: 17px;
 	}
 
+#rollprevious, #rollnext, #rollload, #texttrimmer {
+	position: absolute;
+	top: 0px;
+	line-height: 45px;
+	}
+
+body.trim #trimmertrim {
+	display: none;
+}
+
+#trimmeruntrim {
+	display: none;
+}
+
+body.trim #trimmeruntrim {
+	display: block;
+}
+
 #rollprevious:hover, #rollnext:hover, #rollhome:hover {
 	text-decoration: underline;
 	cursor: pointer;
 	}
 
 #rollload {
-	background: url('images/spinner.gif') no-repeat center center;
+	background: url('../images/spinner.gif') no-repeat center center;
 	top: 16px;
 	left: 50%;
 	margin-left: -8px;
@@ -1624,7 +1657,7 @@ body.smartposition #content.onepageonly { /* If there is only a single page, rem
 	left: -47px;
 	z-index: 55;
 	height: 45px;
-	background: url('images/rollhover.png') no-repeat center top;
+	background: url('../images/rollhover.png') no-repeat center top;
 	}
 
 #rollhover, #rolldates {
@@ -1716,14 +1749,6 @@ body.smartposition #content.onepageonly { /* If there is only a single page, rem
 
 body.trim .post-content, body.trim .post-footer {
 	display: none;
-	}
-
-body.trim .post {
-	margin: 0 -10px 10px;
-	padding: 5px 10px;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
 	}
 
 #texttrimmer {
@@ -1890,63 +1915,6 @@ div#latest-comments small {
 .widget_tag_cloud a {
 	padding: 0 2px;
 	#fff-space: nowrap;
-	}
-
-
-/* GeoPress Fix */
-
-.post-content div.mapstraction {
-	margin: 0;
-	}
-
-
-/* My God. It's full of stars. */	}
-
-#wp-calendar td {
-	color: #ccc;
-	}
-
-#wp-calendar td, #wp-calendar th {
-	text-align: center;
-	padding: 2px 0;
-	}
-
-#wp-calendar a {
-	display: block;
-	}
-
-#wp-calendar caption {
-	font-size: 1.5em;
-	font-weight: bold;
-	padding: 10px;
-	}
-
-#wp-calendar #prev {
-	text-align: left;
-	}
-
-#wp-calendar #next {
-	text-align: right;
-	}
-	
-#wp-calendar #today {
-	background: #f3f3f3;
-	}
-
-
-/* Tag Cloud Module */
-
-.widget_tag_cloud {
-	line-height: 2em;
-	}
-
-.widget_tag_cloud li {
-	display: inline;
-	}
-
-.widget_tag_cloud a {
-	padding: 0 2px;
-	white-space: nowrap;
 	}
 
 

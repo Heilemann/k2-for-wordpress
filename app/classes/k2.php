@@ -24,8 +24,10 @@ class K2 {
 		if ( class_exists('WP_Widget') ) // WP 2.8+
 			require_once(TEMPLATEPATH . '/app/includes/widgets.php');
 
+/*
 		if ( defined('K2_STYLES') and K2_STYLES == true )
 			require_once(TEMPLATEPATH . '/app/classes/styles.php');
+*/
 
 		if ( defined('K2_HEADERS') and K2_HEADERS == true )
 			require_once(TEMPLATEPATH . '/app/classes/header.php');
@@ -73,17 +75,21 @@ class K2 {
 	 */
 	function install() {
 		add_option('k2version', K2_CURRENT, 'This option stores K2\'s version number');
-		add_option('k2asidescategory', '0', 'A category which will be treated differently from other categories');
+
+		add_option('k2style', '1', "Load the classic K2 style.");
+
 		add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on"); // (live & classic)
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
-		add_option('k2archives', '0', 'Set whether K2 has an archives page');
-
 		add_option('k2animations', '1', 'JavaScript Animation effects.');
-		add_option('k2entrymeta1', __('Published by %author% on %date% in %categories%. %comments% %tags%', 'k2'), 'Customized metadata format before entry content.');
-		add_option('k2entrymeta2', '', 'Customized metadata format after entry content.');
-
 		$defaultjs = "// Lightbox v2.03.3 - Adds new images to lightbox\nif (typeof myLightbox != 'undefined' && myLightbox instanceof Lightbox && myLightbox.updateImageList) {\n\tmyLightbox.updateImageList();\n}\n";
 		add_option('k2ajaxdonejs', $defaultjs, 'JavaScript to execute when Ajax is completed');
+
+		add_option('k2archives', '0', 'Set whether K2 has an archives page');
+
+		add_option('k2asidescategory', '0', 'A category which will be treated differently from other categories');
+
+		add_option('k2entrymeta1', __('Published by %author% on %date% in %categories%. %comments% %tags%', 'k2'), 'Customized metadata format before entry content.');
+		add_option('k2entrymeta2', '', 'Customized metadata format after entry content.');
 
 		// Call the install handlers
 		do_action('k2_install');
@@ -120,6 +126,7 @@ class K2 {
 	 */
 	function uninstall() {
 		// Delete options
+		delete_option('k2style');
 		delete_option('k2version');
 		delete_option('k2asidescategory');
 		delete_option('k2livesearch');
@@ -216,6 +223,16 @@ class K2 {
 
 
 	/**
+	 * Adds default K2 CSS to header if enabled in options. Called by action: k2css_head
+	 */
+	function k2css_head() {
+		?>
+		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/k2.css" />
+	<?php
+	}
+
+
+	/**
 	 * Enqueues scripts. Called by action: admin_print_scripts
 	 */
 	function admin_print_scripts() {
@@ -260,6 +277,13 @@ class K2 {
 			update_option('k2animations', '1');
 		} else {
 			update_option('k2animations', '0');
+		}
+
+		// Use the Default K2 Style?
+		if ( isset($_POST['k2']['style']) ) {
+			update_option('k2style', '1');
+		} else {
+			update_option('k2style', '0');
 		}
 
 		// Archives Page (thanks to Michael Hampton, http://www.ioerror.us/ for the assist)
@@ -401,22 +425,25 @@ class K2 {
 	
 
 	/**
-	 * Register K2 scripts to script loader
+	 * Register K2 scripts with WordPress' script loader
 	 */
 	function register_scripts() {
-		// Register jQuery
-		wp_register_script('jquery-dimensions',
-			get_bloginfo('template_directory') . '/js/jquery.dimensions.js',
-			array('jquery'), '1.2');
+		// We want to use the latest version of jQuery, but it may break something in
+		// the admin, so we only load it on the actual site.
+        global $wp_scripts;
 
-		wp_register_script('jquery-easing',
-			get_bloginfo('template_directory') . '/js/jquery.easing.js',
-			array('jquery'), '1.1.2');
+        if ( ( version_compare('1.4.1', $wp_scripts -> registered[jquery] -> ver) == 1 ) && !is_admin() ) :
+	     	wp_deregister_script('jquery'); 
+	
+	     	wp_register_script('jquery',
+				get_bloginfo('template_directory') . '/js/jquery.js',
+				false, '1.4.1');
+		endif;
 
 		// Register our scripts with WordPress
 		wp_register_script('bbq',
 			get_bloginfo('template_directory') . '/js/jquery.bbq.js',
-			array('jquery'), '1.1.1');
+			array('jquery'), '1.1.1', true);
 
 		wp_register_script('hoverintent',
 			get_bloginfo('template_directory') . '/js/jquery.hoverintent.js',
@@ -425,6 +452,18 @@ class K2 {
 		wp_register_script('superfish',
 			get_bloginfo('template_directory') . '/js/jquery.superfish.js',
 			array('jquery', 'hoverintent'), '1.4.8');
+
+		wp_register_script('easing',
+			get_bloginfo('template_directory') . '/js/jquery.easing.js',
+			array('jquery'), '1.3', true);
+
+		wp_register_script('hotkeys',
+			get_bloginfo('template_directory') . '/js/jquery.hotkeys.js',
+			array('jquery'), '0.7.9', true);
+
+		wp_register_script('ui',
+			get_bloginfo('template_directory') . '/js/jquery.ui.js',
+			array('jquery'), '1.7.2', true);
 
 		wp_register_script('k2functions',
 			get_bloginfo('template_directory') . '/js/k2.functions.js',
@@ -440,11 +479,11 @@ class K2 {
 
 		wp_register_script('k2rollingarchives',
 			get_bloginfo('template_directory') . '/js/k2.rollingarchives.js',
-			array('jquery', 'bbq', 'k2slider'), K2_CURRENT, true);
+			array('jquery', 'bbq', 'easing', 'ui', 'k2slider', 'hotkeys'), K2_CURRENT, true);
 
 		wp_register_script('k2livesearch',
 			get_bloginfo('template_directory') . '/js/k2.livesearch.js',
-			array('jquery', 'bbq'), K2_CURRENT, true);
+			array('jquery', 'bbq', 'hotkeys'), K2_CURRENT, true);
 	}
 
 
@@ -471,11 +510,11 @@ class K2 {
 	
 
 	/**
-	 * Initializes scripts
+	 * Initializes Rolling Archives and LiveSearch
 	 */
-	function init_scripts() {
-		global $wp_query;
-
+	function init_advanced_navigation() {
+		global $wp_query, $wp_scripts;
+		
 		// Get the query
 		if ( is_array($wp_query->query) )
 			$rolling_query = $wp_query->query;
@@ -493,12 +532,14 @@ class K2 {
 
 		// Future content will be dynamic.		
 		$rolling_query['k2dynamic'] = 1;
-
-?>
+	?>
 	<script type="text/javascript">
 	//<![CDATA[
 
-		// Setup a function for returning to the original RA UI
+		/**
+		 * Initalize the Rolling Archives proper. This function will reset the RA
+		 * back to the originally loaded page anytime.
+		 */
 		function initialRollingArchives() {
 			K2.RollingArchives.setState(
 				<?php echo (int) $rolling_page; ?>,
@@ -509,35 +550,31 @@ class K2 {
 
 			smartPosition('#primary', 'smartposition'); // Prepare a 'sticky' scroll point
 		}
-		
-		/* Make ready K2's sub-systems */
-		jQuery(document).ready(function(){
 
-			K2.AjaxURL		= "<?php bloginfo('url'); ?>/";
-			K2.Animations	= <?php echo (int) get_option('k2animations') ?>;
-			
-			<?php /* LiveSearch */ if ( '1' == get_option('k2livesearch') ): ?>
-			K2.LiveSearch = new LiveSearch(
-				"<?php esc_attr_e('Search','k2'); ?>"
-			);
-			<?php endif; ?>
+		/**
+		 * Set in motion all of K2's AJAX hotness (RA and LS).
+		 */
+		function initK2() {
+			K2.AjaxURL		= "<?php bloginfo('url'); ?>/"; // For our AJAX calls
+			K2.Animations	= <?php echo (int) get_option('k2animations') ?>; // Fetch the animations option
 
-			<?php /* Rolling Archives */ if ( '1' == get_option('k2rollingarchives') ): ?>
-			// Insert the Rolling Archives UI.
+			// Initialize Livesearch
+			K2.LiveSearch	= new LiveSearch( "<?php esc_attr_e('Search','k2'); ?>" );
+
+			// Insert the Rolling Archives UI...
 			K2.RollingArchives = new RollingArchives(
 				"#content",
 				"<?php /* translators: 1: current page, 2: total pages */ esc_attr_e('%1$d of %2$d', 'k2'); ?>", // Page X of Y
 				"<?php _e('Older', 'k2'); ?>",
 				"<?php _e('Newer', 'k2'); ?>",
-				"<?php _e('Loading', 'k2'); ?>",
-				"<?php _e('Trim', 'k2'); ?>",
-				"<?php _e('Untrim', 'k2'); ?>"
+				"<?php _e('Loading', 'k2'); ?>"
 			);
 
-			initialRollingArchives();		// Initialize the Rolling Archives UI
+			// ...and initialize the Rolling Archives
+			initialRollingArchives();
 
-			K2.RollingArchives.saveState(); // Save the original content for later retrieval
-			<?php endif; ?>
+			// Save the original content for later retrieval
+			K2.RollingArchives.saveState(); 
 
 			<?php /* JS to run after jQuery Ajax calls */ if (get_option('k2ajaxdonejs') != '') { ?>
 			jQuery('#content').ajaxComplete(function () {
@@ -545,22 +582,28 @@ class K2 {
 			});
 			<?php } ?>
 
-			initARIA(); // Setup ARIA for disabled access
-			
-			initMenu(); // Setup the delayed hover actions of the menu
+			// Continually check for fragment changes if RA or LS are enabled
+			if (K2.parseFragments) {
+				if (K2.RollingArchives || K2.LiveSearch) {
+					jQuery(window).bind( 'hashchange', function() {
+						K2.parseFragments();
+					});
+				}
 
-			// Continually check for fragment changes
-			jQuery(window).bind( 'hashchange', function() {
 				K2.parseFragments();
-			});
+			}
 
-			K2.parseFragments();
-		});
+			K2.RollingArchives.hotkeys(50);
+		}
+		
+		// Make ready K2's sub-systems
+		jQuery(document).ready( function() { initK2() })
 	//]]>
 	</script>
-<?php
 
-	}
+
+	<?php
+	} // End Init_Scripts()
 
 
 	/**
@@ -724,11 +767,17 @@ add_action( 'admin_menu', 			array('K2', 'add_options_menu') );
 add_action( 'admin_init', 			array('K2', 'admin_init') );
 add_filter( 'mce_css', 				array('K2', 'admin_style_visual_editor') );
 add_action( 'wp_print_scripts', 	array('K2', 'enqueue_scripts') );
-add_action( 'wp_footer', 			array('K2', 'init_scripts') );
 add_action( 'template_redirect', 	array('K2', 'dynamic_content') );
 add_filter( 'query_vars', 			array('K2', 'add_custom_query_vars') );
+
+// Use the default K2 CSS?
+if ( get_option('k2style') == 1 )
+	add_action( 'wp_head', 			array('K2', 'k2css_head') );
+
+// Are LiveSearch and Rolling Archives enabled?
+if ( get_option('k2livesearch') == 1 && get_option('k2rollingarchives') == 1 )
+	add_action( 'wp_footer', 		array('K2', 'init_advanced_navigation') );
 
 // Decrease the priority of redirect_canonical
 remove_action( 'template_redirect', 'redirect_canonical' );
 add_action( 'template_redirect', 'redirect_canonical', 11 );
-//add_filter( 'redirect_canonical', array('K2', 'prevent_dynamic_redirect') );

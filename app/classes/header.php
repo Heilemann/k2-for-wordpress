@@ -23,6 +23,7 @@ class K2Header {
 		$default_widths =  array( 1 => 560, 780, 950 );
 
 		// Load style settings
+/*
 		if ( K2_STYLES ) {
 			$styleinfo = get_option('k2styleinfo');
 
@@ -43,6 +44,7 @@ class K2Header {
 					@define( 'HEADER_TEXTCOLOR', $styleinfo['header_text_color'] );
 			}
 		}
+*/
 		
 		// Default settings
 		@define( 'HEADER_IMAGE_HEIGHT', 200 );

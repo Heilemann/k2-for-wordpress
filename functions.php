@@ -12,7 +12,7 @@ define('K2_CHILD_THEME', get_stylesheet() != get_template());
 @define( 'TEMPLATEURL', get_bloginfo('stylesheet_directory') );
 
 // Features that can be disabled by Child Themes
-@define( 'K2_STYLES', true );
+/* @define( 'K2_STYLES', true ); */
 @define( 'K2_HEADERS', true );
 
 // WordPress compatibility

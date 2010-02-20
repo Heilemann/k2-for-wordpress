@@ -42,8 +42,19 @@
 	<h2><?php _e('K2 Options', 'k2'); ?></h2>
 	<form action="<?php echo esc_attr($_SERVER['REQUEST_URI']); ?>" method="post" id="k2-options">
 		<ul class="options-list">
+
 			<li>
-				<h3 class="main-label"><label for="k2-advnav"><?php _e('Advanced Navigation', 'k2'); ?></label></h3>
+				<h3 class="main-label"><label for="k2-style"><?php _e("Use Default CSS?", 'k2'); ?></label></h3>
+
+				<p class="main-option">
+					<input id="k2-style" name="k2[style]" type="checkbox" value="1" <?php checked('1', get_option('k2style')); ?> />
+				</p>
+
+				<p class="description"><?php _e("Use the classic 'white page, blue header'-layout. Disable to build your own style from the bottom up using a child theme.", 'k2'); ?></p>
+			</li>
+
+			<li>
+				<h3 class="main-label"><label for="k2-advnav"><?php _e('Use Advanced Navigation?', 'k2'); ?></label></h3>
 
 				<p class="main-option">
 					<input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2livesearch')); ?> />
@@ -54,7 +65,7 @@
 				<ul class="advanced-option">
 					<li>
 						<input id="k2-animations" name="k2[animations]" type="checkbox" value="1" <?php checked('1', get_option('k2animations')); ?> />
-						<label for="k2-animations"><?php _e('JavaScript Animations', 'k2'); ?></label>
+						<label for="k2-animations"><?php _e('Use JavaScript Animations?', 'k2'); ?></label>
 					</li>
 					<li>
 						<h4><label for="k2ajax"><?php _e('Ajax Success JavaScript', 'k2'); ?></label></h4>
@@ -63,8 +74,9 @@
 					</li>
 				</ul>
 			</li>
+
 			<li>
-				<h3 class="main-label"><label for="k2-archives"><?php _e('Archives Page', 'k2'); ?></label></h3>
+				<h3 class="main-label"><label for="k2-archives"><?php _e('Use the Archives Page?', 'k2'); ?></label></h3>
 
 				<p class="main-option">
 					<input id="k2-archives" name="k2[archives]" type="checkbox" value="add_archive" <?php checked('1', get_option('k2archives')); ?> />
@@ -72,8 +84,9 @@
 
 				<p class="description"><?php _e('Installs a pre-made archives page.', 'k2'); ?></p>
 			</li>
+
 			<li>
-				<h3 class="main-label"><label for="k2-asidescategory"><?php _e('Asides', 'k2'); ?></label></h3>
+				<h3 class="main-label"><label for="k2-asidescategory"><?php _e('Use Asides?', 'k2'); ?></label></h3>
 
 				<p class="main-option">
 					<select id="k2-asidescategory" name="k2[asidescategory]">

@@ -126,7 +126,7 @@ LiveSearch.prototype.resetSearch = function(self) {
 
 	self.reset.unbind('click').fadeTo('fast', 0).css('cursor', 'default');
 
-	if (jQuery('body').hasClass('rollingarchives') && K2.RollingArchives.restoreState) {
+	if ( jQuery('body').hasClass('rollingarchives') && K2.RollingArchives.restoreState ) {
 		K2.RollingArchives.restoreState();
 	}
 };
