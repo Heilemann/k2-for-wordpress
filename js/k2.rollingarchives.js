@@ -340,6 +340,9 @@ RollingArchives.prototype.hotkeys = function(offset) {
 	// Esc: Deactivate selected post
 	jQuery(document).bind('keydown.hotkeys', {combi: 'Esc', disableInInput: true}, function() { jQuery(window).unbind('scroll.scrolldetector'); jQuery('*').removeClass('selected'); K2.RollingArchives.nextObj = undefined });
 
+	// H: Go back to page 1  
+	jQuery(document).bind('keydown.hotkeys', {combi: 'H', disableInInput: true}, function() { RA.gotoPage(1) })
+
 	// T: Trim, or remove .post-content  
 	jQuery(document).bind('keydown.hotkeys', {combi: 'T', disableInInput: true}, function() { 
 		
