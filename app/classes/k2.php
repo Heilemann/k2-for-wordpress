@@ -547,8 +547,6 @@ class K2 {
 				<?php echo json_encode($rolling_query); ?>,
 				<?php echo json_encode($page_dates); ?>
 			);
-
-			smartPosition('#primary', 'smartposition'); // Prepare a 'sticky' scroll point
 		}
 
 		/**
@@ -568,11 +566,14 @@ class K2 {
 				"<?php /* translators: 1: current page, 2: total pages */ esc_attr_e('%1$d of %2$d', 'k2'); ?>", // Page X of Y
 				"<?php _e('Older', 'k2'); ?>",
 				"<?php _e('Newer', 'k2'); ?>",
-				"<?php _e('Loading', 'k2'); ?>"
+				"<?php _e('Loading', 'k2'); ?>",
+				50
 			);
 
 			// ...and initialize the Rolling Archives
 			initialRollingArchives();
+
+			smartPosition('#primary', 'smartposition'); // Prepare a 'sticky' scroll point
 
 			// Save the original content for later retrieval
 			K2.RollingArchives.saveState(); 
@@ -594,7 +595,6 @@ class K2 {
 				K2.parseFragments();
 			}
 
-			K2.RollingArchives.hotkeys(50);
 		}
 		
 		// Make ready K2's sub-systems

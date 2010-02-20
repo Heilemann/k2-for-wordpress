@@ -7,12 +7,14 @@
  * @param {string}	older  		A localized string of 'Older' inserted into the UI.
  * @param {string}	newer  		A localized string of 'Newer' inserted into the UI.
  * @param {string}	loading		A localized string of 'Loading' inserted into the UI. 
+ * @param {Int}		offset		Value in pixels to offset scrolls to an element with. 
  */
-function RollingArchives(content, posts, pagetext, older, newer, loading) {
+function RollingArchives(content, posts, pagetext, older, newer, loading, offset) {
 	RA = this;
 	RA.content				= content;
 	RA.posts				= posts;
 	RA.pageText				= pagetext;
+	RA.offset				= offset;
 	RA.active				= false;
 
 	// Insert the Rolling Archives UI
@@ -71,6 +73,8 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 			jQuery('body').removeClass('trim');
 		})
 
+		RA.assignHotkeys();
+	
 		jQuery('body').addClass('rollingarchives')
 	}
 
@@ -227,7 +231,7 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 				jQuery('#primary').height('inherit') // Reflow height
 
 				if (selected == true)
-					RA.scrollTo(RA.posts, 50, 1, (page > RA.lastPage ? -1 : jQuery(RA.posts).length -2 )) // If the hotkeys were used, select the first post
+					RA.scrollTo(RA.posts, 1, (page > RA.lastPage ? -1 : jQuery(RA.posts).length -2 )) // If the hotkeys were used, select the first post
 			}
 		);
 	}
@@ -248,7 +252,7 @@ RollingArchives.prototype.gotoPage = function(newpage) {
  * @param 	Int		$direction	1 to go to next, -1 to go to previous.
  * @type	DOM Object
  */
-RollingArchives.prototype.scrollTo = function(obj, offset, direction, next) {
+RollingArchives.prototype.scrollTo = function(obj, direction, next) {
 	// Turn off our scroll detection.
 	jQuery(window).unbind('scroll.scrolldetector')
 	jQuery('html, body').stop()
@@ -259,7 +263,7 @@ RollingArchives.prototype.scrollTo = function(obj, offset, direction, next) {
 	// Find the next element below the upper fold
 	if (RA.nextObj == undefined) {
 		jQuery(obj).each(function(idx) {
-			if ( jQuery(this).offset().top - offset > jQuery(window).scrollTop() ) {
+			if ( jQuery(this).offset().top - RA.offset > jQuery(window).scrollTop() ) {
 				RA.nextObj = (direction === 1 ? idx -1 : idx);
 				return false;
 			}
@@ -284,7 +288,7 @@ RollingArchives.prototype.scrollTo = function(obj, offset, direction, next) {
 /* 	if ( jQuery(obj+':first').offset().top + jQuery(obj+':last').offset().top + jQuery(obj+':last').height() > jQuery(window).scrollTop() + jQuery(window).height() ) */
 
 	// Move .selected class to new element, return its vertical position to variable
-	nextElementPos = jQuery(obj).removeClass('selected').eq(RA.nextObj).addClass('selected').offset().top - offset;
+	nextElementPos = jQuery(obj).removeClass('selected').eq(RA.nextObj).addClass('selected').offset().top - RA.offset;
 
 	// Scroll to the next element. Then detect if user manually scrolls away, in which case we clear our .selected stuff.
 	var theBrowserWindow = (jQuery.browser.safari) ? jQuery('body') : jQuery('html'); // Browser differences, hurray.
@@ -324,15 +328,13 @@ RollingArchives.prototype.scrollDetection = function(self, scrollPos) {
 
 /*
  * Binds keyboard shortcuts for scrolling back and forth between posts and pages.
- *
- * @param Int	$offset		An offset in pixels added to the top, to scroll to.
  */
-RollingArchives.prototype.hotkeys = function(offset) {
+RollingArchives.prototype.assignHotkeys = function() {
 	// J: Scroll to next post
-	jQuery(document).bind('keydown.hotkeys', {combi: 'J', disableInInput: true}, function() { RA.scrollTo(RA.posts, offset, 1) });
+	jQuery(document).bind('keydown.hotkeys', {combi: 'J', disableInInput: true}, function() { RA.scrollTo(RA.posts, 1) });
 
 	// K: Scroll to previous post
-	jQuery(document).bind('keydown.hotkeys', {combi: 'K', disableInInput: true}, function() { RA.scrollTo(RA.posts, offset, -1) });
+	jQuery(document).bind('keydown.hotkeys', {combi: 'K', disableInInput: true}, function() { RA.scrollTo(RA.posts, -1) });
 
 	// Enter: Go to selected post
 	jQuery(document).bind('keydown.hotkeys', {combi: 'Return', disableInInput: true}, function() { if (jQuery('.selected').length > 0) window.location = jQuery('.selected .post-title a').attr('href') });
