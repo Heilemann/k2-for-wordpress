@@ -564,6 +564,7 @@ class K2 {
 			// Insert the Rolling Archives UI...
 			K2.RollingArchives = new RollingArchives(
 				"#content",
+				".post",
 				"<?php /* translators: 1: current page, 2: total pages */ esc_attr_e('%1$d of %2$d', 'k2'); ?>", // Page X of Y
 				"<?php _e('Older', 'k2'); ?>",
 				"<?php _e('Newer', 'k2'); ?>",
