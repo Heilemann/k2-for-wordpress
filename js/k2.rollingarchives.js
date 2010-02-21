@@ -149,8 +149,8 @@ RollingArchives.prototype.updatePageText = function(page) {
 /**
  * Validates a given page number, modifies the classes on 'body' and returns the pagenumber (or 0 if it's outside the available range).
  *
- * @param 	Int	$newpage A requested page number. 
- * @return	Int	A validated page number, or 0 if the number given is outside the legal range.
+ * @param 	{Int}	newpage A requested page number. 
+ * @return	{Int}			A validated page number, or 0 if the number given is outside the legal range.
  */
 RollingArchives.prototype.validatePage = function(newpage) {
 	if (!isNaN(newpage) && RA.pageCount > 1) {
@@ -178,7 +178,7 @@ RollingArchives.prototype.validatePage = function(newpage) {
 /**
  * Adds removes the 'rollload' class to or from 'body'.
  *
- * @param String $gostop If set to 'start', adds the 'rollload' class, otherwise removes it.
+ * @param {String} gostop If set to 'start', adds the 'rollload' class, otherwise removes it.
  */
 RollingArchives.prototype.loading = function(gostop) {
 	if (gostop == 'start')
@@ -191,7 +191,7 @@ RollingArchives.prototype.loading = function(gostop) {
 /**
  * Makes Rolling Archives go to the page requested.
  *
- * @param Int $newpage The page to go to.
+ * @param {Int} newpage The page to go to.
  */
 RollingArchives.prototype.gotoPage = function(newpage) {
 	var page = RA.validatePage(newpage);
@@ -247,12 +247,12 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 /*
  * Scroll to next/previous of given elements. 
  *
- * @param	String	$obj		The element(s) to go to. Is fed directly to jQuery.
- * @param 	Int		$offset		An offset in pixels added to the top, to scroll to.
- * @param 	Int		$direction	1 to go to next, -1 to go to previous.
- * @type	DOM Object
+ * @param	{String}	elements	The element(s) to go to. Is fed directly to jQuery.
+ * @param 	{Int}		offset		An offset in pixels added to the top, to scroll to.
+ * @param 	{Int}		direction	1 to go to next, -1 to go to previous.
+ * @type	{DOM Object}
  */
-RollingArchives.prototype.scrollTo = function(obj, direction, next) {
+RollingArchives.prototype.scrollTo = function(elements, direction, next) {
 	// Turn off our scroll detection.
 	jQuery(window).unbind('scroll.scrolldetector')
 	jQuery('html, body').stop()
@@ -262,7 +262,7 @@ RollingArchives.prototype.scrollTo = function(obj, direction, next) {
 
 	// Find the next element below the upper fold
 	if (RA.nextObj == undefined) {
-		jQuery(obj).each(function(idx) {
+		jQuery(elements).each(function(idx) {
 			if ( jQuery(this).offset().top - RA.offset > jQuery(window).scrollTop() ) {
 				RA.nextObj = (direction === 1 ? idx -1 : idx);
 				return false;
@@ -277,7 +277,7 @@ RollingArchives.prototype.scrollTo = function(obj, direction, next) {
 	RA.nextObj = RA.nextObj + direction;
 
 	// Next element is outside the range of objects? Then let's change the page.
-	if ( ( RA.nextObj > jQuery(obj).length - 1 ) || RA.nextObj < 0 ) {
+	if ( ( RA.nextObj > jQuery(elements).length - 1 ) || RA.nextObj < 0 ) {
 		RA.nextObj = undefined;
 		RA.pageSlider.setValueBy(-direction);
 		RA.flashElement(direction === 1 ? '#rollprevious' : '#rollnext');
@@ -288,7 +288,7 @@ RollingArchives.prototype.scrollTo = function(obj, direction, next) {
 /* 	if ( jQuery(obj+':first').offset().top + jQuery(obj+':last').offset().top + jQuery(obj+':last').height() > jQuery(window).scrollTop() + jQuery(window).height() ) */
 
 	// Move .selected class to new element, return its vertical position to variable
-	nextElementPos = jQuery(obj).removeClass('selected').eq(RA.nextObj).addClass('selected').offset().top - RA.offset;
+	nextElementPos = jQuery(elements).removeClass('selected').eq(RA.nextObj).addClass('selected').offset().top - RA.offset;
 
 	// Scroll to the next element. Then detect if user manually scrolls away, in which case we clear our .selected stuff.
 	var theBrowserWindow = (jQuery.browser.safari) ? jQuery('body') : jQuery('html'); // Browser differences, hurray.
@@ -311,8 +311,10 @@ RollingArchives.prototype.flashElement = function(el) {
 
 /*
  * Detect whether the user scrolls more than 40px away from the .selected element and then clears .selected stuff.
+ *
+ * @Param {Int}	scrollPos	The position, in pixels from the top, of the element to scroll to. 
  */
-RollingArchives.prototype.scrollDetection = function(self, scrollPos) {
+RollingArchives.prototype.scrollDetection = function(scrollPos) {
 	// If we're at the bottom already, bail.
 	if  (jQuery(document).scrollTop() + jQuery(window).height() >= jQuery(document).height()) return; 
 
@@ -364,6 +366,4 @@ RollingArchives.prototype.assignHotkeys = function() {
 
 	// Right Arrow: Next Page
 	jQuery(document).bind('keydown.hotkeys', {combi: 'Right', disableInInput: true}, function() { RA.pageSlider.setValueBy(1) });
-
-
 }
