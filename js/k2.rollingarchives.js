@@ -3,22 +3,37 @@
  *
  * @param {string}	content		An element to place the UI before. Eg. '#content';
  * @param {string}	posts		Class of the elements containing individual posts.
+ * @param {string}	parent		ID of parent element of RA UI, for .smartposition.
  * @param {string}	pagetext  	A localized string of 'X of Y' inserted into the UI.
  * @param {string}	older  		A localized string of 'Older' inserted into the UI.
  * @param {string}	newer  		A localized string of 'Newer' inserted into the UI.
  * @param {string}	loading		A localized string of 'Loading' inserted into the UI. 
- * @param {Int}		offset		Value in pixels to offset scrolls to an element with. 
+ * @param {Int}		offset		Value in pixels to offset scrolls to an element with. Defaults to 0.
  */
-function RollingArchives(content, posts, pagetext, older, newer, loading, offset) {
-	RA = this;
-	RA.content				= content;
-	RA.posts				= posts;
-	RA.pageText				= pagetext;
-	RA.offset				= offset;
+function RollingArchives(args) {
+	RA						= this;
+
+	RA.content				= args.content;
+	RA.posts				= args.posts;
+	RA.parent				= args.parent;
+	RA.offset				= args.offset || 0;
+
+	// Localization strings for the UI.
+	RA.pageText				= args.pagetext;
+	var older				= args.older || 'Older';
+	var newer				= args.newer || 'Newer';
+	var loading				= args.loading || 'Loading';
+
+	// Initially loaded values.
+	RA.initPageNumber		= args.pagenumber;
+	RA.initPageCount		= args.pagecount;
+	RA.initQuery			= args.query;
+	RA.initPageDates		= args.pagedates;
+
 	RA.active				= false;
 
 	// Insert the Rolling Archives UI
-	jQuery(content).before('\
+	jQuery(RA.content).before('\
 		<div id="rollingarchivesbg"></div>\
 		<div id="rollingarchives">\
 			<div id="rollnavigation">\
@@ -37,6 +52,8 @@ function RollingArchives(content, posts, pagetext, older, newer, loading, offset
 			</div> <!-- #rollnavigation -->\
 		</div> <!-- #rollingarchives -->\
 	')
+
+	RA.setState();
 };							
 
 /**
@@ -48,11 +65,17 @@ function RollingArchives(content, posts, pagetext, older, newer, loading, offset
  * @param {array}	pagedates	An array of 'month, year' to show as you scrub the RA slider.
  */
 RollingArchives.prototype.setState = function(pagenumber, pagecount, query, pagedates) {
-	RA.pageNumber			= pagenumber;
-	RA.pageCount 			= pagecount;
-	RA.query 				= query;
-	RA.pageDates 			= pagedates;
+	RA.pageNumber			= pagenumber	|| RA.initPageNumber;
+	RA.pageCount 			= pagecount		|| RA.initPageCount;
+	RA.query 				= query			|| RA.initQuery;
+	RA.pageDates 			= pagedates		|| RA.initPageDates;
 
+/* 	console.log( RA.pageNumber, RA.pageCount, RA.query, RA.pageDates ); */
+
+	// Save the original content for later retrieval
+	if (!query && RA.pageNumber === 1) RA.saveState(); 
+
+	// First time RA is called? Let's get to work.
 	if ( !jQuery('body').hasClass('rollingarchives') ) {
 		// Add click events
 		jQuery('#rollnext').click(function() {
@@ -73,12 +96,16 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 			jQuery('body').removeClass('trim');
 		})
 
-		RA.assignHotkeys();
+		RA.smartPosition(RA.parent); // Prepare a 'sticky' scroll point
+
+		RA.assignHotkeys(); // Setup Keyboard Shortcuts
 	
-		jQuery('body').addClass('rollingarchives')
+		jQuery('body').addClass('rollingarchives') // Put the world on notice.
+
+		jQuery(window).bind( 'hashchange', K2.parseFragments ) // Looks for fragment changes
 	}
 
-	if ( RA.validatePage(pagenumber) ) {
+	if ( RA.validatePage(RA.pageNumber) ) {
 		jQuery('body').removeClass('hiderollingarchives').addClass('showrollingarchives')
 
 		jQuery('#rollingarchives').show();
@@ -88,20 +115,20 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 
 		// Setup the page slider
 		RA.pageSlider = new K2Slider('#pagehandle', '#pagetrackwrap', {
-			minimum: 1,
-			maximum: RA.pageCount,
-			value: RA.pageCount - RA.pageNumber + 1,
-			onSlide: function(value) {
-				jQuery('#rollhover').show();
-				RA.updatePageText( RA.pageCount - value + 1);
-			},
-			onChange: function(value) {
-				RA.updatePageText( RA.pageCount - value + 1);
-				RA.gotoPage( RA.pageCount - value + 1 );
-			}
-		});
+			minimum:	1,
+			maximum:	RA.pageCount,
+			value:		RA.pageCount - RA.pageNumber + 1,
+			onSlide:	function(value) {
+							jQuery('#rollhover').show();
+							RA.updatePageText( RA.pageCount - value + 1);
+						},
+			onChange:	function(value) {
+							RA.updatePageText( RA.pageCount - value + 1);
+							RA.gotoPage( RA.pageCount - value + 1 );
+						}
+		})
 
-		RA.updatePageText( RA.pageNumber );
+		RA.updatePageText( RA.pageNumber )
 
 		RA.active = true;
 	} else {
@@ -129,7 +156,7 @@ RollingArchives.prototype.restoreState = function() {
 		jQuery.bbq.removeState('page');
 		jQuery.bbq.removeState('search');
 
-		initialRollingArchives();
+		RA.setState();
 	}
 };
 
@@ -139,10 +166,8 @@ RollingArchives.prototype.restoreState = function() {
  * @param {int}	page	The page to update to.
  */
 RollingArchives.prototype.updatePageText = function(page) {
-	jQuery('#rollpages').html(
-		(RA.pageText.replace('%1$d', page)).replace('%2$d', RA.pageCount)
-	);
-	jQuery('#rolldates').html(RA.pageDates[page - 1]);
+	jQuery('#rollpages').html(page +' '+ RA.pageText +' '+ RA.pageCount)
+	jQuery('#rolldates').html(RA.pageDates[page - 1])
 };
 
 
@@ -205,35 +230,36 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 		RA.pageNumber = page;
 
 		// Update the hash/fragment
-		jQuery.bbq.pushState( 'page='+page ); 
+		jQuery.bbq.pushState( 'page='+page )
 
 		// Show the loading spinner
-		RA.loading('start'); 
+		RA.loading('start')
 
 		// Do fancy animation stuff
-		RA.flashElement(page > RA.lastPage ? '#rollprevious' : '#rollnext');
-		jQuery('#primary').height(jQuery('#primary').height()) // Don't skip in height
-		jQuery(RA.content).hide("slide", { direction: (page > RA.lastPage ? 'right' : 'left') }, 200);
+		RA.flashElement(page > RA.lastPage ? '#rollprevious' : '#rollnext')
+		jQuery(RA.parent).height(jQuery(RA.parent).height()) // Don't skip in height
+		jQuery(RA.content).hide("slide", { direction: (page > RA.lastPage ? 'right' : 'left') }, 200)
 
 		// ...and scroll to the top if needed
-		scrollToContent();
+		if (K2.Animations && (RA.pageNumber != 1) && jQuery('body').hasClass('smartposition'))
+			jQuery('html,body').animate({ scrollTop: jQuery(RA.parent).offset().top }, 100)
 
-		jQuery.extend(RA.query, { paged: RA.pageNumber, k2dynamic: 1 });
+		jQuery.extend(RA.query, { paged: RA.pageNumber, k2dynamic: 1 })
 
 		K2.ajaxGet(RA.query,
 			function(data) {
-				jQuery('#rollhover').fadeOut('slow');
-				RA.loading('stop');
+				jQuery('#rollhover').fadeOut('slow')
+				RA.loading('stop')
 
 				// Insert the content and show it.
 				jQuery(RA.content).html(data)
-					.show("slide", { direction: (page > RA.lastPage ? 'left' : 'right') }, 200);
-				jQuery('#primary').height('inherit') // Reflow height
+					.show("slide", { direction: (page > RA.lastPage ? 'left' : 'right') }, 200)
+				jQuery(RA.parent).height('inherit') // Reflow height
 
 				if (selected == true)
 					RA.scrollTo(RA.posts, 1, (page > RA.lastPage ? -1 : jQuery(RA.posts).length -2 )) // If the hotkeys were used, select the first post
 			}
-		);
+		)
 	}
 
 	if (page == 1) // Reset trimmer setting
@@ -241,8 +267,55 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 };
 
 
+/**
+ * When a given element scrolls off the top of the screen, add a given classname to 'body'. 
+ *
+ * @param {String} obj			The element to watch.
+ * @param {String} edge			Can be set to 'bottom', in which case it checks to see if it's
+ * 								scrolled off the bottom. Otherwise it always checks the top.
+ */
+RollingArchives.prototype.smartPosition = function(obj, edge) {
+	var classname	= 'smartposition';
+	var objTop		= jQuery(obj).offset().top;
+
+	if ( jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 7 ) return; // No IE6 or lower
+
+	if (edge != 'bottom') { // Check Obj pos vs top edge by default
+		RA.checkTop(objTop, classname); // Check on load
+		
+		jQuery(window)
+			.scroll(function() { RA.checkTop(objTop, classname); });
+	} else {  // Check Obj pos vs bottom edge
+		RA.checkBottom(objTop, classname);  // Check on load
+
+		jQuery(window)
+			.scroll(function() { RA.checkBottom(obj, classname); })
+			.resize(function() { RA.checkBottom(obj, classname); })
+			.onload(function() { RA.checkBottom(obj, classname); })
+	}
+};
 
 
+/**
+ * Check if an element disappears underneath the fold
+ */
+RollingArchives.prototype.checkBottom = function(obj, classname) {
+	if ( (document.documentElement.scrollTop + document.documentElement.clientHeight || document.body.scrollTop + document.documentElement.clientHeight) >= jQuery(obj).offset().top && jQuery('body').hasClass('showrollingarchives')) {
+		jQuery('body').addClass(classname);
+	} else {
+		jQuery('body').removeClass(classname);
+	}
+}
+
+/**
+ * Check if an element disappears above the window
+ */
+RollingArchives.prototype.checkTop = function(objTop, classname) {
+	if ( jQuery(document).scrollTop() >= objTop )
+		jQuery('body').addClass(classname);
+	else
+		jQuery('body').removeClass(classname);
+};
 
 /*
  * Scroll to next/previous of given elements. 
@@ -292,6 +365,7 @@ RollingArchives.prototype.scrollTo = function(elements, direction, next) {
 
 	// Scroll to the next element. Then detect if user manually scrolls away, in which case we clear our .selected stuff.
 	var theBrowserWindow = (jQuery.browser.safari) ? jQuery('body') : jQuery('html'); // Browser differences, hurray.
+	if (K2.Animations)
 	theBrowserWindow.animate({ scrollTop: nextElementPos }, 150, 'easeOutExpo', function() { jQuery(window).bind('scroll.scrolldetector', function() { RA.scrollDetection(self, nextElementPos) }) } );
 };
 

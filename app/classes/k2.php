@@ -376,52 +376,6 @@ class K2 {
 		}
 	}
 
-
-	/**
-	 * Helper function used by RollingArchives
-	 */
-	function setup_rolling_archives() {
-		global $wp_query;
-
-		// Get the query
-		if ( is_array($wp_query->query) )
-			$rolling_query = $wp_query->query;
-		elseif ( is_string($wp_query->query) )
-			parse_str($wp_query->query, $rolling_query);
-
-		// Get list of page dates
-		if ( !is_page() and !is_single() )
-			$page_dates = get_rolling_page_dates($wp_query);
-
-		// Get the current page
-		$rolling_page = intval( get_query_var('paged') );
-		if ( $rolling_page < 1 )
-			$rolling_page = 1;
-		?>
-
-			<script type="text/javascript">
-			// <![CDATA[
-
-				jQuery(document).ready(function() {
-					K2.RollingArchives.setState(
-						<?php echo (int) $rolling_page; ?>,
-						<?php echo (int) $wp_query->max_num_pages; ?>,
-						<?php echo json_encode($rolling_query); ?>,
-						<?php echo json_encode($page_dates); ?>
-					);
-				});
-
-			<?php if ($rolling_page > 1) { ?>
-				jQuery.bbq.pushState( 'page=' + <?php echo (int) $rolling_page; ?> ); // Update the hash/fragment
-			<?php } else { ?>	
-				jQuery.bbq.removeState( 'page' ); // Remove the hash/fragment
-			<?php } ?>	
-
-			// ]]>
-			</script>
-
-		<?php
-	}
 	
 
 	/**
@@ -537,64 +491,40 @@ class K2 {
 	//<![CDATA[
 
 		/**
-		 * Initalize the Rolling Archives proper. This function will reset the RA
-		 * back to the originally loaded page anytime.
-		 */
-		function initialRollingArchives() {
-			K2.RollingArchives.setState(
-				<?php echo (int) $rolling_page; ?>,
-				<?php echo (int) $wp_query->max_num_pages; ?>,
-				<?php echo json_encode($rolling_query); ?>,
-				<?php echo json_encode($page_dates); ?>
-			);
-		}
-
-		/**
 		 * Set in motion all of K2's AJAX hotness (RA and LS).
 		 */
 		function initK2() {
-			K2.AjaxURL		= "<?php bloginfo('url'); ?>/"; // For our AJAX calls
-			K2.Animations	= <?php echo (int) get_option('k2animations') ?>; // Fetch the animations option
+			K2.AjaxURL		= "<?php bloginfo('url'); ?>/" // For our AJAX calls
+			K2.Animations	= <?php echo (int) get_option('k2animations') ?> // Fetch the animations option
 
 			// Initialize Livesearch
-			K2.LiveSearch	= new LiveSearch( "<?php esc_attr_e('Search','k2'); ?>" );
+			K2.LiveSearch	= new LiveSearch( "<?php esc_attr_e('Search','k2'); ?>" )
 
-			// Insert the Rolling Archives UI...
-			K2.RollingArchives = new RollingArchives(
-				"#content",
-				".post",
-				"<?php /* translators: 1: current page, 2: total pages */ esc_attr_e('%1$d of %2$d', 'k2'); ?>", // Page X of Y
-				"<?php _e('Older', 'k2'); ?>",
-				"<?php _e('Newer', 'k2'); ?>",
-				"<?php _e('Loading', 'k2'); ?>",
-				50
-			);
+			// Insert the Rolling Archives UI and init.
+			K2.RollingArchives = new RollingArchives({
+				content:	"#content",
+				posts:		"#content .post",
+				parent:		"#primary",
+				pagetext:	"<?php /* translators: 1: current page, 2: total pages */ _e('of', 'k2'); ?>", // Page X of Y
+				older:		"<?php _e('Older', 'k2'); ?>",
+				newer:		"<?php _e('Newer', 'k2'); ?>",
+				loading:	"<?php _e('Loading', 'k2'); ?>",
+				offset: 	50,
 
-			// ...and initialize the Rolling Archives
-			initialRollingArchives();
+				pagenumber:	<?php echo (int) $rolling_page; ?>,
+				pagecount:	<?php echo (int) $wp_query->max_num_pages; ?>,
+				query:		<?php echo json_encode($rolling_query); ?>,
+				pagedates:	<?php echo json_encode($page_dates); ?>
+			})
 
-			smartPosition('#primary', 'smartposition'); // Prepare a 'sticky' scroll point
-
-			// Save the original content for later retrieval
-			K2.RollingArchives.saveState(); 
+			// Parse and execute waiting fragments.
+			K2.parseFragments()
 
 			<?php /* JS to run after jQuery Ajax calls */ if (get_option('k2ajaxdonejs') != '') { ?>
 			jQuery('#content').ajaxComplete(function () {
 				<?php echo get_option('k2ajaxdonejs'); ?>
-			});
+			})
 			<?php } ?>
-
-			// Continually check for fragment changes if RA or LS are enabled
-			if (K2.parseFragments) {
-				if (K2.RollingArchives || K2.LiveSearch) {
-					jQuery(window).bind( 'hashchange', function() {
-						K2.parseFragments();
-					});
-				}
-
-				K2.parseFragments();
-			}
-
 		}
 		
 		// Make ready K2's sub-systems
@@ -606,6 +536,48 @@ class K2 {
 	<?php
 	} // End Init_Scripts()
 
+
+
+	/**
+	 * Helper function used by RollingArchives
+	 */
+	function setup_rolling_archives() {
+		global $wp_query;
+
+		// Get the query
+		if ( is_array($wp_query->query) )
+			$rolling_query = $wp_query->query;
+		elseif ( is_string($wp_query->query) )
+			parse_str($wp_query->query, $rolling_query);
+
+		// Get list of page dates
+		if ( !is_page() and !is_single() )
+			$page_dates = get_rolling_page_dates($wp_query);
+
+		// Get the current page
+		$rolling_page = intval( get_query_var('paged') );
+		if ( $rolling_page < 1 )
+			$rolling_page = 1;
+		?>
+
+			<script type="text/javascript">
+			// <![CDATA[
+
+				jQuery(document).ready(function() {
+					K2.RollingArchives.setState(
+						<?php echo (int) $rolling_page; ?>,
+						<?php echo (int) $wp_query->max_num_pages; ?>,
+						<?php echo json_encode($rolling_query); ?>,
+						<?php echo json_encode($page_dates); ?>
+					);
+				});
+
+			// ]]>
+			</script>
+
+		<?php
+	}
+	
 
 	/**
 	 * Helper function to load all php files in given directory using require_once

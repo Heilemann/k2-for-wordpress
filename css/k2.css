@@ -1396,7 +1396,7 @@ input[type=text], textarea {
 	}
 
 #search-label.overlabel-apply.hide { /* Hide label when #s isn't empty */
-	text-indent: -1000px;
+	text-indent: -10000px;
 	}
 
 #s, #search-label.overlabel-apply { /* Style #s and label in same way */

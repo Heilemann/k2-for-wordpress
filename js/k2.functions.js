@@ -50,7 +50,6 @@ K2.ajaxGet = function(data, complete_fn) {
  * Parse out fragments from the URI (eg. something.com#search=bongo)
  * and execute the relevant Rolling Archive or LiveSearch code.
  * Makes use of the BBQ jQuery plugin.
- *
  */
 K2.parseFragments = function() {
 	// Parse out and perform livesearch fragment
@@ -62,63 +61,6 @@ K2.parseFragments = function() {
 		K2.RollingArchives.gotoPage( jQuery.deparam.fragment().page );
 }
 
-
-
-/**
- * When a given element scrolls off the top of the screen, add a given classname to 'body'. 
- *
- * @param {String} obj			The element to watch.
- * @param {String} classname	The classname to attach to 'body'.
- * @param {String} edge			Can be set to 'bottom', in which case it checks to see if it's
- * 								scrolled off the bottom. Otherwise it always checks the top.
- */
-smartPosition = function(obj, classname, edge) {
-	if ( jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 7 ) return; // No IE6 or lower
-
-	if (edge == 'bottom') { // Check Obj pos vs bottom edge
-		checkBottom(obj, classname);  // Check on load
-
-		jQuery(window)
-			.scroll(function() { checkBottom(obj, classname); })
-			.resize(function() { checkBottom(obj, classname); })
-			.onload(function() { checkBottom(obj, classname); })
-	} else {  // Check Obj pos vs top edge
-		checkTop(obj, classname); // Check on load
-		
-		jQuery(window)
-			.scroll(function() { checkTop(obj, classname); });
-	}
-};
-
-/**
- * Check if an element disappears underneath the fold
- */
-checkBottom = function(obj, classname) {
-	if ( (document.documentElement.scrollTop + document.documentElement.clientHeight || document.body.scrollTop + document.documentElement.clientHeight) >= jQuery(obj).offset().top && jQuery('body').hasClass('showrollingarchives')) {
-		jQuery('body').addClass(classname);
-	} else {
-		jQuery('body').removeClass(classname);
-	}
-}
-
-/**
- * Check if an element disappears above the window
- */
-checkTop = function(obj, classname) {
-	if ( (document.documentElement.scrollTop || document.body.scrollTop) >= jQuery(obj).offset().top && jQuery('body').hasClass('showrollingarchives')) {
-		jQuery('body').addClass(classname);
-	} else {
-		jQuery('body').removeClass(classname);
-	}
-};
-
-
-/* When using RA and Livesearch, scroll to the top of the content, if animations are turned on and conditions are met */
-function scrollToContent() {
-	if (K2.Animations)
-		if (self.pageNumber != 1 && jQuery('body').hasClass('smartposition'))
-			jQuery('html,body').animate({ scrollTop: jQuery('#primary').offset().top }, 100);
-};
 
 
 /**

@@ -34,9 +34,9 @@ function LiveSearch(searchprompt) {
 			if (self.searchField.val() == '') {
 				self.searchLabel.show();
 
-				if (self.prevSearch != '') {
+				// 
+				if (self.prevSearch != null)
 					self.resetSearch(self);
-				}
 			}
 
 			var code = event.keyCode;
@@ -97,7 +97,9 @@ LiveSearch.prototype.doSearch = function(self) {
 
 	self.prevSearch = self.searchField.val();
 
-	scrollToContent();
+	// ...and scroll to the top if needed
+	if (K2.Animations && self.pageNumber != 1 && jQuery('body').hasClass('smartposition'))
+		jQuery('html,body').animate({ scrollTop: jQuery('#primary').offset().top }, 100);
 
 	jQuery.bbq.pushState( 'search=' + self.searchField.val() ); // Update the hash/fragment
 
@@ -126,7 +128,5 @@ LiveSearch.prototype.resetSearch = function(self) {
 
 	self.reset.unbind('click').fadeTo('fast', 0).css('cursor', 'default');
 
-	if ( jQuery('body').hasClass('rollingarchives') && K2.RollingArchives.restoreState ) {
-		K2.RollingArchives.restoreState();
-	}
+	if ( RA.restoreState ) RA.restoreState();
 };
