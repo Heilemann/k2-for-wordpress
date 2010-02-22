@@ -382,17 +382,6 @@ class K2 {
 	 * Register K2 scripts with WordPress' script loader
 	 */
 	function register_scripts() {
-		// We want to use the latest version of jQuery, but it may break something in
-		// the admin, so we only load it on the actual site.
-        global $wp_scripts;
-
-        if ( ( version_compare('1.4.1', $wp_scripts -> registered[jquery] -> ver) == 1 ) && !is_admin() ) :
-	     	wp_deregister_script('jquery'); 
-	
-	     	wp_register_script('jquery',
-				get_bloginfo('template_directory') . '/js/jquery.js',
-				false, '1.4.1');
-		endif;
 
 		// Register our scripts with WordPress
 		wp_register_script('bbq',
@@ -447,6 +436,17 @@ class K2 {
 	function enqueue_scripts() {
 		// Load our scripts
 		if ( ! is_admin() ) {
+			// We want to use the latest version of jQuery, but it may break something in
+			// the admin, so we only load it on the actual site.
+	        global $wp_scripts;
+
+	        if ( version_compare('1.4.1', $wp_scripts->registered['jquery']->ver) == 1 ) {
+				wp_deregister_script('jquery');
+
+				wp_register_script('jquery',
+					get_bloginfo('template_directory') . '/js/jquery.js',
+					false, '1.4.1');
+			}
 
 			wp_enqueue_script('k2functions');
 
