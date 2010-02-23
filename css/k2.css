@@ -37,10 +37,6 @@ body {
     font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Helvetica, Arial, Sans-Serif;
 	}
 
-strong, em, b, i {
-    font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Verdana, Helvetica, Arial, Sans-Serif;
-	}
-
 h1, .blog-title, h2, h3 {
 	font-family: "Trebuchet MS", Verdana, Sans-Serif;
 	}
