@@ -402,7 +402,7 @@ class K2 {
 
 		wp_register_script('hotkeys',
 			get_bloginfo('template_directory') . '/js/jquery.hotkeys.js',
-			array('jquery'), '0.7.9', true);
+			array('jquery'), '0.8', true);
 
 		wp_register_script('ui',
 			get_bloginfo('template_directory') . '/js/jquery.ui.js',
@@ -440,12 +440,12 @@ class K2 {
 			// the admin, so we only load it on the actual site.
 	        global $wp_scripts;
 
-	        if ( version_compare('1.4.1', $wp_scripts->registered['jquery']->ver) == 1 ) {
+	        if ( version_compare('1.4.2', $wp_scripts->registered['jquery']->ver) == 1 ) {
 				wp_deregister_script('jquery');
 
 				wp_register_script('jquery',
 					get_bloginfo('template_directory') . '/js/jquery.js',
-					false, '1.4.1');
+					false, '1.4.2');
 			}
 
 			wp_enqueue_script('k2functions');

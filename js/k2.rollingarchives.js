@@ -236,9 +236,11 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 		RA.loading('start')
 
 		// Do fancy animation stuff
-		RA.flashElement(page > RA.lastPage ? '#rollprevious' : '#rollnext')
-		jQuery(RA.parent).height(jQuery(RA.parent).height()) // Don't skip in height
-		jQuery(RA.content).hide("slide", { direction: (page > RA.lastPage ? 'right' : 'left') }, 200)
+		if (K2.Animations) {
+			RA.flashElement(page > RA.lastPage ? '#rollprevious' : '#rollnext')
+			jQuery(RA.parent).height(jQuery(RA.parent).height()) // Don't skip in height
+			jQuery(RA.content).hide("slide", { direction: (page > RA.lastPage ? 'right' : 'left') }, 200)
+		}
 
 		// ...and scroll to the top if needed
 		if (K2.Animations && (RA.pageNumber != 1) && jQuery('body').hasClass('smartposition'))
@@ -253,8 +255,11 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 
 				// Insert the content and show it.
 				jQuery(RA.content).html(data)
-					.show("slide", { direction: (page > RA.lastPage ? 'left' : 'right') }, 200)
-				jQuery(RA.parent).height('inherit') // Reflow height
+
+				if (K2.Animations) {
+					jQuery(RA.content).show("slide", { direction: (page > RA.lastPage ? 'left' : 'right') }, 200)
+					jQuery(RA.parent).height('inherit') // Reflow height
+				}
 
 				if (selected == true)
 					RA.scrollTo(RA.posts, 1, (page > RA.lastPage ? -1 : jQuery(RA.posts).length -2 )) // If the hotkeys were used, select the first post
@@ -354,7 +359,6 @@ RollingArchives.prototype.scrollTo = function(elements, direction, next) {
 		RA.nextObj = undefined;
 		RA.pageSlider.setValueBy(-direction);
 		RA.flashElement(direction === 1 ? '#rollprevious' : '#rollnext');
-		return;
 	}
 
 	// And finally scroll to the element (if the last element in the selection isn't on screen in its entirety).
@@ -364,9 +368,8 @@ RollingArchives.prototype.scrollTo = function(elements, direction, next) {
 	nextElementPos = jQuery(elements).removeClass('selected').eq(RA.nextObj).addClass('selected').offset().top - RA.offset;
 
 	// Scroll to the next element. Then detect if user manually scrolls away, in which case we clear our .selected stuff.
-	var theBrowserWindow = (jQuery.browser.safari) ? jQuery('body') : jQuery('html'); // Browser differences, hurray.
-	if (K2.Animations)
-	theBrowserWindow.animate({ scrollTop: nextElementPos }, 150, 'easeOutExpo', function() { jQuery(window).bind('scroll.scrolldetector', function() { RA.scrollDetection(self, nextElementPos) }) } );
+	var theBrowserWindow	= (jQuery.browser.safari) ? jQuery('body') : jQuery('html'); // Browser differences, hurray.
+	theBrowserWindow.animate({ scrollTop: nextElementPos }, (K2.Animations ? 150 : 0), 'easeOutExpo', function() { jQuery(window).bind('scroll.scrolldetector', function() { RA.scrollDetection(nextElementPos) }) } );
 };
 
 
@@ -374,7 +377,7 @@ RollingArchives.prototype.scrollTo = function(elements, direction, next) {
  * 'Flashes' and element by doubling its fontsize a microsecond.
  */
 RollingArchives.prototype.flashElement = function(el) {
-	if (jQuery(el+':animated').length > 0) return; // Prevent errors
+	if (jQuery(el+':animated').length > 0 || !K2.Animations) return; // Prevent errors
 
 	var origSize = parseInt(jQuery(el).css('font-size'));
 	jQuery(el).animate({fontSize: origSize * 2}, 30, 'easeInQuad', function() {
@@ -407,37 +410,37 @@ RollingArchives.prototype.scrollDetection = function(scrollPos) {
  */
 RollingArchives.prototype.assignHotkeys = function() {
 	// J: Scroll to next post
-	jQuery(document).bind('keydown.hotkeys', {combi: 'J', disableInInput: true}, function() { RA.scrollTo(RA.posts, 1) });
+	jQuery(document).bind('keydown.hotkeys', 'J', function() { RA.scrollTo(RA.posts, 1) });
 
 	// K: Scroll to previous post
-	jQuery(document).bind('keydown.hotkeys', {combi: 'K', disableInInput: true}, function() { RA.scrollTo(RA.posts, -1) });
+	jQuery(document).bind('keydown.hotkeys', 'K', function() { RA.scrollTo(RA.posts, -1) });
 
 	// Enter: Go to selected post
-	jQuery(document).bind('keydown.hotkeys', {combi: 'Return', disableInInput: true}, function() { if (jQuery('.selected').length > 0) window.location = jQuery('.selected .post-title a').attr('href') });
+	jQuery(document).bind('keydown.hotkeys', 'Return', function() { if (jQuery('.selected').length > 0) window.location = jQuery('.selected .post-title a').attr('href') });
 
 	// Esc: Deactivate selected post
-	jQuery(document).bind('keydown.hotkeys', {combi: 'Esc', disableInInput: true}, function() { jQuery(window).unbind('scroll.scrolldetector'); jQuery('*').removeClass('selected'); K2.RollingArchives.nextObj = undefined });
+	jQuery(document).bind('keydown.hotkeys', 'Esc', function() { jQuery(window).unbind('scroll.scrolldetector'); jQuery('*').removeClass('selected'); RA.nextObj = undefined });
 
 	// H: Go back to page 1  
-	jQuery(document).bind('keydown.hotkeys', {combi: 'H', disableInInput: true}, function() { RA.gotoPage(1) })
+	jQuery(document).bind('keydown.hotkeys', 'H', function() { RA.gotoPage(1) })
 
 	// T: Trim, or remove .post-content  
-	jQuery(document).bind('keydown.hotkeys', {combi: 'T', disableInInput: true}, function() { 
+	jQuery(document).bind('keydown.hotkeys', 'T', function() { 
 		
 		if ( !jQuery('body').hasClass('trim') )
 			jQuery('body').addClass('trim')
 		else
 			jQuery('body').removeClass('trim')
 
-		jQuery('#texttrimmer').animate({fontSize: '2em'}, 30, 'easeInQuad', function() {
-			jQuery('#texttrimmer').animate({fontSize: '1em'}, 450, 'easeOutQuad')
-		})
-
+		RA.flashElement('#texttrimmer');
 	});
 
 	// Left Arrow: Previous Page
-	jQuery(document).bind('keydown.hotkeys', {combi: 'Left', disableInInput: true}, function() { RA.pageSlider.setValueBy(-1) });
+	jQuery(document).bind('keydown.hotkeys', 'Left', function() { RA.pageSlider.setValueBy(-1) });
 
 	// Right Arrow: Next Page
-	jQuery(document).bind('keydown.hotkeys', {combi: 'Right', disableInInput: true}, function() { RA.pageSlider.setValueBy(1) });
+	jQuery(document).bind('keydown.hotkeys', 'Right', function() { RA.pageSlider.setValueBy(1) });
+
+	// Slash: Focus on search
+	jQuery(document).bind('keydown.hotkeys', '/', function() { jQuery('#s').focus() });
 }
