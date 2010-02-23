@@ -168,6 +168,6 @@
 		<?php endif; /* If registration required and not logged in */ ?>
 	
 		<div class="clear"></div>
-	</div> <!-- .commentformbox -->
+	</div> <!-- .respon -->
 
 	<?php endif; /* Reply Form */ ?>
