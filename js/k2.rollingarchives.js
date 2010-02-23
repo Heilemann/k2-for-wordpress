@@ -419,6 +419,9 @@ RollingArchives.prototype.assignHotkeys = function() {
 	// Enter: Go to selected post
 	jQuery(document).bind('keydown.hotkeys', 'Return', function() { if (jQuery('.selected').length > 0) window.location = jQuery('.selected .post-title a').attr('href') });
 
+	// K: Scroll to previous post
+	jQuery(document).bind('keydown.hotkeys', 'E', function() { if (jQuery('.selected').length > 0) { window.location = jQuery('.selected a.post-edit-link').attr('href'); RA.flashElement('.selected a.post-edit-link') } });
+
 	// Esc: Deactivate selected post
 	jQuery(document).bind('keydown.hotkeys', 'Esc', function() { jQuery(window).unbind('scroll.scrolldetector'); jQuery('*').removeClass('selected'); RA.nextObj = undefined });
 
