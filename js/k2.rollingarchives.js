@@ -230,7 +230,10 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 		RA.pageNumber = page;
 
 		// Update the hash/fragment
-		jQuery.bbq.pushState( 'page='+page )
+		if (page === 1)		
+			jQuery.bbq.removeState('page');
+		else
+			jQuery.bbq.pushState( 'page='+page )
 
 		// Show the loading spinner
 		RA.loading('start')
@@ -440,7 +443,4 @@ RollingArchives.prototype.assignHotkeys = function() {
 
 	// Right Arrow: Next Page
 	jQuery(document).bind('keydown.hotkeys', 'Right', function() { RA.pageSlider.setValueBy(1) });
-
-	// Slash: Focus on search
-	jQuery(document).bind('keydown.hotkeys', '/', function() { jQuery('#s').focus() });
 }
