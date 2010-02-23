@@ -242,7 +242,7 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 		if (K2.Animations) {
 			RA.flashElement(page > RA.lastPage ? '#rollprevious' : '#rollnext')
 			jQuery(RA.parent).height(jQuery(RA.parent).height()) // Don't skip in height
-			jQuery(RA.content).hide("slide", { direction: (page > RA.lastPage ? 'right' : 'left') }, 200)
+			jQuery(RA.content).hide("slide", { direction: (page > RA.lastPage ? 'right' : 'left'), easing: 'easeInExpo'}, 200)
 		}
 
 		// ...and scroll to the top if needed
@@ -259,10 +259,8 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 				// Insert the content and show it.
 				jQuery(RA.content).html(data)
 
-				if (K2.Animations) {
-					jQuery(RA.content).show("slide", { direction: (page > RA.lastPage ? 'left' : 'right') }, 200)
-					jQuery(RA.parent).height('inherit') // Reflow height
-				}
+				if (K2.Animations)
+					jQuery(RA.content).show("slide", { direction: (page > RA.lastPage ? 'left' : 'right'), easing: 'easeOutExpo' }, 450, jQuery(RA.parent).height('inherit'))
 
 				if (selected == true)
 					RA.scrollTo(RA.posts, 1, (page > RA.lastPage ? -1 : jQuery(RA.posts).length -2 )) // If the hotkeys were used, select the first post
