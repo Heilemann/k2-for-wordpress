@@ -23,12 +23,10 @@ class K2 {
 
 		if ( class_exists('WP_Widget') ) // WP 2.8+
 			require_once(TEMPLATEPATH . '/app/includes/widgets.php');
-
 /*
 		if ( defined('K2_STYLES') and K2_STYLES == true )
 			require_once(TEMPLATEPATH . '/app/classes/styles.php');
 */
-
 		if ( defined('K2_HEADERS') and K2_HEADERS == true )
 			require_once(TEMPLATEPATH . '/app/classes/header.php');
 
@@ -76,8 +74,6 @@ class K2 {
 	function install() {
 		add_option('k2version', K2_CURRENT, 'This option stores K2\'s version number');
 
-		add_option('k2style', '1', "Load the classic K2 style.");
-
 		add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on"); // (live & classic)
 		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
 		add_option('k2animations', '1', 'JavaScript Animation effects.');
@@ -115,7 +111,6 @@ class K2 {
 		// Clean-up deprecated options
 		delete_option('k2sidebarmanager');
 		delete_option('k2sbm_modules');
-		delete_option('k2sidebarmanager');
 	}
 
 
@@ -126,7 +121,6 @@ class K2 {
 	 */
 	function uninstall() {
 		// Delete options
-		delete_option('k2style');
 		delete_option('k2version');
 		delete_option('k2asidescategory');
 		delete_option('k2livesearch');
@@ -223,16 +217,6 @@ class K2 {
 
 
 	/**
-	 * Adds default K2 CSS to header if enabled in options. Called by action: k2css_head
-	 */
-	function k2css_head() {
-		?>
-		<link type="text/css" rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/k2.css" />
-	<?php
-	}
-
-
-	/**
 	 * Enqueues scripts. Called by action: admin_print_scripts
 	 */
 	function admin_print_scripts() {
@@ -277,13 +261,6 @@ class K2 {
 			update_option('k2animations', '1');
 		} else {
 			update_option('k2animations', '0');
-		}
-
-		// Use the Default K2 Style?
-		if ( isset($_POST['k2']['style']) ) {
-			update_option('k2style', '1');
-		} else {
-			update_option('k2style', '0');
 		}
 
 		// Archives Page (thanks to Michael Hampton, http://www.ioerror.us/ for the assist)
@@ -342,18 +319,6 @@ class K2 {
 
 
 	/**
-	 * Return the home page link, used for dynamic content
-	 */
-	function get_home_url() {
-		if ( ('page' == get_option('show_on_front')) and ($page_id = get_option('page_for_posts')) ) {
-			return get_page_link($page_id);
-		}
-		
-		return get_bloginfo('url') . '/';
-	}
-
-
-	/**
 	 * Handles displaying dynamic content such as LiveSearch, RollingArchives
 	 *
 	 * @uses do_action() Provides 'k2_dynamic_content' action
@@ -376,7 +341,6 @@ class K2 {
 		}
 	}
 
-	
 
 	/**
 	 * Register K2 scripts with WordPress' script loader
@@ -467,25 +431,6 @@ class K2 {
 	 * Initializes Rolling Archives and LiveSearch
 	 */
 	function init_advanced_navigation() {
-		global $wp_query, $wp_scripts;
-		
-		// Get the query
-		if ( is_array($wp_query->query) )
-			$rolling_query = $wp_query->query;
-		elseif ( is_string($wp_query->query) )
-			parse_str($wp_query->query, $rolling_query);
-
-		// Get list of page dates
-		if ( !is_page() and !is_single() )
-			$page_dates = get_rolling_page_dates($wp_query);
-
-		// Get the current page
-		$rolling_page = intval( get_query_var('paged') );
-		if ( $rolling_page < 1 )
-			$rolling_page = 1;
-
-		// Future content will be dynamic.		
-		$rolling_query['k2dynamic'] = 1;
 	?>
 	<script type="text/javascript">
 	//<![CDATA[
@@ -509,12 +454,7 @@ class K2 {
 				older:		"<?php _e('Older', 'k2'); ?>",
 				newer:		"<?php _e('Newer', 'k2'); ?>",
 				loading:	"<?php _e('Loading', 'k2'); ?>",
-				offset: 	50,
-
-				pagenumber:	<?php echo (int) $rolling_page; ?>,
-				pagecount:	<?php echo (int) $wp_query->max_num_pages; ?>,
-				query:		<?php echo json_encode($rolling_query); ?>,
-				pagedates:	<?php echo json_encode($page_dates); ?>
+				offset: 	50
 			})
 
 			// Parse and execute waiting fragments.
@@ -534,6 +474,9 @@ class K2 {
 
 
 	<?php
+		// init rolling archives
+		K2::setup_rolling_archives();
+
 	} // End Init_Scripts()
 
 
@@ -543,6 +486,8 @@ class K2 {
 	 */
 	function setup_rolling_archives() {
 		global $wp_query;
+
+		$page_dates = array();
 
 		// Get the query
 		if ( is_array($wp_query->query) )
@@ -742,10 +687,6 @@ add_filter( 'mce_css', 				array('K2', 'admin_style_visual_editor') );
 add_action( 'wp_print_scripts', 	array('K2', 'enqueue_scripts') );
 add_action( 'template_redirect', 	array('K2', 'dynamic_content') );
 add_filter( 'query_vars', 			array('K2', 'add_custom_query_vars') );
-
-// Use the default K2 CSS?
-if ( get_option('k2style') == 1 )
-	add_action( 'wp_head', 			array('K2', 'k2css_head') );
 
 // Are LiveSearch and Rolling Archives enabled?
 if ( get_option('k2livesearch') == 1 && get_option('k2rollingarchives') == 1 )

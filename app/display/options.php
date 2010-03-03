@@ -44,16 +44,6 @@
 		<ul class="options-list">
 
 			<li>
-				<h3 class="main-label"><label for="k2-style"><?php _e("Use Default CSS?", 'k2'); ?></label></h3>
-
-				<p class="main-option">
-					<input id="k2-style" name="k2[style]" type="checkbox" value="1" <?php checked('1', get_option('k2style')); ?> />
-				</p>
-
-				<p class="description"><?php _e("Use the classic 'white page, blue header'-layout. Disable to build your own style from the bottom up using a child theme.", 'k2'); ?></p>
-			</li>
-
-			<li>
 				<h3 class="main-label"><label for="k2-advnav"><?php _e('Use Advanced Navigation?', 'k2'); ?></label></h3>
 
 				<p class="main-option">

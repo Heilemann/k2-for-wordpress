@@ -21,35 +21,11 @@ class K2Header {
 
 		// default k2 widths
 		$default_widths =  array( 1 => 560, 780, 950 );
-
-		// Load style settings
-/*
-		if ( K2_STYLES ) {
-			$styleinfo = get_option('k2styleinfo');
-
-			if ( ! empty($styleinfo) ) {
-				// style contains header height setting
-				if ( ! empty($styleinfo['header_height']) )
-					@define( 'HEADER_IMAGE_HEIGHT', $styleinfo['header_height'] );
-
-				// style contains header width setting
-				if ( ! empty($styleinfo['header_width']) )
-					@define( 'HEADER_IMAGE_WIDTH', $styleinfo['header_width'] );
-
-				// style contains layout widths setting
-				if ( ! empty($styleinfo['layout_widths'][$columns]) )
-					@define( 'HEADER_IMAGE_WIDTH', $styleinfo['layout_widths'][$columns] );
-
-				if ( ! empty($styleinfo['header_text_color']) )
-					@define( 'HEADER_TEXTCOLOR', $styleinfo['header_text_color'] );
-			}
-		}
-*/
 		
 		// Default settings
-		@define( 'HEADER_IMAGE_HEIGHT', 200 );
-		@define( 'HEADER_IMAGE_WIDTH', $default_widths[$columns] );
-		@define( 'HEADER_TEXTCOLOR', 'ffffff' );
+		@define( 'HEADER_IMAGE_HEIGHT', apply_filters('k2_header_height', 200) );
+		@define( 'HEADER_IMAGE_WIDTH', apply_filters('k2_header_width', $default_widths[$columns], $columns) );
+		@define( 'HEADER_TEXTCOLOR', apply_filters('k2_header_textcolor', 'ffffff') );
 
 		// Only load Custom Image Header if GD is installed
 		if ( extension_loaded('gd') && function_exists('gd_info') ) {

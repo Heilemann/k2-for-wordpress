@@ -81,16 +81,26 @@ function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' a
 
 
 function k2_page_css_class_filter( $css_class, $page ) {
-	global $wpdb;
-
-	if ( $wpdb->get_var( $wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_parent = %d AND post_type = 'page' AND post_status = 'publish' LIMIT 1", $page->ID) ) )
-		$css_class[] = 'has_children';
+	if ( ( 'page' == get_option('show_on_front') ) and ( $page->ID == get_option('page_for_posts') ) )
+		$css_class[] = 'poststab';
 
 	return $css_class;
 }
 
 add_filter('page_css_class', 'k2_page_css_class_filter', 10, 2);
 
+
+function k2_page_menu_filter($menu) {
+	$css = 'hometab';
+
+	if ( 'page' != get_option('show_on_front') )
+		$css .= ' poststab';
+
+	$menu = preg_replace('/(<ul><li class=)"(.+?)"/', '$1"$2 ' . $css . '"', $menu, 1);
+
+	return $menu;
+}
+add_filter('wp_page_menu', 'k2_page_menu_filter');
 
 /**
  * Filters post content and resizes embedded videos and images to content width.

@@ -205,5 +205,7 @@ function initMenu() {
 	jQuery('.menu a').each(function () {
 		jQuery(this).attr('title','')
 	});
+
+	jQuery('.menu li ul').parent().addClass('has_children');
 }
 jQuery(document).ready( initMenu )

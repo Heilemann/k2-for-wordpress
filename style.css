@@ -8,6 +8,6 @@ Description:	<strong><a href="themes.php?page=k2-options">Configure K2</a></stro
 Tags:			blue, custom-header, fixed-width, flexible-width, one-column, two-columns, three-columns, theme-options, threaded-comments, microformats, translation-ready, light
 
 $Revision$
-
-Looking for the actual CSS? Open '/css/k2.css'.
 */
+
+@import url('css/k2.css');

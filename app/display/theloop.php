@@ -53,6 +53,7 @@
 		$page_head = sprintf( __('Search Results for \'%s\'', 'k2'), esc_attr( get_search_query() ) );
 	}
 
+	$page_head = apply_filters('k2_section_title', $page_head);
 	$templates[] = 'blocks/k2-loop.php';
 ?>
 
