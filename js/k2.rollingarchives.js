@@ -16,13 +16,13 @@ function RollingArchives(args) {
 	RA.content				= args.content;
 	RA.posts				= args.posts;
 	RA.parent				= args.parent;
-	RA.offset				= args.offset || 0;
+	RA.offset				= args.offset	|| 0;
 
 	// Localization strings for the UI.
 	RA.pageText				= args.pagetext;
-	var older				= args.older || 'Older';
-	var newer				= args.newer || 'Newer';
-	var loading				= args.loading || 'Loading';
+	var older				= args.older	|| 'Older';
+	var newer				= args.newer	|| 'Newer';
+	var loading				= args.loading	|| 'Loading';
 
 	// Initially loaded values.
 	RA.initPageNumber		= args.pagenumber;
@@ -88,16 +88,12 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 			return false;
 		});
 
-		jQuery('#trimmertrim').click(function() {
-			jQuery('body').addClass('trim');
+		jQuery('#trimmertrim, #trimmeruntrim').click(function() {
+			if (K2.Animations)
+				jQuery('.post-content').slideToggle(250, 'easeOutExpo')
+			jQuery('body').toggleClass('trim')
 		})
 	
-		jQuery('#trimmeruntrim').click(function() {
-			jQuery('body').removeClass('trim');
-		})
-
-		RA.smartPosition(RA.parent); // Prepare a 'sticky' scroll point
-
 		RA.assignHotkeys(); // Setup Keyboard Shortcuts
 	
 		jQuery('body').addClass('rollingarchives') // Put the world on notice.
@@ -134,6 +130,8 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 	} else {
 		jQuery('body').removeClass('showrollingarchives').addClass('hiderollingarchives');
 	}
+
+	RA.smartPosition(RA.parent); // Prepare a 'sticky' scroll point
 };
 
 /**
@@ -280,24 +278,24 @@ RollingArchives.prototype.gotoPage = function(newpage) {
  * @param {String} edge			Can be set to 'bottom', in which case it checks to see if it's
  * 								scrolled off the bottom. Otherwise it always checks the top.
  */
-RollingArchives.prototype.smartPosition = function(obj, edge) {
-	var classname	= 'smartposition';
-	var objTop		= jQuery(obj).offset().top;
+RollingArchives.prototype.smartPosition = function(e, edge) {
+	RA.parentTop		= jQuery(e).offset().top;
+	RA.smartPosClass	= 'smartposition'
 
-	if ( jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 7 ) return; // No IE6 or lower
+	if ( jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 7) return; // No IE6 or lower
 
 	if (edge != 'bottom') { // Check Obj pos vs top edge by default
-		RA.checkTop(objTop, classname); // Check on load
+		setTimeout( RA.checkTop, 100); // Check on load.
 		
 		jQuery(window)
-			.scroll(function() { RA.checkTop(objTop, classname); });
+			.scroll( RA.checkTop );
 	} else {  // Check Obj pos vs bottom edge
-		RA.checkBottom(objTop, classname);  // Check on load
+		setTimeout( RA.checkTop, 100); // Check on load.
 
 		jQuery(window)
-			.scroll(function() { RA.checkBottom(obj, classname); })
-			.resize(function() { RA.checkBottom(obj, classname); })
-			.onload(function() { RA.checkBottom(obj, classname); })
+			.scroll( RA.checkBottom )
+			.resize( RA.checkBottom )
+			.onload( RA.checkBottom )
 	}
 };
 
@@ -305,22 +303,21 @@ RollingArchives.prototype.smartPosition = function(obj, edge) {
 /**
  * Check if an element disappears underneath the fold
  */
-RollingArchives.prototype.checkBottom = function(obj, classname) {
-	if ( (document.documentElement.scrollTop + document.documentElement.clientHeight || document.body.scrollTop + document.documentElement.clientHeight) >= jQuery(obj).offset().top && jQuery('body').hasClass('showrollingarchives')) {
-		jQuery('body').addClass(classname);
-	} else {
-		jQuery('body').removeClass(classname);
-	}
+RollingArchives.prototype.checkBottom = function() {
+	if ( (document.documentElement.scrollTop + document.documentElement.clientHeight || document.body.scrollTop + document.documentElement.clientHeight) >= RA.parentTop && jQuery('body').hasClass('showrollingarchives'))
+		jQuery('body').addClass(RA.smartPosClass);
+	else
+		jQuery('body').removeClass(RA.smartPosClass);
 }
 
 /**
  * Check if an element disappears above the window
  */
-RollingArchives.prototype.checkTop = function(objTop, classname) {
-	if ( jQuery(document).scrollTop() >= objTop )
-		jQuery('body').addClass(classname);
+RollingArchives.prototype.checkTop = function() {
+	if ( jQuery(document).scrollTop() >= RA.parentTop  && jQuery('body').hasClass('showrollingarchives'))
+		jQuery('body').addClass(RA.smartPosClass);
 	else
-		jQuery('body').removeClass(classname);
+		jQuery('body').removeClass(RA.smartPosClass);
 };
 
 /*
@@ -337,27 +334,27 @@ RollingArchives.prototype.scrollTo = function(elements, direction, next) {
 	jQuery('html, body').stop()
 
 	// Someone telling us where to go?
-	RA.nextObj = (next != undefined ? next : RA.nextObj);
+	RA.nextIndex = (next != undefined ? next : RA.nextIndex);
 
 	// Find the next element below the upper fold
-	if (RA.nextObj == undefined) {
+	if (RA.nextIndex == undefined) {
 		jQuery(elements).each(function(idx) {
 			if ( jQuery(this).offset().top - RA.offset > jQuery(window).scrollTop() ) {
-				RA.nextObj = (direction === 1 ? idx -1 : idx);
+				RA.nextIndex = (direction === 1 ? idx -1 : idx);
 				return false;
 			}
 		})
 	}
 
 	// direction: -1 on the first page? Can't do bub.
-	if (direction === -1 && RA.pageNumber === 1 && RA.nextObj === 0) return;
+	if (direction === -1 && RA.pageNumber === 1 && RA.nextIndex === 0) return;
 
 	// Now, who's next?
-	RA.nextObj = RA.nextObj + direction;
+	RA.nextIndex = RA.nextIndex + direction;
 
 	// Next element is outside the range of objects? Then let's change the page.
-	if ( ( RA.nextObj > jQuery(elements).length - 1 ) || RA.nextObj < 0 ) {
-		RA.nextObj = undefined;
+	if ( ( RA.nextIndex > jQuery(elements).length - 1 ) || RA.nextIndex < 0 ) {
+		RA.nextIndex = undefined;
 		RA.pageSlider.setValueBy(-direction);
 		RA.flashElement(direction === 1 ? '#rollprevious' : '#rollnext');
 	}
@@ -365,12 +362,14 @@ RollingArchives.prototype.scrollTo = function(elements, direction, next) {
 	// And finally scroll to the element (if the last element in the selection isn't on screen in its entirety).
 /* 	if ( jQuery(obj+':first').offset().top + jQuery(obj+':last').offset().top + jQuery(obj+':last').height() > jQuery(window).scrollTop() + jQuery(window).height() ) */
 
+
 	// Move .selected class to new element, return its vertical position to variable
-	nextElementPos = jQuery(elements).removeClass('selected').eq(RA.nextObj).addClass('selected').offset().top - RA.offset;
+	RA.nextElement			= jQuery(elements).eq(RA.nextIndex);
+	var nextElementPos		= RA.nextElement.offset().top - RA.offset;
+	var theBrowserWindow 	= (jQuery.browser.safari) ? jQuery('body') : jQuery('html'); // Browser differences, hurray.
 
 	// Scroll to the next element. Then detect if user manually scrolls away, in which case we clear our .selected stuff.
-	var theBrowserWindow	= (jQuery.browser.safari) ? jQuery('body') : jQuery('html'); // Browser differences, hurray.
-	theBrowserWindow.animate({ scrollTop: nextElementPos }, (K2.Animations ? 150 : 0), 'easeOutExpo', function() { jQuery(window).bind('scroll.scrolldetector', function() { RA.scrollDetection(nextElementPos) }) } );
+	theBrowserWindow.animate({ scrollTop: nextElementPos }, (K2.Animations ? 150 : 0), 'easeOutExpo', function() { RA.nextElement.effect('highlight',{color: '#dddddd'}, 1500) } );
 };
 
 
@@ -381,29 +380,10 @@ RollingArchives.prototype.flashElement = function(el) {
 	if (jQuery(el+':animated').length > 0 || !K2.Animations) return; // Prevent errors
 
 	var origSize = parseInt(jQuery(el).css('font-size'));
-	jQuery(el).animate({fontSize: origSize * 2}, 30, 'easeInQuad', function() {
+	jQuery(el).animate({fontSize: origSize * 2}, 0, 'linear', function() {
 		jQuery(el).animate({fontSize: origSize}, 150, 'easeOutQuad')
 	})
 }
-
-
-/*
- * Detect whether the user scrolls more than 40px away from the .selected element and then clears .selected stuff.
- *
- * @Param {Int}	scrollPos	The position, in pixels from the top, of the element to scroll to. 
- */
-RollingArchives.prototype.scrollDetection = function(scrollPos) {
-	// If we're at the bottom already, bail.
-	if  (jQuery(document).scrollTop() + jQuery(window).height() >= jQuery(document).height()) return; 
-
-	// "We went too far. He said we went too far..."
-	var tolerance = 40;
-	if ( jQuery(document).scrollTop() > scrollPos + tolerance || jQuery(document).scrollTop() < scrollPos - tolerance ) {
-		jQuery(window).unbind('scroll.scrolldetector');
-		jQuery('*').removeClass('selected')
-		RA.nextObj = undefined;
-	}
-};
 
 
 /*
@@ -417,27 +397,20 @@ RollingArchives.prototype.assignHotkeys = function() {
 	jQuery(document).bind('keydown.hotkeys', 'K', function() { RA.scrollTo(RA.posts, -1) });
 
 	// Enter: Go to selected post
-	jQuery(document).bind('keydown.hotkeys', 'Return', function() { if (jQuery('.selected').length > 0) window.location = jQuery('.selected .post-title a').attr('href') });
+	jQuery(document).bind('keydown.hotkeys', 'Return', function() { if (jQuery(RA.nextElement).length > 0) {
+		jQuery(RA.nextElement).stop(true,true).effect("highlight", {color: '#eee'}, 150).children('.post-title a').click() } });
 
 	// K: Scroll to previous post
-	jQuery(document).bind('keydown.hotkeys', 'E', function() { if (jQuery('.selected').length > 0) { window.location = jQuery('.selected a.post-edit-link').attr('href'); RA.flashElement('.selected a.post-edit-link') } });
+	jQuery(document).bind('keydown.hotkeys', 'E', function() { if (jQuery('.selected').length > 0) { jQuery('.selected a.post-edit-link').click(); RA.flashElement('.selected a.post-edit-link') } });
 
 	// Esc: Deactivate selected post
-	jQuery(document).bind('keydown.hotkeys', 'Esc', function() { jQuery(window).unbind('scroll.scrolldetector'); jQuery('*').removeClass('selected'); RA.nextObj = undefined });
+	jQuery(document).bind('keydown.hotkeys', 'Esc', function() { jQuery(window).unbind('scroll.scrolldetector'); jQuery('*').removeClass('selected'); RA.nextIndex = undefined });
 
 	// H: Go back to page 1  
 	jQuery(document).bind('keydown.hotkeys', 'H', function() { RA.gotoPage(1) })
 
 	// T: Trim, or remove .post-content  
-	jQuery(document).bind('keydown.hotkeys', 'T', function() { 
-		
-		if ( !jQuery('body').hasClass('trim') )
-			jQuery('body').addClass('trim')
-		else
-			jQuery('body').removeClass('trim')
-
-		RA.flashElement('#texttrimmer');
-	});
+	jQuery(document).bind('keydown.hotkeys', 'T', function() { jQuery('#texttrimmer div:visible').click() });
 
 	// Left Arrow: Previous Page
 	jQuery(document).bind('keydown.hotkeys', 'Left', function() { RA.pageSlider.setValueBy(-1) });

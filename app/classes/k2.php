@@ -319,6 +319,18 @@ class K2 {
 
 
 	/**
+	 * Return the home page link, used for dynamic content
+	 */
+	function get_home_url() {
+		if ( ('page' == get_option('show_on_front')) and ($page_id = get_option('page_for_posts')) ) {
+			return get_page_link($page_id);
+		}
+		
+		return get_bloginfo('url') . '/';
+	}
+
+
+	/**
 	 * Handles displaying dynamic content such as LiveSearch, RollingArchives
 	 *
 	 * @uses do_action() Provides 'k2_dynamic_content' action
@@ -431,6 +443,25 @@ class K2 {
 	 * Initializes Rolling Archives and LiveSearch
 	 */
 	function init_advanced_navigation() {
+		global $wp_query, $wp_scripts;
+		
+		// Get the query
+		if ( is_array($wp_query->query) )
+			$rolling_query = $wp_query->query;
+		elseif ( is_string($wp_query->query) )
+			parse_str($wp_query->query, $rolling_query);
+
+		// Get list of page dates
+		if ( !is_page() and !is_single() )
+			$page_dates = get_rolling_page_dates($wp_query);
+
+		// Get the current page
+		$rolling_page = intval( get_query_var('paged') );
+		if ( $rolling_page < 1 )
+			$rolling_page = 1;
+
+		// Future content will be dynamic.		
+		$rolling_query['k2dynamic'] = 1;
 	?>
 	<script type="text/javascript">
 	//<![CDATA[
@@ -454,7 +485,12 @@ class K2 {
 				older:		"<?php _e('Older', 'k2'); ?>",
 				newer:		"<?php _e('Newer', 'k2'); ?>",
 				loading:	"<?php _e('Loading', 'k2'); ?>",
-				offset: 	50
+				offset: 	50,
+
+				pagenumber:	<?php echo (int) $rolling_page; ?>,
+				pagecount:	<?php echo (int) $wp_query->max_num_pages; ?>,
+				query:		<?php echo json_encode($rolling_query); ?>,
+				pagedates:	<?php echo json_encode($page_dates); ?>
 			})
 
 			// Parse and execute waiting fragments.

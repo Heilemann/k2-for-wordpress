@@ -1585,7 +1585,6 @@ body.smartposition #content.onepageonly { /* If there is only a single page, rem
 
 #content { /* Contains both the RA nav and content, and is used for as a top marker for the smartposition */
 	position: relative;
-	margin-top: 5px;
 	}
 
 #rollingarchives a:hover {
