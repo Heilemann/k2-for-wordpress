@@ -50,16 +50,17 @@ K2.ajaxGet = function(data, complete_fn) {
  * and execute the relevant Rolling Archive or LiveSearch code.
  * Makes use of the BBQ jQuery plugin.
  */
-K2.parseFragments = function() {
+K2.parseFragments = function(event) {
 	// Parse out and perform livesearch fragment
-	if ( jQuery.deparam.fragment().search && K2.LiveSearch )
+	if ( event.getState('search') && K2.LiveSearch ) {
 		K2.LiveSearch.doSearch( K2.LiveSearch );
+	}
 
 	// If only a page fragment is present
-	if ( jQuery.deparam.fragment().page && !jQuery.deparam.fragment().search && K2.RollingArchives )
-		K2.RollingArchives.gotoPage( jQuery.deparam.fragment().page );
+	if ( event.getState('page') && !event.getState('search') && K2.RollingArchives ) {
+		K2.RollingArchives.pageSlider.setValue( K2.RollingArchives.pageCount - event.getState('page') + 1 );
+	}
 }
-
 
 
 /**

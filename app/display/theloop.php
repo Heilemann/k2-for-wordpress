@@ -76,10 +76,3 @@
 		<?php locate_template( array('blocks/k2-404.php'), true ); ?>
 
 	<?php endif; /* End Loop Init  */ ?>
-
-
-	<?php
-	/* Initialize Rolling Archives if needed */
-	if ( defined('DOING_AJAX') && true == DOING_AJAX )
-		add_action( 'k2_dynamic_content', array('K2', 'setup_rolling_archives') );
-	?>

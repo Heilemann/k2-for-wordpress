@@ -38,7 +38,104 @@ function get_k2info( $show = '' ) {
 	return $output;
 }
 
-function get_rolling_page_dates($query) {
+
+/**
+ * Initializes Rolling Archives and LiveSearch
+ */
+function k2_init_advanced_navigation() {
+	global $wp_scripts;
+	
+	$rolling_state = k2_get_rolling_archives_state();
+?>
+<script type="text/javascript">
+//<![CDATA[
+
+	/**
+	 * Set in motion all of K2's AJAX hotness (RA and LS).
+	 */
+	function initK2() {
+		K2.AjaxURL		= "<?php bloginfo('url'); ?>/" // For our AJAX calls
+		K2.Animations	= <?php echo (int) get_option('k2animations') ?> // Fetch the animations option
+
+		// Insert the Rolling Archives UI and init.
+		K2.RollingArchives = new RollingArchives({
+			content:    "#content",
+			posts:      "#content .post",
+			parent:     "#primary",
+			pagetext:   "<?php /* translators: 1: current page, 2: total pages */ _e('of', 'k2'); ?>", // Page X of Y
+			older:      "<?php _e('Older', 'k2'); ?>",
+			newer:      "<?php _e('Newer', 'k2'); ?>",
+			loading:    "<?php _e('Loading', 'k2'); ?>",
+			offset:     50,
+			pagenumber: <?php echo $rolling_state['curpage']; ?>,
+			pagecount:  <?php echo $rolling_state['maxpage']; ?>,
+			query:      <?php echo json_encode( $rolling_state['query'] ); ?>,
+			pagedates:  <?php echo json_encode( $rolling_state['pagedates'] ); ?>
+		});
+
+		// Initialize Livesearch
+		K2.LiveSearch = new LiveSearch( "<?php esc_attr_e('Search','k2'); ?>" );
+
+		 // Looks for fragment changes
+		jQuery(window).bind( 'hashchange', K2.parseFragments );
+
+		// Parse and execute waiting fragments.
+		jQuery(window).trigger( 'hashchange' );
+
+		<?php /* JS to run after jQuery Ajax calls */ if ( get_option('k2ajaxdonejs') != '' ): ?>
+		jQuery('#content').ajaxComplete(function () {
+			<?php echo get_option('k2ajaxdonejs'); ?>
+		});
+		<?php endif; ?>
+	}
+	
+	// Make ready K2's sub-systems
+	jQuery(document).ready( function() { initK2(); });
+//]]>
+</script>
+<?php
+} // End Init_Scripts()
+
+// Are LiveSearch and Rolling Archives enabled?
+if ( ( 1 == get_option('k2livesearch') ) and ( 1 == get_option('k2rollingarchives') ) )
+	add_action( 'wp_footer', 'k2_init_advanced_navigation' );
+
+/**
+ * Helper function used by RollingArchives
+ */
+function k2_get_rolling_archives_state() {
+	global $wp_query;
+
+	$rolling_state = array(
+			'curpage' => 1,
+			'maxpage' => (int) $wp_query->max_num_pages,
+			'query' => array(),
+			'pagedates' => array()
+		);
+
+	// Get the query
+	if ( is_array($wp_query->query) )
+		$rolling_state['query'] = $wp_query->query;
+	elseif ( is_string($wp_query->query) )
+		parse_str($wp_query->query, $rolling_state['query']);
+
+	// Future content will be dynamic.		
+	$rolling_state['query']['k2dynamic'] = 1;
+
+	// Get list of page dates
+	if ( !is_page() and !is_single() )
+		$rolling_state['pagedates'] = k2_get_rolling_archives_dates($wp_query);
+
+	// Get the current page
+	$rolling_state['curpage'] = intval( get_query_var('paged') );
+	if ( $rolling_state['curpage'] < 1 )
+		$rolling_state['curpage'] = 1;
+
+	return $rolling_state;
+}
+
+
+function k2_get_rolling_archives_dates($query) {
 	global $wpdb;
 
 	$per_page = intval(get_query_var('posts_per_page'));

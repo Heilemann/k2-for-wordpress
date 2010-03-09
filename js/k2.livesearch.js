@@ -50,7 +50,7 @@ function LiveSearch(searchprompt) {
 				if (self.timer) {
 					clearTimeout(self.timer);
 				}
-				self.timer = setTimeout(function() { self.doSearch(self); }, 500);
+				self.timer = setTimeout(function() { self.doSearch(self); }, 1000);
 			}
 		})
 		.keyup(function(event) {
@@ -81,9 +81,6 @@ LiveSearch.prototype.doSearch = function(self) {
 	if (self.searchField.val() == self.prevSearch) // Don't perform the same search twice
 		return;
 
-	if (self.prevSearch && (self.searchField.val() != self.prevSearch)) // Not an automated search
-		jQuery.bbq.removeState('page');
-
 	if (self.searchField.val() == '') { // A forced search, probably triggered by .ready()
 		self.searchField.val(jQuery.deparam.fragment().search);
 		self.searchLabel.addClass('hide')
@@ -93,6 +90,9 @@ LiveSearch.prototype.doSearch = function(self) {
 		self.active = true;
 		
 		jQuery('body').removeClass('livesearchinactive').addClass('livesearchactive'); // Used to show/hide elements w. CSS.
+
+		// Tell RollingArchives to save the current state
+		if ( K2.RollingArchives.saveState ) K2.RollingArchives.saveState();
 	}
 
 	self.prevSearch = self.searchField.val();
@@ -101,15 +101,13 @@ LiveSearch.prototype.doSearch = function(self) {
 	if (K2.Animations && self.pageNumber != 1 && jQuery('body').hasClass('smartposition'))
 		jQuery('html,body').animate({ scrollTop: jQuery('#primary').offset().top }, 100);
 
-	jQuery.bbq.pushState( 'search=' + self.searchField.val() ); // Update the hash/fragment
+	jQuery.bbq.pushState( 'page=1&search=' + self.searchField.val() ); // Update the hash/fragment
 
-	K2.ajaxGet(self.searchform.serialize() + '&k2dynamic=init&paged=' + jQuery.deparam.fragment().page,
+	K2.ajaxGet(self.searchform.serialize() + '&k2dynamic=init',
 		function(data) {
 			jQuery('#content').html(data);
 
 			self.loading.fadeTo('fast', 0);
-
-			jQuery.bbq.pushState( 'search=' + self.searchField.val() ); // Update the hash/fragment
 
 			self.reset
 				.click( function() { self.resetSearch(self); })
@@ -128,5 +126,6 @@ LiveSearch.prototype.resetSearch = function(self) {
 
 	self.reset.unbind('click').fadeTo('fast', 0).css('cursor', 'default');
 
-	if ( RA.restoreState ) RA.restoreState();
+	// Tell RollingArchives to restore the previous state
+	if ( K2.RollingArchives.restoreState ) K2.RollingArchives.restoreState();
 };

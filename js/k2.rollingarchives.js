@@ -1,5 +1,5 @@
 /**
- * Inserts the Rolling Archives user interface.
+ * Inserts and initializes the Rolling Archives user interface.
  *
  * @param {string}	content		An element to place the UI before. Eg. '#content';
  * @param {string}	posts		Class of the elements containing individual posts.
@@ -24,12 +24,6 @@ function RollingArchives(args) {
 	var newer				= args.newer	|| 'Newer';
 	var loading				= args.loading	|| 'Loading';
 
-	// Initially loaded values.
-	RA.initPageNumber		= args.pagenumber;
-	RA.initPageCount		= args.pagecount;
-	RA.initQuery			= args.query;
-	RA.initPageDates		= args.pagedates;
-
 	RA.active				= false;
 
 	// Insert the Rolling Archives UI
@@ -51,10 +45,35 @@ function RollingArchives(args) {
 				</div>\
 			</div> <!-- #rollnavigation -->\
 		</div> <!-- #rollingarchives -->\
-	')
+	');
 
-	RA.setState();
-};							
+	// Set and save the initial state
+	RA.setState( args.pagenumber, args.pagecount, args.query, args.pagedates );
+	RA.saveState();
+
+	// Add click events
+	jQuery('#rollnext').click(function() {
+		RA.pageSlider.setValueBy(1);
+		return false;
+	});
+
+	jQuery('#rollprevious').click(function() {
+		RA.pageSlider.setValueBy(-1);
+		return false;
+	});
+
+	jQuery('#trimmertrim, #trimmeruntrim').click(function() {
+		if (K2.Animations)
+			jQuery('.post-content').slideToggle(250, 'easeOutExpo')
+		jQuery('body').toggleClass('trim')
+	})
+
+	RA.assignHotkeys(); // Setup Keyboard Shortcuts
+
+	jQuery('body').addClass('rollingarchives'); // Put the world on notice.
+
+	RA.smartPosition(RA.parent); // Prepare a 'sticky' scroll point
+};
 
 /**
  * Initializes the Rolling Archives system at load or after a new page has been fetched by RA.
@@ -65,41 +84,10 @@ function RollingArchives(args) {
  * @param {array}	pagedates	An array of 'month, year' to show as you scrub the RA slider.
  */
 RollingArchives.prototype.setState = function(pagenumber, pagecount, query, pagedates) {
-	RA.pageNumber			= pagenumber	|| RA.initPageNumber;
-	RA.pageCount 			= pagecount		|| RA.initPageCount;
-	RA.query 				= query			|| RA.initQuery;
-	RA.pageDates 			= pagedates		|| RA.initPageDates;
-
-/* 	console.log( RA.pageNumber, RA.pageCount, RA.query, RA.pageDates ); */
-
-	// Save the original content for later retrieval
-	if (!query && RA.pageNumber === 1) RA.saveState(); 
-
-	// First time RA is called? Let's get to work.
-	if ( !jQuery('body').hasClass('rollingarchives') ) {
-		// Add click events
-		jQuery('#rollnext').click(function() {
-			RA.pageSlider.setValueBy(1);
-			return false;
-		});
-
-		jQuery('#rollprevious').click(function() {
-			RA.pageSlider.setValueBy(-1);
-			return false;
-		});
-
-		jQuery('#trimmertrim, #trimmeruntrim').click(function() {
-			if (K2.Animations)
-				jQuery('.post-content').slideToggle(250, 'easeOutExpo')
-			jQuery('body').toggleClass('trim')
-		})
-	
-		RA.assignHotkeys(); // Setup Keyboard Shortcuts
-	
-		jQuery('body').addClass('rollingarchives') // Put the world on notice.
-
-		jQuery(window).bind( 'hashchange', K2.parseFragments ) // Looks for fragment changes
-	}
+	RA.pageNumber			= pagenumber;
+	RA.pageCount 			= pagecount;
+	RA.query 				= query;
+	RA.pageDates 			= pagedates;
 
 	if ( RA.validatePage(RA.pageNumber) ) {
 		jQuery('body').removeClass('hiderollingarchives').addClass('showrollingarchives')
@@ -130,16 +118,17 @@ RollingArchives.prototype.setState = function(pagenumber, pagecount, query, page
 	} else {
 		jQuery('body').removeClass('showrollingarchives').addClass('hiderollingarchives');
 	}
-
-	RA.smartPosition(RA.parent); // Prepare a 'sticky' scroll point
 };
 
 /**
  * Save the current set of data for later retrieval using .restoreState.
  */
 RollingArchives.prototype.saveState = function() {
-	// RA.prevQuery = RA.query;
-	RA.originalContent = jQuery(RA.content).html();
+	RA.prevPageNumber		= RA.pageNumber;
+	RA.prevPageCount		= RA.pageCount;
+	RA.prevQuery			= RA.query;
+	RA.prevPageDates		= RA.pageDates;
+	RA.prevContent			= jQuery(RA.content).html();
 };
 
 /**
@@ -149,12 +138,12 @@ RollingArchives.prototype.restoreState = function() {
 	if (RA.originalContent != '') {
 		jQuery('body').removeClass('livesearchactive').addClass('livesearchinactive'); // Used to show/hide elements w. CSS.
 
-		jQuery(RA.content).html(RA.originalContent)
+		jQuery(RA.content).html(RA.prevContent)
 
-		jQuery.bbq.removeState('page');
+		jQuery.bbq.pushState( 'page=' + RA.prevPageNumber );
 		jQuery.bbq.removeState('search');
 
-		RA.setState();
+		RA.setState( RA.prevPageNumber, RA.prevPageCount, RA.prevQuery, RA.prevPageDates );
 	}
 };
 
