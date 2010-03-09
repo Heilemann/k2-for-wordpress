@@ -140,8 +140,7 @@ RollingArchives.prototype.restoreState = function() {
 
 		jQuery(RA.content).html(RA.prevContent)
 
-		jQuery.bbq.pushState( 'page=' + RA.prevPageNumber );
-		jQuery.bbq.removeState('search');
+		jQuery.bbq.pushState( '#page=' + RA.prevPageNumber );
 
 		RA.setState( RA.prevPageNumber, RA.prevPageCount, RA.prevQuery, RA.prevPageDates );
 	}
@@ -217,10 +216,7 @@ RollingArchives.prototype.gotoPage = function(newpage) {
 		RA.pageNumber = page;
 
 		// Update the hash/fragment
-		if (page === 1)		
-			jQuery.bbq.removeState('page');
-		else
-			jQuery.bbq.pushState( 'page='+page )
+		jQuery.bbq.pushState( 'page=' + page );
 
 		// Show the loading spinner
 		RA.loading('start')
