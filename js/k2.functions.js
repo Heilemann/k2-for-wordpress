@@ -18,7 +18,7 @@ K2.ajaxGet = function(data, complete_fn) {
 		dataType:	'html',
 
 		error: function(request) {
-			jQuery('#primary').prepend('<p id="rollingalert" class="alert">Error ' + request.status + ': ' + request.statusText + '</p>');
+			jQuery('#content').prepend('<p id="rollingalert" class="alert">Error ' + request.status + ': ' + request.statusText + '</p>');
 		},
 
 		success: function() {
@@ -26,20 +26,11 @@ K2.ajaxGet = function(data, complete_fn) {
 		},
 
 		complete: function(request) {
-
 			// Disable obtrusive document.write
 			document.write = function(str) {};
 
 			if ( complete_fn )
 				complete_fn( request.responseText );
-
-			/*
-			if ( K2.callbacks && K2.callbacks.length > 0 ) { 
-				for ( var i = 0; i < K2.callbacks.length; i++ ) {
-					K2.callbacks[i]();
-				}
-			 }
-			*/
 		}
 	});
 };

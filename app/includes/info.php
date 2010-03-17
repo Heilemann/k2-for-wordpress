@@ -66,15 +66,13 @@ function k2_init_advanced_navigation() {
 			older:      "<?php _e('Older', 'k2'); ?>",
 			newer:      "<?php _e('Newer', 'k2'); ?>",
 			loading:    "<?php _e('Loading', 'k2'); ?>",
-			offset:     50,
+			offsetTop:	50,
 			pagenumber: <?php echo $rolling_state['curpage']; ?>,
-			pagecount:  <?php echo $rolling_state['maxpage']; ?>,
-			query:      <?php echo json_encode( $rolling_state['query'] ); ?>,
-			pagedates:  <?php echo json_encode( $rolling_state['pagedates'] ); ?>
+			pagecount:	<?php echo $rolling_state['maxpage']; ?>,
+			query:		<?php echo json_encode( $rolling_state['query'] ); ?>,
+			pagedates:	<?php echo json_encode( $rolling_state['pagedates'] ); ?>,
+			search:		"<?php esc_attr_e('Search','k2'); ?>"
 		});
-
-		// Initialize Livesearch
-		K2.LiveSearch = new LiveSearch( "<?php esc_attr_e('Search','k2'); ?>" );
 
 		 // Looks for fragment changes
 		jQuery(window).bind( 'hashchange', K2.parseFragments );
