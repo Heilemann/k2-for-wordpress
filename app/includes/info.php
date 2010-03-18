@@ -74,6 +74,8 @@ function k2_init_advanced_navigation() {
 			search:		"<?php esc_attr_e('Search','k2'); ?>"
 		});
 
+		K2.LiveSearch	= new LiveSearch( RA.search || 'Search' );
+
 		 // Looks for fragment changes
 		jQuery(window).bind( 'hashchange', K2.parseFragments );
 
