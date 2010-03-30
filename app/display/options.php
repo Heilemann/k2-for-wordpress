@@ -102,18 +102,18 @@
 					<tbody>
 						<tr>
 							<th scope="row">
-								<label for="k2-post-meta-1"><?php _e('Top Meta:', 'k2'); ?></label>
+								<label for="k2-entry-meta-1"><?php _e('Top Meta:', 'k2'); ?></label>
 							</th>
 							<td>
-								<input id="k2-post-meta-1" name="k2[entrymeta1]" type="text" value="<?php form_option('k2entrymeta1'); ?>" />
+								<input id="k2-entry-meta-1" name="k2[entrymeta1]" type="text" value="<?php form_option('k2entrymeta1'); ?>" />
 							</td>
 						</tr>
 						<tr>
 							<th scope="row">
-								<label for="k2-post-meta-2"><?php _e('Bottom Meta:', 'k2'); ?></label>
+								<label for="k2-entry-meta-2"><?php _e('Bottom Meta:', 'k2'); ?></label>
 							</th>
 							<td>
-								<input id="k2-post-meta-2" name="k2[entrymeta2]" type="text" value="<?php form_option('k2entrymeta2'); ?>" />
+								<input id="k2-entry-meta-2" name="k2[entrymeta2]" type="text" value="<?php form_option('k2entrymeta2'); ?>" />
 							</td>
 						</tr>
 					</tbody>
@@ -126,25 +126,25 @@
 						query_posts('showposts=1&what_to_show=posts&order=desc&post_status=publish');
 						if ( have_posts() ): the_post();
 					?>
-					<div id="post-<?php the_ID(); ?>" class="inside">
-						<div class="post-header">
-							<h5 class="post-title"><a href="#" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"', 'k2'), esc_html(strip_tags(the_title('', '', false)), 1) ); ?>'><?php the_title(); ?></a></h5>
+					<div id="entry-<?php the_ID(); ?>" class="inside">
+						<div class="entry-header">
+							<h5 class="entry-title"><a href="#" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"', 'k2'), esc_html(strip_tags(the_title('', '', false)), 1) ); ?>'><?php the_title(); ?></a></h5>
 
-							<div class="post-meta">
+							<div class="entry-meta">
 								<?php k2_entry_meta(1); ?>
-							</div> <!-- .post-meta -->
-						</div> <!-- .post-header -->
+							</div> <!-- .entry-meta -->
+						</div> <!-- .entry-header -->
 
-						<div class="post-content">
+						<div class="entry-content">
 							<?php the_excerpt(); ?>
-						</div> <!-- .post-content -->
+						</div> <!-- .entry-content -->
 
-						<div class="post-footer">
-							<div class="post-meta">
+						<div class="entry-footer">
+							<div class="entry-meta">
 								<?php k2_entry_meta(2); ?>
-							</div><!-- .post-meta -->
-						</div><!-- .post-footer -->
-					</div> <!-- #post-ID -->
+							</div><!-- .entry-meta -->
+						</div><!-- .entry-footer -->
+					</div> <!-- #entry-ID -->
 					<?php endif; ?>
 				</div>
 			</li>

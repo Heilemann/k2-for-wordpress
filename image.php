@@ -44,18 +44,18 @@
 			</div>
 			<?php endif; ?>
 
-			<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<div class="post-header">
-					<h1 class="post-title">
+			<div id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<div class="entry-header">
+					<h1 class="entry-title">
 						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
 					</h1>
 
 					<?php /* Edit Link */ edit_post_link( __('Edit', 'k2'), '<span class="entry-edit">', '</span>' ); ?>
 
 					<?php /* K2 Hook */ do_action('template_entry_head'); ?>
-				</div> <!-- .post-header -->
+				</div> <!-- .entry-header -->
 
-				<div class="post-content">
+				<div class="entry-content">
 					<div class="attachment-image">
 						<a href="<?php echo wp_get_attachment_url($post->ID); ?>" class="image-link"><?php echo wp_get_attachment_image( $post->ID, 'medium' ); ?></a>
 
@@ -65,9 +65,9 @@
 					</div>
 
 					<?php if ( !empty($post->post_content) ) the_content(sprintf(__('Continue reading \'%s\'', 'k2'), the_title('', '', false))); ?>
-				</div> <!-- .post-content -->
+				</div> <!-- .entry-content -->
 
-				<div class="post-footer">
+				<div class="entry-footer">
 					<h5><?php _e('Photo Information', 'k2'); ?></h5>
 					<ul class="image-meta">
 						<li class="dimensions">
@@ -104,8 +104,8 @@
 						</div>
 						<div class="clear"></div>
 					</div>
-				</div><!-- .post-footer -->
-			</div> <!-- #post-ID -->
+				</div><!-- .entry-footer -->
+			</div> <!-- #entry-ID -->
 
 			<div class="comments">
 				<?php comments_template(); ?>
@@ -122,11 +122,11 @@
 
 			<div class="hentry four04">
 
-				<div class="post-header">
+				<div class="entry-header">
 					<h3 class="center"><?php _e('Not Found', 'k2'); ?></h3>
 				</div>
 
-				<div class="post-content">
+				<div class="entry-content">
 					<p><?php _e('Oh no! You\'re looking for something which just isn\'t here! Fear not however, errors are to be expected, and luckily there are tools on the sidebar for you to use in your search for what you need.', 'k2'); ?></p>
 				</div>
 

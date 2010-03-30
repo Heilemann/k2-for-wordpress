@@ -17,27 +17,27 @@
 
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-			<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<div class="post-header">
-					<h1 class="post-title">
+			<div id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<div class="entry-header">
+					<h1 class="entry-title">
 						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
 					</h1>
 
 					<?php /* Edit Link */ edit_post_link(__('Edit', 'k2'), '<span class="entry-edit">', '</span>'); ?>
 
 					<?php /* K2 Hook */ do_action('template_entry_head'); ?>
-				</div><!-- .post-header -->
+				</div><!-- .entry-header -->
 
-				<div class="post-content">
+				<div class="entry-content">
 					<?php the_content(); ?>
-				</div><!-- .post-content -->
+				</div><!-- .entry-content -->
 
-				<div class="post-footer">
+				<div class="entry-footer">
 					<?php wp_link_pages( array('before' => '<div class="entry-pages"><span>' . __('Pages:', 'k2') . '</span>', 'after' => '</div>' ) ); ?>
 
 					<?php /* K2 Hook */ do_action('template_entry_foot'); ?>
-				</div><!-- .post-footer -->
-			</div><!-- #post-ID -->
+				</div><!-- .entry-footer -->
+			</div><!-- #entry-ID -->
 
 			<?php if ( comments_open() ): ?> 
 			<div class="comments">

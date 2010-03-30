@@ -423,7 +423,7 @@ h2 {
 	font-weight: normal;
 	}
 
-.post-title, h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
+.entry-title, h3 { /* H3 is entry headlines. H4 is comments and replyform headlines */
 	font-size: 2.4em;
 	font-weight: normal;
 	}
@@ -441,24 +441,24 @@ h4 {
 	margin-bottom: 10px;
 	}
 
-.post-title {
+.entry-title {
 	margin-right: 40px;
 	}
 
-.four04 .post-title,
-body.page #content .post-title {
+.four04 .entry-title,
+body.page #content .entry-title {
 	margin-left: 40px;
 	text-align: center;
 	}
 
-.post-content h3 {
+.entry-content h3 {
 	font-size: 1.8em;
 	font-weight: normal;
 	margin-top: 25px;
 	}
 
-.post-content h4,
-.post-meta h4 {
+.entry-content h4,
+.entry-meta h4 {
 	font-size: 1.5em;
 	font-weight: normal;
 	margin-top: 25px;
@@ -469,17 +469,17 @@ body.page #content .post-title {
 	font-weight: normal;
 	}
 
-.post-header {
+.entry-header {
 	position: relative;
 	}
 
-body.page .post-content h3 {
+body.page .entry-content h3 {
 	font-size: 1.7em;
 	display: block;
 	padding: 15px 0 0;
 	}
 
-body.page .post-content h4 {
+body.page .entry-content h4 {
 	font-size: 1.5em;
 	display: block;
 	padding: 15px 0 0;
@@ -502,16 +502,16 @@ body.page .post-content h4 {
 	font-weight: normal;
 	}
 
-#primary .post .post-header .metalink {
+#primary .post .entry-header .metalink {
 	font-size: 1.8em;
 	margin-left: 15px;
 	}
 
-#primary .k2-asides .post-header .metalink {
+#primary .k2-asides .entry-header .metalink {
 	font-size: 1.4em;
 	}
 
-.single #primary .k2-asides .post-content {
+.single #primary .k2-asides .entry-content {
 	font-size: 1.5em;
 	color: #999;
 	}
@@ -579,21 +579,21 @@ body.page .post-content h4 {
 	display: inline;
 	}
 
-.post-title, .post-title a, .post-title a:visited,
+.entry-title, .entry-title a, .entry-title a:visited,
 h2, h2 a, h2 a:visited,
 h3, h3 a, h3 a:visited,
 h4, h4 a, h4 a:visited {
 	color: #444;
 	}
 
-.post-title, .post-title a, .post-title a:hover, .post-title a:visited,
+.entry-title, .entry-title a, .entry-title a:hover, .entry-title a:visited,
 h2, h2 a, h2 a:hover, h2 a:visited,
 h3, h3 a, h3 a:hover, h3 a:visited,
 h4, h4 a, h4 a:hover, h4 a:visited {
 	text-decoration: none;
 	}
 
-.post-meta {
+.entry-meta {
 	font-size: 1em;
 	line-height: 1.6em;
 	color: #bbb;
@@ -603,18 +603,18 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	color:  #999;
 	}
 
-.post-meta a,
+.entry-meta a,
 .comment-meta a,
 .entry-date,
 .entry-time {
 	color: #777;
 	}
 
-.post-meta div {
+.entry-meta div {
 	display: inline;
 	}
 
-.post-header .post-meta {
+.entry-header .entry-meta {
 	min-height: 16px;
 	}
 
@@ -635,7 +635,7 @@ abbr.entry-date {
 	padding: 2px 0px;
 	}
 
-.post-header .entry-tags {
+.entry-header .entry-tags {
 	display: block;
 	}
 
@@ -717,25 +717,25 @@ div.quoter_page_container {
 	-moz-box-shadow: 0 0 5px rgba(55,136,209,0.94);
 	}
 
-.post-content {
+.entry-content {
 	font-size: 1.2em;
 	line-height: 2.2em;
 	color: #444;
 	}
 
-.post-content p,
-.post-content ul,
-.post-content ol,
-.post-content div,
-.post-content blockquote {
+.entry-content p,
+.entry-content ul,
+.entry-content ol,
+.entry-content div,
+.entry-content blockquote {
 	margin: 13px 0;
 	}
 
-#content .k2-asides .post-content p,
-#content .k2-asides .post-content ul,
-#content .k2-asides .post-content ol,
-#content .k2-asides .post-content div,
-#content .k2-asides .post-content blockquote {
+#content .k2-asides .entry-content p,
+#content .k2-asides .entry-content ul,
+#content .k2-asides .entry-content ol,
+#content .k2-asides .entry-content div,
+#content .k2-asides .entry-content blockquote {
 	margin: 5px 0;
 	}
 
@@ -743,12 +743,12 @@ div.quoter_page_container {
 	margin: 15px 0;
 	}
 
-#content .k2-asides .post-header,
-#content .k2-asides .post-footer {
+#content .k2-asides .entry-header,
+#content .k2-asides .entry-footer {
 	display: none;
 	}
 
-#content .k2-asides .post-content {
+#content .k2-asides .entry-content {
 	display: block;
 	border-left: 2px solid #ddd;
 	padding-left: 20px;
@@ -758,7 +758,7 @@ div.quoter_page_container {
 	font-weight: bold;
 	}
 
-.post-content .map div { /* Google Maps Support */
+.entry-content .map div { /* Google Maps Support */
 	margin: 0;
 	}
 
@@ -770,7 +770,7 @@ div.quoter_page_container {
 	margin-top: 3px;
 	}
 
-#primary a.post-edit-link:hover,
+#primary a.entry-edit-link:hover,
 #primary a.comment-edit-link:hover,
 #primary a.comment-reply-link:hover {
 	text-decoration: none;
@@ -780,7 +780,7 @@ div.quoter_page_container {
 	width: 670px;
 	}
 
-.template-image .post-footer {
+.template-image .entry-footer {
 	position: absolute;
 	top: 0;
 	right: -220px;
@@ -788,7 +788,7 @@ div.quoter_page_container {
 	padding-top: 180px;
 	}
 
-.columns-one .template-image .post-footer {
+.columns-one .template-image .entry-footer {
 	position: relative;
 	width: auto;
 	top: auto;
@@ -804,7 +804,7 @@ div.quoter_page_container {
 	border-bottom: none;
 	}
 
-.post-footer h5 {
+.entry-footer h5 {
 	font-size: 1.5em;
 	font-weight: normal;
 	}
@@ -1160,7 +1160,7 @@ a {
 	text-decoration: none;
 	}
 
-.post-content a:visited {
+.entry-content a:visited {
 	color: #b41;
 	}
 
@@ -1197,7 +1197,7 @@ img.noborder {
 	text-align: center;
 	}
 
-.post-content .aligncenter,
+.entry-content .aligncenter,
 img.center,
 img[align="center"] {
 	display: block;
@@ -1205,14 +1205,14 @@ img[align="center"] {
 	margin-right: auto;
 	}
 	
-.post-content .alignright,
+.entry-content .alignright,
 img[align="right"] {
 	float: right;
 	margin: 0 0 4px 8px;
 	display: block;
 	}
 
-.post-content .alignleft,
+.entry-content .alignleft,
 img[align="left"] {
 	float: left;
 	margin: 0 8px 4px 0;
@@ -1326,11 +1326,11 @@ img.wp-smiley {
 	padding-left: 10px;
 }
 
-.post-content ol, .post-content ul {
+.entry-content ol, .entry-content ul {
 	padding: 0 0 0 35px;
 	}
 
-.post-content ol li, .post-content ul li {
+.entry-content ol li, .entry-content ul li {
 	margin: 0 0 3px;
 	padding: 0;
 	}
@@ -1462,7 +1462,7 @@ input[type=text], textarea {
 
 /* Attachment */
 
-.post-content .attachment { 
+.entry-content .attachment { 
 	text-align: center; 
 	}
 
@@ -1742,7 +1742,7 @@ body.trim #trimmeruntrim {
 	background: #333;
 	}
 
-body.trim .post-content, body.trim .post-footer {
+body.trim .entry-content, body.trim .entry-footer {
 	display: none;
 	}
 
@@ -1915,7 +1915,7 @@ div#latest-comments small {
 
 /* GeoPress Fix */
 
-.post-content div.mapstraction {
+.entry-content div.mapstraction {
 	margin: 0;
 	}
 

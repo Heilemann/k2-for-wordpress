@@ -64,7 +64,7 @@ function RollingArchives(args) {
 
 	jQuery('#trimmertrim, #trimmeruntrim').click(function() {
 		if (K2.Animations)
-			jQuery('.post-content').slideToggle(250, 'easeOutExpo')
+			jQuery('.entry-content').slideToggle(250, 'easeOutExpo')
 		jQuery('body').toggleClass('trim')
 	})
 
@@ -453,7 +453,7 @@ RollingArchives.prototype.assignHotkeys = function() {
 
 	// Enter: Go to selected post
 	jQuery(document).bind('keydown.hotkeys', 'Return', function() { if (jQuery(RA.nextElement).length > 0) {
-		jQuery(RA.nextElement).stop(true,true).effect("highlight", {color: '#eee'}, 150).children('.post-title a').click() } });
+		jQuery(RA.nextElement).stop(true,true).effect("highlight", {color: '#eee'}, 150).children('.entry-title a').click() } });
 
 	// K: Scroll to previous post
 	jQuery(document).bind('keydown.hotkeys', 'E', function() { if (jQuery('.selected').length > 0) { jQuery('.selected a.post-edit-link').click(); RA.flashElement('.selected a.post-edit-link') } });
@@ -464,7 +464,7 @@ RollingArchives.prototype.assignHotkeys = function() {
 	// H: Go back to page 1  
 	jQuery(document).bind('keydown.hotkeys', 'H', function() { RA.gotoPage(1) })
 
-	// T: Trim, or remove .post-content  
+	// T: Trim, or remove .entry-content  
 	jQuery(document).bind('keydown.hotkeys', 'T', function() { jQuery('#texttrimmer div:visible').click() });
 
 	// Left Arrow: Previous Page

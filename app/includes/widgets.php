@@ -143,9 +143,9 @@ class K2_Widget_Asides extends WP_Widget {
 				?>
 				<div>
 				<?php while ( $asides->have_posts() ): $asides->the_post(); ?>
-					<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+					<div id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
 						<span>&raquo;&nbsp;</span><?php the_content( __('(more)', 'k2') ); ?>
-						<?php /* Edit Link */ edit_post_link( __('Edit', 'k2'), '<span class="post-edit">', '</span>' ); ?>
+						<?php /* Edit Link */ edit_post_link( __('Edit', 'k2'), '<span class="entry-edit">', '</span>' ); ?>
 					</div>
 				<?php endwhile; ?>
 				</div>
