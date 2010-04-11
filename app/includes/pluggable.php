@@ -46,14 +46,14 @@ if ( ! function_exists('k2_entry_date') ):
 	function k2_entry_date() {
 		global $post;
 
-		$output = '<abbr class="published entry-date" title="' . get_the_time('Y-m-d\TH:i:sO') . '">';
+		$output = '<span class="published entry-date"><span class="value-title" title="' . get_the_time('Y-m-d\TH:i:sO') . '"> </span>';
 
 		if ( function_exists('time_since') )
 			$output .= sprintf( __('%s ago', 'k2'), time_since( abs( strtotime( $post->post_date_gmt . ' GMT' ) ), time() ) );
 		else
 			$output .= get_the_time( get_option('date_format') );
 
-		$output .= '</abbr>';
+		$output .= '</span>';
 
 		return $output;
 	}

@@ -84,12 +84,7 @@
 						</li>
 						<li class="uploaded">
 							<span><?php _e('Uploaded on:', 'k2'); ?></span>
-							<?php
-								if ( function_exists('time_since') ):
-									printf( __('%s ago', 'k2'),
-										'<abbr class="published" title="' . get_the_time('Y-m-d\TH:i:sO') . '">' . time_since(abs(strtotime($post->post_date_gmt . " GMT")), time()) . '</abbr>');
-								else:
-							?><abbr class="published" title="<?php the_time('Y-m-d\TH:i:sO'); ?>"><?php the_time( get_option('date_format') ); ?></abbr><?php endif; ?>
+							<?php echo k2_entry_date(); ?>
 						</li>
 
 						<?php /* K2 Hook */ do_action('k2_image_meta', $post->ID); ?>
