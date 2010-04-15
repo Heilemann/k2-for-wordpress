@@ -177,35 +177,35 @@ body.home.onepageonly.rollingarchives #primary { /* No RA, so back to 10px */
 
 /* Main Menu in Header */
 
-#headermenu {
+.headermenu {
 	position: absolute;
 	white-space: nowrap;
 	bottom: 0;
 	margin: 0 20px;
 	}
 
-#headermenu > ul {
+.headermenu > ul {
 	float: left;
 	}
 
-#headermenu li {
+.headermenu li {
 	list-style: none;
 	}
 
-#headermenu li a {
+.headermenu li a {
 	display: block;
 	outline: none;
 	}
 
-#headermenu li a:hover {
+.headermenu li a:hover {
 	text-decoration: none;
 	}
 
-#headermenu > ul > li { /* Top Menu Items */
+.headermenu > ul > li { /* Top Menu Items */
 	float: left;
 	}
 
-#headermenu > ul > li > a { /* Top Menu */
+.headermenu > ul > li > a { /* Top Menu */
 	margin-left: 5px;
 	padding: 5px 15px;
 	color: #fff;
@@ -218,31 +218,31 @@ body.home.onepageonly.rollingarchives #primary { /* No RA, so back to 10px */
 	-webkit-border-top-right-radius: 3px;
 	}
 
-#headermenu > ul > li.current_page_ancestor > a,
-#headermenu > ul > li.current_page_item > a {
+.headermenu > ul > li.current_page_ancestor > a,
+.headermenu > ul > li.current_page_item > a {
 	color: #333;
 	background: #fff;
 	}
 
-#headermenu > ul > li:hover > a,
-#headermenu > ul > li.sfHover > a { /* Top level hover*/
+.headermenu > ul > li:hover > a,
+.headermenu > ul > li.sfHover > a { /* Top level hover*/
 	color: #eee;
 	background-color: #333;
 	}
 
-#headermenu > ul > li.has_children > a { /* Top level parent */
+.headermenu > ul > li.has_children > a { /* Top level parent */
 	padding-right: 18px;
 	position: relative;
 	}
 
-#headermenu > ul > li.current_page_ancestor.has_children > a:after,
-#headermenu > ul > li.current_page_item.has_children > a:after {
+.headermenu > ul > li.current_page_ancestor.has_children > a:after,
+.headermenu > ul > li.current_page_item.has_children > a:after {
 	background: url('../images/arrows.png') no-repeat left top;
 	}
 
-#headermenu > ul > li.has_children:hover > a:after,
-#headermenu > ul > li.has_children.sfHover > a:after,
-#headermenu > ul > li.has_children > a:after { /* Dropdown indicators */
+.headermenu > ul > li.has_children:hover > a:after,
+.headermenu > ul > li.has_children.sfHover > a:after,
+.headermenu > ul > li.has_children > a:after { /* Dropdown indicators */
 	position: absolute;
 	right: 5px;
 	top: 10px;
@@ -252,7 +252,7 @@ body.home.onepageonly.rollingarchives #primary { /* No RA, so back to 10px */
 	background: url('../images/arrows.png') no-repeat left bottom;
 	}
 
-#headermenu > ul > li > ul { /* Child Menus */
+.headermenu > ul > li > ul { /* Child Menus */
 	left: -999em;
 	position: absolute;
 	z-index: 50;
@@ -270,42 +270,42 @@ body.home.onepageonly.rollingarchives #primary { /* No RA, so back to 10px */
 	-webkit-border-top-left-radius: 0;
 	}
 
-#headermenu > ul > li.sfHover > ul,
-#headermenu > ul > li:hover > ul { /* Show submenu when hovering parent */
+.headermenu > ul > li.sfHover > ul,
+.headermenu > ul > li:hover > ul { /* Show submenu when hovering parent */
 	left: inherit;
 	}
 
-#headermenu li li a { /* Submenu links */
+.headermenu li li a { /* Submenu links */
 	color: #333;
 	padding: .6em 1.5em;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	}
 
-#headermenu li li a:hover { /* Child hover */
+.headermenu li li a:hover { /* Child hover */
 	background: #ddd;
 	background: rgba(0, 0, 0, .1); /* To accomodate the gradient background in modern browsers */
 	}
 
-#headermenu li li li a { /* Indent 3rd child */
+.headermenu li li li a { /* Indent 3rd child */
 	padding-left: 2em;
 }
 
-#headermenu > ul > li > ul > li:first-child > a { /* First child 2nd level */
+.headermenu > ul > li > ul > li:first-child > a { /* First child 2nd level */
 	border-radius: 0 3px 0 0;
 	-moz-border-radius: 0 3px 0 0;
 	-webkit-border-top-left-radius: 0;
 	-webkit-border-top-right-radius: 3px;
 	}
 
-#headermenu > ul > li > ul > li:last-child > a:last-child { /* Last child 2nd level */
+.headermenu > ul > li > ul > li:last-child > a:last-child { /* Last child 2nd level */
 	border-radius: 0 0 3px 3px;
 	-moz-border-radius: 0 0 3px 3px;
 	-webkit-border-bottom-left-radius: 3px;
 	-webkit-border-bottom-right-radius: 3px;
 	}
 
-#headermenu ul ul li:last-child ul li:last-child a:last-child { /* Last child 3rd level */
+.headermenu ul ul li:last-child ul li:last-child a:last-child { /* Last child 3rd level */
 	border-radius: 0 0 3px 3px;
 	-moz-border-radius: 0 0 3px 3px;
 	-webkit-border-bottom-left-radius: 3px;

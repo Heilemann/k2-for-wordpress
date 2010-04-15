@@ -20,6 +20,14 @@ $block = ( is_front_page() ? 'h1' : 'div' );
 
 <?php
 	// Display the page tabs
-/* 	wp_page_menu( array( 'show_home' => esc_attr( get_option('k2blogornoblog') ), 'depth' => 3 ) ); */
-	wp_nav_menu( array( 'show_home' => esc_attr( get_option('k2blogornoblog') ), 'depth' => 3 ) );
+	if ( function_exists('wp_nav_menu') ) {
+		wp_nav_menu( array(
+			'sort_column'		=> 'menu_order',
+			'menu'				=> 'Header Menu',
+			'container_class'	=> 'headermenu',
+			'fallback_cb'		=> wp_page_menu( array( 'menu_class' => 'headermenu', 'show_home' => esc_attr( get_option('k2blogornoblog') ), 'depth' => 3 ) )
+			) );
+	} else {
+	 	wp_page_menu( array( 'menu_class' => 'headermenu', 'show_home' => esc_attr( get_option('k2blogornoblog') ), 'depth' => 3 ) );
+	}
 ?>
