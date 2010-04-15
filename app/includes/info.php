@@ -273,10 +273,6 @@ function k2_post_class_filter($classes) {
 	if ( ++$k2_post_alt % 2 )
 		$classes[] = 'alt';
 
-	// Asides post
-	if ( in_category( get_option('k2asidescategory') ) )
-		$classes[] = 'k2-asides';
-
 	// Applies the time- and date-based classes (below) to post DIV
 	k2_date_classes(mysql2date('U', $post->post_date), $classes);
 

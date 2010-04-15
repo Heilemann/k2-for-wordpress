@@ -26,7 +26,7 @@ function k2_body_class( $print = true ) {
  * @deprecated Replace class="<?php k2_post_class(); ?>" with <?php post_class(); ?>
  * @see get_post_class()
  */
-function k2_post_class( $post_count = 1, $post_asides = false, $print = true ) {
+function k2_post_class( $post_count = 1, $print = true ) {
 	$c = join( ' ', get_post_class() );
 
 	return $print ? print($c) : $c;

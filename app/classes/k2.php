@@ -122,7 +122,6 @@ class K2 {
 	function uninstall() {
 		// Delete options
 		delete_option('k2version');
-		delete_option('k2asidescategory');
 		delete_option('k2livesearch');
 		delete_option('k2rollingarchives');
 		delete_option('k2archives');
@@ -270,11 +269,6 @@ class K2 {
 		} else {
 			update_option('k2archives', '0');
 			K2Archive::delete_archive();
-		}
-
-		// Asides
-		if ( isset($_POST['k2']['asidescategory']) ) {
-			update_option('k2asidescategory', (int) $_POST['k2']['asidescategory']);
 		}
 
 		// Top post meta
