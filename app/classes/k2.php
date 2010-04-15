@@ -52,9 +52,11 @@ class K2 {
 		// Register our sidebars with widgets
 		k2_register_sidebars();
 		
-		// Register the fact that K2 supports post-thumbnails
-		if ( function_exists( 'add_theme_support' ) )
+		// Register the fact that K2 supports post-thumbnails and menus
+		if ( function_exists( 'add_theme_support' ) ) {
 			add_theme_support( 'post-thumbnails' );
+			add_theme_support( 'nav-menus' );
+		}
 
 		// Only load Custom Background if GD is installed and WP supports it.
 		if ( function_exists('add_custom_background') && extension_loaded('gd') && function_exists('gd_info') ) {
