@@ -465,11 +465,6 @@ body.page #content .entry-title {
 	margin-top: 25px;
 	}
 
-.k2-asides h3 {
-	font-size: 1.6em;
-	font-weight: normal;
-	}
-
 .entry-header {
 	position: relative;
 	}
@@ -506,15 +501,6 @@ body.page .entry-content h4 {
 #primary .post .entry-header .metalink {
 	font-size: 1.8em;
 	margin-left: 15px;
-	}
-
-#primary .k2-asides .entry-header .metalink {
-	font-size: 1.4em;
-	}
-
-.single #primary .k2-asides .entry-content {
-	font-size: 1.5em;
-	color: #999;
 	}
 
 .comment-meta {
@@ -555,22 +541,6 @@ body.page .entry-content h4 {
 	visibility: visible;
 	}
 
-
-/* The K2 Asides Widget */
-
-.widgets .k2-asides {
-	margin: 0;
-	padding: 0 0 10px;
-	word-spacing: -1px;
-	}
-
-.widgets .k2-asides p {
-	display: inline;
-	}
-
-.widgets .k2-asides .metalink {
-	padding-left: 0px;
-	}
 
 .entry-edit { /* The Edit Button */
 	position: absolute;
@@ -730,33 +700,6 @@ div.quoter_page_container {
 .entry-content div,
 .entry-content blockquote {
 	margin: 13px 0;
-	}
-
-#content .k2-asides .entry-content p,
-#content .k2-asides .entry-content ul,
-#content .k2-asides .entry-content ol,
-#content .k2-asides .entry-content div,
-#content .k2-asides .entry-content blockquote {
-	margin: 5px 0;
-	}
-
-#content .k2-asides {
-	margin: 15px 0;
-	}
-
-#content .k2-asides .entry-header,
-#content .k2-asides .entry-footer {
-	display: none;
-	}
-
-#content .k2-asides .entry-content {
-	display: block;
-	border-left: 2px solid #ddd;
-	padding-left: 20px;
-	}
-
-.asides-permalink {
-	font-weight: bold;
 	}
 
 .entry-content .map div { /* Google Maps Support */

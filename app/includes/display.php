@@ -32,16 +32,6 @@ function k2_navigation($id = 'nav-above') {
 }
 
 
-function k2_asides_permalink($content) {
-	if ( in_category( get_option('k2asidescategory') ) and ! is_singular() )
-		$content .= '<a href="' . get_permalink() . '" rel="bookmark" class="asides-permalink" title="' . k2_permalink_title(false) . '">(' . get_comments_number() . ')</a>';
-
-	return $content;
-}
-
-add_filter('the_content', 'k2_asides_permalink');
-
-
 function k2_permalink_title($echo = true) {
 	$output = sprintf( __('Permanent Link to %s', 'k2'), esc_html( strip_tags( the_title('', '', false) ), 1) );
 	

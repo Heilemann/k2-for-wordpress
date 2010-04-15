@@ -119,69 +119,6 @@ class K2_Widget_About extends WP_Widget {
 }
 
 
-class K2_Widget_Asides extends WP_Widget {
-	function K2_Widget_Asides() {
-		$widget_ops = array( 'classname' => 'k2-widget-asides', 'description' => __('Asides on your sidebar', 'k2') );
-		$this->WP_Widget('k2-asides', __('K2 Asides', 'k2'), $widget_ops);
-	}
-
-	function widget($args, $instance) {
-		extract($args);
-
-		$k2asidescategory = get_option('k2asidescategory');
-
-		if ( $k2asidescategory != '0') {
-			$title = empty($instance['title']) ? apply_filters('single_cat_title', get_the_category_by_ID($k2asidescategory)) : apply_filters('widget_title', $instance['title']);
-
-			$asides = new WP_Query( array( 'cat' => $k2asidescategory, 'showposts' => $instance['number'], 'what_to_show' => 'posts', 'nopaging' => 0, 'post_status' => 'publish', 'caller_get_posts' => 1 ) );
-
-			if ( $asides->have_posts() ) {
-				echo $before_widget;
-
-				if ( $title != '<none>' )
-					echo $before_title . $title . $after_title;
-				?>
-				<div>
-				<?php while ( $asides->have_posts() ): $asides->the_post(); ?>
-					<div id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
-						<span>&raquo;&nbsp;</span><?php the_content( __('(more)', 'k2') ); ?>
-						<?php /* Edit Link */ edit_post_link( __('Edit', 'k2'), '<span class="entry-edit">', '</span>' ); ?>
-					</div>
-				<?php endwhile; ?>
-				</div>
-<?php
-				echo $after_widget;
-			}
-			wp_reset_query();  // Restore global post data stomped by the_post().
-		}
-	}
-
-	function form($instance) {
-		//Defaults
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'number' => 5 ) );
-		$title = esc_attr( $instance['title'] );
-		$number = (int) $instance['number'];
-		?>
-		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'k2'); ?></label>
-			<input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $title; ?>" />
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id('number'); ?>"><?php _e('Number of asides to show:', 'k2'); ?></label>
-			<input type="text" id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" value="<?php echo $number; ?>" size="2" />
-		</p>
-		<?php
-	}
-
-	function update($new_instance, $old_instance) {
-		$instance = $old_instance;
-		$instance['title'] = strip_tags($new_instance['title']);
-		$instance['number'] = (int) $new_instance['number'];
-		return $instance;
-	}
-}
-
-
 /**
  * Assigns a default set of widgets
  */
@@ -230,34 +167,6 @@ function k2_add_widget(&$sidebar, $id_base, $settings = false) {
 
 function k2_widgets_init() {
 	register_widget('K2_Widget_About');
-	register_widget('K2_Widget_Asides');
 }
 
 add_action( 'widgets_init', 'k2_widgets_init' );
-
-function k2_asides_filter($query) {
-	$asidescat = get_option('k2asidescategory');
-
-	// Only filter when it's in the homepage
-	if ( ($asidescat != 0) and ($query->is_home) and is_active_widget(false, false, 'k2-asides') ) {
-		$exclude_cats = $query->get('category__not_in');
-		$include_cats = $query->get('category__in');
-
-		// Remove asides from list of categories to include
-		if ( !empty($include_cats) and in_array($asidescat, $include_cats) ) {
-			$query->set( 'category__in', array_diff( $include_cats, array($asidescat) ) );
-		}
-
-		// Insert asides into list of categories to exclude
-		if ( empty($exclude_cats) ) {
-			$query->set( 'category__not_in', array($asidescat) );
-		} else if ( !in_array( $asidescat, $exclude_cats ) ) {
-			$query->set( 'category__not_in', array_merge( $exclude_cats, array($asidescat) ) );
-		}
-	}
-
-	return $query;
-}
-
-// Filter to remove asides from the loop
-add_filter('pre_get_posts', 'k2_asides_filter');

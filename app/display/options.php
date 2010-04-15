@@ -3,12 +3,6 @@
 	// Check that the K2 folder has no spaces
 	$dir_has_spaces = (strpos(TEMPLATEPATH, ' ') !== false);
 
-	// Get the asides category
-	$asides_id = get_option('k2asidescategory');
-
-	// Get the categories we might use for asides
-	$asides_cats = get_categories('get=all');
-
 	// Get post meta format
 	$entrymeta1 = get_option('k2entrymeta1');
 	if ( empty($entrymeta1) ) {
@@ -57,11 +51,6 @@
 						<input id="k2-animations" name="k2[animations]" type="checkbox" value="1" <?php checked('1', get_option('k2animations')); ?> />
 						<label for="k2-animations"><?php _e('Use JavaScript Animations?', 'k2'); ?></label>
 					</li>
-					<li>
-						<h4><label for="k2ajax"><?php _e('Ajax Success JavaScript', 'k2'); ?></label></h4>
-						<p class="description"><?php _e('JavaScript code that will be executed whenever Advanced Navigation is dynamically loaded.', 'k2'); ?></p>
-						<textarea id="k2ajax" name="k2[ajaxdonejs]" class="codepress javascript"><?php form_option('k2ajaxdonejs'); ?></textarea>
-					</li>
 				</ul>
 			</li>
 
@@ -73,22 +62,6 @@
 				</p>
 
 				<p class="description"><?php _e('Installs a pre-made archives page.', 'k2'); ?></p>
-			</li>
-
-			<li>
-				<h3 class="main-label"><label for="k2-asidescategory"><?php _e('Use Asides?', 'k2'); ?></label></h3>
-
-				<p class="main-option">
-					<select id="k2-asidescategory" name="k2[asidescategory]">
-						<option value="0" <?php selected($asides_id, '0'); ?>><?php _e('Off', 'k2'); ?></option>
-
-						<?php foreach ( $asides_cats as $cat ): ?>
-						<option value="<?php echo esc_attr($cat->cat_ID); ?>" <?php selected($asides_id, $cat->cat_ID); ?>><?php echo($cat->cat_name); ?></option>
-						<?php endforeach; ?>
-					</select>
-				</p>
-
-				<p class="description"><?php _e('Aside posts are styled differently and can be placed on the sidebar.', 'k2'); ?></p>
 			</li>
 
 			<li>

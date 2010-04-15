@@ -84,8 +84,6 @@ class K2 {
 
 		add_option('k2archives', '0', 'Set whether K2 has an archives page');
 
-		add_option('k2asidescategory', '0', 'A category which will be treated differently from other categories');
-
 		add_option('k2entrymeta1', __('Published by %author% on %date% in %categories%. %comments% %tags%', 'k2'), 'Customized metadata format before entry content.');
 		add_option('k2entrymeta2', '', 'Customized metadata format after entry content.');
 
