@@ -1066,6 +1066,7 @@ input[type=text]:focus, textarea:focus {
 	top: 5px;
 	right: 5px;
 	color: #333;
+	z-index: 1000;
 	background: #cfcfcf;
 	padding: 5px 10px;
 	border-radius: 4px;
@@ -1258,11 +1259,7 @@ img.wp-smiley {
 	margin: 0 5px 0 0 !important;
 	padding: 2px 0 2px 10px !important;
 	width: 150px;
-	}
-
-.archive-list li:hover {
-	background-color: #EDEDED;
-	}
+}
 
 .archive-list .children {
 	margin: 0;

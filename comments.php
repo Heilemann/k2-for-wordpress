@@ -160,7 +160,7 @@
 				<?php do_action('comment_form', $post->ID); ?>
 		
 				<p>
-					<div><input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit', 'k2'); ?>" /></div>
+					<input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit', 'k2'); ?>" />
 					<?php comment_id_fields(); ?>
 				</p>
 			</form>

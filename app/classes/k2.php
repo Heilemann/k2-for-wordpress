@@ -393,7 +393,7 @@ class K2 {
 
 		wp_register_script('ui',
 			get_bloginfo('template_directory') . '/js/jquery.ui.js',
-			array('jquery'), '1.7.2', true);
+			array('jquery'), '1.8', true);
 
 		wp_register_script('k2functions',
 			get_bloginfo('template_directory') . '/js/k2.functions.js',
