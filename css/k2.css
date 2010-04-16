@@ -1,3 +1,5 @@
+/* @override http://localhost/k2/wp-content/themes/k2/css/k2.css */
+
 /* @override 
 	http://localhost/k2/wp-content/themes/k2/css/k2.css
 	http://localhost/wp30/wp-content/themes/k2/css/k2.css
@@ -1421,9 +1423,14 @@ input[type=text], textarea {
 
 #rollingarchives,
 .navigation {
-	height: 45px;
 	padding: 0;
 }
+
+#rollingarchives *,
+.navigation * {
+	height: 45px;
+}
+
 
 .navigation {
 	padding: 0 10px;
