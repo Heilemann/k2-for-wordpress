@@ -121,27 +121,27 @@ body.lang-zh {
 	float: right;
 	}
 
-#primary {
+.primary {
 	position: relative;
 	float: left;
 	width: 520px;
 	padding: 10px 0;
 	}
 
-body.showrollingarchives #primary { /* Flush RA with header */
+body.showrollingarchives .primary { /* Flush RA with header */
 	padding-top: 0;
 }
 
-body.home.onepageonly.rollingarchives #primary { /* No RA, so back to 10px */
+body.home.onepageonly.rollingarchives .primary { /* No RA, so back to 10px */
 	padding-top: 10px;
 }
 
 
-* html #primary { /* IE Hack */
+* html .primary { /* IE Hack */
 	display: inline;
 	}
 
-#primary {
+.primary {
 	margin-top: 9px;
 	}
 
@@ -449,7 +449,7 @@ h4 {
 	}
 
 .four04 .entry-title,
-body.page #content .entry-title {
+body.page .content .entry-title {
 	margin-left: 40px;
 	text-align: center;
 	}
@@ -494,13 +494,13 @@ body.page .entry-content h4 {
 	margin: 0;
 	}
 
-#primary .metalink a, #primary .metalink a:visited, /* The Metalink class takes care of the comments, edit, rss and trackback links next to the titles */
+.primary .metalink a, .primary .metalink a:visited, /* The Metalink class takes care of the comments, edit, rss and trackback links next to the titles */
 .widgets .metalink a, .widgets .metalink a:visited {
 	color: #999;
 	font-weight: normal;
 	}
 
-#primary .post .entry-header .metalink {
+.primary .post .entry-header .metalink {
 	font-size: 1.8em;
 	margin-left: 15px;
 	}
@@ -716,13 +716,13 @@ div.quoter_page_container {
 	margin-top: 3px;
 	}
 
-#primary a.entry-edit-link:hover,
-#primary a.comment-edit-link:hover,
-#primary a.comment-reply-link:hover {
+.primary a.entry-edit-link:hover,
+.primary a.comment-edit-link:hover,
+.primary a.comment-reply-link:hover {
 	text-decoration: none;
 }
 
-.columns-three .template-image #primary {
+.columns-three .template-image .primary {
 	width: 670px;
 	}
 
@@ -1426,11 +1426,14 @@ input[type=text], textarea {
 	padding: 0;
 }
 
-#rollingarchives *,
-.navigation * {
+#rollingarchives {
 	height: 45px;
 }
 
+#rollingarchives a,
+.navigation a {
+	height: 45px;
+}
 
 .navigation {
 	padding: 0 10px;
@@ -1438,13 +1441,6 @@ input[type=text], textarea {
 
 body.rollingarchives.single .navigation {
 	display: block;
-}
-
-body.rollingarchives .navigation,
-body.showrollingarchives.single .navigation,
-body.showrollingarchives .navgation, /* If RA or LS are in use, hide static navigation */
-body.livesearchactive .navigation {
-	display: none;
 }
 
 body.showrollingarchives,
@@ -1476,10 +1472,6 @@ body.livesearchactive {
 	color: #999;
 	}
 
-body.showrollingarchives .navigation {
-	display: none;
-}
-
 #rollingarchives { /* AJAX-powered navigation hub */
 	position: relative;
 	top: 0;
@@ -1507,12 +1499,12 @@ body.smartposition #rollingarchivesbg {
 	z-index: 45;
 	position: fixed;
 	top: 0;
-	margin-left: -20px; /* Counter-act #primary & #wrapper paddings */
+	margin-left: -20px; /* Counter-act .primary & #wrapper paddings */
 	height: 45px;
 	background: #f8f8f8;
 	}
 
-body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS when #content passes the top of the window */
+body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS when .content passes the top of the window */
 	position: fixed;
 	z-index: 50;
 	}
@@ -1526,7 +1518,7 @@ body.smartposition #widgets-sidebar-2 div.widget_search:first-child #searchform 
 }
 
 
-body.smartposition #primary { /* When scrolling past content top, adjust for fixing RA interface to top of screen */
+body.smartposition .primary { /* When scrolling past content top, adjust for fixing RA interface to top of screen */
 	padding-top: 45px !important;
 	}
 
@@ -1535,11 +1527,11 @@ body.smartposition #widgets-sidebar-2 div.widget_search:first-child {
 	padding-top: 24px;
 }
 
-body.smartposition #content.onepageonly { /* If there is only a single page, remove space at top of page */
+body.smartposition .content.onepageonly { /* If there is only a single page, remove space at top of page */
 	padding-top: 0;
 	}
 
-#content { /* Contains both the RA nav and content, and is used for as a top marker for the smartposition */
+.content { /* Contains both the RA nav and content, and is used for as a top marker for the smartposition */
 	position: relative;
 	}
 
@@ -1747,15 +1739,11 @@ body.smartposition #trimmertrim, body.smartposition #trimmeruntrim {
 	top: 3px;
 	}
 
-body.onepageonly #content { /* For the rare case of having only one page of content on the frontpage */
+body.onepageonly .content { /* For the rare case of having only one page of content on the frontpage */
 	padding-top: 0;
 	}
 
-body.rollingarchives.home .navigation {
-	display: none;
-}
-
-#content .archivepages { /* Hide 'Page X of Y' when RA is active */
+.content .archivepages { /* Hide 'Page X of Y' when RA is active */
 	display: none;
 	}
 

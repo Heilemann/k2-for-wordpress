@@ -8,10 +8,10 @@
 	</div>
 	<?php endif; ?>
 
-	<div id="primary">
+	<div class="primary">
 		<a name="startcontent"></a>
 
-		<div id="content" class="hfeed">
+		<div class="content" class="hfeed">
 
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
@@ -62,9 +62,9 @@
 
 		<?php endif; ?>
 
-		</div><!-- #content -->
+		</div><!-- .content -->
 
-	</div><!-- #primary -->
+	</div><!-- .primary -->
 		
 	<?php get_sidebar(); ?>
 

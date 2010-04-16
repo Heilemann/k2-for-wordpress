@@ -318,8 +318,8 @@ class K2Styles {
 			$current = get_current_theme();
 
 			// Get a list of style css
-			$styles = K2::files_scan( $styles_dir, 'css', 2 );;
-
+			$styles = K2::files_scan( $styles_dir, 'css', 3 );
+			
 			// Loop through each style css and add to the list
 			foreach ($styles as $style_css) {
 				$wp_themes[$current]['Stylesheet Files'][] = "$styles_dir/$style_css";

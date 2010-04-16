@@ -8,7 +8,9 @@
 	if ( empty($entrymeta1) ) {
 		$entrymeta1 = __('Published by %author% on %date% in %categories%. %comments%. %tags%.', 'k2');
 	}
-	
+	global $wp_themes;
+	print_r($wp_themes);
+	echo $wp_themes;
 ?>
 
 <div class="wrap">
@@ -42,16 +44,14 @@
 
 				<p class="main-option">
 					<input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2livesearch')); ?> />
+
+					&nbsp;&nbsp;&nbsp;<label for="k2-animations" style="vertical-align: baseline"><?php _e('and animations', 'k2'); ?></label>
+					<input id="k2-animations" name="k2[animations]" type="checkbox" value="1" <?php checked('1', get_option('k2animations')); ?> />
+
 				</p>
 
 				<p class="description"><?php _e('Seamlessly search and navigate old posts.', 'k2'); ?></p>
 
-				<ul class="advanced-option">
-					<li>
-						<input id="k2-animations" name="k2[animations]" type="checkbox" value="1" <?php checked('1', get_option('k2animations')); ?> />
-						<label for="k2-animations"><?php _e('Use JavaScript Animations?', 'k2'); ?></label>
-					</li>
-				</ul>
 			</li>
 
 			<li>

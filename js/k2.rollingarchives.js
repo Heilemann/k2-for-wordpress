@@ -1,7 +1,7 @@
 /**
  * Inserts and initializes the Rolling Archives user interface.
  *
- * @param {string}	content		An element to place the UI before. Eg. '#content';
+ * @param {string}	content		An element to place the UI before. Eg. '.content';
  * @param {string}	posts		Class of the elements containing individual posts.
  * @param {string}	parent		ID of parent element of RA UI, for .smartposition.
  * @param {string}	pagetext  	A localized string of 'of', as in 'X of Y', inserted into the UI.
@@ -25,6 +25,8 @@ function RollingArchives(args) {
 	var older				= args.older		|| 'Older';
 	var newer				= args.newer		|| 'Newer';
 	var loading				= args.loading		|| 'Loading';
+
+	jQuery('.navigation').remove()
 
 	// Insert the Rolling Archives UI
 	jQuery(RA.content).before('\

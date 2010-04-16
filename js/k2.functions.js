@@ -18,7 +18,7 @@ K2.ajaxGet = function(data, complete_fn) {
 		dataType:	'html',
 
 		error: function(request) {
-			jQuery('#content').prepend('<p id="rollingalert" class="alert">Error ' + request.status + ': ' + request.statusText + '</p>');
+			jQuery('.content').prepend('<p id="rollingalert" class="alert">Error ' + request.status + ': ' + request.statusText + '</p>');
 		},
 
 		success: function() {
@@ -167,8 +167,8 @@ function resizeImage(image, container, padding) {
 function initARIA() {
 	jQuery('#header').attr('role', 'banner');
 	jQuery('#header .menu').attr('role', 'navigation');
-	jQuery('#primary').attr('role', 'main');
-	jQuery('#content').attr('aria-live', 'polite').attr('aria-atomic', 'true');
+	jQuery('.primary').attr('role', 'main');
+	jQuery('.content').attr('aria-live', 'polite').attr('aria-atomic', 'true');
 	jQuery('.secondary').attr('role', 'complementary');
 	jQuery('#footer').attr('role', 'contentinfo');
 }

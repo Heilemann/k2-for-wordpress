@@ -59,9 +59,9 @@ function k2_init_advanced_navigation() {
 
 		// Insert the Rolling Archives UI and init.
 		K2.RollingArchives = new RollingArchives({
-			content:    "#content",
-			posts:      "#content .post",
-			parent:     "#primary",
+			content:    ".content",
+			posts:      ".content .post",
+			parent:     ".primary",
 			pagetext:   "<?php /* translators: 1: current page, 2: total pages */ _e('of', 'k2'); ?>", // Page X of Y
 			older:      "<?php _e('Older', 'k2'); ?>",
 			newer:      "<?php _e('Newer', 'k2'); ?>",
@@ -83,7 +83,7 @@ function k2_init_advanced_navigation() {
 		jQuery(window).trigger( 'hashchange' );
 
 		<?php /* JS to run after jQuery Ajax calls */ if ( get_option('k2ajaxdonejs') != '' ): ?>
-		jQuery('#content').ajaxComplete(function () {
+		jQuery('.content').ajaxComplete(function () {
 			<?php echo get_option('k2ajaxdonejs'); ?>
 		});
 		<?php endif; ?>

@@ -101,13 +101,13 @@ LiveSearch.prototype.doSearch = function(self) {
 
 	// ...and scroll to the top if needed
 	if (K2.Animations && self.pageNumber != 1 && jQuery('body').hasClass('smartposition'))
-		jQuery('html,body').animate({ scrollTop: jQuery('#primary').offset().top }, 100);
+		jQuery('html,body').animate({ scrollTop: jQuery('.primary').offset().top }, 100);
 
 	jQuery.bbq.pushState( 'search=' + self.searchField.val() ); // Update the hash/fragment
 
 	K2.ajaxGet(self.searchform.serialize() + '&k2dynamic=init',
 		function(data) {
-			jQuery('#content').html(data);
+			jQuery('.content').html(data);
 
 			self.loading.fadeTo('fast', 0);
 

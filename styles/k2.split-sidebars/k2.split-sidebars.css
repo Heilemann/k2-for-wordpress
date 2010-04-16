@@ -8,7 +8,7 @@
 */
 
 
-body.columns-three #primary {
+body.columns-three .primary {
 	margin-left: 195px;
 	}
 
@@ -23,7 +23,7 @@ body.webkit.smartposition #widgets-sidebar-1 div.widget_search:first-child #sear
 	margin-left: -520px;
 	}
 
-body.columns-three .template-image #primary {
+body.columns-three .template-image .primary {
 	margin-left: 0;
 	}
 

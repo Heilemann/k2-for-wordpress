@@ -25,8 +25,8 @@ function k2_navigation($id = 'nav-above') {
 		<div class="nav-next"><?php previous_posts_link( __('Newer <span class="meta-nav">&raquo;</span>', 'k2') ); ?></div>
 	<?php endif; ?>
 
-		<div class="clear"></div>
 	</div>
+	<div class="clear"></div>
 
 <?php
 }
