@@ -70,7 +70,8 @@ class K2 {
 			automatic_feed_links();
 
 		// This theme allows users to set a custom background
-		add_custom_background();
+		if ( function_exists('add_custom_background') )
+			add_custom_background();
 	}
 
 
