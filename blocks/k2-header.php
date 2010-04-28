@@ -22,11 +22,12 @@ $block = ( is_front_page() ? 'h1' : 'div' );
 	// Display the page tabs
 	if ( function_exists('wp_nav_menu') ) {
 		wp_nav_menu( array(
+			'menu'				=> 'header',
 			'sort_column'		=> 'menu_order',
-			'menu'				=> 'Header Menu',
 			'container_class'	=> 'headermenu',
-			'fallback_cb'		=> wp_page_menu( array( 'menu_class' => 'headermenu', 'show_home' => esc_attr( get_option('k2blogornoblog') ), 'depth' => 3 ) )
-			) );
+			'depth'				=> 3,
+			'show_home'			=> esc_attr( get_option('k2blogornoblog') )
+		) );
 	} else {
 	 	wp_page_menu( array( 'menu_class' => 'headermenu', 'show_home' => esc_attr( get_option('k2blogornoblog') ), 'depth' => 3 ) );
 	}
