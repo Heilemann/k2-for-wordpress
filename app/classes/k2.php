@@ -15,6 +15,8 @@ class K2 {
 	 * @uses do_action() Provides 'k2_init' action
 	 */
 	function init() {
+		global $wp_version;
+
 		// Load required classes and includes
 		include_once(TEMPLATEPATH . '/app/includes/wp-compat.php');
 		require_once(TEMPLATEPATH . '/app/classes/archive.php');
@@ -52,19 +54,23 @@ class K2 {
 		// Register our sidebars with widgets
 		k2_register_sidebars();
 		
-		// Register the fact that K2 supports post-thumbnails and menus
 		if ( function_exists( 'add_theme_support' ) ) {
+			// This theme uses post thumbnails
 			add_theme_support( 'post-thumbnails' );
+
+			// This theme uses wp_nav_menu()
 			add_theme_support( 'nav-menus' );
+
 		}
 
-		// Only load Custom Background if GD is installed and WP supports it.
-		if ( function_exists('add_custom_background') && extension_loaded('gd') && function_exists('gd_info') ) {
-			add_custom_background();
-		}
+		// Add default posts and comments RSS feed links to head
+		if ( version_compare( $wp_version, '3.0', '<' ) )
+			add_theme_support( 'automatic-feed-links' );
+		else
+			automatic_feed_links();
 
-		// Automatically output feed links. Requires WP 2.8+
-		automatic_feed_links();
+		// This theme allows users to set a custom background
+		add_custom_background();
 	}
 
 
@@ -74,18 +80,18 @@ class K2 {
 	 * @uses do_action() Provides 'k2_install' action
 	 */
 	function install() {
-		add_option('k2version', K2_CURRENT, 'This option stores K2\'s version number');
+		add_option('k2version', K2_CURRENT);
 
-		add_option('k2livesearch', '1', "If you don't trust JavaScript and Ajax, you can turn off LiveSearch. Otherwise I suggest you leave it on"); // (live & classic)
-		add_option('k2rollingarchives', '1', "If you don't trust JavaScript and Ajax, you can turn off Rolling Archives. Otherwise it is suggested you leave it on");
-		add_option('k2animations', '1', 'JavaScript Animation effects.');
+		add_option( 'k2livesearch', '1' ); // (live & classic)
+		add_option( 'k2rollingarchives', '1');
+		add_option( 'k2animations', '1' );
 		$defaultjs = "// Lightbox v2.03.3 - Adds new images to lightbox\nif (typeof myLightbox != 'undefined' && myLightbox instanceof Lightbox && myLightbox.updateImageList) {\n\tmyLightbox.updateImageList();\n}\n";
-		add_option('k2ajaxdonejs', $defaultjs, 'JavaScript to execute when Ajax is completed');
+		add_option( 'k2ajaxdonejs', $defaultjs );
 
-		add_option('k2archives', '0', 'Set whether K2 has an archives page');
+		add_option( 'k2archives', '0' );
 
-		add_option('k2entrymeta1', __('Published by %author% on %date% in %categories%. %comments% %tags%', 'k2'), 'Customized metadata format before entry content.');
-		add_option('k2entrymeta2', '', 'Customized metadata format after entry content.');
+		add_option( 'k2entrymeta1', __('Published by %author% on %date% in %categories%. %comments% %tags%', 'k2') );
+		add_option( 'k2entrymeta2', '' );
 
 		// Call the install handlers
 		do_action('k2_install');
