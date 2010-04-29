@@ -25,7 +25,7 @@
 	<div class="primary">
 		<a name="startcontent"></a>
 
-		<div class="content" class="hfeed">
+		<div class="content hfeed">
 
 			<?php the_post(); ?>
 

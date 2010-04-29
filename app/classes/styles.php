@@ -324,6 +324,8 @@ class K2Styles {
 			foreach ($styles as $style_css) {
 				$wp_themes[$current]['Stylesheet Files'][] = "$styles_dir/$style_css";
 			}
+
+			$wp_themes[$current]['Stylesheet Files'][] = "/css/k2.css";
 		}
 	}
 

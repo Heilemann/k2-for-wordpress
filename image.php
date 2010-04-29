@@ -33,7 +33,7 @@
 	<div class="primary">
 		<a name="startcontent"></a>
 
-		<div class="content" class="hfeed">
+		<div class="content hfeed">
 
 		<?php if ( have_posts() ): while ( have_posts() ): the_post(); ?>
 

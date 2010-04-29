@@ -15,7 +15,7 @@
 
 		<?php /* Top Navigation */ k2_navigation('nav-above'); ?>
 
-		<div class="content" class="hfeed">
+		<div class="content hfeed">
 
 			<?php include(TEMPLATEPATH . '/app/display/theloop.php'); ?>
 

@@ -13,15 +13,15 @@
 		
 		<?php /* K2 Hook */ do_action('template_primary_begin'); ?>
 
-		<div class="content" class="hfeed">
+		<div class="content hfeed">
 
 			<?php locate_template( array('blocks/k2-404.php'), true ); ?>
 
-		</div> <!-- .content .hfeed -->
+		</div><!-- .content .hfeed -->
 
 		<?php /* K2 Hook */ do_action('template_primary_end'); ?>
 
-	</div> <!-- .primary -->
+	</div><!-- .primary -->
 	
 	<?php get_sidebar(); ?>
 

@@ -13,7 +13,7 @@
 
 		<?php /* K2 Hook */ do_action('template_primary_begin'); ?>
 
-		<div class="content" class="hfeed">
+		<div class="content hfeed">
 
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 

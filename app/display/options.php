@@ -8,7 +8,9 @@
 	if ( empty($entrymeta1) ) {
 		$entrymeta1 = __('Published by %author% on %date% in %categories%. %comments%. %tags%.', 'k2');
 	}
+
 	global $wp_themes;
+	$wp_themes[$current]['Stylesheet Files'][] = "/css/k2.css";
 	print_r($wp_themes);
 	echo $wp_themes;
 ?>
