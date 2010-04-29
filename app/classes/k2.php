@@ -86,6 +86,7 @@ class K2 {
 		add_option( 'k2livesearch', '1' ); // (live & classic)
 		add_option( 'k2rollingarchives', '1');
 		add_option( 'k2animations', '1' );
+		add_option( 'k2usestyle', '1' );
 		$defaultjs = "// Lightbox v2.03.3 - Adds new images to lightbox\nif (typeof myLightbox != 'undefined' && myLightbox instanceof Lightbox && myLightbox.updateImageList) {\n\tmyLightbox.updateImageList();\n}\n";
 		add_option( 'k2ajaxdonejs', $defaultjs );
 
@@ -131,6 +132,7 @@ class K2 {
 		delete_option('k2version');
 		delete_option('k2livesearch');
 		delete_option('k2rollingarchives');
+		delete_option('k2usestyle');
 		delete_option('k2archives');
 		delete_option('k2entrymeta1');
 		delete_option('k2entrymeta2');
@@ -267,6 +269,13 @@ class K2 {
 			update_option('k2animations', '1');
 		} else {
 			update_option('k2animations', '0');
+		}
+
+		// Use K2's CSS?
+		if ( isset($_POST['k2']['usestyle']) ) {
+			update_option('k2usestyle', '1');
+		} else {
+			update_option('k2usestyle', '0');
 		}
 
 		// Archives Page (thanks to Michael Hampton, http://www.ioerror.us/ for the assist)

@@ -9,10 +9,6 @@
 		$entrymeta1 = __('Published by %author% on %date% in %categories%. %comments%. %tags%.', 'k2');
 	}
 
-	global $wp_themes;
-	$wp_themes[$current]['Stylesheet Files'][] = "/css/k2.css";
-	print_r($wp_themes);
-	echo $wp_themes;
 ?>
 
 <div class="wrap">
@@ -54,6 +50,16 @@
 
 				<p class="description"><?php _e('Seamlessly search and navigate old posts.', 'k2'); ?></p>
 
+			</li>
+
+			<li>
+				<h3 class="main-label"><label for="k2-usestyle"><?php _e('Use K2 Styling?', 'k2'); ?></label></h3>
+
+				<p class="main-option">
+					<input id="k2-usestyle" name="k2[usestyle]" type="checkbox" value="use_style" <?php checked('1', get_option('k2usestyle')); ?> />
+				</p>
+
+				<p class="description"><?php _e('Loads the default CSS that comes with K2.', 'k2'); ?></p>
 			</li>
 
 			<li>

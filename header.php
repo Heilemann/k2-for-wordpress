@@ -18,7 +18,12 @@
 
 	<title><?php wp_title('&laquo;', true, 'right'); ?> <?php bloginfo('name'); ?></title>
 
+
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/style.css" />
+
+	<?php if ( get_option('k2usestyle') == 1 ): ?>
+		<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/css/k2.css" />
+	<?php endif; ?>
 
 	<?php /* Child Themes */ if ( K2_CHILD_THEME ): ?>
 		<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
