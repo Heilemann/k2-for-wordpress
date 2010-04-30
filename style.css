@@ -1,3 +1,5 @@
+/* @override http://localhost/k2/wp-content/themes/k2/style.css */
+
 /*
 Theme Name:		K2
 Version:		1.1
@@ -1439,6 +1441,10 @@ input[type=text], textarea {
 
 .navigation {
 	padding: 0 10px;
+}
+
+body.showrollingarchives .navigation {
+	display: none;
 }
 
 body.rollingarchives.single .navigation {

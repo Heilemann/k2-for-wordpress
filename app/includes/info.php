@@ -96,8 +96,8 @@ function k2_init_advanced_navigation() {
 <?php
 } // End Init_Scripts()
 
-// Are LiveSearch and Rolling Archives enabled?
-if ( ( 1 == get_option('k2livesearch') ) and ( 1 == get_option('k2rollingarchives') ) )
+// Is advanced navigation enabled?
+if ( ('1' == get_option('k2livesearch')) && ('1' == get_option('k2rollingarchives')) )
 	add_action( 'wp_footer', 'k2_init_advanced_navigation' );
 
 /**

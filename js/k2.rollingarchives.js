@@ -26,8 +26,6 @@ function RollingArchives(args) {
 	var newer				= args.newer		|| 'Newer';
 	var loading				= args.loading		|| 'Loading';
 
-	jQuery('.navigation').remove()
-
 	// Insert the Rolling Archives UI
 	jQuery(RA.content).before('\
 		<div id="rollingarchivesbg"></div>\
