@@ -1,6 +1,3 @@
-<hr />
-
-
 <?php if ( ! get_post_custom_values('hidesidebar1') && is_active_sidebar('widgets-sidebar-1') ): ?>
 
 	<div id="widgets-sidebar-1" class="widgets secondary">
@@ -8,9 +5,6 @@
 	</div><!-- #widgets-sidebar-1 -->
 
 <?php endif; ?>
-
-
-<hr />
 
 
 <?php if ( ! get_post_custom_values('hidesidebar2') && is_active_sidebar('widgets-sidebar-2') ): ?>
