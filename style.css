@@ -1450,6 +1450,11 @@ body.livesearchactive {
 	overflow-y: scroll; /* Avoid horizontal 'popping' when using RA and LS */
 }
 
+body.showrollingarchives.ie7,
+body.livesearchactive.ie7 { /* Thanks IE7 */
+	overflow-y: auto;
+}
+
 .comments .navigation {
 	margin: 20px 0;
 	}
