@@ -242,7 +242,7 @@ function k2_body_class_filter($classes) {
 	if ( empty($locale) ) {
 		$locale = 'en';
 	} else {
-		$lang_array = split('_', $locale);
+		$lang_array = explode( '_', $locale );
 		$locale = $lang_array[0];
 	}
 	$classes[] = 'lang-' . $locale;
