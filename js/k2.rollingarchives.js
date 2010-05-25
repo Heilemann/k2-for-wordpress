@@ -303,8 +303,12 @@ RollingArchives.prototype.updateCache = function() {
 	var lowerLimit = RA.pageNumber - RA.cacheDepth; // Newer pages
 	var upperLimit = RA.pageNumber + RA.cacheDepth; // Older pages
 
+	// don't go over/under the number of pages
+	if ( lowerLimit < 1 ) lowerLimit = 1;
+	if ( upperLimit > RA.pageCount ) upperLimit = RA.pageCount;
+
 	for (var i = lowerLimit; i <= upperLimit; i++) {
-		if (i <= 0 || i == RA.pageNumber) continue;
+		if ( i == RA.pageNumber ) continue;
 
 		if (RA.cache[i] == undefined) {
 			jQuery.extend(RA.query, { paged: i, k2dynamic: 1 });
