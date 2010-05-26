@@ -9,26 +9,23 @@
  */
 
 // For SEO, outputs the blog title in h1 or a div
-$block = ( is_front_page() ? 'h1' : 'div' );
+$heading_tag = ( is_home() || is_front_page() ) ? 'h1' : 'div';
 ?>
 
-<?php echo "<$block class='blog-title'>"; ?>
-	<a href="<?php echo get_option('home'); ?>/" accesskey="1"><?php bloginfo('name'); ?></a>
-<?php echo "</$block>"; ?>
-
-<p class="description"><?php bloginfo('description'); ?></p>
+<<?php echo $heading_tag; ?> id="site-title">
+<span>
+	<a href="<?php echo home_url( '/' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
+</span>
+</<?php echo $heading_tag; ?>>
+<div id="site-description"><?php bloginfo( 'description' ); ?></div>
 
 <?php
 	// Display the page tabs
 	if ( function_exists('wp_nav_menu') ) {
 		wp_nav_menu( array(
-			'menu'				=> 'header',
-			'sort_column'		=> 'menu_order',
-			'container_class'	=> 'headermenu',
-			'depth'				=> 3,
-			'show_home'			=> esc_attr( get_option('k2blogornoblog') )
+			'theme_location'	=> 'header'
 		) );
 	} else {
-	 	wp_page_menu( array( 'menu_class' => 'headermenu', 'show_home' => esc_attr( get_option('k2blogornoblog') ), 'depth' => 3 ) );
+	 	wp_page_menu();
 	}
 ?>

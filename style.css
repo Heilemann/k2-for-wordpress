@@ -47,7 +47,7 @@ body {
     font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Helvetica, Arial, Sans-Serif;
 	}
 
-h1, .blog-title, h2, h3 {
+h1, #site-title, h2, h3 {
 	font-family: "Trebuchet MS", Verdana, Sans-Serif;
 	}
 
@@ -393,23 +393,23 @@ h1 {
 	font-size: 3em;
 	}
 
-.blog-title {
+#site-title {
 	font-size: 3em;
 	font-weight: bold;
 	padding: 75px 40px 0;
 	}
 
-.blog-title a,
-#header .description {
+#site-title a,
+#site-description {
 	text-decoration: none;
 	color: #fff;
 	}
 
-.blog-title a:hover {
+#site-title a:hover {
 	text-decoration: underline;
 	}
 
-#header .description { /* Description in header */
+#site-description { /* Description in header */
 	font-size: 1em;
 	margin: 0 40px;
 	}

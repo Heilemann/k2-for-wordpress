@@ -27,6 +27,21 @@ class K2Header {
 		@define( 'HEADER_IMAGE_WIDTH', apply_filters('k2_header_width', $default_widths[$columns], $columns) );
 		@define( 'HEADER_TEXTCOLOR', apply_filters('k2_header_textcolor', 'ffffff') );
 
+		/*
+		@define( 'HEADER_IMAGE', '%s/images/headers/default.png' );
+
+		// Default custom headers packaged with the theme.
+		if ( function_exists('register_default_headers') ) {
+			register_default_headers( array (
+				'default' => array (
+					'url' => '%s/images/headers/default.png',
+					'thumbnail_url' => '%s/images/headers/default.png',
+					'description' => __( 'Default', 'k2' )
+				)
+			) );
+		}
+		*/
+
 		// Only load Custom Image Header if GD is installed
 		if ( extension_loaded('gd') && function_exists('gd_info') ) {
 			add_custom_image_header(array('K2Header', 'output_header_css'), array('K2Header', 'output_admin_header_css'));
@@ -34,13 +49,15 @@ class K2Header {
 	}
 
 	function install() {
-		add_option('k2headerimage', '', 'Current Header Image');
-		add_option('k2blogornoblog', 'Blog', 'The text on the first tab in the header navigation.');
+		add_option( 'k2headerimage', '' );
+		add_option( 'k2hometab', '1' );
+		add_option( 'k2hometabcustom', 'Blog' );
 	}
 
 	function uninstall() {
 		delete_option('k2headerimage');
-		delete_option('k2blogornoblog');
+		delete_option('k2hometab');
+		delete_option('k2hometabcustom');
 
 		remove_theme_mods();
 	}
@@ -48,6 +65,7 @@ class K2Header {
 	function display_options() {
 		// Get the current header picture
 		$current_header_image = get_option('k2headerimage');
+		$current_hometab = get_option('k2hometab');
 
 		// Get the header pictures
 		$header_images = K2Header::get_header_images();
@@ -94,10 +112,22 @@ class K2Header {
 					</tr>
 					<tr>
 						<th scope="row">
-							<label for="k2-blog-tab"><?php _e('Rename the \'Blog\' tab:', 'k2'); ?></label>
+							<label for="k2-hometab"><?php _e('Header Menu Home tab:', 'k2'); ?></label>
 						</th>
 						<td>
-							<input id="k2-blog-tab" name="k2[blogornoblog]" type="text" value="<?php form_option('k2blogornoblog'); ?>" />
+							<select id="k2-hometab" name="k2[hometab]">
+								<option value="0" <?php selected($current_hometab, '0'); ?>><?php _e('Off', 'k2'); ?></option>
+								<option value="1" <?php selected($current_hometab, '1'); ?>><?php _e('Home'); /* using WP translation, do not use K2 */ ?></option>
+								<option value="2" <?php selected($current_hometab, '2'); ?>><?php _e('Use Custom Home tab', 'k2'); ?></option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<label for="k2-hometab-custom"><?php _e('Custom Home tab:', 'k2'); ?></label>
+						</th>
+						<td>
+							<input type="text" name="k2[hometabcustom]" id="k2-hometab-custom" value="<?php form_option('k2hometabcustom'); ?>" />
 						</td>
 					</tr>
 				</tbody>
@@ -108,8 +138,12 @@ class K2Header {
 
 	function update_options() {
 		// Blog tab
-		if ( isset($_POST['k2']['blogornoblog']) ) {
-			update_option( 'k2blogornoblog', strip_tags( stripslashes($_POST['k2']['blogornoblog']) ) );
+		if ( isset($_POST['k2']['hometab']) ) {
+			update_option( 'k2hometab', $_POST['k2']['hometab'] );
+		}
+
+		if ( isset($_POST['k2']['hometabcustom']) ) {
+			update_option( 'k2hometabcustom', strip_tags( stripslashes($_POST['k2']['hometabcustom']) ) );
 		}
 
 		// Header Image
@@ -267,12 +301,31 @@ class K2Header {
 	}
 }
 
+
+/**
+ * Get our wp_nav_menu() fallback, wp_page_menu(), to show a home link.
+ *
+ * To override this in a child theme, remove the filter and optionally add
+ * your own function tied to the wp_page_menu_args filter hook.
+ */
+function k2_page_menu_args( $args ) {
+	$args['depth']       = 3;
+	$args['menu_class']  = 'headermenu';
+	$args['sort_column'] = 'menu_order';
+	$args['show_home']   = ( get_option('k2hometab') < 2 ) ? get_option('k2hometab') : esc_attr( get_option('k2hometabcustom') );
+
+	return $args;
+}
+add_filter( 'wp_page_menu_args', 'k2_page_menu_args' );
+
+
 add_action( 'k2_init', array('K2Header', 'init'), 11 );
 add_action( 'k2_install', array('K2Header', 'install') );
 add_action( 'k2_uninstall', array('K2Header', 'uninstall') );
 
 add_action( 'k2_display_options', array('K2Header', 'display_options') );
 add_action( 'k2_update_options', array('K2Header', 'update_options') );
+
 
 add_action( 'wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'), 10, 2 );
 add_filter( 'wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'), 10, 2 );

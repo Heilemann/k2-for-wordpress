@@ -63,6 +63,13 @@ class K2 {
 
 		}
 
+		// This theme uses wp_nav_menu() in one location.
+		if ( function_exists('register_nav_menus') ) {
+			register_nav_menus( array(
+				'header' => __( 'Header Menu', 'k2' ),
+			) );
+		}
+
 		// Add default posts and comments RSS feed links to head
 		if ( version_compare( $wp_version, '3.0', '<' ) )
 			add_theme_support( 'automatic-feed-links' );
