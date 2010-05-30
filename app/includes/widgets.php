@@ -38,47 +38,47 @@ class K2_Widget_About extends WP_Widget {
 
 		<?php if ( is_category() ) : // Category Archive ?>
 			<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for the %3$s category.', 'k2'),
-						get_option('siteurl'), get_bloginfo('name'),
+						get_bloginfo('url'), get_bloginfo('name'),
 						single_cat_title('', false)
 					); ?></p>
 
 		<?php elseif ( is_day() ) : // Day Archive ?>
 			<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for the day %3$s.', 'k2'),
-						get_option('siteurl'), get_bloginfo('name'),
+						get_bloginfo('url'), get_bloginfo('name'),
 						get_the_time( __('l, F jS, Y', 'k2') )
 					); ?></p>
 
 		<?php elseif ( is_month() ) : // Monthly Archive ?>
 			<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for the month %3$s.', 'k2'),
-						get_option('siteurl'), get_bloginfo('name'),
+						get_bloginfo('url'), get_bloginfo('name'),
 						get_the_time( __('F, Y', 'k2') )
 					); ?></p>
 
 		<?php elseif ( is_year() ) : // Yearly Archive ?>
 			<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for the year %3$s.', 'k2'),
-						get_option('siteurl'), get_bloginfo('name'),
+						get_bloginfo('url'), get_bloginfo('name'),
 						get_the_time('Y')
 					); ?></p>
 
 		<?php elseif ( is_search() ) : // Search ?>
 			<p><?php printf( __('You have searched the <a href="%1$s">%2$s</a> weblog archives for \'<strong>%3$s</strong>\'.', 'k2'),
-						get_option('siteurl'), get_bloginfo('name'),
+						get_bloginfo('url'), get_bloginfo('name'),
 						esc_attr( get_search_query() )
 					); ?></p>
 
 		<?php elseif ( is_author() ) : // Author Archive ?>
-			<p><?php printf( __('Archive for <strong>%s</strong>.', 'k2'), get_the_author() ); ?></p>
-			<p><?php the_author_description(); ?></p>
+			<p><?php printf( __('Archive for <strong>%s</strong>.', 'k2'), get_the_author_meta('display_name') ); ?></p>
+			<p><?php the_author_meta('description'); ?></p>
 
 		<?php elseif ( is_tag() ) : // Tag Archive ?>
 			<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives for \'%3$s\' tag.', 'k2'),
-						get_option('siteurl'), get_bloginfo('name'),
+						get_bloginfo('url'), get_bloginfo('name'),
 						get_query_var('tag')
 					); ?></p>
 
 		<?php elseif ( is_paged() ) : // Paged Archive ?>
 			<p><?php printf( __('You are currently browsing the <a href="%1$s">%2$s</a> weblog archives.', 'k2'),
-						get_option('siteurl'), get_bloginfo('name')
+						get_bloginfo('url'), get_bloginfo('name')
 					); ?></p>
 
 		<?php endif; ?>

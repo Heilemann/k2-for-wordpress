@@ -17,7 +17,7 @@ define('K2_CHILD_THEME', get_stylesheet() != get_template());
 
 // WordPress compatibility
 @define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
-@define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content' );
+@define( 'WP_CONTENT_URL', get_bloginfo('url') . '/wp-content' );
 
 // Loads localisation from K2's languages directory
 load_theme_textdomain('k2', TEMPLATEPATH . '/languages');
