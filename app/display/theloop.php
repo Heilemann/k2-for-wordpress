@@ -33,7 +33,10 @@
 
 			rewind_posts();
 		} elseif ( is_category() ) {
-			$templates[] = 'blocks/k2-loop-category-' . absint( get_query_var('cat') ) . '.php';
+			$cat = $wp_query->get_queried_object();
+
+			$templates[] = 'blocks/k2-loop-category-' . $cat->slug . '.php';
+			$templates[] = 'blocks/k2-loop-category-' . $cat->cat_ID . '.php';
 			$templates[] = 'blocks/k2-loop-category.php';
 			$page_head = sprintf( __('Archive for the \'%s\' Category', 'k2'), single_cat_title('', false) );
 			
