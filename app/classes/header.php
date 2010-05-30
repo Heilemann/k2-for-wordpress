@@ -116,9 +116,12 @@ class K2Header {
 						</th>
 						<td>
 							<select id="k2-hometab" name="k2[hometab]">
-								<option value="0" <?php selected($current_hometab, '0'); ?>><?php _e('Off', 'k2'); ?></option>
-								<option value="1" <?php selected($current_hometab, '1'); ?>><?php _e('Home'); /* using WP translation, do not use K2 */ ?></option>
-								<option value="2" <?php selected($current_hometab, '2'); ?>><?php _e('Use Custom Home tab', 'k2'); ?></option>
+								<option value="off" <?php selected($current_hometab, 'off'); ?>><?php _e('Off', 'k2'); ?></option>
+								<option value="home" <?php selected($current_hometab, 'home'); ?>><?php _e('Home'); /* using WP translation, do not use K2 */ ?></option>
+								<?php if ( 'page' == get_option('show_on_front') ): ?>
+									<option value="page" <?php selected($current_hometab, 'page'); ?>><?php echo get_the_title( get_option('page_on_front') ); ?></option>
+								<?php endif; ?>
+								<option value="custom" <?php selected($current_hometab, 'custom'); ?>><?php _e('Custom', 'k2'); ?></option>
 							</select>
 						</td>
 					</tr>
@@ -312,7 +315,28 @@ function k2_page_menu_args( $args ) {
 	$args['depth']       = 3;
 	$args['menu_class']  = 'headermenu';
 	$args['sort_column'] = 'menu_order';
-	$args['show_home']   = ( get_option('k2hometab') < 2 ) ? get_option('k2hometab') : esc_attr( get_option('k2hometabcustom') );
+
+	switch ( get_option('k2hometab') ) {
+		default:
+		case 'home':
+			$args['show_home'] = true;
+			break;
+
+		case 'off':
+			$args['show_home'] = false;
+			break;
+
+		case 'page':
+			if ( 'page' == get_option('show_on_front') )
+				$args['show_home'] = get_the_title( get_option('page_on_front') );
+			else
+				$args['show_home'] = true;
+			break;
+
+		case 'custom':
+			$args['show_home'] = esc_attr( get_option('k2hometabcustom') );
+			break;
+	}
 
 	return $args;
 }
