@@ -211,7 +211,7 @@ class K2Header {
 	function output_header_css() {
 		$image_url = K2Header::get_header_image_url();
 
-		if ( get_header_textcolor() != HEADER_TEXTCOLOR && !empty($image_url) ): // Do we need to insert anything?
+		if ( ( get_header_textcolor() != HEADER_TEXTCOLOR ) || ! empty( $image_url ) ): // Do we need to insert anything?
 		?>
 
 		<style type="text/css">
@@ -222,14 +222,14 @@ class K2Header {
 		<?php endif; ?>
 
 		<?php if ( 'blank' == get_header_textcolor() ): ?>
-			#header .blog-title,
-			#header .description {
+			#site-title,
+			#site-description {
 				display: none;
 			}
 
 		<?php elseif ( get_header_textcolor() != HEADER_TEXTCOLOR ): ?>
-			#header .blog-title a,
-			#header .description {
+			#site-title a,
+			#site-description {
 				color: #<?php header_textcolor(); ?>;
 			}
 		<?php endif; ?>
