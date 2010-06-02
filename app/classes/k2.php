@@ -393,7 +393,7 @@ class K2 {
 	 */
 	function register_scripts() {
 
-		// Register our scripts with WordPress
+		// Third-Party Scripts
 		wp_register_script('bbq',
 			get_bloginfo('template_directory') . '/js/jquery.bbq.js',
 			array('jquery'), '1.2.1', true);
@@ -418,24 +418,28 @@ class K2 {
 			get_bloginfo('template_directory') . '/js/jquery.ui.js',
 			array('jquery'), '1.8', true);
 
+
+		// K2 Scripts
+		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
+
 		wp_register_script('k2functions',
-			get_bloginfo('template_directory') . '/js/k2.functions.js',
+			get_bloginfo('template_directory') . "/js/k2.functions$suffix.js",
 			array('jquery', 'superfish'), K2_CURRENT);
 
 		wp_register_script('k2options',
-			get_bloginfo('template_directory') . '/js/k2.options.js',
+			get_bloginfo('template_directory') . "/js/k2.options$suffix.js",
 			array('jquery', 'jquery-ui-sortable'), K2_CURRENT);
 
 		wp_register_script('k2slider',
-			get_bloginfo('template_directory') . '/js/k2.slider.js',
+			get_bloginfo('template_directory') . "/js/k2.slider$suffix.js",
 			array('jquery'), K2_CURRENT, true);
 
 		wp_register_script('k2rollingarchives',
-			get_bloginfo('template_directory') . '/js/k2.rollingarchives.js',
+			get_bloginfo('template_directory') . "/js/k2.rollingarchives$suffix.js",
 			array('jquery', 'bbq', 'easing', 'ui', 'k2slider', 'hotkeys'), K2_CURRENT, true);
 
 		wp_register_script('k2livesearch',
-			get_bloginfo('template_directory') . '/js/k2.livesearch.js',
+			get_bloginfo('template_directory') . "/js/k2.livesearch$suffix.js",
 			array('jquery', 'bbq', 'hotkeys'), K2_CURRENT, true);
 	}
 

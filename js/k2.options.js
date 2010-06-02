@@ -18,7 +18,12 @@ jQuery(document).ready(function(){
 
 
 	jQuery('#k2-styles').sortable({
-		items: 'tbody tr'
+		items: 'tbody tr',
+		update: function(event, ui) {
+			jQuery('input.styles-order').each(function(index, element){
+				jQuery(this).val(index);
+			});
+		}
 	});
 
 });
