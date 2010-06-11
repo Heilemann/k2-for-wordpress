@@ -110,7 +110,7 @@ class K2Header {
 							</select>
 						</td>
 					</tr>
-					<?php if ( function_exists('has_nav_menu') && !has_nav_menu('header') ): ?>
+					<?php if ( !function_exists('has_nav_menu') || ( function_exists('has_nav_menu') && !has_nav_menu('header') ) ): ?>
 					<tr>
 						<th scope="row">
 							<label for="k2-hometab"><?php _e('Header Menu Home tab:', 'k2'); ?></label>
