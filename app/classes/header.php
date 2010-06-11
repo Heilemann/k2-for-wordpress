@@ -110,6 +110,7 @@ class K2Header {
 							</select>
 						</td>
 					</tr>
+					<?php if ( function_exists('has_nav_menu') && !has_nav_menu('header') ): ?>
 					<tr>
 						<th scope="row">
 							<label for="k2-hometab"><?php _e('Header Menu Home tab:', 'k2'); ?></label>
@@ -133,6 +134,7 @@ class K2Header {
 							<input type="text" name="k2[hometabcustom]" id="k2-hometab-custom" value="<?php form_option('k2hometabcustom'); ?>" />
 						</td>
 					</tr>
+					<?php endif; // end check for has_nav_menu ?>
 				</tbody>
 			</table>
 		</li>
