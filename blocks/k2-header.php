@@ -23,7 +23,9 @@ $heading_tag = ( is_home() || is_front_page() ) ? 'h1' : 'div';
 	// Display the page tabs
 	if ( function_exists('wp_nav_menu') ) {
 		wp_nav_menu( array(
-			'theme_location'	=> 'header'
+			'theme_location'	=> 'header',
+			'container_class' => 'headermenu',
+			'container_id' => 'k2_headermenu',
 		) );
 	} else {
 	 	wp_page_menu();
