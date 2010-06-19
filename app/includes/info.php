@@ -50,9 +50,7 @@ function k2_init_advanced_navigation() {
 <script type="text/javascript">
 //<![CDATA[
 
-	/**
-	 * Set in motion all of K2's AJAX hotness (RA and LS).
-	 */
+	//  Set in motion all of K2's AJAX hotness (RA and LS).
 	function initK2() {
 		K2.AjaxURL		= "<?php bloginfo('url'); ?>/" // For our AJAX calls
 		K2.Animations	= <?php echo (int) get_option('k2animations') ?> // Fetch the animations option
@@ -97,7 +95,7 @@ function k2_init_advanced_navigation() {
 } // End Init_Scripts()
 
 // Is advanced navigation enabled?
-if ( ('1' == get_option('k2livesearch')) && ('1' == get_option('k2rollingarchives')) )
+if ( '1' == get_option('k2advnav') )
 	add_action( 'wp_footer', 'k2_init_advanced_navigation' );
 
 /**

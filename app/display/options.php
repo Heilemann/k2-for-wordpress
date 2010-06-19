@@ -38,10 +38,20 @@
 		<ul class="options-list">
 
 			<li>
+				<h3 class="main-label"><label for="k2-debug"><?php _e('Use Debug Mode?', 'k2'); ?></label></h3>
+
+				<p class="main-option">
+					<input id="k2-debug" name="k2[debug]" type="checkbox" value="debugmode" <?php checked('1', get_option('k2debug')); ?> />
+				</p>
+
+				<p class="description"><?php _e("Loads un-minimized, uncombined javascript files.", 'k2'); ?></p>
+			</li>
+
+			<li>
 				<h3 class="main-label"><label for="k2-advnav"><?php _e('Use Advanced Navigation?', 'k2'); ?></label></h3>
 
 				<p class="main-option">
-					<input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2livesearch')); ?> />
+					<input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2advnav')); ?> />
 
 					&nbsp;&nbsp;&nbsp;<label for="k2-animations" style="vertical-align: baseline"><?php _e('and animations', 'k2'); ?></label>
 					<input id="k2-animations" name="k2[animations]" type="checkbox" value="1" <?php checked('1', get_option('k2animations')); ?> />

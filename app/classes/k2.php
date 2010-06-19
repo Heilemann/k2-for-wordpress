@@ -90,8 +90,8 @@ class K2 {
 	function install() {
 		add_option('k2version', K2_CURRENT);
 
-		add_option( 'k2livesearch', '1' ); // (live & classic)
-		add_option( 'k2rollingarchives', '1');
+		add_option( 'k2debug', '0');
+		add_option( 'k2advnav', '1');
 		add_option( 'k2animations', '1' );
 		add_option( 'k2usestyle', '1' );
 		$defaultjs = "// Lightbox v2.03.3 - Adds new images to lightbox\nif (typeof myLightbox != 'undefined' && myLightbox instanceof Lightbox && myLightbox.updateImageList) {\n\tmyLightbox.updateImageList();\n}\n";
@@ -137,8 +137,8 @@ class K2 {
 	function uninstall() {
 		// Delete options
 		delete_option('k2version');
-		delete_option('k2livesearch');
-		delete_option('k2rollingarchives');
+		delete_option('k2advnav');
+		delete_option('k2debug');
 		delete_option('k2usestyle');
 		delete_option('k2archives');
 		delete_option('k2entrymeta1');
@@ -262,28 +262,29 @@ class K2 {
 	 * @uses do_action() Provides 'k2_update_options' action
 	 */
 	function update_options() {
+		// Debug Mode
+		if ( isset($_POST['k2']['debug']) )
+			update_option('k2debug', '1');
+		else
+			update_option('k2debug', '0');
+
 		// Advanced Navigation
-		if ( isset($_POST['k2']['advnav']) ) {
-			update_option('k2livesearch', '1');
-			update_option('k2rollingarchives', '1');
-		} else {
-			update_option('k2livesearch', '0');
-			update_option('k2rollingarchives', '0');
-		}
+		if ( isset($_POST['k2']['advnav']) )
+			update_option('k2advnav', '1');
+		else
+			update_option('k2advnav', '0');
 
 		// JavaScript Animations
-		if ( isset($_POST['k2']['animations']) ) {
+		if ( isset($_POST['k2']['animations']) )
 			update_option('k2animations', '1');
-		} else {
+		else
 			update_option('k2animations', '0');
-		}
 
 		// Use K2's CSS?
-		if ( isset($_POST['k2']['usestyle']) ) {
+		if ( isset($_POST['k2']['usestyle']) )
 			update_option('k2usestyle', '1');
-		} else {
+		else
 			update_option('k2usestyle', '0');
-		}
 
 		// Archives Page (thanks to Michael Hampton, http://www.ioerror.us/ for the assist)
 		if ( isset($_POST['k2']['archives']) ) {
@@ -295,19 +296,16 @@ class K2 {
 		}
 
 		// Top post meta
-		if ( isset($_POST['k2']['entrymeta1']) ) {
+		if ( isset($_POST['k2']['entrymeta1']) )
 			update_option( 'k2entrymeta1', stripslashes($_POST['k2']['entrymeta1']) );
-		}
 
 		// Bottom post meta
-		if ( isset($_POST['k2']['entrymeta2']) ) {
+		if ( isset($_POST['k2']['entrymeta2']) )
 			update_option( 'k2entrymeta2', stripslashes($_POST['k2']['entrymeta2']) );
-		}
 
 		// Ajax Success JavaScript
-		if ( isset($_POST['k2']['ajaxdonejs']) ) {
+		if ( isset($_POST['k2']['ajaxdonejs']) )
 			update_option( 'k2ajaxdonejs', stripslashes($_POST['k2']['ajaxdonejs']) );
-		}
 
 		// K2 Hook
 		do_action('k2_update_options');
@@ -393,54 +391,70 @@ class K2 {
 	 */
 	function register_scripts() {
 
-		// Third-Party Scripts
-		wp_register_script('bbq',
-			get_bloginfo('template_directory') . '/js/jquery.bbq.js',
-			array('jquery'), '1.2.1', true);
+		// If debug mode is off, load minimized scripts, else don't... Duh!
+		if ( get_option('k2debug') == 0 ) {
+			
+			wp_register_script('k2functions',
+				get_bloginfo('template_directory') . '/js/k2.min.js',
+				array('jquery'), K2_CURRENT, true);
 
-		wp_register_script('hoverintent',
-			get_bloginfo('template_directory') . '/js/jquery.hoverintent.js',
-			array('jquery'), '5');
+			wp_register_script('k2advnav',
+				get_bloginfo('template_directory') . '/js/k2.advnav.min.js',
+				array('jquery', 'k2functions'), K2_CURRENT, true);
 
-		wp_register_script('superfish',
-			get_bloginfo('template_directory') . '/js/jquery.superfish.js',
-			array('jquery', 'hoverintent'), '1.4.8');
+			wp_register_script('k2options',
+				get_bloginfo('template_directory') . "/js/k2.options.min.js",
+				array('jquery', 'jquery-ui-sortable'), K2_CURRENT);
 
-		wp_register_script('easing',
-			get_bloginfo('template_directory') . '/js/jquery.easing.js',
-			array('jquery'), '1.3', true);
+		} else {
 
-		wp_register_script('hotkeys',
-			get_bloginfo('template_directory') . '/js/jquery.hotkeys.js',
-			array('jquery'), '0.8', true);
+			// Third-Party Scripts
+			wp_register_script('bbq',
+				get_bloginfo('template_directory') . '/js/uncompressed/jquery.bbq.js',
+				array('jquery'), '1.2.1', true);
+	
+			wp_register_script('hoverintent',
+				get_bloginfo('template_directory') . '/js/uncompressed/jquery.hoverintent.js',
+				array('jquery'), '5');
+	
+			wp_register_script('superfish',
+				get_bloginfo('template_directory') . '/js/uncompressed/jquery.superfish.js',
+				array('jquery', 'hoverintent'), '1.4.8');
+	
+			wp_register_script('easing',
+				get_bloginfo('template_directory') . '/js/uncompressed/jquery.easing.js',
+				array('jquery'), '1.3', true);
+	
+			wp_register_script('hotkeys',
+				get_bloginfo('template_directory') . '/js/uncompressed/jquery.hotkeys.js',
+				array('jquery'), '0.8', true);
+	
+			wp_register_script('ui',
+				get_bloginfo('template_directory') . '/js/uncompressed/jquery.ui.js',
+				array('jquery'), '1.8.2', true);
+	
+	
+			// K2 Scripts
+			wp_register_script('k2functions',
+				get_bloginfo('template_directory') . "/js/uncompressed/k2.functions.js",
+				array('jquery', 'superfish'), K2_CURRENT);
+	
+			wp_register_script('k2options',
+				get_bloginfo('template_directory') . "/js/uncompressed/k2.options.js",
+				array('jquery', 'jquery-ui-sortable'), K2_CURRENT);
+	
+			wp_register_script('k2slider',
+				get_bloginfo('template_directory') . "/js/uncompressed/k2.slider.js",
+				array('jquery'), K2_CURRENT, true);
+	
+			wp_register_script('k2livesearch',
+				get_bloginfo('template_directory') . "/js/uncompressed/k2.livesearch.js",
+				array('jquery', 'bbq', 'hotkeys'), K2_CURRENT, true);
 
-		wp_register_script('ui',
-			get_bloginfo('template_directory') . '/js/jquery.ui.js',
-			array('jquery'), '1.8', true);
-
-
-		// K2 Scripts
-		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
-
-		wp_register_script('k2functions',
-			get_bloginfo('template_directory') . "/js/k2.functions$suffix.js",
-			array('jquery', 'superfish'), K2_CURRENT);
-
-		wp_register_script('k2options',
-			get_bloginfo('template_directory') . "/js/k2.options$suffix.js",
-			array('jquery', 'jquery-ui-sortable'), K2_CURRENT);
-
-		wp_register_script('k2slider',
-			get_bloginfo('template_directory') . "/js/k2.slider$suffix.js",
-			array('jquery'), K2_CURRENT, true);
-
-		wp_register_script('k2rollingarchives',
-			get_bloginfo('template_directory') . "/js/k2.rollingarchives$suffix.js",
-			array('jquery', 'bbq', 'easing', 'ui', 'k2slider', 'hotkeys'), K2_CURRENT, true);
-
-		wp_register_script('k2livesearch',
-			get_bloginfo('template_directory') . "/js/k2.livesearch$suffix.js",
-			array('jquery', 'bbq', 'hotkeys'), K2_CURRENT, true);
+			wp_register_script('k2advnav',
+				get_bloginfo('template_directory') . "/js/uncompressed/k2.rollingarchives.js",
+				array('jquery', 'bbq', 'easing', 'ui', 'k2slider', 'hotkeys', 'k2livesearch'), K2_CURRENT, true);
+		}
 	}
 
 
@@ -458,17 +472,14 @@ class K2 {
 				wp_deregister_script('jquery');
 
 				wp_register_script('jquery',
-					get_bloginfo('template_directory') . '/js/jquery.js',
+					get_bloginfo('template_directory') . '/js/jquery.min.js',
 					false, '1.4.2');
 			}
 
 			wp_enqueue_script('k2functions');
 
-			if ( '1' == get_option('k2rollingarchives') )
-				wp_enqueue_script('k2rollingarchives');
-
-			if ( '1' == get_option('k2livesearch') )
-				wp_enqueue_script('k2livesearch');
+/* 			if ( get_option('k2advnav') == '1' ) */
+				wp_enqueue_script('k2advnav');
 
 			// WP 2.7 threaded comments
 			if ( is_singular() )
