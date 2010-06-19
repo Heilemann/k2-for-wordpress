@@ -1,3 +1,5 @@
+/* @override http://localhost/k2/wp-content/themes/k2/css/options.css */
+
 /* This file contains the CSS for the 'K2 Options' admin panel */
 
 .wrap a {
@@ -25,10 +27,13 @@
 
 .options-list {
 	max-width: 90%;
+	margin-left: 10px;
+	margin-top: 20px;
 	}
 
 .options-list li {
-	margin: 2em 0;
+	padding: 5px 0;
+	clear: both;
 	}
 
 .options-list li li {
@@ -39,29 +44,31 @@
 	padding-left: 50px;
 	}
 
-.wrap h3,
-.wrap h4 {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-weight: normal;
-	color: #333;
+.options-list li * {
+	line-height: 18px;
 	}
 
-.options-list h3 {
-	font-size: 1.5em;
+.options-list li input[type=checkbox] {
+	height: 20px;
 	}
 
-.options-list h4 {
-	font-size: 1.25em;
-	margin-bottom: 0.25em;
-	}
-
-h3.main-label {
+.options-list > li > label {
+	width: 200px;
 	float: left;
-	margin: 0;
+	}
+
+.optionscontainer {
+	margin-left: 200px;
+	}
+
+.animationscontainer label {
+	width: 200px;
 	}
 
 p.description {
+	display: inline-block;
 	color: #999;
+	margin-left: 10px;
 	}
 
 .error {

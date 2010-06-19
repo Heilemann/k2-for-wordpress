@@ -95,8 +95,8 @@ function k2_init_advanced_navigation() {
 } // End Init_Scripts()
 
 // Is advanced navigation enabled?
-if ( '1' == get_option('k2advnav') )
-	add_action( 'wp_footer', 'k2_init_advanced_navigation' );
+if ( get_option('k2advnav') != '0')
+	add_action( 'wp_head', 'k2_init_advanced_navigation' );
 
 /**
  * Helper function used by RollingArchives
@@ -191,6 +191,20 @@ function k2_body_class_filter($classes) {
 	else
 		$classes[] = 'columns-one';
 
+	switch ( get_option('k2usestyle') ) {
+		case 0: // No CSS
+			$classes[] = 'nok2css';
+			break;
+		case 1: // Sidebars Left
+			$classes[] = 'sidebarsleft';
+			break;
+		case 2: // Sidebars Right
+			$classes[] = 'sidebarsright';
+			break;
+		case 3: // Flanking Sidebars
+			$classes[] = 'flankingsidebars';
+			break;
+	}
 
 	// If animations are turned on
 	if ( '1' == get_option('k2animations') )

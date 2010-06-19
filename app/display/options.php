@@ -38,49 +38,41 @@
 		<ul class="options-list">
 
 			<li>
-				<h3 class="main-label"><label for="k2-debug"><?php _e('Use Debug Mode?', 'k2'); ?></label></h3>
+				<label for="k2-usestyle"><?php _e('Style', 'k2'); ?></label>
 
-				<p class="main-option">
-					<input id="k2-debug" name="k2[debug]" type="checkbox" value="debugmode" <?php checked('1', get_option('k2debug')); ?> />
-				</p>
-
-				<p class="description"><?php _e("Loads un-minimized, uncombined javascript files.", 'k2'); ?></p>
+				<select id="k2-usestyle" name="k2[usestyle]">
+					<option value="3" <?php if(get_option('k2usestyle')=='3') echo 'selected' ?>>Flanking Sidebars (default)</option>
+					<option value="2" <?php if(get_option('k2usestyle')=='2') echo 'selected' ?>>Sidebars Right</option>
+					<option value="1" <?php if(get_option('k2usestyle')=='1') echo 'selected' ?>>Sidebars Left</option>
+					<option value="0" <?php if(get_option('k2usestyle')=='0') echo 'selected' ?>>No CSS</option>
+				</select>
 			</li>
+
 
 			<li>
-				<h3 class="main-label"><label for="k2-advnav"><?php _e('Use Advanced Navigation?', 'k2'); ?></label></h3>
+				<label for="k2-advnav"><?php _e('AJAX archives & search', 'k2'); ?></label>
 
-				<p class="main-option">
-					<input id="k2-advnav" name="k2[advnav]" type="checkbox" value="1" <?php checked('1', get_option('k2advnav')); ?> />
-
-					&nbsp;&nbsp;&nbsp;<label for="k2-animations" style="vertical-align: baseline"><?php _e('and animations', 'k2'); ?></label>
-					<input id="k2-animations" name="k2[animations]" type="checkbox" value="1" <?php checked('1', get_option('k2animations')); ?> />
-
-				</p>
-
-				<p class="description"><?php _e('Seamlessly search and navigate old posts.', 'k2'); ?></p>
-
+				<select id="k2-advnav" name="k2[advnav]">
+					<option value="2" <?php if(get_option('k2advnav')=='2') echo 'selected' ?>>On, with animation (default)</option>
+					<option value="1" <?php if(get_option('k2advnav')=='1') echo 'selected' ?>>On, sans animation</option>
+					<option value="0" <?php if(get_option('k2advnav')=='0') echo 'selected' ?>>Off</option>
+				</select>
 			</li>
+
 
 			<li>
-				<h3 class="main-label"><label for="k2-usestyle"><?php _e('Use K2 Styling?', 'k2'); ?></label></h3>
+				<label for="k2-archives"><?php _e('Archive page', 'k2'); ?></label>
 
-				<p class="main-option">
-					<input id="k2-usestyle" name="k2[usestyle]" type="checkbox" value="use_style" <?php checked('1', get_option('k2usestyle')); ?> />
-				</p>
-
-				<p class="description"><?php _e('Loads the default CSS that comes with K2.', 'k2'); ?></p>
+				<input id="k2-archives" name="k2[archives]" type="checkbox" value="add_archive" <?php checked('1', get_option('k2archives')); ?> />
 			</li>
+
 
 			<li>
-				<h3 class="main-label"><label for="k2-archives"><?php _e('Use the Archives Page?', 'k2'); ?></label></h3>
+				<label for="k2-debug"><?php _e('Minify & combine javascript', 'k2'); ?></label>
 
-				<p class="main-option">
-					<input id="k2-archives" name="k2[archives]" type="checkbox" value="add_archive" <?php checked('1', get_option('k2archives')); ?> />
-				</p>
-
-				<p class="description"><?php _e('Installs a pre-made archives page.', 'k2'); ?></p>
+				<input id="k2-debug" name="k2[debug]" type="checkbox" value="debugmode" <?php checked('1', get_option('k2optimjs')); ?> />
 			</li>
+
 
 			<li>
 				<h3><?php _e('Post Entry', 'k2'); ?></h3>

@@ -19,7 +19,7 @@
 	<title><?php wp_title('&laquo;', true, 'right'); ?> <?php bloginfo('name'); ?></title>
 
 
-	<?php if ( get_option('k2usestyle') == 1 ): ?>
+	<?php if ( get_option('k2usestyle') != 0 ): ?>
 		<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/style.css" />
 	<?php endif; ?>
 
@@ -28,7 +28,7 @@
 	<?php endif; ?>
 
 	<?php if ( is_singular() ): ?>
-	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 	<?php endif; ?>
 
 	<?php wp_head(); ?>

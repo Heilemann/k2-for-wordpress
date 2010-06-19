@@ -90,10 +90,10 @@ class K2 {
 	function install() {
 		add_option('k2version', K2_CURRENT);
 
-		add_option( 'k2debug', '0');
-		add_option( 'k2advnav', '1');
+		add_option( 'k2optimjs', '0');
+		add_option( 'k2advnav', '2');
 		add_option( 'k2animations', '1' );
-		add_option( 'k2usestyle', '1' );
+		add_option( 'k2usestyle', '3' );
 		$defaultjs = "// Lightbox v2.03.3 - Adds new images to lightbox\nif (typeof myLightbox != 'undefined' && myLightbox instanceof Lightbox && myLightbox.updateImageList) {\n\tmyLightbox.updateImageList();\n}\n";
 		add_option( 'k2ajaxdonejs', $defaultjs );
 
@@ -138,7 +138,7 @@ class K2 {
 		// Delete options
 		delete_option('k2version');
 		delete_option('k2advnav');
-		delete_option('k2debug');
+		delete_option('k2optimjs');
 		delete_option('k2usestyle');
 		delete_option('k2archives');
 		delete_option('k2entrymeta1');
@@ -264,15 +264,12 @@ class K2 {
 	function update_options() {
 		// Debug Mode
 		if ( isset($_POST['k2']['debug']) )
-			update_option('k2debug', '1');
+			update_option('k2optimjs', '1');
 		else
-			update_option('k2debug', '0');
+			update_option('k2optimjs', '0');
 
 		// Advanced Navigation
-		if ( isset($_POST['k2']['advnav']) )
-			update_option('k2advnav', '1');
-		else
-			update_option('k2advnav', '0');
+		update_option('k2advnav', $_POST['k2']['advnav']);
 
 		// JavaScript Animations
 		if ( isset($_POST['k2']['animations']) )
@@ -280,11 +277,10 @@ class K2 {
 		else
 			update_option('k2animations', '0');
 
-		// Use K2's CSS?
-		if ( isset($_POST['k2']['usestyle']) )
-			update_option('k2usestyle', '1');
-		else
-			update_option('k2usestyle', '0');
+		// How to style sidebars, and ehther to use K2's CSS at all
+		update_option('k2usestyle', $_POST['k2']['usestyle']);
+
+/* 		print_r($_POST); */
 
 		// Archives Page (thanks to Michael Hampton, http://www.ioerror.us/ for the assist)
 		if ( isset($_POST['k2']['archives']) ) {
@@ -392,15 +388,15 @@ class K2 {
 	function register_scripts() {
 
 		// If debug mode is off, load minimized scripts, else don't... Duh!
-		if ( get_option('k2debug') == 0 ) {
+		if ( get_option('k2optimjs') == 1 ) {
 			
 			wp_register_script('k2functions',
 				get_bloginfo('template_directory') . '/js/k2.min.js',
-				array('jquery'), K2_CURRENT, true);
+				array('jquery'), K2_CURRENT);
 
 			wp_register_script('k2advnav',
 				get_bloginfo('template_directory') . '/js/k2.advnav.min.js',
-				array('jquery', 'k2functions'), K2_CURRENT, true);
+				array('jquery', 'k2functions'), K2_CURRENT);
 
 			wp_register_script('k2options',
 				get_bloginfo('template_directory') . "/js/k2.options.min.js",
@@ -449,11 +445,11 @@ class K2 {
 	
 			wp_register_script('k2livesearch',
 				get_bloginfo('template_directory') . "/js/uncompressed/k2.livesearch.js",
-				array('jquery', 'bbq', 'hotkeys'), K2_CURRENT, true);
+				array('jquery', 'bbq', 'hotkeys'), K2_CURRENT);
 
 			wp_register_script('k2advnav',
 				get_bloginfo('template_directory') . "/js/uncompressed/k2.rollingarchives.js",
-				array('jquery', 'bbq', 'easing', 'ui', 'k2slider', 'hotkeys', 'k2livesearch'), K2_CURRENT, true);
+				array('jquery', 'bbq', 'easing', 'ui', 'k2slider', 'hotkeys', 'k2livesearch'), K2_CURRENT);
 		}
 	}
 
@@ -478,7 +474,7 @@ class K2 {
 
 			wp_enqueue_script('k2functions');
 
-/* 			if ( get_option('k2advnav') == '1' ) */
+			if ( get_option('k2advnav') != '0' )
 				wp_enqueue_script('k2advnav');
 
 			// WP 2.7 threaded comments

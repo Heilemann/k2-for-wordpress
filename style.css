@@ -1404,6 +1404,35 @@ input[type=text], textarea {
 	}
 
 
+
+/*
+	FLANKING SIDEBARS
+	*/
+
+body.flankingsidebars.columns-three .primary {
+	margin-left: 195px;
+	}
+
+body.flankingsidebars.columns-three #widgets-sidebar-1 {
+	position: relative;
+	left: -520px;
+	margin-left: -195px;
+	}
+
+/* Webkit doesn't retain the position of the left-shifted searchform properly */
+body.flankingsidebars.webkit.smartposition #widgets-sidebar-1 div.widget_search:first-child #searchform {
+	margin-left: -520px;
+	}
+
+body.flankingsidebars.columns-three .template-image .primary {
+	margin-left: 0;
+	}
+
+body.flankingsidebars.columns-three #rollingarchivesbg {
+	margin-left: -225px;
+	}
+
+
 /* 
 	NAVIGATION
 	.navigation is traditional page-by-page
@@ -1782,24 +1811,6 @@ div#latest-comments small {
 	margin: 0;
 	font-weight: normal;
 	line-height: 1.5em;
-	}
-
-
-/* FlickrRSS */
-
-.sb-flickr div {
-	margin-top: 10px !important;
-	}
-
-.sb-flickr div img {
-	padding: 5px;
-	}
-
-.sb-flickr div a {
-	}
-	
-.sb-flickr div a img {
-	margin: 0px 5px;
 	}
 
 
