@@ -41,10 +41,10 @@
 				<label for="k2-usestyle"><?php _e('Style', 'k2'); ?></label>
 
 				<select id="k2-usestyle" name="k2[usestyle]">
-					<option value="3" <?php if(get_option('k2usestyle')=='3') echo 'selected' ?>>Flanking Sidebars (default)</option>
-					<option value="2" <?php if(get_option('k2usestyle')=='2') echo 'selected' ?>>Sidebars Right</option>
-					<option value="1" <?php if(get_option('k2usestyle')=='1') echo 'selected' ?>>Sidebars Left</option>
-					<option value="0" <?php if(get_option('k2usestyle')=='0') echo 'selected' ?>>No CSS</option>
+					<option value="3" <?php if(get_option('k2usestyle')=='3') echo 'selected' ?>><?php _e('Flanking Sidebars (default)', 'k2'); ?></option>
+					<option value="2" <?php if(get_option('k2usestyle')=='2') echo 'selected' ?>><?php _e('Sidebars Right', 'k2'); ?></option>
+					<option value="1" <?php if(get_option('k2usestyle')=='1') echo 'selected' ?>><?php _e('Sidebars Left', 'k2'); ?></option>
+					<option value="0" <?php if(get_option('k2usestyle')=='0') echo 'selected' ?>><?php _e('No CSS', 'k2'); ?></option>
 				</select>
 			</li>
 
@@ -53,9 +53,9 @@
 				<label for="k2-advnav"><?php _e('AJAX archives & search', 'k2'); ?></label>
 
 				<select id="k2-advnav" name="k2[advnav]">
-					<option value="2" <?php if(get_option('k2advnav')=='2') echo 'selected' ?>>On, with animation (default)</option>
-					<option value="1" <?php if(get_option('k2advnav')=='1') echo 'selected' ?>>On, sans animation</option>
-					<option value="0" <?php if(get_option('k2advnav')=='0') echo 'selected' ?>>Off</option>
+					<option value="2" <?php if(get_option('k2advnav')=='2') echo 'selected' ?>><?php _e('On, with animation (default)', 'k2'); ?></option>
+					<option value="1" <?php if(get_option('k2advnav')=='1') echo 'selected' ?>><?php _e('On, sans animation', 'k2'); ?></option>
+					<option value="0" <?php if(get_option('k2advnav')=='0') echo 'selected' ?>><?php _e('Off', 'k2'); ?></option>
 				</select>
 			</li>
 
