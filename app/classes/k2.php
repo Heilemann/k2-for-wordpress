@@ -71,10 +71,11 @@ class K2 {
 		}
 
 		// Add default posts and comments RSS feed links to head
-		if ( version_compare( $wp_version, '3.0', '<' ) )
+		if ( version_compare( $wp_version, '3.0', '>=' ) ) {
 			add_theme_support( 'automatic-feed-links' );
-		else
+		} else {
 			automatic_feed_links();
+		}
 
 		// This theme allows users to set a custom background
 		if ( function_exists('add_custom_background') )
