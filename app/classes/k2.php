@@ -53,7 +53,7 @@ class K2 {
 
 		// Register our sidebars with widgets
 		k2_register_sidebars();
-		
+
 		if ( function_exists( 'add_theme_support' ) ) {
 			// This theme uses post thumbnails
 			add_theme_support( 'post-thumbnails' );
@@ -162,7 +162,7 @@ class K2 {
 
 
 	/**
-	 * 
+	 *
 	 */
 	function admin_init() {
 		// Inside K2 Options page
@@ -246,13 +246,13 @@ class K2 {
 	 * @uses do_action() Provides 'k2_update_options' action
 	 */
 	function admin_style_visual_editor($url) {
- 
+
 		if ( !empty($url) )
 			$url .= ',';
-	
+
 		// Change the path here if using sub-directory
 		$url .= trailingslashit( get_stylesheet_directory_uri() ) . 'css/visualeditor.css';
-	 
+
 		return $url;
 	}
 
@@ -281,7 +281,7 @@ class K2 {
 		// How to style sidebars, and ehther to use K2's CSS at all
 		update_option('k2usestyle', $_POST['k2']['usestyle']);
 
-/* 		print_r($_POST); */
+		/* print_r($_POST); */
 
 		// Archives Page (thanks to Michael Hampton, http://www.ioerror.us/ for the assist)
 		if ( isset($_POST['k2']['archives']) ) {
@@ -337,7 +337,7 @@ class K2 {
 		if ( ('page' == get_option('show_on_front')) and ($page_id = get_option('page_for_posts')) ) {
 			return get_page_link($page_id);
 		}
-		
+
 		return get_bloginfo('url') . '/';
 	}
 
@@ -390,7 +390,7 @@ class K2 {
 
 		// If debug mode is off, load minimized scripts, else don't... Duh!
 		if ( get_option('k2optimjs') == 1 ) {
-			
+
 			wp_register_script('k2functions',
 				get_bloginfo('template_directory') . '/js/k2.min.js',
 				array('jquery'), K2_CURRENT);
@@ -409,41 +409,40 @@ class K2 {
 			wp_register_script('bbq',
 				get_bloginfo('template_directory') . '/js/uncompressed/jquery.bbq.js',
 				array('jquery'), '1.2.1', true);
-	
+
 			wp_register_script('hoverintent',
 				get_bloginfo('template_directory') . '/js/uncompressed/jquery.hoverintent.js',
 				array('jquery'), '5');
-	
+
 			wp_register_script('superfish',
 				get_bloginfo('template_directory') . '/js/uncompressed/jquery.superfish.js',
 				array('jquery', 'hoverintent'), '1.4.8');
-	
+
 			wp_register_script('easing',
 				get_bloginfo('template_directory') . '/js/uncompressed/jquery.easing.js',
 				array('jquery'), '1.3', true);
-	
+
 			wp_register_script('hotkeys',
 				get_bloginfo('template_directory') . '/js/uncompressed/jquery.hotkeys.js',
 				array('jquery'), '0.8', true);
-	
+
 			wp_register_script('ui',
 				get_bloginfo('template_directory') . '/js/uncompressed/jquery.ui.js',
 				array('jquery'), '1.8.2', true);
-	
-	
+
 			// K2 Scripts
 			wp_register_script('k2functions',
 				get_bloginfo('template_directory') . "/js/uncompressed/k2.functions.js",
 				array('jquery', 'superfish'), K2_CURRENT);
-	
+
 			wp_register_script('k2options',
 				get_bloginfo('template_directory') . "/js/uncompressed/k2.options.js",
 				array('jquery', 'jquery-ui-sortable'), K2_CURRENT);
-	
+
 			wp_register_script('k2slider',
 				get_bloginfo('template_directory') . "/js/uncompressed/k2.slider.js",
 				array('jquery'), K2_CURRENT, true);
-	
+
 			wp_register_script('k2livesearch',
 				get_bloginfo('template_directory') . "/js/uncompressed/k2.livesearch.js",
 				array('jquery', 'bbq', 'hotkeys'), K2_CURRENT);
@@ -530,12 +529,12 @@ class K2 {
 	/**
 	 * Recursive function for files_scan
 	 *
-	 * @param string $base_path 
-	 * @param string $path 
-	 * @param string $ext 
-	 * @param string $depth 
-	 * @param mixed $relative 
-	 * @param string $files 
+	 * @param string $base_path
+	 * @param string $path
+	 * @param string $ext
+	 * @param string $depth
+	 * @param mixed $relative
+	 * @param string $files
 	 * @return array paths of files found
 	 */
 	function _files_scan($base_path, $path, $ext, $depth, $relative, &$files) {
@@ -628,7 +627,7 @@ class K2 {
 
 	function get_unique_path($source) {
 		$source = pathinfo($source);
-		
+
 		$path = trailingslashit($source['dirname']);
 		$filename = $source['filename'];
 		$ext = $source['extension'];
@@ -642,12 +641,12 @@ class K2 {
 
 
 // Actions and Filters
-add_action( 'admin_menu', 			array('K2', 'add_options_menu') );
-add_action( 'admin_init', 			array('K2', 'admin_init') );
-add_filter( 'mce_css', 				array('K2', 'admin_style_visual_editor') );
+add_action( 'admin_menu', 		array('K2', 'add_options_menu') );
+add_action( 'admin_init', 		array('K2', 'admin_init') );
+add_filter( 'mce_css', 			array('K2', 'admin_style_visual_editor') );
 add_action( 'wp_print_scripts', 	array('K2', 'enqueue_scripts') );
 add_action( 'template_redirect', 	array('K2', 'dynamic_content') );
-add_filter( 'query_vars', 			array('K2', 'add_custom_query_vars') );
+add_filter( 'query_vars', 		array('K2', 'add_custom_query_vars') );
 
 // Decrease the priority of redirect_canonical
 remove_action( 'template_redirect', 'redirect_canonical' );

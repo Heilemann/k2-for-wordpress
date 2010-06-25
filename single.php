@@ -7,7 +7,7 @@
 		<?php dynamic_sidebar('widgets-top'); ?>
 	</div>
 	<?php endif; ?>
-	
+
 	<div class="primary">
 		<a name="startcontent"></a>
 
@@ -84,7 +84,6 @@
 		<?php dynamic_sidebar('widgets-bottom'); ?>
 	</div>
 	<?php endif; ?>
-	
 
 </div><!-- .wrapper -->
 

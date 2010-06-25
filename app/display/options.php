@@ -78,7 +78,7 @@
 				<h3><?php _e('Post Entry', 'k2'); ?></h3>
 
 				<p class="description">
-					<?php _e('Use the following keywords: %author%, %categories%, %comments%, %date%, %tags% and %time%. <!--You can also use third-party shortcodes.-->', 'k2'); ?>
+					<?php _e('Use the following keywords: %author%, %categories%, %comments%, %date%, %tags% and %time%. <!-- You can also use third-party shortcodes. -->', 'k2'); ?>
 				</p>
 
 				<table class="form-table">

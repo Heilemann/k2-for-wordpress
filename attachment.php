@@ -65,7 +65,7 @@
 		</div><!-- .content -->
 
 	</div><!-- .primary -->
-		
+
 	<?php get_sidebar(); ?>
 
 	<?php if ( is_active_sidebar('widgets-bottom') ) : ?>
@@ -73,7 +73,7 @@
 		<?php dynamic_sidebar('widgets-bottom'); ?>
 	</div>
 	<?php endif; ?>
-	
+
 </div><!-- .wrapper -->
 
 <?php get_footer(); ?>

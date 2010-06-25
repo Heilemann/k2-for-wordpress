@@ -6,7 +6,7 @@ Version:		1.1
 Theme URI:		http://getk2.com
 Author:			Various Artists
 Author URI:		http://getk2.com/
-Description:	<strong><a href="themes.php?page=k2-options">Configure K2</a></strong>, visit the <a href="http://groups.google.com/group/k2-support">support forums</a>, <a href="http://code.google.com/p/kaytwo/w/list">the wiki</a> or <a href="http://code.google.com/p/kaytwo/issues/list">the bug tracker</a>. K2 was developed by <a href="http://binarybonsai.com/">Michael</a>, <a href="http://chrisjdavis.org/">Chris</a>, <a href="http://zeo.unic.net.my/">Zeo</a>, <a href="http://stevelam.org/">Steve</a>, Ben and <a href="http://xentek.net/">Eric</a>, and is licensed under the <a href="http://www.opensource.org/licenses/gpl-license.php">GPL</a>.
+Description:		<strong><a href="themes.php?page=k2-options">Configure K2</a></strong>, visit the <a href="http://groups.google.com/group/k2-support">support forums</a>, <a href="http://code.google.com/p/kaytwo/w/list">the wiki</a> or <a href="http://code.google.com/p/kaytwo/issues/list">the bug tracker</a>. K2 was developed by <a href="http://binarybonsai.com/">Michael</a>, <a href="http://chrisjdavis.org/">Chris</a>, <a href="http://zeo.my/">Zeo</a>, <a href="http://stevelam.org/">Steve</a>, Ben and <a href="http://xentek.net/">Eric</a>, and is licensed under the <a href="http://www.opensource.org/licenses/gpl-license.php">GPL</a>.
 Tags:			blue, custom-header, fixed-width, flexible-width, one-column, two-columns, three-columns, theme-options, threaded-comments, microformats, translation-ready, light
 
 $Revision$
@@ -257,7 +257,7 @@ body.home.onepageonly.rollingarchives .primary { /* No RA, so back to 10px */
 
 	-moz-box-shadow: 0px 1px 2px rgba(0, 0, 0, .5);
 	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
-	
+
 	background: #f3f3f3;
 	border-radius: 0 3px 3px 3px;
 	-moz-border-radius: 0 3px 3px 3px;
@@ -757,7 +757,7 @@ div.quoter_page_container {
 #gallery-nav {
 	top: 3.2em;
 	margin: 0;
-	position: absolute;	
+	position: absolute;
 	border-bottom: 1px solid #ddd;
 	padding-bottom: 10px;
 	}
@@ -931,7 +931,7 @@ div.quoter_page_container {
 
 .bypostauthor > div.comment blockquote {
 	color: #333;
-	background: url('images/quote.png') no-repeat 10px 0;              
+	background: url('images/quote.png') no-repeat 10px 0;
 	}
 
 #respond {
@@ -968,7 +968,7 @@ div.quoter_page_container {
 	padding: 0;
 	border: none;
 	}
-	
+
 #leavecomment, .comments #loading, #comments-closed-msg {
 	text-align: center;
 	margin: 30px 0 20px !important;
@@ -1145,7 +1145,7 @@ img[align="center"] {
 	margin-left: auto;
 	margin-right: auto;
 	}
-	
+
 .entry-content .alignright,
 img[align="right"] {
 	float: right;
@@ -1159,7 +1159,7 @@ img[align="left"] {
 	margin: 0 8px 4px 0;
 	display: block;
 	}
-	
+
 a[rel~="attachment"] img,
 .gallery a img,
 .wp-caption {
@@ -1210,7 +1210,7 @@ small {
 small, strike {
 	color: #777;
 	}
-	
+
 code {
 	font-size: 1.1em;
 	}
@@ -1275,7 +1275,7 @@ img.wp-smiley {
 .widgets ul ul, .widgets ol ol {
 	margin: 0 0 0 10px;
 	}
-       
+
 .widgets ul ul ul, .widgets ol ol ol {
 	margin: 0 0 0 20px;
 	}
@@ -1288,7 +1288,7 @@ img.wp-smiley {
 	margin: 0;
 	padding: 1px 0;
 	}
-	
+
 .widgets ul li {
 	list-style: none;
 	}
@@ -1399,8 +1399,8 @@ input[type=text], textarea {
 
 /* Attachment */
 
-.entry-content .attachment { 
-	text-align: center; 
+.entry-content .attachment {
+	text-align: center;
 	}
 
 
@@ -1433,11 +1433,11 @@ body.flankingsidebars.columns-three #rollingarchivesbg {
 	}
 
 
-/* 
+/*
 	NAVIGATION
 	.navigation is traditional page-by-page
 	#rollingarchives is 'advanced' AJAX-powered
-	
+
 	The two are mutually exclusive, with the exception of permalinks where .navigation is always used.
 	*/
 
@@ -1846,7 +1846,7 @@ div#latest-comments small {
 #wp-calendar #next {
 	text-align: right;
 	}
-	
+
 #wp-calendar #today {
 	background: #f3f3f3;
 	}

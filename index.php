@@ -7,7 +7,7 @@
 		<?php dynamic_sidebar('widgets-top'); ?>
 	</div>
 	<?php endif; ?>
-	
+
 	<div class="primary">
 		<a name="startcontent"></a>
 
@@ -21,8 +21,8 @@
 
 		</div> <!-- .content -->
 
-		<?php /* Bottom Navigation */ k2_navigation('nav-below'); ?> 
-	
+		<?php /* Bottom Navigation */ k2_navigation('nav-below'); ?>
+
 		<?php /* K2 Hook */ do_action('template_primary_end'); ?>
 
 	</div> <!-- .primary -->
@@ -34,7 +34,7 @@
 		<?php dynamic_sidebar('widgets-bottom'); ?>
 	</div>
 	<?php endif; ?>
-	
+
 </div> <!-- .wrapper -->
 
 <?php get_footer(); ?>

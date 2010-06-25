@@ -74,7 +74,7 @@
 							<span><?php _e('Dimensions:', 'k2'); ?></span>
 							<?php
 								list($width, $height) = getimagesize( get_attached_file($post->ID) );
-								/* translators: 1: image width, 2: image height */ 
+								/* translators: 1: image width, 2: image height */
 								printf( __('%1$s &times; %2$s pixels', 'k2'), $width, $height );
 							?>
 						</li>
@@ -132,7 +132,7 @@
 		</div> <!-- .content -->
 
 	</div> <!-- .primary -->
-	
+
 	<?php if ( is_active_sidebar('widgets-bottom') ) : ?>
 	<div id="widgets-bottom" class="widgets">
 		<?php dynamic_sidebar('widgets-bottom'); ?>
@@ -140,5 +140,5 @@
 	<?php endif; ?>
 
 </div> <!-- .wrapper -->
-	
+
 <?php get_footer(); ?>

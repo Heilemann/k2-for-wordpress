@@ -1,7 +1,7 @@
 /* This CSS file styles the visual editor in the admin */
 
 strong, em, b, i {
-    font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Verdana, Helvetica, Arial, sans-serif;
+	font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Verdana, Helvetica, Arial, sans-serif;
 	}
 
 h1, h2, h3 {
@@ -89,7 +89,7 @@ img[align="center"] {
 	margin-left: auto;
 	margin-right: auto;
 	}
-	
+
 .alignright,
 img[align="right"] {
 	float: right;
@@ -126,14 +126,14 @@ blockquote {
 
 blockquote p {
 	margin:  0;
-}
+	}
 
-ol, 
+ol,
 ul {
 	padding: 0 0 0 35px;
 	}
 
-ol li, 
+ol li,
 ul li {
 	margin: 0 0 3px;
 	padding: 0;

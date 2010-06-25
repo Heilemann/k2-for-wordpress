@@ -7,7 +7,7 @@
 		<?php dynamic_sidebar('widgets-top'); ?>
 	</div>
 	<?php endif; ?>
-	
+
 	<div class="primary">
 		<a name="startcontent"></a>
 
@@ -39,7 +39,7 @@
 				</div><!-- .entry-footer -->
 			</div><!-- #entry-ID -->
 
-			<?php if ( comments_open() ): ?> 
+			<?php if ( comments_open() ): ?>
 			<div class="comments">
 				<?php comments_template(); ?>
 			</div><!-- .comments -->
@@ -57,7 +57,6 @@
 
 	</div><!-- .primary -->
 
-	
 	<?php if ( ! get_post_custom_values('sidebarless') ) get_sidebar(); ?>
 
 	<?php if ( is_active_sidebar('widgets-bottom') ) : ?>
@@ -65,8 +64,7 @@
 		<?php dynamic_sidebar('widgets-bottom'); ?>
 	</div>
 	<?php endif; ?>
-	
 
 </div><!-- .wrapper -->
-	
+
 <?php get_footer(); ?>

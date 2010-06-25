@@ -4,12 +4,10 @@
 
 <?php /* Counts the posts, comments and categories on your blog */
 	$numpostsarray	= wp_count_posts('post');
-	$numposts		= $numpostsarray->publish;
-	
+	$numposts	= $numpostsarray->publish;
 	$numcommsarray	= wp_count_comments();
-	$numcomms		= $numcommsarray->approved;
-	
-	$numcats = count(get_all_category_ids());
+	$numcomms	= $numcommsarray->approved;
+	$numcats 	= count(get_all_category_ids());
 ?>
 
 <?php get_header(); ?>
@@ -62,7 +60,7 @@
 					</ul>
 
 					<br class="clear" />
-						
+
 				</div><!-- .entry-content -->
 
 				<div class="entry-footer">
@@ -81,7 +79,7 @@
 		</div><!-- .content .hfeed -->
 
 	</div><!-- .primary -->
-	
+
 	<?php if ( ! get_post_custom_values('sidebarless') ) get_sidebar(); ?>
 
 	<?php if ( is_active_sidebar('widgets-bottom') ) : ?>
@@ -89,8 +87,7 @@
 		<?php dynamic_sidebar('widgets-bottom'); ?>
 	</div>
 	<?php endif; ?>
-	
 
 </div> <!-- .wrapper -->
-	
+
 <?php get_footer(); ?>

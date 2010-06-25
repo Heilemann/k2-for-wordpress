@@ -21,7 +21,7 @@ class K2Header {
 
 		// default k2 widths
 		$default_widths =  array( 1 => 560, 780, 950 );
-		
+
 		// Default settings
 		@define( 'HEADER_IMAGE_HEIGHT', apply_filters('k2_header_height', 200) );
 		@define( 'HEADER_IMAGE_WIDTH', apply_filters('k2_header_width', $default_widths[$columns], $columns) );

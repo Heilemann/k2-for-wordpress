@@ -72,13 +72,13 @@ function js_format_hash(&$item, $key) {
 function js_value($value) {
 	if ( is_string($value) )
 		return '"' . esc_js($value) . '"';
-	
+
 	if ( is_bool($value) )
       return $value ? 'true' : 'false';
 
 	if ( is_numeric($value) )
 		return $value;
-		
+
 	if ( empty($value) )
 		return '0';
 

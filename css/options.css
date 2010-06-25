@@ -88,7 +88,7 @@ p.description {
 
 .form-list dd {
 	margin-left: 240px;
-}
+	}
 
 .form-list dd.description {
 	margin-left: 0px;
@@ -172,7 +172,7 @@ option {
 	text-align: right;
 	color: #666;
 	}
-	
+
 .hidden {
 	position: absolute;
 	left: -999px;
@@ -185,7 +185,7 @@ option {
 #k2-entry-meta-1,
 #k2-entry-meta-2 {
 	width: 100%
-}
+	}
 
 #meta-preview {
 	margin: 20px 0 10px;
@@ -298,7 +298,7 @@ abbr.entry-date {
 
 .submit {
 	max-width: 90%;
-}
+	}
 
 #k2ajax {
 	width: 100%;

@@ -148,8 +148,8 @@ if ( ! function_exists('k2_register_sidebars') ):
 		if ( function_exists('register_sidebar') ) {
 
 		    register_sidebar(array(
-		        'id' 			=>	'widgets-top',
-		        'name'			=>	__('Below Page Header', 'k2'),
+		        'id' 		=>	'widgets-top',
+		        'name'		=>	__('Below Page Header', 'k2'),
 		        'description'	=>	__('Just below the header.', 'k2'),
 		        'before_widget'	=>	'<div><div id="%1$s" class="widget %2$s">', // <span>'s is used for horizontal sizing, <div> for padding
 		        'after_widget'	=>	'</div></div>',
@@ -158,8 +158,8 @@ if ( ! function_exists('k2_register_sidebars') ):
 		    ));
 
 		    register_sidebar(array(
-		        'id'			=>	'widgets-sidebar-1',
-		        'name'			=>	__('Left Sidebar', 'k2'),
+		        'id'		=>	'widgets-sidebar-1',
+		        'name'		=>	__('Left Sidebar', 'k2'),
 		        'before_widget'	=>	'<div id="%1$s" class="widget %2$s">',
 		        'after_widget'	=>	'</div>',
 		        'before_title'	=>	'<h4 class="widgettitle">',
@@ -167,8 +167,8 @@ if ( ! function_exists('k2_register_sidebars') ):
 		    ));
 
 		    register_sidebar(array(
-		        'id'			=>	'widgets-sidebar-2',
-		        'name'			=>	__('Right Sidebar', 'k2'),
+		        'id'		=>	'widgets-sidebar-2',
+		        'name'		=>	__('Right Sidebar', 'k2'),
 		        'before_widget'	=>	'<div id="%1$s" class="widget %2$s">',
 		        'after_widget'	=>	'</div>',
 		        'before_title'	=>	'<h4 class="widgettitle">',
@@ -176,8 +176,8 @@ if ( ! function_exists('k2_register_sidebars') ):
 		    ));
 
 		    register_sidebar(array(
-		        'id' 			=>	'widgetspost',
-		        'name'			=>	__('After Posts', 'k2'),
+		        'id' 		=>	'widgetspost',
+		        'name'		=>	__('After Posts', 'k2'),
 		        'description'	=>	__('On single blog post pages, following the post and preceeding the comments.', 'k2'),
 		        'before_widget'	=>	'<div id="%1$s" class="widget %2$s">',
 		        'after_widget'	=>	'</div>',
@@ -186,8 +186,8 @@ if ( ! function_exists('k2_register_sidebars') ):
 		    ));
 
 		    register_sidebar(array(
-		        'id' 			=>	'widgets-bottom',
-		        'name'			=>	__('Page Footer', 'k2'),
+		        'id' 		=>	'widgets-bottom',
+		        'name'		=>	__('Page Footer', 'k2'),
 		        'description'	=>	__('At the bottom of the page.', 'k2'),
 		        'before_widget'	=>	'<div id="%1$s" class="widget %2$s">',
 		        'after_widget'	=>	'</div>',
@@ -276,12 +276,12 @@ if ( ! function_exists('k2_comment_start_el') ):
 					<p class="comment-moderation alert"><?php _e('Your comment is awaiting moderation.', 'k2'); ?></p>
 					<?php endif; ?>
 
-					<?php comment_text(); ?> 
+					<?php comment_text(); ?>
 				</div><!-- .comment-content -->
 
 				<div class="buttons">
 					<?php if ( function_exists('quoter_comment') ): quoter_comment(); endif; ?>
-	
+
 					<?php
 						if ( function_exists('jal_edit_comment_link') ):
 							jal_edit_comment_link(__('Edit', 'k2'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>');
@@ -321,16 +321,16 @@ if ( ! function_exists('k2_ping_start_el') ):
 				<?php if ( function_exists('comment_favicon') ): ?>
 					<span class="favatar"><?php comment_favicon(); ?></span>
 				<?php endif; ?>
-	
+
 				<span class="comment-author"><?php comment_author_link(); ?></span>
-	
-				<div class="comment-meta">				
+
+				<div class="comment-meta">
 				<?php
-					/* translators: 1: ping type, 2: datetime */ 
-					printf( __('%1$s on %2$s', 'k2'), 
+					/* translators: 1: ping type, 2: datetime */
+					printf( __('%1$s on %2$s', 'k2'),
 						'<span class="pingtype">' . comment_type( __('Comment', 'k2'), __('Trackback', 'k2'), __('Pingback', 'k2') ) . '</span>',
 						sprintf('<a href="#comment-%1$s" title="%2$s">%3$s</a>',
-							get_comment_ID(),	
+							get_comment_ID(),
 							(function_exists('time_since')?
 								sprintf( __('%s ago.', 'k2'),
 									time_since( abs( strtotime($comment->comment_date_gmt . " GMT") ), time() )
@@ -342,10 +342,10 @@ if ( ! function_exists('k2_ping_start_el') ):
 								/* translators: pingback/trackback date format (here: 'Month Xth, Year'), see http://php.net/date */
 								get_comment_date( __('M jS, Y', 'k2') ),
 								get_comment_time()
-							)			
+							)
 						)
 					);
-				
+
 						edit_comment_link( __('Edit', 'k2'), '<span class="comment-edit">', '</span>' );
 				?>
 				</div><!-- .comment-meta -->

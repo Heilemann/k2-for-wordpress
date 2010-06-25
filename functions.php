@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Current version of K2
 define('K2_CURRENT', '1.1');
 
@@ -21,7 +21,7 @@ define('K2_CHILD_THEME', get_stylesheet() != get_template());
 
 // Loads localisation from K2's languages directory
 load_theme_textdomain('k2', TEMPLATEPATH . '/languages');
-		
+
 /* Blast you red baron! Initialize the K2 system! */
 require_once(TEMPLATEPATH . '/app/classes/k2.php');
 K2::init();

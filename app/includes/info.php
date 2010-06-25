@@ -44,7 +44,7 @@ function get_k2info( $show = '' ) {
  */
 function k2_init_advanced_navigation() {
 	global $wp_scripts;
-	
+
 	$rolling_state = k2_get_rolling_archives_state();
 ?>
 <script type="text/javascript">
@@ -52,20 +52,20 @@ function k2_init_advanced_navigation() {
 
 	//  Set in motion all of K2's AJAX hotness (RA and LS).
 	function initK2() {
-		K2.AjaxURL		= "<?php bloginfo('url'); ?>/" // For our AJAX calls
+		K2.AjaxURL	= "<?php bloginfo('url'); ?>/" // For our AJAX calls
 		K2.Animations	= <?php echo (int) get_option('k2animations') ?> // Fetch the animations option
 
 		// Insert the Rolling Archives UI and init.
 		K2.RollingArchives = new RollingArchives({
-			content:    ".content",
-			posts:      ".content .post",
-			parent:     ".primary",
-			pagetext:   "<?php /* translators: 1: current page, 2: total pages */ _e('of', 'k2'); ?>", // Page X of Y
-			older:      "<?php _e('Older', 'k2'); ?>",
-			newer:      "<?php _e('Newer', 'k2'); ?>",
-			loading:    "<?php _e('Loading', 'k2'); ?>",
+			content:	".content",
+			posts:		".content .post",
+			parent:		".primary",
+			pagetext:	"<?php /* translators: 1: current page, 2: total pages */ _e('of', 'k2'); ?>", // Page X of Y
+			older:		"<?php _e('Older', 'k2'); ?>",
+			newer:		"<?php _e('Newer', 'k2'); ?>",
+			loading:	"<?php _e('Loading', 'k2'); ?>",
 			offsetTop:	50,
-			pagenumber: <?php echo $rolling_state['curpage']; ?>,
+			pagenumber:	<?php echo $rolling_state['curpage']; ?>,
 			pagecount:	<?php echo $rolling_state['maxpage']; ?>,
 			query:		<?php echo json_encode( $rolling_state['query'] ); ?>,
 			pagedates:	<?php echo json_encode( $rolling_state['pagedates'] ); ?>,
@@ -86,7 +86,7 @@ function k2_init_advanced_navigation() {
 		});
 		<?php endif; ?>
 	}
-	
+
 	// Make ready K2's sub-systems
 	jQuery(document).ready( function() { initK2(); });
 //]]>
@@ -117,7 +117,7 @@ function k2_get_rolling_archives_state() {
 	elseif ( is_string($wp_query->query) )
 		parse_str($wp_query->query, $rolling_state['query']);
 
-	// Future content will be dynamic.		
+	// Future content will be dynamic.
 	$rolling_state['query']['k2dynamic'] = 1;
 
 	// Get list of page dates
@@ -259,7 +259,7 @@ function k2_body_class_filter($classes) {
 	}
 	$classes[] = 'lang-' . $locale;
 
-    // For WPMU. Set a class for the blog ID    
+    // For WPMU. Set a class for the blog ID
     if ( isset($blog_id) )
         $classes[] = 'wpmu-' . $blog_id;
 
@@ -322,18 +322,18 @@ function k2_date_classes($t, &$c, $p = '') {
 	Credits: This is a php port from Rafael Lima's original Javascript CSS Browser Selector: http://rafael.adm.br/css_browser_selector
 */
 function k2_browser_classes($ua = null) {
-		$ua = ($ua) ? strtolower($ua) : strtolower($_SERVER['HTTP_USER_AGENT']);		
+		$ua = ($ua) ? strtolower($ua) : strtolower($_SERVER['HTTP_USER_AGENT']);
 
 		$g = 'gecko';
 		$w = 'webkit';
 		$s = 'safari';
 		$b = array();
-		
+
 		// browser
 		if ( !preg_match( '/opera|webtv/i', $ua ) && preg_match( '/msie\s(\d)/', $ua, $array ) ):
 			$b[] = 'ie ie' . $array[1];
 		elseif ( strstr( $ua, 'firefox/2' ) ):
-			$b[] = $g . ' ff2';		
+			$b[] = $g . ' ff2';
 		elseif ( strstr( $ua, 'firefox/3.5' ) ):
 			$b[] = $g . ' ff3 ff3_5';
 		elseif ( strstr( $ua, 'firefox/3' ) ):
@@ -354,17 +354,17 @@ function k2_browser_classes($ua = null) {
 			$b[] = $g;
 		endif;
 
-		// platform				
+		// platform
 		if ( strstr( $ua, 'j2me' ) ):
 			$b[] = 'mobile';
 		elseif ( strstr( $ua, 'iphone' ) ):
-				$b[] = 'iphone';		
+				$b[] = 'iphone';
 		elseif ( strstr( $ua, 'ipod' ) ):
-				$b[] = 'ipod';		
+				$b[] = 'ipod';
 		elseif ( strstr( $ua, 'mac' ) ):
-				$b[] = 'mac';		
+				$b[] = 'mac';
 		elseif ( strstr( $ua, 'darwin' ) ):
-				$b[] = 'mac';		
+				$b[] = 'mac';
 		elseif ( strstr( $ua, 'webtv' ) ):
 				$b[] = 'webtv';
 		elseif ( strstr( $ua, 'win' ) ):
@@ -374,7 +374,6 @@ function k2_browser_classes($ua = null) {
 		elseif ( strstr( $ua, 'x11' ) || strstr( $ua, 'linux' ) ):
 			$b[] = 'linux';
 		endif;
-		
-		return $b;
 
+		return $b;
 }

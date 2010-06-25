@@ -1,4 +1,4 @@
-<?php 
+<?php
 	// Do not access this file directly
 	if ( !empty($_SERVER['SCRIPT_FILENAME']) and 'comments.php' == basename($_SERVER['SCRIPT_FILENAME']) )
 		die( __('Please do not load this page directly. Thanks!', 'k2') );
@@ -10,7 +10,7 @@
 		<h4><?php /* translators: 1: language string for the number of comment(s), 2: post title */
 			printf( __('%1$s to &#8220;%2$s&#8221;', 'k2'),
 				sprintf( _n('<span id="comments">%s</span> Response', '<span id="comments">%s</span> Responses', get_comments_number(), 'k2'), number_format_i18n(get_comments_number()) ),
-				the_title('', '', false) 
+				the_title('', '', false)
 			);
 		?></h4>
 
@@ -64,7 +64,7 @@
 		?></h4>
 
 		<div class="quoter_page_container"><?php if ( function_exists('quoter_page') ) quoter_page(); ?></div>
-		
+
 		<div class="cancel-comment-reply">
 			<?php cancel_comment_reply_link( __('Cancel Reply', 'k2') ); ?>
 		</div>
@@ -83,15 +83,15 @@
 					endif;
 			?>
 			<?php elseif ( is_user_logged_in() ) : ?>
-		
+
 				<p class="comment-login">
 					<?php printf(__('Logged in as <a href="%1$s">%2$s</a>.', 'k2'), get_bloginfo('url') . '/wp-admin/profile.php', $user_identity); ?> <a href="<?php echo wp_logout_url(get_permalink()); ?>" title="<?php _e('Log out of this account', 'k2'); ?>"><?php _e('Log out &raquo;', 'k2'); ?></a>
 				</p>
-	
+
 			<?php elseif ( '' != $comment_author ) : ?>
 
 				<p class="comment-welcomeback"><?php printf(__('Welcome back <strong>%s</strong>', 'k2'), $comment_author); ?>
-				
+
 				<a href="javascript:toggleCommentAuthorInfo();" id="toggle-comment-author-info">
 					(<?php _e('Change Your Details', 'k2'); ?>)
 				</a>
@@ -100,7 +100,7 @@
 				//<![CDATA[
 					var changeMsg = "<?php echo esc_js( __('(Change)', 'k2') ); ?>";
 					var closeMsg = "<?php echo esc_js( __('(Close)', 'k2') ); ?>";
-					
+
 					function toggleCommentAuthorInfo() {
 						jQuery('#comment-author-info').slideToggle('slow', function(){
 							if ( jQuery('#comment-author-info').css('display') == 'none' ) {
@@ -117,7 +117,7 @@
 				//]]>
 				</script>
 			<?php endif; ?>
-			
+
 			<?php if ( ! is_user_logged_in() ) : ?>
 				<div id="comment-author-info">
 					<p>
@@ -126,25 +126,25 @@
 							<strong><?php _e('Name', 'k2'); ?></strong> <?php if ( $req ) : _e('(required)', 'k2'); endif; ?>
 						</label>
 					</p>
-					
+
 					<p>
 						<input type="text" name="email" id="email" value="<?php echo esc_attr($comment_author_email); ?>" size="22" tabindex="2" />
 						<label for="email">
 							<strong><?php _e('Mail', 'k2'); ?></strong> <?php _e('(will not be published)', 'k2'); ?> <?php if ( $req ) : _e('(required)', 'k2'); endif; ?>
 						</label>
 					</p>
-					
+
 					<p>
 						<input type="text" name="url" id="url" value="<?php echo esc_attr($comment_author_url); ?>" size="22" tabindex="3" />
 						<label for="url">
 							<strong><?php _e('Website', 'k2'); ?></strong>
 						</label>
-					</p>			
+					</p>
 				</div><!-- comment-personaldetails -->
 			<?php endif; /* If not logged in */ ?>
 
-				<!--<p><?php printf( __('<strong>XHTML:</strong> You can use these tags: <code>%s</code>', 'k2'), allowed_tags() ); ?></p>-->
-		
+				<!-- <p><?php printf( __('<strong>XHTML:</strong> You can use these tags: <code>%s</code>', 'k2'), allowed_tags() ); ?></p> -->
+
 				<p>
 					<textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"><?php
 						if ( function_exists('jal_edit_comment_link') ) :
@@ -156,9 +156,9 @@
 						endif;
 					?></textarea>
 				</p>
-		
+
 				<?php do_action('comment_form', $post->ID); ?>
-		
+
 				<p>
 					<input name="submit" type="submit" id="submit" tabindex="5" value="<?php _e('Submit', 'k2'); ?>" />
 					<?php comment_id_fields(); ?>
@@ -166,7 +166,7 @@
 			</form>
 
 		<?php endif; /* If registration required and not logged in */ ?>
-	
+
 		<div class="clear"></div>
 	</div> <!-- .respon -->
 

@@ -34,7 +34,7 @@ function k2_navigation($id = 'nav-above') {
 
 function k2_permalink_title($echo = true) {
 	$output = sprintf( __('Permanent Link to %s', 'k2'), esc_html( strip_tags( the_title('', '', false) ), 1) );
-	
+
 	if ($echo)
 		echo $output;
 
@@ -43,18 +43,18 @@ function k2_permalink_title($echo = true) {
 
 
 /* By Mark Jaquith, http://txfx.net */
-function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' and ') { 
-	$categories = get_the_category(); 
+function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' and ') {
+	$categories = get_the_category();
 
-	if (empty($categories)) { 
+	if (empty($categories)) {
 		return __('Uncategorized', 'k2');
-	} 
+	}
 
-	$thelist = ''; 
-	$i = 1; 
-	$n = count($categories); 
+	$thelist = '';
+	$i = 1;
+	$n = count($categories);
 
-	foreach ($categories as $category) { 
+	foreach ($categories as $category) {
 		if (1 < $i and $i != $n) {
 			$thelist .= $normal_separator;
 		}
@@ -63,9 +63,9 @@ function k2_nice_category($normal_separator = ', ', $penultimate_separator = ' a
 			$thelist .= $penultimate_separator;
 		}
 
-		$thelist .= '<a href="' . get_category_link($category->cat_ID) . '" title="' . sprintf( __('View all posts in %s', 'k2'), $category->cat_name ) . '">'.$category->cat_name.'</a>'; 
-		++$i; 
-	} 
+		$thelist .= '<a href="' . get_category_link($category->cat_ID) . '" title="' . sprintf( __('View all posts in %s', 'k2'), $category->cat_name ) . '">'.$category->cat_name.'</a>';
+		++$i;
+	}
 	return apply_filters('the_category', $thelist, $normal_separator);
 }
 
@@ -100,5 +100,3 @@ function k2_resize_embeds( $content ) {
 }
 
 add_filter( 'the_content',	'k2_resize_embeds' );
-
-

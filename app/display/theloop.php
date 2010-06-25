@@ -7,7 +7,7 @@
 	// array for loading loop templates
 	$templates = array();
 	$page_head = '';
-	
+
 	if ( is_home() ) {
 		$templates[] = 'blocks/k2-loop-home.php';
 
@@ -39,17 +39,17 @@
 			$templates[] = 'blocks/k2-loop-category-' . $cat->cat_ID . '.php';
 			$templates[] = 'blocks/k2-loop-category.php';
 			$page_head = sprintf( __('Archive for the \'%s\' Category', 'k2'), single_cat_title('', false) );
-			
+
 		} elseif ( is_tag() ) {
 			$templates[] = 'blocks/k2-loop-tag-' . get_query_var('tag') . '.php';
 			$templates[] = 'blocks/k2-loop-tag.php';
 			$page_head = sprintf( __('Tag Archive for \'%s\'', 'k2'), single_tag_title('', false) );
-			
+
 		} elseif ( is_author() ) {
 			$templates[] = 'blocks/k2-loop-author.php';
 			$page_head = sprintf( __('Author Archive for %s', 'k2'), get_the_author_meta( 'display_name', get_query_var('author') ) );
 		}
-		
+
 		$templates[] = 'blocks/k2-loop-archive.php';
 	} elseif ( is_search() ) {
 		$templates[] = 'blocks/k2-loop-search.php';
@@ -73,7 +73,7 @@
 	<?php /* Check if there are posts */ if ( have_posts() ): ?>
 
 		<?php /* Load the loop templates */ locate_template( $templates, true ); ?>
-	
+
 	<?php /* If there is nothing to loop */ else: define('K2_NOT_FOUND', true); ?>
 
 		<?php locate_template( array('blocks/k2-404.php'), true ); ?>

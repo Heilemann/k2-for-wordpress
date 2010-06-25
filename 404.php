@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
 <div class="wrapper">
-	
+
 	<?php if ( is_active_sidebar('widgets-top') ) : ?>
 	<div id="widgets-top" class="widgets">
 		<?php dynamic_sidebar('widgets-top'); ?>
@@ -10,7 +10,7 @@
 
 	<div class="primary">
 		<a name="startcontent"></a>
-		
+
 		<?php /* K2 Hook */ do_action('template_primary_begin'); ?>
 
 		<div class="content hfeed">
@@ -22,7 +22,7 @@
 		<?php /* K2 Hook */ do_action('template_primary_end'); ?>
 
 	</div><!-- .primary -->
-	
+
 	<?php get_sidebar(); ?>
 
 	<?php if ( is_active_sidebar('widgets-bottom') ) : ?>
