@@ -14,18 +14,7 @@ $Revision$
 
 
 /* Reset CSS v1.0 from http://meyerweb.com/eric/tools/css/reset/ */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, font, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td {
-	margin: 0;
-	padding: 0;
-	}
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0}
 
 
 /* Basic Typography */
@@ -669,19 +658,11 @@ div.quoter_page_container {
 
 /* Primary Contents */
 
-.post {
+.post,
+body.attachment .attachment {
 	position: relative;
 	margin: 0 0 20px;
 	padding: 5px 10px;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	-webkit-transition: -webkit-box-shadow .2s ease-out;
-	}
-
-.post.selected {
-	-webkit-box-shadow: 0 0 5px rgba(55,136,209,0.94);
-	-moz-box-shadow: 0 0 5px rgba(55,136,209,0.94);
 	}
 
 .entry-content {
@@ -716,80 +697,70 @@ div.quoter_page_container {
 	text-decoration: none;
 }
 
-.columns-three .template-image .primary {
-	width: 670px;
-	}
 
-.template-image .entry-footer {
-	position: absolute;
-	top: 0;
-	right: -220px;
-	width: 200px;
-	padding-top: 180px;
-	}
+/*
+	GALLERY
+*/
 
-.columns-one .template-image .entry-footer {
-	position: relative;
-	width: auto;
-	top: auto;
-	right: auto;
-	padding-top: 0;
-	margin-right: 210px;
-	}
+.gallery {
+	padding-left: 25px;
+}
 
-.columns-one .template-image #gallery-nav {
-	right: -210px;
-	top: 0;
-	width: 200px;
-	border-bottom: none;
-	}
+.gallery-item {
+	float: left;
+}
 
-.entry-footer h5 {
-	font-size: 1.5em;
-	font-weight: normal;
-	}
+.gallery-item dt {
+	margin: 0px;	
+}
 
-#gallery-nav img {
-	height: 96px;
-	width: 96px;
-	}
+.gallery-item dt a {
+	float: left;
+	line-height: 0;
+}
+
+.gallery-item dd {
+	display: none;
+}
+
+.gallery:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+/*
+	SINGLE ATTACHMENT
+*/
 
 #gallery-nav {
-	top: 3.2em;
-	margin: 0;
-	position: absolute;
-	border-bottom: 1px solid #ddd;
-	padding-bottom: 10px;
+	padding: 20px 0;
+	clear: both;
 	}
 
-#gallery-nav a {
-	text-decoration: none;
+#gallery-nav > div {
+	padding: 0;
+	width: 50%;
+	}
+
+#gallery-nav a span {
+	outline: none;
 	}
 
 #gallery-nav a span {
 	display: block;
-	}
-
-.attachment .post {
-	margin-left: 60px;
-	}
-
-.template-image .post {
-	margin-left: 0;
-	}
-
-.attachment-icon {
-	position: absolute;
-	top: 0;
-	left: -60px;
+	padding: 10px 0;
 	}
 
 .attachment-image {
 	text-align: center;
-	}
+}
 
 .attachment-image .caption {
 	margin: 0;
+	text-align: center;
 	}
 
 .attachment-image .caption p {
@@ -797,12 +768,11 @@ div.quoter_page_container {
 	}
 
 .image-meta {
-	padding: 10px 0 10px 20px;
-	list-style-type: circle;
+	list-style-type: none;
 	}
 
 .image-meta li {
-	margin: 3px 0;
+	margin: 5px 0;
 	}
 
 .image-meta span {
@@ -812,6 +782,10 @@ div.quoter_page_container {
 	width: 8em;
 	}
 
+.image-meta .entry-date {
+	font-weight: normal;
+	color: #333;
+}
 
 /* Comments */
 
@@ -1160,25 +1134,6 @@ img[align="left"] {
 	display: block;
 	}
 
-a[rel~="attachment"] img,
-.gallery a img,
-.wp-caption {
-	background-color: #F3F3F3;
-	border: 1px solid #ddd;
-	padding: 3px;
-	text-align: center;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	}
-
-a[rel~="attachment"] img:hover,
-.gallery a img:hover,
-.wp-caption:hover {
-	padding: 2px;
-	border: 2px solid #27d;
-	}
-
 .wp-caption a img,
 .wp-caption a img:hover {
 	padding: 4px 0px 0px;
@@ -1424,12 +1379,8 @@ body.flankingsidebars.webkit.smartposition #widgets-sidebar-1 div.widget_search:
 	margin-left: -520px;
 	}
 
-body.flankingsidebars.columns-three .template-image .primary {
-	margin-left: 0;
-	}
-
 body.flankingsidebars.columns-three #rollingarchivesbg {
-	margin-left: -225px;
+	margin-left: -215px;
 	}
 
 
@@ -1486,7 +1437,7 @@ body.livesearchactive.ie7 { /* Thanks IE7 */
 	float: left;
 	width: 45%;
 	text-align: left;
-	padding: 10px 5% 10px 0;
+	padding: 5px 5% 15px 0;
 	}
 
 .navigation .nav-next,

@@ -22,13 +22,11 @@ class K2 {
 		require_once(TEMPLATEPATH . '/app/classes/archive.php');
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
+		require_once(TEMPLATEPATH . '/app/includes/media.php');
 
 		if ( class_exists('WP_Widget') ) // WP 2.8+
 			require_once(TEMPLATEPATH . '/app/includes/widgets.php');
-/*
-		if ( defined('K2_STYLES') and K2_STYLES == true )
-			require_once(TEMPLATEPATH . '/app/classes/styles.php');
-*/
+
 		if ( defined('K2_HEADERS') and K2_HEADERS == true )
 			require_once(TEMPLATEPATH . '/app/classes/header.php');
 

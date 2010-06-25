@@ -22,28 +22,6 @@
 			</div>
 			<?php endif; ?>
 
-			<div id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<div class="post">
-					<h1 class="entry-title">
-						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
-					</h1>
-
-					<?php /* Edit Link */ edit_post_link( __('Edit', 'k2'), '<span class="entry-edit">', '</span>' ); ?>
-
-					<div class="attachment-icon">
-						<?php echo wp_get_attachment_link($post->ID, 'thumbnail', false, true); ?>
-					</div>
-				</div> <!-- .entry-header -->
-
-				<div class="entry-content">
-					<p class="downloadlink">
-						<?php printf( __('Download %s', 'k2'), wp_get_attachment_link($post->ID, 'thumbnail') ); ?>
-						<span class="file-size"><?php echo size_format( filesize( get_attached_file($post->ID) ) ); ?></span>
-					<p>
-
-					<?php the_content(); ?>
-				</div><!-- .entry-content -->
-			</div><!-- #entry-ID -->
 
 			<div class="comments">
 				<?php comments_template(); ?>

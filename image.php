@@ -33,7 +33,7 @@
 	<div class="primary">
 		<a name="startcontent"></a>
 
-		<div class="content hfeed">
+		<?php /* K2 Hook */ do_action('template_primary_begin'); ?>
 
 		<?php if ( have_posts() ): while ( have_posts() ): the_post(); ?>
 
@@ -43,95 +43,86 @@
 				<div class="clear"></div>
 			</div>
 			<?php endif; ?>
-
-			<div id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<div class="entry-header">
-					<h1 class="entry-title">
-						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
-					</h1>
-
-					<?php /* Edit Link */ edit_post_link( __('Edit', 'k2'), '<span class="entry-edit">', '</span>' ); ?>
-
-					<?php /* K2 Hook */ do_action('template_entry_head'); ?>
-				</div> <!-- .entry-header -->
-
-				<div class="entry-content">
-					<div class="attachment-image">
-						<a href="<?php echo wp_get_attachment_url($post->ID); ?>" class="image-link"><?php echo wp_get_attachment_image( $post->ID, 'medium' ); ?></a>
-
-						<?php if ( !empty($post->post_excerpt) ): ?>
-						<div class="caption"><?php the_excerpt(); ?></div>
-						<?php endif; ?>
-					</div>
-
-					<?php if ( !empty($post->post_content) ) the_content(sprintf(__('Continue reading \'%s\'', 'k2'), the_title('', '', false))); ?>
-				</div> <!-- .entry-content -->
-
-				<div class="entry-footer">
-					<h5><?php _e('Photo Information', 'k2'); ?></h5>
-					<ul class="image-meta">
-						<li class="dimensions">
-							<span><?php _e('Dimensions:', 'k2'); ?></span>
-							<?php
-								list($width, $height) = getimagesize( get_attached_file($post->ID) );
-								/* translators: 1: image width, 2: image height */
-								printf( __('%1$s &times; %2$s pixels', 'k2'), $width, $height );
-							?>
-						</li>
-						<li class="file-size">
-							<span><?php _e('File Size:', 'k2'); ?></span>
-							<?php echo size_format( filesize( get_attached_file($post->ID) ) ); ?>
-						</li>
-						<li class="uploaded">
-							<span><?php _e('Uploaded on:', 'k2'); ?></span>
-							<?php echo k2_entry_date(); ?>
-						</li>
-
-						<?php /* K2 Hook */ do_action('k2_image_meta', $post->ID); ?>
-					</ul>
-
-					<div id="gallery-nav" class="navigation">
-						<div class="nav-previous">
-							<?php $k2_image_link = 'prev'; previous_image_link(); $k2_image_link = false; ?>
+	
+			<div class="content hfeed">
+	
+				<div id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
+					<div class="entry-header">
+						<h1 class="entry-title">
+							<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
+						</h1>
+	
+						<?php /* Edit Link */ edit_post_link( __('Edit', 'k2'), '<span class="entry-edit">', '</span>' ); ?>
+	
+						<?php /* K2 Hook */ do_action('template_entry_head'); ?>
+					</div> <!-- .entry-header -->
+	
+					<div class="entry-content">
+						<div class="attachment-image">
+							<a href="<?php echo wp_get_attachment_url($post->ID); ?>" class="image-link"><?php echo wp_get_attachment_image( $post->ID, 'medium' ); ?></a>
+	
+							<?php if ( !empty($post->post_excerpt) ): ?>
+							<div class="caption"><?php the_excerpt(); ?></div>
+							<?php endif; ?>
 						</div>
-						<div class="nav-next">
-							<?php $k2_image_link = 'next'; next_image_link(); $k2_image_link = false; ?>
+					</div> <!-- .entry-content -->
+	
+					<div class="entry-footer">
+						<ul class="image-meta">
+							<li class="dimensions">
+								<span><?php _e('Dimensions:', 'k2'); ?></span>
+								<?php
+									list($width, $height) = getimagesize( get_attached_file($post->ID) );
+									/* translators: 1: image width, 2: image height */
+									printf( __('%1$s &times; %2$s pixels', 'k2'), $width, $height );
+								?>
+							</li>
+							<li class="file-size">
+								<span><?php _e('File Size:', 'k2'); ?></span>
+								<?php echo size_format( filesize( get_attached_file($post->ID) ) ); ?>
+							</li>
+							<li class="uploaded">
+								<span><?php _e('Uploaded on:', 'k2'); ?></span>
+								<?php echo k2_entry_date(); ?>
+							</li>
+	
+							<?php /* K2 Hook */ do_action('k2_image_meta', $post->ID); ?>
+						</ul>
+	
+						<div id="gallery-nav" class="navigation">
+							<div class="nav-previous">
+								<?php $k2_image_link = 'prev'; previous_image_link(); $k2_image_link = false; ?>
+							</div>
+							<div class="nav-next">
+								<?php $k2_image_link = 'next'; next_image_link(); $k2_image_link = false; ?>
+							</div>
+							<div class="clear"></div>
 						</div>
-						<div class="clear"></div>
-					</div>
-				</div><!-- .entry-footer -->
-			</div> <!-- #entry-ID -->
-
-			<div class="comments">
-				<?php comments_template(); ?>
-			</div> <!-- .comments -->
-
-			<?php if ( ! empty($post->post_parent) ): ?>
-			<div class="navigation">
-				<div class="nav-previous"><a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><span>&laquo;</span> <?php echo get_the_title($post->post_parent); ?></a></div>
-				<div class="clear"></div>
-			</div>
+					</div><!-- .entry-footer -->
+				</div> <!-- #entry-ID -->
+	
+				<div class="comments">
+					<?php comments_template(); ?>
+				</div> <!-- .comments -->
+	
+				<?php if ( ! empty($post->post_parent) ): ?>
+				<div class="navigation">
+					<div class="nav-previous"><a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><span>&laquo;</span> <?php echo get_the_title($post->post_parent); ?></a></div>
+					<div class="clear"></div>
+				</div>
+				<?php endif; ?>
+	
+			<?php endwhile; else: define('K2_NOT_FOUND', true); ?>
+	
+				<?php locate_template( array('blocks/k2-404.php'), true ); ?>
+	
 			<?php endif; ?>
-
-		<?php endwhile; else: ?>
-
-			<div class="hentry four04">
-
-				<div class="entry-header">
-					<h3 class="center"><?php _e('Not Found', 'k2'); ?></h3>
-				</div>
-
-				<div class="entry-content">
-					<p><?php _e('Oh no! You\'re looking for something which just isn\'t here! Fear not however, errors are to be expected, and luckily there are tools on the sidebar for you to use in your search for what you need.', 'k2'); ?></p>
-				</div>
-
-			</div> <!-- .hentry .four04 -->
-
-		<?php endif; ?>
 
 		</div> <!-- .content -->
 
 	</div> <!-- .primary -->
+
+	<?php if ( ! get_post_custom_values('sidebarless') ) get_sidebar(); ?>
 
 	<?php if ( is_active_sidebar('widgets-bottom') ) : ?>
 	<div id="widgets-bottom" class="widgets">
