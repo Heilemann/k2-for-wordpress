@@ -96,10 +96,10 @@ add_filter('wp_page_menu', 'k2_page_menu_filter');
  * Filters post content and resizes embedded videos and images to content width.
  */
 function k2_resize_embeds( $content ) {
-	return str_replace( 'width="480" height="295"></embed>', 'width="500" height="307"></embed>', $content );
-	return str_replace( 'width="480" height="385"></embed>', 'width="500" height="400"></embed>', $content );
 	return str_replace( 'width="560" height="340"></embed>', 'width="500" height="307"></embed>', $content );
 /*
+	return str_replace( 'width="480" height="295"></embed>', 'width="500" height="307"></embed>', $content );
+	return str_replace( 'width="480" height="385"></embed>', 'width="500" height="400"></embed>', $content );
 	return str_replace( 'width="425" height="344"></embed>', 'width="500" height="405"></embed>', $content );
 	return str_replace( 'width="640" height="385"></embed>', 'width="500" height="307"></embed>', $content );
 	return str_replace( 'width="640" height="505"></embed>', 'width="500" height="307"></embed>', $content );
