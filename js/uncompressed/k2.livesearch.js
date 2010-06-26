@@ -4,7 +4,7 @@ function LiveSearch(searchprompt) {
 	jQuery('body').addClass('livesearch');
 
 	this.searchPrompt		= searchprompt;
-	this.searchform			= jQuery('#searchform');
+	this.searchForm			= jQuery('#searchform');
 	this.searchField		= jQuery('#s');
 	this.reset				= jQuery('#searchreset');
 	this.loading			= jQuery('#searchload');
@@ -14,7 +14,7 @@ function LiveSearch(searchprompt) {
 	jQuery('#searchsubmit').addClass('hidden');
 	
 	// Inject reset and load containers.
-	this.searchForm.append("<span id="searchreset" title="<?php esc_attr_e('Reset Search', 'k2'); ?>"></span><span id="searchload"></span>")
+	this.searchForm.append("<span id='searchreset'></span><span id='searchload'></span>")
 
 	// Inlinize label
 	this.searchLabel.empty().text(searchprompt).addClass('overlabel-apply');

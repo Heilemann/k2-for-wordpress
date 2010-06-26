@@ -68,7 +68,7 @@ function RollingArchives(args) {
 		jQuery('body').toggleClass('trim')
 	})
 
-	RA.assignHotkeys(); // Setup Keyboard Shortcuts
+/* 	RA.assignHotkeys(); // Setup Keyboard Shortcuts */
 
 	jQuery('body').addClass('rollingarchives'); // Put the world on notice.
 
@@ -398,8 +398,10 @@ RollingArchives.prototype.scrollTo = function(elements, direction, next) {
 	// Find the next element below the upper fold
 	if (RA.nextIndex == undefined) {
 		jQuery(elements).each(function(idx) {
-			if ( jQuery(this).offset().top - RA.offset > jQuery(window).scrollTop() ) {
+/* 			console.log( jQuery(this).offset().top +' - '+ RA.offsetTop +' > '+ jQuery(window).scrollTop() ); */
+			if ( jQuery(this).offset().top - RA.offsetTop > jQuery(window).scrollTop() ) {
 				RA.nextIndex = (direction === 1 ? idx -1 : idx);
+				console.log( 'Next index: '+RA.nextIndex );
 				return false;
 			}
 		})
@@ -419,12 +421,11 @@ RollingArchives.prototype.scrollTo = function(elements, direction, next) {
 	}
 
 	// And finally scroll to the element (if the last element in the selection isn't on screen in its entirety).
-/* 	if ( jQuery(obj+':first').offset().top + jQuery(obj+':last').offset().top + jQuery(obj+':last').height() > jQuery(window).scrollTop() + jQuery(window).height() ) */
-
+/* 	if ( jQuery(elements+':first').offset().top + jQuery(elements+':last').offset().top + jQuery(elements+':last').height() > jQuery(window).scrollTop() + jQuery(window).height() ) */
 
 	// Move .selected class to new element, return its vertical position to variable
 	RA.nextElement			= jQuery(elements).eq(RA.nextIndex);
-	var nextElementPos		= RA.nextElement.offset().top - RA.offset;
+	var nextElementPos		= RA.nextElement.offset().top - RA.offsetTop;
 	var theBrowserWindow 	= (jQuery.browser.safari) ? jQuery('body') : jQuery('html'); // Browser differences, hurray.
 
 	// Scroll to the next element. Then detect if user manually scrolls away, in which case we clear our .selected stuff.
