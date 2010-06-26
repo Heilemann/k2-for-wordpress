@@ -15,7 +15,7 @@ defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
 <head profile="http://purl.org/uF/hAtom/0.1/ http://purl.org/uF/2008/03/">
 
-<title><?php wp_title('&laquo; ', true, 'right'); ?><?php bloginfo('name'); ?></title>
+<title><?php wp_title('&laquo;', true, 'right'); ?><?php bloginfo('name'); ?></title>
 
 <meta http-equiv="content-type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 <meta name="template" content="K2 <?php k2info('version'); ?>" />
