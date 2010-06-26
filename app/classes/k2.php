@@ -479,7 +479,7 @@ class K2 {
 				wp_enqueue_script('k2advnav');
 
 			// WP 2.7 threaded comments
-			if ( is_singular() )
+			if ( is_singular() && get_option('thread_comments') )
 				wp_enqueue_script( 'comment-reply' );
 		}
 	}
