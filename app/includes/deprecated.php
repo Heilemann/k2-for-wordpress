@@ -4,8 +4,9 @@
  * globals and functions and look for the alternatives instead. The functions
  * and globals will be removed in a later version.
  *
- * @package K2
- * @subpackage Deprecated
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
  */
 
 /**

@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
+ */
 
 	// Check that the K2 folder has no spaces
 	$dir_has_spaces = (strpos(TEMPLATEPATH, ' ') !== false);

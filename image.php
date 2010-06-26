@@ -1,4 +1,12 @@
 <?php
+/**
+ * The template used to display image type attachments.
+ *
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
+ */
+
 	$k2_image_link = false;
 
 	function k2_gallery_link($output) {
@@ -43,30 +51,30 @@
 				<div class="clear"></div>
 			</div>
 			<?php endif; ?>
-	
+
 			<div class="content hfeed">
-	
+
 				<div id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
 					<div class="entry-header">
 						<h1 class="entry-title">
 							<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
 						</h1>
-	
+
 						<?php /* Edit Link */ edit_post_link( __('Edit', 'k2'), '<span class="entry-edit">', '</span>' ); ?>
-	
+
 						<?php /* K2 Hook */ do_action('template_entry_head'); ?>
 					</div> <!-- .entry-header -->
-	
+
 					<div class="entry-content">
 						<div class="attachment-image">
 							<a href="<?php echo wp_get_attachment_url($post->ID); ?>" class="image-link"><?php echo wp_get_attachment_image( $post->ID, 'medium' ); ?></a>
-	
+
 							<?php if ( !empty($post->post_excerpt) ): ?>
 							<div class="caption"><?php the_excerpt(); ?></div>
 							<?php endif; ?>
 						</div>
 					</div> <!-- .entry-content -->
-	
+
 					<div class="entry-footer">
 						<ul class="image-meta">
 							<li class="dimensions">
@@ -85,10 +93,10 @@
 								<span><?php _e('Uploaded on:', 'k2'); ?></span>
 								<?php echo k2_entry_date(); ?>
 							</li>
-	
+
 							<?php /* K2 Hook */ do_action('k2_image_meta', $post->ID); ?>
 						</ul>
-	
+
 						<div id="gallery-nav" class="navigation">
 							<div class="nav-previous">
 								<?php $k2_image_link = 'prev'; previous_image_link(); $k2_image_link = false; ?>
@@ -100,22 +108,22 @@
 						</div>
 					</div><!-- .entry-footer -->
 				</div> <!-- #entry-ID -->
-	
+
 				<div class="comments">
 					<?php comments_template(); ?>
 				</div> <!-- .comments -->
-	
+
 				<?php if ( ! empty($post->post_parent) ): ?>
 				<div class="navigation">
 					<div class="nav-previous"><a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><span>&laquo;</span> <?php echo get_the_title($post->post_parent); ?></a></div>
 					<div class="clear"></div>
 				</div>
 				<?php endif; ?>
-	
+
 			<?php endwhile; else: define('K2_NOT_FOUND', true); ?>
-	
+
 				<?php locate_template( array('blocks/k2-404.php'), true ); ?>
-	
+
 			<?php endif; ?>
 
 		</div> <!-- .content -->

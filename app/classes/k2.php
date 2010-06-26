@@ -1,12 +1,15 @@
 <?php
+/**
+ * K2 main class.
+ *
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
+ */
+
 // Prevent users from directly loading this class file
 defined('K2_CURRENT') or die ( __('Error: This file can not be loaded directly.', 'k2') );
 
-/**
- * K2 - Main class
- *
- * @package K2
- */
 class K2 {
 
 	/**

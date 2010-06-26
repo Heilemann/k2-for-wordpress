@@ -1,9 +1,18 @@
 <?php
-	// Do not access this file directly
-	if ( !empty($_SERVER['SCRIPT_FILENAME']) and 'comments.php' == basename($_SERVER['SCRIPT_FILENAME']) )
-		die( __('Please do not load this page directly. Thanks!', 'k2') );
+/**
+ * The template for displaying comments.
+ *
+ * The area of the page that contains both current comments
+ * and the comment form. The actual display of comments is
+ * handled by a callback to k2_comment_type_switch which is
+ * located in the app/includes/pluggable.php file.
+ *
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
+ */
 
- 	// Password Protection
+	// Password Protection
 	if ( post_password_required() ) return;
 ?>
 

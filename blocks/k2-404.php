@@ -1,3 +1,11 @@
+<?php
+/**
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
+ */
+?>
+
 <div class="hentry four04">
 
 	<div class="entry-header">
@@ -18,4 +26,4 @@
 
 	</div>
 
-</div><!-- .hentry .four04 -->
+</div> <!-- .hentry .four04 -->

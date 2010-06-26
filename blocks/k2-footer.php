@@ -1,14 +1,14 @@
 <?php
 /**
- * Footer Template
+ * Footer Template.
  *
- * This file is loaded by footer.php and used for content inside the #footer div
+ * This file is loaded by footer.php and used for content inside the #footer div.
  *
- * @package K2
- * @subpackage Templates
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
  */
 ?>
-
 
 <?php
 	wp_register('<div class="siteadmin">','</div>'); // Admin & Register Button

@@ -1,5 +1,11 @@
 <?php
-// WordPress Compatibility Functions
+/**
+ * WordPress Compatibility Functions.
+ *
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
+ */
 
 /**
  * Santizes a html classname to ensure it only contains valid characters

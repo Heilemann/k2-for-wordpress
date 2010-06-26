@@ -1,6 +1,16 @@
-<?php /*
-	Template Name: Archives (Do Not Use Manually)
-*/ ?>
+<?php
+/**
+ * The template for displaying pages with page slug archives.
+ *
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
+ */
+
+/*
+Template Name: Archives (Do Not Use Manually)
+*/
+?>
 
 <?php /* Counts the posts, comments and categories on your blog */
 	$numpostsarray	= wp_count_posts('post');

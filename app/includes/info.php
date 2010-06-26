@@ -1,4 +1,10 @@
 <?php
+/**
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
+ */
+
 // Prevent users from directly loading this file
 defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly.', 'k2') );
 

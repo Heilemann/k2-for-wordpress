@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
+ */
 
 // Based on Hasse R. Hansen's K2 header plugin - http://www.ramlev.dk
 

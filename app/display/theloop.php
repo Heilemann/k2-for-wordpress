@@ -1,6 +1,12 @@
 <?php
-	// This is the loop, which fetches entries from your database.
-	// It is a very delicate piece of machinery. Be gentle!
+/**
+ * This is the loop, which fetches entries from your database.
+ * It is a very delicate piece of machinery. Be gentle!
+ *
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
+ */
 
 	global $wp_query;
 

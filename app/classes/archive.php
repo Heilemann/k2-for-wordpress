@@ -1,5 +1,11 @@
 <?php
-/* This class holds all the code for creating, deleting and setting up the pre-made archives page */
+/**
+ * This class holds all the code for creating, deleting and setting up the pre-made archives page.
+ *
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
+ */
 
 class K2Archive {
 	function install() {

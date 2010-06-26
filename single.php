@@ -1,4 +1,13 @@
-<?php get_header(); ?>
+<?php
+/**
+ * The template for displaying all single posts.
+ *
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
+ */
+
+get_header(); ?>
 
 <div class="wrapper">
 

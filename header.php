@@ -1,4 +1,12 @@
 <?php
+/**
+ * The template for displaying the header.
+ *
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
+ */
+
 	// Prevent users from directly loading this theme file
 	defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly.', 'k2') );
 ?>

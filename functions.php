@@ -1,4 +1,12 @@
 <?php
+/**
+ * K2 definitions.
+ *
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
+ */
+
 // Current version of K2
 define('K2_CURRENT', '1.1');
 

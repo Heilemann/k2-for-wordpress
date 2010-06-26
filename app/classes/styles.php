@@ -1,10 +1,12 @@
 <?php
 /**
- * K2 Styles
+ * K2 Styles.
  *
- * Custom CSS for K2
+ * Custom CSS for K2.
  *
- * @package K2
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
  */
 
 // Prevent users from directly loading this file

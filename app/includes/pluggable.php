@@ -1,12 +1,13 @@
 <?php
-
 /**
  * K2 Pluggable Functions.
  *
  * These functions can be replaced via styles/plugins. If styles/plugins do
  * not redefine these functions, then these will be used instead.
  *
- * @package K2
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
  */
 
 // Prevent users from directly loading this include file

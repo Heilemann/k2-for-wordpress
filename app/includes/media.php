@@ -1,11 +1,16 @@
 <?php
+/**
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 1.1 r1112
+ */
 
 // Deactivate WordPress function
 remove_shortcode('gallery', 'gallery_shortcode');
- 
+
 // Activate own function
 add_shortcode('gallery', 'k2_gallery_shortcode');
- 
+
 // Function to filter the default gallery shortcode
 function k2_gallery_shortcode($attr) {
 	global $post;
@@ -116,7 +121,7 @@ function k2_remove_gallery_css( $css ) {
 add_filter( 'gallery_style', 'k2_remove_gallery_css' );
 
 
-// Get link to the next or previous attachment in the parents gallery 
+// Get link to the next or previous attachment in the parents gallery
 function os_get_gallery_navigation() {
 	global $post;
 

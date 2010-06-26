@@ -2,14 +2,15 @@
 /**
  * K2 Widgets.
  *
- * Specific widgets for K2
+ * Specific widgets for K2.
  *
- * @package K2
+ * @package WordPress
+ * @subpackage K2
+ * @since K2 unknown
  */
 
 // Prevent users from directly loading this include file
 defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly.', 'k2') );
-
 
 class K2_Widget_About extends WP_Widget {
 	function K2_Widget_About() {
