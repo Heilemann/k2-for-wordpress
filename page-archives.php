@@ -46,16 +46,24 @@ Template Name: Archives (Do Not Use Manually)
 					<?php /* Edit Link */ edit_post_link(__('Edit', 'k2'), '<span class="entry-edit">', '</span>'); ?>
 
 					<?php /* K2 Hook */ do_action('template_entry_head'); ?>
-				</div><!-- .entry-header -->
+				</div> <!-- .entry-header -->
 
 				<div class="entry-content">
 
-					<p class="archivetext"><?php /* translators: 1: blog name, 2: post count, 3: comment count, 4: category count */ printf( __('This is the frontpage of the %1$s archives. Currently the archives are spanning %2$s posts and %3$s comments, contained within the meager confines of %4$s categories. Through here, you will be able to move down into the archives by way of time or category. If you are looking for something specific, perhaps you should try the search on the sidebar.', 'k2'), get_bloginfo('name'), $numposts, $numcomms, $numcats ); ?></p>
+					<p class="archivetext"><?php /* translators: 1: blog name, 2: post count, 3: comment count, 4: category count */
+						printf( __( 'This is the frontpage of the %1$s archives. Currently the archives are spanning %2$s posts and %3$s comments, contained within the meager confines of %4$s categories. Through here, you will be able to move down into the archives by way of time or category. If you are looking for something specific, perhaps you should try the search on the sidebar.', 'k2'),
+						get_bloginfo('name'), $numposts, $numcomms, $numcats );
+					?></p>
 
-					<h3><?php _e('Tag Cloud', 'k2'); ?></h3>
-					<div id="tag-cloud">
-					<?php wp_tag_cloud('number=0'); ?>
-					</div>
+					<?php
+					$tag_cloud = get_terms( 'post_tag' );
+					if ( $tag_cloud ) :
+					?>
+						<h3><?php _e('Tag Cloud', 'k2'); ?></h3>
+						<div id="tag-cloud">
+							<?php wp_tag_cloud('number=0'); ?>
+						</div>
+					<?php endif; ?>
 
 					<h3><?php _e('Browse by Month', 'k2'); ?></h3>
 					<ul class="archive-list">
@@ -71,24 +79,24 @@ Template Name: Archives (Do Not Use Manually)
 
 					<br class="clear" />
 
-				</div><!-- .entry-content -->
+				</div> <!-- .entry-content -->
 
 				<div class="entry-footer">
 					<?php wp_link_pages( array('before' => '<div class="entry-pages"><span>' . __('Pages:', 'k2') . '</span>', 'after' => '</div>' ) ); ?>
 
 					<?php /* K2 Hook */ do_action('template_entry_foot'); ?>
-				</div><!-- .entry-footer -->
-			</div><!-- #entry-ID -->
+				</div> <!-- .entry-footer -->
+			</div> <!-- #entry-ID -->
 
 			<?php if ( get_post_custom_values('comments') ): ?>
 			<div class="comments">
 				<?php comments_template(); ?>
-			</div><!-- .comments -->
+			</div> <!-- .comments -->
 			<?php endif; ?>
 
-		</div><!-- .content .hfeed -->
+		</div> <!-- .content .hfeed -->
 
-	</div><!-- .primary -->
+	</div> <!-- .primary -->
 
 	<?php if ( ! get_post_custom_values('sidebarless') ) get_sidebar(); ?>
 
