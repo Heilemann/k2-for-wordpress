@@ -274,7 +274,7 @@ class K2 {
 		update_option('k2advnav', $_POST['k2']['advnav']);
 
 		// JavaScript Animations
-		if ( isset($_POST['k2']['animations']) )
+		if ( isset($_POST['k2']['advnav']) && $_POST['k2']['advnav'] == 2)
 			update_option('k2animations', '1');
 		else
 			update_option('k2animations', '0');
