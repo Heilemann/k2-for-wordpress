@@ -140,7 +140,7 @@
 					<p>
 						<input type="text" name="email" id="email" value="<?php echo esc_attr($comment_author_email); ?>" size="22" tabindex="2" />
 						<label for="email">
-							<strong><?php _e('Mail', 'k2'); ?></strong> <?php _e('(will not be published)', 'k2'); ?> <?php if ( $req ) : _e('(required)', 'k2'); endif; ?>
+							<strong><?php _e('Email', 'k2'); ?></strong> <?php _e('(will not be published)', 'k2'); ?> <?php if ( $req ) : _e('(required)', 'k2'); endif; ?>
 						</label>
 					</p>
 
