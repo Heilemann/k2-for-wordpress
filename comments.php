@@ -148,7 +148,7 @@
 							<strong><?php _e('Website', 'k2'); ?></strong>
 						</label>
 					</p>
-				</div><!-- comment-personaldetails -->
+				</div><!-- #comment-author-info -->
 			<?php endif; /* If not logged in */ ?>
 
 				<!-- <p><?php printf( __('<strong>XHTML:</strong> You can use these tags: <code>%s</code>', 'k2'), allowed_tags() ); ?></p> -->
@@ -176,6 +176,6 @@
 		<?php endif; /* If registration required and not logged in */ ?>
 
 		<div class="clear"></div>
-	</div> <!-- .respon -->
+	</div> <!-- #respond -->
 
 	<?php endif; /* Reply Form */ ?>
