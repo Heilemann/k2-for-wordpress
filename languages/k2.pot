@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: K2 1.1\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/kaytwo-i18n/issues/list\n"
-"POT-Creation-Date: 2010-06-26 05:20-0400\n"
+"POT-Creation-Date: 2010-06-27 14:01-0400\n"
 "PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -595,7 +595,7 @@ msgstr ""
 msgid "Continue reading '%s'"
 msgstr ""
 
-#: ../blocks/k2-loop.php:41 ../page-archives.php:77 ../page.php:50
+#: ../blocks/k2-loop.php:41 ../page-archives.php:85 ../page.php:50
 #: ../single.php:54
 msgid "Pages:"
 msgstr ""
@@ -612,100 +612,100 @@ msgstr[1] ""
 msgid "Feed for this Entry"
 msgstr ""
 
-#: ../comments.php:27
+#: ../comments.php:28
 msgid "Copy this URI to trackback this entry."
 msgstr ""
 
-#: ../comments.php:27
+#: ../comments.php:28
 msgid "Trackback Address"
 msgstr ""
 
-#: ../comments.php:53
+#: ../comments.php:55
 msgid "No Comments"
 msgstr ""
 
-#: ../comments.php:59
+#: ../comments.php:61
 msgid "Comments are currently closed."
 msgstr ""
 
-#: ../comments.php:66
+#: ../comments.php:68
 msgid "Edit Your Comment"
 msgstr ""
 
-#: ../comments.php:68 ../comments.php:70
+#: ../comments.php:70 ../comments.php:72
 msgid "Leave a Reply"
 msgstr ""
 
-#: ../comments.php:68
+#: ../comments.php:70
 #, php-format
 msgid "Leave a Reply to %s"
 msgstr ""
 
-#: ../comments.php:77
+#: ../comments.php:79
 msgid "Cancel Reply"
 msgstr ""
 
-#: ../comments.php:81
+#: ../comments.php:83
 #, php-format
 msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
 msgstr ""
 
-#: ../comments.php:96
+#: ../comments.php:98
 #, php-format
 msgid "Logged in as <a href=\"%1$s\">%2$s</a>."
 msgstr ""
 
-#: ../comments.php:96
+#: ../comments.php:98
 msgid "Log out of this account"
 msgstr ""
 
-#: ../comments.php:96
+#: ../comments.php:98
 msgid "Log out &raquo;"
 msgstr ""
 
-#: ../comments.php:101
+#: ../comments.php:103
 #, php-format
 msgid "Welcome back <strong>%s</strong>"
 msgstr ""
 
-#: ../comments.php:104
+#: ../comments.php:106
 msgid "Change Your Details"
 msgstr ""
 
-#: ../comments.php:109
+#: ../comments.php:111
 msgid "(Change)"
 msgstr ""
 
-#: ../comments.php:110
+#: ../comments.php:112
 msgid "(Close)"
 msgstr ""
 
-#: ../comments.php:134
+#: ../comments.php:136
 msgid "Name"
 msgstr ""
 
-#: ../comments.php:134 ../comments.php:141
+#: ../comments.php:136 ../comments.php:143
 msgid "(required)"
 msgstr ""
 
-#: ../comments.php:141
-msgid "Mail"
+#: ../comments.php:143
+msgid "Email"
 msgstr ""
 
-#: ../comments.php:141
+#: ../comments.php:143
 msgid "(will not be published)"
 msgstr ""
 
-#: ../comments.php:148
+#: ../comments.php:150
 msgid "Website"
 msgstr ""
 
-#: ../comments.php:154
+#: ../comments.php:156
 #, php-format
 msgid "<strong>XHTML:</strong> You can use these tags: <code>%s</code>"
 msgstr ""
 
-#: ../comments.php:171
+#: ../comments.php:173
 msgid "Submit"
 msgstr ""
 
@@ -736,7 +736,7 @@ msgid "Uploaded on:"
 msgstr ""
 
 #. translators: 1: blog name, 2: post count, 3: comment count, 4: category count
-#: ../page-archives.php:53
+#: ../page-archives.php:54
 #, php-format
 msgid ""
 "This is the frontpage of the %1$s archives. Currently the archives are "
@@ -746,15 +746,15 @@ msgid ""
 "specific, perhaps you should try the search on the sidebar."
 msgstr ""
 
-#: ../page-archives.php:55
+#: ../page-archives.php:62
 msgid "Tag Cloud"
 msgstr ""
 
-#: ../page-archives.php:60
+#: ../page-archives.php:68
 msgid "Browse by Month"
 msgstr ""
 
-#: ../page-archives.php:67
+#: ../page-archives.php:75
 msgid "Browse by Category"
 msgstr ""
 
@@ -764,40 +764,4 @@ msgstr ""
 
 #: ../searchform.php:14
 msgid "Search &raquo;"
-msgstr ""
-
-#. Theme Name of the plugin/theme
-msgid "K2"
-msgstr ""
-
-#. Theme URI of the plugin/theme
-msgid "http://getk2.com"
-msgstr ""
-
-#. Description of the plugin/theme
-msgid ""
-"<strong><a href=\"themes.php?page=k2-options\">Configure K2</a></strong>, "
-"visit the <a href=\"http://groups.google.com/group/k2-support\">support "
-"forums</a>, <a href=\"http://code.google.com/p/kaytwo/w/list\">the wiki</a> "
-"or <a href=\"http://code.google.com/p/kaytwo/issues/list\">the bug tracker</"
-"a>. K2 was developed by <a href=\"http://binarybonsai.com/\">Michael</a>, <a "
-"href=\"http://chrisjdavis.org/\">Chris</a>, <a href=\"http://zeo.my/\">Zeo</"
-"a>, <a href=\"http://stevelam.org/\">Steve</a>, Ben and <a href=\"http://"
-"xentek.net/\">Eric</a>, and is licensed under the <a href=\"http://www."
-"opensource.org/licenses/gpl-license.php\">GPL</a>."
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "Various Artists"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "http://getk2.com/"
-msgstr ""
-
-#. Tags of the plugin/theme
-msgid ""
-"blue, custom-header, fixed-width, flexible-width, one-column, two-columns, "
-"three-columns, theme-options, threaded-comments, microformats, translation-"
-"ready, light"
 msgstr ""
