@@ -18,20 +18,22 @@
 
 		<h4><?php /* translators: 1: language string for the number of comment(s), 2: post title */
 			printf( _n( '<span id="comments">1</span> Response to %2$s', '<span id="comments">%1$s</span> Responses to %2$s', get_comments_number(), 'k2' ),
-				number_format_i18n( get_comments_number() ), '&#8220;' . get_the_title() . '&#8221;' 
+				number_format_i18n( get_comments_number() ), '&#8220;' . get_the_title() . '&#8221;'
 			);
 		?></h4>
 
 		<div class="metalinks">
 			<span class="commentsrsslink"><?php post_comments_feed_link( __('Feed for this Entry', 'k2') ); ?></span>
-			<?php if ( pings_open() ) : ?><span class="trackbacklink"><a href="<?php trackback_url(); ?>" title="<?php _e('Copy this URI to trackback this entry.', 'k2'); ?>"><?php _e('Trackback Address', 'k2'); ?></a></span><?php endif; ?>
+			<?php if ( pings_open() ) : ?>
+			<span class="trackbacklink"><a href="<?php trackback_url(); ?>" title="<?php _e('Copy this URI to trackback this entry.', 'k2'); ?>"><?php _e('Trackback Address', 'k2'); ?></a></span>
+			<?php endif; ?>
 		</div>
 
 		<hr />
 
 	<?php if ( have_comments() ) : ?>
 
-		<?php $total_pages = get_comment_pages_count(); if ( $total_pages > 1 ) : // Are there comments to navigate through? ?>
+		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
 		<div id="comments-nav" class="navigation">
 			<?php paginate_comments_links( ) ?>
 		</div>
@@ -41,7 +43,7 @@
 			<?php wp_list_comments( array( 'callback' => 'k2_comment_type_switch' ) ); ?>
 		</ul>
 
-		<?php if ( $total_pages > 1 ) : // Are there comments to navigate through? ?>
+		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
 		<div id="comments-nav" class="navigation">
 			<?php paginate_comments_links(  ) ?>
 		</div>
@@ -148,7 +150,7 @@
 							<strong><?php _e('Website', 'k2'); ?></strong>
 						</label>
 					</p>
-				</div><!-- #comment-author-info -->
+				</div> <!-- #comment-author-info -->
 			<?php endif; /* If not logged in */ ?>
 
 				<!-- <p><?php printf( __('<strong>XHTML:</strong> You can use these tags: <code>%s</code>', 'k2'), allowed_tags() ); ?></p> -->
