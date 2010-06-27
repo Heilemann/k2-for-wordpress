@@ -13,7 +13,7 @@ defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
-<head profile="http://purl.org/uF/hAtom/0.1/ http://purl.org/uF/2008/03/">
+<head profile="http://microformats.org/profile/specs http://microformats.org/profile/hatom">
 
 <title><?php wp_title('&laquo;', true, 'right'); ?><?php bloginfo('name'); ?></title>
 
