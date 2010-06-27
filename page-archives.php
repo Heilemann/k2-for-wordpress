@@ -74,7 +74,7 @@ Template Name: Archives (Do Not Use Manually)
 
 					<h3><?php _e('Browse by Category', 'k2'); ?></h3>
 					<ul class="archive-list">
-						<?php wp_list_cats('hierarchical=1&optioncount=1'); ?>
+						<?php wp_list_categories( array( 'hierarchical' => true, 'show_count' => 1, 'title_li' => '' ) ); ?>
 					</ul>
 
 					<br class="clear" />
