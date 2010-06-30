@@ -21,14 +21,11 @@ class K2 {
 		global $wp_version;
 
 		// Load required classes and includes
-		include_once(TEMPLATEPATH . '/app/includes/wp-compat.php');
 		require_once(TEMPLATEPATH . '/app/classes/archive.php');
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
 		require_once(TEMPLATEPATH . '/app/includes/media.php');
-
-		if ( class_exists('WP_Widget') ) // WP 2.8+
-			require_once(TEMPLATEPATH . '/app/includes/widgets.php');
+		require_once(TEMPLATEPATH . '/app/includes/widgets.php');
 
 		if ( defined('K2_HEADERS') and K2_HEADERS == true )
 			require_once(TEMPLATEPATH . '/app/classes/header.php');
