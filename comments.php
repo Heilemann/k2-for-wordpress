@@ -34,8 +34,8 @@
 	<?php if ( have_comments() ) : ?>
 
 		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
-		<div id="comments-nav" class="navigation">
-			<?php paginate_comments_links( ) ?>
+		<div id="comments-nav-above" class="navigation">
+			<?php paginate_comments_links(); ?>
 		</div>
 		<?php endif; // check for comment navigation ?>
 
@@ -44,8 +44,8 @@
 		</ul>
 
 		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
-		<div id="comments-nav" class="navigation">
-			<?php paginate_comments_links(  ) ?>
+		<div id="comments-nav-below" class="navigation">
+			<?php paginate_comments_links(); ?>
 		</div>
 		<?php endif; // check for comment navigation ?>
 

@@ -789,14 +789,16 @@ body.attachment .attachment {
 
 /* Comments */
 
-#comments-nav {
+#comments-nav-above,
+#comments-nav-below {
 	height: inherit;
 	color: #aaa;
 	text-align: center;
 	font-size: 1.1em;
 }
 
-#comments-nav .page-numbers {
+#comments-nav-above .page-numbers,
+#comments-nav-below .page-numbers {
 	padding: 5px;
 }
 
