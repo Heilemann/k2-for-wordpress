@@ -82,7 +82,7 @@
 		<?php if ( get_option('comment_registration') and !is_user_logged_in() ) : ?>
 			<p><?php printf( __('You must be <a href="%s">logged in</a> to post a comment.', 'k2'), wp_login_url( get_permalink() )); ?></p>
 		<?php else: ?>
-			<form action="<?php echo get_bloginfo('url'); ?>/wp-comments-post.php" method="post" id="commentform">
+			<form action="<?php echo site_url('wp-comments-post.php'); ?>" method="post" id="commentform">
 
 			<?php
 				if ( isset($_GET['jal_edit_comments']) ) :
@@ -95,7 +95,7 @@
 			<?php elseif ( is_user_logged_in() ) : ?>
 
 				<p class="comment-login">
-					<?php printf(__('Logged in as <a href="%1$s">%2$s</a>.', 'k2'), get_bloginfo('url') . '/wp-admin/profile.php', $user_identity); ?> <a href="<?php echo wp_logout_url(get_permalink()); ?>" title="<?php _e('Log out of this account', 'k2'); ?>"><?php _e('Log out &raquo;', 'k2'); ?></a>
+					<?php printf(__('Logged in as <a href="%1$s">%2$s</a>.', 'k2'), admin_url('profile.php'), $user_identity); ?> <a href="<?php echo wp_logout_url(get_permalink()); ?>" title="<?php _e('Log out of this account', 'k2'); ?>"><?php _e('Log out &raquo;', 'k2'); ?></a>
 				</p>
 
 			<?php elseif ( '' != $comment_author ) : ?>
