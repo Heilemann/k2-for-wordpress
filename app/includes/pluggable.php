@@ -237,7 +237,7 @@ if ( ! function_exists('k2_comment_type_switch') ) :
 					<span class="comment-author"><?php comment_author_link(); ?></span>
 
 					<div class="comment-meta">
-						<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>" title="<?php _e('Permanent Link to this Comment', 'k2'); ?>">
+						<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>" title="<?php _e('Permalink to this Comment', 'k2'); ?>">
 						<?php
 						if ( function_exists('time_since') ):
 							printf( __('%s ago.', 'k2'), time_since( abs( strtotime($comment->comment_date_gmt . ' GMT') ), time() ) );
@@ -302,7 +302,7 @@ if ( ! function_exists('k2_comment_type_switch') ) :
 								sprintf( esc_attr__('%s ago.', 'k2'),
 									time_since( abs( strtotime($comment->comment_date_gmt . " GMT") ), time() )
 								) :
-								esc_attr__('Permanent Link to this Comment', 'k2')
+								esc_attr__('Permalink to this Comment', 'k2')
 							),
 							/* translators: 1: comment date, 2: comment time */
 							sprintf( __('%1$s at %2$s', 'k2'),
