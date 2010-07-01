@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: K2 1.1\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/kaytwo-i18n/issues/list\n"
-"POT-Creation-Date: 2010-06-27 14:01-0400\n"
+"POT-Creation-Date: 2010-07-01 19:56+0800\n"
 "PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,33 +80,33 @@ msgstr ""
 msgid "Error: This file can not be loaded directly."
 msgstr ""
 
-#: ../app/classes/k2.php:70
+#: ../app/classes/k2.php:67
 msgid "Header Menu"
 msgstr ""
 
-#: ../app/classes/k2.php:104
+#: ../app/classes/k2.php:101
 msgid "Published by %author% on %date% in %categories%. %comments% %tags%"
 msgstr ""
 
-#: ../app/classes/k2.php:199 ../app/display/options.php:41
+#: ../app/classes/k2.php:196 ../app/display/options.php:41
 msgid "K2 Options"
 msgstr ""
 
-#: ../app/classes/k2.php:206
+#: ../app/classes/k2.php:203
 msgid "K2 Support Group"
 msgstr ""
 
-#: ../app/classes/k2.php:207
+#: ../app/classes/k2.php:204
 msgid "K2 Bug Tracker"
 msgstr ""
 
-#: ../app/classes/k2.php:228
+#: ../app/classes/k2.php:225
 msgid ""
 "Do you want to restore K2 to default settings? This will remove all your K2 "
 "settings."
 msgstr ""
 
-#: ../app/classes/k2.php:496
+#: ../app/classes/k2.php:493
 msgid "Could not open required directory"
 msgstr ""
 
@@ -237,9 +237,9 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: ../app/display/options.php:119
+#: ../app/display/options.php:119 ../app/includes/display.php:36
 #, php-format
-msgid "Permanent Link to \"%s\""
+msgid "Permalink to %s"
 msgstr ""
 
 #: ../app/display/options.php:147
@@ -254,7 +254,7 @@ msgstr ""
 msgid "Install a Default Set of Widgets"
 msgstr ""
 
-#. translators: daily archive date format (here: 'Weekday, Month Xth, Year'), see http://php.net/date
+#. translators: daily archive date format (example: Monday, January 1st, 1970), see http://php.net/date
 #: ../app/display/theloop.php:27
 #, php-format
 msgid "Daily Archive for %s"
@@ -264,7 +264,7 @@ msgstr ""
 msgid "l, F jS, Y"
 msgstr ""
 
-#. translators: monthly archive date format (here: 'Month, Year'), see http://php.net/date
+#. translators: monthly archive date format (example: January, 1970), see http://php.net/date
 #: ../app/display/theloop.php:31
 #, php-format
 msgid "Monthly Archive for %s"
@@ -274,7 +274,7 @@ msgstr ""
 msgid "F, Y"
 msgstr ""
 
-#. translators: yearly archive date format (here: 'Year'), see http://php.net/date
+#. translators: yearly archive date format (example: 1970), see http://php.net/date
 #: ../app/display/theloop.php:35
 #, php-format
 msgid "Yearly Archive for %s"
@@ -282,12 +282,12 @@ msgstr ""
 
 #: ../app/display/theloop.php:47
 #, php-format
-msgid "Archive for the '%s' Category"
+msgid "Archive for the &#8216;%s&#8217; Category"
 msgstr ""
 
 #: ../app/display/theloop.php:52
 #, php-format
-msgid "Tag Archive for '%s'"
+msgid "Tag Archive for &#8216;%s&#8217;"
 msgstr ""
 
 #: ../app/display/theloop.php:56
@@ -297,7 +297,7 @@ msgstr ""
 
 #: ../app/display/theloop.php:62
 #, php-format
-msgid "Search Results for '%s'"
+msgid "Search Results for &#8216;%s&#8217;"
 msgstr ""
 
 #. translators: 1: current page, 2: total pages
@@ -314,11 +314,6 @@ msgstr ""
 msgid "Newer <span class=\"meta-nav\">&raquo;</span>"
 msgstr ""
 
-#: ../app/includes/display.php:36
-#, php-format
-msgid "Permanent Link to %s"
-msgstr ""
-
 #: ../app/includes/display.php:50
 msgid "Uncategorized"
 msgstr ""
@@ -328,7 +323,7 @@ msgstr ""
 msgid "View all posts in %s"
 msgstr ""
 
-#. translators: 1: current page, 2: total pages
+#. translators: Page X of Y
 #: ../app/includes/info.php:69
 msgid "of"
 msgstr ""
@@ -349,120 +344,116 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: ../app/includes/pluggable.php:53
+#: ../app/includes/pluggable.php:52
 #, php-format
 msgid "%s ago"
 msgstr ""
 
-#: ../app/includes/pluggable.php:74
+#: ../app/includes/pluggable.php:73
 msgid " and "
 msgstr ""
 
-#: ../app/includes/pluggable.php:89
+#: ../app/includes/pluggable.php:88
 #, php-format
 msgid "View all posts by %s"
 msgstr ""
 
-#: ../app/includes/pluggable.php:103
+#: ../app/includes/pluggable.php:102
 msgid "<span>Tags:</span> "
 msgstr ""
 
-#: ../app/includes/pluggable.php:121
+#: ../app/includes/pluggable.php:120
 msgid "0 <span>Comments</span>"
 msgstr ""
 
-#: ../app/includes/pluggable.php:121
+#: ../app/includes/pluggable.php:120
 msgid "1 <span>Comment</span>"
 msgstr ""
 
-#: ../app/includes/pluggable.php:121
+#: ../app/includes/pluggable.php:120
 msgid "% <span>Comment</span>"
 msgid_plural "% <span>Comments</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../app/includes/pluggable.php:121
+#: ../app/includes/pluggable.php:120
 msgid "<span>Closed</span>"
 msgstr ""
 
-#: ../app/includes/pluggable.php:153
+#: ../app/includes/pluggable.php:152
 msgid "Below Page Header"
 msgstr ""
 
-#: ../app/includes/pluggable.php:154
+#: ../app/includes/pluggable.php:153
 msgid "Just below the header."
 msgstr ""
 
-#: ../app/includes/pluggable.php:163
+#: ../app/includes/pluggable.php:162
 msgid "Left Sidebar"
 msgstr ""
 
-#: ../app/includes/pluggable.php:172
+#: ../app/includes/pluggable.php:171
 msgid "Right Sidebar"
 msgstr ""
 
-#: ../app/includes/pluggable.php:181
+#: ../app/includes/pluggable.php:180
 msgid "After Posts"
 msgstr ""
 
-#: ../app/includes/pluggable.php:182
+#: ../app/includes/pluggable.php:181
 msgid ""
 "On single blog post pages, following the post and preceeding the comments."
 msgstr ""
 
-#: ../app/includes/pluggable.php:191
+#: ../app/includes/pluggable.php:190
 msgid "Page Footer"
 msgstr ""
 
-#: ../app/includes/pluggable.php:192
+#: ../app/includes/pluggable.php:191
 msgid "At the bottom of the page."
 msgstr ""
 
-#: ../app/includes/pluggable.php:262 ../app/includes/pluggable.php:339
-msgid "Permanent Link to this Comment"
+#: ../app/includes/pluggable.php:240 ../app/includes/pluggable.php:305
+msgid "Permalink to this Comment"
 msgstr ""
 
-#: ../app/includes/pluggable.php:265 ../app/includes/pluggable.php:336
+#: ../app/includes/pluggable.php:243 ../app/includes/pluggable.php:302
 #, php-format
 msgid "%s ago."
 msgstr ""
 
 #. translators: 1: comment date, 2: comment time
-#: ../app/includes/pluggable.php:268 ../app/includes/pluggable.php:342
+#: ../app/includes/pluggable.php:246 ../app/includes/pluggable.php:308
 #, php-format
 msgid "%1$s at %2$s"
 msgstr ""
 
-#: ../app/includes/pluggable.php:277
+#: ../app/includes/pluggable.php:256
 msgid "Your comment is awaiting moderation."
 msgstr ""
 
-#: ../app/includes/pluggable.php:288 ../app/includes/pluggable.php:290
-#: ../app/includes/pluggable.php:350 ../blocks/k2-loop.php:22 ../image.php:63
+#: ../app/includes/pluggable.php:267 ../app/includes/pluggable.php:269
+#: ../app/includes/pluggable.php:315 ../blocks/k2-loop.php:22 ../image.php:63
 #: ../page-archives.php:46 ../page.php:40 ../single.php:37
 msgid "Edit"
 msgstr ""
 
-#. translators: 1: ping type, 2: datetime
-#: ../app/includes/pluggable.php:331
+#. translators: 1: comment type (Pingback or Trackback), 2: datetime
+#: ../app/includes/pluggable.php:297
 #, php-format
 msgid "%1$s on %2$s"
 msgstr ""
 
-#: ../app/includes/pluggable.php:332
-msgid "Comment"
-msgstr ""
-
-#: ../app/includes/pluggable.php:332
-msgid "Trackback"
-msgstr ""
-
-#: ../app/includes/pluggable.php:332
+#: ../app/includes/pluggable.php:298
 msgid "Pingback"
 msgstr ""
 
-#. translators: pingback/trackback date format (here: 'Month Xth, Year'), see http://php.net/date
-#: ../app/includes/pluggable.php:344
+#: ../app/includes/pluggable.php:298
+msgid "Trackback"
+msgstr ""
+
+#. translators: comment type (Pingback or Trackback) date format (example: Jul 1st, 2010), see http://php.net/date
+#: ../app/includes/pluggable.php:310
 msgid "M jS, Y"
 msgstr ""
 
@@ -551,10 +542,10 @@ msgstr ""
 
 #: ../blocks/k2-404.php:16
 msgid ""
-"Oh no! You're looking for something which just isn't here! Fear not however, "
-"errors are to be expected. Lucky for you, there are tools in the sidebar for "
-"you to use in your search for what you need, or you can browse the most "
-"recent posts, listed below."
+"Oh no! You&#8216;re looking for something which just isn&#8216;t here! Fear "
+"not however, errors are to be expected. Lucky for you, there are tools in "
+"the sidebar for you to use in your search for what you need, or you can "
+"browse the most recent posts, listed below."
 msgstr ""
 
 #: ../blocks/k2-404.php:18
@@ -590,9 +581,9 @@ msgstr ""
 msgid "%d queries. %s seconds."
 msgstr ""
 
-#: ../blocks/k2-loop.php:37 ../single.php:50
+#: ../blocks/k2-loop.php:37
 #, php-format
-msgid "Continue reading '%s'"
+msgid "Continue reading &#8216;%s&#8217;"
 msgstr ""
 
 #: ../blocks/k2-loop.php:41 ../page-archives.php:85 ../page.php:50
