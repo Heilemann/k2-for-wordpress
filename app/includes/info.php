@@ -66,16 +66,16 @@ function k2_init_advanced_navigation() {
 			content:	".content",
 			posts:		".content .post",
 			parent:		".primary",
-			pagetext:	"<?php /* translators: 1: current page, 2: total pages */ _e('of', 'k2'); ?>", // Page X of Y
-			older:		"<?php _e('Older', 'k2'); ?>",
-			newer:		"<?php _e('Newer', 'k2'); ?>",
-			loading:	"<?php _e('Loading', 'k2'); ?>",
+			pagetext:	"<?php /* translators: Page X of Y */ echo esc_js( __('of', 'k2') ); ?>",
+			older:		"<?php echo esc_js( __('Older', 'k2') ); ?>",
+			newer:		"<?php echo esc_js( __('Newer', 'k2') ); ?>",
+			loading:	"<?php echo esc_js( __('Loading', 'k2') ); ?>",
 			offsetTop:	50,
 			pagenumber:	<?php echo $rolling_state['curpage']; ?>,
 			pagecount:	<?php echo $rolling_state['maxpage']; ?>,
 			query:		<?php echo json_encode( $rolling_state['query'] ); ?>,
 			pagedates:	<?php echo json_encode( $rolling_state['pagedates'] ); ?>,
-			search:		"<?php esc_attr_e('Search','k2'); ?>"
+			search:		"<?php echo esc_js( __('Search','k2') ); ?>"
 		});
 
 		K2.LiveSearch	= new LiveSearch( RA.search || 'Search' );

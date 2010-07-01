@@ -13,7 +13,7 @@
 	</div>
 
 	<div class="entry-content">
-		<p><?php _e('Oh no! You\'re looking for something which just isn\'t here! Fear not however, errors are to be expected. Lucky for you, there are tools in the sidebar for you to use in your search for what you need, or you can browse the most recent posts, listed below.', 'k2'); ?></p>
+		<p><?php _e('Oh no! You&#8216;re looking for something which just isn&#8216;t here! Fear not however, errors are to be expected. Lucky for you, there are tools in the sidebar for you to use in your search for what you need, or you can browse the most recent posts, listed below.', 'k2'); ?></p>
 
 		<h4><?php _e('Most Recent Posts:', 'k2'); ?></h4>
 	    <ul>

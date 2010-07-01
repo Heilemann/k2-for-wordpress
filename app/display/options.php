@@ -116,7 +116,7 @@
 					?>
 					<div id="entry-<?php the_ID(); ?>" class="inside">
 						<div class="entry-header">
-							<h5 class="entry-title"><a href="#" rel="bookmark" title='<?php printf( __('Permanent Link to "%s"', 'k2'), esc_html(strip_tags(the_title('', '', false)), 1) ); ?>'><?php the_title(); ?></a></h5>
+							<h5 class="entry-title"><a href="#" rel="bookmark" title="<?php printf( esc_attr__( 'Permalink to %s', 'k2' ), the_title_attribute( 'echo=0' ) ); ?>"><?php the_title(); ?></a></h5>
 
 							<div class="entry-meta">
 								<?php k2_entry_meta(1); ?>

@@ -13,7 +13,6 @@
 // Prevent users from directly loading this include file
 defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly.', 'k2') );
 
-
 /**
  * Displays the current post meta.
  *
@@ -86,7 +85,7 @@ endif;
 if ( ! function_exists('k2_entry_author') ):
 	function k2_entry_author() {
 		return '<span class="vcard author entry-author"><a href="' . get_author_posts_url( get_the_author_meta('ID') ) .
-					'" class="url fn" title="' . sprintf( __('View all posts by %s', 'k2'), esc_attr( get_the_author() ) ) .
+					'" class="url fn" title="' . sprintf( esc_attr__('View all posts by %s', 'k2'), get_the_author() ) .
 					'">' . get_the_author() . '</a></span>';
 	}
 endif;
@@ -209,149 +208,117 @@ add_shortcode('entry_time', 'k2_entry_time');
 
 
 /**
- * Switch between displaying comments or ping-/trackbacks.
+ * Template for comments and pingbacks / trackbacks.
  *
- * @since 1.1
+ * To override this walker in a child theme without modifying the comments template
+ * simply create your own k2_comment_type_switch(), and that function will be used instead.
  *
- * @param object $comment Comment data object.
- * @param array $args
- * @param int $depth Depth of comment in reference to parents.
- */
-
-if ( ! function_exists('k2_comment_type_switch') ):
-	function k2_comment_type_switch($comment, $args = array(), $depth = 1) {
-		$GLOBALS['comment'] = $comment;
-
-		if ($comment->comment_type == ('pingback' || 'trackback')):
-			k2_ping_start_el($comment, $args, $depth);
-		else:
-			k2_comment_start_el($comment, $args, $depth);
-		endif;
-	}
-endif;
-
-
-/**
- * Displays current comment.
+ * Used as a callback by wp_list_comments() for displaying the comments.
  *
- * @since 1.0
+ * @since K2 1.1
  *
  * @param object $comment Comment data object.
  * @param array $args
  * @param int $depth Depth of comment in reference to parents.
  */
-if ( ! function_exists('k2_comment_start_el') ):
-	function k2_comment_start_el($comment, $args = array(), $depth = 1) {
-		$GLOBALS['comment'] = $comment;
 
-		extract($args, EXTR_SKIP);
-	?>
+if ( ! function_exists('k2_comment_type_switch') ) :
+	function k2_comment_type_switch( $comment, $args, $depth = 1 ) {
+		$GLOBALS['comment'] = $comment;
+		switch( $comment->comment_type ) :
+			case '' :
+		?>
 		<li id="comment-<?php comment_ID(); ?>">
 			<div <?php comment_class(); ?>>
-
 				<div class="comment-head">
-					<?php if ( get_option('show_avatars') ): ?>
-						<span class="gravatar">
-							<?php echo get_avatar( $comment, 32 ); ?>
-						</span>
-					<?php endif; ?>
-
+				<?php if ( get_option('show_avatars') ) : ?>
+					<span class="gravatar"><?php echo get_avatar( $comment, 32 ); ?></span>
+				<?php endif; ?>
 					<span class="comment-author"><?php comment_author_link(); ?></span>
 
 					<div class="comment-meta">
-						<a href="#comment-<?php comment_ID(); ?>" title="<?php _e('Permanent Link to this Comment', 'k2'); ?>">
-							<?php
-								if ( function_exists('time_since') ):
-									printf( __('%s ago.', 'k2'), time_since( abs( strtotime($comment->comment_date_gmt . ' GMT') ), time() ) );
-								else:
-									/* translators: 1: comment date, 2: comment time */
-									printf( __('%1$s at %2$s', 'k2'), get_comment_date(), get_comment_time() );
-								endif;
-							?>
+						<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>" title="<?php _e('Permanent Link to this Comment', 'k2'); ?>">
+						<?php
+						if ( function_exists('time_since') ):
+							printf( __('%s ago.', 'k2'), time_since( abs( strtotime($comment->comment_date_gmt . ' GMT') ), time() ) );
+						else :
+							/* translators: 1: comment date, 2: comment time */
+							printf( __('%1$s at %2$s', 'k2'), get_comment_date(), get_comment_time() );
+						endif;
+						?>
 						</a>
-					</div><!-- .comment-meta -->
-				</div><!-- .comment-head -->
+					</div> <!-- .comment-meta -->
+
+				</div> <!-- .comment-head -->
 
 				<div class="comment-content">
-					<?php if ( ! $comment->comment_approved ): ?>
+				<?php if ( $comment->comment_approved == '0' ): ?>
 					<p class="comment-moderation alert"><?php _e('Your comment is awaiting moderation.', 'k2'); ?></p>
-					<?php endif; ?>
+				<?php endif; ?>
 
 					<?php comment_text(); ?>
-				</div><!-- .comment-content -->
+				</div> <!-- .comment-content -->
 
 				<div class="buttons">
-					<?php if ( function_exists('quoter_comment') ): quoter_comment(); endif; ?>
+					<?php if ( function_exists('quoter_comment') ) quoter_comment(); ?>
 
 					<?php
-						if ( function_exists('jal_edit_comment_link') ):
-							jal_edit_comment_link(__('Edit', 'k2'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>');
-						else:
-							edit_comment_link(__('Edit', 'k2'), '<span class="comment-edit">', '</span>');
-						endif;
+					if ( function_exists('jal_edit_comment_link') ) :
+						jal_edit_comment_link(__('Edit', 'k2'), '<span class="comment-edit">','</span>', '<em>(Editing)</em>');
+					else :
+						edit_comment_link(__('Edit', 'k2'), '<span class="comment-edit">', '</span>');
+					endif;
 					?>
 
 					<div id="comment-reply-<?php comment_ID(); ?>" class="comment-reply">
 						<?php comment_reply_link(array_merge( $args, array('add_below' => 'comment-reply', 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
-					</div>
-				</div><!-- .buttons -->
+					</div> <!-- .comment-reply -->
 
-			</div><!-- comment -->
-	<?php
-	}
-endif;
+				</div> <!-- .buttons -->
 
-
-/**
- * Displays current pingback/trackback
- *
- * @since 1.0
- *
- * @param object $comment Comment data object.
- * @param array $args
- * @param int $depth Depth of comment in reference to parents.
- */
-if ( ! function_exists('k2_ping_start_el') ):
-	function k2_ping_start_el($comment, $args = array(), $depth = 1) {
-		$GLOBALS['comment'] = $comment;
-	?>
-
+			</div> <!-- .comment -->
+		<?php
+			break;
+			case 'pingback'  :
+			case 'trackback' :
+		?>
 		<li id="comment-<?php comment_ID(); ?>">
 			<div <?php comment_class(); ?>>
 
-				<?php if ( function_exists('comment_favicon') ): ?>
+				<?php if ( function_exists('comment_favicon') ) : ?>
 					<span class="favatar"><?php comment_favicon(); ?></span>
 				<?php endif; ?>
 
-				<span class="comment-author"><?php comment_author_link(); ?></span>
+					<span class="comment-author"><?php comment_author_link(); ?></span>
 
-				<div class="comment-meta">
-				<?php
-					/* translators: 1: ping type, 2: datetime */
+					<div class="comment-meta">
+					<?php
+					/* translators: 1: comment type (Pingback or Trackback), 2: datetime */
 					printf( __('%1$s on %2$s', 'k2'),
-						'<span class="pingtype">' . comment_type( __('Comment', 'k2'), __('Trackback', 'k2'), __('Pingback', 'k2') ) . '</span>',
-						sprintf('<a href="#comment-%1$s" title="%2$s">%3$s</a>',
-							get_comment_ID(),
-							(function_exists('time_since')?
-								sprintf( __('%s ago.', 'k2'),
+						( $comment->comment_type == 'pingback' ) ? '<span class="pingback">' . __('Pingback', 'k2') . '</span>' : '<span class="trackback">' . __('Trackback', 'k2') . '</span>',
+						sprintf('<a href="%1$s" title="%2$s">%3$s</a>',
+							esc_url( get_comment_link( $comment->comment_ID ) ),
+							(function_exists('time_since') ?
+								sprintf( esc_attr__('%s ago.', 'k2'),
 									time_since( abs( strtotime($comment->comment_date_gmt . " GMT") ), time() )
-								):
-								__('Permanent Link to this Comment', 'k2')
+								) :
+								esc_attr__('Permanent Link to this Comment', 'k2')
 							),
 							/* translators: 1: comment date, 2: comment time */
 							sprintf( __('%1$s at %2$s', 'k2'),
-								/* translators: pingback/trackback date format (here: 'Month Xth, Year'), see http://php.net/date */
+								/* translators: comment type (Pingback or Trackback) date format (example: Jul 1st, 2010), see http://php.net/date */
 								get_comment_date( __('M jS, Y', 'k2') ),
 								get_comment_time()
 							)
 						)
 					);
-
 						edit_comment_link( __('Edit', 'k2'), '<span class="comment-edit">', '</span>' );
-				?>
-				</div><!-- .comment-meta -->
+					?>
+					</div> <!-- .comment-meta -->
 
-			</div><!-- .comment -->
-	<?php
+			</div> <!-- .comment -->
+		<?php
+			break;
+		endswitch;
 	}
 endif;

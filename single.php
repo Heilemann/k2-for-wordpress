@@ -47,7 +47,7 @@ get_header(); ?>
 					<?php if ( function_exists('has_post_thumbnail') and has_post_thumbnail() ) : ?>
 						<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'medium', array( 'class' => 'alignleft' ) ); ?></a>
 					<?php endif; ?>
-					<?php the_content( sprintf( __('Continue reading \'%s\'', 'k2'), the_title('', '', false) ) ); ?>
+					<?php the_content(); ?>
 				</div><!-- .entry-content -->
 
 				<div class="entry-footer">
@@ -80,7 +80,7 @@ get_header(); ?>
 		</div><!-- .content -->
 
 
-		<?php /* Bottom Navigation */ k2_navigation('nav-below'); ?> 
+		<?php /* Bottom Navigation */ k2_navigation('nav-below'); ?>
 
 		<?php /* K2 Hook */ do_action('template_primary_end'); ?>
 

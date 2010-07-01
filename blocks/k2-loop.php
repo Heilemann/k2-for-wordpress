@@ -34,7 +34,7 @@ while ( have_posts() ): the_post(); ?>
 			<?php if ( function_exists('has_post_thumbnail') and has_post_thumbnail() ) : ?>
 				<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( array( 75, 75 ), array( 'class' => 'alignleft' ) ); ?></a>
 			<?php endif; ?>
-			<?php the_content( sprintf( __('Continue reading \'%s\'', 'k2'), the_title('', '', false) ) ); ?>
+			<?php the_content( sprintf( __('Continue reading &#8216;%s&#8217;', 'k2'), get_the_title() ) ); ?>
 		</div><!-- .entry-content -->
 
 		<div class="entry-footer">
@@ -51,4 +51,3 @@ while ( have_posts() ): the_post(); ?>
 	</div><!-- #entry-ID -->
 
 <?php endwhile; /* End The Loop */ ?>
-
