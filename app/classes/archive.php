@@ -97,7 +97,7 @@ class K2Archive {
 			$count_tags	= K2Archive::count('tag');
 
 			/* translators: 1: post count, 2: page count 3: comment count, 4: category count, 5: tag count */
-			printf( __('Currently the archives are spanning %1$s, %2$s and %3$s, contained within the meager confines of %4$s and %5$s.', 'k2'),
+			printf( '<p>' . __('Currently the archives are spanning %1$s, %2$s and %3$s, contained within the meager confines of %4$s and %5$s.', 'k2') . '</p>',
 				 $count_posts, $count_pages, $count_comments, $count_cats, $count_tags
 			);
 		} else {
