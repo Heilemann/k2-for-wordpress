@@ -7,20 +7,23 @@
  * @since K2 unknown
  */
 
+if ( is_page_template( 'page-archives.php' ) ) :
+
 /*
-Template Name: Archives (Do Not Use Manually)
+Template Name: Archives
 */
-?>
 
-<?php /* Counts the posts, comments and categories on your blog */
-	$numpostsarray	= wp_count_posts('post');
-	$numposts	= $numpostsarray->publish;
-	$numcommsarray	= wp_count_comments();
-	$numcomms	= $numcommsarray->approved;
-	$numcats 	= count(get_all_category_ids());
-?>
+/**
+ * Counts the posts, pages, comments, categories and tags on your site.
+ * see: app/classes/archive.php
+ */
+$count_posts	= K2Archive::count('post');
+$count_pages	= K2Archive::count('page');
+$count_comments	= K2Archive::count('comment');
+$count_cats	= K2Archive::count('category');
+$count_tags	= K2Archive::count('tag');
 
-<?php get_header(); ?>
+get_header(); ?>
 
 <div class="wrapper">
 
@@ -50,9 +53,9 @@ Template Name: Archives (Do Not Use Manually)
 
 				<div class="entry-content">
 
-					<p class="archivetext"><?php /* translators: 1: blog name, 2: post count, 3: comment count, 4: category count */
-						printf( __( 'This is the frontpage of the %1$s archives. Currently the archives are spanning %2$s posts and %3$s comments, contained within the meager confines of %4$s categories. Through here, you will be able to move down into the archives by way of time or category. If you are looking for something specific, perhaps you should try the search on the sidebar.', 'k2'),
-						get_bloginfo('name'), $numposts, $numcomms, $numcats );
+					<p class="archivetext"><?php /* translators: 1: blog name, 2: post count, 3: page count 4: comment count, 5: category count, 6: tag count */
+						printf( __('This is the frontpage of the %1$s archives. Currently the archives are spanning %2$s, %3$s and %4$s, contained within the meager confines of %5$s and %6$s. Through here, you will be able to move down into the archives by way of time or category. If you are looking for something specific, perhaps you should try the search on the sidebar.', 'k2'),
+						get_bloginfo('name'), $count_posts, $count_pages, $count_comments, $count_cats, $count_tags );
 					?></p>
 
 					<?php
@@ -109,3 +112,9 @@ Template Name: Archives (Do Not Use Manually)
 </div> <!-- .wrapper -->
 
 <?php get_footer(); ?>
+
+<?php else :
+
+	locate_template( array('page.php'), true );
+
+endif; ?>
