@@ -1,6 +1,6 @@
 <?php
 /**
- * This class holds all the code for creating, deleting and setting up the pre-made archives page.
+ * This class holds all the code for adding, deleting and setting up the pre-made archives page.
  *
  * @package WordPress
  * @subpackage K2
@@ -8,43 +8,55 @@
  */
 
 class K2Archive {
-	function install() {
+
+	/**
+	 * Get the page ID that uses template page-archives.php.
+	 *
+	 * @since K2 1.1
+	 */
+	function get_page_id() {
+		global $wpdb;
+
+		$page_id = $wpdb->get_var("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = 'page-archives.php' LIMIT 1");
+
+		return $page_id;
+	}
+
+	/**
+	 * Add the archives page.
+	 *
+	 * @since K2 1.1
+	 */
+	function add() {
 		if ( '1' == get_option('k2archives') ) {
-			K2Archive::create_archive();
+			$page_id = K2Archive::get_page_id();
+
+			if ( !$page_id ) {
+				$data = array(
+					'post_title' => __('Archives', 'k2'),
+					'post_name' => 'archives',
+					'post_status' => 'publish',
+					'post_type' => 'page',
+					'page_template' => 'page-archives.php',
+					'comment_status' => 'closed',
+					'ping_status' => 'closed'
+				);
+
+				wp_insert_post($data);
+			}
 		}
 	}
 
-	function create_archive() {
-		global $wpdb;
+	/**
+	 * Delete the archives page.
+	 *
+	 * @since K2 1.1
+	 */
+	function delete() {
+		$page_id = K2Archive::get_page_id();
 
-		$archives_id = $wpdb->get_var("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = 'page-archives.php' LIMIT 1");
-
-		if ( empty($archives_id) ) {
-			$archives_page = array();
-			$archives_page['post_content'] = __('Do not edit this page', 'k2');
-			$archives_page['post_excerpt'] = __('Do not edit this page', 'k2');
-			$archives_page['post_title'] = __('Archives', 'k2');
-			$archives_page['post_name'] = 'archivepage';
-			$archives_page['post_status'] = 'publish';
-			$archives_page['post_type'] = 'page';
-			$archives_page['page_template'] = 'page-archives.php';
-
-			// For WordPress 2.6+
-			if ( ! function_exists('get_page_templates') )
-				require_once(ABSPATH . 'wp-admin/includes/theme.php');
-
-			wp_insert_post($archives_page);
-		}
-	}
-
-	function delete_archive() {
-		global $wpdb;
-
-		$archives_id = $wpdb->get_var("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = 'page-archives.php' LIMIT 1");
-
-		if (!empty($archives_id)) {
-			wp_delete_post($archives_id);
-		}
+		if ( $page_id )
+			wp_delete_post($page_id, true);
 	}
 
 	/**
@@ -58,23 +70,23 @@ class K2Archive {
 		switch($type) :
 			case 'post' :
 				$posts = wp_count_posts('post');
-				$total = sprintf(_n('%d post', '%d posts', $posts->publish, 'k2'), number_format_i18n($posts->publish));
+				$total = sprintf( _n('%d post', '%d posts', $posts->publish, 'k2'), number_format_i18n($posts->publish) );
 				break;
 			case 'page' :
 				$pages = wp_count_posts('page');
-				$total = sprintf(_n('%d page', '%d pages', $pages->publish, 'k2'), number_format_i18n($pages->publish));
+				$total = sprintf( _n('%d page', '%d pages', $pages->publish, 'k2'), number_format_i18n($pages->publish) );
 				break;
 			case 'comment' :
 				$comments = wp_count_comments();
-				$total = sprintf(_n('%d comment', '%d comments', $comments->approved, 'k2'), number_format_i18n($comments->approved));
+				$total = sprintf( _n('%d comment', '%d comments', $comments->approved, 'k2'), number_format_i18n($comments->approved) );
 				break;
 			case 'category' :
 				$categories = wp_count_terms('category');
-				$total = sprintf(_n('%d category', '%d categories', $categories, 'k2'), number_format_i18n($categories));
+				$total = sprintf( _n('%d category', '%d categories', $categories, 'k2'), number_format_i18n($categories) );
 				break;
 			case 'tag' :
 				$tags = wp_count_terms('post_tag');
-				$total = sprintf(_n('%d tag', '%d tags', $tags, 'k2'), number_format_i18n($tags));
+				$total = sprintf( _n('%d tag', '%d tags', $tags, 'k2'), number_format_i18n($tags) );
 				break;
 		endswitch;
 
@@ -89,7 +101,7 @@ class K2Archive {
 	function excerpt($content) {
 		global $post;
 
-		if ((get_post_type() == 'page') && (get_post_meta($post->ID, '_wp_page_template', true) == 'page-archives.php')) {
+		if ( (get_post_type() == 'page') && (get_post_meta($post->ID, '_wp_page_template', true) == 'page-archives.php') ) {
 			$count_posts	= K2Archive::count('post');
 			$count_pages	= K2Archive::count('page');
 			$count_comments	= K2Archive::count('comment');
@@ -107,7 +119,6 @@ class K2Archive {
 
 }
 
-add_action('k2_install', array('K2Archive', 'install'));
-add_action('k2_uninstall', array('K2Archive', 'delete_archive'));
+add_action('k2_install', array('K2Archive', 'add'));
+add_action('k2_uninstall', array('K2Archive', 'delete'));
 add_filter('the_content', array('K2Archive', 'excerpt'));
-?>

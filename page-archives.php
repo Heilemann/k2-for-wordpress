@@ -10,7 +10,7 @@
 if ( is_page_template( 'page-archives.php' ) ) :
 
 /*
-Template Name: Archives
+Template Name: Archives (Do Not Use Manually)
 */
 
 /**

@@ -284,10 +284,10 @@ class K2 {
 		// Archives Page (thanks to Michael Hampton, http://www.ioerror.us/ for the assist)
 		if ( isset($_POST['k2']['archives']) ) {
 			update_option('k2archives', '1');
-			K2Archive::create_archive();
+			K2Archive::add();
 		} else {
 			update_option('k2archives', '0');
-			K2Archive::delete_archive();
+			K2Archive::delete();
 		}
 
 		// Top post meta
