@@ -81,11 +81,12 @@ class K2Archive {
 				$total = sprintf( _n('%d comment', '%d comments', $comments->approved, 'k2'), number_format_i18n($comments->approved) );
 				break;
 			case 'category' :
-				$categories = wp_count_terms('category');
+				//$categories = wp_count_terms('category', array('hide_empty' => true));
+				$categories = count(get_terms('category'));
 				$total = sprintf( _n('%d category', '%d categories', $categories, 'k2'), number_format_i18n($categories) );
 				break;
 			case 'tag' :
-				$tags = wp_count_terms('post_tag');
+				$tags = wp_count_terms('post_tag', array('hide_empty' => true));
 				$total = sprintf( _n('%d tag', '%d tags', $tags, 'k2'), number_format_i18n($tags) );
 				break;
 		endswitch;
