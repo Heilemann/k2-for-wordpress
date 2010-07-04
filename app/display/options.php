@@ -73,7 +73,7 @@
 
 
 			<li>
-				<label for="k2-debug"><?php _e('Minify & combine javascript', 'k2'); ?></label>
+				<label for="k2-debug"><?php _e('Minify & combine JavaScript', 'k2'); ?></label>
 
 				<input id="k2-debug" name="k2[debug]" type="checkbox" value="debugmode" <?php checked('1', get_option('k2optimjs')); ?> />
 			</li>
