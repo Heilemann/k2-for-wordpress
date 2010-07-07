@@ -14,11 +14,10 @@ defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
 <head profile="http://microformats.org/profile/specs http://microformats.org/profile/hatom">
-
-<title><?php wp_title('&laquo;', true, 'right'); ?><?php bloginfo('name'); ?></title>
-
 <meta http-equiv="content-type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 <meta name="template" content="K2 <?php k2info('version'); ?>" />
+
+<title><?php wp_title('&laquo;', true, 'right'); ?><?php bloginfo('name'); ?></title>
 
 <?php if ( get_option('k2usestyle') != 0 ): ?>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/style.css" />
