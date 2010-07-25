@@ -357,6 +357,7 @@ add_action( 'k2_uninstall', array('K2Header', 'uninstall') );
 add_action( 'k2_display_options', array('K2Header', 'display_options') );
 add_action( 'k2_update_options', array('K2Header', 'update_options') );
 
-
-add_action( 'wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'), 10, 2 );
-add_filter( 'wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'), 10, 2 );
+if ( is_admin() && ( 'custom-header' == $_GET['page'] ) ) {
+	add_action( 'wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'), 10, 2 );
+	add_filter( 'wp_create_file_in_uploads', array('K2Header', 'process_custom_header_image'), 10, 2 );
+}
