@@ -193,7 +193,14 @@ class K2 {
 	 * Adds K2 Options to Appearance menu, adds actions for head and scripts
 	 */
 	function add_options_menu() {
-		$page = add_theme_page( __('K2 Options', 'k2'), __('K2 Options', 'k2'), 'edit_themes', 'k2-options', array('K2', 'admin') );
+		global $wp_version;
+
+		// WP 3.0 new capability: edit_theme_options
+		if ( version_compare( $wp_version, '3.0', '>=' ) ) {
+			$page = add_theme_page( __('K2 Options', 'k2'), __('K2 Options', 'k2'), 'edit_theme_options', 'k2-options', array('K2', 'admin') );
+		} else {
+			$page = add_theme_page( __('K2 Options', 'k2'), __('K2 Options', 'k2'), 'edit_themes', 'k2-options', array('K2', 'admin') );
+		}
 
 		add_action( "admin_head-$page", array('K2', 'admin_head') );
 		add_action( "admin_print_scripts-$page", array('K2', 'admin_print_scripts') );
@@ -458,18 +465,6 @@ class K2 {
 	function enqueue_scripts() {
 		// Load our scripts
 		if ( ! is_admin() ) {
-			// We want to use the latest version of jQuery, but it may break something in
-			// the admin, so we only load it on the actual site.
-	        global $wp_scripts;
-
-	        if ( version_compare('1.4.2', $wp_scripts->registered['jquery']->ver) == 1 ) {
-				wp_deregister_script('jquery');
-
-				wp_register_script('jquery',
-					get_bloginfo('template_directory') . '/js/jquery.min.js',
-					false, '1.4.2');
-			}
-
 			wp_enqueue_script('k2functions');
 
 			if ( get_option('k2advnav') != '0' )
