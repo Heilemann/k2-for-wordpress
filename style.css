@@ -549,7 +549,8 @@ h4, h4 a, h4 a:hover, h4 a:visited {
 	text-decoration: none;
 	}
 
-.entry-meta {
+.entry-meta,
+.entry-meta .meta-prep {
 	font-size: 1em;
 	line-height: 1.6em;
 	color: #bbb;
@@ -676,8 +677,16 @@ body.attachment .attachment {
 .entry-content ol,
 .entry-content div,
 .entry-content blockquote {
-	margin: 13px 0;
+	margin: 0 0 13px;
 	}
+
+.format-aside p {
+	margin: 0;
+}
+
+.format-aside p + p {
+	margin: 13px 0 0;
+}
 
 .entry-content .map div { /* Google Maps Support */
 	margin: 0;

@@ -59,6 +59,8 @@ class K2 {
 			// This theme uses wp_nav_menu()
 			add_theme_support( 'nav-menus' );
 
+			// This theme supports Post Formats
+			add_theme_support( 'post-formats', array( 'aside' ) );
 		}
 
 		// This theme uses wp_nav_menu() in one location.
