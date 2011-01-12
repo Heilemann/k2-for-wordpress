@@ -17,13 +17,13 @@
 
 <?php /* K2 Hook */ do_action('template_before_footer'); ?>
 
-<div id="footer">
+<footer id="footer">
 
-	<?php locate_template( array('blocks/k2-footer.php'), true ); ?>
+	<?php get_template_part( 'blocks/k2-footer' ); ?>
 
 	<?php /* K2 Hook */ do_action('template_footer'); ?>
 
-</div><!-- #footer -->
+</footer><!-- #footer -->
 
 <?php wp_footer(); ?>
 

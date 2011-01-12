@@ -5,7 +5,7 @@
 	<?php the_content( sprintf( __('Continue reading &#8216;%s&#8217;', 'k2'), get_the_title() ) ); ?>
 </div><!-- .entry-content -->
 
-<div class="entry-footer">
+<footer class="entry-footer">
 	<div class="entry-meta">
 		<?php printf( __( '<span class="meta-prep">Published</span> <span class="entry-author"><span class="meta-prep">by</span> %1$s</span> <span class="entry-date"><span class="meta-prep">on</span> %2$s</span>', 'k2' ),
 			sprintf( '<span class="author vcard"><a class="url fn n" href="%1$s" title="%2$s">%3$s</a></span>',
@@ -25,4 +25,4 @@
 	</div>
 
 	<?php /* K2 Hook */ do_action('template_entry_foot'); ?>
-</div><!-- .entry-footer -->
+</footer><!-- .entry-footer -->

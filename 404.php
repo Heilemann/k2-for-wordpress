@@ -11,30 +11,27 @@ get_header(); ?>
 
 <div class="wrapper">
 
-	<?php if ( is_active_sidebar('widgets-top') ) : ?>
+	<?php if ( is_active_sidebar('widgets-top') ): ?>
 	<div id="widgets-top" class="widgets">
 		<?php dynamic_sidebar('widgets-top'); ?>
 	</div>
 	<?php endif; ?>
 
 	<div class="primary">
-		<a name="startcontent"></a>
-
 		<?php /* K2 Hook */ do_action('template_primary_begin'); ?>
 
-		<div class="content hfeed">
+		<div id="content" class="content">
 
 			<?php locate_template( array('blocks/k2-404.php'), true ); ?>
 
 		</div><!-- .content .hfeed -->
 
 		<?php /* K2 Hook */ do_action('template_primary_end'); ?>
-
 	</div><!-- .primary -->
 
 	<?php get_sidebar(); ?>
 
-	<?php if ( is_active_sidebar('widgets-bottom') ) : ?>
+	<?php if ( is_active_sidebar('widgets-bottom') ): ?>
 	<div id="widgets-bottom" class="widgets">
 		<?php dynamic_sidebar('widgets-bottom'); ?>
 	</div>

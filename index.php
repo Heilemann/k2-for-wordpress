@@ -10,7 +10,7 @@
  *
  * @package WordPress
  * @subpackage K2
- * @since K2 unknown
+ * @since K2 1.0
  */
 
 get_header(); ?>
@@ -24,19 +24,12 @@ get_header(); ?>
 	<?php endif; ?>
 
 	<div class="primary">
-		<a name="startcontent"></a>
 
 		<?php /* K2 Hook */ do_action('template_primary_begin'); ?>
 
-		<?php /* Top Navigation */ k2_navigation('nav-above'); ?>
-
-		<div class="content hfeed">
-
-			<?php include(TEMPLATEPATH . '/app/display/theloop.php'); ?>
-
+		<div id="content" class="content">
+			<?php get_template_part('blocks/k2-loop'); ?>
 		</div> <!-- .content -->
-
-		<?php /* Bottom Navigation */ k2_navigation('nav-below'); ?>
 
 		<?php /* K2 Hook */ do_action('template_primary_end'); ?>
 

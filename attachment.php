@@ -18,11 +18,9 @@ get_header(); ?>
 	<?php endif; ?>
 
 	<div class="primary">
-		<a name="startcontent"></a>
+		<div id="content" class="content">
 
-		<div class="content hfeed">
-
-		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+		<?php if ( have_posts()) : while (have_posts()) : the_post(); ?>
 
 			<?php if ( ! empty($post->post_parent) ): ?>
 			<div class="navigation">

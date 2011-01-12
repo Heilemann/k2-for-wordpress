@@ -151,48 +151,48 @@ if ( ! function_exists('k2_register_sidebars') ):
 		        'id' 		=>	'widgets-top',
 		        'name'		=>	__('Below Page Header', 'k2'),
 		        'description'	=>	__('Just below the header.', 'k2'),
-		        'before_widget'	=>	'<div><div id="%1$s" class="widget %2$s">', // <span>'s is used for horizontal sizing, <div> for padding
-		        'after_widget'	=>	'</div></div>',
-		        'before_title'	=>	'<h4 class="widgettitle">',
-		        'after_title'	=>	'</h4>'
+		        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
+		        'after_widget'	=>	'</aside>',
+		        'before_title'	=>	'<h1 class="widget-title">',
+		        'after_title'	=>	'</h1>'
 		    ));
 
 		    register_sidebar(array(
 		        'id'		=>	'widgets-sidebar-1',
-		        'name'		=>	__('Left Sidebar', 'k2'),
-		        'before_widget'	=>	'<div id="%1$s" class="widget %2$s">',
-		        'after_widget'	=>	'</div>',
-		        'before_title'	=>	'<h4 class="widgettitle">',
-		        'after_title'	=>	'</h4>'
+		        'name'		=>	__('Sidebar 1', 'k2'),
+		        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
+		        'after_widget'	=>	'</aside>',
+		        'before_title'	=>	'<h1 class="widget-title">',
+		        'after_title'	=>	'</h1>'
 		    ));
 
 		    register_sidebar(array(
 		        'id'		=>	'widgets-sidebar-2',
-		        'name'		=>	__('Right Sidebar', 'k2'),
-		        'before_widget'	=>	'<div id="%1$s" class="widget %2$s">',
-		        'after_widget'	=>	'</div>',
-		        'before_title'	=>	'<h4 class="widgettitle">',
-		        'after_title'	=>	'</h4>'
+		        'name'		=>	__('Sidebar 2', 'k2'),
+		        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
+		        'after_widget'	=>	'</aside>',
+		        'before_title'	=>	'<h1 class="widget-title">',
+		        'after_title'	=>	'</h1>'
 		    ));
 
 		    register_sidebar(array(
-		        'id' 		=>	'widgetspost',
+		        'id' 		=>	'widgets-post',
 		        'name'		=>	__('After Posts', 'k2'),
 		        'description'	=>	__('On single blog post pages, following the post and preceeding the comments.', 'k2'),
-		        'before_widget'	=>	'<div id="%1$s" class="widget %2$s">',
-		        'after_widget'	=>	'</div>',
-		        'before_title'	=>	'<h4 class="widgettitle">',
-		        'after_title'	=>	'</h4>'
+		        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
+		        'after_widget'	=>	'</aside>',
+		        'before_title'	=>	'<h1 class="widget-title">',
+		        'after_title'	=>	'</h1>'
 		    ));
 
 		    register_sidebar(array(
 		        'id' 		=>	'widgets-bottom',
 		        'name'		=>	__('Page Footer', 'k2'),
 		        'description'	=>	__('At the bottom of the page.', 'k2'),
-		        'before_widget'	=>	'<div id="%1$s" class="widget %2$s">',
-		        'after_widget'	=>	'</div>',
-		        'before_title'	=>	'<h4 class="widgettitle">',
-		        'after_title'	=>	'</h4>'
+		        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
+		        'after_widget'	=>	'</aside>',
+		        'before_title'	=>	'<h1 class="widget-title">',
+		        'after_title'	=>	'</h1>'
 		    ));
 		}
 	}

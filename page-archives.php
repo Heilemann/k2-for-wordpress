@@ -34,22 +34,16 @@ get_header(); ?>
 	<?php endif; ?>
 
 	<div class="primary">
-		<a name="startcontent"></a>
-
-		<div class="content hfeed">
+		<div id="content" class="content">
 
 			<?php the_post(); ?>
 
-			<div id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<div class="entry-header">
-					<h1 class="entry-title">
-						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
-					</h1>
-
-					<?php /* Edit Link */ edit_post_link(__('Edit', 'k2'), '<span class="entry-edit">', '</span>'); ?>
+			<article id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<header class="entry-header">
+					<h1 class="entry-title"><?php the_title(); ?></h1>
 
 					<?php /* K2 Hook */ do_action('template_entry_head'); ?>
-				</div> <!-- .entry-header -->
+				</header> <!-- .entry-header -->
 
 				<div class="entry-content">
 
@@ -84,12 +78,12 @@ get_header(); ?>
 
 				</div> <!-- .entry-content -->
 
-				<div class="entry-footer">
+				<footer class="entry-footer">
 					<?php wp_link_pages( array('before' => '<div class="entry-pages"><span>' . __('Pages:', 'k2') . '</span>', 'after' => '</div>' ) ); ?>
 
 					<?php /* K2 Hook */ do_action('template_entry_foot'); ?>
-				</div> <!-- .entry-footer -->
-			</div> <!-- #entry-ID -->
+				</footer> <!-- .entry-footer -->
+			</article> <!-- #entry-ID -->
 
 			<?php if ( get_post_custom_values('comments') ): ?>
 			<div class="comments">

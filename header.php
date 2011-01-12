@@ -9,15 +9,15 @@
 
 // Prevent users from directly loading this theme file
 defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly.', 'k2') );
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
-<head profile="http://microformats.org/profile/specs http://microformats.org/profile/hatom">
-<meta http-equiv="content-type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
+?><!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+<meta charset="<?php bloginfo( 'charset' ); ?>" />
 <meta name="template" content="K2 <?php k2info('version'); ?>" />
 
 <title><?php wp_title('&laquo;', true, 'right'); ?><?php bloginfo('name'); ?></title>
+
+<link rel="profile" href="http://gmpg.org/xfn/11" />
 
 <?php if ( get_option('k2usestyle') != 0 ): ?>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/style.css" />
@@ -33,6 +33,10 @@ defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly
 
 <?php wp_get_archives('type=monthly&format=link'); ?>
 
+<!--[if lt IE 9]>
+<script src="<?php bloginfo( 'template_directory' ); ?>/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+
 <?php wp_head(); ?>
 </head>
 
@@ -40,17 +44,17 @@ defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly
 
 <?php /* K2 Hook */ do_action('template_body_top'); ?>
 
-<div id="page">
+<div id="page" class="hfeed">
 
 	<?php /* K2 Hook */ do_action('template_before_header'); ?>
 
-	<div id="header">
+	<header id="header">
 
-		<?php locate_template( array('blocks/k2-header.php'), true ); ?>
+		<?php get_template_part( 'blocks/k2-header' ); ?>
 
 		<?php /* K2 Hook */ do_action('template_header'); ?>
 
-	</div> <!-- #header -->
+	</header> <!-- #header -->
 
 	<hr />
 

@@ -363,8 +363,7 @@ class K2 {
 			// Send the header
 			header('Content-Type: ' . get_bloginfo('html_type') . '; charset=' . get_bloginfo('charset'));
 
-			// Include the content
-			include(TEMPLATEPATH . '/app/display/theloop.php');
+			get_template_part('blocks/k2-loop');
 
 			if ( 'init' == $k2dynamic ) {
 				$rolling_state = k2_get_rolling_archives_state();

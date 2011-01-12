@@ -4,7 +4,7 @@
  *
  * @package WordPress
  * @subpackage K2
- * @since K2 unknown
+ * @since K2 1.0
  */
 
 get_header(); ?>
@@ -18,69 +18,41 @@ get_header(); ?>
 	<?php endif; ?>
 
 	<div class="primary">
-		<a name="startcontent"></a>
-
 		<?php /* K2 Hook */ do_action('template_primary_begin'); ?>
 
-		<?php /* Top Navigation */ k2_navigation('nav-above'); ?>
+		<div id="content" class="content">
 
-		<div class="content hfeed">
+		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+			<nav id="nav-above" class="navigation">
+				<h1 class="section-heading"><?php _e( 'Post navigation', 'k2' ); ?></h1>
+				<div class="nav-previous"><?php previous_post_link( '%link', '<span class="meta-nav">&laquo;</span> %title' ); ?></div>
+				<div class="nav-next"><?php next_post_link( '%link', '%title <span class="meta-nav">&raquo;</span>' ); ?></div>
+			</nav><!-- #nav-above -->
 
-			<div id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<div class="entry-header">
-					<h1 class="entry-title">
-						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
-					</h1>
+			<article id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<?php get_template_part('blocks/k2-post' , function_exists('get_post_format') ? get_post_format( $post->ID ) : '' ); ?>
+			</article><!-- #entry-ID -->
 
-					<?php /* Edit Link */ edit_post_link( __('Edit', 'k2'), '<span class="entry-edit">', '</span>' ); ?>
-
-					<div class="entry-meta">
-						<?php k2_entry_meta(1); ?>
-					</div> <!-- .entry-meta -->
-
-					<?php /* K2 Hook */ do_action('template_entry_head'); ?>
-				</div><!-- .entry-header -->
-
-				<div class="entry-content">
-					<?php if ( function_exists('has_post_thumbnail') and has_post_thumbnail() ) : ?>
-						<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'medium', array( 'class' => 'alignleft' ) ); ?></a>
-					<?php endif; ?>
-					<?php the_content(); ?>
-				</div><!-- .entry-content -->
-
-				<div class="entry-footer">
-					<?php wp_link_pages( array('before' => '<div class="entry-pages"><span>' . __('Pages:', 'k2') . '</span>', 'after' => '</div>' ) ); ?>
-
-					<div class="entry-meta">
-						<?php k2_entry_meta(2); ?>
-					</div><!-- .entry-meta -->
-
-					<?php /* K2 Hook */ do_action('template_entry_foot'); ?>
-				</div><!-- .entry-footer -->
-			</div><!-- #entry-ID -->
-
-
+			<?php if ( is_active_sidebar('widgets-post') ): ?>
 			<div id="widgetspost" class="widgets">
-				<?php dynamic_sidebar('widgetspost'); ?>
+				<?php dynamic_sidebar('widgets-post'); ?>
 			</div>
+			<?php endif; ?>
 
+			<nav id="nav-below" class="navigation">
+				<h1 class="section-heading"><?php _e( 'Post navigation', 'k2' ); ?></h1>
+				<div class="nav-previous"><?php previous_post_link( '%link', '<span class="meta-nav">&laquo;</span> %title' ); ?></div>
+				<div class="nav-next"><?php next_post_link( '%link', '%title <span class="meta-nav">&raquo;</span>' ); ?></div>
+			</nav><!-- #nav-above -->
 
 			<div class="comments">
 				<?php comments_template(); ?>
 			</div><!-- .comments -->
 
-		<?php endwhile; else: define('K2_NOT_FOUND', true); ?>
-
-			<?php locate_template( array('blocks/k2-404.php'), true ); ?>
-
-		<?php endif; ?>
+		<?php endwhile; else: get_template_part( 'blocks/k2-404' ); endif; ?>
 
 		</div><!-- .content -->
-
-
-		<?php /* Bottom Navigation */ k2_navigation('nav-below'); ?>
 
 		<?php /* K2 Hook */ do_action('template_primary_end'); ?>
 

@@ -9,7 +9,7 @@
  *
  * @package WordPress
  * @subpackage K2
- * @since K2 unknown
+ * @since K2 1.0
  */
 
 get_header(); ?>
@@ -23,34 +23,28 @@ get_header(); ?>
 	<?php endif; ?>
 
 	<div class="primary">
-		<a name="startcontent"></a>
-
 		<?php /* K2 Hook */ do_action('template_primary_begin'); ?>
 
-		<div class="content hfeed">
+		<div id="content" class="content">
 
-		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+			<?php the_post(); ?>
 
-			<div id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<div class="entry-header">
-					<h1 class="entry-title">
-						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
-					</h1>
-
-					<?php /* Edit Link */ edit_post_link(__('Edit', 'k2'), '<span class="entry-edit">', '</span>'); ?>
+			<article id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<header class="entry-header">
+					<h1 class="entry-title"><?php the_title(); ?></h1>
 
 					<?php /* K2 Hook */ do_action('template_entry_head'); ?>
-				</div><!-- .entry-header -->
+				</header><!-- .entry-header -->
 
 				<div class="entry-content">
 					<?php the_content(); ?>
 				</div><!-- .entry-content -->
 
-				<div class="entry-footer">
+				<footer class="entry-footer">
 					<?php wp_link_pages( array('before' => '<div class="entry-pages"><span>' . __('Pages:', 'k2') . '</span>', 'after' => '</div>' ) ); ?>
 
 					<?php /* K2 Hook */ do_action('template_entry_foot'); ?>
-				</div><!-- .entry-footer -->
+				</footer><!-- .entry-footer -->
 			</div><!-- #entry-ID -->
 
 			<?php if ( comments_open() ): ?>
@@ -59,16 +53,9 @@ get_header(); ?>
 			</div><!-- .comments -->
 			<?php endif; ?>
 
-		<?php endwhile; else: define('K2_NOT_FOUND', true); ?>
-
-			<?php locate_template( array('blocks/k2-404.php'), true ); ?>
-
-		<?php endif; ?>
-
 		</div><!-- .content -->
 
 		<?php /* K2 Hook */ do_action('template_primary_end'); ?>
-
 	</div><!-- .primary -->
 
 	<?php if ( ! get_post_custom_values('sidebarless') ) get_sidebar(); ?>
