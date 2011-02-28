@@ -45,7 +45,7 @@ get_header(); ?>
 
 					<?php /* K2 Hook */ do_action('template_entry_foot'); ?>
 				</footer><!-- .entry-footer -->
-			</div><!-- #entry-ID -->
+			</article><!-- #entry-ID -->
 
 			<?php if ( comments_open() ): ?>
 			<div class="comments">
