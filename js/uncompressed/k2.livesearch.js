@@ -108,7 +108,7 @@ LiveSearch.prototype.doSearch = function(self) {
 
 	jQuery.bbq.pushState( 'search=' + self.searchField.val() ); // Update the hash/fragment
 
-	K2.ajaxGet(self.searchform.serialize() + '&k2dynamic=init',
+	K2.ajaxGet(self.searchForm.serialize() + '&k2dynamic=init',
 		function(data) {
 			jQuery('.content').html(data);
 
