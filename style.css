@@ -335,14 +335,14 @@ body.home.onepageonly.rollingarchives .primary { /* No RA, so back to 10px */
 	width: 100%;
 	}
 
-#widgets-top > div,
-#widgets-bottom > div {
+#widgets-top > .widget,
+#widgets-bottom > .widget {
 	display: inline-block;
 	float: left;
 	}
 
-body.columns-one #widgets-top > div,
-body.columns-one #widgets-bottom > div {
+body.columns-one #widgets-top > .widget,
+body.columns-one #widgets-bottom > .widget {
 	width: 33%;
 	}
 
@@ -351,8 +351,8 @@ body.columns-two #widgets-bottom > span {
 	width: 25%;
 	}
 
-body.columns-three #widgets-top > div,
-body.columns-three #widgets-bottom > div {
+body.columns-three #widgets-top > .widget,
+body.columns-three #widgets-bottom > .widget {
 	width: 20%;
 	}
 
@@ -368,7 +368,7 @@ body.columns-three #widgets-bottom > div {
 	width: 100%;
 	}
 
-#widgetspost > div {
+#widgetspost > .widget {
 	display: inline-block;
 	float: left;
 	width: 50%;
@@ -465,6 +465,12 @@ body.page .content .entry-title {
 	text-align: center;
 	}
 
+.entry-content h2 {
+	font-size: 2.0em;
+	font-weight: normal;
+	margin-top: 25px;
+	}
+
 .entry-content h3 {
 	font-size: 1.8em;
 	font-weight: normal;
@@ -481,6 +487,10 @@ body.page .content .entry-title {
 .entry-header {
 	position: relative;
 	}
+
+body.page .entry-header {
+	margin-bottom: 20px;
+}
 
 body.page .entry-content h3 {
 	font-size: 1.7em;
@@ -624,7 +634,7 @@ abbr.entry-date {
 	display: block;
 	}
 
-div.comment-reply {
+.comment-reply {
 	display: inline;
 	}
 
@@ -675,7 +685,7 @@ a#cancel-comment-reply-link:hover,
 	text-decoration: none;
 	}
 
-div.quoter_page_container {
+.quoter_page_container {
 	margin: 5px 0;
 	display: none; /* Hidden because it's not too nice an implementation */
 	}
@@ -691,8 +701,13 @@ div.quoter_page_container {
 body.attachment .attachment {
 	position: relative;
 	margin: 0 0 20px;
-	padding: 5px 10px;
+	clear: left;
 	}
+
+.format-aside {
+	padding: 5px 10px;
+	background: #f8f8f8;
+}
 
 .entry-content {
 	font-size: 1.2em;
@@ -942,7 +957,7 @@ body.attachment .attachment {
 	background: #f6f6f6;
 	}
 
-.bypostauthor > div.comment blockquote {
+.bypostauthor > .comment blockquote {
 	color: #333;
 	background: url('images/quote.png') no-repeat 10px 0;
 	}
@@ -1086,6 +1101,10 @@ input[type=text]:focus, textarea:focus {
 	background: #333;
 	color: #fff;
 	text-decoration: none !important;
+	}
+
+body.admin-bar #footer .siteadmin a {
+	display: none;
 	}
 
 #footer .wp-version,
@@ -1370,9 +1389,14 @@ input[type=text], textarea {
 	width: 18px;
 	}
 
-.smartposition #searchreset,
-.smartposition #searchload {
+body.smartposition #searchreset,
+body.smartposition #searchload {
 	top: 14px;
+}
+
+body.smartposition.admin-bar #searchreset,
+body.smartposition.admin-bar #searchload {
+	top: 42px;
 }
 
 #searchreset {
@@ -1414,7 +1438,7 @@ body.flankingsidebars.columns-three #widgets-sidebar-1 {
 	}
 
 /* Webkit doesn't retain the position of the left-shifted searchform properly */
-body.flankingsidebars.webkit.smartposition #widgets-sidebar-1 div.widget_search:first-child #searchform {
+body.flankingsidebars.webkit.smartposition #widgets-sidebar-1 .widget_search:first-child #searchform {
 	margin-left: -520px;
 	}
 
@@ -1446,7 +1470,8 @@ body.flankingsidebars.columns-three #rollingarchivesbg {
 }
 
 .navigation {
-	padding: 0 10px;
+	float: left;
+	width: 100%;
 }
 
 body.showrollingarchives .navigation {
@@ -1476,7 +1501,7 @@ body.livesearchactive.ie7 { /* Thanks IE7 */
 	float: left;
 	width: 45%;
 	text-align: left;
-	padding: 5px 5% 15px 0;
+	padding: 5px 2.5% 10px 0;
 	}
 
 .navigation .nav-next,
@@ -1484,7 +1509,7 @@ body.livesearchactive.ie7 { /* Thanks IE7 */
 	float: right;
 	width: 45%;
 	text-align: right;
-	padding: 6px 0 10px 5%;
+	padding: 5px 0 10px 2.5%;
 	}
 
 .navigation a {
@@ -1493,7 +1518,6 @@ body.livesearchactive.ie7 { /* Thanks IE7 */
 
 #rollingarchives { /* AJAX-powered navigation hub */
 	position: relative;
-	top: 0;
 	display: block;
 	width: 500px;
 	border-bottom: none;
@@ -1526,25 +1550,40 @@ body.smartposition #rollingarchivesbg {
 body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS when .content passes the top of the window */
 	position: fixed;
 	z-index: 50;
+	top: 0;
 	}
 
-body.smartposition #widgets-sidebar-1 div.widget_search:first-child #searchform,
-body.smartposition #widgets-sidebar-2 div.widget_search:first-child #searchform { /* Fix search to top of window when scrolling past, if it is the first widget on the sidebar */
+body.smartposition.admin-bar #rollingarchivesbg,
+body.smartposition.admin-bar #rollingarchives {
+	top: 28px;
+}
+
+body.smartposition #widgets-sidebar-1 .widget_search:first-child #searchform,
+body.smartposition #widgets-sidebar-2 .widget_search:first-child #searchform { /* Fix search to top of window when scrolling past, if it is the first widget on the sidebar */
 	position: fixed;
 	top: 0;
 	z-index: 50;
 	padding-top: 12px;
-}
+	}
 
+body.smartposition.admin-bar #widgets-sidebar-1 .widget_search:first-child #searchform,
+body.smartposition.admin-bar #widgets-sidebar-2 .widget_search:first-child #searchform {
+	top: 28px;
+	}
 
 body.smartposition .primary { /* When scrolling past content top, adjust for fixing RA interface to top of screen */
 	padding-top: 45px !important;
 	}
 
-body.smartposition #widgets-sidebar-1 div.widget_search:first-child,
-body.smartposition #widgets-sidebar-2 div.widget_search:first-child {
+body.smartposition #widgets-sidebar-1 .widget_search:first-child,
+body.smartposition #widgets-sidebar-2 .widget_search:first-child {
 	padding-top: 24px;
-}
+	}
+
+body.smartposition.admin-bar #widgets-sidebar-1 .widget_search:first-child,
+body.smartposition.admin-bar #widgets-sidebar-2 .widget_search:first-child {
+	padding-top: 52px;
+	}
 
 body.smartposition .content.onepageonly { /* If there is only a single page, remove space at top of page */
 	padding-top: 0;
@@ -1796,7 +1835,7 @@ body.onepageonly .content { /* For the rare case of having only one page of cont
 	font-size: 1.1em;
 	}
 
-div#latest-comments small {
+#latest-comments small {
 	display: block;
 	margin: 0;
 	font-weight: normal;
@@ -1860,7 +1899,7 @@ div#latest-comments small {
 
 /* GeoPress Fix */
 
-.entry-content div.mapstraction {
+.entry-content .mapstraction {
 	margin: 0;
 	}
 
