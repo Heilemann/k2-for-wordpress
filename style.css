@@ -755,25 +755,39 @@ body.attachment .attachment {
 */
 
 .gallery {
-	padding-left: 25px;
 }
 
 .gallery-item {
 	float: left;
+	margin-bottom: 1em;
+	position: relative;
 }
 
-.gallery-item dt {
-	margin: 0px;	
+.gallery-cols-3 .gallery-item {
+	width: 30%;
+	margin-right: 5%;
 }
 
-.gallery-item dt a {
-	float: left;
-	line-height: 0;
+.gallery-cols-3 .last {
+	margin-right: 0;
 }
 
-.gallery-item dd {
-	display: none;
+.gallery-item figcaption {
+	color: #ccc;
+	background: #333;
+	background: rgba(0, 0, 0, 0.6);
+	position: absolute;
+	bottom: 0;
+	padding: 4px 8px;
+	line-height: 1.5;
+	/*visibility: hidden;*/
 }
+
+/*
+.gallery-item:hover figcaption {
+	visibility: visible;
+}
+*/
 
 .gallery:after {
     content: ".";

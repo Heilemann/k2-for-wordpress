@@ -29,9 +29,9 @@ function k2_gallery_shortcode($attr) {
 		'order'      => 'ASC',
 		'orderby'    => 'menu_order ID',
 		'id'         => $post->ID,
-		'itemtag'    => 'dl',
-		'icontag'    => 'dt',
-		'captiontag' => 'dd',
+		'itemtag'    => 'figure',
+		'icontag'    => '',
+		'captiontag' => 'figcaption',
 		'columns'    => 3,
 		'size'       => 'thumbnail',
 		'include'    => '',
@@ -75,7 +75,7 @@ function k2_gallery_shortcode($attr) {
 
 	$selector = "gallery-{$instance}";
 
-	$output = "<div id='$selector' class='gallery galleryid-{$id}'>\n";
+	$output = "<div id='$selector' class='gallery galleryid-{$id} gallery-cols-{$columns}'>\n";
 
 	$i = 0;
 	foreach ( $attachments as $id => $attachment ) {
