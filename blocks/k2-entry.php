@@ -1,5 +1,8 @@
 <header class="entry-header">
-	<?php k2_entry_meta('aside-above'); ?>
+	<h1 class="entry-title">
+		<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php k2_permalink_title(); ?>"><?php the_title(); ?></a>
+	</h1>
+	<?php /* Edit Link */ edit_post_link( __('Edit', 'k2'), '<span class="entry-edit">', '</span>' ); ?>
 	<?php /* K2 Hook */ do_action('template_entry_head'); ?>
 </header><!-- .entry-header -->
 
@@ -11,6 +14,6 @@
 </div><!-- .entry-content -->
 
 <footer class="entry-footer">
-	<?php k2_entry_meta('aside-below'); ?>
+	<?php wp_link_pages( array('before' => '<div class="entry-pages"><span>' . __('Pages:', 'k2') . '</span>', 'after' => '</div>' ) ); ?>
 	<?php /* K2 Hook */ do_action('template_entry_foot'); ?>
 </footer><!-- .entry-footer -->

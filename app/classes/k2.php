@@ -21,11 +21,11 @@ class K2 {
 		global $wp_version;
 
 		// Load required classes and includes
-		require_once(TEMPLATEPATH . '/app/classes/archive.php');
 		require_once(TEMPLATEPATH . '/app/includes/info.php');
 		require_once(TEMPLATEPATH . '/app/includes/display.php');
 		require_once(TEMPLATEPATH . '/app/includes/media.php');
 		require_once(TEMPLATEPATH . '/app/includes/widgets.php');
+		require_once(TEMPLATEPATH . '/app/includes/pluggable.php');
 
 		if ( defined('K2_HEADERS') and K2_HEADERS == true )
 			require_once(TEMPLATEPATH . '/app/classes/header.php');
@@ -41,45 +41,30 @@ class K2 {
 		// Register our scripts with script loader
 		K2::register_scripts();
 
-		// There may be some things we need to do before K2 is initialised
-		// Let's do them now
-		do_action('k2_init');
+		// This theme uses post thumbnails
+		add_theme_support( 'post-thumbnails' );
 
-		// Finally load pluggable & deprecated functions
-		require_once(TEMPLATEPATH . '/app/includes/pluggable.php');
-		include_once(TEMPLATEPATH . '/app/includes/deprecated.php');
+		// This theme uses wp_nav_menu()
+		add_theme_support( 'nav-menus' );
 
-		// Register our sidebars with widgets
-		k2_register_sidebars();
-
-		if ( function_exists( 'add_theme_support' ) ) {
-			// This theme uses post thumbnails
-			add_theme_support( 'post-thumbnails' );
-
-			// This theme uses wp_nav_menu()
-			add_theme_support( 'nav-menus' );
-
-			// This theme supports Post Formats
-			add_theme_support( 'post-formats', array( 'aside' ) );
-		}
-
-		// This theme uses wp_nav_menu() in one location.
-		if ( function_exists('register_nav_menus') ) {
-			register_nav_menus( array(
-				'header' => __( 'Header Menu', 'k2' ),
-			) );
-		}
+		// This theme supports Post Formats
+		add_theme_support( 'post-formats', array( 'aside' ) );
 
 		// Add default posts and comments RSS feed links to head
-		if ( version_compare( $wp_version, '3.0', '>=' ) ) {
-			add_theme_support( 'automatic-feed-links' );
-		} else {
-			automatic_feed_links();
-		}
+		add_theme_support( 'automatic-feed-links' );
 
 		// This theme allows users to set a custom background
 		if ( function_exists('add_custom_background') )
 			add_custom_background();
+
+		// This theme uses wp_nav_menu() in one location.
+		register_nav_menus( array(
+			'header' => __( 'Header Menu', 'k2' ),
+		) );
+
+		// There may be some things we need to do before K2 is initialised
+		// Let's do them now
+		do_action('k2_init');
 	}
 
 
@@ -98,10 +83,12 @@ class K2 {
 		$defaultjs = "// Lightbox v2.03.3 - Adds new images to lightbox\nif (typeof myLightbox != 'undefined' && myLightbox instanceof Lightbox && myLightbox.updateImageList) {\n\tmyLightbox.updateImageList();\n}\n";
 		add_option( 'k2ajaxdonejs', $defaultjs );
 
-		add_option( 'k2archives', '0' );
-
-		add_option( 'k2entrymeta1', __('Published by %author% on %date% in %categories%. %comments% %tags%', 'k2') );
-		add_option( 'k2entrymeta2', '' );
+		add_option( 'k2postmeta', array(
+			'standard-above' => __('Published by %author% on %date% in %categories%. %comments% %tags%', 'k2'),
+			'standard-below' => '',
+			'aside-above' => '',
+			'aside-below' => __('Published by %author% on %date%. %comments%', 'k2')
+		) );
 
 		// Call the install handlers
 		do_action('k2_install');
@@ -118,15 +105,26 @@ class K2 {
 		// Install options
 		K2::install();
 
+
+		// Update the post meta options
+		$postmeta = get_option( 'k2postmeta' );
+
+		if ( $entrymeta1 = get_option( 'k2entrymeta1' ) )
+			$postmeta['standard-above'] = $entrymeta1;
+
+		if ( $entrymeta2 = get_option( 'k2entrymeta2' ) )
+			$postmeta['standard-below'] = $entrymeta2;
+
+		update_option( 'k2postmeta', $postmeta );
+		delete_option( 'k2entrymeta1' );
+		delete_option( 'k2entrymeta2' );
+
+
 		// Call the upgrade handlers
 		do_action('k2_upgrade', $previous);
 
 		// Update the version
 		update_option('k2version', K2_CURRENT);
-
-		// Clean-up deprecated options
-		delete_option('k2sidebarmanager');
-		delete_option('k2sbm_modules');
 	}
 
 
@@ -141,9 +139,7 @@ class K2 {
 		delete_option('k2advnav');
 		delete_option('k2optimjs');
 		delete_option('k2usestyle');
-		delete_option('k2archives');
-		delete_option('k2entrymeta1');
-		delete_option('k2entrymeta2');
+		delete_option('k2postmeta');
 		delete_option('k2animations');
 		delete_option('k2ajaxdonejs');
 
@@ -172,19 +168,13 @@ class K2 {
 			// Reset K2
 			if ( isset($_REQUEST['restore-defaults']) ) {
 				K2::restore_defaults();
-				wp_redirect('themes.php?page=k2-options&defaults=true');
-				die;
-
-			// Reset Sidebars
-			} elseif ( isset($_REQUEST['default-widgets']) ) {
-				k2_default_widgets();
-				wp_redirect('themes.php?page=k2-options&widgets=true');
+				wp_redirect('admin.php?page=k2-options&defaults=true');
 				die;
 
 				// Save Settings
 			} elseif ( isset($_REQUEST['save']) and isset($_REQUEST['k2']) ) {
 				K2::update_options();
-				wp_redirect('themes.php?page=k2-options&saved=true');
+				wp_redirect('admin.php?page=k2-options&saved=true');
 				die;
 			}
 		}
@@ -195,14 +185,8 @@ class K2 {
 	 * Adds K2 Options to Appearance menu, adds actions for head and scripts
 	 */
 	function add_options_menu() {
-		global $wp_version;
-
-		// WP 3.0 new capability: edit_theme_options
-		if ( version_compare( $wp_version, '3.0', '>=' ) ) {
-			$page = add_theme_page( __('K2 Options', 'k2'), __('K2 Options', 'k2'), 'edit_theme_options', 'k2-options', array('K2', 'admin') );
-		} else {
-			$page = add_theme_page( __('K2 Options', 'k2'), __('K2 Options', 'k2'), 'edit_themes', 'k2-options', array('K2', 'admin') );
-		}
+		$page = add_menu_page( '', __('K2', 'k2'), 'edit_theme_options', 'k2-options', array('K2', 'admin'), get_template_directory_uri() . '/images/k2-16.png', 63);
+		add_submenu_page( 'k2-options', __('K2 Options', 'k2'), __('K2 Options', 'k2'), 'edit_theme_options', 'k2-options', array('K2', 'admin') );
 
 		add_action( "admin_head-$page", array('K2', 'admin_head') );
 		add_action( "admin_print_scripts-$page", array('K2', 'admin_print_scripts') );
@@ -288,24 +272,9 @@ class K2 {
 		// How to style sidebars, and ehther to use K2's CSS at all
 		update_option('k2usestyle', $_POST['k2']['usestyle']);
 
-		/* print_r($_POST); */
-
-		// Archives Page (thanks to Michael Hampton, http://www.ioerror.us/ for the assist)
-		if ( isset($_POST['k2']['archives']) ) {
-			update_option('k2archives', '1');
-			K2Archive::add();
-		} else {
-			update_option('k2archives', '0');
-			K2Archive::delete();
-		}
-
 		// Top post meta
-		if ( isset($_POST['k2']['entrymeta1']) )
-			update_option( 'k2entrymeta1', stripslashes($_POST['k2']['entrymeta1']) );
-
-		// Bottom post meta
-		if ( isset($_POST['k2']['entrymeta2']) )
-			update_option( 'k2entrymeta2', stripslashes($_POST['k2']['entrymeta2']) );
+		if ( isset( $_POST['k2']['postmeta'] ) && is_array( $_POST['k2']['postmeta'] ) )
+			update_option( 'k2postmeta', array_map( 'stripslashes', $_POST['k2']['postmeta'] ) );
 
 		// Ajax Success JavaScript
 		if ( isset($_POST['k2']['ajaxdonejs']) )
@@ -393,9 +362,8 @@ class K2 {
 	 * Register K2 scripts with WordPress' script loader
 	 */
 	function register_scripts() {
-
 		// If debug mode is off, load minimized scripts, else don't... Duh!
-		if ( get_option('k2optimjs') == 1 ) {
+		if ( 1 == get_option('k2optimjs') ) {
 
 			wp_register_script('k2functions',
 				get_bloginfo('template_directory') . '/js/k2.min.js',
@@ -410,7 +378,6 @@ class K2 {
 				array('jquery', 'jquery-ui-sortable'), K2_CURRENT);
 
 		} else {
-
 			// Third-Party Scripts
 			wp_register_script('bbq',
 				get_bloginfo('template_directory') . '/js/uncompressed/jquery.bbq.js',

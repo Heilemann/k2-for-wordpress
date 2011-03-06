@@ -13,23 +13,89 @@
 // Prevent users from directly loading this include file
 defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly.', 'k2') );
 
+
+if ( ! function_exists('k2_register_sidebars') ):
 /**
- * Displays the current post meta.
+ * Register our sidebar with widgets
  *
- * @since 1.0-RC8
- *
- * @param integer $num Optional. Meta position, 1 for top, 2 for bottom
+ * @since 1.0
  *
  */
+function k2_register_sidebars() {
+
+    register_sidebar(array(
+        'id' 		=>	'widgets-top',
+        'name'		=>	__('Below Page Header', 'k2'),
+        'description'	=>	__('Just below the header.', 'k2'),
+        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
+        'after_widget'	=>	'</aside>',
+        'before_title'	=>	'<h1 class="widget-title">',
+        'after_title'	=>	'</h1>'
+    ));
+
+    register_sidebar(array(
+        'id'		=>	'widgets-sidebar-1',
+        'name'		=>	__('Sidebar 1', 'k2'),
+        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
+        'after_widget'	=>	'</aside>',
+        'before_title'	=>	'<h1 class="widget-title">',
+        'after_title'	=>	'</h1>'
+    ));
+
+    register_sidebar(array(
+        'id'		=>	'widgets-sidebar-2',
+        'name'		=>	__('Sidebar 2', 'k2'),
+        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
+        'after_widget'	=>	'</aside>',
+        'before_title'	=>	'<h1 class="widget-title">',
+        'after_title'	=>	'</h1>'
+    ));
+
+    register_sidebar(array(
+        'id' 		=>	'widgets-post',
+        'name'		=>	__('After Posts', 'k2'),
+        'description'	=>	__('On single blog post pages, following the post and preceeding the comments.', 'k2'),
+        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
+        'after_widget'	=>	'</aside>',
+        'before_title'	=>	'<h1 class="widget-title">',
+        'after_title'	=>	'</h1>'
+    ));
+
+    register_sidebar(array(
+        'id' 		=>	'widgets-bottom',
+        'name'		=>	__('Page Footer', 'k2'),
+        'description'	=>	__('At the bottom of the page.', 'k2'),
+        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
+        'after_widget'	=>	'</aside>',
+        'before_title'	=>	'<h1 class="widget-title">',
+        'after_title'	=>	'</h1>'
+    ));
+
+	do_action('k2_register_sidebars');
+}
+endif;
+add_action( 'widgets_init', 'k2_register_sidebars' );
+
+
+
 if ( ! function_exists('k2_entry_meta') ):
-	function k2_entry_meta($num = 1) {
-		$num = (int) $num;
-		if ( $num < 1 ) $num = 1;
+function k2_entry_meta( $section = '' ) {
+	echo k2_get_entry_meta( $section );
+}
+endif;
 
-		$entrymeta = preg_replace( '/%(.+?)%/', '[entry_$1]', get_option('k2entrymeta' . $num) );
+if ( ! function_exists('k2_get_entry_meta') ):
+function k2_get_entry_meta( $section = '' ) {
+	$k2postmeta = get_option( 'k2postmeta' );
 
-		echo do_shortcode($entrymeta);
+	if ( ! empty( $k2postmeta[$section] ) ) {
+		$entrymeta = do_shortcode( preg_replace( '/%(.+?)%/', '[entry_$1]', $k2postmeta[$section] ) );
+
+		return '<div class="entry-meta ' . $section . '">' . $entrymeta . '</div>';
 	}
+
+	return '';
+}
 endif;
 
 
@@ -133,68 +199,6 @@ endif;
 if ( ! function_exists('k2_entry_time') ):
 	function k2_entry_time() {
 		return '<span class="entry-time">' . get_the_time( get_option('time_format') ) . '</span>';
-	}
-endif;
-
-
-/**
- * Register our sidebar with widgets
- *
- * @since 1.0-RC8
- *
- */
-if ( ! function_exists('k2_register_sidebars') ):
-	function k2_register_sidebars() {
-		if ( function_exists('register_sidebar') ) {
-
-		    register_sidebar(array(
-		        'id' 		=>	'widgets-top',
-		        'name'		=>	__('Below Page Header', 'k2'),
-		        'description'	=>	__('Just below the header.', 'k2'),
-		        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
-		        'after_widget'	=>	'</aside>',
-		        'before_title'	=>	'<h1 class="widget-title">',
-		        'after_title'	=>	'</h1>'
-		    ));
-
-		    register_sidebar(array(
-		        'id'		=>	'widgets-sidebar-1',
-		        'name'		=>	__('Sidebar 1', 'k2'),
-		        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
-		        'after_widget'	=>	'</aside>',
-		        'before_title'	=>	'<h1 class="widget-title">',
-		        'after_title'	=>	'</h1>'
-		    ));
-
-		    register_sidebar(array(
-		        'id'		=>	'widgets-sidebar-2',
-		        'name'		=>	__('Sidebar 2', 'k2'),
-		        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
-		        'after_widget'	=>	'</aside>',
-		        'before_title'	=>	'<h1 class="widget-title">',
-		        'after_title'	=>	'</h1>'
-		    ));
-
-		    register_sidebar(array(
-		        'id' 		=>	'widgets-post',
-		        'name'		=>	__('After Posts', 'k2'),
-		        'description'	=>	__('On single blog post pages, following the post and preceeding the comments.', 'k2'),
-		        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
-		        'after_widget'	=>	'</aside>',
-		        'before_title'	=>	'<h1 class="widget-title">',
-		        'after_title'	=>	'</h1>'
-		    ));
-
-		    register_sidebar(array(
-		        'id' 		=>	'widgets-bottom',
-		        'name'		=>	__('Page Footer', 'k2'),
-		        'description'	=>	__('At the bottom of the page.', 'k2'),
-		        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
-		        'after_widget'	=>	'</aside>',
-		        'before_title'	=>	'<h1 class="widget-title">',
-		        'after_title'	=>	'</h1>'
-		    ));
-		}
 	}
 endif;
 

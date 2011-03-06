@@ -16,14 +16,13 @@ defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly
 <meta name="template" content="K2 <?php k2info('version'); ?>" />
 
 <title><?php wp_title('&laquo;', true, 'right'); ?><?php bloginfo('name'); ?></title>
-
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 
 <?php if ( get_option('k2usestyle') != 0 ): ?>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/style.css" />
 <?php endif; ?>
 
-<?php /* Child Themes */ if ( K2_CHILD_THEME ): ?>
+<?php /* Child Themes */ if ( is_child_theme() ): ?>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
 <?php endif; ?>
 
@@ -31,10 +30,8 @@ defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly
 	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 <?php endif; ?>
 
-<?php wp_get_archives('type=monthly&format=link'); ?>
-
 <!--[if lt IE 9]>
-<script src="<?php bloginfo( 'template_directory' ); ?>/js/html5.js" type="text/javascript"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/js/html5.js" type="text/javascript"></script>
 <![endif]-->
 
 <?php wp_head(); ?>

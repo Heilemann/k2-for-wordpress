@@ -187,13 +187,10 @@ function k2_body_class_filter($classes) {
 	/* Detect whether the sidebars are in use and add appropriate classes */
 	if ( is_active_sidebar('widgets-sidebar-1') && is_active_sidebar('widgets-sidebar-2') )
 		$classes[] = 'columns-three';
-
 	else if ( is_active_sidebar('widgets-sidebar-1') )
 		$classes[] = 'columns-two widgets-sidebar-1';
-
 	else if ( is_active_sidebar('widgets-sidebar-2') )
 		$classes[] = 'columns-two widgets-sidebar-2';
-
 	else
 		$classes[] = 'columns-one';
 

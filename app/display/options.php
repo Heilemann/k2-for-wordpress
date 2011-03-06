@@ -8,12 +8,11 @@
 	// Check that the K2 folder has no spaces
 	$dir_has_spaces = (strpos(TEMPLATEPATH, ' ') !== false);
 
-	// Get post meta format
-	$entrymeta1 = get_option('k2entrymeta1');
-	if ( empty($entrymeta1) ) {
-		$entrymeta1 = __('Published by %author% on %date% in %categories%. %comments%. %tags%.', 'k2');
-	}
+	$k2usestyle = get_option( 'k2usestyle' );
+	$k2advnav = get_option( 'k2advnav' );
 
+	// Get post meta format
+	$k2postmeta = (array) get_option( 'k2postmeta' );
 ?>
 
 <div class="wrap">
@@ -46,10 +45,10 @@
 				<label for="k2-usestyle"><?php _e('Style', 'k2'); ?></label>
 
 				<select id="k2-usestyle" name="k2[usestyle]">
-					<option value="3" <?php if(get_option('k2usestyle')=='3') echo 'selected' ?>><?php _e('Flanking Sidebars (default)', 'k2'); ?></option>
-					<option value="2" <?php if(get_option('k2usestyle')=='2') echo 'selected' ?>><?php _e('Sidebars Right', 'k2'); ?></option>
-					<option value="1" <?php if(get_option('k2usestyle')=='1') echo 'selected' ?>><?php _e('Sidebars Left', 'k2'); ?></option>
-					<option value="0" <?php if(get_option('k2usestyle')=='0') echo 'selected' ?>><?php _e('No CSS', 'k2'); ?></option>
+					<option value="3" <?php selected($k2usestyle, 3); ?>><?php _e('Flanking Sidebars (default)', 'k2'); ?></option>
+					<option value="2" <?php selected($k2usestyle, 2); ?>><?php _e('Sidebars Right', 'k2'); ?></option>
+					<option value="1" <?php selected($k2usestyle, 1); ?>><?php _e('Sidebars Left', 'k2'); ?></option>
+					<option value="0" <?php selected($k2usestyle, 0); ?>><?php _e('No CSS', 'k2'); ?></option>
 				</select>
 			</li>
 
@@ -58,17 +57,10 @@
 				<label for="k2-advnav"><?php _e('AJAX archives & search', 'k2'); ?></label>
 
 				<select id="k2-advnav" name="k2[advnav]">
-					<option value="2" <?php if(get_option('k2advnav')=='2') echo 'selected' ?>><?php _e('On, with animation (default)', 'k2'); ?></option>
-					<option value="1" <?php if(get_option('k2advnav')=='1') echo 'selected' ?>><?php _e('On, sans animation', 'k2'); ?></option>
-					<option value="0" <?php if(get_option('k2advnav')=='0') echo 'selected' ?>><?php _e('Off', 'k2'); ?></option>
+					<option value="2" <?php selected( $k2advnav, 2 ); ?>><?php _e('On, with animation (default)', 'k2'); ?></option>
+					<option value="1" <?php selected( $k2advnav, 1 ); ?>><?php _e('On, sans animation', 'k2'); ?></option>
+					<option value="0" <?php selected( $k2advnav, 0 ); ?>><?php _e('Off', 'k2'); ?></option>
 				</select>
-			</li>
-
-
-			<li>
-				<label for="k2-archives"><?php _e('Archive page', 'k2'); ?></label>
-
-				<input id="k2-archives" name="k2[archives]" type="checkbox" value="add_archive" <?php checked('1', get_option('k2archives')); ?> />
 			</li>
 
 
@@ -83,58 +75,67 @@
 				<h3><?php _e('Post Entry', 'k2'); ?></h3>
 
 				<p class="description">
-					<?php _e('Use the following keywords: %author%, %categories%, %comments%, %date%, %tags% and %time%. <!-- You can also use third-party shortcodes. -->', 'k2'); ?>
+					<?php _e('Use the following keywords: %author%, %categories%, %comments%, %date%, %tags% and %time%.', 'k2'); ?>
 				</p>
 
 				<table class="form-table">
+					<caption><?php _e('Standard Posts', 'k2'); ?></caption>
 					<tbody>
 						<tr>
 							<th scope="row">
-								<label for="k2-entry-meta-1"><?php _e('Top Meta:', 'k2'); ?></label>
+								<label for="k2-post-meta-standard-above"><?php _e('Top Meta:', 'k2'); ?></label>
 							</th>
 							<td>
-								<input id="k2-entry-meta-1" name="k2[entrymeta1]" type="text" value="<?php form_option('k2entrymeta1'); ?>" />
+								<input id="k2-post-meta-standard-above" name="k2[postmeta][standard-above]" type="text" value="<?php esc_attr_e($k2postmeta['standard-above']); ?>" />
 							</td>
 						</tr>
 						<tr>
 							<th scope="row">
-								<label for="k2-entry-meta-2"><?php _e('Bottom Meta:', 'k2'); ?></label>
+								<label for="k2-post-meta-standard-below"><?php _e('Bottom Meta:', 'k2'); ?></label>
 							</th>
 							<td>
-								<input id="k2-entry-meta-2" name="k2[entrymeta2]" type="text" value="<?php form_option('k2entrymeta2'); ?>" />
+								<input id="k2-post-meta-standard-below" name="k2[postmeta][standard-below]" type="text" value="<?php esc_attr_e($k2postmeta['standard-below']); ?>" />
 							</td>
 						</tr>
 					</tbody>
 				</table>
 
+				<table class="form-table">
+					<caption><?php _e('Asides', 'k2'); ?></caption>
+					<tbody>
+						<tr>
+							<th scope="row">
+								<label for="k2-post-meta-aside-above"><?php _e('Top Meta:', 'k2'); ?></label>
+							</th>
+							<td>
+								<input id="k2-post-meta-aside-above" name="k2[postmeta][aside-above]" type="text" value="<?php esc_attr_e($k2postmeta['aside-above']); ?>" />
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">
+								<label for="k2-post-meta-aside-below"><?php _e('Bottom Meta:', 'k2'); ?></label>
+							</th>
+							<td>
+								<input id="k2-post-meta-aside-below" name="k2[postmeta][aside-below]" type="text" value="<?php esc_attr_e($k2postmeta['aside-below']); ?>" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
 
+<?php /* ?>
 				<div id="meta-preview" class="postbox">
 					<h3 class="handle"><span><?php _e('Preview', 'k2'); ?></span></h3>
 					<?php
 						query_posts('showposts=1&what_to_show=posts&order=desc&post_status=publish');
-						if ( have_posts() ): the_post();
+						if ( have_posts() ):
+							the_post();
 					?>
-					<div id="entry-<?php the_ID(); ?>" class="inside">
-						<div class="entry-header">
-							<h5 class="entry-title"><a href="#" rel="bookmark" title="<?php printf( esc_attr__( 'Permalink to %s', 'k2' ), the_title_attribute( 'echo=0' ) ); ?>"><?php the_title(); ?></a></h5>
-
-							<div class="entry-meta">
-								<?php k2_entry_meta(1); ?>
-							</div> <!-- .entry-meta -->
-						</div> <!-- .entry-header -->
-
-						<div class="entry-content">
-							<?php the_excerpt(); ?>
-						</div> <!-- .entry-content -->
-
-						<div class="entry-footer">
-							<div class="entry-meta">
-								<?php k2_entry_meta(2); ?>
-							</div><!-- .entry-meta -->
-						</div><!-- .entry-footer -->
-					</div> <!-- #entry-ID -->
+						<article id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
+							<?php get_template_part('blocks/k2-' . get_post_type() ); ?>
+						</article>
 					<?php endif; ?>
 				</div>
+<?php */ ?>
 			</li>
 
 			<?php /* K2 Hook */ do_action('k2_display_options'); ?>
@@ -147,7 +148,6 @@
 			<input type="submit" id="save" name="save" class="button-primary" value="<?php esc_attr_e('Save Changes', 'k2'); ?>" />
 
 			<input type="submit" name="restore-defaults" id="restore-defaults" onClick="return confirmDefaults();" value="<?php esc_attr_e('Revert to K2 Defaults', 'k2'); ?>" class="button-secondary" />
-			<input type="submit" name="default-widgets" id="default-widgets-btn" class="button-secondary" value="<?php esc_attr_e('Install a Default Set of Widgets', 'k2'); ?>" />
 		</div><!-- .submit -->
 	</form>
 

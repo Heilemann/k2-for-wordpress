@@ -22,7 +22,7 @@ class K2_Widget_About extends WP_Widget {
 		extract($args);
 
 		$title = empty($instance['title']) ? __('About', 'k2') : apply_filters('widget_title', $instance['title']);
-		$message = stripslashes( $instance['message'] );
+		$message = empty( $instance['message'] ) ? '' : stripslashes( $instance['message'] );
 
 		if ( is_home() or is_front_page() or is_page() ) {
 			if ( ! empty($message) ) {
@@ -120,54 +120,7 @@ class K2_Widget_About extends WP_Widget {
 }
 
 
-/**
- * Assigns a default set of widgets
- */
-function k2_default_widgets() {
-	$sidebars_widgets = wp_get_widget_defaults();
-
-	if ( isset($sidebars_widgets['widgets-sidebar-1']) and isset($sidebars_widgets['widgets-sidebar-2']) ) {
-		$sidebars_widgets['widgets-sidebar-1'] = $sidebars_widgets['widgets-sidebar-2'] = array();
-
-		k2_add_widget($sidebars_widgets['widgets-sidebar-1'], 'search');
-		k2_add_widget($sidebars_widgets['widgets-sidebar-1'], 'k2-about');
-		k2_add_widget($sidebars_widgets['widgets-sidebar-1'], 'recent-posts');
-		k2_add_widget($sidebars_widgets['widgets-sidebar-1'], 'recent-comments');
-		k2_add_widget($sidebars_widgets['widgets-sidebar-1'], 'archives');
-		k2_add_widget($sidebars_widgets['widgets-sidebar-1'], 'tag_cloud');
-		k2_add_widget($sidebars_widgets['widgets-sidebar-1'], 'links');
-
-		wp_set_sidebars_widgets( $sidebars_widgets );
-	}
-}
-
-function k2_add_widget(&$sidebar, $id_base, $settings = false) {
-	global $wp_registered_widget_updates;
-
-	foreach ( (array) $wp_registered_widget_updates as $name => $control ) {
-		if ( $name == $id_base ) {
-			if ( !is_callable( $control['callback'] ) )
-				continue;
-
-			$_POST['id_base'] = $id_base;
-			if ( 1 == $control['callback'][0]->number ) {
-				$_POST['multi_number'] = 2;
-				$sidebar[] = $id_base . '-2';
-			} else {
-				$_POST['multi_number'] = $control['callback'][0]->number;
-				$sidebar[] = $control['callback'][0]->id;
-			}
-
-			call_user_func_array( $control['callback'], $control['params'] );
-
-			break;
-		}
-	}
-}
-
-
 function k2_widgets_init() {
 	register_widget('K2_Widget_About');
 }
-
 add_action( 'widgets_init', 'k2_widgets_init' );

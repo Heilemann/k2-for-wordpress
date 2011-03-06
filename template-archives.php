@@ -4,24 +4,19 @@
  *
  * @package WordPress
  * @subpackage K2
- * @since K2 unknown
+ * @since K2 1.5
  */
-
-if ( is_page_template( 'page-archives.php' ) ) :
 
 /*
-Template Name: Archives (Do Not Use Manually)
+Template Name: Archives
 */
 
-/**
- * Counts the posts, pages, comments, categories and tags on your site.
- * see: app/classes/archive.php
- */
-$count_posts	= K2Archive::count('post');
-$count_pages	= K2Archive::count('page');
-$count_comments	= K2Archive::count('comment');
-$count_cats	= K2Archive::count('category');
-$count_tags	= K2Archive::count('tag');
+// Counts the posts, pages, comments, categories and tags on your site.
+$count_posts    = wp_count_posts( 'post' );
+$count_pages    = wp_count_posts( 'page' );
+$count_comments	= wp_count_comments();
+$count_cats	    = wp_count_terms( 'category', array( 'hide_empty' => true ) );
+$count_tags	    = wp_count_terms( 'post_tag', array( 'hide_empty' => true ) );
 
 get_header(); ?>
 
@@ -47,10 +42,19 @@ get_header(); ?>
 
 				<div class="entry-content">
 
-					<p class="archivetext"><?php /* translators: 1: blog name, 2: post count, 3: page count 4: comment count, 5: category count, 6: tag count */
+					<p class="archivetext">
+					<?php
+						/* translators: 1: blog name, 2: post count, 3: page count 4: comment count, 5: category count, 6: tag count */
 						printf( __('This is the frontpage of the %1$s archives. Currently the archives are spanning %2$s, %3$s and %4$s, contained within the meager confines of %5$s and %6$s. Through here, you will be able to move down into the archives by way of time or category. If you are looking for something specific, perhaps you should try the search on the sidebar.', 'k2'),
-						get_bloginfo('name'), $count_posts, $count_pages, $count_comments, $count_cats, $count_tags );
-					?></p>
+							get_bloginfo('name'),
+							sprintf( _n( '%d post', '%d posts', $count_posts->publish, 'k2' ), number_format_i18n( $count_posts->publish ) ),
+							sprintf( _n( '%d page', '%d pages', $count_pages->publish, 'k2' ), number_format_i18n( $count_posts->publish ) ),
+							sprintf( _n( '%d comment', '%d comments', $count_comments->approved, 'k2' ), number_format_i18n( $count_comments->approved ) ),
+							sprintf( _n( '%d category', '%d categories', $count_cats, 'k2' ), number_format_i18n( $count_cats ) ),
+							sprintf( _n( '%d tag', '%d tags', $count_tags, 'k2' ), number_format_i18n( $count_tags ) )
+						);
+					?>
+					</p>
 
 					<?php
 					$tag_cloud = get_terms( 'post_tag' );
@@ -106,9 +110,3 @@ get_header(); ?>
 </div> <!-- .wrapper -->
 
 <?php get_footer(); ?>
-
-<?php else :
-
-	locate_template( array('page.php'), true );
-
-endif; ?>

@@ -69,8 +69,18 @@
 	<?php /* Start the Loop */ while ( have_posts() ) : the_post(); ?>
 
 		<article id="entry-<?php the_ID(); ?>" <?php post_class(); ?>>
-			<?php get_template_part('blocks/k2-post' , function_exists('get_post_format') ? get_post_format( $post->ID ) : '' ); ?>
-		</article><!-- #entry-ID -->
+			<?php
+				$templates = array();
+
+				if ( function_exists( 'get_post_format' ) && $post_format = get_post_format( $post->ID ) )
+					$templates[] = "blocks/k2-{$post->post_type}-{$post_format}.php";
+
+				$templates[] = "blocks/k2-{$post->post_type}.php";
+				$templates[] = 'blocks/k2-entry.php';
+
+				locate_template( $templates, true, false );
+			?>
+		</article><!-- #entry-<?php the_ID(); ?> -->
 
 	<?php endwhile; ?>
 

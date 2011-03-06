@@ -2,6 +2,10 @@
 
 /* This file contains the CSS for the 'K2 Options' admin panel */
 
+caption {
+	text-align: left;
+	}
+
 .wrap a {
 	color: #0A5199;
 	border: none;
@@ -303,3 +307,7 @@ abbr.entry-date {
 #k2ajax {
 	width: 100%;
 	}
+
+#icon-k2-options {
+	background: url(../images/k2-32.png) center center no-repeat;
+}

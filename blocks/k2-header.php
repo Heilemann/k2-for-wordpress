@@ -8,7 +8,7 @@
  * @subpackage Templates
  */
 ?>
-<hgroup role="banner">
+<hgroup>
 	<h1 id="site-title"><span><a href="<?php echo home_url( '/' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home" accesskey="1"><?php bloginfo( 'name' ); ?></a></span>
 	</h1>
 	<h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
@@ -17,15 +17,10 @@
 <nav id="access" role="navigation">
 	<div class="skip-link screen-reader-text"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'k2' ); ?>"><?php _e( 'Skip to content', 'k2' ); ?></a></div>
 <?php
-	// Display the page tabs
-	if ( function_exists('wp_nav_menu') ) {
-		wp_nav_menu( array(
-			'theme_location' => 'header',
-			'container_class' => 'headermenu',
-			'container_id' => 'k2_headermenu',
-		) );
-	} else {
-	 	wp_page_menu();
-	}
+	wp_nav_menu( array(
+		'theme_location' => 'header',
+		'container_class' => 'headermenu',
+		'container_id' => 'k2_headermenu',
+	) );
 ?>
 </nav>
