@@ -19,11 +19,11 @@ defined( 'K2_CURRENT' ) or die ( __('Error: This file can not be loaded directly
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 
 <?php if ( get_option('k2usestyle') != 0 ): ?>
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('template_url'); ?>/style.css" />
+	<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/style.css" />
 <?php endif; ?>
 
 <?php /* Child Themes */ if ( is_child_theme() ): ?>
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php bloginfo('stylesheet_url'); ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>" />
 <?php endif; ?>
 
 <?php if ( is_singular() ): ?>

@@ -60,61 +60,63 @@ h4, h5, h6 {
 	}
 
 
-/* Page Structure */
+@media screen {
+	/* Page Structure */
 
-body {
-	font-size: 62.5%; /* Resets 1em to 10px */
-	color: #444;
-	background: #eee;
-	text-align: center;
-	}
+	body {
+		font-size: 62.5%; /* Resets 1em to 10px */
+		color: #444;
+		background: #eee;
+		text-align: center;
+		}
 
-body.lang-ar,
-body.lang-fa,
-body.lang-he,
-body.lang-hi,
-body.lang-km,
-body.lang-ko,
-body.lang-ja,
-body.lang-th,
-body.lang-zh {
-	font-size: 75%; /* Resets 1em to 12px, for internationalized K2s */
-	}
+	body.lang-ar,
+	body.lang-fa,
+	body.lang-he,
+	body.lang-hi,
+	body.lang-km,
+	body.lang-ko,
+	body.lang-ja,
+	body.lang-th,
+	body.lang-zh {
+		font-size: 75%; /* Resets 1em to 12px, for internationalized K2s */
+		}
 
-#page {
-	background: #fff;
-	}
+	#page {
+		background: #fff;
+		}
 
-#page {
-	text-align: left;
-	margin: 0 auto;
-	padding-top: 20px;
-	position: relative;
-	border: 1px solid #ddd;
-	border-top: none;
-	clear: both;
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-	-moz-border-radius-bottomleft: 5px;
-	-moz-border-radius-bottomright: 5px;
-	-webkit-border-bottom-left-radius: 5px;
-	-webkit-border-bottom-right-radius: 5px;
-	}
+	#page {
+		text-align: left;
+		margin: 0 auto;
+		padding-top: 20px;
+		position: relative;
+		border: 1px solid #ddd;
+		border-top: none;
+		clear: both;
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
+		-moz-border-radius-bottomleft: 5px;
+		-moz-border-radius-bottomright: 5px;
+		-webkit-border-bottom-left-radius: 5px;
+		-webkit-border-bottom-right-radius: 5px;
+		}
 
-.columns-one #page,
-.columns-one.smartposition #rollingarchivesbg {
-	width: 560px;
-	}
+	.columns-one #page,
+	.columns-one.smartposition #rollingarchivesbg {
+		width: 560px;
+		}
 
-.columns-two #page,
-.columns-two.smartposition #rollingarchivesbg {
-	width: 780px;
-	}
+	.columns-two #page,
+	.columns-two.smartposition #rollingarchivesbg {
+		width: 780px;
+		}
 
-.columns-three #page,
-.columns-three.smartposition #rollingarchivesbg {
-	width: 950px;
-	}
+	.columns-three #page,
+	.columns-three.smartposition #rollingarchivesbg {
+		width: 950px;
+		}
+}
 
 #header {
 	position: relative;
@@ -124,61 +126,62 @@ body.lang-zh {
 	background-repeat: no-repeat;
 	}
 
-.wrapper {
-	padding: 0 20px 0px;
+@media screen {
+	.wrapper {
+		padding: 0 20px 0px;
+		}
+
+	.columns-two .secondary {
+		float: right;
+		}
+
+	.primary {
+		position: relative;
+		float: left;
+		width: 520px;
+		padding: 10px 0;
+		}
+
+	body.showrollingarchives .primary { /* Flush RA with header */
+		padding-top: 0;
 	}
 
-.columns-two .secondary {
-	float: right;
+	body.home.onepageonly.rollingarchives .primary { /* No RA, so back to 10px */
+		padding-top: 10px;
 	}
 
-.primary {
-	position: relative;
-	float: left;
-	width: 520px;
-	padding: 10px 0;
+	* html .primary { /* IE Hack */
+		display: inline;
+		}
+
+	.primary {
+		margin-top: 9px;
+		}
+
+	.columns-one .secondary {
+		width: 240px;
+		border-top: 1px solid #eee;
+		}
+
+	.columns-three .secondary {
+		width: 175px;
+		}
+
+	.secondary {
+		width: 200px;
+		float: left;
+		font-size: 1em;
+		line-height: 1.5em;
+		color: #666;
+		padding: 0 10px;
+		overflow: hidden;
+		padding-bottom: 20px;
 	}
 
-body.showrollingarchives .primary { /* Flush RA with header */
-	padding-top: 0;
+	#widgets-sidebar-2 {
+		clear: right;
+		}
 }
-
-body.home.onepageonly.rollingarchives .primary { /* No RA, so back to 10px */
-	padding-top: 10px;
-}
-
-
-* html .primary { /* IE Hack */
-	display: inline;
-	}
-
-.primary {
-	margin-top: 9px;
-	}
-
-.columns-one .secondary {
-	width: 240px;
-	border-top: 1px solid #eee;
-	}
-
-.columns-three .secondary {
-	width: 175px;
-	}
-
-.secondary {
-	width: 200px;
-	float: left;
-	font-size: 1em;
-	line-height: 1.5em;
-	color: #666;
-	padding: 0 10px;
-	overflow: hidden;
-	padding-bottom: 20px;
-}
-
-#widgets-sidebar-2 {
-	clear: right;
-	}
 
 .comments {
 	clear: both;
@@ -187,209 +190,209 @@ body.home.onepageonly.rollingarchives .primary { /* No RA, so back to 10px */
 	position: relative;
 	}
 
+@media screen {
+	/* Main Menu in Header */
 
-/* Main Menu in Header */
+	.headermenu {
+		position: absolute;
+		white-space: nowrap;
+		bottom: 0;
+		margin: 0 20px;
+		}
 
-.headermenu {
-	position: absolute;
-	white-space: nowrap;
-	bottom: 0;
-	margin: 0 20px;
+	.headermenu > ul {
+		float: left;
+		}
+
+	.headermenu li {
+		list-style: none;
+		}
+
+	.headermenu li a {
+		display: block;
+		outline: none;
+		}
+
+	.headermenu li a:hover {
+		text-decoration: none;
+		}
+
+	.headermenu > ul > li { /* Top Menu Items */
+		float: left;
+		}
+
+	.headermenu > ul > li > a { /* Top Menu */
+		margin-left: 5px;
+		padding: 5px 15px;
+		color: #fff;
+
+		border-top-left-radius: 3px;
+		border-top-right-radius: 3px;
+		-moz-border-radius-topleft: 3px;
+		-moz-border-radius-topright: 3px;
+		-webkit-border-top-left-radius: 3px;
+		-webkit-border-top-right-radius: 3px;
+		}
+
+	.headermenu > ul > li.current_page_ancestor > a,
+	.headermenu > ul > li.current_page_item > a {
+		color: #333;
+		background: #fff;
+		}
+
+	.headermenu > ul > li:hover > a,
+	.headermenu > ul > li.sfHover > a { /* Top level hover*/
+		color: #eee;
+		background-color: #333;
+		}
+
+	.headermenu > ul > li.has_children > a { /* Top level parent */
+		padding-right: 18px;
+		position: relative;
+		}
+
+	.headermenu > ul > li.current_page_ancestor.has_children > a:after,
+	.headermenu > ul > li.current_page_item.has_children > a:after {
+		background: url('images/arrows.png') no-repeat left top;
+		}
+
+	.headermenu > ul > li.has_children:hover > a:after,
+	.headermenu > ul > li.has_children.sfHover > a:after,
+	.headermenu > ul > li.has_children > a:after { /* Dropdown indicators */
+		position: absolute;
+		right: 5px;
+		top: 10px;
+		height: 4px;
+		width: 7px;
+		content: '';
+		background: url('images/arrows.png') no-repeat left bottom;
+		}
+
+	.headermenu > ul > li > ul { /* Child Menus */
+		left: -999em;
+		position: absolute;
+		z-index: 50;
+		max-width: 20em;
+		margin-left: 5px;
+
+		-moz-box-shadow: 0px 1px 2px rgba(0, 0, 0, .5);
+		-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+
+		background: #f3f3f3;
+		border-radius: 0 3px 3px 3px;
+		-moz-border-radius: 0 3px 3px 3px;
+		-webkit-border-top-right-radius: 3px;
+		-webkit-border-radius: 3px;
+		-webkit-border-top-left-radius: 0;
+		}
+
+	.headermenu > ul > li.sfHover > ul,
+	.headermenu > ul > li:hover > ul { /* Show submenu when hovering parent */
+		left: inherit;
+		}
+
+	.headermenu li li a { /* Submenu links */
+		color: #333;
+		padding: .6em 1.5em;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		}
+
+	.headermenu li li a:hover { /* Child hover */
+		background: #ddd;
+		background: rgba(0, 0, 0, .1); /* To accomodate the gradient background in modern browsers */
+		}
+
+	.headermenu li li li a { /* Indent 3rd child */
+		padding-left: 2em;
 	}
 
-.headermenu > ul {
-	float: left;
+	.headermenu > ul > li > ul > li:first-child > a { /* First child 2nd level */
+		border-radius: 0 3px 0 0;
+		-moz-border-radius: 0 3px 0 0;
+		-webkit-border-top-left-radius: 0;
+		-webkit-border-top-right-radius: 3px;
+		}
+
+	.headermenu > ul > li > ul > li:last-child > a:last-child { /* Last child 2nd level */
+		border-radius: 0 0 3px 3px;
+		-moz-border-radius: 0 0 3px 3px;
+		-webkit-border-bottom-left-radius: 3px;
+		-webkit-border-bottom-right-radius: 3px;
+		}
+
+	.headermenu ul ul li:last-child ul li:last-child a:last-child { /* Last child 3rd level */
+		border-radius: 0 0 3px 3px;
+		-moz-border-radius: 0 0 3px 3px;
+		-webkit-border-bottom-left-radius: 3px;
+		-webkit-border-bottom-right-radius: 3px;
+		}
+
+
+	/* Widgets: 'Below Header' & 'Page Footer' */
+
+	#widgets-top,		/* Below Header */
+	#widgets-bottom {	/* Page Footer */
+		margin-top: 20px;
+		overflow: auto;
+		width: 100%;
+		}
+
+	#widgets-top > .widget,
+	#widgets-bottom > .widget {
+		display: inline-block;
+		float: left;
+		}
+
+	body.columns-one #widgets-top > .widget,
+	body.columns-one #widgets-bottom > .widget {
+		width: 33%;
+		}
+
+	body.columns-two #widgets-top > span,
+	body.columns-two #widgets-bottom > span {
+		width: 25%;
+		}
+
+	body.columns-three #widgets-top > .widget,
+	body.columns-three #widgets-bottom > .widget {
+		width: 20%;
+		}
+
+	#widgets-top .widget,
+	#widgets-bottom .widget {
+		margin: 0 10px;
+		}
+
+	/* Widgets: Below Single Post */
+
+	#widgetspost {
+		overflow: auto;
+		width: 100%;
+		}
+
+	#widgetspost > .widget {
+		display: inline-block;
+		float: left;
+		width: 50%;
 	}
 
-.headermenu li {
-	list-style: none;
-	}
 
-.headermenu li a {
-	display: block;
-	outline: none;
-	}
+	/* Sidebar Subpages Menu */
 
-.headermenu li a:hover {
-	text-decoration: none;
-	}
+	.sb-pagemenu ul {
+		margin-left: 10px;
+		}
 
-.headermenu > ul > li { /* Top Menu Items */
-	float: left;
-	}
+	.sb-pagemenu ul ul {
+		margin-top: 2px;
+		}
 
-.headermenu > ul > li > a { /* Top Menu */
-	margin-left: 5px;
-	padding: 5px 15px;
-	color: #fff;
-
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
-	-moz-border-radius-topleft: 3px;
-	-moz-border-radius-topright: 3px;
-	-webkit-border-top-left-radius: 3px;
-	-webkit-border-top-right-radius: 3px;
-	}
-
-.headermenu > ul > li.current_page_ancestor > a,
-.headermenu > ul > li.current_page_item > a {
-	color: #333;
-	background: #fff;
-	}
-
-.headermenu > ul > li:hover > a,
-.headermenu > ul > li.sfHover > a { /* Top level hover*/
-	color: #eee;
-	background-color: #333;
-	}
-
-.headermenu > ul > li.has_children > a { /* Top level parent */
-	padding-right: 18px;
-	position: relative;
-	}
-
-.headermenu > ul > li.current_page_ancestor.has_children > a:after,
-.headermenu > ul > li.current_page_item.has_children > a:after {
-	background: url('images/arrows.png') no-repeat left top;
-	}
-
-.headermenu > ul > li.has_children:hover > a:after,
-.headermenu > ul > li.has_children.sfHover > a:after,
-.headermenu > ul > li.has_children > a:after { /* Dropdown indicators */
-	position: absolute;
-	right: 5px;
-	top: 10px;
-	height: 4px;
-	width: 7px;
-	content: '';
-	background: url('images/arrows.png') no-repeat left bottom;
-	}
-
-.headermenu > ul > li > ul { /* Child Menus */
-	left: -999em;
-	position: absolute;
-	z-index: 50;
-	max-width: 20em;
-	margin-left: 5px;
-
-	-moz-box-shadow: 0px 1px 2px rgba(0, 0, 0, .5);
-	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
-
-	background: #f3f3f3;
-	border-radius: 0 3px 3px 3px;
-	-moz-border-radius: 0 3px 3px 3px;
-	-webkit-border-top-right-radius: 3px;
-	-webkit-border-radius: 3px;
-	-webkit-border-top-left-radius: 0;
-	}
-
-.headermenu > ul > li.sfHover > ul,
-.headermenu > ul > li:hover > ul { /* Show submenu when hovering parent */
-	left: inherit;
-	}
-
-.headermenu li li a { /* Submenu links */
-	color: #333;
-	padding: .6em 1.5em;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	}
-
-.headermenu li li a:hover { /* Child hover */
-	background: #ddd;
-	background: rgba(0, 0, 0, .1); /* To accomodate the gradient background in modern browsers */
-	}
-
-.headermenu li li li a { /* Indent 3rd child */
-	padding-left: 2em;
+	.sb-pagemenu ul ul .page_item {
+		margin-left: 10px;
+		padding: 0;
+		}
 }
-
-.headermenu > ul > li > ul > li:first-child > a { /* First child 2nd level */
-	border-radius: 0 3px 0 0;
-	-moz-border-radius: 0 3px 0 0;
-	-webkit-border-top-left-radius: 0;
-	-webkit-border-top-right-radius: 3px;
-	}
-
-.headermenu > ul > li > ul > li:last-child > a:last-child { /* Last child 2nd level */
-	border-radius: 0 0 3px 3px;
-	-moz-border-radius: 0 0 3px 3px;
-	-webkit-border-bottom-left-radius: 3px;
-	-webkit-border-bottom-right-radius: 3px;
-	}
-
-.headermenu ul ul li:last-child ul li:last-child a:last-child { /* Last child 3rd level */
-	border-radius: 0 0 3px 3px;
-	-moz-border-radius: 0 0 3px 3px;
-	-webkit-border-bottom-left-radius: 3px;
-	-webkit-border-bottom-right-radius: 3px;
-	}
-
-
-/* Widgets: 'Below Header' & 'Page Footer' */
-
-#widgets-top,		/* Below Header */
-#widgets-bottom {	/* Page Footer */
-	margin-top: 20px;
-	overflow: auto;
-	width: 100%;
-	}
-
-#widgets-top > .widget,
-#widgets-bottom > .widget {
-	display: inline-block;
-	float: left;
-	}
-
-body.columns-one #widgets-top > .widget,
-body.columns-one #widgets-bottom > .widget {
-	width: 33%;
-	}
-
-body.columns-two #widgets-top > span,
-body.columns-two #widgets-bottom > span {
-	width: 25%;
-	}
-
-body.columns-three #widgets-top > .widget,
-body.columns-three #widgets-bottom > .widget {
-	width: 20%;
-	}
-
-#widgets-top .widget,
-#widgets-bottom .widget {
-	margin: 0 10px;
-	}
-
-/* Widgets: Below Single Post */
-
-#widgetspost {
-	overflow: auto;
-	width: 100%;
-	}
-
-#widgetspost > .widget {
-	display: inline-block;
-	float: left;
-	width: 50%;
-}
-
-
-/* Sidebar Subpages Menu */
-
-.sb-pagemenu ul {
-	margin-left: 10px;
-	}
-
-.sb-pagemenu ul ul {
-	margin-top: 2px;
-	}
-
-.sb-pagemenu ul ul .page_item {
-	margin-left: 10px;
-	padding: 0;
-	}
-
 
 /* Headings */
 
@@ -1266,559 +1269,566 @@ img.wp-smiley {
 	padding: 0 0 0 5px !important;
 	}
 
+@media screen {
+	/* Lists */
 
-/* Lists */
+	.archive-list {
+		margin: 10px 0 0 0 !important;
+		padding-left: 0px !important;
+		}
 
-.archive-list {
-	margin: 10px 0 0 0 !important;
-	padding-left: 0px !important;
+	.archive-list li {
+		list-style: none;
+		float: left;
+		margin: 0 5px 0 0 !important;
+		padding: 2px 0 2px 10px !important;
+		width: 150px;
 	}
 
-.archive-list li {
-	list-style: none;
-	float: left;
-	margin: 0 5px 0 0 !important;
-	padding: 2px 0 2px 10px !important;
-	width: 150px;
+	.archive-list .children {
+		margin: 0;
+	}
+
+	.archive-list .children {
+		padding-left: 10px;
+	}
+
+	.entry-content ol, .entry-content ul {
+		padding: 0 0 0 35px;
+		}
+
+	.entry-content ol li, .entry-content ul li {
+		margin: 0 0 3px;
+		padding: 0;
+		}
+
+	.widgets ul ul, .widgets ol ol {
+		margin: 0 0 0 10px;
+		}
+
+	.widgets ul ul ul, .widgets ol ol ol {
+		margin: 0 0 0 20px;
+		}
+
+	.widgets ol {
+		margin-left: 15px;
+		}
+
+	.widgets ul li, .widgets ol li {
+		margin: 0;
+		padding: 1px 0;
+		}
+
+	.widgets ul li {
+		list-style: none;
+		}
+
+
+	/* Search Widget, incl. Livesearch */
+
+	.widget_search {
+		margin-top: 20px !important;
+		}
+
+	#search h4, .widget_search h4 {
+		display: none;
+		}
+
+	input[type=text], textarea {
+		color: #444;
+		padding: 1px;
+		margin: 0;
+		}
+
+	#search-label { /* The 'Search for:' label */
+		display: none;
+		}
+
+	#search-label.overlabel-apply { /* Inline label for livesearch */
+		display: block;
+		position: absolute;
+		color: #888;
+		cursor: text;
+		padding: 4px 5px;
+		z-index: 1;
+		background: #fff;
+		}
+
+	#search-label.overlabel-apply.fade { /* Fade label when #s has focus */
+		color: #ccc;
+		}
+
+	#search-label.overlabel-apply.hide { /* Hide label when #s isn't empty */
+		text-indent: -10000px;
+		}
+
+	#s, #search-label.overlabel-apply { /* Style #s and label in same way */
+		font-size: 1.1em;
+		width: 190px;
+		line-height: 15px;
+		border-radius: 2px;
+		-moz-border-radius: 2px;
+		-webkit-border-radius: 2px;
+		}
+
+	#s { /* The actual search input field */
+		position: relative;
+		padding: 3px;
+		width: 60%;
+		border: 1px solid #ddd;
+		background: transparent;
+		z-index: 2;
+		}
+
+	.livesearch #s { /* The search input field w. livesearch enabled */
+		padding-right: 20px;
+		width: 175px;
+		}
+
+	.livesearch.columns-three #s {
+		width: 150px;
+		}
+
+	.livesearch.columns-three #search-label.overlabel-apply { /* For Three Columns */
+		width: 165px;
+		}
+
+	#s:focus {
+		border-color: #333;
+		}
+
+	#searchreset, #searchload { /* Reset button & loading spinner */
+		position: absolute;
+		top: 2px;
+		opacity: 0;
+		right: 2px;
+		height: 18px;
+		width: 18px;
+		}
+
+	body.smartposition #searchreset,
+	body.smartposition #searchload {
+		top: 14px;
+	}
+
+	body.smartposition.admin-bar #searchreset,
+	body.smartposition.admin-bar #searchload {
+		top: 42px;
+	}
+
+	#searchreset {
+		z-index: 4;
+		background: url('images/reset-fff.png') center center no-repeat;
+		}
+
+	#searchload {
+		z-index: 3;
+		background: url('images/spinner.gif') center center no-repeat;
+		}
+
+	#searchsubmit { /* Static search button */
+		float: right;
+		width: 30%;
+		}
+
+
+	/* Attachment */
+
+	.entry-content .attachment {
+		text-align: center;
+		}
+
+
+
+	/*
+		FLANKING SIDEBARS
+		*/
+
+	body.flankingsidebars.columns-three .primary {
+		margin-left: 195px;
+		}
+
+	body.flankingsidebars.columns-three #widgets-sidebar-1 {
+		position: relative;
+		left: -520px;
+		margin-left: -195px;
+		}
+
+	/* Webkit doesn't retain the position of the left-shifted searchform properly */
+	body.flankingsidebars.webkit.smartposition #widgets-sidebar-1 .widget_search:first-child #searchform {
+		margin-left: -520px;
+		}
+
+	body.flankingsidebars.columns-three #rollingarchivesbg {
+		margin-left: -215px;
+		}
+
+
+	/*
+		NAVIGATION
+		.navigation is traditional page-by-page
+		#rollingarchives is 'advanced' AJAX-powered
+
+		The two are mutually exclusive, with the exception of permalinks where .navigation is always used.
+		*/
+
+	#rollingarchives,
+	.navigation {
+		padding: 0;
+	}
+
+	#rollingarchives {
+		height: 45px;
+	}
+
+	#rollingarchives a,
+	.navigation a {
+		height: 45px;
+	}
+
+	.navigation {
+		float: left;
+		width: 100%;
+	}
+
+	body.showrollingarchives .navigation {
+		display: none;
+	}
+
+	body.rollingarchives.single .navigation {
+		display: block;
+	}
+
+	body.showrollingarchives,
+	body.livesearchactive {
+		overflow-y: scroll; /* Avoid horizontal 'popping' when using RA and LS */
+	}
+
+	body.showrollingarchives.ie7,
+	body.livesearchactive.ie7 { /* Thanks IE7 */
+		overflow-y: auto;
+	}
+
+	.comments .navigation {
+		margin: 20px 0;
+		}
+
+	.navigation .nav-previous,
+	.navigation .left {
+		float: left;
+		width: 45%;
+		text-align: left;
+		padding: 5px 2.5% 10px 0;
+		}
+
+	.navigation .nav-next,
+	.navigation .right {
+		float: right;
+		width: 45%;
+		text-align: right;
+		padding: 5px 0 10px 2.5%;
+		}
+
+	.navigation a {
+		color: #999;
+		}
+
+	#rollingarchives { /* AJAX-powered navigation hub */
+		position: relative;
+		display: block;
+		width: 500px;
+		border-bottom: none;
+		margin: 0 10px;
+		}
+
+	#rollingarchives.emptypage {
+		display: none;
+		}
+
+	body.onepageonly #rollingarchives {
+		display: none;
+		}
+
+	#rollingarchivesbg {
+		display: none;
+		}
+
+	body.smartposition #rollingarchivesbg {
+		display: block;
+		background: #f4f4f4;
+		z-index: 45;
+		position: fixed;
+		top: 0;
+		margin-left: -20px; /* Counter-act .primary & #wrapper paddings */
+		height: 45px;
+		background: #f8f8f8;
+		}
+
+	body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS when .content passes the top of the window */
+		position: fixed;
+		z-index: 50;
+		top: 0;
+		}
+
+	body.smartposition.admin-bar #rollingarchivesbg,
+	body.smartposition.admin-bar #rollingarchives {
+		top: 28px;
+	}
+
+	body.smartposition #widgets-sidebar-1 .widget_search:first-child #searchform,
+	body.smartposition #widgets-sidebar-2 .widget_search:first-child #searchform { /* Fix search to top of window when scrolling past, if it is the first widget on the sidebar */
+		position: fixed;
+		top: 0;
+		z-index: 50;
+		padding-top: 12px;
+		}
+
+	body.smartposition.admin-bar #widgets-sidebar-1 .widget_search:first-child #searchform,
+	body.smartposition.admin-bar #widgets-sidebar-2 .widget_search:first-child #searchform {
+		top: 28px;
+		}
+
+	body.smartposition .primary { /* When scrolling past content top, adjust for fixing RA interface to top of screen */
+		padding-top: 45px !important;
+		}
+
+	body.smartposition #widgets-sidebar-1 .widget_search:first-child,
+	body.smartposition #widgets-sidebar-2 .widget_search:first-child {
+		padding-top: 24px;
+		}
+
+	body.smartposition.admin-bar #widgets-sidebar-1 .widget_search:first-child,
+	body.smartposition.admin-bar #widgets-sidebar-2 .widget_search:first-child {
+		padding-top: 52px;
+		}
+
+	body.smartposition .content.onepageonly { /* If there is only a single page, remove space at top of page */
+		padding-top: 0;
+		}
+
+	.content { /* Contains both the RA nav and content, and is used for as a top marker for the smartposition */
+		position: relative;
+		}
+
+	#rollingarchives a:hover {
+		text-decoration: underline;
+		}
+
+	#rollnavigation a:active, #rollnavigation a:focus {
+		outline: none;
+		}
+
+	#rollprevious, #rollnext, #rollload, #rollpages, #rolldates, #texttrimmer {
+		position: absolute;
+		top: 17px;
+		}
+
+	#rollprevious, #rollnext, #rollload, #texttrimmer {
+		position: absolute;
+		top: 0px;
+		line-height: 45px;
+		}
+
+	body.trim #trimmertrim {
+		display: none;
+	}
+
+	#trimmeruntrim {
+		display: none;
+	}
+
+	body.trim #trimmeruntrim {
+		display: block;
+	}
+
+	#rollprevious:hover, #rollnext:hover, #rollhome:hover {
+		text-decoration: underline;
+		cursor: pointer;
+		}
+
+	#rollload {
+		background: url('images/spinner.gif') no-repeat center center;
+		top: 16px;
+		left: 50%;
+		margin-left: -8px;
+		width: 16px;
+		height: 16px;
+		}
+
+	#rollload span, #rollhome span {
+		display: none;
+		}
+
+	#rollnext, #rollprevious, .navigation a {
+		color: #666;
+		font-weight: bold;
+		}
+
+	#rollpages {
+		left: 55px;
+		color: #aaa;
+		}
+
+	#rollhover {
+		position: absolute;
+		top: 7px;
+		left: -47px;
+		z-index: 55;
+		height: 45px;
+		background: url('images/rollhover.png') no-repeat center top;
+		}
+
+	#rollhover, #rolldates {
+		width: 100px;
+		}
+
+	#rollhover {
+		top: 8px;
+		}
+
+	#rolldates {
+		position: absolute;
+		color: #999;
+		text-align: center;
+		font-size: .9em;
+		top: 22px;
+		margin: 0;
+		}
+
+	#rollprevious {
+		left: 0;
+		text-align: left;
+		}
+
+	#rollnext {
+		right: 0;
+		text-align: right;
+		}
+
+	.emptypage #rollnavigation {
+		visibility: hidden;
+		}
+
+	.firstpage #rollprevious {
+		visibility: visible;
+		}
+
+	.firstpage #rollnext,
+	.firstpage #rollhome {
+		visibility: hidden;
+		}
+
+	.nthpage #rollnext,
+	.nthpage #rollprevious,
+	.nthpage #rollhome {
+		visibility: visible;
+		}
+
+	.lastpage #rollnext,
+	.lastpage #rollhome {
+		visibility: visible;
+		}
+
+	.lastpage #rollprevious {
+		visibility: hidden;
+		}
+
+	#pagetrackwrap {
+		position: absolute;
+		top: 16px;
+		left: 140px;
+		width: 230px;
+		}
+
+	#pagetrack {
+		height: 6px;
+		background: #eee;
+		border-radius: 10px;
+		-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
+		border: 1px solid #ddd;
+		margin-top: 3px;
+		}
+
+	#pagehandle {
+		width: 6px;
+		height: 6px;
+		margin: 0 1px;
+		background: #999;
+		cursor: col-resize;
+		border-radius: 10px;
+		-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
+		}
+
+	#pagehandle:hover {
+		background: #333;
+		}
+
+	body.trim .entry-content, body.trim .entry-footer {
+		display: none;
+		}
+
+	#texttrimmer {
+		width: 55px;
+		height: 15px;
+		right: 55px;
+		}
+
+	.firstpage #texttrimmer,
+	.firstpage #pagetrackwrap {
+		visibility: hidden;
+		}
+
+	.nthpage #texttrimmer,
+	.nthpage #pagetrackwrap,
+	.lastpage #texttrimmer,
+	.lastpage #pagetrackwrap {
+		visibility: visible;
+		}
+
+	#trimmertrim:hover, #trimmeruntrim:hover {
+		text-decoration: underline;
+		}
+
+	#trimmertrim, #trimmeruntrim {
+		cursor: pointer;
+		width: 50px;
+		text-align: center;
+		color: #999;
+		}
+
+	.trimmed #trimmertrim {
+		display: none;
+		}
+
+	#trimmeruntrim {
+		display: none;
+		}
+
+	.trimmed #trimmeruntrim {
+		display: block;
+		}
+
+	body.smartposition #trimmertrim, body.smartposition #trimmeruntrim {
+		top: 3px;
+		}
+
+	body.onepageonly .content { /* For the rare case of having only one page of content on the frontpage */
+		padding-top: 0;
+		}
+
+	.content .archivepages { /* Hide 'Page X of Y' when RA is active */
+		display: none;
+		}
 }
 
-.archive-list .children {
-	margin: 0;
+/* Hide and reposition specific elements for printing */
+@media print {
+	.headermenu, .widgets, #rollingarchives, #rollingarchivesbg {
+		display: none;
+	}
 }
-
-.archive-list .children {
-	padding-left: 10px;
-}
-
-.entry-content ol, .entry-content ul {
-	padding: 0 0 0 35px;
-	}
-
-.entry-content ol li, .entry-content ul li {
-	margin: 0 0 3px;
-	padding: 0;
-	}
-
-.widgets ul ul, .widgets ol ol {
-	margin: 0 0 0 10px;
-	}
-
-.widgets ul ul ul, .widgets ol ol ol {
-	margin: 0 0 0 20px;
-	}
-
-.widgets ol {
-	margin-left: 15px;
-	}
-
-.widgets ul li, .widgets ol li {
-	margin: 0;
-	padding: 1px 0;
-	}
-
-.widgets ul li {
-	list-style: none;
-	}
-
-
-/* Search Widget, incl. Livesearch */
-
-.widget_search {
-	margin-top: 20px !important;
-	}
-
-#search h4, .widget_search h4 {
-	display: none;
-	}
-
-input[type=text], textarea {
-	color: #444;
-	padding: 1px;
-	margin: 0;
-	}
-
-#search-label { /* The 'Search for:' label */
-	display: none;
-	}
-
-#search-label.overlabel-apply { /* Inline label for livesearch */
-	display: block;
-	position: absolute;
-	color: #888;
-	cursor: text;
-	padding: 4px 5px;
-	z-index: 1;
-	background: #fff;
-	}
-
-#search-label.overlabel-apply.fade { /* Fade label when #s has focus */
-	color: #ccc;
-	}
-
-#search-label.overlabel-apply.hide { /* Hide label when #s isn't empty */
-	text-indent: -10000px;
-	}
-
-#s, #search-label.overlabel-apply { /* Style #s and label in same way */
-	font-size: 1.1em;
-	width: 190px;
-	line-height: 15px;
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	}
-
-#s { /* The actual search input field */
-	position: relative;
-	padding: 3px;
-	width: 60%;
-	border: 1px solid #ddd;
-	background: transparent;
-	z-index: 2;
-	}
-
-.livesearch #s { /* The search input field w. livesearch enabled */
-	padding-right: 20px;
-	width: 175px;
-	}
-
-.livesearch.columns-three #s {
-	width: 150px;
-	}
-
-.livesearch.columns-three #search-label.overlabel-apply { /* For Three Columns */
-	width: 165px;
-	}
-
-#s:focus {
-	border-color: #333;
-	}
-
-#searchreset, #searchload { /* Reset button & loading spinner */
-	position: absolute;
-	top: 2px;
-	opacity: 0;
-	right: 2px;
-	height: 18px;
-	width: 18px;
-	}
-
-body.smartposition #searchreset,
-body.smartposition #searchload {
-	top: 14px;
-}
-
-body.smartposition.admin-bar #searchreset,
-body.smartposition.admin-bar #searchload {
-	top: 42px;
-}
-
-#searchreset {
-	z-index: 4;
-	background: url('images/reset-fff.png') center center no-repeat;
-	}
-
-#searchload {
-	z-index: 3;
-	background: url('images/spinner.gif') center center no-repeat;
-	}
-
-#searchsubmit { /* Static search button */
-	float: right;
-	width: 30%;
-	}
-
-
-/* Attachment */
-
-.entry-content .attachment {
-	text-align: center;
-	}
-
-
-
-/*
-	FLANKING SIDEBARS
-	*/
-
-body.flankingsidebars.columns-three .primary {
-	margin-left: 195px;
-	}
-
-body.flankingsidebars.columns-three #widgets-sidebar-1 {
-	position: relative;
-	left: -520px;
-	margin-left: -195px;
-	}
-
-/* Webkit doesn't retain the position of the left-shifted searchform properly */
-body.flankingsidebars.webkit.smartposition #widgets-sidebar-1 .widget_search:first-child #searchform {
-	margin-left: -520px;
-	}
-
-body.flankingsidebars.columns-three #rollingarchivesbg {
-	margin-left: -215px;
-	}
-
-
-/*
-	NAVIGATION
-	.navigation is traditional page-by-page
-	#rollingarchives is 'advanced' AJAX-powered
-
-	The two are mutually exclusive, with the exception of permalinks where .navigation is always used.
-	*/
-
-#rollingarchives,
-.navigation {
-	padding: 0;
-}
-
-#rollingarchives {
-	height: 45px;
-}
-
-#rollingarchives a,
-.navigation a {
-	height: 45px;
-}
-
-.navigation {
-	float: left;
-	width: 100%;
-}
-
-body.showrollingarchives .navigation {
-	display: none;
-}
-
-body.rollingarchives.single .navigation {
-	display: block;
-}
-
-body.showrollingarchives,
-body.livesearchactive {
-	overflow-y: scroll; /* Avoid horizontal 'popping' when using RA and LS */
-}
-
-body.showrollingarchives.ie7,
-body.livesearchactive.ie7 { /* Thanks IE7 */
-	overflow-y: auto;
-}
-
-.comments .navigation {
-	margin: 20px 0;
-	}
-
-.navigation .nav-previous,
-.navigation .left {
-	float: left;
-	width: 45%;
-	text-align: left;
-	padding: 5px 2.5% 10px 0;
-	}
-
-.navigation .nav-next,
-.navigation .right {
-	float: right;
-	width: 45%;
-	text-align: right;
-	padding: 5px 0 10px 2.5%;
-	}
-
-.navigation a {
-	color: #999;
-	}
-
-#rollingarchives { /* AJAX-powered navigation hub */
-	position: relative;
-	display: block;
-	width: 500px;
-	border-bottom: none;
-	margin: 0 10px;
-	}
-
-#rollingarchives.emptypage {
-	display: none;
-	}
-
-body.onepageonly #rollingarchives {
-	display: none;
-	}
-
-#rollingarchivesbg {
-	display: none;
-	}
-
-body.smartposition #rollingarchivesbg {
-	display: block;
-	background: #f4f4f4;
-	z-index: 45;
-	position: fixed;
-	top: 0;
-	margin-left: -20px; /* Counter-act .primary & #wrapper paddings */
-	height: 45px;
-	background: #f8f8f8;
-	}
-
-body.smartposition #rollingarchives { /* .smartposition is added to BODY with JS when .content passes the top of the window */
-	position: fixed;
-	z-index: 50;
-	top: 0;
-	}
-
-body.smartposition.admin-bar #rollingarchivesbg,
-body.smartposition.admin-bar #rollingarchives {
-	top: 28px;
-}
-
-body.smartposition #widgets-sidebar-1 .widget_search:first-child #searchform,
-body.smartposition #widgets-sidebar-2 .widget_search:first-child #searchform { /* Fix search to top of window when scrolling past, if it is the first widget on the sidebar */
-	position: fixed;
-	top: 0;
-	z-index: 50;
-	padding-top: 12px;
-	}
-
-body.smartposition.admin-bar #widgets-sidebar-1 .widget_search:first-child #searchform,
-body.smartposition.admin-bar #widgets-sidebar-2 .widget_search:first-child #searchform {
-	top: 28px;
-	}
-
-body.smartposition .primary { /* When scrolling past content top, adjust for fixing RA interface to top of screen */
-	padding-top: 45px !important;
-	}
-
-body.smartposition #widgets-sidebar-1 .widget_search:first-child,
-body.smartposition #widgets-sidebar-2 .widget_search:first-child {
-	padding-top: 24px;
-	}
-
-body.smartposition.admin-bar #widgets-sidebar-1 .widget_search:first-child,
-body.smartposition.admin-bar #widgets-sidebar-2 .widget_search:first-child {
-	padding-top: 52px;
-	}
-
-body.smartposition .content.onepageonly { /* If there is only a single page, remove space at top of page */
-	padding-top: 0;
-	}
-
-.content { /* Contains both the RA nav and content, and is used for as a top marker for the smartposition */
-	position: relative;
-	}
-
-#rollingarchives a:hover {
-	text-decoration: underline;
-	}
-
-#rollnavigation a:active, #rollnavigation a:focus {
-	outline: none;
-	}
-
-#rollprevious, #rollnext, #rollload, #rollpages, #rolldates, #texttrimmer {
-	position: absolute;
-	top: 17px;
-	}
-
-#rollprevious, #rollnext, #rollload, #texttrimmer {
-	position: absolute;
-	top: 0px;
-	line-height: 45px;
-	}
-
-body.trim #trimmertrim {
-	display: none;
-}
-
-#trimmeruntrim {
-	display: none;
-}
-
-body.trim #trimmeruntrim {
-	display: block;
-}
-
-#rollprevious:hover, #rollnext:hover, #rollhome:hover {
-	text-decoration: underline;
-	cursor: pointer;
-	}
-
-#rollload {
-	background: url('images/spinner.gif') no-repeat center center;
-	top: 16px;
-	left: 50%;
-	margin-left: -8px;
-	width: 16px;
-	height: 16px;
-	}
-
-#rollload span, #rollhome span {
-	display: none;
-	}
-
-#rollnext, #rollprevious, .navigation a {
-	color: #666;
-	font-weight: bold;
-	}
-
-#rollpages {
-	left: 55px;
-	color: #aaa;
-	}
-
-#rollhover {
-	position: absolute;
-	top: 7px;
-	left: -47px;
-	z-index: 55;
-	height: 45px;
-	background: url('images/rollhover.png') no-repeat center top;
-	}
-
-#rollhover, #rolldates {
-	width: 100px;
-	}
-
-#rollhover {
-	top: 8px;
-	}
-
-#rolldates {
-	position: absolute;
-	color: #999;
-	text-align: center;
-	font-size: .9em;
-	top: 22px;
-	margin: 0;
-	}
-
-#rollprevious {
-	left: 0;
-	text-align: left;
-	}
-
-#rollnext {
-	right: 0;
-	text-align: right;
-	}
-
-.emptypage #rollnavigation {
-	visibility: hidden;
-	}
-
-.firstpage #rollprevious {
-	visibility: visible;
-	}
-
-.firstpage #rollnext,
-.firstpage #rollhome {
-	visibility: hidden;
-	}
-
-.nthpage #rollnext,
-.nthpage #rollprevious,
-.nthpage #rollhome {
-	visibility: visible;
-	}
-
-.lastpage #rollnext,
-.lastpage #rollhome {
-	visibility: visible;
-	}
-
-.lastpage #rollprevious {
-	visibility: hidden;
-	}
-
-#pagetrackwrap {
-	position: absolute;
-	top: 16px;
-	left: 140px;
-	width: 230px;
-	}
-
-#pagetrack {
-	height: 6px;
-	background: #eee;
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border: 1px solid #ddd;
-	margin-top: 3px;
-	}
-
-#pagehandle {
-	width: 6px;
-	height: 6px;
-	margin: 0 1px;
-	background: #999;
-	cursor: col-resize;
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	}
-
-#pagehandle:hover {
-	background: #333;
-	}
-
-body.trim .entry-content, body.trim .entry-footer {
-	display: none;
-	}
-
-#texttrimmer {
-	width: 55px;
-	height: 15px;
-	right: 55px;
-	}
-
-.firstpage #texttrimmer,
-.firstpage #pagetrackwrap {
-	visibility: hidden;
-	}
-
-.nthpage #texttrimmer,
-.nthpage #pagetrackwrap,
-.lastpage #texttrimmer,
-.lastpage #pagetrackwrap {
-	visibility: visible;
-	}
-
-#trimmertrim:hover, #trimmeruntrim:hover {
-	text-decoration: underline;
-	}
-
-#trimmertrim, #trimmeruntrim {
-	cursor: pointer;
-	width: 50px;
-	text-align: center;
-	color: #999;
-	}
-
-.trimmed #trimmertrim {
-	display: none;
-	}
-
-#trimmeruntrim {
-	display: none;
-	}
-
-.trimmed #trimmeruntrim {
-	display: block;
-	}
-
-body.smartposition #trimmertrim, body.smartposition #trimmeruntrim {
-	top: 3px;
-	}
-
-body.onepageonly .content { /* For the rare case of having only one page of content on the frontpage */
-	padding-top: 0;
-	}
-
-.content .archivepages { /* Hide 'Page X of Y' when RA is active */
-	display: none;
-	}
-
 
 /* CSS Beyond this point is for various supported plugins and not the 'core' K2 template */
 
