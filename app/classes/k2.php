@@ -38,9 +38,6 @@ class K2 {
 		elseif ( version_compare($k2version, K2_CURRENT, '<') )
 			K2::upgrade($k2version);
 
-		// Register our scripts with script loader
-		K2::register_scripts();
-
 		// This theme uses post thumbnails
 		add_theme_support( 'post-thumbnails' );
 
@@ -54,7 +51,9 @@ class K2 {
 		add_theme_support( 'automatic-feed-links' );
 
 		// This theme allows users to set a custom background
-		if ( function_exists('add_custom_background') )
+		if ( version_compare( $wp_version, '3.4', '>=' ) )
+			add_theme_support( 'custom-background' );
+		else
 			add_custom_background();
 
 		// This theme uses wp_nav_menu() in one location.
@@ -605,6 +604,7 @@ class K2 {
 add_action( 'admin_menu', 		array('K2', 'add_options_menu') );
 add_action( 'admin_init', 		array('K2', 'admin_init') );
 add_filter( 'mce_css', 			array('K2', 'admin_style_visual_editor') );
+add_action( 'wp_enqueue_scripts', array( 'K2', 'register_scripts' ) );
 add_action( 'wp_print_scripts', 	array('K2', 'enqueue_scripts') );
 add_action( 'template_redirect', 	array('K2', 'dynamic_content') );
 add_filter( 'query_vars', 		array('K2', 'add_custom_query_vars') );
