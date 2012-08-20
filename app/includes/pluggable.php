@@ -24,16 +24,6 @@ if ( ! function_exists('k2_register_sidebars') ):
 function k2_register_sidebars() {
 
     register_sidebar(array(
-        'id' 		=>	'widgets-top',
-        'name'		=>	__('Below Page Header', 'k2'),
-        'description'	=>	__('Just below the header.', 'k2'),
-        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
-        'after_widget'	=>	'</aside>',
-        'before_title'	=>	'<h1 class="widget-title">',
-        'after_title'	=>	'</h1>'
-    ));
-
-    register_sidebar(array(
         'id'		=>	'widgets-sidebar-1',
         'name'		=>	__('Sidebar 1', 'k2'),
         'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
@@ -45,6 +35,16 @@ function k2_register_sidebars() {
     register_sidebar(array(
         'id'		=>	'widgets-sidebar-2',
         'name'		=>	__('Sidebar 2', 'k2'),
+        'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
+        'after_widget'	=>	'</aside>',
+        'before_title'	=>	'<h1 class="widget-title">',
+        'after_title'	=>	'</h1>'
+    ));
+
+    register_sidebar(array(
+        'id' 		=>	'widgets-top',
+        'name'		=>	__('Below Page Header', 'k2'),
+        'description'	=>	__('Just below the header.', 'k2'),
         'before_widget'	=>	'<aside id="%1$s" class="widget %2$s">',
         'after_widget'	=>	'</aside>',
         'before_title'	=>	'<h1 class="widget-title">',
